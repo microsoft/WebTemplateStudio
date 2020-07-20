@@ -1,0 +1,12 @@
+# vscode configuration
+.vscode/
+
+//{[{
+# production
+/server/bin
+/server/obj
+
+#publish folder
+/publish/
+//}]}
+

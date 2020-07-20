@@ -17,10 +17,10 @@ import { NAVIGATION_MODAL_TYPES, ModalType } from "../../store/navigation/typeKe
  * Custom styling guidance:
  * https://reactcommunity.org/react-modal/styles/
  */
-const getCustomStyles = (MODAL_TYPE: ModalType | undefined) => {
+const getCustomStyles = (MODAL_TYPE?: ModalType): Modal.Styles => {
   // default width
   let CUSTOM_WIDTH = "50%";
-  let backgroundColor = "var(--vscode-menu-background)";
+  const backgroundColor = "var(--vscode-menu-background)";
 
   // depends on modal type, customize width
   if (
@@ -29,10 +29,6 @@ const getCustomStyles = (MODAL_TYPE: ModalType | undefined) => {
       MODAL_TYPE === NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL)
   ) {
     CUSTOM_WIDTH = "40%";
-  }
-
-  if (MODAL_TYPE && MODAL_TYPE === NAVIGATION_MODAL_TYPES.ADD_PAGES_MODAL) {
-    backgroundColor = "var(--vscode-editor-background)";
   }
 
   return {
@@ -79,6 +75,7 @@ const asModal = <P extends object>(
     };
     render() {
       return (
+
         <Modal
           isOpen={this.props.isModalOpen}
           onRequestClose={this.props.closeModal}

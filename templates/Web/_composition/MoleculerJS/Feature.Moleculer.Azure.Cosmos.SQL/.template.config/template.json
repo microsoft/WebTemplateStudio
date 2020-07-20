@@ -11,7 +11,8 @@
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$backendframework == Moleculer & identity == wts.Feature.Azure.Cosmos.SQL"
+    "wts.compositionFilter": "$backendframework == Moleculer & identity == wts.Feature.Azure.Cosmos.SQL",
+    "wts.licenses":"[Dotenv](https://github.com/motdotla/dotenv/blob/master/LICENSE)|[MoleculerDB](https://github.com/moleculerjs/moleculer-db/blob/master/LICENSE)|[MoleculerDbAdpterMongo](https://github.com/moleculerjs/moleculer-db/blob/master/LICENSE)"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,

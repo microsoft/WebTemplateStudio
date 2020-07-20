@@ -293,6 +293,7 @@ paket-files/
 
 # VSCode custom workspace settings
 .vscode/
+!/templates/**/.vscode
 
 # CodeRush
 .cr/
@@ -334,10 +335,13 @@ ASALocalRun/
 
 # Ignore compiled files from the extension 
 **/extension/logs/
+**/extension/.vscode-test/
 **/out/
 !src/extension/locales/**/out/
 src/extension/package.nls.*.json
 **/react/
+**/dist/
+**/distVsix/
 **/node_modules/
 **/build/
 **/package-lock.json

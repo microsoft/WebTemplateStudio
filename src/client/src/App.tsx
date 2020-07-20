@@ -1,9 +1,8 @@
 import classnames from "classnames";
 import * as React from "react";
 import { connect, useDispatch } from "react-redux";
-import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
 import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
-
+import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
 import {
   EXTENSION_COMMANDS,
   ROUTES,
@@ -13,46 +12,23 @@ import {
 import appStyles from "./appStyles.module.css";
 import { AppState } from "./store/combineReducers";
 import { IOption } from "./types/option";
-import Loadable from "react-loadable";
 import PageDetails from "./containers/PageDetails";
 import { NAVIGATION_MODAL_TYPES } from "./store/navigation/typeKeys";
 import RightSidebar from "./containers/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
 import { setOutputPathAction } from "./store/userSelection/app/action";
 import { loadAction } from "./store/config/config/action";
+import loadable from '@loadable/component'
 
-const PageSelectFrameworks = Loadable({
-  loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),
-  loading:() => <div/>
-});
-const PageAddPages = Loadable({
-  loader: () => import(/* webpackChunkName: "PageAddPages" */  "./containers/PageAddPages"),
-  loading:() => <div/>
-});
-const PageReviewAndGenerate = Loadable({
-  loader: () => import(/* webpackChunkName: "PageReviewAndGenerate" */  "./containers/PageReviewAndGenerate"),
-  loading:() => <div/>
-});
-const PageAzureLogin = Loadable({
-  loader: () => import(/* webpackChunkName: "PageAzureLogin" */  "./containers/PageAzureLogin"),
-  loading:() => <div/>
-});
-const GenerationModal = Loadable({
-  loader: () => import(/* webpackChunkName: "GenerationModal" */  "./containers/GenerationModal"),
-  loading:() => <div/>
-});
-const CosmosDbModal = Loadable({
-  loader: () => import(/* webpackChunkName: "CosmosDbModal" */  "./containers/CosmosDbModal"),
-  loading:() => <div/>
-});
-const AppServiceModal = Loadable({
-  loader: () => import(/* webpackChunkName: "AppServiceModal" */  "./containers/AppServiceModal"),
-  loading:() => <div/>
-});
-const ViewLicensesModal = Loadable({
-  loader: () => import(/* webpackChunkName: "ViewLicensesModal" */  "./containers/ViewLicensesModal"),
-  loading:() => <div/>
-});
+const PageSelectFrameworks = loadable(()=> import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"));
+const PageAddPages = loadable(()=> import(/* webpackChunkName: "PageAddPages" */  "./containers/PageAddPages"));
+const PageReviewAndGenerate = loadable(() => import(/* webpackChunkName: "PageReviewAndGenerate" */  "./containers/PageReviewAndGenerate"));
+const PageAddServices = loadable(() => import(/* webpackChunkName: "PageAddServices" */  "./containers/PageAddServices"));
+const GenerationModal = loadable(() => import(/* webpackChunkName: "GenerationModal" */  "./containers/GenerationModal"));
+const CosmosDbModal = loadable(() => import(/* webpackChunkName: "CosmosDbModal" */  "./containers/CosmosDbModal"));
+const AppServiceModal = loadable(() => import(/* webpackChunkName: "AppServiceModal" */  "./containers/AppServiceModal"));
+const ViewLicensesModal = loadable(() => import(/* webpackChunkName: "ViewLicensesModal" */  "./containers/ViewLicensesModal"));
+const AzureLoginModal = loadable(() => import(/* webpackChunkName: "AzureLoginModal" */  "./containers/AzureLoginModal"));
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -67,40 +43,16 @@ interface IStateProps {
 type Props = IStateProps;
 
 const App = (props: Props) => {
-  const { frontendOptions,
-    modalState, selectedRoute } = props;
-  const [isLoaded, setIsLoaded] = React.useState(false);
-  const promisesLoading: Array<any> = new Array<any>();
+  const { modalState, selectedRoute } = props;
   const dispatch = useDispatch();
 
-  const addToPromisesList = (promise: Promise<any>)=>{
-    promisesLoading.push(promise);
-    return promise;
-  }
-  const Header = Loadable({
-    loader: () => addToPromisesList(import(/* webpackChunkName: "Header" */  "./containers/Header")),
-    loading:() => <div/>
-  });
-
-  const Footer = Loadable({
-    loader: () => addToPromisesList(import(/* webpackChunkName: "Footer" */  "./containers/Footer")),
-    loading:() => <div/>
-   });
-  const PageNewProject = Loadable({
-    loader: () => addToPromisesList(import(/* webpackChunkName: "PageNewProject" */ "./containers/PageNewProject")),
-    loading:() => <div/>
-  });
-  
-  if (frontendOptions.length === 0){
-    messageEventsFromExtension();
-  }
-
-  Promise.all(promisesLoading).then(()=>{
-    setIsLoaded(true);
-  })
+  const Header = loadable(() => import(/* webpackChunkName: "Header" */  "./containers/Header"));
+  const Footer = loadable(() => import(/* webpackChunkName: "Footer" */  "./containers/Footer"));
+  const PageNewProject = loadable(() => import(/* webpackChunkName: "PageNewProject" */ "./containers/PageNewProject"));
 
   React.useEffect(()=>{
     dispatch(loadAction());
+    messageEventsFromExtension();
   },[]);
 
   function messageEventsFromExtension(){
@@ -118,13 +70,14 @@ const App = (props: Props) => {
 
   return (
     <React.Fragment>
-      {isLoaded && (<Header />)}
-      {isLoaded && (<TopNavBar  />)}
+      <Header />
+      <TopNavBar  />
 
-      {isLoaded && (<div className={appStyles.container}>
+      <div className={appStyles.container}>
         {(modalState.modalType === NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL) && (<ViewLicensesModal/>)}
         {(modalState.modalType === NAVIGATION_MODAL_TYPES.APP_SERVICE_MODAL) && (<AppServiceModal/>)}
         {(modalState.modalType === NAVIGATION_MODAL_TYPES.COSMOS_DB_MODAL) && (<CosmosDbModal/>)}
+        {(modalState.modalType === NAVIGATION_MODAL_TYPES.AZURE_LOGIN_MODAL) && (<AzureLoginModal/>)}
         {(modalState.modalType === NAVIGATION_MODAL_TYPES.GEN_MODAL) && (<GenerationModal/>)}
 
         <main
@@ -132,10 +85,10 @@ const App = (props: Props) => {
             [appStyles.centerViewNewProjectPage]:
               selectedRoute === ROUTES.NEW_PROJECT,
             [appStyles.centerViewMaxHeight]: selectedRoute === ROUTES.PAGE_DETAILS,
-            [appStyles.centerViewAzurePage]: selectedRoute === ROUTES.AZURE_LOGIN
+            [appStyles.centerViewAzurePage]: selectedRoute === ROUTES.ADD_SERVICES
           })}
         >
-          {selectedRoute === ROUTES.NEW_PROJECT ? (
+           {selectedRoute === ROUTES.NEW_PROJECT ? (
             <HomeSplashSVG
              className={classnames(appStyles.splash, appStyles.homeSplash)}
             />
@@ -151,7 +104,7 @@ const App = (props: Props) => {
           ) : null}
 
           {(selectedRoute === ROUTES.PAGE_DETAILS) && (<PageDetails />)}
-          {(selectedRoute === ROUTES.AZURE_LOGIN) && (<PageAzureLogin/>)}
+          {(selectedRoute === ROUTES.ADD_SERVICES) && (<PageAddServices/>)}
           {(selectedRoute === ROUTES.REVIEW_AND_GENERATE) && (<PageReviewAndGenerate />)}
           {(selectedRoute === ROUTES.SELECT_FRAMEWORKS) && (<PageSelectFrameworks/>)}
           {(selectedRoute === ROUTES.SELECT_PAGES) && (<PageAddPages isModal={false}/>)}
@@ -159,9 +112,8 @@ const App = (props: Props) => {
 
         </main>
         <RightSidebar />
-      </div>)}
-      {isLoaded && (<Footer />)}
-      {!isLoaded && (<div className={appStyles.spinnerContainer}></div>)}
+      </div>
+      <Footer />
     </React.Fragment>
   );
 }

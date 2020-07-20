@@ -6,7 +6,7 @@
   "publisher": "WASTeamAccount",
   "aiKey": "###AIKEY###",
   "engines": {
-    "vscode": "^1.32.0"
+    "vscode": "^1.38.0"
   },
   "categories": [
     "Other"
@@ -52,7 +52,7 @@
     "onCommand:webTemplateStudioExtension.wizardLaunch",
     "onCommand:webTemplateStudioExtension.deployApp"
   ],
-  "main": "./out/extension.js",
+  "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
@@ -88,65 +88,68 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "gulp compile",
-    "build": "gulp build",
+    "webpack-prod": "webpack --mode production",
+    "webpack": "webpack --mode development",
+    "webpack-dev": "webpack --mode development --watch",
+    "build": "tsc -p tsconfig.json",
+    "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "lint": "yarn eslint ./src/**/*.{ts,tsx}",
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test",
+    "test": "npm run compile && node ./out/test/runTest.js",
     "template-tests": "node ./out/scripts/generate-test && node ./out/scripts/run-tests",
-    "createVsixPackage": "gulp package"
+    "createVsixPackage": "vsce package --yarn -o \"./../../dist/webts-0.0.0-UNTRACKEDVERSION.vsix\""
   },
   "devDependencies": {
     "@types/mocha": "^7.0.2",
-    "@types/node": "^8.10.25",
-    "@typescript-eslint/eslint-plugin": "^2.29.0",
-    "@typescript-eslint/parser": "^2.29.0",
+    "@types/node": "^14.0.14",
+    "@types/vscode": "^1.38",
+    "@typescript-eslint/eslint-plugin": "^3.0.1",
+    "@typescript-eslint/parser": "^3.0.1",
     "del": "^5.1.0",
-    "eslint": "^6.8.0",
+    "eslint": "^7.1.0",
     "event-stream": "^4.0.1",
-    "gulp": "^4.0.2",
-    "gulp-cli": "^2.2.0",
-    "gulp-filter": "^6.0.0",
-    "gulp-sourcemaps": "^2.6.5",
-    "gulp-typescript": "^6.0.0-alpha.1",
-    "typescript": "^3.8.3",
     "kind-of": "^6.0.3",
+    "mocha": "^7.2.0",
     "run-sequence": "^2.2.1",
-    "vscode": "^1.1.36",
-    "vscode-nls-dev": "^3.3.1"
+    "ts-loader": "^7.0.5",
+    "typescript": "^3.9.3",
+    "vscode-nls-dev": "^3.3.1",
+    "vscode-test": "^1.4.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
   },
   "extensionDependencies": [
     "ms-vscode.azure-account",
     "ms-azuretools.vscode-azureappservice"
   ],
   "dependencies": {
-    "@types/app-root-path": "^1.2.4",
     "@types/archiver": "^3.1.0",
-    "@types/fs-extra": "^8.1.0",
+    "@types/fs-extra": "^9.0.1",
     "@types/node-fetch": "^2.5.6",
     "@types/opn": "^5.5.0",
     "@types/request": "^2.48.4",
     "@types/rimraf": "^3.0.0",
-    "app-root-path": "^3.0.0",
+    "@types/semver": "^7.2.0",
     "archiver": "^4.0.1",
     "axios": "^0.19.2",
     "azure-arm-cosmosdb": "^2.3.0",
     "azure-arm-resource": "^7.3.0",
     "azure-arm-website": "^5.7.0",
+    "clean-webpack-plugin": "^3.0.0",
     "fs-extra": "^9.0.0",
     "global": "^4.4.0",
     "latest-version": "^5.1.0",
-    "log4js": "^6.2.1",
+    "log4js": "^6.3.0",
     "ms-rest": "^2.5.4",
     "ms-rest-azure": "^3.0.0",
     "node-fetch": "^2.6.0",
+    "node-fs-extra": "^0.8.2",
     "opn": "^6.0.0",
     "rimraf": "^3.0.2",
     "url-parse": "^1.4.7",
     "vsce": "^1.75.0",
-    "vscode-extension-telemetry": "^0.1.2",
-    "vscode-nls": "^4.1.2"
+    "vscode-extension-telemetry": "^0.1.6",
+    "vscode-nls": "^4.1.2",
+    "webpack-filter-warnings-plugin": "^1.2.1"
   }
 }

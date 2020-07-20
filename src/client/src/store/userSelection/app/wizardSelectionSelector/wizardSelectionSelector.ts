@@ -27,20 +27,25 @@ const isEnableNextPageSelector = (state: AppState): boolean =>{
   }
 
   if (state.navigation.routes.selected === ROUTES.SELECT_FRAMEWORKS &&
-    state.userSelection.frontendFramework.title !== "" && state.userSelection.backendFramework.title !== "" &&
-    state.userSelection.pages.filter(page => !page.isValidTitle).length === 0){
+    state.userSelection.frontendFramework.title !== "" && state.userSelection.backendFramework.title !== ""){
     valid = true;
   }
 
-  if (state.navigation.routes.selected === ROUTES.SELECT_PAGES && state.userSelection.pages.length>0 && 
-    state.userSelection.pages.filter(page => !page.isValidTitle).length === 0){
+  if (state.navigation.routes.selected === ROUTES.SELECT_PAGES && state.userSelection.pages.length>0){
     valid = true;
   }
 
-  if ((state.navigation.routes.selected === ROUTES.AZURE_LOGIN || state.navigation.routes.selected === ROUTES.REVIEW_AND_GENERATE)
-    && state.userSelection.pages.filter(page => !page.isValidTitle).length === 0){
+  if ((state.navigation.routes.selected === ROUTES.ADD_SERVICES || state.navigation.routes.selected === ROUTES.REVIEW_AND_GENERATE)){
     valid = true;
   }
+
+  return valid;
+}
+
+const isEnableGenerateButtonSelector = (state: AppState): boolean =>{
+  const valid = state.userSelection.projectNameObject.validation.isValid === true && 
+    state.userSelection.pages.length >0 &&
+    state.userSelection.pages.filter(page => !page.isValidTitle).length === 0
 
   return valid;
 }
@@ -117,5 +122,6 @@ export {
   getValidations,
   getProjectNameValidation,
   isValidNameAndProjectPathSelector,
-  isEnableNextPageSelector
+  isEnableNextPageSelector,
+  isEnableGenerateButtonSelector
 };

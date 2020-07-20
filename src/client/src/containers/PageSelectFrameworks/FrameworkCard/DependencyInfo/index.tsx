@@ -26,7 +26,7 @@ const dependencies: IDependencies = {
   Node: {
     dependencyStoreKey: "node",
     dependencyName: "Node",
-    dependencyMinimumVersion: "v10.15+",
+    dependencyMinimumVersion: "v12.0+",
     downloadLink: "https://nodejs.org/en/download/",
     privacyStatementLink: "https://nodejs.org/en/about/privacy/",
     downloadLinkLabel: "Node download link"
@@ -38,6 +38,14 @@ const dependencies: IDependencies = {
     downloadLink: "https://www.python.org/downloads/",
     privacyStatementLink: "https://www.python.org/privacy/",
     downloadLinkLabel: "Python download link"
+  },
+  NetCore: {
+    dependencyStoreKey: "netCore",
+    dependencyName: ".NET Core",
+    dependencyMinimumVersion: "v3.1+",
+    downloadLink: "https://dotnet.microsoft.com/download",
+    privacyStatementLink: "https://dotnet.microsoft.com/privacy",
+    downloadLinkLabel: ".NET Core download link"
   }
 };
 
@@ -47,7 +55,8 @@ const frameworkNameToDependencyMap: Map<string, IDependency> = new Map([
   [WIZARD_CONTENT_INTERNAL_NAMES.VUE, dependencies.Node],
   [WIZARD_CONTENT_INTERNAL_NAMES.FLASK, dependencies.Python],
   [WIZARD_CONTENT_INTERNAL_NAMES.NODE, dependencies.Node],
-  [WIZARD_CONTENT_INTERNAL_NAMES.MOLECULER, dependencies.Node]
+  [WIZARD_CONTENT_INTERNAL_NAMES.MOLECULER, dependencies.Node],
+  [WIZARD_CONTENT_INTERNAL_NAMES.ASPNET, dependencies.NetCore]
 ]);
 
 interface IProps {
@@ -72,11 +81,18 @@ const DependencyInfo = (props: Props) => {
     setDependency(localDepency);
 
     if (localDepency){
-      const {
-        dependencyName,
-        dependencyMinimumVersion
-      } = localDepency;
-        setInstalled(dependencyName.toLocaleLowerCase() === "node" ? dependencyContext.node: dependencyContext.python);
+      const { dependencyName, dependencyStoreKey, dependencyMinimumVersion } = localDepency;
+      switch (dependencyStoreKey.toLocaleLowerCase()) {
+        case "node":
+          setInstalled(dependencyContext.node);
+          break;
+        case "python":
+          setInstalled(dependencyContext.python);
+          break;
+        case "netcore":
+          setInstalled(dependencyContext.netcore);
+          break;
+      }
         setDependencyMessage(intl.formatMessage(messages.notInstalled, {
           dependencyName: dependencyName,
           minimumVersion: dependencyMinimumVersion

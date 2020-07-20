@@ -1,3 +1,5 @@
+# Application Architecture
+
 Web Template Studio is a [Visual Studio Code Extension](https://code.visualstudio.com/api) that has three major components: 
 
   - The extension's backend (referred to as the [extension](https://github.com/Microsoft/WebTemplateStudio/tree/dev/src/extension)), which is written in [Typescript](https://www.typescriptlang.org/).
@@ -27,6 +29,19 @@ It is responsible for the interaction with the user and is responsible for colle
 
 The wizard client keeps track of the state using [Redux](https://react-redux.js.org/).
 
+### Color Themes
+Web Template Studio supports Visual Studio Code's **light, dark, and high contrast theme**. You can press `Ctrl + K` in Windows/Linux or `Command ⌘ + K` then `Ctrl + T` in Windows/Linux or `Command ⌘ + T` to choose different color themes in Visual Studio Code.
+
+
+Example of Light Theme:
+![image](../resources/webts-light-theme.png)
+
+To support different color themes, VSCode CSS theme variables are used so that the webview matches the look and feel of a developer’s VSCode. VSCode's documentation on theme color can be found [here](https://code.visualstudio.com/api/references/theme-color). You can also look at the VSCode CSS variables for each theme by pressing `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Visual Studio Code and then running the `Developer: Generate Color Theme From Current Settings` command.
+
+If you want to use these variables in the client, you have to follow a certain format. For example, if you want to apply  VSCode's `"editor.background": "#252526"`, you would convert it to `var(--vscode-editor-background)` in the CSS file. More documentation can be found on the [webview API docs](https://code.visualstudio.com/api/extension-guides/webview#theming-webview-content).
+
+When the app is being run in the browser imitates these VSCode themes using `themes.css` and `themeslight.css` for dark and light mode respectively. Otherwise, if it is being ran in the extension, the CSS variables will map to VSCode directly.
+
 ## Generation Engine (Core Template Studio)
 
 The Generation Engine is responsible for template synchronisation, get frameworks, get templates and generating projects. It consists of a [CLI](https://github.com/microsoft/CoreTemplateStudio/blob/dev/docs/getting-started-developers.md#cli-project) that receives requests from the extension and get processed by [Core Template Studio](https://github.com/microsoft/CoreTemplateStudio/). Once the request is processed, it returns the response in json format to the extension.
@@ -46,6 +61,7 @@ It also exposes public functions to call the Core Template Studio CLI commands. 
 - getFrameworks(projectType: string): Promise<any>
 - getPages(projectType: string, frontendFramework: string, backendFramework: string): Promise<any>
 - getFeatures(projectType: string, frontendFramework: string, backendFramework: string): Promise<any>
+- getAllLicenses(payload: ICommandPayload): Promise<any>
 - generate(payload: ICommandPayload): Promise<any>
 ```
 

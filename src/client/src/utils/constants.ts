@@ -16,7 +16,9 @@ const WEB_TEMPLATE_STUDIO_LINKS = {
 const AZURE_LINKS = {
   CREATE_NEW_SUBSCRIPTION: "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade",
   CREATE_NEW_RESOURCE_GROUP: "https://portal.azure.com/#create/Microsoft.ResourceGroup",
-  APP_SERVICE_PLAN:"https://azure.microsoft.com/en-us/pricing/details/app-service/plans/"
+  APP_SERVICE_PLAN:"https://azure.microsoft.com/en-us/pricing/details/app-service/plans/",
+  VIEW_GENERATE_APP_SERVICE: "https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Web%2Fsites",
+  VIEW_GENERATE_MONGO_DB: "https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts"
 };
 
 const PRODUCTION = "production";
@@ -49,7 +51,6 @@ const ARIA_LABELS_NAVIGATION = defineMessages({
 });
 
 const PAYLOAD_MESSAGES_TEXT = {
-  RESET_PAGES_TEXT: "Sending reset pages request...",
   SWITCH_FRAMEWORKS_TEXT: "Sending framework change request...",
   SENT_GENERATION_INFO_TEXT: "Sending generation info..."
 };
@@ -58,7 +59,7 @@ const ROUTES = {
   PAGE_DETAILS: "/PageDetail",
   SELECT_FRAMEWORKS:  "/SelectFrameworks",
   SELECT_PAGES: "/SelectPages",
-  AZURE_LOGIN: "/AzureLogin",
+  ADD_SERVICES: "/AddPages",
   REVIEW_AND_GENERATE :"/ReviewAndGenerate",
   NEW_PROJECT: "/"
 };
@@ -69,7 +70,7 @@ const ROUTES_ARRAY = [
   ROUTES.NEW_PROJECT,
   ROUTES.SELECT_FRAMEWORKS,
   ROUTES.SELECT_PAGES,
-  ROUTES.AZURE_LOGIN,
+  ROUTES.ADD_SERVICES,
   ROUTES.REVIEW_AND_GENERATE
 ];
 
@@ -121,6 +122,7 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   FULL_STACK_APP: "FullStackWebApp",
   NODE: "Node",
   MOLECULER: "Moleculer",
+  ASPNET: "AspNet",
   FLASK: "Flask",
   REACT: "React",
   REST_API: "RestAPI",
@@ -130,6 +132,11 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   VUE_MASTER_DETAIL: "wts.Page.Vue.MasterDetail",
   VUE_LIST: "wts.Page.Vue.List"
 };
+
+enum SERVICE_GROUPS {
+  HOSTING = "CloudHosting",
+  DATABASE = "CloudDatabase",
+}
 
 const EXTENSION_MODULES = {
   AZURE: "Azure",
@@ -160,22 +167,21 @@ const EXTENSION_COMMANDS = {
   GET_VALID_COSMOS_NAME: "get-valid-cosmos-name",
   TRACK_PAGE_SWITCH: "track-page-switch",
   TRACK_CREATE_NEW_PROJECT: "track-create-new-project",
-  TRACK_OPEN_ADD_PAGES_MODAL: "track-open-add-pages-modal",
   TRACK_PRESS_QUICKSTART: "track-press-quickstart",
   TRACK_OPEN_APP_SERVICE_MODAL_FROM_SERVICES_LIST: "track-open-app-service-modal-from-services-list",
   TRACK_OPEN_COSMOSDB_SERVICE_MODAL_FROM_SERVICES_LIST: "track-open-cosmosdb-service-modal-from-services-list",
   TRACK_OPEN_AZURE_SERVICE_ADVANCED_MODE: "track-open-azure-service-advanced-mode",
-  GEN_STATUS_MESSAGE: "update-status-message",
   GEN_STATUS: "update-status",
   OPEN_PROJECT_IN_VSCODE: "open-project-vscode",
   GET_TEMPLATE_INFO: "get-template-info",
   CLOSE_WIZARD: "close-wizard",
   GET_VERSIONS: "get-versions",
-  RESET_PAGES: "reset-pages",
   GET_DEPENDENCY_INFO: "check-dependency",
   GET_FRAMEWORKS: "get-frameworks",
+  GET_ALL_LICENSES: "get-all-licenses",
   GET_LATEST_VERSION:"get-latest-version",
   GET_PAGES: "get-pages",
+  GET_FEATURES: "get-features",
   GET_VALIDATIONS: "get-validations",
   LOG: "log",
   OPEN_LOG: "open-log"
@@ -209,5 +215,6 @@ export {
   PAYLOAD_MESSAGES_TEXT,
   BOOTSTRAP_LICENSE,
   TELEMETRY,
-  AzureResourceType
+  AzureResourceType,
+  SERVICE_GROUPS
 };

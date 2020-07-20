@@ -16,4 +16,5 @@ export interface ICosmosDB {
   accountName: string;
   api: string;
   internalName: string;
+  groupName: string;
 }

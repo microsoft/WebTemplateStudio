@@ -16,7 +16,7 @@ import { WizardServant } from "./wizardServant";
 import { Generation } from "./client-modules/generation";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { LaunchExperience } from "./launchExperience";
-import { DependencyChecker } from "./utils/dependencyChecker";
+import { DependenciesModule } from "./client-modules/dependenciesModule";
 import { CoreTSModule } from "./coreTSModule";
 import { Defaults } from "./utils/defaults";
 import { Telemetry } from "./client-modules/telemetry";
@@ -39,11 +39,12 @@ export class Controller {
   private AzureModule: AzureModule;
   private Generation: Generation;
   private Validator: Validator;
-  private DependencyChecker: DependencyChecker;
+  private dependencies: DependenciesModule;
   private CoreTSModule: CoreTSModule;
   private Telemetry: Telemetry;
   private Defaults: Defaults;
   private SyncCompleted = false;
+  public static vsContext: vscode.ExtensionContext;
 
   /**
    *  Defines the WizardServant modules to which wizard client commands are routed
@@ -57,7 +58,7 @@ export class Controller {
       [ExtensionModule.Validator, this.Validator],
       [ExtensionModule.Generate, this.Generation],
       [ExtensionModule.Logger, this.loggerModule],
-      [ExtensionModule.DependencyChecker, this.DependencyChecker],
+      [ExtensionModule.DependencyChecker, this.dependencies],
       [ExtensionModule.CoreTSModule, this.CoreTSModule],
       [ExtensionModule.Defaults, this.Defaults]
     ]);
@@ -108,6 +109,7 @@ export class Controller {
   private constructor(
     private context: vscode.ExtensionContext
   ) {
+    Controller.vsContext = context;
     Controller.TelemetryService = new TelemetryService(
       this.context
     );
@@ -119,10 +121,11 @@ export class Controller {
     this.AzureModule = new AzureModule();
     this.Generation = new Generation(Controller.TelemetryService);
     this.loggerModule = new LoggerModule();
-    this.DependencyChecker = new DependencyChecker();
+    this.dependencies = new DependenciesModule();
     this.CoreTSModule = new CoreTSModule();
     this.Telemetry = new Telemetry(Controller.TelemetryService);
     this.Defaults = new Defaults();
+    Logger.load(this.context.extensionPath);
     Logger.initializeOutputChannel(getExtensionName(this.context));
     this.defineExtensionModule();
     vscode.window.withProgress(
@@ -146,11 +149,13 @@ export class Controller {
     context: vscode.ExtensionContext,
     launchExperience: LaunchExperience
   ): Promise<void> {
-    const syncObject = await Controller.TelemetryService.callWithTelemetryAndCatchHandleErrors(
+     let syncObject
+     await Controller.TelemetryService.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SyncEngine,
       async function(this: IActionContext) {
         return await launchExperience
           .launchApiSyncModule(context)
+          .then(data => syncObject=data)
           .catch(error => {
             console.log(error);
             CoreTemplateStudio.DestroyInstance();
@@ -161,10 +166,7 @@ export class Controller {
 
     if (syncObject) {
       this.SyncCompleted = true;
-      Controller.reactPanelContext = ReactPanel.createOrShow(
-        context.extensionPath,
-        this.routingMessageReceieverDelegate
-      );
+      Controller.reactPanelContext = ReactPanel.createOrShow(this.routingMessageReceieverDelegate);
 
       Controller.getTemplateInfoAndStore(
         context,
@@ -203,10 +205,7 @@ export class Controller {
 
   showReactPanel(): void {
     if (ReactPanel.currentPanel) {
-      ReactPanel.createOrShow(
-        this.context.extensionPath,
-        this.routingMessageReceieverDelegate
-      );
+      ReactPanel.createOrShow(this.routingMessageReceieverDelegate);
     }
   }
 

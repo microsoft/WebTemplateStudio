@@ -1,6 +1,7 @@
 const sampleData = require("../data/sampleData");
 //{[{
 const { MoleculerError } = require("moleculer").Errors;
+const { v4: uuidv4 } = require('uuid');
 //}]}
 
 
@@ -30,37 +31,36 @@ const { MoleculerError } = require("moleculer").Errors;
       handler(ctx) {
         let listItem = {
           text: ctx.params.text,
-          _id: sampleData.listID
+          id: uuidv4()
         };
     
         sampleData.listTextAssets.unshift(listItem);
-        sampleData.listID++;
     
         return listItem;
       }
     },
     listDelete: {
-      rest: "DELETE /list/:_id",
+      rest: "DELETE /list/:id",
       /**
        * Param validation.
        * More info: https://moleculer.services/docs/0.14/validating.html
        */
       params: {
-        _id: { type: "string", integer: true, positive: true, convert: true }, // required filed
+        id: { type: "string", integer: true, positive: true, convert: true }, // required filed
         $$strict: true // no additional properties allowed
       },
       handler(ctx) {
-        const _id = Number(ctx.params._id);
+        const id = ctx.params.id;
         const index = sampleData.listTextAssets.findIndex(
-          listItem => listItem._id === _id
+          listItem => listItem.id === id
         );
     
         if (index === -1) {
-          throw new MoleculerError(`Could not find item with id: ${_id}`, 404);
+          throw new MoleculerError(`Could not find item with id: ${id}`, 404);
         }
     
         sampleData.listTextAssets.splice(index, 1);
-        return { _id, text: "This commented was deleted" };
+        return { id, text: "This commented was deleted" };
       }
     },
   //}]}

@@ -79,19 +79,12 @@ describe("wizardSelectionSelector", () => {
       const store = mockStore(mock);
       expect(isEnableNextPageSelector(store.getState())).toBeTruthy();
     })
-
-    it("isEnableNextPage invalid (frontendFramework unselected)",()=>{
-      const mockStore = configureMockStore<AppState>();
-      mock.navigation.routes.selected = ROUTES.SELECT_PAGES;
-      const store = mockStore(mock);
-      expect(isEnableNextPageSelector(store.getState())).toBeFalsy();
-    })
   });
 
   describe("on azure login", () => {
     it("isEnableNextPage valid always",()=>{
       const mockStore = configureMockStore<AppState>();
-      mock.navigation.routes.selected = ROUTES.AZURE_LOGIN;
+      mock.navigation.routes.selected = ROUTES.ADD_SERVICES;
       const store = mockStore(mock);
       expect(isEnableNextPageSelector(store.getState())).toBeTruthy();
     });

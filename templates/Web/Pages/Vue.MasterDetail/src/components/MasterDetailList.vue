@@ -1,10 +1,11 @@
 ﻿<template>
   <button
     class="list-group-item list-group-item-action styles.sidebarText"
+    v-bind:class="{ active: isActive }"
     type="button"
     @click="$emit('selectSampleOrder', sampleOrder)"
   >
-    <img class="mr-3" :src="sampleOrder.imageSrc ? sampleOrder.imageSrc : imgGreyAvatar" alt="Default Grey Avatar" />
+    <img class="mr-3" :src="sampleOrder.imageSrc ? sampleOrder.imageSrc : imgGreyAvatar" :alt="sampleOrder.title" />
     {{sampleOrder.title}}
   </button>
 </template>
@@ -16,6 +17,10 @@ export default {
   props: {
     sampleOrder: {
       type: Object,
+      required: true
+    },
+    isActive: {
+      type: Boolean,
       required: true
     }
   },

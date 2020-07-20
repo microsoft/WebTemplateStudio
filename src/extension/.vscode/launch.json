@@ -12,8 +12,8 @@
       "runtimeExecutable": "${execPath}",
       "env": {"NODE_ENV": "dev"},
       "args": ["--extensionDevelopmentPath=${workspaceFolder}"],
-      "outFiles": ["${workspaceFolder}/out/**/*.js"],
-      "preLaunchTask": "npm: watch"
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "preLaunchTask": "npm: webpack"
     },
     {
       "name": "Extension Tests",

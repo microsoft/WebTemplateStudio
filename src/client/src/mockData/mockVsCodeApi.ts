@@ -6,6 +6,7 @@ import {
 
 import * as mockAzureModule from "./extensionModules/mockAzureModule";
 import * as mockLoggerModule from "./extensionModules/mockLoggerModule";
+import * as mockGenerationModule from "./extensionModules/mockGenerationModule";
 
 /**
  * Models the functionality of acquireVsCodeApi() from vscode for use
@@ -163,7 +164,7 @@ const mockVsCodeApi = () => ({
                       preview: false,
                       enabled: true,
                       type: "backend",
-                      linuxVersion: "node|10.14"
+                      linuxVersion: "node|12-lts"
                     }
                   },
                   {
@@ -181,7 +182,7 @@ const mockVsCodeApi = () => ({
                       latestVersion: "0.14.3",
                       preview: false,
                       type: "backend",
-                      linuxVersion: "node|10.14"
+                      linuxVersion: "node|12-lts"
                     }
                   },
                   {
@@ -212,6 +213,34 @@ const mockVsCodeApi = () => ({
                       type: "backend",
                       linuxVersion: "python|3.7"
                     }
+                  },
+                  {
+                    name: "AspNet",
+                    displayName: "ASP.NET",
+                    summary: ".NET framework",
+                    description: "",
+                    author: "Microsoft",
+                    order: 1,
+                    metadataType: "Framework",
+                    licenses:
+                      "[AspNet](https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt)",
+                    licenseTerms: [
+                      {
+                        text: "AspNet",
+                        url:
+                          "https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt"
+                      }
+                    ],
+                    platforms: ["Web"],
+                    languages: ["Any"],
+                    tags: {
+                      version: "3.1.5",
+                      latestVersion: "3.1.5",
+                      preview: true,
+                      enabled: true,
+                      type: "backend",
+                      linuxVersion: "DOTNETCORE|3.1"
+                    }
                   }
                 ],
                 isPreview: true,
@@ -222,7 +251,7 @@ const mockVsCodeApi = () => ({
           );
           break;
         case EXTENSION_COMMANDS.GET_LATEST_VERSION:
-            const latestVersion = true;
+            const latestVersion = "v3.1.5";
             window.postMessage(
               {
                 command: EXTENSION_COMMANDS.GET_LATEST_VERSION,
@@ -362,25 +391,105 @@ const mockVsCodeApi = () => ({
             "*"
           );
           break;
+        case EXTENSION_COMMANDS.GET_FEATURES:
+          window.postMessage(
+            {
+              command: EXTENSION_COMMANDS.GET_FEATURES,
+              payload: {
+                scope:message.payload && message.payload.scope ? message.payload.scope : "",
+                features: [
+                  {
+                    templateId: "wts.Feature.Azure.AppService",
+                    templateGroupIdentity: "wts.Feature.Azure.AppService",
+                    name: "App Service",
+                    defaultName: "App Service",
+                    description: "Quickly build, deploy, and scale your web apps with confidence.",
+                    richDescription: "Quickly build, deploy, and scale web apps with confidence. Meet rigorous, enterprise-grade performance, security, and compliance requirements by using the fully managed platform for your operational and monitoring tasks.",
+                    author: "Microsoft",
+                    version: "1.0.0",
+                    icon: "",
+                    displayOrder: 1,
+                    isHidden: false,
+                    group: "CloudHosting",
+                    isGroupExclusiveSelection: false,
+                    genGroup: 0,
+                    multipleInstance: false,
+                    itemNameEditable: false,
+                    licenses: [],
+                    dependencies: [],
+                    requirements: [],
+                    exclusions: [],
+                    requiredSdks: [],
+                    templateType: "feature",
+                    rightClickEnabled: true,
+                    requiredVisualStudioWorkloads: []
+                  },
+                  {
+                    templateId: "wts.Feature.Azure.Cosmos.Mongo",
+                    templateGroupIdentity: "wts.Feature.Azure.Cosmos",
+                    name: "Cosmos DB",
+                    defaultName: "Cosmos DB",
+                    description: "Connect your web app to a distributed database service to access and query data using SQL or MongoDB API.",
+                    richDescription: "Azure Cosmos DB is Microsoft's proprietary globally-distributed, multi-model database service for managing data on a global scale. It offers a variety of APIs for your database including Azure Table, Core (SQL), MongoDB and Gremlin (GraphQL). Web Template Studio offers you the functionality to deploy a Cosmos DB instance from the wizard itself and select an initial location to deploy your database with the ability to scale it to multiple locations at a future time. As an added feature, deploying with the MongoDB API enables you to quickly connect the project Web Template Studio generates to your database instance.",
+                    author: "Microsoft",
+                    version: "1.0.0",
+                    icon: "",
+                    displayOrder: 1,
+                    isHidden: false,
+                    group: "CloudDatabase",
+                    isGroupExclusiveSelection: false,
+                    genGroup: 0,
+                    multipleInstance: false,
+                    itemNameEditable: false,
+                    licenses: [],
+                    dependencies: [],
+                    requirements: [],
+                    exclusions: [],
+                    requiredSdks: [],
+                    templateType: "feature",
+                    rightClickEnabled: true,
+                    requiredVisualStudioWorkloads: []
+                  },
+                  {
+                    templateId: "wts.Feature.Azure.Cosmos.SQL",
+                    templateGroupIdentity: "wts.Feature.Azure.Cosmos",
+                    name: "Cosmos DB",
+                    defaultName: "Cosmos DB",
+                    description: "Connect your web app to a distributed database service to access and query data using SQL or MongoDB API.",
+                    richDescription: "Azure Cosmos DB is Microsoft's proprietary globally-distributed, multi-model database service for managing data on a global scale. It offers a variety of APIs for your database including Azure Table, Core (SQL), MongoDB and Gremlin (GraphQL). Web Template Studio offers you the functionality to deploy a Cosmos DB instance from the wizard itself and select an initial location to deploy your database with the ability to scale it to multiple locations at a future time. As an added feature, deploying with the MongoDB API enables you to quickly connect the project Web Template Studio generates to your database instance.",
+                    author: "Microsoft",
+                    version: "1.0.0",
+                    icon: "",
+                    displayOrder: 1,
+                    isHidden: false,
+                    group: "CloudDatabase",
+                    isGroupExclusiveSelection: false,
+                    genGroup: 0,
+                    multipleInstance: false,
+                    itemNameEditable: false,
+                    licenses: [],
+                    dependencies: [],
+                    requirements: [],
+                    exclusions: [],
+                    requiredSdks: [],
+                    templateType: "feature",
+                    rightClickEnabled: true,
+                    requiredVisualStudioWorkloads: []
+                  }
+                ]
+              }
+            },
+            "*"
+          );
+          break;
         case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
           window.postMessage(
             {
               command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
               payload: {
                 scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                dependency: "node",
-                installed: true
-              }
-            },
-            "*"
-          );
-          window.postMessage(
-            {
-              command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                dependency: "python",
-                installed: false
+                dependency: message.payload.dependency,
+                installed: message.payload.dependency === "node"
               }
             },
             "*"
@@ -405,38 +514,10 @@ const mockVsCodeApi = () => ({
           mockAzureModule.getValidCosmosName(message);
           break;
         case EXTENSION_COMMANDS.GENERATE:
-          window.postMessage(
-            {
-              command: EXTENSION_COMMANDS.GEN_STATUS_MESSAGE,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                status: "updated status message..."
-              }
-            },
-            "*"
-          );
-          window.postMessage(
-            {
-              command: EXTENSION_COMMANDS.GEN_STATUS,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                templates: {
-                  success: true,
-                  failure: false
-                },
-                cosmos: {
-                  success: false,
-                  failure: true
-                },
-                appService: {
-                  success: true,
-                  failure: false
-                },
-                finished: true
-              }
-            },
-            "*"
-          );
+          mockGenerationModule.generate(message);
+          break;
+        case EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE:
+          mockGenerationModule.openProjectVSCode(message);
           break;
         case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
           window.postMessage(
@@ -510,19 +591,6 @@ const mockVsCodeApi = () => ({
                   isValid: true,
                   error: ""
                 }
-              }
-            },
-            "*"
-          );
-          break;
-        case EXTENSION_COMMANDS.RESET_PAGES:
-          window.postMessage(
-            {
-              command: EXTENSION_COMMANDS.RESET_PAGES,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                internalName: message.payload.internalName,
-                resetPages: true
               }
             },
             "*"

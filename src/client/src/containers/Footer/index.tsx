@@ -14,7 +14,7 @@ import { openGenModalAction } from "../../store/navigation/modals/action";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
-import { isEnableNextPageSelector } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { isEnableNextPageSelector, isEnableGenerateButtonSelector } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../store/combineReducers";
 
 import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
@@ -26,20 +26,22 @@ import { AppContext } from "../../AppContext";
 import { useSelector, useDispatch } from "react-redux";
 import { setPageWizardPageAction, setVisitedWizardPageAction } from "../../store/navigation/routes/action";
 import { getIsVisitedRoutesSelector } from "../../store/config/config/wizardNavigationSelector";
+import { useMemo } from "react";
+import { setIsDirtyAction } from "../../store/navigation/isDirty/action";
 
 type Props = InjectedIntlProps;
 
 const pathsNext: any = {
   [ROUTES.NEW_PROJECT]: ROUTES.SELECT_FRAMEWORKS,
   [ROUTES.SELECT_FRAMEWORKS]: ROUTES.SELECT_PAGES,
-  [ROUTES.SELECT_PAGES]: ROUTES.AZURE_LOGIN,
-  [ROUTES.AZURE_LOGIN]: ROUTES.REVIEW_AND_GENERATE,
+  [ROUTES.SELECT_PAGES]: ROUTES.ADD_SERVICES,
+  [ROUTES.ADD_SERVICES]: ROUTES.REVIEW_AND_GENERATE,
 };
 const pathsBack: any = {
   [ROUTES.SELECT_FRAMEWORKS]: ROUTES.NEW_PROJECT,
   [ROUTES.SELECT_PAGES]: ROUTES.SELECT_FRAMEWORKS,
-  [ROUTES.AZURE_LOGIN]: ROUTES.SELECT_PAGES,
-  [ROUTES.REVIEW_AND_GENERATE]: ROUTES.AZURE_LOGIN,
+  [ROUTES.ADD_SERVICES]: ROUTES.SELECT_PAGES,
+  [ROUTES.REVIEW_AND_GENERATE]: ROUTES.ADD_SERVICES,
 };
 
 const Footer = (props: Props) => {
@@ -48,7 +50,10 @@ const Footer = (props: Props) => {
   const visitedRoutes = useSelector((state: AppState) => getIsVisitedRoutesSelector(state));
   const isEnableNextPage = useSelector((state: AppState) => isEnableNextPageSelector(state));
   const currentRoute = useSelector((state: AppState) => state.navigation.routes.selected);
+  const isEnableGenerateButton = useSelector((state: AppState) => isEnableGenerateButtonSelector(state));
   const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const isFirstStep = useMemo(() => currentRoute === ROUTES.NEW_PROJECT, [currentRoute]);
+  const isLastStep = useMemo(() => currentRoute === ROUTES.REVIEW_AND_GENERATE, [currentRoute]);
 
   const dispatch = useDispatch();
 
@@ -62,19 +67,20 @@ const Footer = (props: Props) => {
     e.preventDefault();
     trackPageForTelemetry(currentRoute);
     dispatch(openGenModalAction());
+    dispatch(setIsDirtyAction(false));
   };
 
   const navigateBack = () => {
     trackPageForTelemetry(currentRoute);
     dispatch(setPageWizardPageAction(pathsBack[currentRoute]));
+    dispatch(setIsDirtyAction(true));
   };
 
   const navigateForward = () => {
     trackPageForTelemetry(currentRoute);
-    if (currentRoute !== ROUTES.REVIEW_AND_GENERATE) {
-      dispatch(setVisitedWizardPageAction(pathsNext[currentRoute]));
-    }
+    dispatch(setVisitedWizardPageAction(pathsNext[currentRoute]));
     dispatch(setPageWizardPageAction(pathsNext[currentRoute]));
+    dispatch(setIsDirtyAction(true));
   };
 
   const navigateForwardOnKeyPress = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
@@ -91,10 +97,6 @@ const Footer = (props: Props) => {
     }
   };
 
-  const canGenerate = (): boolean => {
-    return visitedRoutes.showReviewAndGenerate;
-  };
-
   const showLicenses = (): boolean => {
     return visitedRoutes.showFrameworks;
   };
@@ -105,27 +107,27 @@ const Footer = (props: Props) => {
         <div className={styles.footer}>
           <div>{showLicenses() && formatMessage(messages.license)}</div>
           <div className={styles.buttonContainer}>
-            {currentRoute !== ROUTES.NEW_PROJECT && (
               <a
-                tabIndex={0}
-                className={classnames(buttonStyles.buttonDark, styles.button, styles.buttonBack)}
-                onClick={navigateBack}
-                onKeyPress={navigateBackOnKeyPress}
-                onKeyUp={keyUpHandler}
+                tabIndex={!isFirstStep ? 0 : -1}
+                className={classnames(buttonStyles.buttonDark, styles.button, styles.buttonBack,
+                  {
+                    [styles.disabledOverlay]: isFirstStep
+                  })}
+                onClick={() => { if (!isFirstStep) navigateBack() }}
+                onKeyPress={(event) => { if (!isFirstStep) navigateBackOnKeyPress(event) }}
+                onKeyUp={(event: React.KeyboardEvent<HTMLAnchorElement>) => { if (!isFirstStep) keyUpHandler(event) }}
               >
                 {formatMessage(messages.back)}
               </a>
-            )}
-            {currentRoute !== ROUTES.REVIEW_AND_GENERATE && (
               <a
                 tabIndex={isEnableNextPage ? 0 : -1}
                 className={classnames(styles.button, styles.buttonNext, buttonStyles.buttonHighlighted, {
                   [buttonStyles.buttonDark]: !isEnableNextPage,
-                  [styles.disabledOverlay]: !isEnableNextPage,
+                  [styles.disabledOverlay]: isLastStep || !isEnableNextPage
                 })}
-                onClick={() =>{ if (isEnableNextPage) navigateForward()}}
-                onKeyPress={(event) =>{ if (isEnableNextPage) navigateForwardOnKeyPress(event)}}
-                onKeyUp={keyUpHandler}
+                onClick={() => { if (!isLastStep && isEnableNextPage) navigateForward()}}
+                onKeyPress={(event) => { if (!isLastStep) navigateForwardOnKeyPress(event)}}
+                onKeyUp={(event: React.KeyboardEvent<HTMLAnchorElement>) => { if (!isLastStep) keyUpHandler(event) }}
               >
                 {formatMessage(messages.next)}
                 {nextArrow && (
@@ -136,20 +138,17 @@ const Footer = (props: Props) => {
                   />
                 )}
               </a>
-            )}
-            {canGenerate() && (
-              <button
-                disabled={!isEnableNextPage}
-                className={classnames(styles.button, {
-                  [buttonStyles.buttonDark]: !isEnableNextPage,
-                  [buttonStyles.buttonHighlighted]: isEnableNextPage,
-                  [styles.disabledOverlay]: !isEnableNextPage,
-                })}
-                onClick={generateProject}
-              >
-                {formatMessage(messages.generate)}
-              </button>
-            )}
+            <button
+              disabled={!isEnableGenerateButton}
+              className={classnames(styles.button, {
+                [buttonStyles.buttonDark]: !isEnableGenerateButton,
+                [buttonStyles.buttonHighlighted]: isEnableGenerateButton,
+                [styles.disabledOverlay]: !isEnableGenerateButton,
+              })}
+              onClick={generateProject}
+            >
+              {formatMessage(messages.generate)}
+            </button>
           </div>
         </div>
       )}

@@ -4,6 +4,7 @@ import { CONSTANTS } from "./constants";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
 import { Logger } from "./utils/logger";
 import { deactivate } from "./extension";
+import { Controller } from "./controller";
 
 /**
  * Manages react webview panels
@@ -16,7 +17,6 @@ export class ReactPanel {
 
   private static readonly viewType = "react";
   private readonly _panel: vscode.WebviewPanel;
-  private readonly _extensionPath: string;
   private _disposables: vscode.Disposable[] = [];
   private static _controllerFunctionDelegate = function(message: any): void {
     //default behavior
@@ -25,10 +25,8 @@ export class ReactPanel {
     }
   };
 
-  public static createOrShow(
-    extensionPath: string,
-    controllerFunctionDelegate: (message: any) => any = this
-      ._controllerFunctionDelegate
+  public static createOrShow(controllerFunctionDelegate: (message: any) => 
+    any = this._controllerFunctionDelegate
   ): ReactPanel {
     const column = vscode.window.activeTextEditor
       ? vscode.window.activeTextEditor.viewColumn
@@ -41,7 +39,7 @@ export class ReactPanel {
       ReactPanel._controllerFunctionDelegate = controllerFunctionDelegate;
 
       ReactPanel.currentPanel = new ReactPanel(
-        extensionPath,
+        Controller.vsContext.extensionPath,
         column || vscode.ViewColumn.One
       );
     }
@@ -56,7 +54,6 @@ export class ReactPanel {
     extensionPath: string,
     column: vscode.ViewColumn
   ) {
-    this._extensionPath = extensionPath;
 
     // Create and show a new webview panel
     this._panel = vscode.window.createWebviewPanel(
@@ -72,7 +69,7 @@ export class ReactPanel {
 
         // And restric the webview to only loading content from our extension's `media` directory.
         localResourceRoots: [
-          vscode.Uri.file(path.join(this._extensionPath, "react"))
+          vscode.Uri.file(path.join(Controller.vsContext.extensionPath, "react"))
         ]
       }
     );
@@ -110,22 +107,15 @@ export class ReactPanel {
   }
 
   private _getHtmlForWebview(): string {
-    const manifest = require(path.join(
-      this._extensionPath,
-      "react",
-      "asset-manifest.json"
-    ));
+    const manifest = require('../react/asset-manifest.json');
     const mainScript = manifest.files["main.js"];
     const mainStyle = manifest.files["main.css"];
 
-    const scriptPathOnDisk = vscode.Uri.file(
-      path.join(this._extensionPath, "react", mainScript)
-    );
-    const scriptUri = scriptPathOnDisk.with({ scheme: "vscode-resource" });
-    const stylePathOnDisk = vscode.Uri.file(
-      path.join(this._extensionPath, "react", mainStyle)
-    );
-    const styleUri = stylePathOnDisk.with({ scheme: "vscode-resource" });
+    const scriptPathOnDisk = vscode.Uri.file(path.join(Controller.vsContext.extensionPath, "react", mainScript));
+
+    const stylePathOnDisk = vscode.Uri.file(path.join(Controller.vsContext.extensionPath, "react", mainStyle));
+
+    const basePathOnDisk = vscode.Uri.file(path.join(Controller.vsContext.extensionPath, "react"));
 
     return `<!DOCTYPE html>
 			<html lang="en">
@@ -134,16 +124,14 @@ export class ReactPanel {
 				<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
 				<meta name="theme-color" content="#000000">
 				<title>Web Template Studio</title>
-				<link rel="stylesheet" type="text/css" href="${styleUri}">
-				<meta img-src vscode-resource: https: ;style-src vscode-resource: 'unsafe-inline' http: https: data:;">
-				<base href="${vscode.Uri.file(path.join(this._extensionPath, "react")).with({
-          scheme: "vscode-resource"
-        })}/">
+				<link rel="stylesheet" type="text/css" href="${this._panel.webview.asWebviewUri(stylePathOnDisk)}">
+				<meta img-src ${this._panel.webview.cspSource} https: ;style-src ${this._panel.webview.cspSource} 'unsafe-inline' http: https: data:;">
+				<base href="${this._panel.webview.asWebviewUri(basePathOnDisk)}/">
 			</head>
 			<body>
 				<noscript>You need to enable JavaScript to run this app.</noscript>
 				<div id="root"></div>
-        <script src="${scriptUri}"></script>
+        <script src="${this._panel.webview.asWebviewUri(scriptPathOnDisk)}"></script>
 			</body>
 			</html>`;
   }

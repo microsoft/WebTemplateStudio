@@ -19,7 +19,6 @@
     "wts.displayOrder": "1",
     "wts.genGroup": "0",
     "wts.rightClickEnabled": "true",
-    "wts.licenses": "[Bootstrap](https://github.com/twbs/bootstrap/blob/master/LICENSE)",
     "wts.casing.sourceName": "pascal"
   },
   "sourceName": "ReactGrid",

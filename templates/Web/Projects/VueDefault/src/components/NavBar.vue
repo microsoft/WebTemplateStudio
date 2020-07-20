@@ -5,11 +5,11 @@
     <div class="skipLink">
       <a href="#mainContent">Skip to Main Content</a>
     </div>
-    <b-nav class="navbar navbar-expand-sm navbar-light border-bottom justify-content-between">
-      <a class="navbar-brand" href="/">wts.VueDefault</a>
-      <div class="navbar-nav">
-      </div>
-    </b-nav>
+    <div class="navbar navbar-expand-sm navbar-light border-bottom justify-content-between">
+      <a class="navbar-brand" href="/" role="heading" aria-level="1">wts.VueDefault</a>
+      <b-nav class="navbar-nav">
+      </b-nav>
+    </div>
   </div>
 </template>
 

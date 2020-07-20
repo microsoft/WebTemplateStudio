@@ -29,9 +29,9 @@ function create(req, res, next) {
 
 // Remove a listItem from the ListItem collection in Cosmos MongoDB
 function destroy(req, res, next) {
-  const { _id } = req.params;
+  const { id } = req.params;
 
-  ListItem.findByIdAndDelete(_id)
+  ListItem.findByIdAndDelete(id)
     .then(listItem => {
       res.json(listItem);
     })

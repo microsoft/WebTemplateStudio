@@ -40,6 +40,6 @@
   "dialog.reportAnIssue": "Report an issue",
   "dialog.showLog": "Show log",
   "dialog.multilineError": "An error has occured. Check output window for more details.",
-  "dialog.cosmosDBConnectStringReplacePrompt": "Replace your DB connection string in the .env file with the generated CosmosDB connection string?",
+  "dialog.cosmosDBConnectStringReplacePrompt": "Do you want to update the CosmosDB connection string in configuration file?",
   "dialog.resetPagesPrompt": "Switching Frameworks will reset pages in your queue. Are you sure you want to proceed?"
 }

@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 import imgGreyAvatar from "../../images/GreyAvatar.svg";
 import PropTypes from "prop-types";
 
-const MasterList = ({ sampleOrder, selectSampleOrder }) => {
+const MasterList = ({ sampleOrder, selectSampleOrder, isActive }) => {
   return (
     <button
       onClick={() => selectSampleOrder(sampleOrder)}
@@ -12,10 +12,11 @@ const MasterList = ({ sampleOrder, selectSampleOrder }) => {
       className={classnames(
         "list-group-item",
         "list-group-item-action",
-        styles.sidebarText
+        styles.sidebarText,
+        { "active": isActive }
       )}
     >
-      <img src={ sampleOrder.imageSrc ? sampleOrder.imageSrc : imgGreyAvatar} alt="Default Grey Avatar" className="mr-3" />
+      <img src={ sampleOrder.imageSrc ? sampleOrder.imageSrc : imgGreyAvatar} alt={sampleOrder.title} className="mr-3" />
       {sampleOrder.title}
     </button>
   );
@@ -23,7 +24,8 @@ const MasterList = ({ sampleOrder, selectSampleOrder }) => {
 
 MasterList.propTypes = {
   sampleOrder: PropTypes.any,
-  selectSampleOrder: PropTypes.func
+  selectSampleOrder: PropTypes.func,
+  isActive: PropTypes.bool
 }
 
 export default MasterList;

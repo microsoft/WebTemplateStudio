@@ -18,6 +18,7 @@ export const getInitialState = (): AppState => {
       backendOptions: [],
       frontendOptions: [],
       pageOptions: [],
+      featureOptions: [],
     },
     config:{
       detailsPage: {
@@ -79,7 +80,18 @@ export const getInitialState = (): AppState => {
         version: '',
         author: ''
       },
-      pages: [],
+      pages: [{
+        author:"Microsoft",
+        defaultName:"Blank",
+        internalName:"wts.Page.React.Blank",
+        isValidTitle:true,
+        licenses:[{
+          text:"Bootstrap",
+          url:"https://github.com/twbs/bootstrap/blob/master/LICENSE"
+        }],
+        title:"Blank",
+        id:"0.7087795384523403"
+      }],
       outputPathObject: {
         outputPath: '/generic_output_path'
       },
@@ -108,11 +120,12 @@ export const getInitialState = (): AppState => {
           '/': true,
           '/SelectFrameworks': false,
           '/SelectPages': false,
-          '/AzureLogin': false,
+          '/AddPages': false,
           '/ReviewAndGenerate': false
         },
         selected: '/'
-      }
+      },
+      isDirty: false
     }
   };
   return initialState;
@@ -190,6 +203,40 @@ const loadPages = (frameWorkName: string): Array<any>=>{
   pages.push(masterPage);
   
   return pages;
+}
+
+const loadFeatures = (): Array<any> => {
+  const appServiceFeature ={
+    body: "Quickly build, deploy, and scale your web apps with confidence.",
+    internalName: "wts.Feature.Azure.AppService",
+    templateGroupIdentity: "wts.Feature.Azure.AppService",
+    licenses: [],
+    longDescription: "Quickly build, deploy, and scale web apps with confidence. Meet rigorous, enterprise-grade performance, security, and compliance requirements by using the fully managed platform for your operational and monitoring tasks.",
+    selected: false,
+    svgUrl: "",
+    title: "App Service",
+    defaultName: "App Service",
+    isValidTitle: true,
+    author: "Microsoft",
+    group: "CloudHosting"
+  };
+  const cosmosDbFeature = {
+    body: "Connect your web app to a distributed database service to access and query data using SQL or MongoDB API.",
+    internalName: "wts.Feature.Azure.Cosmos",
+    templateGroupIdentity: "wts.Feature.Azure.Cosmos",
+    licenses: [],
+    longDescription: "Azure Cosmos DB is Microsoft's proprietary globally-distributed, multi-model database service for managing data on a global scale. It offers a variety of APIs for your database including Azure Table, Core (SQL), MongoDB and Gremlin (GraphQL). Web Template Studio offers you the functionality to deploy a Cosmos DB instance from the wizard itself and select an initial location to deploy your database with the ability to scale it to multiple locations at a future time. As an added feature, deploying with the MongoDB API enables you to quickly connect the project Web Template Studio generates to your database instance.",
+    selected: false,
+    svgUrl: "",
+    title: "Cosmos DB",
+    defaultName: "Cosmos DB",
+    isValidTitle: true,
+    author: "Microsoft",
+    group: "CloudDatabase"
+  };
+  return new Array<any>(
+    appServiceFeature,
+    cosmosDbFeature);
 }
 
 const getSubscriptionsSelector = (): Array<Subscription> => {
@@ -270,8 +317,8 @@ export const addBackEndFrameworksOptions = (store: AppState)=>{
       selected: false,
       svgUrl: '',
       title: 'Node.js/Express',
-      version: '10.15.0',
-      linuxVersion: 'node|10.14',
+      version: '12.0.0',
+      linuxVersion: 'node|12-lts',
       latestVersionLoaded: true
     },
     {
@@ -283,7 +330,7 @@ export const addBackEndFrameworksOptions = (store: AppState)=>{
       svgUrl: '',
       title: 'Moleculer',
       version: '0.14.3',
-      linuxVersion: 'node|10.14',
+      linuxVersion: 'node|12-lts',
       latestVersionLoaded: true
     },
     {
@@ -299,11 +346,34 @@ export const addBackEndFrameworksOptions = (store: AppState)=>{
       version: '1.0.3',
       linuxVersion: 'python|3.7',
       latestVersionLoaded: true
+    },
+    {
+      author: 'Microsoft',
+      body: 'ASP.NET Framework',
+      internalName: 'AspNet',
+      licenses: ['[AspNet](https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt)'],
+      longDescription: 'ASP.NET long description',
+      position: 1,
+      selected: false,
+      svgUrl: '',
+      title: 'ASP.NET',
+      version: '3.1.5',
+      linuxVersion: 'DOTNETCORE|3.1',
+      latestVersionLoaded: true
     }
 
 
   ];
   return store;
+}
+
+export const addFeaturesOptions = (store: AppState) => {
+  store.templates.featureOptions = loadFeatures();
+}
+
+export const getServicesGroups = (store: AppState) => {
+  const groups = store.templates.featureOptions.map(g => g.group) as string[];
+  return [...new Set(groups)];
 }
 
 export const loadMasters = (store: AppState) =>{
@@ -335,7 +405,7 @@ export const setSelectedRoute = (store: AppState, seletedRoute: string) => {
         '/': true,
         '/SelectFrameworks': true,
         '/SelectPages': false,
-        '/AzureLogin': false,
+        '/AddPages': false,
         '/ReviewAndGenerate': false
       };
     case ROUTES.REVIEW_AND_GENERATE:
@@ -343,8 +413,33 @@ export const setSelectedRoute = (store: AppState, seletedRoute: string) => {
         '/': true,
         '/SelectFrameworks': true,
         '/SelectPages': true,
-        '/AzureLogin': true,
+        '/AddPages': true,
         '/ReviewAndGenerate': true
       }
   }
 }
+
+export const setAzureEmail = (store: AppState, email = "test@test.com") => {
+  store.config.azureProfileData.email = email;
+}
+
+export const setGenerationData = (store: AppState) => {
+  store.userSelection.pages = [getISelected()];
+  store.userSelection.services.appService = {
+    subscription: "",
+    resourceGroup: "",
+    location: "",
+    siteName: "",
+    internalName: "",
+  };
+  store.userSelection.services.cosmosDB = {
+    subscription: "",
+    resourceGroup: "",
+    location: "",
+    accountName: "",
+    api: "",
+    internalName: "",
+    groupName: "",
+  };
+  return 3;
+};

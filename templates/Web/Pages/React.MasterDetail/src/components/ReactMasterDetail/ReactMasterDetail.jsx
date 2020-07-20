@@ -51,6 +51,7 @@ const Param_SourceName_Pascal = () => {
                   selectSampleOrder={setCurrentSampleOrder}
                   sampleOrder={sampleOrder}
                   key={sampleOrder.id}
+                  isActive={sampleOrder === currentSampleOrder}
                 />
               ))}
             </div>

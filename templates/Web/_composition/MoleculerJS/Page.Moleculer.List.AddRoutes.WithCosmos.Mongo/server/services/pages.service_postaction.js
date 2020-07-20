@@ -30,18 +30,18 @@ module.exports = {
       }
     },
     listDelete: {
-      rest: "DELETE /list/:_id",
+      rest: "DELETE /list/:id",
       /**
        * Param validation.
        * More info: https://moleculer.services/docs/0.14/validating.html
        */
       params: {
-        _id: { type: "string" }, // required filed
+        id: { type: "string" }, // required filed
         $$strict: true // no additional properties allowed
       },
       handler(ctx) {
         // Call remove method that was loaded with `db.mixin.js`
-        return this._remove(ctx, { id: ctx.params._id });
+        return this._remove(ctx, { id: ctx.params.id });
       }
     },
   //}]}

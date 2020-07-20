@@ -2,11 +2,12 @@ import {takeEvery, call, put, select} from "redux-saga/effects";
 import { getTemplateInfo, getFrameworks, getUserStatus } from "../../../utils/extensionService/extensionService";
 import { IVersions } from "../../../types/version";
 import { AppState } from "../../combineReducers";
-import { parseFrameworksPayload } from "../../../utils/parseFrameworksPayload";
+import { getFrameworksOptions } from "../../../utils/cliTemplatesParser";
 import { FRAMEWORK_TYPE } from "../../../utils/constants";
 import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 import { TEMPLATES_TYPEKEYS } from "../../templates/templateTypeKeys";
 import { AZURE_TYPEKEYS } from "../azure/typeKeys";
+import { USERSELECTION_TYPEKEYS } from "../../userSelection/typeKeys";
 
 export function* loadLogin(vscode: any){
   yield takeEvery(
@@ -62,27 +63,55 @@ export function* loadFrameworksListSaga(vscode: any) {
   );
 
   function* callBack (){
-    const isPreviewSelector = (state: AppState) => state.config.previewStatus;
-    const isPreview = yield select(isPreviewSelector);
+    const isPreview = yield select((state: AppState) => state.config.previewStatus);
 
     const event: any = yield call(getFrameworks, vscode, isPreview);
     const message = event.data;
+    const optionFrontEndFrameworks = getFrameworksOptions(
+      message.payload.frameworks,
+      FRAMEWORK_TYPE.FRONTEND
+    );
+
+    const defaultOptionFront = optionFrontEndFrameworks[0];
+    const defaultSelectedFrontEndFramework = {
+      internalName: defaultOptionFront.internalName,
+      title: defaultOptionFront.title as string,
+      version: `v${defaultOptionFront.version || "1.0"}`,
+      licenses: defaultOptionFront.licenses,
+      author: defaultOptionFront.author,
+    };
+
     yield put ({
       type: TEMPLATES_TYPEKEYS.SET_FRONTEND_FRAMEWORKS,
-      payload: parseFrameworksPayload(
-        message.payload.frameworks,
-        FRAMEWORK_TYPE.FRONTEND,
-        message.payload.isPreview
-      )
+      payload: optionFrontEndFrameworks
     });
 
     yield put ({
+      type: USERSELECTION_TYPEKEYS.SELECT_FRONTEND_FRAMEWORK,
+      payload: defaultSelectedFrontEndFramework
+    });
+    const optionBackEndFrameworks = getFrameworksOptions(
+      message.payload.frameworks,
+      FRAMEWORK_TYPE.BACKEND
+    );
+
+    const defaultOptionBack = optionBackEndFrameworks[0];
+    const defaultSelectedBackEndFramework = {
+      title: defaultOptionBack.title as string,
+      internalName: defaultOptionBack.internalName,
+      version: `v${defaultOptionBack.version || "1.0"}`,
+      author: defaultOptionBack.author,
+      licenses: defaultOptionBack.licenses
+    };
+
+    yield put ({
       type: TEMPLATES_TYPEKEYS.SET_BACKEND_FRAMEWORKS,
-      payload: parseFrameworksPayload(
-        message.payload.frameworks,
-        FRAMEWORK_TYPE.BACKEND,
-        message.payload.isPreview
-      )
+      payload: optionBackEndFrameworks
+    });
+
+    yield put ({
+      type: USERSELECTION_TYPEKEYS.SELECT_BACKEND_FRAMEWORK,
+      payload: defaultSelectedBackEndFramework
     });
   }
 }

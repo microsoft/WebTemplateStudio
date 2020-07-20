@@ -71,6 +71,20 @@ const getLatestVersion = (vscode: IVSCodeObject, checkVersionPackageName: string
   });
 }
 
+const getDependencyInfo = (vscode: IVSCodeObject, dependency: string): Promise<{dependency: string; installed: boolean}> => {
+  return postMessageAsync(EXTENSION_COMMANDS.GET_DEPENDENCY_INFO, {
+      module: EXTENSION_MODULES.DEPENDENCYCHECKER,
+      command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
+      payload: { dependency },
+    }, vscode).then((event) => {
+    const { dependency, installed } = event.data.payload;
+    return {
+      dependency,
+      installed,
+    };
+  });
+};
+
 const getPages = (vscode: IVSCodeObject, frontEndInternalName: string, backEndInternalName: string)=>{
   return postMessageAsync( EXTENSION_COMMANDS.GET_PAGES, {
     module: EXTENSION_MODULES.CORETS,
@@ -83,23 +97,22 @@ const getPages = (vscode: IVSCodeObject, frontEndInternalName: string, backEndIn
   }, vscode);
 }
 
+const getFeatures = (vscode: IVSCodeObject, frontEndInternalName: string, backEndInternalName: string)=>{
+  return postMessageAsync( EXTENSION_COMMANDS.GET_FEATURES, {
+    module: EXTENSION_MODULES.CORETS,
+    command: EXTENSION_COMMANDS.GET_FEATURES,
+    payload: {
+      projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
+      frontendFramework: frontEndInternalName,
+      backendFramework: backEndInternalName
+    }
+  }, vscode);
+}
+
 const getOutputPath = (vscode: IVSCodeObject) => {
   return postMessageAsync(EXTENSION_COMMANDS.GET_OUTPUT_PATH, {
     module: EXTENSION_MODULES.DEFAULTS,
     command: EXTENSION_COMMANDS.GET_OUTPUT_PATH
-  }, vscode);
-}
-
-const resetAllPages = (vscode: IVSCodeObject, internalName: string, pagesLength: number) => {
-  return postMessageAsync(EXTENSION_COMMANDS.RESET_PAGES, {
-    module: EXTENSION_MODULES.VSCODEUI,
-    command: EXTENSION_COMMANDS.RESET_PAGES,
-    track: true,
-    text: PAYLOAD_MESSAGES_TEXT.RESET_PAGES_TEXT,
-    payload: {
-      internalName: internalName,
-      pagesLength: pagesLength
-    }
   }, vscode);
 }
 
@@ -184,6 +197,16 @@ const generateProject = (genrationData: any,vscode: IVSCodeObject) => {
   }, vscode);
 }
 
+const getAllLicenses = (licenseData: any,vscode: IVSCodeObject) => {
+  return postMessageAsync(EXTENSION_COMMANDS.GET_ALL_LICENSES, {
+    module: EXTENSION_MODULES.CORETS,
+    command: EXTENSION_COMMANDS.GET_ALL_LICENSES,
+    track: false,
+    text: PAYLOAD_MESSAGES_TEXT.SENT_GENERATION_INFO_TEXT,
+    payload: licenseData
+  }, vscode);
+}
+
 const getLocations = (vscode: IVSCodeObject, subscription: string, azureServiceType: string) => {
   return postMessageAsync(EXTENSION_COMMANDS.GET_LOCATIONS, {
     module: EXTENSION_MODULES.AZURE,
@@ -218,19 +241,40 @@ const openLogFile = (vscode: IVSCodeObject) => {
   }, vscode);
 }
 
+const openProjectInVSCode = (outputPath: string, vscode: IVSCodeObject) => {
+  return vscode.postMessage({
+    module: EXTENSION_MODULES.GENERATE,
+    command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
+    track: true,
+    payload: {
+      outputPath,
+    },
+  });
+}
+
+const subscribeToExtensionEvents = (listener: any) => {
+  window.addEventListener("message", listener);
+}
+
+const unsubscribeToExtensionEvents = (listener: any) => {
+  window.removeEventListener("message", listener);
+}
+
 export {
   projectPathValidation,
   getValidationsConfig,
   getFrameworks,
+  getAllLicenses,
   getLatestVersion,
+  getDependencyInfo,
   getPages,
+  getFeatures,
   getOutputPath,
   sendTelemetry,
   getResourceGroups,
   GetValidAppServiceName,
   GetValidCosmosAccountName,
   ValidateAppServiceName,
-  resetAllPages,
   azureLogout,
   getLocations,
   ValidateCosmosAccountName,
@@ -239,5 +283,8 @@ export {
   getTemplateInfo,
   generateProject,
   sendLog,
-  openLogFile
+  openLogFile,
+  openProjectInVSCode,
+  subscribeToExtensionEvents,
+  unsubscribeToExtensionEvents
 }
