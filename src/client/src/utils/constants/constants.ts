@@ -4,8 +4,6 @@ const PROJECT_NAME_CHARACTER_LIMIT = 50;
 
 const PAGE_NAME_CHARACTER_LIMIT = 50;
 
-const MAX_PAGES_ALLOWED = 20;
-
 const WEB_TEMPLATE_STUDIO_LINKS = {
   REPO: "https://github.com/Microsoft/WebTemplateStudio",
   ISSUES: "https://github.com/Microsoft/WebTemplateStudio/issues"
@@ -21,9 +19,6 @@ const INTL_MESSAGES = defineMessages({
     defaultMessage: "{fieldId} field cannot be empty"
   }
 });
-
-const BOOTSTRAP_LICENSE =
-  "https://github.com/twbs/bootstrap/blob/master/LICENSE";
 
 const ARIA_LABELS_NAVIGATION = defineMessages({
   ARIA_LABELS_MESSAGES: {
@@ -75,11 +70,9 @@ export {
   TEST,
   PROJECT_NAME_CHARACTER_LIMIT,
   PAGE_NAME_CHARACTER_LIMIT,
-  MAX_PAGES_ALLOWED,
   WEB_TEMPLATE_STUDIO_LINKS,
   FRAMEWORK_TYPE,
   KEY_EVENTS,
   PAYLOAD_MESSAGES_TEXT,
-  BOOTSTRAP_LICENSE,
   TELEMETRY
 };
