@@ -199,7 +199,7 @@ export const MESSAGES = {
     ),
     cosmosDBConnectStringReplacePrompt: localize(
       "dialog.cosmosDBConnectStringReplacePrompt",
-      "Do you want to update the CosmosDB connection string in configuration file?"
+      "Do you want to update the CosmosDB connection string in the configuration file?"
     ),
     resetPagesPrompt: localize(
       "dialog.resetPagesPrompt",
