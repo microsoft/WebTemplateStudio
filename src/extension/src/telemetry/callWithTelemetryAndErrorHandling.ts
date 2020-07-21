@@ -121,19 +121,19 @@ function handleError(
     let message: string;
     if (errorData.message.includes("\n")) {
       console.log(errorData.message);
-      message = MESSAGES.DialogMessages.multiLineError;
+      message = MESSAGES.DIALOG_MESSAGES.multiLineError;
     } else {
       message = errorData.message;
     }
 
     // don't wait
     window
-      .showErrorMessage(message, MESSAGES.DialogResponses.showLog, MESSAGES.DialogResponses.reportAnIssue)
+      .showErrorMessage(message, MESSAGES.DIALOG_RESPONSES.showLog, MESSAGES.DIALOG_RESPONSES.reportAnIssue)
       .then((result: MessageItem | undefined) => {
-        if (result === MESSAGES.DialogResponses.reportAnIssue) {
+        if (result === MESSAGES.DIALOG_RESPONSES.reportAnIssue) {
           reportAnIssue(vscodeContext, callbackId, errorData);
         }
-        else if (result === MESSAGES.DialogResponses.showLog) {
+        else if (result === MESSAGES.DIALOG_RESPONSES.showLog) {
           vscode.workspace.openTextDocument(Logger.filename)
           .then(TextDocument => vscode.window.showTextDocument(TextDocument));
         }

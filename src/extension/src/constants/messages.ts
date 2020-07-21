@@ -181,7 +181,7 @@ export const MESSAGES = {
     ),
     SYNC_STATUS: localize("info.syncStatus", "Sync Status: ")
   },
-  DialogResponses:{
+  DIALOG_RESPONSES:{
     yes: { title: localize("dialog.yes", "Yes") },
     no: { title: localize("dialog.no", "No") },
     cancel: { title: localize("dialog.cancel", "Cancel"), isCloseAffordance: true },
@@ -192,7 +192,7 @@ export const MESSAGES = {
     reportAnIssue: { title: localize("dialog.reportAnIssue", "Report an issue")},
     showLog: { title: localize("dialog.showLog", "Show log")}
   },
-  DialogMessages: {
+  DIALOG_MESSAGES: {
     multiLineError: localize(
       "dialog.multilineError",
       "An error has occured. Check output window for more details."

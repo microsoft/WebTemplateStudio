@@ -56,14 +56,14 @@ export abstract class AzureAuth {
   public static async promptUsersToLogout(): Promise<any> {
     return await vscode.window
       .showInformationMessage(
-        MESSAGES.DialogMessages.logoutPrompt,
-        ...[MESSAGES.DialogResponses.yes, MESSAGES.DialogResponses.no]
+        MESSAGES.DIALOG_MESSAGES.logoutPrompt,
+        ...[MESSAGES.DIALOG_RESPONSES.yes, MESSAGES.DIALOG_RESPONSES.no]
       )
       .then((selection: vscode.MessageItem | undefined) => {
         const userConfirmation = {
           signOut: false
         };
-        if (selection === MESSAGES.DialogResponses.yes) {
+        if (selection === MESSAGES.DIALOG_RESPONSES.yes) {
           userConfirmation.signOut = true;
         }
         return { payload: userConfirmation };

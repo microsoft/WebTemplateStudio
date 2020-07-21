@@ -201,12 +201,12 @@ export class Generation extends WizardServant {
 
   private async replaceConnectionString(path: string, connectionString: string, backendFramework: string): Promise<void> {
     const selection = await vscode.window.showInformationMessage(
-      MESSAGES.DialogMessages.cosmosDBConnectStringReplacePrompt,
-      ...[MESSAGES.DialogResponses.yes, MESSAGES.DialogResponses.no]
+      MESSAGES.DIALOG_MESSAGES.cosmosDBConnectStringReplacePrompt,
+      ...[MESSAGES.DIALOG_RESPONSES.yes, MESSAGES.DIALOG_RESPONSES.no]
     );
 
     const start = Date.now();
-    if (selection === MESSAGES.DialogResponses.yes) {
+    if (selection === MESSAGES.DIALOG_RESPONSES.yes) {
       AzureServices.updateConnectionStringToProject(path, connectionString, backendFramework);
       vscode.window.showInformationMessage(MESSAGES.INFO.FILE_REPLACED_MESSAGE + path);
       this.trackCosmosConnectionStringReplace(start);
