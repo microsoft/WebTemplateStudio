@@ -20,7 +20,7 @@ import { getExtensionName, getExtensionVersionNumber } from "./utils/packageInfo
 import { ISyncReturnType } from "./types/syncReturnType";
 import { LoggerModule } from "./client-modules/loggerModule";
 import { MESSAGES } from "./constants/messages";
-import { ExtensionModule } from "./constants/modules";
+import { ExtensionModule } from "./constants/commands";
 import { ExtensionCommand } from "./constants/commands";
 
 export class Controller {
