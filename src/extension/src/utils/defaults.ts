@@ -4,10 +4,10 @@ import * as vscode from "vscode";
 import * as os from "os";
 import * as fs from "fs";
 import * as path from "path";
-import { ExtensionCommand } from "../constants/commands";
+import { EXTENSION_COMMANDS } from "../constants/commands";
 
 export class Defaults extends WizardServant {
-  clientCommandMap: Map<ExtensionCommand,(message: any) => Promise<IPayloadResponse>>;
+  clientCommandMap: Map<EXTENSION_COMMANDS,(message: any) => Promise<IPayloadResponse>>;
 
   constructor() {
     super();
@@ -15,12 +15,12 @@ export class Defaults extends WizardServant {
   }
 
   private defineCommandMap(): Map<
-    ExtensionCommand,
+    EXTENSION_COMMANDS,
     (message: any) => Promise<IPayloadResponse>
   > {
     return new Map([
-      [ExtensionCommand.GET_PROJECT_NAME, this.getProjectName],
-      [ExtensionCommand.GET_OUTPUT_PATH, this.getOutputPath]
+      [EXTENSION_COMMANDS.GET_PROJECT_NAME, this.getProjectName],
+      [EXTENSION_COMMANDS.GET_OUTPUT_PATH, this.getOutputPath]
     ]);
   }
 

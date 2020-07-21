@@ -1,4 +1,4 @@
-import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/extension";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/commands";
 
 import * as mockData from "./mockAzureModuleData";
 

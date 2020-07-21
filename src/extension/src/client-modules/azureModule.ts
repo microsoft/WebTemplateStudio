@@ -1,7 +1,7 @@
 import { SubscriptionItem } from "../azure/azure-auth/azureAuth";
 
 import { AzureResourceType } from "../constants/constants";
-import { ExtensionCommand } from "../constants/commands";
+import { EXTENSION_COMMANDS } from "../constants/commands";
 
 import { AuthorizationError } from "../errors";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
@@ -16,16 +16,16 @@ interface Subscription {
 }
 
 export class AzureModule extends WizardServant {
-  clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
-    [ExtensionCommand.AZURE_LOGIN, this.login],
-    [ExtensionCommand.AZURE_LOGOUT, this.logout],
-    [ExtensionCommand.GET_USER_STATUS, this.getUserStatus],
-    [ExtensionCommand.GET_RESOURCE_GROUPS, this.getResourceGroups],
-    [ExtensionCommand.GET_LOCATIONS, this.getLocations],
-    [ExtensionCommand.GET_VALID_APP_SERVICE_NAME, this.getValidAppServiceName],
-    [ExtensionCommand.GET_VALID_COSMOS_NAME, this.getValidCosmosName],
-    [ExtensionCommand.VALIDATE_COSMOS_NAME, this.validateCosmosName],
-    [ExtensionCommand.VALIDATE_APPSERVICE_NAME, this.validateAppServiceName],
+  clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
+    [EXTENSION_COMMANDS.AZURE_LOGIN, this.login],
+    [EXTENSION_COMMANDS.AZURE_LOGOUT, this.logout],
+    [EXTENSION_COMMANDS.GET_USER_STATUS, this.getUserStatus],
+    [EXTENSION_COMMANDS.GET_RESOURCE_GROUPS, this.getResourceGroups],
+    [EXTENSION_COMMANDS.GET_LOCATIONS, this.getLocations],
+    [EXTENSION_COMMANDS.GET_VALID_APP_SERVICE_NAME, this.getValidAppServiceName],
+    [EXTENSION_COMMANDS.GET_VALID_COSMOS_NAME, this.getValidCosmosName],
+    [EXTENSION_COMMANDS.VALIDATE_COSMOS_NAME, this.validateCosmosName],
+    [EXTENSION_COMMANDS.VALIDATE_APPSERVICE_NAME, this.validateAppServiceName],
   ]);
 
   public async login(message: any): Promise<IPayloadResponse> {

@@ -25,7 +25,7 @@ import { setPageWizardPageAction, setVisitedWizardPageAction } from "../../store
 import { getIsVisitedRoutesSelector } from "../../store/config/config/wizardNavigationSelector";
 import { useMemo } from "react";
 import { setIsDirtyAction } from "../../store/navigation/isDirty/action";
-import { EXTENSION_COMMANDS } from "../../utils/constants/extension";
+import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
 
 type Props = InjectedIntlProps;
 

@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { CLI_SETTINGS } from "../constants/cli";
-import { ExtensionCommand } from "../constants/commands";
+import { EXTENSION_COMMANDS } from "../constants/commands";
 import fs = require("fs");
 import path = require("path");
 import { WizardServant, IPayloadResponse } from "../wizardServant";
@@ -8,12 +8,12 @@ import { MESSAGES } from "../constants/messages";
 
 export class Validator extends WizardServant {
   clientCommandMap: Map<
-    ExtensionCommand,
+    EXTENSION_COMMANDS,
     (message: any) => Promise<IPayloadResponse>
   > = new Map([
-    [ExtensionCommand.GET_OUTPUT_PATH, Validator.sendOutputPathSelectionToClient],
+    [EXTENSION_COMMANDS.GET_OUTPUT_PATH, Validator.sendOutputPathSelectionToClient],
     [
-      ExtensionCommand.PROJECT_PATH_VALIDATION,
+      EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
       Validator.handleProjectPathValidation
     ]
   ]);

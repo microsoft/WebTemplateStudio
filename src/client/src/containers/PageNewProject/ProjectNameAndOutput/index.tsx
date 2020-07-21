@@ -33,7 +33,7 @@ import { IValidations } from "../../../store/config/validations/model";
 import { AppContext } from "../../../AppContext";
 import stylesInput from "../../../css/input.module.css";
 import classnames from "classnames";
-import { EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../../utils/constants/extension";
+import { EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../../utils/constants/commands";
 
 interface IStateProps {
   outputPath: string;

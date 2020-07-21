@@ -11,7 +11,7 @@ import { removeAppServiceAction } from "../../../../store/userSelection/services
 import { AppContext } from "../../../../AppContext";
 import { openAppServiceModalAction } from "../../../../store/navigation/modals/action";
 import messages from "./messages";
-import { EXTENSION_COMMANDS } from "../../../../utils/constants/extension";
+import { EXTENSION_COMMANDS } from "../../../../utils/constants/commands";
 
 interface IProps {
   appServiceSelection: IAppService | null;

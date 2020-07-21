@@ -21,7 +21,7 @@ import { ISyncReturnType } from "./types/syncReturnType";
 import { LoggerModule } from "./client-modules/loggerModule";
 import { MESSAGES } from "./constants/messages";
 import { ExtensionModule } from "./constants/commands";
-import { ExtensionCommand } from "./constants/commands";
+import { EXTENSION_COMMANDS } from "./constants/commands";
 
 export class Controller {
   /**
@@ -191,7 +191,7 @@ export class Controller {
   }
 
   private static handleValidMessage(
-    commandName: ExtensionCommand,
+    commandName: EXTENSION_COMMANDS,
     responsePayload?: any
   ): void {
     responsePayload.command = commandName;

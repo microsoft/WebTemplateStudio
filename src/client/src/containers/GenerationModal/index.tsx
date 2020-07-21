@@ -29,7 +29,7 @@ import { getGenerationData } from "../../store/userSelection/app/selector";
 import { getCosmosDB, getAppService } from "../../store/userSelection/services/servicesSelector";
 import GenerationItem from "./GenerationItem";
 import { Subject, forkJoin } from "rxjs";
-import { EXTENSION_COMMANDS } from "../../utils/constants/extension";
+import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
 import { AZURE_LINKS } from "../../utils/constants/azure";
 
 interface IStateProps {

@@ -1,10 +1,10 @@
-import { ExtensionCommand } from "./constants/commands";
+import { EXTENSION_COMMANDS } from "./constants/commands";
 import { IActionContext, ITelemetryService } from "./telemetry/telemetryService";
 import { MESSAGES } from "./constants/messages";
 
 export abstract class WizardServant {
   abstract clientCommandMap: Map<
-    ExtensionCommand,
+    EXTENSION_COMMANDS,
     (message: any) => Promise<IPayloadResponse>
   >;
   private _commandBidding = (message: any): Promise<any> => {

@@ -1,22 +1,22 @@
 import { WizardServant, IPayloadResponse } from "./wizardServant";
-import { ExtensionCommand } from "./constants/commands";
+import { EXTENSION_COMMANDS } from "./constants/commands";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
 
 export class CoreTSModule extends WizardServant {
-  clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>>;
+  clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>>;
 
   constructor() {
     super();
     this.clientCommandMap = this.defineCommandMap();
   }
 
-  private defineCommandMap(): Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> {
+  private defineCommandMap(): Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> {
     return new Map([
-      [ExtensionCommand.GET_FRAMEWORKS, this.getFrameworks],
-      [ExtensionCommand.GET_ALL_LICENSES, this.getAllLicenses],
-      [ExtensionCommand.GET_PAGES, this.getPages],
-      [ExtensionCommand.GET_FEATURES, this.getFeatures],
-      [ExtensionCommand.GET_TEMPLATE_INFO, this.getTemplateConfig],
+      [EXTENSION_COMMANDS.GET_FRAMEWORKS, this.getFrameworks],
+      [EXTENSION_COMMANDS.GET_ALL_LICENSES, this.getAllLicenses],
+      [EXTENSION_COMMANDS.GET_PAGES, this.getPages],
+      [EXTENSION_COMMANDS.GET_FEATURES, this.getFeatures],
+      [EXTENSION_COMMANDS.GET_TEMPLATE_INFO, this.getTemplateConfig],
     ]);
   }
 

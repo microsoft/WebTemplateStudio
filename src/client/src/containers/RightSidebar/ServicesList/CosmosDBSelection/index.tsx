@@ -11,7 +11,7 @@ import { sendTelemetry } from "../../../../utils/extensionService/extensionServi
 import { removeCosmosDbAction } from "../../../../store/userSelection/services/cosmosDb/action";
 import { AppContext } from "../../../../AppContext";
 import messages from "./messages";
-import { EXTENSION_COMMANDS } from "../../../../utils/constants/extension";
+import { EXTENSION_COMMANDS } from "../../../../utils/constants/commands";
 
 interface IProps {
   cosmosSelection: ICosmosDB | null;

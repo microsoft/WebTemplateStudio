@@ -13,7 +13,7 @@ import { Logger } from "../utils/logger";
 import { IGenerationPayloadType, IServicesGenerationPayload } from "../types/generationPayloadType";
 import { sendToClientGenerationStatus, GenerationItemStatus, updateStatusMessage, sendToClientGenerationPath, GENERATION_NAMES } from "../utils/generationStatus";
 import { MESSAGES } from "../constants/messages";
-import { ExtensionCommand } from "../constants/commands";
+import { EXTENSION_COMMANDS } from "../constants/commands";
 
 interface DeployedServiceStatus {
   serviceType: AzureResourceType;
@@ -22,9 +22,9 @@ interface DeployedServiceStatus {
 }
 
 export class Generation extends WizardServant {
-  clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
-    [ExtensionCommand.GENERATE, this.generate],
-    [ExtensionCommand.OPEN_PROJECT_IN_VSCODE, this.openProjectVSCode],
+  clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
+    [EXTENSION_COMMANDS.GENERATE, this.generate],
+    [EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE, this.openProjectVSCode],
   ]);
 
   constructor(private Telemetry: ITelemetryService) {

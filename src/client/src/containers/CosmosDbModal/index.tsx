@@ -24,7 +24,7 @@ import LocationSelection from "../../components/LocationSelection";
 import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
 import { AppContext } from "../../AppContext";
 import ResourceGroupSelection from "../../components/ResourceGroupSelection";
-import { EXTENSION_COMMANDS } from "../../utils/constants/extension";
+import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants/internalNames";
 
 interface IStateProps {
