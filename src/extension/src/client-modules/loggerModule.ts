@@ -10,8 +10,8 @@ type ILoggingPayload = {
 
 export class LoggerModule extends WizardServant {
   clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
-    [ExtensionCommand.Log, this.logFromWizard],
-    [ExtensionCommand.OpenLog, this.openLog],
+    [ExtensionCommand.LOG, this.logFromWizard],
+    [ExtensionCommand.OPEN_LOG, this.openLog],
   ]);
 
   private async logFromWizard(message: any): Promise<IPayloadResponse> {

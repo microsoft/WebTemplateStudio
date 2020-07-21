@@ -12,11 +12,11 @@ export class CoreTSModule extends WizardServant {
 
   private defineCommandMap(): Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> {
     return new Map([
-      [ExtensionCommand.GetFrameworks, this.getFrameworks],
-      [ExtensionCommand.GetAllLicenses, this.getAllLicenses],
-      [ExtensionCommand.GetPages, this.getPages],
-      [ExtensionCommand.GetFeatures, this.getFeatures],
-      [ExtensionCommand.GetTemplateInfo, this.getTemplateConfig],
+      [ExtensionCommand.GET_FRAMEWORKS, this.getFrameworks],
+      [ExtensionCommand.GET_ALL_LICENSES, this.getAllLicenses],
+      [ExtensionCommand.GET_PAGES, this.getPages],
+      [ExtensionCommand.GET_FEATURES, this.getFeatures],
+      [ExtensionCommand.GET_TEMPLATE_INFO, this.getTemplateConfig],
     ]);
   }
 

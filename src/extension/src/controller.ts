@@ -5,7 +5,6 @@ import { CONSTANTS } from "./constants/constants";
 import { TelemetryEventName } from './constants/telemetry';
 import { ReactPanel } from "./reactPanel";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
-import { VSCodeUI } from "./utils/vscodeUI";
 import { TelemetryService, IActionContext, ITelemetryService } from "./telemetry/telemetryService";
 import { Logger } from "./utils/logger";
 import { WizardServant } from "./wizardServant";
@@ -32,7 +31,6 @@ export class Controller {
   private static _instance: Controller | undefined;
   public static reactPanelContext: ReactPanel;
   public static TelemetryService: ITelemetryService;
-  private vscodeUI: VSCodeUI;
   public static Logger: Logger;
   private loggerModule: LoggerModule;
   private AzureModule: AzureModule;
@@ -52,7 +50,6 @@ export class Controller {
   private defineExtensionModule(): void {
     Controller.extensionModuleMap = new Map([
       [ExtensionModule.Telemetry, this.Telemetry],
-      [ExtensionModule.VSCodeUI, this.vscodeUI],
       [ExtensionModule.Azure, this.AzureModule],
       [ExtensionModule.Validator, this.Validator],
       [ExtensionModule.Generate, this.Generation],
@@ -115,7 +112,6 @@ export class Controller {
 
     Controller.TelemetryService.trackEvent(TelemetryEventName.ExtensionLaunch);
 
-    this.vscodeUI = new VSCodeUI();
     this.Validator = new Validator();
     this.AzureModule = new AzureModule();
     this.Generation = new Generation(Controller.TelemetryService);

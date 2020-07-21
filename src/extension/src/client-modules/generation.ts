@@ -23,8 +23,8 @@ interface DeployedServiceStatus {
 
 export class Generation extends WizardServant {
   clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
-    [ExtensionCommand.Generate, this.generate],
-    [ExtensionCommand.OpenProjectVSCode, this.openProjectVSCode],
+    [ExtensionCommand.GENERATE, this.generate],
+    [ExtensionCommand.OPEN_PROJECT_IN_VSCODE, this.openProjectVSCode],
   ]);
 
   constructor(private Telemetry: ITelemetryService) {

@@ -21,15 +21,12 @@ const EXTENSION_COMMANDS = {
   GEN_STATUS: "update-status",
   OPEN_PROJECT_IN_VSCODE: "open-project-vscode",
   GET_TEMPLATE_INFO: "get-template-info",
-  CLOSE_WIZARD: "close-wizard",
-  GET_VERSIONS: "get-versions",
   GET_DEPENDENCY_INFO: "check-dependency",
   GET_FRAMEWORKS: "get-frameworks",
   GET_ALL_LICENSES: "get-all-licenses",
   GET_LATEST_VERSION:"get-latest-version",
   GET_PAGES: "get-pages",
   GET_FEATURES: "get-features",
-  GET_VALIDATIONS: "get-validations",
   LOG: "log",
   OPEN_LOG: "open-log"
 };

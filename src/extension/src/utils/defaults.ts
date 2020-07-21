@@ -19,8 +19,8 @@ export class Defaults extends WizardServant {
     (message: any) => Promise<IPayloadResponse>
   > {
     return new Map([
-      [ExtensionCommand.GetProjectName, this.getProjectName],
-      [ExtensionCommand.GetOutputPath, this.getOutputPath]
+      [ExtensionCommand.GET_PROJECT_NAME, this.getProjectName],
+      [ExtensionCommand.GET_OUTPUT_PATH, this.getOutputPath]
     ]);
   }
 

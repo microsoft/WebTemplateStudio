@@ -11,9 +11,9 @@ export class Validator extends WizardServant {
     ExtensionCommand,
     (message: any) => Promise<IPayloadResponse>
   > = new Map([
-    [ExtensionCommand.GetOutputPath, Validator.sendOutputPathSelectionToClient],
+    [ExtensionCommand.GET_OUTPUT_PATH, Validator.sendOutputPathSelectionToClient],
     [
-      ExtensionCommand.ProjectPathValidation,
+      ExtensionCommand.PROJECT_PATH_VALIDATION,
       Validator.handleProjectPathValidation
     ]
   ]);

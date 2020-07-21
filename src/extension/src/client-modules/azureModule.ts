@@ -17,15 +17,15 @@ interface Subscription {
 
 export class AzureModule extends WizardServant {
   clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
-    [ExtensionCommand.Login, this.login],
-    [ExtensionCommand.Logout, this.logout],
-    [ExtensionCommand.GetUserStatus, this.getUserStatus],
-    [ExtensionCommand.GetResourceGroups, this.getResourceGroups],
-    [ExtensionCommand.GetLocations, this.getLocations],
-    [ExtensionCommand.GetValidAppServiceName, this.getValidAppServiceName],
-    [ExtensionCommand.GetValidCosmosName, this.getValidCosmosName],
-    [ExtensionCommand.ValidateCosmosName, this.validateCosmosName],
-    [ExtensionCommand.ValidateAppServiceName, this.validateAppServiceName],
+    [ExtensionCommand.AZURE_LOGIN, this.login],
+    [ExtensionCommand.AZURE_LOGOUT, this.logout],
+    [ExtensionCommand.GET_USER_STATUS, this.getUserStatus],
+    [ExtensionCommand.GET_RESOURCE_GROUPS, this.getResourceGroups],
+    [ExtensionCommand.GET_LOCATIONS, this.getLocations],
+    [ExtensionCommand.GET_VALID_APP_SERVICE_NAME, this.getValidAppServiceName],
+    [ExtensionCommand.GET_VALID_COSMOS_NAME, this.getValidCosmosName],
+    [ExtensionCommand.VALIDATE_COSMOS_NAME, this.validateCosmosName],
+    [ExtensionCommand.VALIDATE_APPSERVICE_NAME, this.validateAppServiceName],
   ]);
 
   public async login(message: any): Promise<IPayloadResponse> {

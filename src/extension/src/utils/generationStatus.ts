@@ -16,7 +16,7 @@ export const GENERATION_NAMES = {
 
 export const sendToClientGenerationStatus = (name: string, status: string, message?: string) => {
   Controller.reactPanelContext.postMessageWebview({
-    command: ExtensionCommand.UpdateGenStatus,
+    command: ExtensionCommand.GEN_STATUS,
     payload: {
       name,
       status,
@@ -31,7 +31,7 @@ export const updateStatusMessage = (message: string) => {
 
 export const sendToClientGenerationPath = (outputPath: string) => {
   Controller.reactPanelContext.postMessageWebview({
-    command: ExtensionCommand.GetOutputPath,
+    command: ExtensionCommand.GET_OUTPUT_PATH,
     payload: { outputPath },
   });
 };

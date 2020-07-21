@@ -8,19 +8,19 @@ export class Telemetry extends WizardServant {
     ExtensionCommand,
     (message: any) => Promise<IPayloadResponse>
   > = new Map([
-    [ExtensionCommand.TrackPageSwitch, this.trackWizardPageTimeToNext],
-    [ExtensionCommand.TrackCreateNewProject, this.trackCreateNewProject],
+    [ExtensionCommand.TRACK_PAGE_SWITCH, this.trackWizardPageTimeToNext],
+    [ExtensionCommand.TRACK_CREATE_NEW_PROJECT, this.trackCreateNewProject],
     [ExtensionCommand.TrackOpenAddPagesModal, this.trackOpenAddPagesModal],
-    [ExtensionCommand.TrackPressQuickstart, this.trackPressQuickstart],
+    [ExtensionCommand.TRACK_PRESS_QUICKSTART, this.trackPressQuickstart],
     [
-      ExtensionCommand.TrackOpenAppServiceModalFromServicesList,
+      ExtensionCommand.TRACK_OPEN_APP_SERVICE_MODAL_FROM_SERVICES_LIST,
       this.trackOpenAppServiceModalFromServicesList
     ],
     [
-      ExtensionCommand.TrackOpenCosmosDBServiceModalFromServicesList,
+      ExtensionCommand.TRACK_OPEN_COSMOSDB_SERVICE_MODAL_FROM_SERVICES_LIST,
       this.trackOpenCosmosDBServiceModalFromServicesList
     ],
-    [ExtensionCommand.TrackOpenAzureServiceAdvancedMode, this.TrackOpenAzureServiceAdvancedMode]
+    [ExtensionCommand.TRACK_OPEN_AZURE_SERVICE_ADVANCED_MODE, this.TrackOpenAzureServiceAdvancedMode]
   ]);
 
   constructor(private telemetry: ITelemetryService) {
