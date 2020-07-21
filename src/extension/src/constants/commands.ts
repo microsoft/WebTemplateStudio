@@ -20,7 +20,6 @@ export enum ExtensionCommand {
   GET_FEATURES = "get-features",
   TRACK_PAGE_SWITCH = "track-page-switch",
   TRACK_CREATE_NEW_PROJECT = "track-create-new-project",
-  TrackOpenAddPagesModal = "track-open-add-pages-modal",
   TRACK_PRESS_QUICKSTART = "track-press-quickstart",
   TRACK_OPEN_APP_SERVICE_MODAL_FROM_SERVICES_LIST = "track-open-app-service-modal-from-services-list",
   TRACK_OPEN_COSMOSDB_SERVICE_MODAL_FROM_SERVICES_LIST = "track-open-cosmosdb-service-modal-from-services-list",
@@ -29,7 +28,5 @@ export enum ExtensionCommand {
   GEN_STATUS = "update-status",
   OPEN_PROJECT_IN_VSCODE = "open-project-vscode",
   GET_TEMPLATE_INFO = "get-template-info",
-  GetPort = "get-port",
-  ResetPages = "reset-pages",
   GET_DEPENDENCY_INFO = "check-dependency"
 }

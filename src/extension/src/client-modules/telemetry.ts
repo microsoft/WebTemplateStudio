@@ -10,7 +10,6 @@ export class Telemetry extends WizardServant {
   > = new Map([
     [ExtensionCommand.TRACK_PAGE_SWITCH, this.trackWizardPageTimeToNext],
     [ExtensionCommand.TRACK_CREATE_NEW_PROJECT, this.trackCreateNewProject],
-    [ExtensionCommand.TrackOpenAddPagesModal, this.trackOpenAddPagesModal],
     [ExtensionCommand.TRACK_PRESS_QUICKSTART, this.trackPressQuickstart],
     [
       ExtensionCommand.TRACK_OPEN_APP_SERVICE_MODAL_FROM_SERVICES_LIST,
@@ -50,11 +49,6 @@ export class Telemetry extends WizardServant {
 
   public async trackPressQuickstart(): Promise<IPayloadResponse> {
     this.telemetry.trackEvent(TelemetryEventName.TrackPressQuickstart);
-    return { payload: true };
-  }
-
-  public async trackOpenAddPagesModal(): Promise<IPayloadResponse> {
-    this.telemetry.trackEvent(TelemetryEventName.TrackOpenAddPagesModal);
     return { payload: true };
   }
 
