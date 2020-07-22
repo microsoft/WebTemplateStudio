@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { Controller } from "./controller";
 import { Deploy } from "./deploy";
-import { AppType } from "./constants";
+import { AppType } from "./constants/constants";
 
 export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
