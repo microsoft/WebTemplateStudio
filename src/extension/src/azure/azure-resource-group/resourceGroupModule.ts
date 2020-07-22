@@ -7,8 +7,9 @@ import {
   AuthorizationError,
   DeploymentError
 } from "../../errors";
-import { CONSTANTS } from "../../constants";
+import { CONSTANTS } from "../../constants/constants";
 import { NameGenerator } from "../utils/nameGenerator";
+import { MESSAGES } from "../../constants/messages";
 
 export interface ResourceGroupSelection {
   subscriptionItem: SubscriptionItem;
@@ -38,7 +39,7 @@ export class ResourceGroupDeploy {
     try {
       if (this.azureResourceClient === undefined) {
         throw new AuthorizationError(
-          CONSTANTS.ERRORS.AZURE_RESOURCE_CLIENT_NOT_DEFINED
+          MESSAGES.ERRORS.AZURE_RESOURCE_CLIENT_NOT_DEFINED
         );
       }
       const { resourceGroupName, location } = resourceGroupSelection;
@@ -78,7 +79,7 @@ export class ResourceGroupDeploy {
     }
     if (tries >= CONSTANTS.VALIDATION_LIMIT) {
       throw new ResourceGroupError(
-        CONSTANTS.ERRORS.CREATION_TRIES_EXCEEDED("resource group")
+        MESSAGES.ERRORS.CREATION_TRIES_EXCEEDED("resource group")
       );
     }
     return generatedName;
@@ -107,7 +108,7 @@ export class ResourceGroupDeploy {
     this.setAzureResourceClient(userSubscriptionItem);
     if (this.azureResourceClient === undefined) {
       throw new AuthorizationError(
-        CONSTANTS.ERRORS.AZURE_RESOURCE_CLIENT_NOT_DEFINED
+        MESSAGES.ERRORS.AZURE_RESOURCE_CLIENT_NOT_DEFINED
       );
     }
     const exist = await this.azureResourceClient.resourceGroups.checkExistence(
@@ -122,7 +123,7 @@ export class ResourceGroupDeploy {
     this.setAzureResourceClient(subscriptionItem);
     if (this.azureResourceClient === undefined) {
       throw new AuthorizationError(
-        CONSTANTS.ERRORS.AZURE_RESOURCE_CLIENT_NOT_DEFINED
+        MESSAGES.ERRORS.AZURE_RESOURCE_CLIENT_NOT_DEFINED
       );
     }
     const groups = await this.azureResourceClient.resourceGroups.list();

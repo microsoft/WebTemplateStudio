@@ -1,5 +1,5 @@
 import { WizardServant, IPayloadResponse } from "../wizardServant";
-import { ExtensionCommand } from "../constants";
+import { EXTENSION_COMMANDS } from "../constants/commands";
 import latestVersion from "latest-version";
 import RequirementsService from "../utils/requirements/requirementsService";
 import { Logger } from "../utils/logger";
@@ -7,9 +7,9 @@ const axios = require("axios");
 
 export class DependenciesModule extends WizardServant {
   private requirementsService = new RequirementsService();
-  clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
-    [ExtensionCommand.CheckDependency, this.requirementIsInstalled],
-    [ExtensionCommand.GetLatestVersion, this.getLatestVersion],
+  clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
+    [EXTENSION_COMMANDS.GET_DEPENDENCY_INFO, this.requirementIsInstalled],
+    [EXTENSION_COMMANDS.GET_LATEST_VERSION, this.getLatestVersion],
   ]);
 
   async requirementIsInstalled(message: any): Promise<IPayloadResponse> {

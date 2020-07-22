@@ -1,4 +1,4 @@
-import { ROUTES } from "../../../utils/constants";
+import { ROUTES } from "../../../utils/constants/routes";
 import { createSelector } from "reselect";
 import { AppState } from "../../combineReducers";
 import { IRoutes } from "../../userSelection/pages/model";

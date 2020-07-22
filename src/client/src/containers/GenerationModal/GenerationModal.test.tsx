@@ -10,7 +10,7 @@ import GenerationModal from ".";
 import { Subject } from "rxjs/internal/Subject";
 import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import * as extensionService from "../../utils/extensionService/extensionService";
-import { WEB_TEMPLATE_STUDIO_LINKS } from "../../utils/constants";
+import { WEB_TEMPLATE_STUDIO_LINKS } from "../../utils/constants/constants";
 import { messages } from "./messages";
 import { resetWizardAction, loadAction } from "../../store/config/config/action";
 

@@ -1,4 +1,4 @@
-import { ExtensionCommand } from "../constants";
+import { EXTENSION_COMMANDS } from "../constants/commands";
 import { Controller } from "../controller";
 
 export enum GenerationItemStatus {
@@ -16,7 +16,7 @@ export const GENERATION_NAMES = {
 
 export const sendToClientGenerationStatus = (name: string, status: string, message?: string) => {
   Controller.reactPanelContext.postMessageWebview({
-    command: ExtensionCommand.UpdateGenStatus,
+    command: EXTENSION_COMMANDS.GEN_STATUS,
     payload: {
       name,
       status,
@@ -31,7 +31,7 @@ export const updateStatusMessage = (message: string) => {
 
 export const sendToClientGenerationPath = (outputPath: string) => {
   Controller.reactPanelContext.postMessageWebview({
-    command: ExtensionCommand.GetOutputPath,
+    command: EXTENSION_COMMANDS.GET_OUTPUT_PATH,
     payload: { outputPath },
   });
 };

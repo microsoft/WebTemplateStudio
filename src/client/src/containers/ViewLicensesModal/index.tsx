@@ -9,7 +9,7 @@ import Licenses from "./Licenses";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { isViewLicensesModalOpenSelector } from "../../store/navigation/modals/selector";
 import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
-import { KEY_EVENTS } from "../../utils/constants";
+import { KEY_EVENTS } from "../../utils/constants/constants";
 import messages from "./messages";
 
 interface IStateProps {

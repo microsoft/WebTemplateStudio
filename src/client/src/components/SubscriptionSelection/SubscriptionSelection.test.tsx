@@ -6,7 +6,7 @@ import { getInitialState, setSubscriptions } from "../../mockData/mockStore";
 import { RenderResult, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { renderWithStore } from "../../testUtils";
-import { AZURE_LINKS } from "../../utils/constants";
+import { AZURE_LINKS } from "../../utils/constants/azure";
 import messages from "./messages";
 
 jest.mock("../Dropdown", () => require('../../testUtils').dropdownMock);
