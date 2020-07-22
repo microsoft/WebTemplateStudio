@@ -6,7 +6,7 @@ const getConfigSelector = (state: AppState): ConfigState => state.config;
 
 const getProjectTypeSelector = createSelector(
   getConfigSelector,
-  (config) => config.appType.internalName
+  (config) => config.platform
 );
 
 export { getProjectTypeSelector };

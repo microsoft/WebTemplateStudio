@@ -5,7 +5,8 @@ import {
   CONSTANTS,
   ExtensionModule,
   TelemetryEventName,
-  ExtensionCommand
+  ExtensionCommand,
+  AppType
 } from "./constants";
 import { ReactPanel } from "./reactPanel";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
@@ -191,7 +192,8 @@ export class Controller {
       wizardVersion: getExtensionVersionNumber(ctx),
       itemNameValidationConfig: syncObject.itemNameValidationConfig,
       projectNameValidationConfig: syncObject.projectNameValidationConfig,
-      preview
+      preview,
+      platform: AppType.Web
     };
   }
 

@@ -1,16 +1,10 @@
 import SelectionActionType from "./actionTypes";
-import { ISelected } from "../../../types/selected";
 import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 
-const initialState = {
-  title: "Fullstack Web Application",
-  internalName: "FullStackWebApp",
-  version: "v1.0",
-  licenses: ""
-};
+const initialState = "Web";
 
-const webAppReducer = (
-  state: ISelected = initialState,
+const platformReducer = (
+  state: string = initialState,
   action: SelectionActionType
 ) => {
   switch (action.type) {
@@ -21,4 +15,4 @@ const webAppReducer = (
   }
 };
 
-export default webAppReducer;
+export default platformReducer;

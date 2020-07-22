@@ -60,12 +60,7 @@ export const getInitialState = (): AppState => {
         subscriptions: [],
         email:''
       },
-      appType: {
-        title: 'Fullstack Web Application',
-        internalName: 'FullStackWebApp',
-        version: 'v1.0',
-        licenses: ''
-      }
+      platform: "Web"
     },
     userSelection: {
       frontendFramework: {
