@@ -14,10 +14,11 @@ import {
 } from "azure-arm-resource/lib/resource/resourceManagementClient";
 import { ResourceManager } from "../azure-arm/resourceManager";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
-import { CONSTANTS } from "../../constants";
+import { CONSTANTS } from "../../constants/constants";
 import fs = require("fs-extra");
 import { ConnectionString } from "../utils/connectionString";
 import { Controller } from "../../controller";
+import { MESSAGES } from "../../constants/messages";
 
 export interface CosmosDBSelections {
   cosmosDBResourceName: string;
@@ -228,7 +229,7 @@ export class CosmosDBDeploy {
     try {
       if (this.SubscriptionItemCosmosClient === undefined) {
         throw new AuthorizationError(
-          CONSTANTS.ERRORS.COSMOS_CLIENT_NOT_DEFINED
+          MESSAGES.ERRORS.COSMOS_CLIENT_NOT_DEFINED
         );
       }
 
@@ -302,7 +303,7 @@ export class CosmosDBDeploy {
       userSubscriptionItem.subscription === undefined ||
       userSubscriptionItem.subscriptionId === undefined
     ) {
-      throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_DEFINED);
+      throw new SubscriptionError(MESSAGES.ERRORS.SUBSCRIPTION_NOT_DEFINED);
     }
     return new CosmosDBManagementClient(
       userCredentials,
@@ -331,7 +332,7 @@ export class CosmosDBDeploy {
     name: string
   ): Promise<string | undefined> {
     if (this.SubscriptionItemCosmosClient === undefined) {
-      throw new AuthorizationError(CONSTANTS.ERRORS.COSMOS_CLIENT_NOT_DEFINED);
+      throw new AuthorizationError(MESSAGES.ERRORS.COSMOS_CLIENT_NOT_DEFINED);
     }
     name = name ? name.trim() : "";
 
@@ -339,15 +340,15 @@ export class CosmosDBDeploy {
     const max = CONSTANTS.COSMOS_DB_NAME.MAX_LENGTH;
 
     if (name.length < min || name.length > max) {
-      return CONSTANTS.ERRORS.NAME_MIN_MAX(min, max);
+      return MESSAGES.ERRORS.NAME_MIN_MAX(min, max);
     } else if (name.match(/[^a-z0-9-]/)) {
-      return CONSTANTS.ERRORS.COSMOS_VALID_CHARACTERS;
+      return MESSAGES.ERRORS.COSMOS_VALID_CHARACTERS;
     } else if (
       await this.SubscriptionItemCosmosClient.databaseAccounts.checkNameExists(
         name
       )
     ) {
-      return CONSTANTS.ERRORS.COSMOS_ACCOUNT_NOT_AVAILABLE(name);
+      return MESSAGES.ERRORS.COSMOS_ACCOUNT_NOT_AVAILABLE(name);
     } else {
       return undefined;
     }
@@ -382,7 +383,7 @@ export class CosmosDBDeploy {
         cosmosClient = this.createCosmosClient(cosmosClientOrSubscriptionItem);
       } catch (error) {
         throw new AuthorizationError(
-          CONSTANTS.ERRORS.CONNECTION_STRING_FAILED + error.message
+          MESSAGES.ERRORS.CONNECTION_STRING_FAILED + error.message
         );
       }
     }

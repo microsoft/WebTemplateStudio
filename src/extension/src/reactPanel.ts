@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import * as path from "path";
-import { CONSTANTS } from "./constants";
+import { CONSTANTS } from "./constants/constants";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
 import { Logger } from "./utils/logger";
 import { deactivate } from "./extension";

@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
-import { ExtensionCommand } from "../constants";
+import { EXTENSION_COMMANDS } from "../constants/commands";
 import { Logger, LogLevel } from "../utils/logger";
 
 type ILoggingPayload = {
@@ -9,9 +9,9 @@ type ILoggingPayload = {
 };
 
 export class LoggerModule extends WizardServant {
-  clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
-    [ExtensionCommand.Log, this.logFromWizard],
-    [ExtensionCommand.OpenLog, this.openLog],
+  clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
+    [EXTENSION_COMMANDS.LOG, this.logFromWizard],
+    [EXTENSION_COMMANDS.OPEN_LOG, this.openLog],
   ]);
 
   private async logFromWizard(message: any): Promise<IPayloadResponse> {

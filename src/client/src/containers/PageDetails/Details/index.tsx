@@ -5,7 +5,7 @@ import { ReactComponent as BackArrow } from "../../../assets/backarrow.svg";
 import { getSvg } from "../../../utils/getSvgUrl";
 import styles from "./styles.module.css";
 import backArrow from "../../../assets/backarrow.svg";
-import { KEY_EVENTS } from "../../../utils/constants";
+import { KEY_EVENTS } from "../../../utils/constants/constants";
 import { IOption } from "../../../types/option";
 import { ILicenseObject, License } from "../../../types/license";
 

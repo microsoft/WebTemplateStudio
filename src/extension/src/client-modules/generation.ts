@@ -1,13 +1,10 @@
 import * as vscode from "vscode";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
 import {
-  ExtensionCommand,
-  TelemetryEventName,
   CONSTANTS,
-  AzureResourceType,
-  DialogMessages,
-  DialogResponses,
-} from "../constants";
+  AzureResourceType
+} from "../constants/constants";
+import { TelemetryEventName } from '../constants/telemetry';
 import { IActionContext, ITelemetryService } from "../telemetry/telemetryService";
 import { AzureServices } from "../azure/azureServices";
 import { CoreTemplateStudio } from "../coreTemplateStudio";
@@ -15,6 +12,8 @@ import { ResourceGroupSelection } from "../azure/azure-resource-group/resourceGr
 import { Logger } from "../utils/logger";
 import { IGenerationPayloadType, IServicesGenerationPayload } from "../types/generationPayloadType";
 import { sendToClientGenerationStatus, GenerationItemStatus, updateStatusMessage, sendToClientGenerationPath, GENERATION_NAMES } from "../utils/generationStatus";
+import { MESSAGES } from "../constants/messages";
+import { EXTENSION_COMMANDS } from "../constants/commands";
 
 interface DeployedServiceStatus {
   serviceType: AzureResourceType;
@@ -23,9 +22,9 @@ interface DeployedServiceStatus {
 }
 
 export class Generation extends WizardServant {
-  clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
-    [ExtensionCommand.Generate, this.generate],
-    [ExtensionCommand.OpenProjectVSCode, this.openProjectVSCode],
+  clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
+    [EXTENSION_COMMANDS.GENERATE, this.generate],
+    [EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE, this.openProjectVSCode],
   ]);
 
   constructor(private Telemetry: ITelemetryService) {
@@ -44,7 +43,7 @@ export class Generation extends WizardServant {
 
       if (this.hasAzureServices(generationData.services)) {
         await this.generateResourceGroups(generationData);
-        await this.generateAzureServices(generationData);        
+        await this.generateAzureServices(generationData);
       }
     } else if (this.hasAzureServices(generationData.services)) {
       sendToClientGenerationStatus(GENERATION_NAMES.APP_SERVICE, GenerationItemStatus.Failed, "ERROR: Azure Service deployment halted due to template error.");
@@ -202,14 +201,14 @@ export class Generation extends WizardServant {
 
   private async replaceConnectionString(path: string, connectionString: string, backendFramework: string): Promise<void> {
     const selection = await vscode.window.showInformationMessage(
-      DialogMessages.cosmosDBConnectStringReplacePrompt,
-      ...[DialogResponses.yes, DialogResponses.no]
+      MESSAGES.DIALOG_MESSAGES.cosmosDBConnectStringReplacePrompt,
+      ...[MESSAGES.DIALOG_RESPONSES.yes, MESSAGES.DIALOG_RESPONSES.no]
     );
 
     const start = Date.now();
-    if (selection === DialogResponses.yes) {
+    if (selection === MESSAGES.DIALOG_RESPONSES.yes) {
       AzureServices.updateConnectionStringToProject(path, connectionString, backendFramework);
-      vscode.window.showInformationMessage(CONSTANTS.INFO.FILE_REPLACED_MESSAGE + path);
+      vscode.window.showInformationMessage(MESSAGES.INFO.FILE_REPLACED_MESSAGE + path);
       this.trackCosmosConnectionStringReplace(start);
     }
   }

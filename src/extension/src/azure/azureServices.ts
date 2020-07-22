@@ -2,7 +2,7 @@ import { MICROSOFT_LEARN_TENANTS } from "./../configuration.json";
 
 import { AzureAuth, SubscriptionItem, LocationItem } from "./azure-auth/azureAuth";
 import { CosmosDBDeploy, CosmosDBSelections } from "./azure-cosmosDB/cosmosDbModule";
-import { CONSTANTS, AzureResourceType} from "../constants";
+import { CONSTANTS, AzureResourceType} from "../constants/constants";
 import { SubscriptionError, ValidationError } from "../errors";
 import { ResourceGroupDeploy, ResourceGroupSelection } from "./azure-resource-group/resourceGroupModule";
 import { AppServiceProvider, AppServiceSelections } from "./azure-app-service/appServiceProvider";
@@ -11,6 +11,7 @@ import { ConnectionString } from "./utils/connectionString";
 import { ICosmosDBGenerationPayload, IAppServiceGenerationPayload, IServicesGenerationPayload } from "../types/generationPayloadType";
 import * as fse from "fs-extra";
 import * as path from "path";
+import { MESSAGES } from "../constants/messages";
 
 interface UserStatus {
   email: string;
@@ -71,7 +72,7 @@ export class AzureServices {
     const subscription = AzureServices.subscriptionsCache.find(item => item.label === name);
 
     if (!subscription) {
-      throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
+      throw new SubscriptionError(MESSAGES.ERRORS.SUBSCRIPTION_NOT_FOUND);
     }
 
     return subscription;
@@ -265,7 +266,7 @@ export class AzureServices {
 
     const result = await AzureServices.AzureAppServiceProvider.createWebApp(userAppServiceSelection, path);
     if (!result) {
-      throw new Error(CONSTANTS.ERRORS.APP_SERVICE_UNDEFINED_ID);
+      throw new Error(MESSAGES.ERRORS.APP_SERVICE_UNDEFINED_ID);
     }
 
     const id = AzureServices.convertId(result);

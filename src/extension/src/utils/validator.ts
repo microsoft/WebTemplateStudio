@@ -1,17 +1,19 @@
 import * as vscode from "vscode";
-import { CONSTANTS, ExtensionCommand } from "../constants";
+import { CLI_SETTINGS } from "../constants/cli";
+import { EXTENSION_COMMANDS } from "../constants/commands";
 import fs = require("fs");
 import path = require("path");
 import { WizardServant, IPayloadResponse } from "../wizardServant";
+import { MESSAGES } from "../constants/messages";
 
 export class Validator extends WizardServant {
   clientCommandMap: Map<
-    ExtensionCommand,
+    EXTENSION_COMMANDS,
     (message: any) => Promise<IPayloadResponse>
   > = new Map([
-    [ExtensionCommand.GetOutputPath, Validator.sendOutputPathSelectionToClient],
+    [EXTENSION_COMMANDS.GET_OUTPUT_PATH, Validator.sendOutputPathSelectionToClient],
     [
-      ExtensionCommand.ProjectPathValidation,
+      EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
       Validator.handleProjectPathValidation
     ]
   ]);
@@ -27,7 +29,7 @@ export class Validator extends WizardServant {
         let path = undefined;
 
         if (res !== undefined) {
-          if (process.platform === CONSTANTS.CLI.WINDOWS_PLATFORM_VERSION) {
+          if (process.platform === CLI_SETTINGS.WINDOWS_PLATFORM_VERSION) {
             path = res[0].path.substring(1, res[0].path.length);
           } else {
             path = res[0].path;
@@ -78,14 +80,14 @@ export class Validator extends WizardServant {
         path
       )
     ) {
-      error = CONSTANTS.ERRORS.PATH_WITH_EMOJIS(path);
+      error = MESSAGES.ERRORS.PATH_WITH_EMOJIS(path);
       isValid = false;
     }
     if (!fs.existsSync(path) && path !== "") {
-      error = CONSTANTS.ERRORS.INVALID_OUTPUT_PATH(path);
+      error = MESSAGES.ERRORS.INVALID_OUTPUT_PATH(path);
       isValid = false;
     } else if (name !== "" && !Validator.isUniquePath(path, name)) {
-      error = CONSTANTS.ERRORS.PROJECT_PATH_EXISTS(path, name);
+      error = MESSAGES.ERRORS.PROJECT_PATH_EXISTS(path, name);
       isValid = false;
     }
     return {

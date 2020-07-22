@@ -1,7 +1,7 @@
 import os = require("os");
 import util = require("util");
 import semver = require("semver");
-import { CONSTANTS } from "../../../constants";
+import { CONSTANTS } from "../../../constants/constants";
 
 const exec = util.promisify(require("child_process").exec);
 const PYTHON_REGEX = RegExp("Python ([0-9.]+)");

@@ -1,12 +1,12 @@
 import {
-  EXTENSION_COMMANDS,
   DEVELOPMENT,
   TEST
-} from "../utils/constants";
+} from "../utils/constants/constants";
 
 import * as mockAzureModule from "./extensionModules/mockAzureModule";
 import * as mockLoggerModule from "./extensionModules/mockLoggerModule";
 import * as mockGenerationModule from "./extensionModules/mockGenerationModule";
+import { EXTENSION_COMMANDS } from "../utils/constants/commands";
 
 /**
  * Models the functionality of acquireVsCodeApi() from vscode for use

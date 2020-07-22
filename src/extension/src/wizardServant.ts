@@ -1,9 +1,10 @@
-import { ExtensionCommand, CONSTANTS } from "./constants";
+import { EXTENSION_COMMANDS } from "./constants/commands";
 import { IActionContext, ITelemetryService } from "./telemetry/telemetryService";
+import { MESSAGES } from "./constants/messages";
 
 export abstract class WizardServant {
   abstract clientCommandMap: Map<
-    ExtensionCommand,
+    EXTENSION_COMMANDS,
     (message: any) => Promise<IPayloadResponse>
   >;
   private _commandBidding = (message: any): Promise<any> => {
@@ -50,7 +51,7 @@ export abstract class WizardServant {
         messagePayload.command,
         async function(this: IActionContext) {
           throw Error(
-            CONSTANTS.ERRORS.INVALID_COMMAND + ":" + messagePayload.command
+            MESSAGES.ERRORS.INVALID_COMMAND + ":" + messagePayload.command
           );
         }
       );

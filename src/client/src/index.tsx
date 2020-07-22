@@ -11,7 +11,7 @@ import reducers from "./store/combineReducers";
 import runSagaMiddelware from "./store/rootSaga";
 import { IntlProvider } from "react-intl";
 import { AppContext} from "./AppContext";
-import { PRODUCTION } from "./utils/constants";
+import { PRODUCTION } from "./utils/constants/constants";
 import mockVsCodeApi from "./mockData/mockVsCodeApi";
 
 const sagaMiddleware = reduxSaga();

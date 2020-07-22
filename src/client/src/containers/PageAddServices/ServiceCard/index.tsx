@@ -6,7 +6,8 @@ import {openAzureLoginModalAction} from "../../../store/navigation/modals/action
 import buttonStyles from "../../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 import { getSvg } from "../../../utils/getSvgUrl";
-import { KEY_EVENTS, ROUTES } from "../../../utils/constants";
+import { KEY_EVENTS } from "../../../utils/constants/constants";
+import { ROUTES } from "../../../utils/constants/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { setPageWizardPageAction, setDetailPageAction } from "../../../store/navigation/routes/action";
 import messages from "./messages";

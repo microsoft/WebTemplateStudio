@@ -1,4 +1,4 @@
-import { ROUTES } from "../../../utils/constants";
+import { ROUTES } from "../../../utils/constants/routes";
 import { IRoutes } from "../../userSelection/pages/model";
 import { NAVIGATION_ROUTES_TYPEKEYS } from "../typeKeys";
 import RootAction from "../../ActionType";

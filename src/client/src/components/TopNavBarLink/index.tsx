@@ -5,7 +5,7 @@ import { injectIntl, FormattedMessage, InjectedIntl } from "react-intl";
 
 import styles from "./styles.module.css";
 import keyUpHandler from "../../utils/keyUpHandler";
-import { ARIA_LABELS_NAVIGATION } from "../../utils/constants";
+import { ARIA_LABELS_NAVIGATION } from "../../utils/constants/constants";
 
 const TopNavBarLink = ({
   pageNumber,

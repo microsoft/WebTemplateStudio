@@ -6,7 +6,7 @@ import { ReactComponent as CloseSVG } from "../../../../../assets/cancel.svg";
 import { getSvg } from "../../../../../utils/getSvgUrl";
 import { ISelected } from "../../../../../types/selected";
 import styles from "./styles.module.css";
-import { KEY_EVENTS } from "../../../../../utils/constants";
+import { KEY_EVENTS } from "../../../../../utils/constants/constants";
 import { injectIntl, InjectedIntl, InjectedIntlProps } from "react-intl";
 import { AppState } from "../../../../../store/combineReducers";
 
