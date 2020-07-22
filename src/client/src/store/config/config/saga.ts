@@ -1,5 +1,5 @@
 import {takeEvery, call, put, select} from "redux-saga/effects";
-import { getTemplateInfo, getFrameworks, getUserStatus } from "../../../utils/extensionService/extensionService";
+import { getTemplateInfo, getFrameworks, getUserStatus, getProjectTypes } from "../../../utils/extensionService/extensionService";
 import { IVersions } from "../../../types/version";
 import { AppState } from "../../combineReducers";
 import { getFrameworksOptions } from "../../../utils/cliTemplatesParser";
@@ -64,8 +64,9 @@ export function* loadFrameworksListSaga(vscode: any) {
 
   function* callBack (){
     const isPreview = yield select((state: AppState) => state.config.previewStatus);
-
-    const event: any = yield call(getFrameworks, vscode, isPreview);
+    //Todo refactor, project type should be on store
+    const typeProject = "FullStackWebApp";
+    const event: any = yield call(getFrameworks, vscode, isPreview, typeProject);
     const message = event.data;
     const optionFrontEndFrameworks = getFrameworksOptions(
       message.payload.frameworks,
@@ -113,5 +114,28 @@ export function* loadFrameworksListSaga(vscode: any) {
       type: USERSELECTION_TYPEKEYS.SELECT_BACKEND_FRAMEWORK,
       payload: defaultSelectedBackEndFramework
     });
+  }
+}
+
+export function* loadProjectTypesListSaga(vscode: any) {
+  yield takeEvery(
+    CONFIG_TYPEKEYS.LOAD,
+    callBack
+  );
+
+  function* callBack (){
+    const platform = yield select((state: AppState) => state.config.platform);
+    const event: any = yield call(getProjectTypes, vscode, platform);
+    const projectTypes = event.data.payload.projectTypes.map((projectType: any) => projectType.name);
+
+    yield put ({
+      type: TEMPLATES_TYPEKEYS.SET_PROJECT_TYPES,
+      payload: projectTypes
+    });
+    
+    /*yield put ({
+      type: USERSELECTION_TYPEKEYS.SELECT_PROJECT_TYPE,
+      payload: projectTypes[0]
+    });*/
   }
 }

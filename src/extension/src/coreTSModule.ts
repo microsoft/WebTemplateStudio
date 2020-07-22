@@ -17,6 +17,7 @@ export class CoreTSModule extends WizardServant {
       [ExtensionCommand.GetPages, this.getPages],
       [ExtensionCommand.GetFeatures, this.getFeatures],
       [ExtensionCommand.GetTemplateInfo, this.getTemplateConfig],
+      [ExtensionCommand.GET_PROJECT_TYPES, this.getProjectTypes],
     ]);
   }
 
@@ -25,9 +26,17 @@ export class CoreTSModule extends WizardServant {
     return {
       payload: {
         scope: message.payload.scope,
-        frameworks,
-        isPreview: message.payload.isPreview,
-        projectType: message.payload.projectType,
+        frameworks
+      },
+    };
+  }
+
+  async getProjectTypes(message: any): Promise<IPayloadResponse> {
+    const projectTypes = await CoreTemplateStudio.GetExistingInstance().getProjectTypes(message.payload.platform);
+    return {
+      payload: {
+        scope: message.payload.scope,
+        projectTypes
       },
     };
   }

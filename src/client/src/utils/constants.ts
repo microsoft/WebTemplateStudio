@@ -184,7 +184,8 @@ const EXTENSION_COMMANDS = {
   GET_FEATURES: "get-features",
   GET_VALIDATIONS: "get-validations",
   LOG: "log",
-  OPEN_LOG: "open-log"
+  OPEN_LOG: "open-log",
+  GET_PROJECT_TYPES: "get-project-types",
 };
 
 const TELEMETRY = {

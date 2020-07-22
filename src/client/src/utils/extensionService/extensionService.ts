@@ -38,14 +38,19 @@ const getValidationsConfig = (paramsMessage: any, vscode: IVSCodeObject): Promis
   return postMessageAsync(EXTENSION_COMMANDS.GET_VALIDATIONS, paramsMessage, vscode);
 }
 
-const getFrameworks = (vscode: IVSCodeObject, isPreview: boolean): Promise<any> => {
+const getFrameworks = (vscode: IVSCodeObject, isPreview: boolean, projectType: string): Promise<any> => {
   return postMessageAsync(EXTENSION_COMMANDS.GET_FRAMEWORKS, {
     module: EXTENSION_MODULES.CORETS,
     command: EXTENSION_COMMANDS.GET_FRAMEWORKS,
-    payload: {
-      isPreview,
-      projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP
-    }
+    payload: { projectType }
+  }, vscode);
+}
+
+const getProjectTypes = (vscode: IVSCodeObject, platform: string): Promise<any> => {
+  return postMessageAsync(EXTENSION_COMMANDS.GET_PROJECT_TYPES, {
+    module: EXTENSION_MODULES.CORETS,
+    command: EXTENSION_COMMANDS.GET_PROJECT_TYPES,
+    payload: { platform }
   }, vscode);
 }
 
@@ -264,6 +269,7 @@ export {
   projectPathValidation,
   getValidationsConfig,
   getFrameworks,
+  getProjectTypes,
   getAllLicenses,
   getLatestVersion,
   getDependencyInfo,

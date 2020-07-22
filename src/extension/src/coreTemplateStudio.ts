@@ -166,6 +166,17 @@ export class CoreTemplateStudio {
     );
   }
 
+  public async getProjectTypes(platform: string): Promise<any> {
+    const getProjectTypesCommand = `${
+      CONSTANTS.CLI.GET_PROJECT_TYPES_COMMAND_PREFIX
+    }\n`;
+    
+    return this.awaitCliEvent(
+      CONSTANTS.CLI.GET_PROJECT_TYPES_COMPLETE_STATE,
+      getProjectTypesCommand
+    );
+  }
+
   public getTemplateConfig(): any {
     return CoreTemplateStudio._templateConfig;
   }
@@ -211,17 +222,6 @@ export class CoreTemplateStudio {
     return this.awaitCliEvent(
       CONSTANTS.CLI.GET_FEATURES_COMPLETE_STATE,
       getFeaturesCommand
-    );
-  }
-
-  public async getProjectTypes(): Promise<any> {
-    // to use this in client
-    const getProjectTypesCommand = `${
-      CONSTANTS.CLI.GET_PROJECT_TYPES_COMMAND_PREFIX
-    }\n`;
-    return this.awaitCliEvent(
-      CONSTANTS.CLI.GET_PROJECT_TYPES_COMPLETE_STATE,
-      getProjectTypesCommand
     );
   }
 
