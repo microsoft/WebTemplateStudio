@@ -9,6 +9,7 @@ import { ICommandPayload } from "./types/commandPayload";
 import { IGenerationPayloadType } from "./types/generationPayloadType";
 import { EventEmitter } from "events";
 import { IEngineGenerationPayloadType } from "./types/engineGenerationPayloadType";
+import { ISyncPayloadType } from "./types/syncPayloadType";
 
 class CliEventEmitter extends EventEmitter {}
 
@@ -147,9 +148,9 @@ export class CoreTemplateStudio {
   }
 
   public async sync(payload: ICommandPayload): Promise<any> {
-    const syncCommand = `${CONSTANTS.CLI.SYNC_COMMAND_PREFIX} -p ${
-      payload.payload.path
-    }\n`;
+    const typedPayload = payload.payload as ISyncPayloadType;
+    const syncCommand = `${CONSTANTS.CLI.SYNC_COMMAND_PREFIX
+    } -p ${typedPayload.path} -t ${typedPayload.platform}\n`;
     this.cliEvents.on(CONSTANTS.CLI.SYNC_PROGRESS_STATE, data => {
       payload.liveMessageHandler(data["status"], data["progress"]);
     });

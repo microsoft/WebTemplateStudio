@@ -13,7 +13,8 @@ export class LaunchExperience {
   }
 
   public async launchApiSyncModule(
-    context: vscode.ExtensionContext
+    context: vscode.ExtensionContext,
+    platform: string
   ): Promise<ISyncReturnType> {
 
     await CoreTemplateStudio.GetInstance(context)
@@ -38,7 +39,7 @@ export class LaunchExperience {
       !syncObject.successfullySynced &&
       syncAttempts < CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS
     ) {
-      syncObject = await this.attemptSync();
+      syncObject = await this.attemptSync(platform);
       syncAttempts++;
       if (!syncObject.successfullySynced) {
         await this.timeout(CONSTANTS.API.SYNC_RETRY_WAIT_TIME);
@@ -56,7 +57,7 @@ export class LaunchExperience {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  private async attemptSync(): Promise<ISyncReturnType> {
+  private async attemptSync(platform: string): Promise<ISyncReturnType> {
     let pathToTemplates: string;
 
     if (process.env.NODE_ENV === "dev" || process.env.NODE_ENV === "development") {
@@ -68,7 +69,7 @@ export class LaunchExperience {
     const apiInstance = CoreTemplateStudio.GetExistingInstance();
     return await apiInstance
       .sync({
-        payload: { path: pathToTemplates },
+        payload: { path: pathToTemplates, platform },
         liveMessageHandler: this.handleSyncLiveData
       })
       .then((syncResult: any) => {

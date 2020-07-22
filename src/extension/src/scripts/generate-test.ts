@@ -1,5 +1,5 @@
 import { CoreTemplateStudio } from "../coreTemplateStudio";
-import { CONSTANTS } from "../constants";
+import { CONSTANTS, AppType } from "../constants";
 
 let instance: CoreTemplateStudio;
 let backends: string[] = [];
@@ -41,6 +41,7 @@ let generateProj = (
       payload: {
         backendFramework: backend,
         frontendFramework: frontend,
+        backendFrameworkLinuxVersion: "",
         pages: pagesObj,
         path: "../../../../../template_test",
         projectName: backend + "-" + frontend,
@@ -67,7 +68,7 @@ let attemptSync: any = (
   }
   return instanceObj
     .sync({
-      payload: { path: CONSTANTS.API.DEVELOPMENT_PATH_TO_TEMPLATES },
+      payload: { path: CONSTANTS.API.DEVELOPMENT_PATH_TO_TEMPLATES, platform: AppType.Web },
       liveMessageHandler: value => {
         value;
       }
