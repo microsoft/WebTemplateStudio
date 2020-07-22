@@ -99,6 +99,7 @@ export const getInitialState = (): AppState => {
           isDirty: true
         }
       },
+      projectType:"",
       services: {
         cosmosDB: null,
         appService: null      

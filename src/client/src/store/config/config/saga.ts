@@ -132,10 +132,10 @@ export function* loadProjectTypesListSaga(vscode: any) {
       type: TEMPLATES_TYPEKEYS.SET_PROJECT_TYPES,
       payload: projectTypes
     });
-    
-    /*yield put ({
+
+    yield put ({
       type: USERSELECTION_TYPEKEYS.SELECT_PROJECT_TYPE,
       payload: projectTypes[0]
-    });*/
+    });
   }
 }
