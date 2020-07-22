@@ -10,7 +10,7 @@ import ResourceManagementClient, {
   ResourceManagementModels
 } from "azure-arm-resource/lib/resource/resourceManagementClient";
 
-import { CONSTANTS, AppType, AzureResourceType } from "../../constants/constants";
+import { CONSTANTS, AzureResourceType } from "../../constants/constants";
 import {
   SubscriptionError,
   AuthorizationError,
@@ -135,7 +135,7 @@ export class AppServiceProvider {
         if (res.nameAvailable) {
           return undefined;
         } else {
-          return MESSAGES.ERRORS.APP_NAME_NOT_AVAILABLE(appName, AppType.Web);
+          return MESSAGES.ERRORS.WEB_APP_NAME_NOT_AVAILABLE(appName);
         }
       })
       .catch(error => {

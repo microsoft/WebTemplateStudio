@@ -1,14 +1,14 @@
 import * as vscode from "vscode";
 import { Controller } from "./controller";
 import { Deploy } from "./deploy";
-import { AppType } from "./constants/constants";
+import { Platform } from "./constants/constants";
 
 export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
     vscode.commands.registerCommand(
       "webTemplateStudioExtension.wizardLaunch",
       async () => {
-        Controller.getInstance(context, AppType.Web);
+        Controller.getInstance(context, Platform.Web);
       }
     ),
     vscode.commands.registerCommand(

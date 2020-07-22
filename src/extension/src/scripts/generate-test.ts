@@ -1,5 +1,5 @@
 import { CoreTemplateStudio } from "../coreTemplateStudio";
-import { AppType } from "../constants/constants";
+import { Platform } from "../constants/constants";
 import { CLI_SETTINGS } from "../constants/cli";
 
 
@@ -70,7 +70,7 @@ let attemptSync: any = (
   }
   return instanceObj
     .sync({
-      payload: { path: CLI_SETTINGS.DEVELOPMENT_PATH_TO_TEMPLATES, platform: AppType.Web },
+      payload: { path: CLI_SETTINGS.DEVELOPMENT_PATH_TO_TEMPLATES, platform: Platform.Web },
       liveMessageHandler: value => {
         value;
       }
