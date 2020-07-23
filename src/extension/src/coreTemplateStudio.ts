@@ -166,7 +166,7 @@ export class CoreTemplateStudio {
     );
   }
 
-  public async getProjectTypes(platform: string): Promise<any> {
+  public async getProjectTypes(): Promise<any> {
     const getProjectTypesCommand = `${
       CONSTANTS.CLI.GET_PROJECT_TYPES_COMMAND_PREFIX
     }\n`;

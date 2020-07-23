@@ -32,7 +32,7 @@ export class CoreTSModule extends WizardServant {
   }
 
   async getProjectTypes(message: any): Promise<IPayloadResponse> {
-    const projectTypes = await CoreTemplateStudio.GetExistingInstance().getProjectTypes(message.payload.platform);
+    const projectTypes = await CoreTemplateStudio.GetExistingInstance().getProjectTypes();
     return {
       payload: {
         scope: message.payload.scope,

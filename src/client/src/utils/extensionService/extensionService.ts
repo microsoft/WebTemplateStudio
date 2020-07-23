@@ -46,11 +46,10 @@ const getFrameworks = (vscode: IVSCodeObject, isPreview: boolean, projectType: s
   }, vscode);
 }
 
-const getProjectTypes = (vscode: IVSCodeObject, platform: string): Promise<any> => {
+const getProjectTypes = (vscode: IVSCodeObject): Promise<any> => {
   return postMessageAsync(EXTENSION_COMMANDS.GET_PROJECT_TYPES, {
     module: EXTENSION_MODULES.CORETS,
-    command: EXTENSION_COMMANDS.GET_PROJECT_TYPES,
-    payload: { platform }
+    command: EXTENSION_COMMANDS.GET_PROJECT_TYPES
   }, vscode);
 }
 

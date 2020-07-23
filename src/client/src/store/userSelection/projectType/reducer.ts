@@ -1,7 +1,7 @@
 import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 import WizardSelectionActionType from "../selectionActionType";
 
-const initialState = "FullStack";
+const initialState = "FullStackWebApp";
 
 const backendFramework = (
   state: string = initialState,

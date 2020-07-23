@@ -125,7 +125,7 @@ export function* loadProjectTypesListSaga(vscode: any) {
 
   function* callBack (){
     const platform = yield select((state: AppState) => state.config.platform);
-    const event: any = yield call(getProjectTypes, vscode, platform);
+    const event: any = yield call(getProjectTypes, vscode);
     const projectTypes = event.data.payload.projectTypes.map((projectType: any) => projectType.name);
 
     yield put ({
