@@ -2,27 +2,32 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
-  "name": "AngularDefault",
-  "shortName": "AngularDefault",
-  "groupIdentity": "wts.Proj.AngularDefault",
-  "identity": "wts.Proj.AngularDefault",
+  "name": "NodeDefault",
+  "shortName": "NodeDefault",
+  "groupIdentity": "wts.Proj.NodeDefault",
+  "identity": "wts.Proj.NodeDefault",
   "description": "",
   "tags": {
     "language": "Any",
     "type": "project",
     "wts.type": "project",
     "wts.projecttype": "FullStackWebApp",
-    "wts.frontendframework": "Angular",
-    "wts.backendframework": "all",
+    "wts.frontendframework": "all",
+    "wts.backendframework": "Node",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.displayOrder": "1",
-    "wts.licenses": "[Angular](https://github.com/angular/angular/blob/master/LICENSE)|[Angular CLI](https://github.com/angular/angular-cli/blob/master/LICENSE)|[Bootstrap](https://github.com/twbs/bootstrap/blob/master/LICENSE)"
+    "wts.compositionOrder": "2",
+    "wts.licenses": "[Node](https://github.com/nodejs/node/blob/master/LICENSE)|[Express](https://github.com/expressjs/express/blob/master/LICENSE)|[Express Generator](https://github.com/expressjs/generator/blob/master/LICENSE)"
   },
-  "sourceName": "wts.AngularDefault",
+  "sourceName": "wts.NodeDefault",
   "preferNameDirectory": true,
   "PrimaryOutputs": [],
   "symbols": {
+    "wts.projectName": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_ProjectName"
+    },
     "wts.userName": {
       "type": "parameter",
       "dataType": "string",
@@ -57,37 +62,47 @@
       "parameters": {
         "format": "yyyy"
       }
+    },
+    "wts.ToLowerPackageJsonDefault":
+    {
+      "type": "generated",
+      "generator": "casing",
+      "parameters": {
+        "source":"wts.projectName",
+        "toLower": true
+      },
+      "replaces": "Param_ToLowerPackageJsonDefault"
     }
   },
   "postActions": [
     {
-      "description": "Add Angular Dependencies",
+      "description": "Add Node Dependencies",
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'@angular/animations': '10.0.2', '@angular/common': '10.0.2', '@angular/compiler': '10.0.2', '@angular/core': '10.0.2', '@angular/forms': '10.0.2','@angular/localize': '10.0.2','@angular/platform-browser': '10.0.2', '@angular/platform-browser-dynamic': '10.0.2', '@angular/router': '10.0.2', '@ng-bootstrap/ng-bootstrap': '6.1.0', 'bootstrap': '4.5.0', 'rxjs': '6.5.5', 'tslib': '^2.0.0', 'zone.js': '0.10.3', 'core-js': '3.6.5', 'fs-extra': '9.0.1'}",
+        "dict": "{'cookie-parser': '1.4.5', 'debug': '4.1.1','express': '4.17.1','http-errors': '1.8.0','morgan': '1.10.0'}",
         "key": "dependencies",
         "jsonPath": "package.json"
       },
       "continueOnError": false
     },
     {
-      "description": "Add Angular Dev Dependencies",
+      "description": "Add Node Dev Dependencies",
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'@angular-devkit/build-angular': '0.1000.0', '@angular/cli': '10.0.0', '@angular/compiler-cli': '10.0.2', '@angular/language-service': '10.0.2', '@types/node': '14.0.14', '@types/jasmine': '3.5.11', '@types/jasminewd2': '2.0.8', 'codelyzer': '5.2.2', 'jasmine-core': '3.5.0', 'jasmine-spec-reporter': '5.0.2', 'karma': '5.1.0', 'karma-chrome-launcher': '3.1.0', 'karma-coverage-istanbul-reporter': '3.0.3', 'karma-jasmine': '3.3.1', 'karma-jasmine-html-reporter': '1.5.4', 'protractor': '7.0.0', 'ts-node': '8.10.2', 'tslint': '6.1.2', 'typescript': '3.9.5'}",
+        "dict": "{}",
         "key": "devDependencies",
         "jsonPath": "package.json"
       },
       "continueOnError": false
     },
     {
-      "description": "Add Angular Build Scripts",
+      "description": "Add Node Build Scripts",
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'start-frontend': 'ng serve --port=3000 --o --proxy-config proxy.config.json', 'ng': 'ng', 'build': 'node ./buildScript', 'test': 'ng test', 'lint': 'ng lint', 'e2e': 'ng e2e'}",
+        "dict": "{'start-backend': 'node server/server.js'}",
         "key": "scripts",
         "jsonPath": "package.json"
       },

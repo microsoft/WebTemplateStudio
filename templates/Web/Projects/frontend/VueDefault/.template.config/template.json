@@ -2,24 +2,24 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
-  "name": "ReactDefault",
-  "shortName": "ReactDefault",
-  "groupIdentity": "wts.Proj.ReactDefault",
-  "identity": "wts.Proj.ReactDefault",
+  "name": "VueDefault",
+  "shortName": "VueDefault",
+  "groupIdentity": "wts.Proj.VueDefault",
+  "identity": "wts.Proj.VueDefault",
   "description": "",
   "tags": {
     "language": "Any",
     "type": "project",
     "wts.type": "project",
     "wts.projecttype": "FullStackWebApp",
-    "wts.frontendframework": "React",
+    "wts.frontendframework": "Vue",
     "wts.backendframework": "all",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.displayOrder": "1",
-    "wts.licenses": "[React](https://github.com/facebook/react/blob/master/LICENSE)|[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)|[Bootstrap](https://github.com/twbs/bootstrap/blob/master/LICENSE)"
+    "wts.compositionOrder": "1",
+    "wts.licenses": "[Vue](https://github.com/vuejs/vue/blob/dev/LICENSE)|[Vue CLI](https://github.com/vuejs/vue-cli/blob/dev/LICENSE)"
   },
-  "sourceName": "wts.ReactDefault",
+  "sourceName": "wts.VueDefault",
   "preferNameDirectory": true,
   "PrimaryOutputs": [],
   "symbols": {
@@ -61,22 +61,33 @@
   },
   "postActions": [
     {
-      "description": "Add React Dependencies",
+      "description": "Add Vue Dependencies",
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'bootstrap': '4.5.0', 'classnames': '2.2.6', 'react': '16.13.1', 'react-dom': '16.13.1', 'react-router-dom': '5.2.0', 'react-scripts': '3.4.1', 'fs-extra': '9.0.1'}",
+        "dict": "{'bootstrap': '4.5.0', 'bootstrap-vue': '2.15.0', 'core-js': '3.6.5', 'vue': '2.6.11', 'vue-router': '3.3.4', 'fs-extra': '9.0.1'}",
         "key": "dependencies",
         "jsonPath": "package.json"
       },
       "continueOnError": false
     },
     {
-      "description": "Add React Build Scripts",
+      "description": "Add Vue Dev Dependencies",
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'start-frontend': 'react-scripts start', 'build': 'node ./buildScript', 'test': 'react-scripts test', 'eject': 'react-scripts eject', 'lint':'eslint src/**/*.js src/**/*.jsx'}",
+        "dict": "{'@vue/cli-plugin-babel': '4.3.1', '@vue/cli-plugin-eslint': '4.3.1', '@vue/cli-service': '4.3.1',  'babel-eslint': '10.1.0', 'eslint': '6.8.0', 'eslint-plugin-vue': '6.2.2', 'vue-template-compiler': '2.6.11'}",
+        "key": "devDependencies",
+        "jsonPath": "package.json"
+      },
+      "continueOnError": false
+    },
+    {
+      "description": "Add Vue Build Scripts",
+      "manualInstructions": [],
+      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
+      "args": {
+        "dict": "{'start-frontend': 'vue-cli-service serve --open', 'build': 'node ./buildScript', 'lint': 'vue-cli-service lint'}",
         "key": "scripts",
         "jsonPath": "package.json"
       },
