@@ -192,7 +192,7 @@ export class Controller {
       itemNameValidationConfig: syncObject.itemNameValidationConfig,
       projectNameValidationConfig: syncObject.projectNameValidationConfig,
       preview,
-      platform: platform
+      platform,
     };
   }
 
