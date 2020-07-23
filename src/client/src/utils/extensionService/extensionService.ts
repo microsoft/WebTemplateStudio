@@ -1,8 +1,8 @@
 import { IVSCodeObject } from "../../types/vscode";
-import {
-  EXTENSION_COMMANDS, EXTENSION_MODULES, WIZARD_CONTENT_INTERNAL_NAMES, PAYLOAD_MESSAGES_TEXT
-} from "../constants";
+import { PAYLOAD_MESSAGES_TEXT } from "../constants/constants";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../constants/internalNames";
 import { ILoggingPayload } from "../../types/logger";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../constants/commands";
 
 const postMessageAsync = (command: string, paramsMessage: any, vscode: IVSCodeObject, scopeId: number = Math.random())=>{
   const promise = new Promise<any>((resolve) => {
@@ -32,10 +32,6 @@ const projectPathValidation = (projectPath: string, projectName: string, vscode:
     projectName
   }, vscode);
   return promise;
-}
-
-const getValidationsConfig = (paramsMessage: any, vscode: IVSCodeObject): Promise<any> => {
-  return postMessageAsync(EXTENSION_COMMANDS.GET_VALIDATIONS, paramsMessage, vscode);
 }
 
 const getFrameworks = (vscode: IVSCodeObject, isPreview: boolean, projectType: string): Promise<any> => {
@@ -266,7 +262,6 @@ const unsubscribeToExtensionEvents = (listener: any) => {
 
 export {
   projectPathValidation,
-  getValidationsConfig,
   getFrameworks,
   getProjectTypes,
   getAllLicenses,

@@ -3,7 +3,7 @@ import { getTemplateInfo, getFrameworks, getUserStatus, getProjectTypes } from "
 import { IVersions } from "../../../types/version";
 import { AppState } from "../../combineReducers";
 import { getFrameworksOptions } from "../../../utils/cliTemplatesParser";
-import { FRAMEWORK_TYPE } from "../../../utils/constants";
+import { FRAMEWORK_TYPE } from "../../../utils/constants/constants";
 import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 import { TEMPLATES_TYPEKEYS } from "../../templates/templateTypeKeys";
 import { AZURE_TYPEKEYS } from "../azure/typeKeys";

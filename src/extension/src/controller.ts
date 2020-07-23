@@ -1,16 +1,10 @@
 import * as vscode from "vscode";
 
 import { Validator } from "./utils/validator";
-import {
-  CONSTANTS,
-  ExtensionModule,
-  TelemetryEventName,
-  ExtensionCommand,
-  AppType
-} from "./constants";
+import { CONSTANTS } from "./constants/constants";
+import { TelemetryEventName } from './constants/telemetry';
 import { ReactPanel } from "./reactPanel";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
-import { VSCodeUI } from "./utils/vscodeUI";
 import { TelemetryService, IActionContext, ITelemetryService } from "./telemetry/telemetryService";
 import { Logger } from "./utils/logger";
 import { WizardServant } from "./wizardServant";
@@ -25,6 +19,9 @@ import { AzureModule } from "./client-modules/azureModule";
 import { getExtensionName, getExtensionVersionNumber } from "./utils/packageInfo";
 import { ISyncReturnType } from "./types/syncReturnType";
 import { LoggerModule } from "./client-modules/loggerModule";
+import { MESSAGES } from "./constants/messages";
+import { ExtensionModule } from "./constants/commands";
+import { EXTENSION_COMMANDS } from "./constants/commands";
 
 export class Controller {
   /**
@@ -34,7 +31,6 @@ export class Controller {
   private static _instance: Controller | undefined;
   public static reactPanelContext: ReactPanel;
   public static TelemetryService: ITelemetryService;
-  private vscodeUI: VSCodeUI;
   public static Logger: Logger;
   private loggerModule: LoggerModule;
   private AzureModule: AzureModule;
@@ -54,7 +50,6 @@ export class Controller {
   private defineExtensionModule(): void {
     Controller.extensionModuleMap = new Map([
       [ExtensionModule.Telemetry, this.Telemetry],
-      [ExtensionModule.VSCodeUI, this.vscodeUI],
       [ExtensionModule.Azure, this.AzureModule],
       [ExtensionModule.Validator, this.Validator],
       [ExtensionModule.Generate, this.Generation],
@@ -84,10 +79,10 @@ export class Controller {
           Controller.handleValidMessage(message.command, responsePayload);
         }
       } else {
-        vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
+        vscode.window.showErrorMessage(MESSAGES.ERRORS.INVALID_COMMAND);
       }
     } else {
-      vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_MODULE);
+      vscode.window.showErrorMessage(MESSAGES.ERRORS.INVALID_MODULE);
     }
   }
 
@@ -117,7 +112,6 @@ export class Controller {
 
     Controller.TelemetryService.trackEvent(TelemetryEventName.ExtensionLaunch);
 
-    this.vscodeUI = new VSCodeUI();
     this.Validator = new Validator();
     this.AzureModule = new AzureModule();
     this.Generation = new Generation(Controller.TelemetryService);
@@ -192,13 +186,12 @@ export class Controller {
       wizardVersion: getExtensionVersionNumber(ctx),
       itemNameValidationConfig: syncObject.itemNameValidationConfig,
       projectNameValidationConfig: syncObject.projectNameValidationConfig,
-      preview,
-      platform: AppType.Web
+      preview
     };
   }
 
   private static handleValidMessage(
-    commandName: ExtensionCommand,
+    commandName: EXTENSION_COMMANDS,
     responsePayload?: any
   ): void {
     responsePayload.command = commandName;

@@ -4,7 +4,7 @@ import LocationSelection from ".";
 import { RenderResult, fireEvent, waitFor, act } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { renderWithIntl } from "../../testUtils";
-import { AzureResourceType } from "../../utils/constants";
+import { AzureResourceType } from "../../utils/constants/azure";
 import * as extensionService from '../../utils/extensionService/extensionService';
 
 jest.mock("../../components/Dropdown", () => require("../../testUtils").dropdownMock);

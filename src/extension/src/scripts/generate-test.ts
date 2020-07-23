@@ -1,5 +1,5 @@
 import { CoreTemplateStudio } from "../coreTemplateStudio";
-import { CONSTANTS } from "../constants";
+import { CLI_SETTINGS } from "../constants/cli";
 
 let instance: CoreTemplateStudio;
 let backends: string[] = [];
@@ -61,13 +61,13 @@ let attemptSync: any = (
   instanceObj: CoreTemplateStudio,
   syncAttemptNum: number
 ) => {
-  if (syncAttemptNum >= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
+  if (syncAttemptNum >= CLI_SETTINGS.MAX_SYNC_REQUEST_ATTEMPTS) {
     CoreTemplateStudio.DestroyInstance();
     throw new Error("too many failed sync requests");
   }
   return instanceObj
     .sync({
-      payload: { path: CONSTANTS.API.DEVELOPMENT_PATH_TO_TEMPLATES },
+      payload: { path: CLI_SETTINGS.DEVELOPMENT_PATH_TO_TEMPLATES },
       liveMessageHandler: value => {
         value;
       }

@@ -1,4 +1,4 @@
-import { AzureResourceType, CONSTANTS } from "../../constants";
+import { AzureResourceType, CONSTANTS } from "../../constants/constants";
 
 export namespace NameGenerator {
   export async function generateValidAzureTypeName(

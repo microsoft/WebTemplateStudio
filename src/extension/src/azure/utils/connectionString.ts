@@ -1,4 +1,4 @@
-import { CONSTANTS } from "../../constants";
+import { CONSTANTS } from "../../constants/constants";
 const Url = require("url-parse");
 
 interface ConnectionStringSqlData {

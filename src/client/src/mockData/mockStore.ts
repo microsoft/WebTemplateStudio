@@ -2,7 +2,7 @@ import { ISelected } from "../types/selected";
 import { FormattedMessage } from "react-intl";
 import { AppState } from "../store/combineReducers";
 import { ModalType } from "../store/navigation/typeKeys";
-import { ROUTES } from "../utils/constants";
+import { ROUTES } from "../utils/constants/routes";
 
 export const getISelected = () => {
   const selected: ISelected = {

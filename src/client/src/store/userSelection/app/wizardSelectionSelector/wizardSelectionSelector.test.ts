@@ -1,6 +1,6 @@
 import configureMockStore from "redux-mock-store";
 import { isEnableNextPageSelector} from "./wizardSelectionSelector";
-import { ROUTES } from "../../../../utils/constants";
+import { ROUTES } from "../../../../utils/constants/routes";
 import { getInitialState } from "../../../../mockData/mockStore";
 import { AppState } from "../../../combineReducers";
 import { ISelected } from "../../../../types/selected";

@@ -10,12 +10,10 @@ import styles from "./styles.module.css";
 import { GenerationItemData, GENERATION_NAMES } from "../../types/generationStatus";
 import { isGenModalOpenSelector } from "../../store/navigation/modals/selector";
 import {
-  EXTENSION_COMMANDS,
   KEY_EVENTS,
   WEB_TEMPLATE_STUDIO_LINKS,
-  TELEMETRY,
-  AZURE_LINKS,
-} from "../../utils/constants";
+  TELEMETRY
+} from "../../utils/constants/constants";
 
 import { AppState } from "../../store/combineReducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
@@ -31,6 +29,8 @@ import { getGenerationData } from "../../store/userSelection/app/selector";
 import { getCosmosDB, getAppService } from "../../store/userSelection/services/servicesSelector";
 import GenerationItem from "./GenerationItem";
 import { Subject, forkJoin } from "rxjs";
+import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
+import { AZURE_LINKS } from "../../utils/constants/azure";
 
 interface IStateProps {
   isModalOpen: boolean;
