@@ -1,13 +1,12 @@
 import classnames from "classnames";
 import * as React from "react";
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
 import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
 import {
   DEVELOPMENT
 } from "./utils/constants/constants";
 
-import { ROUTES } from "./utils/constants/routes";
 
 import appStyles from "./appStyles.module.css";
 import { AppState } from "./store/combineReducers";
@@ -20,6 +19,7 @@ import { setOutputPathAction } from "./store/userSelection/app/action";
 import { loadAction } from "./store/config/config/action";
 import loadable from '@loadable/component'
 import { EXTENSION_COMMANDS } from "./utils/constants/commands";
+import { ROUTES } from "./utils/constants/routes";
 
 const PageSelectFrameworks = loadable(()=> import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"));
 const PageAddPages = loadable(()=> import(/* webpackChunkName: "PageAddPages" */  "./containers/PageAddPages"));
@@ -50,7 +50,8 @@ const App = (props: Props) => {
   const Header = loadable(() => import(/* webpackChunkName: "Header" */  "./containers/Header"));
   const Footer = loadable(() => import(/* webpackChunkName: "Footer" */  "./containers/Footer"));
   const PageNewProject = loadable(() => import(/* webpackChunkName: "PageNewProject" */ "./containers/PageNewProject"));
-
+  const platform = useSelector((state: AppState) => state.config.platform);
+  
   React.useEffect(()=>{
     dispatch(loadAction());
     messageEventsFromExtension();
@@ -73,7 +74,6 @@ const App = (props: Props) => {
     <React.Fragment>
       <Header />
       <TopNavBar  />
-
       <div className={appStyles.container}>
         {(modalState.modalType === NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL) && (<ViewLicensesModal/>)}
         {(modalState.modalType === NAVIGATION_MODAL_TYPES.APP_SERVICE_MODAL) && (<AppServiceModal/>)}

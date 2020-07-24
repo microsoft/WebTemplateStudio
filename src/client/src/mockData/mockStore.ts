@@ -112,6 +112,7 @@ export const getInitialState = (): AppState => {
           modalData: null
         }
       },
+      routesList:[],
       routes: {
         isVisited: {
           '/': true,

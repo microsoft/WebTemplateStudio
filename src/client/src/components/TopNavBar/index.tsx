@@ -5,7 +5,6 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import TopNavBarLink from "../TopNavBarLink";
 import styles from "./styles.module.css";
 
-import { ROUTES_ARRAY } from "../../utils/constants/routes";
 import { isEnableNextPageSelector } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import messages from "./messages";
 import { setPageWizardPageAction, setVisitedWizardPageAction } from "../../store/navigation/routes/action";
@@ -19,6 +18,7 @@ const TopNavBar = (props: Props) => {
   const isVisited = useSelector((state: AppState) => state.navigation.routes.isVisited);
   const selectedRoute = useSelector((state: AppState) => state.navigation.routes.selected);
   const projectNameValidation = useSelector((state: AppState) => state.userSelection.projectNameObject.validation);
+  const ROUTES_ARRAY = useSelector((state: AppState) => state.navigation.routesList);
   const { intl } = props;
   const { formatMessage } = props.intl;
   const topNavBarData: string[] = [

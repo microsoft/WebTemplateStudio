@@ -8,6 +8,7 @@ import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 import { TEMPLATES_TYPEKEYS } from "../../templates/templateTypeKeys";
 import { AZURE_TYPEKEYS } from "../azure/typeKeys";
 import { USERSELECTION_TYPEKEYS } from "../../userSelection/typeKeys";
+import { getRoutes } from "../../../utils/constants/routes";
 
 export function* loadLogin(vscode: any){
   yield takeEvery(
@@ -124,7 +125,6 @@ export function* loadProjectTypesListSaga(vscode: any) {
   );
 
   function* callBack (){
-    const platform = yield select((state: AppState) => state.config.platform);
     const event: any = yield call(getProjectTypes, vscode);
     const projectTypes = event.data.payload.projectTypes.map((projectType: any) => projectType.name);
 
@@ -136,6 +136,22 @@ export function* loadProjectTypesListSaga(vscode: any) {
     yield put ({
       type: USERSELECTION_TYPEKEYS.SELECT_PROJECT_TYPE,
       payload: projectTypes[0]
+    });
+  }
+}
+
+export function* loadRoutesListaSaga(){
+  yield takeEvery(
+    CONFIG_TYPEKEYS.LOAD,
+    callBack
+  );
+
+  function* callBack (){
+    const platform = yield select((state: AppState) => state.config.platform);
+    const routes: string[] = getRoutes(platform);
+    yield put({
+      payload: routes,
+      type: TEMPLATES_TYPEKEYS.SET_ROUTES
     });
   }
 }

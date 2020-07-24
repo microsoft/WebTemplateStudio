@@ -1,6 +1,3 @@
-import { defineMessages } from "react-intl";
-
-
 const ROUTES = {
   PAGE_DETAILS: "/PageDetail",
   SELECT_FRAMEWORKS:  "/SelectFrameworks",
@@ -10,9 +7,7 @@ const ROUTES = {
   NEW_PROJECT: "/"
 };
 
-
-// Presents the routes in the order of the wizard
-const ROUTES_ARRAY = [
+const routesWeb = [
   ROUTES.NEW_PROJECT,
   ROUTES.SELECT_FRAMEWORKS,
   ROUTES.SELECT_PAGES,
@@ -20,8 +15,13 @@ const ROUTES_ARRAY = [
   ROUTES.REVIEW_AND_GENERATE
 ];
 
+const getRoutes = (platform: string): string[] => {
+  let routes:string[] = [];
+  if (platform === "Web") routes = routesWeb;
+  return routes;
+}
 
 export {
   ROUTES,
-  ROUTES_ARRAY
+  getRoutes
 };
