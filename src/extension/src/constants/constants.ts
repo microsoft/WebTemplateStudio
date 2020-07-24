@@ -88,7 +88,7 @@ export enum AzureResourceType {
   AppServicePlan = "app-service-plan"
 }
 
-export enum AppType {
+export enum Platform {
   Web = "Web"
 }
 
