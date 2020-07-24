@@ -19,7 +19,7 @@ import { setOutputPathAction } from "./store/userSelection/app/action";
 import { loadAction } from "./store/config/config/action";
 import loadable from '@loadable/component'
 import { EXTENSION_COMMANDS } from "./utils/constants/commands";
-import { ROUTES } from "./utils/constants/routes";
+import { ROUTE } from "./utils/constants/routes";
 
 const PageSelectFrameworks = loadable(()=> import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"));
 const PageAddPages = loadable(()=> import(/* webpackChunkName: "PageAddPages" */  "./containers/PageAddPages"));
@@ -84,18 +84,18 @@ const App = (props: Props) => {
         <main
           className={classnames(appStyles.centerView, {
             [appStyles.centerViewNewProjectPage]:
-              selectedRoute === ROUTES.NEW_PROJECT,
-            [appStyles.centerViewMaxHeight]: selectedRoute === ROUTES.PAGE_DETAILS,
-            [appStyles.centerViewAzurePage]: selectedRoute === ROUTES.ADD_SERVICES
+              selectedRoute === ROUTE.NEW_PROJECT,
+            [appStyles.centerViewMaxHeight]: selectedRoute === ROUTE.PAGE_DETAILS,
+            [appStyles.centerViewAzurePage]: selectedRoute === ROUTE.ADD_SERVICES
           })}
         >
-           {selectedRoute === ROUTES.NEW_PROJECT ? (
+           {selectedRoute === ROUTE.NEW_PROJECT ? (
             <HomeSplashSVG
              className={classnames(appStyles.splash, appStyles.homeSplash)}
             />
           ) : null}
 
-          {selectedRoute === ROUTES.REVIEW_AND_GENERATE ? (
+          {selectedRoute === ROUTE.REVIEW_AND_GENERATE ? (
             <SummarySplashSVG
               className={classnames(
                 appStyles.splash,
@@ -104,12 +104,12 @@ const App = (props: Props) => {
             />
           ) : null}
 
-          {(selectedRoute === ROUTES.PAGE_DETAILS) && (<PageDetails />)}
-          {(selectedRoute === ROUTES.ADD_SERVICES) && (<PageAddServices/>)}
-          {(selectedRoute === ROUTES.REVIEW_AND_GENERATE) && (<PageReviewAndGenerate />)}
-          {(selectedRoute === ROUTES.SELECT_FRAMEWORKS) && (<PageSelectFrameworks/>)}
-          {(selectedRoute === ROUTES.SELECT_PAGES) && (<PageAddPages isModal={false}/>)}
-          {(selectedRoute === ROUTES.NEW_PROJECT) && (<PageNewProject/>)}
+          {(selectedRoute === ROUTE.PAGE_DETAILS) && (<PageDetails />)}
+          {(selectedRoute === ROUTE.ADD_SERVICES) && (<PageAddServices/>)}
+          {(selectedRoute === ROUTE.REVIEW_AND_GENERATE) && (<PageReviewAndGenerate />)}
+          {(selectedRoute === ROUTE.SELECT_FRAMEWORKS) && (<PageSelectFrameworks/>)}
+          {(selectedRoute === ROUTE.SELECT_PAGES) && (<PageAddPages isModal={false}/>)}
+          {(selectedRoute === ROUTE.NEW_PROJECT) && (<PageNewProject/>)}
 
         </main>
         <RightSidebar />

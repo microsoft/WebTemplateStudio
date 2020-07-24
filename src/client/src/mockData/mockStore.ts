@@ -2,7 +2,7 @@ import { ISelected } from "../types/selected";
 import { FormattedMessage } from "react-intl";
 import { AppState } from "../store/combineReducers";
 import { ModalType } from "../store/navigation/typeKeys";
-import { ROUTES } from "../utils/constants/routes";
+import { ROUTE } from "../utils/constants/routes";
 
 export const getISelected = () => {
   const selected: ISelected = {
@@ -398,7 +398,7 @@ export const setSelectedRoute = (store: AppState, seletedRoute: string) => {
   store.navigation.routes.selected = seletedRoute;
   switch (seletedRoute) 
   {
-    case ROUTES.SELECT_FRAMEWORKS:
+    case ROUTE.SELECT_FRAMEWORKS:
       store.navigation.routes.isVisited = {
         '/': true,
         '/SelectFrameworks': true,
@@ -406,7 +406,7 @@ export const setSelectedRoute = (store: AppState, seletedRoute: string) => {
         '/AddPages': false,
         '/ReviewAndGenerate': false
       };
-    case ROUTES.REVIEW_AND_GENERATE:
+    case ROUTE.REVIEW_AND_GENERATE:
       store.navigation.routes.isVisited = {
         '/': true,
         '/SelectFrameworks': true,

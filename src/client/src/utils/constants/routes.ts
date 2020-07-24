@@ -1,4 +1,4 @@
-const ROUTES = {
+const ROUTE = {
   PAGE_DETAILS: "/PageDetail",
   SELECT_FRAMEWORKS:  "/SelectFrameworks",
   SELECT_PAGES: "/SelectPages",
@@ -8,11 +8,11 @@ const ROUTES = {
 };
 
 const routesWeb = [
-  ROUTES.NEW_PROJECT,
-  ROUTES.SELECT_FRAMEWORKS,
-  ROUTES.SELECT_PAGES,
-  ROUTES.ADD_SERVICES,
-  ROUTES.REVIEW_AND_GENERATE
+  ROUTE.NEW_PROJECT,
+  ROUTE.SELECT_FRAMEWORKS,
+  ROUTE.SELECT_PAGES,
+  ROUTE.ADD_SERVICES,
+  ROUTE.REVIEW_AND_GENERATE
 ];
 
 const getRoutes = (platform: string): string[] => {
@@ -22,6 +22,6 @@ const getRoutes = (platform: string): string[] => {
 }
 
 export {
-  ROUTES,
+  ROUTE,
   getRoutes
 };

@@ -7,7 +7,7 @@ import buttonStyles from "../../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 import { getSvg } from "../../../utils/getSvgUrl";
 import { KEY_EVENTS } from "../../../utils/constants/constants";
-import { ROUTES } from "../../../utils/constants/routes";
+import { ROUTE } from "../../../utils/constants/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { setPageWizardPageAction, setDetailPageAction } from "../../../store/navigation/routes/action";
 import messages from "./messages";
@@ -32,15 +32,15 @@ export const ServiceCard = (props: Props) => {
 
   const showDetails = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     event.stopPropagation();
-    dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
-    dispatch(setDetailPageAction(service, false, ROUTES.ADD_SERVICES));
+    dispatch(setPageWizardPageAction(ROUTE.PAGE_DETAILS));
+    dispatch(setDetailPageAction(service, false, ROUTE.ADD_SERVICES));
   };
 
   const showDetailIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
     event.stopPropagation();
     if (event.key === KEY_EVENTS.ENTER) {
-      dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
-      dispatch(setDetailPageAction(service, false, ROUTES.ADD_SERVICES));
+      dispatch(setPageWizardPageAction(ROUTE.PAGE_DETAILS));
+      dispatch(setDetailPageAction(service, false, ROUTE.ADD_SERVICES));
     }
   };
 

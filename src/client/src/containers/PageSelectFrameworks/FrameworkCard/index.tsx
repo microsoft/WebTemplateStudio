@@ -8,7 +8,7 @@ import { getSvg } from "../../../utils/getSvgUrl";
 import DependencyInfo from "./DependencyInfo";
 import messages from "./messages";
 import { KEY_EVENTS } from "../../../utils/constants/constants";
-import { ROUTES } from "../../../utils/constants/routes";
+import { ROUTE } from "../../../utils/constants/routes";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ReactComponent as Check } from "../../../assets/check.svg";
 import { getLatestVersion } from "../../../utils/extensionService/extensionService";
@@ -57,8 +57,8 @@ const FrameworkCard = (props: Props) => {
   }, [backEndSelect]);
 
   const setDetailPage = (detailPageInfo: IOption) => {
-    dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
-    dispatch(setDetailPageAction(detailPageInfo, false, ROUTES.SELECT_FRAMEWORKS));
+    dispatch(setPageWizardPageAction(ROUTE.PAGE_DETAILS));
+    dispatch(setDetailPageAction(detailPageInfo, false, ROUTE.SELECT_FRAMEWORKS));
   }
   const selectWhenLoadWithoutSelection = () => {
     const frameworkSelectableFirstTime = isFrontEnd

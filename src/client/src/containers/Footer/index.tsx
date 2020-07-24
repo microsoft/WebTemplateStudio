@@ -3,7 +3,7 @@ import * as React from "react";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 import { KEY_EVENTS } from "../../utils/constants/constants";
-import { ROUTES } from "../../utils/constants/routes";
+import { ROUTE } from "../../utils/constants/routes";
 
 import { IVSCodeObject } from "../../types/vscode";
 
@@ -30,16 +30,16 @@ import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
 type Props = InjectedIntlProps;
 
 const pathsNext: any = {
-  [ROUTES.NEW_PROJECT]: ROUTES.SELECT_FRAMEWORKS,
-  [ROUTES.SELECT_FRAMEWORKS]: ROUTES.SELECT_PAGES,
-  [ROUTES.SELECT_PAGES]: ROUTES.ADD_SERVICES,
-  [ROUTES.ADD_SERVICES]: ROUTES.REVIEW_AND_GENERATE,
+  [ROUTE.NEW_PROJECT]: ROUTE.SELECT_FRAMEWORKS,
+  [ROUTE.SELECT_FRAMEWORKS]: ROUTE.SELECT_PAGES,
+  [ROUTE.SELECT_PAGES]: ROUTE.ADD_SERVICES,
+  [ROUTE.ADD_SERVICES]: ROUTE.REVIEW_AND_GENERATE,
 };
 const pathsBack: any = {
-  [ROUTES.SELECT_FRAMEWORKS]: ROUTES.NEW_PROJECT,
-  [ROUTES.SELECT_PAGES]: ROUTES.SELECT_FRAMEWORKS,
-  [ROUTES.ADD_SERVICES]: ROUTES.SELECT_PAGES,
-  [ROUTES.REVIEW_AND_GENERATE]: ROUTES.ADD_SERVICES,
+  [ROUTE.SELECT_FRAMEWORKS]: ROUTE.NEW_PROJECT,
+  [ROUTE.SELECT_PAGES]: ROUTE.SELECT_FRAMEWORKS,
+  [ROUTE.ADD_SERVICES]: ROUTE.SELECT_PAGES,
+  [ROUTE.REVIEW_AND_GENERATE]: ROUTE.ADD_SERVICES,
 };
 
 const Footer = (props: Props) => {
@@ -50,8 +50,8 @@ const Footer = (props: Props) => {
   const currentRoute = useSelector((state: AppState) => state.navigation.routes.selected);
   const isEnableGenerateButton = useSelector((state: AppState) => isEnableGenerateButtonSelector(state));
   const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
-  const isFirstStep = useMemo(() => currentRoute === ROUTES.NEW_PROJECT, [currentRoute]);
-  const isLastStep = useMemo(() => currentRoute === ROUTES.REVIEW_AND_GENERATE, [currentRoute]);
+  const isFirstStep = useMemo(() => currentRoute === ROUTE.NEW_PROJECT, [currentRoute]);
+  const isLastStep = useMemo(() => currentRoute === ROUTE.REVIEW_AND_GENERATE, [currentRoute]);
 
   const dispatch = useDispatch();
 
@@ -101,7 +101,7 @@ const Footer = (props: Props) => {
 
   return (
     <nav aria-label={formatMessage(messages.navAriaLabel)}>
-      {currentRoute !== ROUTES.PAGE_DETAILS && (
+      {currentRoute !== ROUTE.PAGE_DETAILS && (
         <div className={styles.footer}>
           <div>{showLicenses() && formatMessage(messages.license)}</div>
           <div className={styles.buttonContainer}>

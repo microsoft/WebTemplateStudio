@@ -4,7 +4,7 @@ import { ISelected } from "../../../../types/selected";
 import { IValidation } from "../../../../utils/validations/validations";
 import { AppState } from "../../../combineReducers";
 import { UserSelectionState } from "../../combineReducers";
-import { ROUTES } from "../../../../utils/constants/routes";
+import { ROUTE } from "../../../../utils/constants/routes";
 import { IValidations } from "../../../config/validations/model";
 
 const getWizardSelectionsSelector = (state: AppState): UserSelectionState =>
@@ -21,21 +21,21 @@ const getOutputPath = (state: AppState): string =>
   state.userSelection.outputPathObject.outputPath;
 const isEnableNextPageSelector = (state: AppState): boolean =>{
   let valid = false;
-  if (state.navigation.routes.selected === ROUTES.NEW_PROJECT){
+  if (state.navigation.routes.selected === ROUTE.NEW_PROJECT){
     valid = state.userSelection.projectNameObject.validation.isValid === true && 
       state.userSelection.outputPathObject.outputPath !== "";
   }
 
-  if (state.navigation.routes.selected === ROUTES.SELECT_FRAMEWORKS &&
+  if (state.navigation.routes.selected === ROUTE.SELECT_FRAMEWORKS &&
     state.userSelection.frontendFramework.title !== "" && state.userSelection.backendFramework.title !== ""){
     valid = true;
   }
 
-  if (state.navigation.routes.selected === ROUTES.SELECT_PAGES && state.userSelection.pages.length>0){
+  if (state.navigation.routes.selected === ROUTE.SELECT_PAGES && state.userSelection.pages.length>0){
     valid = true;
   }
 
-  if ((state.navigation.routes.selected === ROUTES.ADD_SERVICES || state.navigation.routes.selected === ROUTES.REVIEW_AND_GENERATE)){
+  if ((state.navigation.routes.selected === ROUTE.ADD_SERVICES || state.navigation.routes.selected === ROUTE.REVIEW_AND_GENERATE)){
     valid = true;
   }
 

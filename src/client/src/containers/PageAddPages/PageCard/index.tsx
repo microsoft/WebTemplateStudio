@@ -8,7 +8,7 @@ import styles from "./styles.module.css";
 import { getSvg } from "../../../utils/getSvgUrl";
 import messages from "./messages";
 import { KEY_EVENTS } from "../../../utils/constants/constants";
-import { ROUTES } from "../../../utils/constants/routes";
+import { ROUTE } from "../../../utils/constants/routes";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import { ReactComponent as Plus } from "../../../assets/plus.svg";
@@ -52,15 +52,15 @@ const PageCard = (props: Props) => {
 
   const showMoreInfo = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     event.stopPropagation();
-    dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
-    dispatch(setDetailPageAction(page, false, ROUTES.SELECT_PAGES));
+    dispatch(setPageWizardPageAction(ROUTE.PAGE_DETAILS));
+    dispatch(setDetailPageAction(page, false, ROUTE.SELECT_PAGES));
   };
 
   const showDetailIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
     event.stopPropagation();
     if (event.key === KEY_EVENTS.ENTER) {
-      dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
-      dispatch(setDetailPageAction(page, false, ROUTES.SELECT_PAGES));
+      dispatch(setPageWizardPageAction(ROUTE.PAGE_DETAILS));
+      dispatch(setDetailPageAction(page, false, ROUTE.SELECT_PAGES));
     }
   };
 

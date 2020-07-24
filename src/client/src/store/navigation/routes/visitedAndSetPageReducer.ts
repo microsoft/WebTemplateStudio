@@ -1,14 +1,14 @@
-import { ROUTES } from "../../../utils/constants/routes";
+import { ROUTE } from "../../../utils/constants/routes";
 import { IRoutes } from "../../userSelection/pages/model";
 import { NAVIGATION_ROUTES_TYPEKEYS } from "../typeKeys";
 import RootAction from "../../ActionType";
 
 const initialState = {
-  [ROUTES.NEW_PROJECT]: true,
-  [ROUTES.SELECT_FRAMEWORKS]: false,
-  [ROUTES.SELECT_PAGES]: false,
-  [ROUTES.ADD_SERVICES]: false,
-  [ROUTES.REVIEW_AND_GENERATE]: false
+  [ROUTE.NEW_PROJECT]: true,
+  [ROUTE.SELECT_FRAMEWORKS]: false,
+  [ROUTE.SELECT_PAGES]: false,
+  [ROUTE.ADD_SERVICES]: false,
+  [ROUTE.REVIEW_AND_GENERATE]: false
 };
 
 export const isVisited = (

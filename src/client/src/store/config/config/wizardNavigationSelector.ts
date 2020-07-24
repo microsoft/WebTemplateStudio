@@ -1,4 +1,4 @@
-import { ROUTES } from "../../../utils/constants/routes";
+import { ROUTE } from "../../../utils/constants/routes";
 import { createSelector } from "reselect";
 import { AppState } from "../../combineReducers";
 import { IRoutes } from "../../userSelection/pages/model";
@@ -11,9 +11,9 @@ export interface IVisitedPages {
 
 const getIsVisitedRoutes = (state: AppState) => state.navigation.routes.isVisited;
 const transformIsVisited = (isVisitedRoutes: IRoutes): IVisitedPages => ({
-  showFrameworks: isVisitedRoutes[ROUTES.SELECT_FRAMEWORKS],
-  showPages: isVisitedRoutes[ROUTES.SELECT_PAGES],
-  showReviewAndGenerate: isVisitedRoutes[ROUTES.REVIEW_AND_GENERATE]
+  showFrameworks: isVisitedRoutes[ROUTE.SELECT_FRAMEWORKS],
+  showPages: isVisitedRoutes[ROUTE.SELECT_PAGES],
+  showReviewAndGenerate: isVisitedRoutes[ROUTE.REVIEW_AND_GENERATE]
 });
 
 const getIsVisitedRoutesSelector = createSelector(
