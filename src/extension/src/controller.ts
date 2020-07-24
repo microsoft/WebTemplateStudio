@@ -92,18 +92,20 @@ export class Controller {
    * @returns Singleton Controller type
    */
   public static getInstance(
-    context: vscode.ExtensionContext
+    context: vscode.ExtensionContext,
+    platform: string
   ): Controller {
     if (this._instance) {
       this._instance.showReactPanel();
     } else {
-      this._instance = new Controller(context);
+      this._instance = new Controller(context, platform);
     }
     return this._instance;
   }
 
   private constructor(
-    private context: vscode.ExtensionContext
+    private context: vscode.ExtensionContext,
+    private platform : string
   ) {
     Controller.vsContext = context;
     Controller.TelemetryService = new TelemetryService(
@@ -130,7 +132,7 @@ export class Controller {
       },
       async (progress: vscode.Progress<IVSCodeProgressType>) => {
         const launchExperience = new LaunchExperience(progress);
-        await this.launchWizard(this.context, launchExperience);
+        await this.launchWizard(this.context, launchExperience, this.platform);
       }
     );
   }
@@ -142,14 +144,15 @@ export class Controller {
    */
   public async launchWizard(
     context: vscode.ExtensionContext,
-    launchExperience: LaunchExperience
+    launchExperience: LaunchExperience,
+    platform: string
   ): Promise<void> {
      let syncObject
      await Controller.TelemetryService.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SyncEngine,
       async function(this: IActionContext) {
         return await launchExperience
-          .launchApiSyncModule(context)
+          .launchApiSyncModule(context, platform)
           .then(data => syncObject=data)
           .catch(error => {
             console.log(error);
@@ -165,7 +168,8 @@ export class Controller {
 
       Controller.getTemplateInfoAndStore(
         context,
-        syncObject
+        syncObject,
+        platform
       );
       this.Telemetry.trackCreateNewProject({
         entryPoint: CONSTANTS.TELEMETRY.LAUNCH_WIZARD_STARTED_POINT
@@ -175,7 +179,8 @@ export class Controller {
 
   private static getTemplateInfoAndStore(
     ctx: vscode.ExtensionContext,
-    syncObject: ISyncReturnType
+    syncObject: ISyncReturnType,
+    platform: string
   ): void {
     const preview = vscode.workspace
       .getConfiguration()
@@ -186,7 +191,8 @@ export class Controller {
       wizardVersion: getExtensionVersionNumber(ctx),
       itemNameValidationConfig: syncObject.itemNameValidationConfig,
       projectNameValidationConfig: syncObject.projectNameValidationConfig,
-      preview
+      preview,
+      platform,
     };
   }
 
