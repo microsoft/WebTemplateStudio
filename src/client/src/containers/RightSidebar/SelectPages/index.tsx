@@ -11,7 +11,7 @@ import { ReactComponent as HideIcon } from "../../../assets/i-hide.svg";
 import styles from "./styles.module.css";
 import { AppState } from "../../../store/combineReducers";
 
-import { PAGE_NAME_CHARACTER_LIMIT } from "../../../utils/constants";
+import { PAGE_NAME_CHARACTER_LIMIT } from "../../../utils/constants/constants";
 import messages from "./messages";
 import { setPagesAction } from "../../../store/userSelection/pages/action";
 

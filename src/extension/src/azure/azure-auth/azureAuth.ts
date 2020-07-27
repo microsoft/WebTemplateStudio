@@ -6,7 +6,8 @@ import {
   ResourceManagementClient as RMC
 } from "azure-arm-resource";
 import { AuthorizationError, ResourceGroupError } from "../../errors";
-import { CONSTANTS, DialogMessages, DialogResponses } from "../../constants";
+import { CONSTANTS } from "../../constants/constants";
+import { MESSAGES } from "../../constants/messages";
 
 const MICROSOFT_DOCUMENT_DB_PROVIDER = "Microsoft.DocumentDb";
 const MICROSOFT_WEB_PROVIDER = "Microsoft.Web";
@@ -55,14 +56,14 @@ export abstract class AzureAuth {
   public static async promptUsersToLogout(): Promise<any> {
     return await vscode.window
       .showInformationMessage(
-        DialogMessages.logoutPrompt,
-        ...[DialogResponses.yes, DialogResponses.no]
+        MESSAGES.DIALOG_MESSAGES.logoutPrompt,
+        ...[MESSAGES.DIALOG_RESPONSES.yes, MESSAGES.DIALOG_RESPONSES.no]
       )
       .then((selection: vscode.MessageItem | undefined) => {
         const userConfirmation = {
           signOut: false
         };
-        if (selection === DialogResponses.yes) {
+        if (selection === MESSAGES.DIALOG_RESPONSES.yes) {
           userConfirmation.signOut = true;
         }
         return { payload: userConfirmation };
@@ -75,7 +76,7 @@ export abstract class AzureAuth {
       await vscode.commands.executeCommand("azure-account.login");
       // Make sure it did not return from timeout
       if (this.api.status === CONSTANTS.AZURE_LOGIN_STATUS.LOGGING_IN) {
-        throw new AuthorizationError(CONSTANTS.ERRORS.LOGIN_TIMEOUT);
+        throw new AuthorizationError(MESSAGES.ERRORS.LOGIN_TIMEOUT);
       }
       return true;
     } else {
@@ -92,7 +93,7 @@ export abstract class AzureAuth {
       await vscode.commands.executeCommand("azure-account.logout");
       // Make sure it did not return from timeout
       if (this.api.status === CONSTANTS.AZURE_LOGIN_STATUS.LOGGED_IN) {
-        throw new AuthorizationError(CONSTANTS.ERRORS.LOGOUT_FAILED);
+        throw new AuthorizationError(MESSAGES.ERRORS.LOGOUT_FAILED);
       }
     }
     return true;
@@ -178,7 +179,7 @@ export abstract class AzureAuth {
           return resourceGroup;
         }
       }
-      throw new ResourceGroupError(CONSTANTS.ERRORS.RESOURCE_GROUP_NOT_FOUND);
+      throw new ResourceGroupError(MESSAGES.ERRORS.RESOURCE_GROUP_NOT_FOUND);
     });
   }
   /*
@@ -206,7 +207,7 @@ export abstract class AzureAuth {
     subscriptionItem: SubscriptionItem
   ): Promise<LocationItem[]> {
     if (subscriptionItem === null || subscriptionItem === undefined) {
-      return Promise.reject(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_DEFINED);
+      return Promise.reject(MESSAGES.ERRORS.SUBSCRIPTION_NOT_DEFINED);
     }
 
     await this.initializeLocations(subscriptionItem);
@@ -240,7 +241,7 @@ export abstract class AzureAuth {
     subscriptionItem: SubscriptionItem
   ): Promise<LocationItem[]> {
     if (subscriptionItem === null || subscriptionItem === undefined) {
-      return Promise.reject(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_DEFINED);
+      return Promise.reject(MESSAGES.ERRORS.SUBSCRIPTION_NOT_DEFINED);
     }
 
     await this.initializeLocations(subscriptionItem);

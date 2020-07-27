@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { getDropdownSubscriptionsSelector } from "../../store/config/azure/selector";
 import { useState } from "react";
 import { AppState } from "../../store/combineReducers";
-import { AZURE_LINKS } from "../../utils/constants";
+import { AZURE_LINKS } from "../../utils/constants/azure";
 
 interface IProps {
   initialSubscription: string;

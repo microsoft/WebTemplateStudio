@@ -1,12 +1,14 @@
 import { SubscriptionItem } from "../azure/azure-auth/azureAuth";
 
-import { CONSTANTS, AzureResourceType, ExtensionCommand } from "../constants";
+import { AzureResourceType } from "../constants/constants";
+import { EXTENSION_COMMANDS } from "../constants/commands";
 
 import { AuthorizationError } from "../errors";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
 import { Logger } from "../utils/logger";
 import { AzureServices } from "../azure/azureServices";
 import { NameGenerator } from "../azure/utils/nameGenerator";
+import { MESSAGES } from "../constants/messages";
 
 interface Subscription {
   name: string;
@@ -14,16 +16,16 @@ interface Subscription {
 }
 
 export class AzureModule extends WizardServant {
-  clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
-    [ExtensionCommand.Login, this.login],
-    [ExtensionCommand.Logout, this.logout],
-    [ExtensionCommand.GetUserStatus, this.getUserStatus],
-    [ExtensionCommand.GetResourceGroups, this.getResourceGroups],
-    [ExtensionCommand.GetLocations, this.getLocations],
-    [ExtensionCommand.GetValidAppServiceName, this.getValidAppServiceName],
-    [ExtensionCommand.GetValidCosmosName, this.getValidCosmosName],
-    [ExtensionCommand.ValidateCosmosName, this.validateCosmosName],
-    [ExtensionCommand.ValidateAppServiceName, this.validateAppServiceName],
+  clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
+    [EXTENSION_COMMANDS.AZURE_LOGIN, this.login],
+    [EXTENSION_COMMANDS.AZURE_LOGOUT, this.logout],
+    [EXTENSION_COMMANDS.GET_USER_STATUS, this.getUserStatus],
+    [EXTENSION_COMMANDS.GET_RESOURCE_GROUPS, this.getResourceGroups],
+    [EXTENSION_COMMANDS.GET_LOCATIONS, this.getLocations],
+    [EXTENSION_COMMANDS.GET_VALID_APP_SERVICE_NAME, this.getValidAppServiceName],
+    [EXTENSION_COMMANDS.GET_VALID_COSMOS_NAME, this.getValidCosmosName],
+    [EXTENSION_COMMANDS.VALIDATE_COSMOS_NAME, this.validateCosmosName],
+    [EXTENSION_COMMANDS.VALIDATE_APPSERVICE_NAME, this.validateAppServiceName],
   ]);
 
   public async login(message: any): Promise<IPayloadResponse> {
@@ -33,7 +35,7 @@ export class AzureModule extends WizardServant {
       Logger.appendLog("EXTENSION", "info", "User logged in");
       return this.getUserStatus(message);
     }
-    throw new AuthorizationError(CONSTANTS.ERRORS.LOGIN_TIMEOUT);
+    throw new AuthorizationError(MESSAGES.ERRORS.LOGIN_TIMEOUT);
   }
 
   public async logout(message: any): Promise<IPayloadResponse> {

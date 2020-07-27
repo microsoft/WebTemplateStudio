@@ -1,9 +1,10 @@
 import * as vscode from "vscode";
-import { CONSTANTS } from "./constants";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
 import { ISyncReturnType } from "./types/syncReturnType";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { Logger } from "./utils/logger";
+import { MESSAGES } from "./constants/messages";
+import { CLI_SETTINGS } from "./constants/cli";
 
 export class LaunchExperience {
   private static _progressObject: vscode.Progress<IVSCodeProgressType>;
@@ -13,17 +14,18 @@ export class LaunchExperience {
   }
 
   public async launchApiSyncModule(
-    context: vscode.ExtensionContext
+    context: vscode.ExtensionContext,
+    platform: string
   ): Promise<ISyncReturnType> {
 
     await CoreTemplateStudio.GetInstance(context)
       .catch((error: Error) => {
-        error.message = CONSTANTS.ERRORS.CANNOT_START_GENERATION_ENGINE.concat(" ", error.message);
+        error.message = MESSAGES.ERRORS.CANNOT_START_GENERATION_ENGINE.concat(" ", error.message);
         throw error;
     });
 
     LaunchExperience._progressObject.report({
-      message: CONSTANTS.INFO.STARTING_GENERATION_SERVER
+      message: MESSAGES.INFO.STARTING_GENERATION_SERVER
     });
 
     let syncObject: ISyncReturnType = {
@@ -36,17 +38,17 @@ export class LaunchExperience {
     let syncAttempts = 0;
     while (
       !syncObject.successfullySynced &&
-      syncAttempts < CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS
+      syncAttempts < CLI_SETTINGS.MAX_SYNC_REQUEST_ATTEMPTS
     ) {
-      syncObject = await this.attemptSync();
+      syncObject = await this.attemptSync(platform);
       syncAttempts++;
       if (!syncObject.successfullySynced) {
-        await this.timeout(CONSTANTS.API.SYNC_RETRY_WAIT_TIME);
+        await this.timeout(CLI_SETTINGS.SYNC_RETRY_WAIT_TIME);
       }
     }
-    if (syncAttempts >= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
+    if (syncAttempts >= CLI_SETTINGS.MAX_SYNC_REQUEST_ATTEMPTS) {
       CoreTemplateStudio.DestroyInstance();
-      throw new Error(CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS(syncObject.errorMessage));
+      throw new Error(MESSAGES.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS(syncObject.errorMessage));
     }
 
     return { ...syncObject };
@@ -56,19 +58,19 @@ export class LaunchExperience {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  private async attemptSync(): Promise<ISyncReturnType> {
+  private async attemptSync(platform: string): Promise<ISyncReturnType> {
     let pathToTemplates: string;
 
     if (process.env.NODE_ENV === "dev" || process.env.NODE_ENV === "development") {
-      pathToTemplates = CONSTANTS.API.DEVELOPMENT_PATH_TO_TEMPLATES;
+      pathToTemplates = CLI_SETTINGS.DEVELOPMENT_PATH_TO_TEMPLATES;
     } else {
-      pathToTemplates = CONSTANTS.API.PRODUCTION_PATH_TO_TEMPLATES;
+      pathToTemplates = CLI_SETTINGS.PRODUCTION_PATH_TO_TEMPLATES;
     }
 
     const apiInstance = CoreTemplateStudio.GetExistingInstance();
     return await apiInstance
       .sync({
-        payload: { path: pathToTemplates },
+        payload: { path: pathToTemplates, platform },
         liveMessageHandler: this.handleSyncLiveData
       })
       .then((syncResult: any) => {

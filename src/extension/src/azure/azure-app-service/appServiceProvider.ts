@@ -10,7 +10,7 @@ import ResourceManagementClient, {
   ResourceManagementModels
 } from "azure-arm-resource/lib/resource/resourceManagementClient";
 
-import { CONSTANTS, AppType, AzureResourceType } from "../../constants";
+import { CONSTANTS, AzureResourceType } from "../../constants/constants";
 import {
   SubscriptionError,
   AuthorizationError,
@@ -24,6 +24,7 @@ import { AppNameValidationResult, NameValidator } from "../utils/nameValidator";
 import { ResourceManager } from "../azure-arm/resourceManager";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
 import { Controller } from "../../controller";
+import { MESSAGES } from "../../constants/messages";
 
 export interface AppServiceSelections {
   siteName: string;
@@ -97,7 +98,7 @@ export class AppServiceProvider {
       userSubscriptionItem.subscription === undefined ||
       userSubscriptionItem.subscriptionId === undefined
     ) {
-      throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_DEFINED);
+      throw new SubscriptionError(MESSAGES.ERRORS.SUBSCRIPTION_NOT_DEFINED);
     }
 
     return new WebSiteManagementClient(
@@ -124,7 +125,7 @@ export class AppServiceProvider {
       return validationStatus.message;
     }
     if (this.webClient === undefined) {
-      return CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED;
+      return MESSAGES.ERRORS.WEBSITE_CLIENT_NOT_DEFINED;
     }
     return await this.webClient
       .checkNameAvailability(appName + CONSTANTS.APP_SERVICE_DOMAIN, "Site", {
@@ -134,7 +135,7 @@ export class AppServiceProvider {
         if (res.nameAvailable) {
           return undefined;
         } else {
-          return CONSTANTS.ERRORS.APP_NAME_NOT_AVAILABLE(appName, AppType.Web);
+          return MESSAGES.ERRORS.WEB_APP_NAME_NOT_AVAILABLE(appName);
         }
       })
       .catch(error => {
@@ -226,7 +227,7 @@ export class AppServiceProvider {
     }
     if (tries >= CONSTANTS.VALIDATION_LIMIT) {
       throw new AppServiceError(
-        CONSTANTS.ERRORS.CREATION_TRIES_EXCEEDED("app service plan")
+        MESSAGES.ERRORS.CREATION_TRIES_EXCEEDED("app service plan")
       );
     }
     return generatedName;
@@ -234,7 +235,7 @@ export class AppServiceProvider {
 
   private async validateASPName(name: string): Promise<boolean> {
     if (this.webClient === undefined) {
-      throw new AuthorizationError(CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
+      throw new AuthorizationError(MESSAGES.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
     }
     const exist = await this.checkASPExistence(name);
     return !exist;
@@ -242,7 +243,7 @@ export class AppServiceProvider {
 
   private async checkASPExistence(name: string): Promise<boolean> {
     if (this.webClient === undefined) {
-      throw new AuthorizationError(CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
+      throw new AuthorizationError(MESSAGES.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
     }
     const allASP: AppServicePlanCollection = await this.webClient.appServicePlans.list();
     return allASP.some(asp => {
@@ -256,7 +257,7 @@ export class AppServiceProvider {
     settings: StringDictionary
   ): Promise<void> {
     if (this.webClient === undefined) {
-      throw new AuthorizationError(CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
+      throw new AuthorizationError(MESSAGES.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
     }
     this.webClient.webApps.updateApplicationSettings(
       resourceGroupName,

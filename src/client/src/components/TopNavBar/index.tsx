@@ -5,7 +5,7 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import TopNavBarLink from "../TopNavBarLink";
 import styles from "./styles.module.css";
 
-import { ROUTES_ARRAY } from "../../utils/constants";
+import { ROUTES_ARRAY } from "../../utils/constants/routes";
 import { isEnableNextPageSelector } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import messages from "./messages";
 import { setPageWizardPageAction, setVisitedWizardPageAction } from "../../store/navigation/routes/action";

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { INTL_MESSAGES, KEY_EVENTS } from "../../utils/constants";
+import { INTL_MESSAGES, KEY_EVENTS } from "../../utils/constants/constants";
 
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";

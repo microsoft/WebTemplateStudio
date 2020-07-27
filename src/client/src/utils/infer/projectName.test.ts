@@ -1,7 +1,7 @@
 import { inferProjectName } from './projectName';
 import {
   EXTENSION_COMMANDS
-} from "../constants";
+} from "../constants/constants";
 
 describe("validate infer name", () => {
   xit("is not same",(resolve)=>{

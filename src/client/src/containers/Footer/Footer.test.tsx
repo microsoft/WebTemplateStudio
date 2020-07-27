@@ -6,7 +6,7 @@ import { RenderResult } from "@testing-library/react";
 import { renderWithStore } from "../../testUtils";
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
-import { ROUTES } from "../../utils/constants";
+import { ROUTES } from "../../utils/constants/routes";
 import { AppState } from "../../store/combineReducers";
 
 describe("Footer", () => {

@@ -1,6 +1,6 @@
 import { IApiTemplateInfo } from "../types/apiTemplateInfo";
 import { IOption } from "../types/option";
-import { FRAMEWORK_TYPE } from "./constants";
+import { FRAMEWORK_TYPE } from "./constants/constants";
 
 export const getFrameworksOptions = (json: any[], type: FRAMEWORK_TYPE): IOption[] => {
   const items = getFrameworksTemplateInfo(json, type);

@@ -1,4 +1,4 @@
-import { CONSTANTS } from "../../constants";
+import { CONSTANTS } from "../../constants/constants";
 import NodeChecker from "./validators/nodeValidator";
 import PythonChecker from "./validators/pythonValidator";
 import NetCoreChecker from "./validators/netCoreValidator";

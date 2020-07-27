@@ -7,10 +7,8 @@ import About from "./About";
 import SelectPages from "./SelectPages";
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
-import {
-  ROUTES,
-  KEY_EVENTS
-} from "../../utils/constants";
+import { KEY_EVENTS } from "../../utils/constants/constants";
+import { ROUTES } from "../../utils/constants/routes";
 import messages from "./strings";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 
