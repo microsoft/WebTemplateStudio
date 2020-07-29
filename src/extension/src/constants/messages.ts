@@ -37,12 +37,11 @@ export const MESSAGES = {
       "error.subscriptionNotFound",
       "No subscription found with this name."
     ),
-    APP_NAME_NOT_AVAILABLE: (appName: string, type: string): string => {
+    WEB_APP_NAME_NOT_AVAILABLE: (appName: string): string => {
       return localize(
         "error.appNameNotAvailable",
-        "{1} app name {0} is not available",
-        appName,
-        type
+        "Web app name {0} is not available",
+        appName
       );
     },
     APP_SERVICE_UNDEFINED_ID: localize(

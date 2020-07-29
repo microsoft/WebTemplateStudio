@@ -1,5 +1,7 @@
 import { CoreTemplateStudio } from "../coreTemplateStudio";
+import { Platform } from "../constants/constants";
 import { CLI_SETTINGS } from "../constants/cli";
+
 
 let instance: CoreTemplateStudio;
 let backends: string[] = [];
@@ -41,6 +43,7 @@ let generateProj = (
       payload: {
         backendFramework: backend,
         frontendFramework: frontend,
+        backendFrameworkLinuxVersion: "",
         pages: pagesObj,
         path: "../../../../../template_test",
         projectName: backend + "-" + frontend,
@@ -67,7 +70,7 @@ let attemptSync: any = (
   }
   return instanceObj
     .sync({
-      payload: { path: CLI_SETTINGS.DEVELOPMENT_PATH_TO_TEMPLATES },
+      payload: { path: CLI_SETTINGS.DEVELOPMENT_PATH_TO_TEMPLATES, platform: Platform.Web },
       liveMessageHandler: value => {
         value;
       }
