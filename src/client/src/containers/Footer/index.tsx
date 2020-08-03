@@ -24,7 +24,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { setPageWizardPageAction, setVisitedWizardPageAction } from "../../store/navigation/routes/action";
 import { getIsVisitedRoutesSelector } from "../../store/config/config/wizardNavigationSelector";
 import { useMemo } from "react";
-import { setIsDirtyAction } from "../../store/navigation/isDirty/action";
 import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
 
 type Props = InjectedIntlProps;
@@ -65,20 +64,17 @@ const Footer = (props: Props) => {
     e.preventDefault();
     trackPageForTelemetry(currentRoute);
     dispatch(openGenModalAction());
-    dispatch(setIsDirtyAction(false));
   };
 
   const navigateBack = () => {
     trackPageForTelemetry(currentRoute);
     dispatch(setPageWizardPageAction(pathsBack[currentRoute]));
-    dispatch(setIsDirtyAction(true));
   };
 
   const navigateForward = () => {
     trackPageForTelemetry(currentRoute);
     dispatch(setVisitedWizardPageAction(pathsNext[currentRoute]));
     dispatch(setPageWizardPageAction(pathsNext[currentRoute]));
-    dispatch(setIsDirtyAction(true));
   };
 
   const navigateForwardOnKeyPress = (event: React.KeyboardEvent<HTMLAnchorElement>) => {

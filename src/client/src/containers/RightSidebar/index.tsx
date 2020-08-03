@@ -24,7 +24,6 @@ const RightSidebar = (props: Props)=>{
   const [ isSidebarOpen, setIsSiderbarOpen ] = React.useState(true);
   const hasServices: boolean = useSelector(hasServicesSelector);
   const selectedRoute = useSelector((state: AppState) => state.navigation.routes.selected);
-  const navigateIsDirty = useSelector((state: AppState) => state.navigation.isDirty);
   const isFirstOrLastPage: boolean = React.useMemo<boolean>(()=>selectedRoute === ROUTE.NEW_PROJECT ||
     selectedRoute === ROUTE.REVIEW_AND_GENERATE,[selectedRoute]);
 
@@ -41,10 +40,6 @@ const RightSidebar = (props: Props)=>{
       showHideMenu();
     }
   };
-
-  React.useEffect(()=>{
-    if (navigateIsDirty===false) setIsSiderbarOpen(true);
-  },[navigateIsDirty]);
 
   return (
     <div>

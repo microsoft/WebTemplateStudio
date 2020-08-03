@@ -10,10 +10,7 @@ import messages from "./messages";
 import stylesTopNavBarLink from "../TopNavBarLink/styles.module.css";
 import { AppState } from "../../store/combineReducers";
 import * as routesActions from "../../store/navigation/routes/action";
-import * as isDirtyActions from "../../store/navigation/isDirty/action";
 const spySetPageWizardPageAction = jest.spyOn(routesActions, 'setPageWizardPageAction');
-//const spySetVisitedWizardPageAction = jest.spyOn(routesAction, 'setVisitedWizardPageAction');
-const spySetIsDirtyAction= jest.spyOn(isDirtyActions, 'setIsDirtyAction');
 
 describe("TopNavBar", () => {
   let wrapper: RenderResult;
@@ -27,7 +24,6 @@ describe("TopNavBar", () => {
       initialState = getInitialState();
       store = mockStore(initialState);
       spySetPageWizardPageAction.mockClear();
-      spySetIsDirtyAction.mockClear();
     });
 
     it("renders without crashing", () => {
@@ -42,7 +38,6 @@ describe("TopNavBar", () => {
 
       fireEvent.click(text);
       expect(spySetPageWizardPageAction).toHaveBeenCalled();
-      expect(spySetIsDirtyAction).toHaveBeenCalled();
     });
 
     it("New Project number", () => {
@@ -52,7 +47,6 @@ describe("TopNavBar", () => {
 
       fireEvent.click(number);
       expect(spySetPageWizardPageAction).toHaveBeenCalled();
-      expect(spySetIsDirtyAction).toHaveBeenCalled();
     });
 
     it("Add Frameworks text", () => {
@@ -62,7 +56,6 @@ describe("TopNavBar", () => {
 
       fireEvent.click(text);
       expect(spySetPageWizardPageAction).toHaveBeenCalled();
-      expect(spySetIsDirtyAction).toHaveBeenCalled();
     });
 
     it("Add Frameworks number", () => {
@@ -72,7 +65,6 @@ describe("TopNavBar", () => {
 
       fireEvent.click(number);
       expect(spySetPageWizardPageAction).toHaveBeenCalled();
-      expect(spySetIsDirtyAction).toHaveBeenCalled();
     });
 
     it("Add Pages Text", () => {
@@ -82,7 +74,6 @@ describe("TopNavBar", () => {
 
       fireEvent.click(text);
       expect(spySetPageWizardPageAction).toHaveBeenCalled();
-      expect(spySetIsDirtyAction).toHaveBeenCalled();
     });
 
     it("Add Pages Number", () => {
@@ -92,7 +83,6 @@ describe("TopNavBar", () => {
 
       fireEvent.click(number);
       expect(spySetPageWizardPageAction).toHaveBeenCalled();
-      expect(spySetIsDirtyAction).toHaveBeenCalled();
     });
 
     it("Add Optional Cloud Service text", () => {
@@ -102,7 +92,6 @@ describe("TopNavBar", () => {
 
       fireEvent.click(text);
       expect(spySetPageWizardPageAction).toHaveBeenCalled();
-      expect(spySetIsDirtyAction).toHaveBeenCalled();
     });
 
     it("Add Optional Cloud Service number", () => {
@@ -112,7 +101,6 @@ describe("TopNavBar", () => {
 
       fireEvent.click(number);
       expect(spySetPageWizardPageAction).toHaveBeenCalled();
-      expect(spySetIsDirtyAction).toHaveBeenCalled();
     });
 
     it("Summary text", () => {
@@ -122,7 +110,6 @@ describe("TopNavBar", () => {
 
       fireEvent.click(text);
       expect(spySetPageWizardPageAction).toHaveBeenCalled();
-      expect(spySetIsDirtyAction).toHaveBeenCalled();
     });
 
     it("Summary number", () => {
@@ -132,7 +119,6 @@ describe("TopNavBar", () => {
 
       fireEvent.click(number);
       expect(spySetPageWizardPageAction).toHaveBeenCalled();
-      expect(spySetIsDirtyAction).toHaveBeenCalled();
     });
   });
 
@@ -144,7 +130,6 @@ describe("TopNavBar", () => {
       initialState.userSelection.projectNameObject.validation.isValid=false;
       store = mockStore(initialState);
       spySetPageWizardPageAction.mockClear();
-      spySetIsDirtyAction.mockClear();
     });
 
     it("renders without crashing", () => {
@@ -159,7 +144,6 @@ describe("TopNavBar", () => {
 
       fireEvent.click(text);
       expect(spySetPageWizardPageAction).not.toHaveBeenCalled();
-      expect(spySetIsDirtyAction).not.toHaveBeenCalled();
     });
 
     it("New Project number", () => {
@@ -169,7 +153,6 @@ describe("TopNavBar", () => {
 
       fireEvent.click(number);
       expect(spySetPageWizardPageAction).not.toHaveBeenCalled();
-      expect(spySetIsDirtyAction).not.toHaveBeenCalled();
     });
 
     it("Add Frameworks text", () => {
@@ -179,7 +162,6 @@ describe("TopNavBar", () => {
 
       fireEvent.click(text);
       expect(spySetPageWizardPageAction).not.toHaveBeenCalled();
-      expect(spySetIsDirtyAction).not.toHaveBeenCalled();
     });
 
     it("Add Frameworks number", () => {
@@ -189,7 +171,6 @@ describe("TopNavBar", () => {
 
       fireEvent.click(number);
       expect(spySetPageWizardPageAction).not.toHaveBeenCalled();
-      expect(spySetIsDirtyAction).not.toHaveBeenCalled();
     });
 
     it("Add Pages Text", () => {
@@ -199,7 +180,6 @@ describe("TopNavBar", () => {
 
       fireEvent.click(text);
       expect(spySetPageWizardPageAction).not.toHaveBeenCalled();
-      expect(spySetIsDirtyAction).not.toHaveBeenCalled();
     });
 
     it("Add Pages Number", () => {
@@ -209,7 +189,6 @@ describe("TopNavBar", () => {
 
       fireEvent.click(number);
       expect(spySetPageWizardPageAction).not.toHaveBeenCalled();
-      expect(spySetIsDirtyAction).not.toHaveBeenCalled();
     });
 
     it("Add Optional Cloud Service text", () => {
@@ -219,7 +198,6 @@ describe("TopNavBar", () => {
 
       fireEvent.click(text);
       expect(spySetPageWizardPageAction).not.toHaveBeenCalled();
-      expect(spySetIsDirtyAction).not.toHaveBeenCalled();
     });
 
     it("Add Optional Cloud Service number", () => {
@@ -229,7 +207,6 @@ describe("TopNavBar", () => {
 
       fireEvent.click(number);
       expect(spySetPageWizardPageAction).not.toHaveBeenCalled();
-      expect(spySetIsDirtyAction).not.toHaveBeenCalled();
     });
 
     it("Summary text", () => {
@@ -239,7 +216,6 @@ describe("TopNavBar", () => {
 
       fireEvent.click(text);
       expect(spySetPageWizardPageAction).not.toHaveBeenCalled();
-      expect(spySetIsDirtyAction).not.toHaveBeenCalled();
     });
 
     it("Summary number", () => {
@@ -249,7 +225,6 @@ describe("TopNavBar", () => {
 
       fireEvent.click(number);
       expect(spySetPageWizardPageAction).not.toHaveBeenCalled();
-      expect(spySetIsDirtyAction).not.toHaveBeenCalled();
     });
   });
 });
