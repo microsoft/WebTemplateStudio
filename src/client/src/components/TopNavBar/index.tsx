@@ -10,6 +10,7 @@ import messages from "./messages";
 import { setPageWizardPageAction, setVisitedWizardPageAction } from "../../store/navigation/routes/action";
 import { AppState } from "../../store/combineReducers";
 import { setIsDirtyAction } from "../../store/navigation/isDirty/action";
+import { IRoutesNavItems } from "../../types/route";
 
 type Props = InjectedIntlProps;
 
@@ -18,16 +19,11 @@ const TopNavBar = (props: Props) => {
   const isVisited = useSelector((state: AppState) => state.navigation.routes.isVisited);
   const selectedRoute = useSelector((state: AppState) => state.navigation.routes.selected);
   const projectNameValidation = useSelector((state: AppState) => state.userSelection.projectNameObject.validation);
-  const ROUTES_ARRAY = useSelector((state: AppState) => state.navigation.routesList);
+  const routesNavItems: IRoutesNavItems[] = useSelector((state: AppState) => state.navigation.routesNavItems);
+  const ROUTES_ARRAY: string[] = routesNavItems.map(nav => nav.route);
   const { intl } = props;
   const { formatMessage } = props.intl;
-  const topNavBarData: string[] = [
-    formatMessage(messages.welcome),
-    formatMessage(messages.frameworks),
-    formatMessage(messages.pages),
-    formatMessage(messages.services),
-    formatMessage(messages.summary)
-  ];
+
   const [currentPathIndex, setPathIndex] = React.useState(ROUTES_ARRAY.indexOf(selectedRoute));
   const dispatch = useDispatch();
 
@@ -57,7 +53,7 @@ const TopNavBar = (props: Props) => {
           aria-label={intl.formatMessage(messages.ariaNavLabel)}
         >
           <div>
-            {topNavBarData.map((sidebartitle, idx) => {
+            {routesNavItems.map((item, idx) => {
               const alreadyVisitedRouteAndCanVisit = isVisited[ROUTES_ARRAY[idx]] && isEnableNextPage;
               const isOtherVisitedRoute = idx !== currentPathIndex && isVisited[ROUTES_ARRAY[idx]];
 
@@ -67,7 +63,7 @@ const TopNavBar = (props: Props) => {
                     [styles.visitedPath]: alreadyVisitedRouteAndCanVisit,
                     [styles.itemBorderTop]: idx === 0
                   })}
-                  key={sidebartitle}
+                  key={formatMessage(item.messageDescriptor)}
                   onClick={(event) => {
                     if (projectNameValidation.isValid) navigateToPageAndSetVisited(event, idx) 
                   }}
@@ -75,7 +71,7 @@ const TopNavBar = (props: Props) => {
                   <TopNavBarLink
                     disabled={!projectNameValidation.isValid}
                     path={ROUTES_ARRAY[idx]}
-                    text={sidebartitle}
+                    text={formatMessage(item.messageDescriptor)}
                     visitedCheck={isOtherVisitedRoute}
                     isSelected={idx === currentPathIndex}
                     pageNumber={idx + 1}

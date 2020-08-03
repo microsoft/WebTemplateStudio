@@ -8,7 +8,8 @@ import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 import { TEMPLATES_TYPEKEYS } from "../../templates/templateTypeKeys";
 import { AZURE_TYPEKEYS } from "../azure/typeKeys";
 import { USERSELECTION_TYPEKEYS } from "../../userSelection/typeKeys";
-import { getRoutes } from "../../../utils/routes/routes";
+import { getNavItems } from "../../../utils/routes/routes";
+import { IRoutesNavItems } from "../../../types/route";
 
 export function* loadLogin(vscode: any){
   yield takeEvery(
@@ -140,7 +141,7 @@ export function* loadProjectTypesListSaga(vscode: any) {
   }
 }
 
-export function* loadRoutesListaSaga(){
+export function* loadroutesNavItemsaSaga(){
   yield takeEvery(
     CONFIG_TYPEKEYS.LOAD,
     callBack
@@ -148,7 +149,7 @@ export function* loadRoutesListaSaga(){
 
   function* callBack (){
     const platform = yield select((state: AppState) => state.config.platform);
-    const routes: string[] = getRoutes(platform);
+    const routes: IRoutesNavItems[] = getNavItems(platform);
     yield put({
       payload: routes,
       type: TEMPLATES_TYPEKEYS.SET_ROUTES

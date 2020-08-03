@@ -1,7 +1,7 @@
 import {all} from "redux-saga/effects";
 import {frameworkSaga} from "./userSelection/frameworks/saga";
 import {getFeaturesSaga} from "./userSelection/frameworks/getFeaturesSaga";
-import { loadTemplatesSaga, loadFrameworksListSaga, loadLogin, loadProjectTypesListSaga, loadRoutesListaSaga } from "./config/config/saga";
+import { loadTemplatesSaga, loadFrameworksListSaga, loadLogin, loadProjectTypesListSaga, loadroutesNavItemsaSaga } from "./config/config/saga";
 
 let rootSagaVscode: any;
 function* rootSaga(){
@@ -11,7 +11,7 @@ function* rootSaga(){
         loadProjectTypesListSaga(rootSagaVscode),
         loadFrameworksListSaga(rootSagaVscode),
         loadLogin(rootSagaVscode),
-        loadRoutesListaSaga()])
+        loadroutesNavItemsaSaga()])
 }
 
 function runSagaMiddleware(vscode: any, sagaMiddleware: any){

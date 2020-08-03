@@ -1,7 +1,8 @@
 import { NavItemsWeb } from "../constants/routes";
+import { IRoutesNavItems } from "../../types/route";
 
-export const getRoutes = (platform: string): string[] => {
-  let routes:string[] = [];
+export const getNavItems = (platform: string): IRoutesNavItems[] => {
+  let routes:IRoutesNavItems[] = [];
   if (platform === "Web") routes = NavItemsWeb;
   return routes;
 }
