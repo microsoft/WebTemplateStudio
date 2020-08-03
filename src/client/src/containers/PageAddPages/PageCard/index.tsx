@@ -53,14 +53,14 @@ const PageCard = (props: Props) => {
   const showMoreInfo = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     event.stopPropagation();
     dispatch(setPageWizardPageAction(ROUTE.PAGE_DETAILS));
-    dispatch(setDetailPageAction(page, false, ROUTE.SELECT_PAGES));
+    dispatch(setDetailPageAction(page, false, ROUTE.ADD_PAGES));
   };
 
   const showDetailIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
     event.stopPropagation();
     if (event.key === KEY_EVENTS.ENTER) {
       dispatch(setPageWizardPageAction(ROUTE.PAGE_DETAILS));
-      dispatch(setDetailPageAction(page, false, ROUTE.SELECT_PAGES));
+      dispatch(setDetailPageAction(page, false, ROUTE.ADD_PAGES));
     }
   };
 

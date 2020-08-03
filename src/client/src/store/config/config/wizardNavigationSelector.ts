@@ -12,7 +12,7 @@ export interface IVisitedPages {
 const getIsVisitedRoutes = (state: AppState) => state.navigation.routes.isVisited;
 const transformIsVisited = (isVisitedRoutes: IRoutes): IVisitedPages => ({
   showFrameworks: isVisitedRoutes[ROUTE.SELECT_FRAMEWORKS],
-  showPages: isVisitedRoutes[ROUTE.SELECT_PAGES],
+  showPages: isVisitedRoutes[ROUTE.ADD_PAGES],
   showReviewAndGenerate: isVisitedRoutes[ROUTE.REVIEW_AND_GENERATE]
 });
 

@@ -73,7 +73,7 @@ describe("wizardSelectionSelector", () => {
   describe("on select pages", () => {
     it("isEnableNextPage valid",()=>{
       const mockStore = configureMockStore<AppState>();
-      mock.navigation.routes.selected = ROUTE.SELECT_PAGES;
+      mock.navigation.routes.selected = ROUTE.ADD_PAGES;
       const validPage: ISelected = {title:"", isValidTitle:true, internalName:"wts.mock.blank"};
       mock.userSelection.pages.push(validPage);
       const store = mockStore(mock);

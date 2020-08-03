@@ -8,7 +8,7 @@ import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 import { TEMPLATES_TYPEKEYS } from "../../templates/templateTypeKeys";
 import { AZURE_TYPEKEYS } from "../azure/typeKeys";
 import { USERSELECTION_TYPEKEYS } from "../../userSelection/typeKeys";
-import { getRoutes } from "../../../utils/constants/routes";
+import { getRoutes } from "../../../utils/routes/routes";
 
 export function* loadLogin(vscode: any){
   yield takeEvery(

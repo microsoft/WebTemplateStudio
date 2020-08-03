@@ -6,7 +6,7 @@ import RootAction from "../../ActionType";
 const initialState = {
   [ROUTE.NEW_PROJECT]: true,
   [ROUTE.SELECT_FRAMEWORKS]: false,
-  [ROUTE.SELECT_PAGES]: false,
+  [ROUTE.ADD_PAGES]: false,
   [ROUTE.ADD_SERVICES]: false,
   [ROUTE.REVIEW_AND_GENERATE]: false
 };

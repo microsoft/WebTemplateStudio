@@ -108,7 +108,7 @@ const App = (props: Props) => {
           {(selectedRoute === ROUTE.ADD_SERVICES) && (<PageAddServices/>)}
           {(selectedRoute === ROUTE.REVIEW_AND_GENERATE) && (<PageReviewAndGenerate />)}
           {(selectedRoute === ROUTE.SELECT_FRAMEWORKS) && (<PageSelectFrameworks/>)}
-          {(selectedRoute === ROUTE.SELECT_PAGES) && (<PageAddPages isModal={false}/>)}
+          {(selectedRoute === ROUTE.ADD_PAGES) && (<PageAddPages isModal={false}/>)}
           {(selectedRoute === ROUTE.NEW_PROJECT) && (<PageNewProject/>)}
 
         </main>

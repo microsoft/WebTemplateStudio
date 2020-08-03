@@ -64,7 +64,7 @@ describe("Footer", () => {
     });
 
     it("When page is SELECT_PAGES next, back and create project button should be shown", () => {
-      setSelectedRoute(initialState, ROUTE.SELECT_PAGES);
+      setSelectedRoute(initialState, ROUTE.ADD_PAGES);
       wrapper = renderWithStore(<Footer {...props} />, store);
       const nextButton = wrapper.getByText('Next');
       expect(nextButton).toBeDefined();

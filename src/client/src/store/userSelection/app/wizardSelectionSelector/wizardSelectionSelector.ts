@@ -31,7 +31,7 @@ const isEnableNextPageSelector = (state: AppState): boolean =>{
     valid = true;
   }
 
-  if (state.navigation.routes.selected === ROUTE.SELECT_PAGES && state.userSelection.pages.length>0){
+  if (state.navigation.routes.selected === ROUTE.ADD_PAGES && state.userSelection.pages.length>0){
     valid = true;
   }
 
