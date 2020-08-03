@@ -11,38 +11,44 @@ import { setPageWizardPageAction, setVisitedWizardPageAction } from "../../store
 import { AppState } from "../../store/combineReducers";
 import { setIsDirtyAction } from "../../store/navigation/isDirty/action";
 import { IRoutesNavItems } from "../../types/route";
+import { setRoutesAction } from "../../store/navigation/routesNavItems/actions";
 
 type Props = InjectedIntlProps;
 
 const TopNavBar = (props: Props) => {
   const isEnableNextPage = useSelector((state: AppState) => isEnableNextPageSelector(state));
-  const isVisited = useSelector((state: AppState) => state.navigation.routes.isVisited);
   const selectedRoute = useSelector((state: AppState) => state.navigation.routes.selected);
   const projectNameValidation = useSelector((state: AppState) => state.userSelection.projectNameObject.validation);
   const routesNavItems: IRoutesNavItems[] = useSelector((state: AppState) => state.navigation.routesNavItems);
-  const ROUTES_ARRAY: string[] = routesNavItems.map(nav => nav.route);
   const { intl } = props;
   const { formatMessage } = props.intl;
 
-  const [currentPathIndex, setPathIndex] = React.useState(ROUTES_ARRAY.indexOf(selectedRoute));
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    const index = ROUTES_ARRAY.indexOf(selectedRoute);
-    setPathIndex(index);
-    const page = document.getElementById('page' + (index + 1));
-    if (page) page.focus();
+    if (selectedRoute && routesNavItems.length>0){
+      const index = routesNavItems.filter(route => route.route == selectedRoute)[0].index;
+      const page = document.getElementById('page' + (index + 1));
+      if (page) page.focus();
+    }
   }, [selectedRoute]);
 
   const navigateToPageAndSetVisited = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>, idx: number
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>, item: IRoutesNavItems
   ) => {
     event.preventDefault();
-    setPathIndex(ROUTES_ARRAY.indexOf(ROUTES_ARRAY[idx]));
-    for (let i=0; i<= idx; i++){
-      const routeToSetVisited = ROUTES_ARRAY[i];
-      dispatch(setVisitedWizardPageAction(routeToSetVisited));
-    }
+    const newRoutesNavItems = routesNavItems.splice(0);
+    for (let i=0; i<= item.index; i++){
+      if (i < item.index){
+        newRoutesNavItems[i].isSelected = false;
+        newRoutesNavItems[i].wasVisited = true;
+      }
+      if (i == item.index){
+        newRoutesNavItems[i].isSelected = true;
+        newRoutesNavItems[i].wasVisited = true;
+      }
+    } 
+    dispatch(setRoutesAction(newRoutesNavItems));
   };
 
   return (
@@ -54,8 +60,8 @@ const TopNavBar = (props: Props) => {
         >
           <div>
             {routesNavItems.map((item, idx) => {
-              const alreadyVisitedRouteAndCanVisit = isVisited[ROUTES_ARRAY[idx]] && isEnableNextPage;
-              const isOtherVisitedRoute = idx !== currentPathIndex && isVisited[ROUTES_ARRAY[idx]];
+              const alreadyVisitedRouteAndCanVisit = item.wasVisited && isEnableNextPage;
+              const isOtherVisitedRoute = item.route !== selectedRoute && item.wasVisited;
 
               return (
                 <div
@@ -65,15 +71,15 @@ const TopNavBar = (props: Props) => {
                   })}
                   key={formatMessage(item.messageDescriptor)}
                   onClick={(event) => {
-                    if (projectNameValidation.isValid) navigateToPageAndSetVisited(event, idx) 
+                    if (projectNameValidation.isValid) navigateToPageAndSetVisited(event, item) 
                   }}
                 >
                   <TopNavBarLink
                     disabled={!projectNameValidation.isValid}
-                    path={ROUTES_ARRAY[idx]}
+                    path={item.route}
                     text={formatMessage(item.messageDescriptor)}
                     visitedCheck={isOtherVisitedRoute}
-                    isSelected={idx === currentPathIndex}
+                    isSelected={item.isSelected}
                     pageNumber={idx + 1}
                     reducerSetPage={(page)=> {
                       dispatch(setPageWizardPageAction(page));
