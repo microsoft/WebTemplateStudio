@@ -17,13 +17,14 @@ import * as ModalActions from "../../store/navigation/modals/action";
 import { hasServices as hasServicesSelector } from "../../store/userSelection/services/servicesSelector";
 import ProjectDetails from "./ProjectDetails";
 import SelectFrameworks from "./SelectFrameworks";
+import { getSelectedRoute } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 
 type Props = InjectedIntlProps;
 
 const RightSidebar = (props: Props)=>{
   const [ isSidebarOpen, setIsSiderbarOpen ] = React.useState(true);
   const hasServices: boolean = useSelector(hasServicesSelector);
-  const selectedRoute = useSelector((state: AppState) => state.navigation.routes.selected);
+  const selectedRoute = useSelector(getSelectedRoute);
   const isFirstOrLastPage: boolean = React.useMemo<boolean>(()=>selectedRoute === ROUTE.NEW_PROJECT ||
     selectedRoute === ROUTE.REVIEW_AND_GENERATE,[selectedRoute]);
 

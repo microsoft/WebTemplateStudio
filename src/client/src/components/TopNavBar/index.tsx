@@ -5,7 +5,7 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import TopNavBarLink from "../TopNavBarLink";
 import styles from "./styles.module.css";
 
-import { isEnableNextPageSelector } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { isEnableNextPageSelector, getSelectedRoute } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import messages from "./messages";
 import { setPageWizardPageAction, setVisitedWizardPageAction } from "../../store/navigation/routes/action";
 import { AppState } from "../../store/combineReducers";
@@ -16,7 +16,7 @@ type Props = InjectedIntlProps;
 
 const TopNavBar = (props: Props) => {
   const isEnableNextPage = useSelector((state: AppState) => isEnableNextPageSelector(state));
-  const selectedRoute = useSelector((state: AppState) => state.navigation.routes.selected);
+  const selectedRoute = useSelector((state: AppState) => getSelectedRoute(state));
   const projectNameValidation = useSelector((state: AppState) => state.userSelection.projectNameObject.validation);
   const routesNavItems: IRoutesNavItems[] = useSelector((state: AppState) => state.navigation.routesNavItems);
   const { intl } = props;

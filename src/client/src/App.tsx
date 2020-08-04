@@ -20,6 +20,7 @@ import { loadAction } from "./store/config/config/action";
 import loadable from '@loadable/component'
 import { EXTENSION_COMMANDS } from "./utils/constants/commands";
 import { ROUTE } from "./utils/constants/routes";
+import { getSelectedRoute } from "./store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 
 const PageSelectFrameworks = loadable(()=> import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"));
 const PageAddPages = loadable(()=> import(/* webpackChunkName: "PageAddPages" */  "./containers/PageAddPages"));
@@ -122,7 +123,7 @@ const App = (props: Props) => {
 const mapStateToProps = (state: AppState): IStateProps => ({
   frontendOptions: state.templates.frontendOptions,
   modalState: state.navigation.modals.openModal,
-  selectedRoute : state.navigation.routes.selected,
+  selectedRoute : getSelectedRoute(state),
 });
 
 export default

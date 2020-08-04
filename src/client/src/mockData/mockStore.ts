@@ -395,26 +395,9 @@ export const setOpenModal = (store: AppState, modalType: ModalType) => {
 }
 
 export const setSelectedRoute = (store: AppState, seletedRoute: string) => {
-  store.navigation.routes.selected = seletedRoute;
-  switch (seletedRoute) 
-  {
-    case ROUTE.SELECT_FRAMEWORKS:
-      store.navigation.routes.isVisited = {
-        '/': true,
-        '/SelectFrameworks': true,
-        '/SelectPages': false,
-        '/AddPages': false,
-        '/ReviewAndGenerate': false
-      };
-    case ROUTE.REVIEW_AND_GENERATE:
-      store.navigation.routes.isVisited = {
-        '/': true,
-        '/SelectFrameworks': true,
-        '/SelectPages': true,
-        '/AddPages': true,
-        '/ReviewAndGenerate': true
-      }
-  }
+  //store.navigation.routes.selected = seletedRoute;
+  store.navigation.routesNavItems.forEach(route => {route.isSelected=false});
+  store.navigation.routesNavItems.filter(route => route.route == seletedRoute)[0].isSelected=true;
 }
 
 export const setAzureEmail = (store: AppState, email = "test@test.com") => {

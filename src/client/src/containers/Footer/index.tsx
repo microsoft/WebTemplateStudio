@@ -11,7 +11,7 @@ import { openGenModalAction } from "../../store/navigation/modals/action";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
-import { isEnableNextPageSelector, isEnableGenerateButtonSelector } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { isEnableNextPageSelector, isEnableGenerateButtonSelector, getSelectedRoute } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../store/combineReducers";
 
 import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
@@ -46,7 +46,7 @@ const Footer = (props: Props) => {
 
   const visitedRoutes = useSelector((state: AppState) => getIsVisitedRoutesSelector(state));
   const isEnableNextPage = useSelector((state: AppState) => isEnableNextPageSelector(state));
-  const currentRoute = useSelector((state: AppState) => state.navigation.routes.selected);
+  const currentRoute = useSelector((state: AppState) => getSelectedRoute(state));
   const isEnableGenerateButton = useSelector((state: AppState) => isEnableGenerateButtonSelector(state));
   const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
   const isFirstStep = useMemo(() => currentRoute === ROUTE.NEW_PROJECT, [currentRoute]);

@@ -19,23 +19,30 @@ const getSelectedPages = (state: AppState): Array<ISelected> =>
   state.userSelection.pages;
 const getOutputPath = (state: AppState): string =>
   state.userSelection.outputPathObject.outputPath;
+
+const getSelectedRoute = (state: AppState): string =>{
+  const selectedRoute = state.navigation.routesNavItems.filter(route => route.isSelected).length > 0 ? 
+    state.navigation.routesNavItems.filter(route => route.isSelected)[0].route : "";
+  return selectedRoute;
+};
+
 const isEnableNextPageSelector = (state: AppState): boolean =>{
   let valid = false;
-  if (state.navigation.routes.selected === ROUTE.NEW_PROJECT){
+  if (getSelectedRoute(state) === ROUTE.NEW_PROJECT){
     valid = state.userSelection.projectNameObject.validation.isValid === true && 
       state.userSelection.outputPathObject.outputPath !== "";
   }
 
-  if (state.navigation.routes.selected === ROUTE.SELECT_FRAMEWORKS &&
+  if (getSelectedRoute(state) === ROUTE.SELECT_FRAMEWORKS &&
     state.userSelection.frontendFramework.title !== "" && state.userSelection.backendFramework.title !== ""){
     valid = true;
   }
 
-  if (state.navigation.routes.selected === ROUTE.ADD_PAGES && state.userSelection.pages.length>0){
+  if (getSelectedRoute(state) === ROUTE.ADD_PAGES && state.userSelection.pages.length>0){
     valid = true;
   }
 
-  if ((state.navigation.routes.selected === ROUTE.ADD_SERVICES || state.navigation.routes.selected === ROUTE.REVIEW_AND_GENERATE)){
+  if ((getSelectedRoute(state) === ROUTE.ADD_SERVICES || getSelectedRoute(state) === ROUTE.REVIEW_AND_GENERATE)){
     valid = true;
   }
 
@@ -121,6 +128,7 @@ export {
   getProjectName,
   getValidations,
   getProjectNameValidation,
+  getSelectedRoute,
   isValidNameAndProjectPathSelector,
   isEnableNextPageSelector,
   isEnableGenerateButtonSelector
