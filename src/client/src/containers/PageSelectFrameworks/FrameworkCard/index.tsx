@@ -8,15 +8,15 @@ import { getSvg } from "../../../utils/getSvgUrl";
 import DependencyInfo from "./DependencyInfo";
 import messages from "./messages";
 import { KEY_EVENTS } from "../../../utils/constants/constants";
-import { ROUTE } from "../../../utils/constants/routes";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ReactComponent as Check } from "../../../assets/check.svg";
 import { getLatestVersion } from "../../../utils/extensionService/extensionService";
 import { AppContext } from "../../../AppContext";
 import { updateFrameworksAction } from "../../../store/templates/frameworks/action";
 import { IOption } from "../../../types/option";
-import { setPageWizardPageAction, setDetailPageAction } from "../../../store/navigation/routes/action";
 import { setSelectedBackendFrameworkAction, setSelectedFrontendFrameworkAction } from "../../../store/userSelection/frameworks/action";
+import { setDetailPageAction } from "../../../store/navigation/routes/action";
+import { ROUTE } from "../../../utils/constants/routes";
 
 type Props = ISelectProps & IStateProps & InjectedIntlProps;
 
@@ -57,7 +57,6 @@ const FrameworkCard = (props: Props) => {
   }, [backEndSelect]);
 
   const setDetailPage = (detailPageInfo: IOption) => {
-    dispatch(setPageWizardPageAction(ROUTE.PAGE_DETAILS));
     dispatch(setDetailPageAction(detailPageInfo, false, ROUTE.SELECT_FRAMEWORKS));
   }
   const selectWhenLoadWithoutSelection = () => {
@@ -101,6 +100,7 @@ const FrameworkCard = (props: Props) => {
   };
 
   const detailsClickWrapper = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    debugger;
     event.stopPropagation();
     setDetailPage(framework);
   };

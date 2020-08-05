@@ -21,10 +21,11 @@ import messages from "./messages";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import { AppContext } from "../../AppContext";
 import { useSelector, useDispatch } from "react-redux";
-import { setPageWizardPageAction, setVisitedWizardPageAction } from "../../store/navigation/routes/action";
 import { getIsVisitedRoutesSelector } from "../../store/config/config/wizardNavigationSelector";
 import { useMemo } from "react";
 import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
+import { IRoutesNavItems } from "../../types/route";
+import { setRoutesAction } from "../../store/navigation/routesNavItems/actions";
 
 type Props = InjectedIntlProps;
 
@@ -51,6 +52,7 @@ const Footer = (props: Props) => {
   const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
   const isFirstStep = useMemo(() => currentRoute === ROUTE.NEW_PROJECT, [currentRoute]);
   const isLastStep = useMemo(() => currentRoute === ROUTE.REVIEW_AND_GENERATE, [currentRoute]);
+  const routesNavItems: IRoutesNavItems[] = useSelector((state: AppState) => state.navigation.routesNavItems);
 
   const dispatch = useDispatch();
 
@@ -68,13 +70,24 @@ const Footer = (props: Props) => {
 
   const navigateBack = () => {
     trackPageForTelemetry(currentRoute);
-    dispatch(setPageWizardPageAction(pathsBack[currentRoute]));
+    const currentIndex = routesNavItems.filter(route => route.route == currentRoute)[0].index;
+    const newRoutesNavItems = routesNavItems.splice(0);
+    newRoutesNavItems.forEach(route => route.isSelected=false);
+    newRoutesNavItems.filter(route => route.index == currentIndex -1)[0].isSelected=true;
+    newRoutesNavItems.filter(route => route.index == currentIndex -1)[0].wasVisited=true;
+
+    dispatch(setRoutesAction(newRoutesNavItems));
   };
 
   const navigateForward = () => {
     trackPageForTelemetry(currentRoute);
-    dispatch(setVisitedWizardPageAction(pathsNext[currentRoute]));
-    dispatch(setPageWizardPageAction(pathsNext[currentRoute]));
+    const currentIndex = routesNavItems.filter(route => route.route == currentRoute)[0].index;
+    const newRoutesNavItems = routesNavItems.splice(0);
+    newRoutesNavItems.forEach(route => route.isSelected=false);
+    newRoutesNavItems.filter(route => route.index == currentIndex +1)[0].isSelected=true;
+    newRoutesNavItems.filter(route => route.index == currentIndex +1)[0].wasVisited=true;
+
+    dispatch(setRoutesAction(newRoutesNavItems));
   };
 
   const navigateForwardOnKeyPress = (event: React.KeyboardEvent<HTMLAnchorElement>) => {

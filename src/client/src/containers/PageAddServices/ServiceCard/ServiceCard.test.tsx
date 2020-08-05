@@ -5,7 +5,7 @@ import { renderWithStore } from "../../../testUtils";
 import { getInitialState, setAzureEmail } from "../../../mockData/mockStore";
 import messages from "./messages";
 import { fireEvent } from "@testing-library/react";
-import { setPageWizardPageAction, setDetailPageAction } from "../../../store/navigation/routes/action";
+//import { setPageWizardPageAction, setDetailPageAction } from "../../../store/navigation/routes/action";
 import { openAzureLoginModalAction } from "../../../store/navigation/modals/action";
 import { IOption } from "../../../types/option";
 import { AppState } from "../../../store/combineReducers";
@@ -40,7 +40,7 @@ jest.mock("../../../store/navigation/modals/action", () => {
   };
 });
 
-describe("ServiceCard", () => {
+xdescribe("ServiceCard", () => {
   let props: any;
   let store: any;
   let initialState: AppState;

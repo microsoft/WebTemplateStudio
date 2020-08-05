@@ -7,7 +7,6 @@ import styles from "./styles.module.css";
 
 import { isEnableNextPageSelector, getSelectedRoute } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import messages from "./messages";
-import { setPageWizardPageAction, setVisitedWizardPageAction } from "../../store/navigation/routes/action";
 import { AppState } from "../../store/combineReducers";
 import { IRoutesNavItems } from "../../types/route";
 import { setRoutesAction } from "../../store/navigation/routesNavItems/actions";
@@ -81,7 +80,6 @@ const TopNavBar = (props: Props) => {
                     isSelected={item.isSelected}
                     pageNumber={idx + 1}
                     reducerSetPage={(page)=> {
-                      dispatch(setPageWizardPageAction(page));
                     }}
                   />
                 </div>

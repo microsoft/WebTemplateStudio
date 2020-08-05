@@ -40,12 +40,13 @@ interface IStateProps {
   frontendOptions: IOption[];
   modalState: any;
   selectedRoute: string;
+  isDetailPageVisible: boolean
 }
 
 type Props = IStateProps;
 
 const App = (props: Props) => {
-  const { modalState, selectedRoute } = props;
+  const { modalState, selectedRoute, isDetailPageVisible } = props;
   const dispatch = useDispatch();
 
   const Header = loadable(() => import(/* webpackChunkName: "Header" */  "./containers/Header"));
@@ -105,12 +106,12 @@ const App = (props: Props) => {
             />
           ) : null}
 
-          {(selectedRoute === ROUTE.PAGE_DETAILS) && (<PageDetails />)}
-          {(selectedRoute === ROUTE.ADD_SERVICES) && (<PageAddServices/>)}
-          {(selectedRoute === ROUTE.REVIEW_AND_GENERATE) && (<PageReviewAndGenerate />)}
-          {(selectedRoute === ROUTE.SELECT_FRAMEWORKS) && (<PageSelectFrameworks/>)}
-          {(selectedRoute === ROUTE.ADD_PAGES) && (<PageAddPages isModal={false}/>)}
-          {(selectedRoute === ROUTE.NEW_PROJECT) && (<PageNewProject/>)}
+          {isDetailPageVisible && (<PageDetails />)}
+          {(!isDetailPageVisible && selectedRoute === ROUTE.ADD_SERVICES) && (<PageAddServices/>)}
+          {(!isDetailPageVisible && selectedRoute === ROUTE.REVIEW_AND_GENERATE) && (<PageReviewAndGenerate />)}
+          {(!isDetailPageVisible && selectedRoute === ROUTE.SELECT_FRAMEWORKS) && (<PageSelectFrameworks/>)}
+          {(!isDetailPageVisible && selectedRoute === ROUTE.ADD_PAGES) && (<PageAddPages isModal={false}/>)}
+          {(!isDetailPageVisible && selectedRoute === ROUTE.NEW_PROJECT) && (<PageNewProject/>)}
 
         </main>
         <RightSidebar />
@@ -124,6 +125,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   frontendOptions: state.templates.frontendOptions,
   modalState: state.navigation.modals.openModal,
   selectedRoute : getSelectedRoute(state),
+  isDetailPageVisible: state.config.detailsPage.data.title != ""
 });
 
 export default

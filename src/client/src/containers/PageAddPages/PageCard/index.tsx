@@ -14,8 +14,8 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ReactComponent as Plus } from "../../../assets/plus.svg";
 import { ISelected } from "../../../types/selected";
 import { inferItemName } from "../../../utils/infer/itemName";
-import { setPageWizardPageAction, setDetailPageAction } from "../../../store/navigation/routes/action";
 import { setPagesAction } from "../../../store/userSelection/pages/action";
+import { setDetailPageAction } from "../../../store/navigation/routes/action";
 
 type Props = IProps & IStateProps & InjectedIntlProps;
 
@@ -52,14 +52,12 @@ const PageCard = (props: Props) => {
 
   const showMoreInfo = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     event.stopPropagation();
-    dispatch(setPageWizardPageAction(ROUTE.PAGE_DETAILS));
     dispatch(setDetailPageAction(page, false, ROUTE.ADD_PAGES));
   };
 
   const showDetailIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
     event.stopPropagation();
     if (event.key === KEY_EVENTS.ENTER) {
-      dispatch(setPageWizardPageAction(ROUTE.PAGE_DETAILS));
       dispatch(setDetailPageAction(page, false, ROUTE.ADD_PAGES));
     }
   };
