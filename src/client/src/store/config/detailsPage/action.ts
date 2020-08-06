@@ -1,20 +1,6 @@
-import { ISetVisitedPageAction, IResetVisitedPageAction, ISetPageAction, ISetDetails } from "./model";
+import { ISetDetails } from "./model";
 import { IOption } from "../../../types/option";
 import { NAVIGATION_ROUTES_TYPEKEYS } from "../../navigation/typeKeys";
-
-const setVisitedWizardPageAction = (route: string): ISetVisitedPageAction => ({
-  type: NAVIGATION_ROUTES_TYPEKEYS.SET_VISITED_WIZARD_PAGE,
-  payload: route
-});
-
-const resetVisitedWizardPageAction = (): IResetVisitedPageAction => ({
-  type: NAVIGATION_ROUTES_TYPEKEYS.RESET_VISITED_WIZARD_PAGE,
-});
-
-const setPageWizardPageAction = (route: string): ISetPageAction => ({
-  type: NAVIGATION_ROUTES_TYPEKEYS.SET_PAGE_WIZARD_PAGE,
-  payload: route
-});
 
 const setDetailPageAction = (
   detailPageInfo: IOption,
@@ -30,8 +16,5 @@ const setDetailPageAction = (
 });
 
 export {
-  setVisitedWizardPageAction,
-  resetVisitedWizardPageAction,
-  setPageWizardPageAction,
   setDetailPageAction
  };

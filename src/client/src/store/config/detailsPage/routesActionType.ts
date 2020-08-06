@@ -1,8 +1,5 @@
-import { ISetVisitedPageAction, IResetVisitedPageAction, ISetPageAction, ISetDetails  } from "./model";
+import { ISetDetails  } from "./model";
 
-type RouteType = ISetVisitedPageAction |
- IResetVisitedPageAction |
- ISetPageAction |
- ISetDetails;
+type DetailsType = ISetDetails;
 
-export default RouteType;
+export default DetailsType;
