@@ -1,6 +1,6 @@
 import { ISetVisitedPageAction, IResetVisitedPageAction, ISetPageAction, ISetDetails } from "./model";
 import { IOption } from "../../../types/option";
-import { NAVIGATION_ROUTES_TYPEKEYS } from "../typeKeys";
+import { NAVIGATION_ROUTES_TYPEKEYS } from "../../navigation/typeKeys";
 
 const setVisitedWizardPageAction = (route: string): ISetVisitedPageAction => ({
   type: NAVIGATION_ROUTES_TYPEKEYS.SET_VISITED_WIZARD_PAGE,

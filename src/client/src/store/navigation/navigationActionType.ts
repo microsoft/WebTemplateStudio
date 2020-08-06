@@ -1,5 +1,5 @@
 import modalsActionType from "./modals/modalActionType";
-import routesActionType from "./routes/routesActionType";
+import routesActionType from "../config/detailsPage/routesActionType";
 import { IRoutesActionType } from "./routesNavItems/models";
 
 type navigationType = modalsActionType | routesActionType | IRoutesActionType;

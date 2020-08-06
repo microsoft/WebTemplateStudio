@@ -15,8 +15,8 @@ import { AppContext } from "../../../AppContext";
 import { updateFrameworksAction } from "../../../store/templates/frameworks/action";
 import { IOption } from "../../../types/option";
 import { setSelectedBackendFrameworkAction, setSelectedFrontendFrameworkAction } from "../../../store/userSelection/frameworks/action";
-import { setDetailPageAction } from "../../../store/navigation/routes/action";
 import { ROUTE } from "../../../utils/constants/routes";
+import { setDetailPageAction } from "../../../store/config/detailsPage/action";
 
 type Props = ISelectProps & IStateProps & InjectedIntlProps;
 

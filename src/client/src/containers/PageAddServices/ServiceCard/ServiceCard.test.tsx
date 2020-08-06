@@ -5,12 +5,12 @@ import { renderWithStore } from "../../../testUtils";
 import { getInitialState, setAzureEmail } from "../../../mockData/mockStore";
 import messages from "./messages";
 import { fireEvent } from "@testing-library/react";
-//import { setPageWizardPageAction, setDetailPageAction } from "../../../store/navigation/routes/action";
+import { setDetailPageAction } from "../../../store/config/detailsPage/action";
 import { openAzureLoginModalAction } from "../../../store/navigation/modals/action";
 import { IOption } from "../../../types/option";
 import { AppState } from "../../../store/combineReducers";
 
-jest.mock("../../../store/navigation/routes/action", () => {
+jest.mock("../../../store/config/detailsPage/action", () => {
   const setDetailPageAction = jest.fn((detailPageInfo: IOption, isIntlFormatted = false, originRoute: string) => ({
     type: "WTS/navigation/routes/SET_DETAILS_PAGE_INFO",
     payload: {
@@ -25,7 +25,6 @@ jest.mock("../../../store/navigation/routes/action", () => {
     payload: route,
   }));
   return {
-    setDetailPageAction,
     setPageWizardPageAction,
   };
 });
@@ -107,7 +106,7 @@ xdescribe("ServiceCard", () => {
 
     const learnMoreButton = wrapper.getByText(intl.formatMessage(messages.learnMore));
     fireEvent.click(learnMoreButton);
-    expect(setPageWizardPageAction).toHaveBeenCalled();
+    //expect(setPageWizardPageAction).toHaveBeenCalled();
     expect(setDetailPageAction).toHaveBeenCalled();
   });
 
@@ -116,7 +115,7 @@ xdescribe("ServiceCard", () => {
 
     const learnMoreButton = wrapper.getByText(intl.formatMessage(messages.learnMore));
     fireEvent.keyDown(learnMoreButton, { key: "Enter", code: "Enter" });
-    expect(setPageWizardPageAction).toBeCalled();
+    //expect(setPageWizardPageAction).toBeCalled();
     expect(setDetailPageAction).toBeCalled();
   });
 

@@ -9,7 +9,7 @@ import { renderWithStore } from "../../testUtils";
 import messages from "./messages";
 import stylesTopNavBarLink from "../TopNavBarLink/styles.module.css";
 import { AppState } from "../../store/combineReducers";
-import * as routesActions from "../../store/navigation/routes/action";
+import * as routesActions from "../../store/config/detailsPage/action";
 const spySetPageWizardPageAction = jest.spyOn(routesActions, 'setPageWizardPageAction');
 
 describe("TopNavBar", () => {

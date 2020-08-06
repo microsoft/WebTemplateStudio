@@ -21,7 +21,6 @@ import messages from "./messages";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import { AppContext } from "../../AppContext";
 import { useSelector, useDispatch } from "react-redux";
-import { getIsVisitedRoutesSelector } from "../../store/config/config/wizardNavigationSelector";
 import { useMemo } from "react";
 import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
 import { IRoutesNavItems } from "../../types/route";
@@ -45,7 +44,6 @@ const pathsBack: any = {
 const Footer = (props: Props) => {
   const { formatMessage } = props.intl;
 
-  const visitedRoutes = useSelector((state: AppState) => getIsVisitedRoutesSelector(state));
   const isEnableNextPage = useSelector((state: AppState) => isEnableNextPageSelector(state));
   const currentRoute = useSelector((state: AppState) => getSelectedRoute(state));
   const isEnableGenerateButton = useSelector((state: AppState) => isEnableGenerateButtonSelector(state));
@@ -104,15 +102,11 @@ const Footer = (props: Props) => {
     }
   };
 
-  const showLicenses = (): boolean => {
-    return visitedRoutes.showFrameworks;
-  };
-
   return (
     <nav aria-label={formatMessage(messages.navAriaLabel)}>
       {currentRoute !== ROUTE.PAGE_DETAILS && (
         <div className={styles.footer}>
-          <div>{showLicenses() && formatMessage(messages.license)}</div>
+          <div>{formatMessage(messages.license)}</div>
           <div className={styles.buttonContainer}>
               <a
                 tabIndex={!isFirstStep ? 0 : -1}

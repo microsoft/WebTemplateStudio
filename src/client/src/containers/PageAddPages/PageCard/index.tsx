@@ -15,7 +15,7 @@ import { ReactComponent as Plus } from "../../../assets/plus.svg";
 import { ISelected } from "../../../types/selected";
 import { inferItemName } from "../../../utils/infer/itemName";
 import { setPagesAction } from "../../../store/userSelection/pages/action";
-import { setDetailPageAction } from "../../../store/navigation/routes/action";
+import { setDetailPageAction } from "../../../store/config/detailsPage/action";
 
 type Props = IProps & IStateProps & InjectedIntlProps;
 

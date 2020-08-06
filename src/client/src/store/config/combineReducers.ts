@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import detailsPage from "../navigation/routes/detailsPageReducer";
+import detailsPage from "./detailsPage/detailsPageReducer";
 import previewStatus from "./config/previewReducer";
 import validations from "./validations/setValidationsReducer";
 import versions from "./versions/reducer";

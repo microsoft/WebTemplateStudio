@@ -1,5 +1,5 @@
 import { IOption } from "../../../types/option";
-import { NAVIGATION_ROUTES_TYPEKEYS } from "../typeKeys";
+import { NAVIGATION_ROUTES_TYPEKEYS } from "../../navigation/typeKeys";
 
 export interface ISetVisitedPageAction {
   type: NAVIGATION_ROUTES_TYPEKEYS.SET_VISITED_WIZARD_PAGE;

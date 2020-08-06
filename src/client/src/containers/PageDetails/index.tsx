@@ -5,7 +5,7 @@ import { IOption } from "../../types/option";
 import { getScreenShot } from "../../utils/getSvgUrl";
 import styles from "./styles.module.css";
 import { AppState } from "../../store/combineReducers";
-import { setDetailPageAction } from "../../store/navigation/routes/action";
+import { setDetailPageAction } from "../../store/config/detailsPage/action";
 
 interface IPageDetailsProps {
   originRoute: string;
