@@ -3,6 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { AppState } from "../store/combineReducers";
 import { ModalType } from "../store/navigation/typeKeys";
 import { ROUTE } from "../utils/constants/routes";
+import { getNavItems } from "../utils/routes/routes";
 
 export const getISelected = () => {
   const selected: ISelected = {
@@ -112,18 +113,7 @@ export const getInitialState = (): AppState => {
           modalData: null
         }
       },
-      routesNavItems:[],
-      routes: {
-        isVisited: {
-          '/': true,
-          '/SelectFrameworks': false,
-          '/SelectPages': false,
-          '/AddPages': false,
-          '/ReviewAndGenerate': false
-        },
-        selected: '/'
-      },
-      isDirty: false
+      routesNavItems:getNavItems("Web")
     }
   };
   return initialState;

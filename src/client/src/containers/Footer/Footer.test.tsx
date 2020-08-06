@@ -132,7 +132,7 @@ describe("Footer", () => {
       expect(nextButton).toHaveClass(styles.disabledOverlay);
 
       const createButton = wrapper.getByText('Create Project');
-      expect(createButton).toHaveClass(styles.disabledOverlay);
+       expect(createButton).toHaveClass(styles.disabledOverlay);
     });
   });
 

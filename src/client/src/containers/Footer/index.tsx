@@ -112,7 +112,7 @@ const Footer = (props: Props) => {
                 tabIndex={!isFirstStep ? 0 : -1}
                 className={classnames(buttonStyles.buttonDark, styles.button, styles.buttonBack,
                   {
-                    [styles.disabledOverlay]: isFirstStep
+                    [styles.disabledOverlay]: isFirstStep || !isEnableGenerateButton
                   })}
                 onClick={() => { if (!isFirstStep) navigateBack() }}
                 onKeyPress={(event) => { if (!isFirstStep) navigateBackOnKeyPress(event) }}
@@ -124,7 +124,7 @@ const Footer = (props: Props) => {
                 tabIndex={isEnableNextPage ? 0 : -1}
                 className={classnames(styles.button, styles.buttonNext, buttonStyles.buttonHighlighted, {
                   [buttonStyles.buttonDark]: !isEnableNextPage,
-                  [styles.disabledOverlay]: isLastStep || !isEnableNextPage
+                  [styles.disabledOverlay]: isLastStep || !isEnableNextPage || !isEnableGenerateButton
                 })}
                 onClick={() => { if (!isLastStep && isEnableNextPage) navigateForward()}}
                 onKeyPress={(event) => { if (!isLastStep) navigateForwardOnKeyPress(event)}}
