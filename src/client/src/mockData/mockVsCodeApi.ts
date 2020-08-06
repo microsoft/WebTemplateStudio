@@ -579,7 +579,7 @@ const mockVsCodeApi = () => ({
                 command: EXTENSION_COMMANDS.GET_PROJECT_TYPES,
                 payload: {
                   scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                  projectTypes:["FullStackWebApp"]
+                  projectTypes:[{name:"FullStackWebApp"}]
                 }
               },
               "*"
