@@ -17,7 +17,7 @@ def create():
     return {'id': str(created_item.inserted_id), 'text': list_item['text']}
 
 def delete(id):
-    query_str = {'id': ObjectId(id)}
+    query_str = {'_id': ObjectId(id)}
     result = list_items.delete_one(query_str)
     if result.deleted_count == 0:
         raise Exception('Could not find an item with given id')
