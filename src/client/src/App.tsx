@@ -40,7 +40,7 @@ interface IStateProps {
   frontendOptions: IOption[];
   modalState: any;
   selectedRoute: string;
-  isDetailPageVisible: boolean
+  isDetailPageVisible: boolean;
 }
 
 type Props = IStateProps;

@@ -23,7 +23,7 @@ const PageDetails = (props: Props) => {
     <div className={styles.detailsContainer}>
       <Details
         handleBackClick={()=>{
-          const optionDetailPageBack:IOption = {title:"", internalName:"",body:"", svgUrl:""};
+          const optionDetailPageBack: IOption = {title: "", internalName: "",body: "", svgUrl: ""};
           dispatch(setDetailPageAction(optionDetailPageBack, false, ""));
         }}
         detailInfo={detailsPageInfo}

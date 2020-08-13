@@ -66,7 +66,7 @@ const TopNavBar = (props: Props) => {
                   })}
                   key={formatMessage(item.messageDescriptor)}
                   onClick={(event) => {
-                    if (projectNameValidation.isValid) navigateToPageAndSetVisited(event, item) 
+                    if (projectNameValidation.isValid) navigateToPageAndSetVisited(event, item)
                   }}
                 >
                   <TopNavBarLink
@@ -76,8 +76,6 @@ const TopNavBar = (props: Props) => {
                     visitedCheck={isOtherVisitedRoute}
                     isSelected={item.isSelected}
                     pageNumber={idx + 1}
-                    reducerSetPage={(page)=> {
-                    }}
                   />
                 </div>
               );
