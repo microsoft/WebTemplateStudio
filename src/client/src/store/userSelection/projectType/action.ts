@@ -1,4 +1,3 @@
-import { ISelected } from "../../../types/selected";
 import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 import { ISelectProjectTypeAction } from "./model";
 

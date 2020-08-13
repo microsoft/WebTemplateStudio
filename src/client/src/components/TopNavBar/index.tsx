@@ -42,7 +42,7 @@ const TopNavBar = (props: Props) => {
       if (i < item.index) newRoutesNavItems[i].isSelected = false;
       if (i == item.index) newRoutesNavItems[i].isSelected = true;
       newRoutesNavItems[i].wasVisited = true;
-    } 
+    }
     dispatch(setRoutesAction(newRoutesNavItems));
   };
 
@@ -76,8 +76,6 @@ const TopNavBar = (props: Props) => {
                     visitedCheck={isOtherVisitedRoute}
                     isSelected={item.isSelected}
                     pageNumber={idx + 1}
-                    reducerSetPage={(page)=> {
-                    }}
                   />
                 </div>
               );

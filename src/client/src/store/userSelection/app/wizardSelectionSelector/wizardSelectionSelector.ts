@@ -34,6 +34,7 @@ const isEnableNextPageSelector = (state: AppState): boolean =>{
   }
 
   if (getSelectedRoute(state) === ROUTE.SELECT_FRAMEWORKS &&
+    state.templates.frontendOptions && state.templates.backendOptions && 
     state.userSelection.frontendFramework.title !== "" && state.userSelection.backendFramework.title !== ""){
     valid = true;
   }

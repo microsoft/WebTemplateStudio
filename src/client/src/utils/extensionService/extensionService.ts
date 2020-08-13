@@ -85,12 +85,12 @@ const getDependencyInfo = (vscode: IVSCodeObject, dependency: string): Promise<{
   });
 };
 
-const getPages = (vscode: IVSCodeObject, frontEndInternalName: string, backEndInternalName: string)=>{
+const getPages = (vscode: IVSCodeObject, projectType: string, frontEndInternalName: string, backEndInternalName: string)=>{
   return postMessageAsync( EXTENSION_COMMANDS.GET_PAGES, {
     module: EXTENSION_MODULES.CORETS,
     command: EXTENSION_COMMANDS.GET_PAGES,
     payload: {
-      projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
+      projectType,
       frontendFramework: frontEndInternalName,
       backendFramework: backEndInternalName
     }
