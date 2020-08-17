@@ -35,8 +35,6 @@ const TopNavBar = (props: Props) => {
     event: React.MouseEvent<HTMLDivElement, MouseEvent>, item: IRoutesNavItems
   ) => {
     event.preventDefault();
-    console.log("2222222222222222 routesNavItems");
-    console.log(routesNavItems);
     const newRoutesNavItems = routesNavItems.splice(0);
     for (let i=0; i<= item.index; i++){
       if (i < item.index) newRoutesNavItems[i].isSelected = false;

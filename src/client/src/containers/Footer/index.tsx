@@ -28,19 +28,6 @@ import { setRoutesAction } from "../../store/navigation/routesNavItems/actions";
 
 type Props = InjectedIntlProps;
 
-const pathsNext: any = {
-  [ROUTE.NEW_PROJECT]: ROUTE.SELECT_FRAMEWORKS,
-  [ROUTE.SELECT_FRAMEWORKS]: ROUTE.ADD_PAGES,
-  [ROUTE.ADD_PAGES]: ROUTE.ADD_SERVICES,
-  [ROUTE.ADD_SERVICES]: ROUTE.REVIEW_AND_GENERATE,
-};
-const pathsBack: any = {
-  [ROUTE.SELECT_FRAMEWORKS]: ROUTE.NEW_PROJECT,
-  [ROUTE.ADD_PAGES]: ROUTE.SELECT_FRAMEWORKS,
-  [ROUTE.ADD_SERVICES]: ROUTE.ADD_PAGES,
-  [ROUTE.REVIEW_AND_GENERATE]: ROUTE.ADD_SERVICES,
-};
-
 const Footer = (props: Props) => {
   const { formatMessage } = props.intl;
 
