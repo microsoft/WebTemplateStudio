@@ -1,26 +1,10 @@
-# vue-next-webpack-preview
+# Vue3 Mockup
 
-> Minimal webpack setup for Vue 3 (alpha) 
+## About this mockup:
+This Mockup is created to design the future Vue 3 templates in Web Template Studio project.
 
-This is for preview purposes only. There might be bugs and undocumented behavior differences from v2, which are expected.
+There is an Issue in Web Template Studio repository to have an open discussion.
 
-Also note that if you are using VSCode, Vetur isn't updated to take advantage of Vue 3's typing yet so intellisense in Vue files may not be fully functional (especially in templates).
+In order to have an easy way to maintain the mockup specs there will be placed in the issue.
 
-### Prerequisites
-- Node & NPM
-
-### Install
-```sh
-npm install
-```
-### Usage
-##### Develop
-```sh
-# run dev server at localhost:8080
-npm run dev
-```
-##### Build
-```sh
-# transpile js for deployment
-npm run build
-```
+<a href="https://github.com/microsoft/WebTemplateStudio/issues/1531">Vue 3 Templates Issue</a>
