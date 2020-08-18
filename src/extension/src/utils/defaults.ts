@@ -1,5 +1,5 @@
 import { WizardServant, IPayloadResponse } from "../wizardServant";
-import { PROJECT_NAME_VALIDATION_LIMIT } from "../constants/constants";
+import { PROJECT_NAME_VALIDATION_LIMIT, DEFAULT_PROJECT_NAME } from "../constants/constants";
 import * as vscode from "vscode";
 import * as os from "os";
 import * as fs from "fs";
@@ -7,61 +7,48 @@ import * as path from "path";
 import { EXTENSION_COMMANDS } from "../constants/commands";
 
 export class Defaults extends WizardServant {
-  clientCommandMap: Map<EXTENSION_COMMANDS,(message: any) => Promise<IPayloadResponse>>;
-
-  constructor() {
-    super();
-    this.clientCommandMap = this.defineCommandMap();
-  }
-
-  private defineCommandMap(): Map<
-    EXTENSION_COMMANDS,
-    (message: any) => Promise<IPayloadResponse>
-  > {
-    return new Map([
-      [EXTENSION_COMMANDS.GET_PROJECT_NAME, this.getProjectName],
-      [EXTENSION_COMMANDS.GET_OUTPUT_PATH, this.getOutputPath]
-    ]);
-  }
+  clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
+    [EXTENSION_COMMANDS.GET_PROJECT_NAME, this.getProjectName],
+    [EXTENSION_COMMANDS.GET_OUTPUT_PATH, this.getOutputPath],
+  ]);
 
   public async getProjectName(message: any): Promise<IPayloadResponse> {
-    const userOutputPath = vscode.workspace
-      .getConfiguration()
-      .get<string>("wts.changeSaveToLocation");
-    const outputPath: string = userOutputPath ? userOutputPath : os.homedir();
-    const defaultAppName = "myApp";
-    let newAppName = defaultAppName;
-    let count = 1;
-
-    while (
-      fs.existsSync(path.join(outputPath, newAppName)) &&
-      count <= PROJECT_NAME_VALIDATION_LIMIT
-    ) {
-      newAppName = `${defaultAppName}${count}`;
-      count++;
-    }
-    if (count > PROJECT_NAME_VALIDATION_LIMIT) {
-      newAppName = "";
-    }
+    const outputPath = this.getDefaultProjectPath();
+    const projectName = await this.inferProjectName(outputPath);
     return {
       payload: {
-        scope:message.payload.scope,
-        projectName: newAppName
-      }
+        scope: message.payload.scope,
+        projectName,
+      },
     };
   }
 
   public async getOutputPath(message: any): Promise<IPayloadResponse> {
-    const userOutputPath = vscode.workspace
-      .getConfiguration()
-      .get<string>("wts.changeSaveToLocation");
-
-    const outputPath: string = userOutputPath ? userOutputPath : os.homedir();
+    const outputPath = this.getDefaultProjectPath();
     return {
       payload: {
-        scope:message.payload.scope,
-        outputPath: outputPath
-      }
+        scope: message.payload.scope,
+        outputPath,
+      },
     };
+  }
+
+  private getDefaultProjectPath(): string {
+    const projectPath = vscode.workspace.getConfiguration().get<string>("wts.changeSaveToLocation");
+    return projectPath ?? os.homedir();
+  }
+
+  private async inferProjectName(outputPath: string): Promise<string> {
+    let projectName = DEFAULT_PROJECT_NAME;
+    let count = 1;
+
+    while (fs.existsSync(path.join(outputPath, projectName)) && count <= PROJECT_NAME_VALIDATION_LIMIT) {
+      projectName = `${DEFAULT_PROJECT_NAME}${count}`;
+      count++;
+    }
+    if (count > PROJECT_NAME_VALIDATION_LIMIT) {
+      projectName = "";
+    }
+    return projectName;
   }
 }
