@@ -10,6 +10,8 @@ import messages from "./messages";
 import { AppState } from "../../store/combineReducers";
 import { IRoutesNavItems } from "../../types/route";
 import { setRoutesAction } from "../../store/navigation/routesNavItems/actions";
+import { setDetailPageAction } from "../../store/config/detailsPage/action";
+import { IOption } from "../../types/option";
 
 type Props = InjectedIntlProps;
 
@@ -64,7 +66,11 @@ const TopNavBar = (props: Props) => {
                   })}
                   key={formatMessage(item.messageDescriptor)}
                   onClick={(event) => {
-                    if (projectNameValidation.isValid) navigateToPageAndSetVisited(event, item) 
+                    if (projectNameValidation.isValid) {
+                      navigateToPageAndSetVisited(event, item) 
+                      const optionDetailPageBack: IOption = {title: "", internalName: "", body: "", svgUrl: ""};
+                      dispatch(setDetailPageAction(optionDetailPageBack, false, ""));
+                    }
                   }}
                 >
                   <TopNavBarLink

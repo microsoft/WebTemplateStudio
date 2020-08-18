@@ -25,6 +25,8 @@ import { useMemo } from "react";
 import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
 import { IRoutesNavItems } from "../../types/route";
 import { setRoutesAction } from "../../store/navigation/routesNavItems/actions";
+import { IOption } from "../../types/option";
+import { setDetailPageAction } from "../../store/config/detailsPage/action";
 
 type Props = InjectedIntlProps;
 
@@ -60,7 +62,8 @@ const Footer = (props: Props) => {
     newRoutesNavItems.forEach(route => route.isSelected=false);
     newRoutesNavItems.filter(route => route.index === currentIndex -1)[0].isSelected=true;
     newRoutesNavItems.filter(route => route.index === currentIndex -1)[0].wasVisited=true;
-
+    const optionDetailPageBack: IOption = {title: "", internalName: "", body: "", svgUrl: ""};
+    dispatch(setDetailPageAction(optionDetailPageBack, false, ""));
     dispatch(setRoutesAction(newRoutesNavItems));
   };
 
@@ -71,7 +74,8 @@ const Footer = (props: Props) => {
     newRoutesNavItems.forEach(route => route.isSelected=false);
     newRoutesNavItems.filter(route => route.index === currentIndex +1)[0].isSelected=true;
     newRoutesNavItems.filter(route => route.index === currentIndex +1)[0].wasVisited=true;
-
+    const optionDetailPageBack: IOption = {title: "", internalName: "", body: "", svgUrl: ""};
+    dispatch(setDetailPageAction(optionDetailPageBack, false, ""));
     dispatch(setRoutesAction(newRoutesNavItems));
   };
 
