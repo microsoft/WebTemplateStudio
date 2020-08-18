@@ -12,7 +12,7 @@ import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import * as extensionService from "../../utils/extensionService/extensionService";
 import { WEB_TEMPLATE_STUDIO_LINKS } from "../../utils/constants/constants";
 import { messages } from "./messages";
-import { resetWizardAction, loadAction } from "../../store/config/config/action";
+import { resetWizardAction } from "../../store/config/config/action";
 
 const spyGenerateProject = jest.spyOn(extensionService, "generateProject");
 const spySendTelemetry = jest.spyOn(extensionService, "sendTelemetry");
@@ -22,10 +22,7 @@ jest.mock("../../store/config/config/action", () => {
   const resetWizardAction = jest.fn(() => ({
     type: "WTS/config/RESET_WIZARD",
   }));
-  const loadAction = jest.fn(() => ({
-    type: "WTS/config/LOAD",
-  }));
-  return { resetWizardAction, loadAction };
+  return { resetWizardAction };
 });
 
 jest.mock("./GenerationItem", () => {
@@ -128,7 +125,7 @@ describe("GenerationModal", () => {
       });
     });
 
-    it("On press close button, resetWizardAction and loadAction should be called", async () => {
+    it("On press close button, resetWizardAction should be called", async () => {
       const { getByTestId, getAllByTestId } = renderWithStore(<GenerationModal {...props} />, store);
       const finishGenerationMockButtons = getAllByTestId("mock-finish-generation");
       finishGenerationMockButtons.forEach((b) => fireEvent.click(b));
@@ -136,7 +133,6 @@ describe("GenerationModal", () => {
         const closeButton = getByTestId("close-button");
         fireEvent.click(closeButton);
         expect(resetWizardAction).toBeCalled();
-        expect(loadAction).toBeCalled();
       });
     });
 
@@ -160,7 +156,7 @@ describe("GenerationModal", () => {
       });
     });
 
-    it("On press create new project button, resetWizardAction and loadAction should be called", async () => {
+    it("On press create new project button, resetWizardAction should be called", async () => {
       const { getByText, getAllByTestId } = renderWithStore(<GenerationModal {...props} />, store);
       const finishGenerationMockButtons = getAllByTestId("mock-finish-generation");
       finishGenerationMockButtons.forEach((b) => fireEvent.click(b));
@@ -168,7 +164,6 @@ describe("GenerationModal", () => {
         const createNewProjectButton = getByText(intl.formatMessage(messages.createNewProject));
         fireEvent.click(createNewProjectButton);
         expect(resetWizardAction).toBeCalled();
-        expect(loadAction).toBeCalled();
       });
     });
 
@@ -207,7 +202,7 @@ describe("GenerationModal", () => {
       });
     });
 
-    it("On press close button, resetWizardAction and loadAction should be called", async () => {
+    it("On press close button, resetWizardAction should be called", async () => {
       const { getByTestId, getAllByTestId } = renderWithStore(<GenerationModal {...props} />, store);
       const finishGenerationMockButtons = getAllByTestId("mock-failed-generation");
       finishGenerationMockButtons.forEach((b) => fireEvent.click(b));
@@ -217,7 +212,6 @@ describe("GenerationModal", () => {
 
         expect(spySendTelemetry).toHaveBeenCalled();
         expect(resetWizardAction).toBeCalled();
-        expect(loadAction).toBeCalled();
       });
     });
 
@@ -242,7 +236,7 @@ describe("GenerationModal", () => {
       });
     });
 
-    it("On press create new project button, resetWizardAction and loadAction should be called", async () => {
+    it("On press create new project button, resetWizardAction should be called", async () => {
       const { getByText, getAllByTestId } = renderWithStore(<GenerationModal {...props} />, store);
       const finishGenerationMockButtons = getAllByTestId("mock-failed-generation");
       finishGenerationMockButtons.forEach((b) => fireEvent.click(b));
@@ -250,7 +244,6 @@ describe("GenerationModal", () => {
         const createNewProjectButton = getByText(intl.formatMessage(messages.createNewProject));
         fireEvent.click(createNewProjectButton);
         expect(resetWizardAction).toBeCalled();
-        expect(loadAction).toBeCalled();
       });
     });
 
