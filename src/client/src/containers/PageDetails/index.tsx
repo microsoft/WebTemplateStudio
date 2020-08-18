@@ -16,7 +16,7 @@ interface IPageDetailsProps {
 type Props = IPageDetailsProps;
 
 const PageDetails = (props: Props) => {
-  const { detailsPageInfo, isIntlFormatted, originRoute } = props;
+  const { detailsPageInfo, isIntlFormatted } = props;
   const dispatch = useDispatch();
 
   return (

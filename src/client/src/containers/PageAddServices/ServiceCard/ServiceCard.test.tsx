@@ -11,7 +11,7 @@ import { IOption } from "../../../types/option";
 import { AppState } from "../../../store/combineReducers";
 
 jest.mock("../../../store/config/detailsPage/action", () => {
-  const setDetailPageAction = jest.fn((detailPageInfo: IOption, isIntlFormatted = false, originRoute: string) => ({
+  jest.fn((detailPageInfo: IOption, isIntlFormatted = false, originRoute: string) => ({
     type: "WTS/navigation/routes/SET_DETAILS_PAGE_INFO",
     payload: {
       data: detailPageInfo,

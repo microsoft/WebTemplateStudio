@@ -25,7 +25,7 @@ const TopNavBar = (props: Props) => {
 
   React.useEffect(() => {
     if (selectedRoute && routesNavItems.length>0){
-      const index = routesNavItems.filter(route => route.route == selectedRoute)[0].index;
+      const index = routesNavItems.filter(route => route.route === selectedRoute)[0].index;
       const page = document.getElementById('page' + (index + 1));
       if (page) page.focus();
     }
@@ -38,7 +38,7 @@ const TopNavBar = (props: Props) => {
     const newRoutesNavItems = routesNavItems.splice(0);
     for (let i=0; i<= item.index; i++){
       if (i < item.index) newRoutesNavItems[i].isSelected = false;
-      if (i == item.index) newRoutesNavItems[i].isSelected = true;
+      if (i === item.index) newRoutesNavItems[i].isSelected = true;
       newRoutesNavItems[i].wasVisited = true;
     }
     dispatch(setRoutesAction(newRoutesNavItems));

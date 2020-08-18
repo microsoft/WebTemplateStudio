@@ -55,22 +55,22 @@ const Footer = (props: Props) => {
 
   const navigateBack = () => {
     trackPageForTelemetry(currentRoute);
-    const currentIndex = routesNavItems.filter(route => route.route == currentRoute)[0].index;
+    const currentIndex = routesNavItems.filter(route => route.route === currentRoute)[0].index;
     const newRoutesNavItems = routesNavItems.splice(0);
     newRoutesNavItems.forEach(route => route.isSelected=false);
-    newRoutesNavItems.filter(route => route.index == currentIndex -1)[0].isSelected=true;
-    newRoutesNavItems.filter(route => route.index == currentIndex -1)[0].wasVisited=true;
+    newRoutesNavItems.filter(route => route.index === currentIndex -1)[0].isSelected=true;
+    newRoutesNavItems.filter(route => route.index === currentIndex -1)[0].wasVisited=true;
 
     dispatch(setRoutesAction(newRoutesNavItems));
   };
 
   const navigateForward = () => {
     trackPageForTelemetry(currentRoute);
-    const currentIndex = routesNavItems.filter(route => route.route == currentRoute)[0].index;
+    const currentIndex = routesNavItems.filter(route => route.route === currentRoute)[0].index;
     const newRoutesNavItems = routesNavItems.splice(0);
     newRoutesNavItems.forEach(route => route.isSelected=false);
-    newRoutesNavItems.filter(route => route.index == currentIndex +1)[0].isSelected=true;
-    newRoutesNavItems.filter(route => route.index == currentIndex +1)[0].wasVisited=true;
+    newRoutesNavItems.filter(route => route.index === currentIndex +1)[0].isSelected=true;
+    newRoutesNavItems.filter(route => route.index === currentIndex +1)[0].wasVisited=true;
 
     dispatch(setRoutesAction(newRoutesNavItems));
   };

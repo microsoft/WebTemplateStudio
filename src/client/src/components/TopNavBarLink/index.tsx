@@ -11,7 +11,6 @@ const TopNavBarLink = ({
   pageNumber,
   text,
   visitedCheck,
-  path,
   disabled,
   isSelected,
   intl

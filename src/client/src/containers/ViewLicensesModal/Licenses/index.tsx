@@ -1,10 +1,5 @@
 import * as React from "react";
-import ReactMarkdown from "react-markdown";
-import { connect, useSelector } from "react-redux";
-import {
-  getFrameworkLicensesSelector,
-  getPageLicencesSelector
-} from "../../../store/userSelection/frameworksLicenseSelector";
+import { useSelector } from "react-redux";
 import { ILicenseObject } from "../../../types/license";
 
 import styles from "./styles.module.css";

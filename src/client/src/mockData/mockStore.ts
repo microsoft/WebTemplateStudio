@@ -2,7 +2,6 @@ import { ISelected } from "../types/selected";
 import { FormattedMessage } from "react-intl";
 import { AppState } from "../store/combineReducers";
 import { ModalType } from "../store/navigation/typeKeys";
-import { ROUTE } from "../utils/constants/routes";
 import { getNavItems } from "../utils/routes/routes";
 
 export const getISelected = () => {
@@ -387,7 +386,7 @@ export const setOpenModal = (store: AppState, modalType: ModalType) => {
 export const setSelectedRoute = (store: AppState, seletedRoute: string) => {
   //store.navigation.routes.selected = seletedRoute;
   store.navigation.routesNavItems.forEach(route => {route.isSelected=false});
-  store.navigation.routesNavItems.filter(route => route.route == seletedRoute)[0].isSelected=true;
+  store.navigation.routesNavItems.filter(route => route.route === seletedRoute)[0].isSelected=true;
 }
 
 export const setAzureEmail = (store: AppState, email = "test@test.com") => {

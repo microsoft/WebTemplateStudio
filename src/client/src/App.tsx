@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import * as React from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
 import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
 import {
@@ -52,7 +52,6 @@ const App = (props: Props) => {
   const Header = loadable(() => import(/* webpackChunkName: "Header" */  "./containers/Header"));
   const Footer = loadable(() => import(/* webpackChunkName: "Footer" */  "./containers/Footer"));
   const PageNewProject = loadable(() => import(/* webpackChunkName: "PageNewProject" */ "./containers/PageNewProject"));
-  const platform = useSelector((state: AppState) => state.config.platform);
   
   React.useEffect(()=>{
     dispatch(loadAction());
@@ -125,7 +124,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   frontendOptions: state.templates.frontendOptions,
   modalState: state.navigation.modals.openModal,
   selectedRoute : getSelectedRoute(state),
-  isDetailPageVisible: state.config.detailsPage.data.title != ""
+  isDetailPageVisible: state.config.detailsPage.data.title !== ""
 });
 
 export default

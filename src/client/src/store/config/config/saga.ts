@@ -82,7 +82,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
       payload: projectType
     });
 
-    if (projectType==WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP){
+    if (projectType === WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP){
       const event: any = yield call(getFrameworks, vscode, isPreview, projectType);
       const message = event.data;
       const optionFrontEndFrameworks = getFrameworksOptions(

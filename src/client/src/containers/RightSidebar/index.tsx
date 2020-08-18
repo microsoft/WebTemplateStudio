@@ -11,8 +11,6 @@ import { KEY_EVENTS } from "../../utils/constants/constants";
 import { ROUTE } from "../../utils/constants/routes";
 import messages from "./strings";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-
-import { AppState } from "../../store/combineReducers";
 import * as ModalActions from "../../store/navigation/modals/action";
 import { hasServices as hasServicesSelector } from "../../store/userSelection/services/servicesSelector";
 import ProjectDetails from "./ProjectDetails";
