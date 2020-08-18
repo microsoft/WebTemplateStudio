@@ -68,11 +68,21 @@ const asModal = <P extends object>(
   WrappedComponent: React.ComponentType<P>,
   MODAL_TYPE?: ModalType
 ) => {
+  const modalRoot = document.getElementById('modal-root');
+
   return class extends React.Component<P & IProps> {
+    constructor(props : any){
+      super(props);
+      debugger;
+      let hh = this.el;
+      debugger;
+    }
+    
     static defaultProps = {
       closeModal: () => void(0),
       isModalOpen: false
     };
+
     render() {
       return (
 
