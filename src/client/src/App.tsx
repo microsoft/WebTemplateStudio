@@ -115,7 +115,7 @@ const App = (props: Props) => {
         </main>
         <RightSidebar />
       </div>
-      <Footer />
+      {!isDetailPageVisible && (<Footer />)}
     </React.Fragment>
   );
 }
