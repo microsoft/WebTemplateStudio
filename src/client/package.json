@@ -15,7 +15,6 @@
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "@types/react-intl": "^2.3.17",
-    "@types/react-modal": "^3.8.1",
     "@types/react-redux": "^7.1.9",
     "@types/react-select": "^3.0.13",
     "@types/react-sortable-hoc": "^0.7.1",
