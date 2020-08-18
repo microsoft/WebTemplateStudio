@@ -13,7 +13,7 @@ import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { LaunchExperience } from "./launchExperience";
 import { DependenciesModule } from "./client-modules/dependenciesModule";
 import { CoreTSModule } from "./coreTSModule";
-import { Defaults } from "./utils/defaults";
+import { Defaults } from "./client-modules/defaults";
 import { Telemetry } from "./client-modules/telemetry";
 import { AzureModule } from "./client-modules/azureModule";
 import { getExtensionName, getExtensionVersionNumber } from "./utils/packageInfo";
