@@ -1,0 +1,25 @@
+.overlayModal {
+  position: "fixed";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000;
+  background-color: "rgba(0, 0, 0, 0.6)";
+}
+
+.contentModal {
+  top: "50%";
+  left: "50%";
+  right: "auto";
+  bottom: "auto";
+  margin-right: "-50%";
+  transform: "translate(-50%, -50%)";
+  border-radius: "3px";
+  width: CUSTOM_WIDTH;
+  padding: "4vh";
+  background: var(--vscode-menu-background);
+  border: "0.5px solid var(--vscode-editor-foreground)";
+  max-width: "700px";
+  min-width: "300px";
+}

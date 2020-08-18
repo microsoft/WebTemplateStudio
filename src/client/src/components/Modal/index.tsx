@@ -1,7 +1,8 @@
 import * as React from "react";
-
-import Modal from "react-modal";
-import { NAVIGATION_MODAL_TYPES, ModalType } from "../../store/navigation/typeKeys";
+import { ModalType } from "../../store/navigation/typeKeys";
+import ReactDOM from "react-dom";
+import styles from "./styles.module.css";
+import classnames from "classnames";
 
 /**
  * A Higher-Order Component that creates a modal from a normal React component
@@ -17,7 +18,7 @@ import { NAVIGATION_MODAL_TYPES, ModalType } from "../../store/navigation/typeKe
  * Custom styling guidance:
  * https://reactcommunity.org/react-modal/styles/
  */
-const getCustomStyles = (MODAL_TYPE?: ModalType): Modal.Styles => {
+/*const getCustomStyles = (MODAL_TYPE?: ModalType): Modal.Styles => {
   // default width
   let CUSTOM_WIDTH = "50%";
   const backgroundColor = "var(--vscode-menu-background)";
@@ -30,63 +31,53 @@ const getCustomStyles = (MODAL_TYPE?: ModalType): Modal.Styles => {
   ) {
     CUSTOM_WIDTH = "40%";
   }
-
-  return {
-    overlay: {
-      position: "fixed",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      zIndex: 2000,
-      backgroundColor: "rgba(0, 0, 0, 0.6)"
-    },
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-      borderRadius: "3px",
-      width: CUSTOM_WIDTH,
-      padding: "4vh",
-      background: backgroundColor,
-      border: "0.5px solid var(--vscode-editor-foreground)",
-      maxWidth: "700px",
-      minWidth: "300px"
-    }
-  };
-};
+*/
 
 interface IProps {
   closeModal: () => any;
   isModalOpen: boolean;
+  el: React.ReactElement;
+}
+
+const modalRoot: any = document.getElementById('modal-root');
+let el: any;
+
+class ModalClass extends React.Component {
+  constructor(props: any) {
+    super(props);
+    el = document.createElement('div');
+  }
+
+  componentDidMount() {
+    // El elemento del portal se inserta en el árbol DOM después de
+    // que se montan los hijos del Modal, lo que significa que los hijos
+    // se montarán en un nodo DOM separado. Si un componente hijo
+    // requiere estar conectado inmediatamente cuando se monta al árbol del DOM
+    // por ejemplo, para medir un nodo DOM, o usar 'autoFocus' en un descendiente,
+    // agrega el estado a Modal y renderiza solo a los hijos 
+    // cuando se inserta Modal en el árbol DOM.
+    modalRoot.appendChild(el);
+  }
+
+  componentWillUnmount() {
+    modalRoot.removeChild(el);
+  }
+
+  render() {
+    return ReactDOM.createPortal(
+      this.props.children,
+      el
+    );
+  }
 }
 
 const asModal = <P extends object>(
   WrappedComponent: React.ComponentType<P>,
   MODAL_TYPE?: ModalType
 ) => {
-  const modalRoot:any = document.getElementById('modal-root');
+  const modalRoot = document.getElementById('modal-root');
 
   return class extends React.Component<P & IProps> {
-    constructor(props : any){
-      super(props);
-    }
-
-    componentDidMount() {
-      // El elemento del portal se inserta en el árbol DOM después de
-      // que se montan los hijos del Modal, lo que significa que los hijos
-      // se montarán en un nodo DOM separado. Si un componente hijo
-      // requiere estar conectado inmediatamente cuando se monta al árbol del DOM
-      // por ejemplo, para medir un nodo DOM, o usar 'autoFocus' en un descendiente,
-      // agrega el estado a Modal y renderiza solo a los hijos 
-      // cuando se inserta Modal en el árbol DOM.
-      //modalRoot.appendChild("ssss");
-      debugger;
-    }
-
     static defaultProps = {
       closeModal: () => void(0),
       isModalOpen: false
@@ -94,9 +85,13 @@ const asModal = <P extends object>(
 
     render() {
       return (
-        <div id="kk">
-          <h1>hhhhhhhhhhhhhhhhhhhh</h1>
-        </div>
+        <ModalClass>
+          <div className={classnames(styles.overlayModal)} id="11">
+            <div className={classnames(styles.contentModal)} id="22">
+              <WrappedComponent {...this.props as P} />
+            </div>
+          </div>
+        </ModalClass>
       );
     }
   };
