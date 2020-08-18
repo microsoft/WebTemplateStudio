@@ -68,16 +68,25 @@ const asModal = <P extends object>(
   WrappedComponent: React.ComponentType<P>,
   MODAL_TYPE?: ModalType
 ) => {
-  const modalRoot = document.getElementById('modal-root');
+  const modalRoot:any = document.getElementById('modal-root');
 
   return class extends React.Component<P & IProps> {
     constructor(props : any){
       super(props);
-      debugger;
-      let hh = this.el;
+    }
+
+    componentDidMount() {
+      // El elemento del portal se inserta en el árbol DOM después de
+      // que se montan los hijos del Modal, lo que significa que los hijos
+      // se montarán en un nodo DOM separado. Si un componente hijo
+      // requiere estar conectado inmediatamente cuando se monta al árbol del DOM
+      // por ejemplo, para medir un nodo DOM, o usar 'autoFocus' en un descendiente,
+      // agrega el estado a Modal y renderiza solo a los hijos 
+      // cuando se inserta Modal en el árbol DOM.
+      //modalRoot.appendChild("ssss");
       debugger;
     }
-    
+
     static defaultProps = {
       closeModal: () => void(0),
       isModalOpen: false
@@ -85,16 +94,9 @@ const asModal = <P extends object>(
 
     render() {
       return (
-
-        <Modal
-          isOpen={this.props.isModalOpen}
-          onRequestClose={this.props.closeModal}
-          contentLabel="Modal Display"
-          style={getCustomStyles(MODAL_TYPE)}
-          ariaHideApp={false}
-        >
-          <WrappedComponent {...this.props as P} />
-        </Modal>
+        <div id="kk">
+          <h1>hhhhhhhhhhhhhhhhhhhh</h1>
+        </div>
       );
     }
   };
