@@ -43,5 +43,6 @@ const NavItemsWeb: IRoutesNavItems[] = [
 
 export {
   ROUTE,
-  NavItemsWeb
+  NavItemsWeb,
+  messages
 };
