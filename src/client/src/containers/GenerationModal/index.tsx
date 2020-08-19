@@ -23,7 +23,7 @@ import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";
 
 import { sendTelemetry, generateProject, openProjectInVSCode } from "../../utils/extensionService/extensionService";
-import { resetWizardAction, loadAction } from "../../store/config/config/action";
+import { resetWizardAction } from "../../store/config/config/action";
 import { AppContext } from "../../AppContext";
 import { getGenerationData } from "../../store/userSelection/app/selector";
 import { getCosmosDB, getAppService } from "../../store/userSelection/services/servicesSelector";

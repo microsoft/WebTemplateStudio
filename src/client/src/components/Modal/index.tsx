@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ModalType, NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
-import ReactDOM from "react-dom";
+//import ReactDOM from "react-dom";
 import styles from "./styles.module.css";
 import classnames from "classnames";
 
@@ -9,7 +9,7 @@ interface IProps {
   isModalOpen: boolean;
 }
 
-class ModalClass extends React.Component {
+/*class ModalClass extends React.Component {
   el: HTMLDivElement;
   modalRoot: HTMLDivElement;
   constructor(props: any) {
@@ -32,18 +32,13 @@ class ModalClass extends React.Component {
       this.el
     );
   }
-}
+}*/
 
 const asModal = <P extends object>(
   WrappedComponent: React.ComponentType<P>,
   MODAL_TYPE?: ModalType
 ) => {
   return class extends React.Component<P & IProps> {
-    static defaultProps = {
-      closeModal: () => void(0),
-      isModalOpen: false
-    };
-
     render() {
       return (
         <div className={classnames(styles.overlayModal)}>

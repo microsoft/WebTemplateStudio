@@ -35,7 +35,7 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
       id:Math.random().toString()
     };;
     routesNavItems = routesNavItems.map((navItem, index)=>{
-      if (index==0){
+      if (index === 0){
         navItem.isSelected=true;
         navItem.wasVisited=true;
       }else{
