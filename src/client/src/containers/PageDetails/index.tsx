@@ -5,7 +5,7 @@ import { IOption } from "../../types/option";
 import { getScreenShot } from "../../utils/getSvgUrl";
 import styles from "./styles.module.css";
 import { AppState } from "../../store/combineReducers";
-import { setPageWizardPageAction } from "../../store/navigation/routes/action";
+import { setDetailPageAction } from "../../store/config/detailsPage/action";
 
 interface IPageDetailsProps {
   originRoute: string;
@@ -16,13 +16,16 @@ interface IPageDetailsProps {
 type Props = IPageDetailsProps;
 
 const PageDetails = (props: Props) => {
-  const { detailsPageInfo, isIntlFormatted, originRoute } = props;
+  const { detailsPageInfo, isIntlFormatted } = props;
   const dispatch = useDispatch();
 
   return (
     <div className={styles.detailsContainer}>
       <Details
-        handleBackClick={()=>{dispatch(setPageWizardPageAction(originRoute))}}
+        handleBackClick={()=>{
+          const optionDetailPageBack: IOption = {title: "", internalName: "", body: "", svgUrl: ""};
+          dispatch(setDetailPageAction(optionDetailPageBack, false, ""));
+        }}
         detailInfo={detailsPageInfo}
         formatteDetailInfo={isIntlFormatted ? detailsPageInfo : undefined}
       />

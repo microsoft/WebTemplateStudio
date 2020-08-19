@@ -23,6 +23,7 @@ export enum EXTENSION_COMMANDS {
   GET_TEMPLATE_INFO= "get-template-info",
   GET_DEPENDENCY_INFO= "check-dependency",
   GET_FRAMEWORKS= "get-frameworks",
+  GET_PROJECT_TYPES="get-project-types",
   GET_ALL_LICENSES= "get-all-licenses",
   GET_LATEST_VERSION="get-latest-version",
   GET_PAGES= "get-pages",

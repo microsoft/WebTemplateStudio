@@ -1,27 +1,48 @@
+import { IRoutesNavItems } from "../../types/route";
 import { defineMessages } from "react-intl";
 
-
-const ROUTES = {
+const ROUTE = {
   PAGE_DETAILS: "/PageDetail",
   SELECT_FRAMEWORKS:  "/SelectFrameworks",
-  SELECT_PAGES: "/SelectPages",
-  ADD_SERVICES: "/AddPages",
+  ADD_PAGES: "/AddPages",
+  ADD_SERVICES: "/AddServices",
   REVIEW_AND_GENERATE :"/ReviewAndGenerate",
   NEW_PROJECT: "/"
 };
 
+const messages = defineMessages({
+  frameworks: {
+    id: "topNavBar.frameworks",
+    defaultMessage: "Add Frameworks"
+  },
+  pages: {
+    id: "topNavBar.pages",
+    defaultMessage: "Add Pages"
+  },
+  services: {
+    defaultMessage: "Add Optional Cloud Services",
+    id: "topNavBar.services"
+  },
+  summary: {
+    defaultMessage: "Summary",
+    id: "topNavBar.summary"
+  },
+  welcome: {
+    defaultMessage: "New Project",
+    id: "topNavBar.newProject"
+  }
+});
 
-// Presents the routes in the order of the wizard
-const ROUTES_ARRAY = [
-  ROUTES.NEW_PROJECT,
-  ROUTES.SELECT_FRAMEWORKS,
-  ROUTES.SELECT_PAGES,
-  ROUTES.ADD_SERVICES,
-  ROUTES.REVIEW_AND_GENERATE
+const NavItemsWeb: IRoutesNavItems[] = [
+  {route:ROUTE.NEW_PROJECT, isSelected:true, wasVisited: true, index:0, messageDescriptor: messages.welcome},
+  {route:ROUTE.SELECT_FRAMEWORKS, isSelected:false, wasVisited: false, index:1, messageDescriptor:messages.frameworks},
+  {route:ROUTE.ADD_PAGES, isSelected:false, wasVisited: false, index:2, messageDescriptor:messages.pages},
+  {route:ROUTE.ADD_SERVICES, isSelected:false, wasVisited: false, index:3, messageDescriptor:messages.services},
+  {route:ROUTE.REVIEW_AND_GENERATE, isSelected:false, wasVisited: false, index:4, messageDescriptor:messages.summary},
 ];
 
-
 export {
-  ROUTES,
-  ROUTES_ARRAY
+  ROUTE,
+  NavItemsWeb,
+  messages
 };

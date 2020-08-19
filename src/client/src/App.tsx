@@ -7,7 +7,6 @@ import {
   DEVELOPMENT
 } from "./utils/constants/constants";
 
-import { ROUTES } from "./utils/constants/routes";
 
 import appStyles from "./appStyles.module.css";
 import { AppState } from "./store/combineReducers";
@@ -20,6 +19,8 @@ import { setOutputPathAction } from "./store/userSelection/app/action";
 import { loadAction } from "./store/config/config/action";
 import loadable from '@loadable/component'
 import { EXTENSION_COMMANDS } from "./utils/constants/commands";
+import { ROUTE } from "./utils/constants/routes";
+import { getSelectedRoute } from "./store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 
 const PageSelectFrameworks = loadable(()=> import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"));
 const PageAddPages = loadable(()=> import(/* webpackChunkName: "PageAddPages" */  "./containers/PageAddPages"));
@@ -39,18 +40,19 @@ interface IStateProps {
   frontendOptions: IOption[];
   modalState: any;
   selectedRoute: string;
+  isDetailPageVisible: boolean;
 }
 
 type Props = IStateProps;
 
 const App = (props: Props) => {
-  const { modalState, selectedRoute } = props;
+  const { modalState, selectedRoute, isDetailPageVisible } = props;
   const dispatch = useDispatch();
 
   const Header = loadable(() => import(/* webpackChunkName: "Header" */  "./containers/Header"));
   const Footer = loadable(() => import(/* webpackChunkName: "Footer" */  "./containers/Footer"));
   const PageNewProject = loadable(() => import(/* webpackChunkName: "PageNewProject" */ "./containers/PageNewProject"));
-
+  
   React.useEffect(()=>{
     dispatch(loadAction());
     messageEventsFromExtension();
@@ -73,7 +75,6 @@ const App = (props: Props) => {
     <React.Fragment>
       <Header />
       <TopNavBar  />
-
       <div className={appStyles.container}>
         {(modalState.modalType === NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL) && (<ViewLicensesModal/>)}
         {(modalState.modalType === NAVIGATION_MODAL_TYPES.APP_SERVICE_MODAL) && (<AppServiceModal/>)}
@@ -84,18 +85,18 @@ const App = (props: Props) => {
         <main
           className={classnames(appStyles.centerView, {
             [appStyles.centerViewNewProjectPage]:
-              selectedRoute === ROUTES.NEW_PROJECT,
-            [appStyles.centerViewMaxHeight]: selectedRoute === ROUTES.PAGE_DETAILS,
-            [appStyles.centerViewAzurePage]: selectedRoute === ROUTES.ADD_SERVICES
+              selectedRoute === ROUTE.NEW_PROJECT,
+            [appStyles.centerViewMaxHeight]: selectedRoute === ROUTE.PAGE_DETAILS,
+            [appStyles.centerViewAzurePage]: selectedRoute === ROUTE.ADD_SERVICES
           })}
         >
-           {selectedRoute === ROUTES.NEW_PROJECT ? (
+           {selectedRoute === ROUTE.NEW_PROJECT ? (
             <HomeSplashSVG
              className={classnames(appStyles.splash, appStyles.homeSplash)}
             />
           ) : null}
 
-          {selectedRoute === ROUTES.REVIEW_AND_GENERATE ? (
+          {selectedRoute === ROUTE.REVIEW_AND_GENERATE ? (
             <SummarySplashSVG
               className={classnames(
                 appStyles.splash,
@@ -104,17 +105,17 @@ const App = (props: Props) => {
             />
           ) : null}
 
-          {(selectedRoute === ROUTES.PAGE_DETAILS) && (<PageDetails />)}
-          {(selectedRoute === ROUTES.ADD_SERVICES) && (<PageAddServices/>)}
-          {(selectedRoute === ROUTES.REVIEW_AND_GENERATE) && (<PageReviewAndGenerate />)}
-          {(selectedRoute === ROUTES.SELECT_FRAMEWORKS) && (<PageSelectFrameworks/>)}
-          {(selectedRoute === ROUTES.SELECT_PAGES) && (<PageAddPages isModal={false}/>)}
-          {(selectedRoute === ROUTES.NEW_PROJECT) && (<PageNewProject/>)}
+          {isDetailPageVisible && (<PageDetails />)}
+          {(!isDetailPageVisible && selectedRoute === ROUTE.ADD_SERVICES) && (<PageAddServices/>)}
+          {(!isDetailPageVisible && selectedRoute === ROUTE.REVIEW_AND_GENERATE) && (<PageReviewAndGenerate />)}
+          {(!isDetailPageVisible && selectedRoute === ROUTE.SELECT_FRAMEWORKS) && (<PageSelectFrameworks/>)}
+          {(!isDetailPageVisible && selectedRoute === ROUTE.ADD_PAGES) && (<PageAddPages isModal={false}/>)}
+          {(!isDetailPageVisible && selectedRoute === ROUTE.NEW_PROJECT) && (<PageNewProject/>)}
 
         </main>
         <RightSidebar />
       </div>
-      <Footer />
+      {!isDetailPageVisible && (<Footer />)}
     </React.Fragment>
   );
 }
@@ -122,7 +123,8 @@ const App = (props: Props) => {
 const mapStateToProps = (state: AppState): IStateProps => ({
   frontendOptions: state.templates.frontendOptions,
   modalState: state.navigation.modals.openModal,
-  selectedRoute : state.navigation.routes.selected,
+  selectedRoute : getSelectedRoute(state),
+  isDetailPageVisible: state.config.detailsPage.data.title !== ""
 });
 
 export default

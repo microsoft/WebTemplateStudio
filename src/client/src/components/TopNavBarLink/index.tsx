@@ -11,11 +11,9 @@ const TopNavBarLink = ({
   pageNumber,
   text,
   visitedCheck,
-  path,
   disabled,
   isSelected,
-  intl,
-  reducerSetPage
+  intl
 }: {
   pageNumber: number;
   text: string;
@@ -24,11 +22,7 @@ const TopNavBarLink = ({
   disabled: boolean;
   isSelected: boolean;
   intl: InjectedIntl;
-  reducerSetPage: (route: string) => void;
 }) => {
-  const handleClick = () =>{
-    if (!disabled) reducerSetPage(path);
-  } 
 
   const getAriaLabel = (
     arialabeltext: FormattedMessage.MessageDescriptor,
@@ -49,7 +43,6 @@ const TopNavBarLink = ({
   return (
     <a
       tabIndex={linkTabIndex}
-      onClick={handleClick}
       className={styles.container}
       onKeyUp={keyUpHandler}
       id={"page" + pageNumber}
