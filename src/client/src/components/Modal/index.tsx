@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 import classnames from "classnames";
 
 interface IProps {
-  closeModal: () => any | null;
+  closeModal?: any;
   isModalOpen: boolean;
 }
 
