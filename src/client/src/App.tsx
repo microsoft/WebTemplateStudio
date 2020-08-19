@@ -3,17 +3,13 @@ import * as React from "react";
 import { connect, useDispatch } from "react-redux";
 import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
 import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
-import {
-  DEVELOPMENT
-} from "./utils/constants/constants";
-
-
+import { DEVELOPMENT } from "./utils/constants/constants";
 import appStyles from "./appStyles.module.css";
 import { AppState } from "./store/combineReducers";
 import { IOption } from "./types/option";
-import PageDetails from "./containers/PageDetails";
+import PageDetails from "./pages/PageDetails";
 import { NAVIGATION_MODAL_TYPES } from "./store/navigation/typeKeys";
-import RightSidebar from "./containers/RightSidebar";
+import RightSidebar from "./components/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
 import { setOutputPathAction } from "./store/userSelection/app/action";
 import { loadAction } from "./store/config/config/action";
@@ -22,15 +18,15 @@ import { EXTENSION_COMMANDS } from "./utils/constants/commands";
 import { ROUTE } from "./utils/constants/routes";
 import { getSelectedRoute } from "./store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 
-const PageSelectFrameworks = loadable(()=> import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"));
-const PageAddPages = loadable(()=> import(/* webpackChunkName: "PageAddPages" */  "./containers/PageAddPages"));
-const PageReviewAndGenerate = loadable(() => import(/* webpackChunkName: "PageReviewAndGenerate" */  "./containers/PageReviewAndGenerate"));
-const PageAddServices = loadable(() => import(/* webpackChunkName: "PageAddServices" */  "./containers/PageAddServices"));
-const GenerationModal = loadable(() => import(/* webpackChunkName: "GenerationModal" */  "./containers/GenerationModal"));
-const CosmosDbModal = loadable(() => import(/* webpackChunkName: "CosmosDbModal" */  "./containers/CosmosDbModal"));
-const AppServiceModal = loadable(() => import(/* webpackChunkName: "AppServiceModal" */  "./containers/AppServiceModal"));
-const ViewLicensesModal = loadable(() => import(/* webpackChunkName: "ViewLicensesModal" */  "./containers/ViewLicensesModal"));
-const AzureLoginModal = loadable(() => import(/* webpackChunkName: "AzureLoginModal" */  "./containers/AzureLoginModal"));
+const PageSelectFrameworks = loadable(()=> import(/* webpackChunkName: "PageSelectFrameworks" */  "./pages/PageSelectFrameworks"));
+const PageAddPages = loadable(()=> import(/* webpackChunkName: "PageAddPages" */  "./pages/PageAddPages"));
+const PageReviewAndGenerate = loadable(() => import(/* webpackChunkName: "PageReviewAndGenerate" */  "./pages/PageReviewAndGenerate"));
+const PageAddServices = loadable(() => import(/* webpackChunkName: "PageAddServices" */  "./pages/PageAddServices"));
+const GenerationModal = loadable(() => import(/* webpackChunkName: "GenerationModal" */  "./modals/GenerationModal"));
+const CosmosDbModal = loadable(() => import(/* webpackChunkName: "CosmosDbModal" */  "./modals/CosmosDbModal"));
+const AppServiceModal = loadable(() => import(/* webpackChunkName: "AppServiceModal" */  "./modals/AppServiceModal"));
+const ViewLicensesModal = loadable(() => import(/* webpackChunkName: "ViewLicensesModal" */  "./modals/ViewLicensesModal"));
+const AzureLoginModal = loadable(() => import(/* webpackChunkName: "AzureLoginModal" */  "./modals/AzureLoginModal"));
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -49,9 +45,9 @@ const App = (props: Props) => {
   const { modalState, selectedRoute, isDetailPageVisible } = props;
   const dispatch = useDispatch();
 
-  const Header = loadable(() => import(/* webpackChunkName: "Header" */  "./containers/Header"));
-  const Footer = loadable(() => import(/* webpackChunkName: "Footer" */  "./containers/Footer"));
-  const PageNewProject = loadable(() => import(/* webpackChunkName: "PageNewProject" */ "./containers/PageNewProject"));
+  const Header = loadable(() => import(/* webpackChunkName: "Header" */  "./components/Header"));
+  const Footer = loadable(() => import(/* webpackChunkName: "Footer" */  "./components/Footer"));
+  const PageNewProject = loadable(() => import(/* webpackChunkName: "PageNewProject" */ "./pages/PageNewProject"));
   
   React.useEffect(()=>{
     dispatch(loadAction());
