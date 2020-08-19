@@ -11,7 +11,7 @@
   width: 100%;
   box-sizing: border-box;
   background-color: var(--vscode-editor-background);
-  height: calc(100vh - 124px);
+  height: calc(100vh - 88px);
   justify-content: flex-start;
   position: relative;
   flex: 1 1 auto;

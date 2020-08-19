@@ -1,7 +1,7 @@
 import modalsActionType from "./modals/modalActionType";
-import routesActionType from "./routes/routesActionType";
-import isDirtyActionType from "./isDirty/isDirtyActionType";
+import routesActionType from "../config/detailsPage/routesActionType";
+import { IRoutesActionType } from "./routesNavItems/models";
 
-type navigationType = modalsActionType | routesActionType | isDirtyActionType;
+type navigationType = modalsActionType | routesActionType | IRoutesActionType;
 
 export default navigationType;

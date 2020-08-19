@@ -6,6 +6,7 @@ import pages from "./pages/selectPagesReducer";
 import projectNameObject from "./app/updateProjectNameReducer";
 import outputPathObject from "./app/updateOutputPathReducer";
 import services from "./services/combineReducers";
+import projectType from "./projectType/reducer";
 
 const UserSelectionStateReducer = combineReducers({
   frontendFramework,
@@ -13,7 +14,8 @@ const UserSelectionStateReducer = combineReducers({
   pages,
   outputPathObject,
   projectNameObject,
-  services
+  services,
+  projectType
 });
 
 export default UserSelectionStateReducer;
