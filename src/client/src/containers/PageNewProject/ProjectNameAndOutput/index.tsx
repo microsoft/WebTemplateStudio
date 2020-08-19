@@ -26,14 +26,13 @@ import { validateProjectName} from "../../../utils/validations/projectName/proje
 import { IValidation} from "../../../utils/validations/validations";
 import { inferProjectName} from "../../../utils/infer/projectName";
 import messages from "./messages";
-import { getOutputPath as getOutputPathFromExtension } from "../../../utils/extensionService/extensionService";
+import { getOutputPathFromConfig, browseNewOutputPath } from "../../../utils/extensionService/extensionService";
 import { setProjectPathValidationAction } from "../../../store/config/validations/action";
 import { setProjectNameAction, setOutputPathAction } from "../../../store/userSelection/app/action";
 import { IValidations } from "../../../store/config/validations/model";
 import { AppContext } from "../../../AppContext";
 import stylesInput from "../../../css/input.module.css";
 import classnames from "classnames";
-import { EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../../utils/constants/commands";
 
 interface IStateProps {
   outputPath: string;
@@ -57,7 +56,7 @@ const ProjectNameAndOutput = (props: Props) => {
   const dispatch = useDispatch();
   const { vscode } = React.useContext(AppContext);
   const [name, setName] = React.useState("");
-  
+
   React.useEffect(()=>{
     setName(projectName);
   },[]);
@@ -73,7 +72,7 @@ const ProjectNameAndOutput = (props: Props) => {
 
   React.useEffect(() => {
     if (outputPath === "") {
-      getOutputPathFromExtension(vscode).then((event)=>{
+      getOutputPathFromConfig(vscode).then((event)=>{
         const message = event.data;
         if (message.payload !== null && message.payload.outputPath !== null) {
           dispatch(setOutputPathAction(message.payload.outputPath));
@@ -96,11 +95,12 @@ const ProjectNameAndOutput = (props: Props) => {
   }
 
   const handleSaveClick = () => {
-    vscode.postMessage({
-      module: EXTENSION_MODULES.VALIDATOR,
-      command: EXTENSION_COMMANDS.GET_OUTPUT_PATH,
-      track: false
-    });
+    browseNewOutputPath(vscode).then(event => {
+      const message = event.data;
+        if (message.payload !== null && message.payload.outputPath !== undefined) {
+          dispatch(setOutputPathAction(message.payload.outputPath));
+        }
+    })
   };
 
   return (

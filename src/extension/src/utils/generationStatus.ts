@@ -31,7 +31,7 @@ export const updateStatusMessage = (message: string) => {
 
 export const sendToClientGenerationPath = (outputPath: string) => {
   Controller.reactPanelContext.postMessageWebview({
-    command: EXTENSION_COMMANDS.GET_OUTPUT_PATH,
+    command: EXTENSION_COMMANDS.UPDATE_OUTPUT_PATH_AFTER_GENERATING,
     payload: { outputPath },
   });
 };

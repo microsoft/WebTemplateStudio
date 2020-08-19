@@ -8,33 +8,32 @@ import { MESSAGES } from "../constants/messages";
 
 export class Validator extends WizardServant {
   clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
-    [EXTENSION_COMMANDS.GET_OUTPUT_PATH, Validator.sendOutputPathSelectionToClient],
+    [EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH, Validator.browseNewOutputPath],
     [EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION, Validator.handleProjectPathValidation],
   ]);
 
-  public static async sendOutputPathSelectionToClient(): Promise<IPayloadResponse> {
-    return vscode.window
-      .showOpenDialog({
-        canSelectFiles: false,
-        canSelectFolders: true,
-        canSelectMany: false,
-      })
-      .then((res: any) => {
-        let path = undefined;
+  public static async browseNewOutputPath(message: any): Promise<IPayloadResponse> {
+    const openDialogConfig = { canSelectFiles: false, canSelectFolders: true, canSelectMany: false };
+    return vscode.window.showOpenDialog(openDialogConfig).then((response) => {
+      const outputPath = Validator.getOutputPath(response);
+      return {
+        payload: {
+          scope: message.payload.scope,
+          outputPath,
+        },
+      };
+    });
+  }
 
-        if (res !== undefined) {
-          if (process.platform === CLI_SETTINGS.WINDOWS_PLATFORM_VERSION) {
-            path = res[0].path.substring(1, res[0].path.length);
-          } else {
-            path = res[0].path;
-          }
-        }
-        return {
-          payload: {
-            outputPath: path,
-          },
-        };
-      });
+  private static getOutputPath(path?: vscode.Uri[]): string | undefined {
+    if (path === undefined) {
+      return undefined;
+    }
+    let outputPath = path[0].path;
+    if (process.platform === CLI_SETTINGS.WINDOWS_PLATFORM_VERSION) {
+      outputPath = outputPath.substring(1, path[0].path.length);
+    }
+    return outputPath;
   }
 
   public static async handleProjectPathValidation(message: any): Promise<IPayloadResponse> {

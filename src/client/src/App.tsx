@@ -52,7 +52,7 @@ const App = (props: Props) => {
   const Header = loadable(() => import(/* webpackChunkName: "Header" */  "./containers/Header"));
   const Footer = loadable(() => import(/* webpackChunkName: "Footer" */  "./containers/Footer"));
   const PageNewProject = loadable(() => import(/* webpackChunkName: "PageNewProject" */ "./containers/PageNewProject"));
-  
+
   React.useEffect(()=>{
     dispatch(loadAction());
     messageEventsFromExtension();
@@ -62,7 +62,7 @@ const App = (props: Props) => {
     window.addEventListener("message", event => {
       const message = event.data;
       switch (message.command) {
-        case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
+        case EXTENSION_COMMANDS.UPDATE_OUTPUT_PATH_AFTER_GENERATING:
           if (message.payload !== null && message.payload.outputPath !== undefined) {
             dispatch(setOutputPathAction(message.payload.outputPath));
           }

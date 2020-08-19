@@ -9,7 +9,7 @@ import { EXTENSION_COMMANDS } from "../constants/commands";
 export class Defaults extends WizardServant {
   clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
     [EXTENSION_COMMANDS.GET_PROJECT_NAME, this.getProjectName],
-    [EXTENSION_COMMANDS.GET_OUTPUT_PATH, this.getOutputPath],
+    [EXTENSION_COMMANDS.GET_OUTPUT_PATH_FROM_CONFIG, this.getOutputPathFromConfig],
   ]);
 
   public async getProjectName(message: any): Promise<IPayloadResponse> {
@@ -23,7 +23,7 @@ export class Defaults extends WizardServant {
     };
   }
 
-  public async getOutputPath(message: any): Promise<IPayloadResponse> {
+  public async getOutputPathFromConfig(message: any): Promise<IPayloadResponse> {
     const outputPath = this.getDefaultProjectPath();
     return {
       payload: {

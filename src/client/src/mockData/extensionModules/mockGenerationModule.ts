@@ -37,6 +37,7 @@ const generateProject = async (pages: any[]) => {
     GenerationItemStatus.Success,
     "The project generation has finished successfully"
   );
+  sendNewGenerationOutputhPath();
 };
 
 const generateAppService = async () => {
@@ -68,6 +69,16 @@ const sendGenerationStatus = (name: string, status: GenerationItemStatus, messag
         status,
         message,
       },
+    },
+    "*"
+  );
+};
+
+const sendNewGenerationOutputhPath = () => {
+  window.postMessage(
+    {
+      command: EXTENSION_COMMANDS.UPDATE_OUTPUT_PATH_AFTER_GENERATING,
+    payload: { outputPath: "outputPath" },
     },
     "*"
   );
