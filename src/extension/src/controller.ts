@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 
-import { Validator } from "./utils/validator";
+import { Validator } from "./client-modules/validator";
 import { CONSTANTS } from "./constants/constants";
 import { TelemetryEventName } from './constants/telemetry';
 import { ReactPanel } from "./reactPanel";
