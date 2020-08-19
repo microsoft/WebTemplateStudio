@@ -14,7 +14,7 @@ export class Defaults extends WizardServant {
     [EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH, this.browseNewOutputPath],
   ]);
 
-  public async getProjectName(message: any): Promise<IPayloadResponse> {
+  public async getProjectName(): Promise<IPayloadResponse> {
     const outputPath = this.getDefaultProjectPath();
     const projectName = await this.inferProjectName(outputPath);
     return {
@@ -24,7 +24,7 @@ export class Defaults extends WizardServant {
     };
   }
 
-  public async getOutputPathFromConfig(message: any): Promise<IPayloadResponse> {
+  public async getOutputPathFromConfig(): Promise<IPayloadResponse> {
     const outputPath = this.getDefaultProjectPath();
     return {
       payload: {
@@ -33,7 +33,7 @@ export class Defaults extends WizardServant {
     };
   }
 
-  public async browseNewOutputPath(message: any): Promise<IPayloadResponse> {
+  public async browseNewOutputPath(): Promise<IPayloadResponse> {
     const openDialogConfig = { canSelectFiles: false, canSelectFolders: true, canSelectMany: false };
     return vscode.window.showOpenDialog(openDialogConfig).then((response) => {
       const outputPath = this.getOutputPath(response);

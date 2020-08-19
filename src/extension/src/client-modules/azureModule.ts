@@ -28,23 +28,23 @@ export class AzureModule extends WizardServant {
     [EXTENSION_COMMANDS.VALIDATE_APPSERVICE_NAME, this.validateAppServiceName],
   ]);
 
-  public async login(message: any): Promise<IPayloadResponse> {
+  public async login(): Promise<IPayloadResponse> {
     Logger.appendLog("EXTENSION", "info", "Attempt to log user in");
     const isLoggedIn = await AzureServices.Login();
     if (isLoggedIn) {
       Logger.appendLog("EXTENSION", "info", "User logged in");
-      return this.getUserStatus(message);
+      return this.getUserStatus();
     }
     throw new AuthorizationError(MESSAGES.ERRORS.LOGIN_TIMEOUT);
   }
 
-  public async logout(message: any): Promise<IPayloadResponse> {
+  public async logout(): Promise<IPayloadResponse> {
     const success = await AzureServices.Logout();
     const payload = { success };
     return { payload };
   }
 
-  public async getUserStatus(message: any): Promise<IPayloadResponse> {
+  public async getUserStatus(): Promise<IPayloadResponse> {
     const userStatus = await AzureServices.getUserStatus();
     const subscriptions = this.getFormattedSubscriptions(userStatus.subscriptions);
     return {

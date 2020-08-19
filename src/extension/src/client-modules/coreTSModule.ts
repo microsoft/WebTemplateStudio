@@ -12,7 +12,7 @@ export class CoreTSModule extends WizardServant {
     [EXTENSION_COMMANDS.GET_TEMPLATE_INFO, this.getTemplateConfig],
   ]);
 
-  async getProjectTypes(message: any): Promise<IPayloadResponse> {
+  async getProjectTypes(): Promise<IPayloadResponse> {
     const projectTypes = await CoreTemplateStudio.GetExistingInstance().getProjectTypes();
     return {
       payload: {
@@ -39,9 +39,8 @@ export class CoreTSModule extends WizardServant {
     };
   }
 
-  async getTemplateConfig(message: any): Promise<IPayloadResponse> {
+  async getTemplateConfig(): Promise<IPayloadResponse> {
     const payload = CoreTemplateStudio.GetExistingInstance().getTemplateConfig();
-    payload.scope = message.payload.scope;
     return { payload };
   }
 
