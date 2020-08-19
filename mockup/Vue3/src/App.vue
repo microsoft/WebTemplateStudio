@@ -1,49 +1,44 @@
 <template>
-  <div id='root'>
+  <div>
     <NavBar />
-    <router-view />
-    <Footer />
+    <router-view/>
+    <Footer/>
   </div>
 </template>
 
-<script>
-import { ref } from 'vue'
-import NavBar from "./components/NavBar.vue";
-import Footer from "./components/Footer.vue";
-
-export default {
- components: {
-    NavBar,
-    Footer
-  }
-}
-</script>
-
-<style scoped>
-
-#root {
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-
-img {
-  width: 200px;
+  color: #2c3e50;
 }
 
 #nav {
-  font-size: 1.5em;
-  margin-bottom: 30px;
+  padding: 30px;
 }
 
-a {
-  text-decoration: none;
-  margin: 30px 25px;
-  color: #333;
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
 }
 
-a:hover {
-  text-decoration: underline;
-  color: 
+#nav a.router-link-exact-active {
+  color: #42b983;
 }
-
 </style>
+
+
+<script>
+import NavBar from "@/components/NavBar.vue";
+import Footer from "@/components/Footer.vue";
+
+export default {
+  name: "app",
+  components: {
+    NavBar,
+    Footer
+  }
+};
+</script>

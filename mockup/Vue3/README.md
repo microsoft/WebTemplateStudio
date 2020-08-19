@@ -1,10 +1,29 @@
-# Vue3 Mockup
+# vuecli5
 
-## About this mockup:
-This Mockup is created to design the future Vue 3 templates in Web Template Studio project.
+## Project setup
+```
+npm install
+```
 
-There is an Issue in Web Template Studio repository to have an open discussion.
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
-In order to have an easy way to maintain the mockup specs there will be placed in the issue.
+### Compiles and minifies for production
+```
+npm run build
+```
 
-<a href="https://github.com/microsoft/WebTemplateStudio/issues/1531">Vue 3 Templates Issue</a>
+### Run your unit tests
+```
+npm run test:unit
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

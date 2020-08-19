@@ -19,7 +19,7 @@
     <BaseWarningMessage
       v-if="WarningMessageOpen"
       :text="WarningMessageText"
-      @onWarningClose="handleWarningClose"
+      @onwarningclose="handleWarningClose"
     />
   </div>
 </template>
@@ -29,31 +29,21 @@ import CONSTANTS from "@/constants";
 import MasterDetailPage from "@/components/MasterDetailPage";
 import MasterDetailList from "@/components/MasterDetailList";
 import BaseWarningMessage from "@/components/BaseWarningMessage";
+import { ref, onMounted} from "vue";
 
 export default {
   name: "Master_Detail",
-
   components: {
     MasterDetailPage,
     MasterDetailList,
     BaseWarningMessage
   },
-
-  data() {
-    return {
-      sampleOrders: [],
-      currentSampleOrder: {},
-      WarningMessageOpen: false,
-      WarningMessageText: ""
-    };
-  },
-
-  created() {
-    this.fetchTextAssets();
-  },
-
-  methods: {
-    fetchTextAssets() {
+  setup(){
+    const sampleOrders = ref([]);
+    const currentSampleOrder = ref({});
+    const WarningMessageOpen = ref(false);
+    const WarningMessageText = ref("");
+    const fetchTextAssets = () => {
       fetch(CONSTANTS.ENDPOINT.MASTERDETAIL)
         .then(response => {
           if (!response.ok) {
@@ -62,21 +52,25 @@ export default {
           return response.json();
         })
         .then(listSampleOrders => {
-          this.sampleOrders = listSampleOrders;
-          this.currentSampleOrder = listSampleOrders[0];
+          sampleOrders.value = listSampleOrders;
+          currentSampleOrder.value = listSampleOrders[0];
         })
         .catch(error => {
-          this.WarningMessageOpen = true;
-          this.WarningMessageText = `${CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET} ${error}`;
+          WarningMessageOpen.value = true;
+          WarningMessageText.value = `${CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET} ${error}`;
         });
-    },
-    handleWarningClose() {
-      this.WarningMessageOpen = false;
-      this.WarningMessageText = "";
-    },
-    selectSampleOrder(sampleOrder) {
-      this.currentSampleOrder = sampleOrder;
     }
+    const handleWarningClose = () => {
+      WarningMessageOpen.value = false;
+      WarningMessageText.value = "";
+    }
+    const selectSampleOrder = (sampleOrder) => {
+      currentSampleOrder.value = sampleOrder;
+    }
+
+    onMounted(()=> fetchTextAssets());
+
+    return {sampleOrders, currentSampleOrder, WarningMessageOpen, WarningMessageText, handleWarningClose, selectSampleOrder};
   }
 };
 </script>

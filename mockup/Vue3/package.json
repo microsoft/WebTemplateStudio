@@ -1,24 +1,34 @@
 {
+  "name": "vuecli5",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server",
-    "build": "webpack --env.prod"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "test:unit": "vue-cli-service test:unit",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "vue": "^3.0.0-alpha.10",
-    "vue-router": "4.0.0-alpha.4",
-    "bootstrap": "4.5.0",
-    "bootstrap-vue": "2.15.0"
+    "bootstrap": "^4.5.2",
+    "bootstrap-vue": "^2.16.0",
+    "core-js": "^3.6.5",
+    "vue": "^3.0.0-0",
+    "vue-router": "^4.0.0-0",
+    "mitt":"^2.1.0"
   },
   "devDependencies": {
-    "@vue/compiler-sfc": "^3.0.0-alpha.10",
-    "css-loader": "^3.4.2",
-    "file-loader": "^6.0.0",
-    "mini-css-extract-plugin": "^0.9.0",
-    "url-loader": "^4.0.0",
-    "vue-loader": "^16.0.0-alpha.3",
-    "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-unit-jest": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0-0",
+    "@vue/test-utils": "^2.0.0-0",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^7.0.0-0",
+    "typescript": "~3.9.3",
+    "vue-jest": "^5.0.0-0"
   }
 }

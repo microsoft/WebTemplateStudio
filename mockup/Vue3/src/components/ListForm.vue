@@ -1,5 +1,5 @@
 ﻿<template>
-  <form class="input-group my-3" @submit.prevent="$emit('addListItem')">
+  <form class="input-group my-3" @submit.prevent="addListItem">
     <div class="col-11">
       <input
         :value="value"
@@ -7,44 +7,41 @@
         class="form-control"
         placeholder="Add text here..."
         type="text"
-        @input="$emit('input', $event.target.value)"
+        @input="onInput($event.target.value)"
       />
-      <b-alert :show="!this.isValid" variant="danger" dismissible>{{this.emptyError}}</b-alert>
+      <b-alert :show="!isValid" variant="danger" dismissible>{{emptyError}}</b-alert>
     </div>
     <span class="input-group-btn col-1">
-      <button :disabled="!this.isSubmitable" class="btn btn-primary" type="submit">Submit</button>
+      <button :disabled="isSubmitable" class="btn btn-primary" type="submit">Submit</button>
     </span>
   </form>
 </template>
 
 <script>
-import CONSTANTS from "../constants";
+import CONSTANTS from "@/constants";
+import { ref } from 'vue';
+
 export default {
   name: "ListForm",
-
   props: {
     value: {
       type: String,
       required: true
     }
   },
+  setup(){
+    const isValid = ref(true);
+    const isSubmitable = ref(false);
+    const emptyError = CONSTANTS.ERROR_MESSAGE.LIST_EMPTY_MESSAGE;
 
-  data() {
-    return {
-      isValid: true,
-      isSubmitable: false,
-      emptyError: CONSTANTS.ERROR_MESSAGE.LIST_EMPTY_MESSAGE
+    const addListItem = ()=>{
+      isValid.value = true;
+      isSubmitable.value = false;
     };
-  },
-
-  created() {
-    this.$on("input", val => {
-      this.isValid = this.isSubmitable = val.length > 0;
-    });
-    this.$on("addListItem", () => {
-      this.isValid = true;
-      this.isSubmitable = false;
-    });
+    const onInput = (val) =>{
+      isValid.value = isSubmitable.value = val.length > 0;
+    }
+    return {isValid, isSubmitable, emptyError, addListItem, onInput};
   }
 };
 </script>

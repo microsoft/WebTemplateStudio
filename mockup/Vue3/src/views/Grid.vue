@@ -20,7 +20,7 @@
     <BaseWarningMessage
       v-if="WarningMessageOpen"
       :text="WarningMessageText"
-      @onWarningClose="handleWarningClose"
+      @onwarningclose="handleWarningClose"
     />
   </div>
 </template>
@@ -29,35 +29,26 @@
 import CONSTANTS from "@/constants";
 import GridComponent from "@/components/GridComponent";
 import BaseWarningMessage from "@/components/BaseWarningMessage";
+import {onMounted, ref} from "vue";
 
 export default {
   name: "Grid",
-
   components: {
     GridComponent,
     BaseWarningMessage
   },
-
-  data() {
-    return {
-      gridTextAssets: [
+  setup(){
+    const gridTextAssets = ref([
         {
           shortDescription: "",
           title: "",
           id: 0
         }
-      ],
-      WarningMessageOpen: false,
-      WarningMessageText: ""
-    };
-  },
+      ]);
+    const WarningMessageOpen = ref(false);
+    const WarningMessageText = ref("");
 
-  created() {
-    this.fetchTextAssets();
-  },
-
-  methods: {
-    fetchTextAssets() {
+    const fetchTextAssets = () => {
       fetch(CONSTANTS.ENDPOINT.GRID)
         .then(response => {
           if (!response.ok) {
@@ -66,17 +57,18 @@ export default {
           return response.json();
         })
         .then(result => {
-          this.gridTextAssets = result;
+          gridTextAssets.value = result;
         })
         .catch(error => {
-          this.WarningMessageOpen = true;
-          this.WarningMessageText = `${CONSTANTS.ERROR_MESSAGE.GRID_GET} ${error}`;
+          WarningMessageOpen.value = true;
+          WarningMessageText.value = `${CONSTANTS.ERROR_MESSAGE.GRID_GET} ${error}`;
         });
-    },
-    handleWarningClose() {
-      this.WarningMessageOpen = false;
-      this.WarningMessageText = "";
     }
+
+    onMounted(()=>{
+      fetchTextAssets();
+    });
+    return {gridTextAssets,WarningMessageOpen,WarningMessageText};
   }
 };
 </script>

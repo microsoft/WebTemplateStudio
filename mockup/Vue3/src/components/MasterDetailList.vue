@@ -3,15 +3,14 @@
     class="list-group-item list-group-item-action styles.sidebarText"
     v-bind:class="{ active: isActive }"
     type="button"
-    @click="$emit('selectSampleOrder', sampleOrder)"
+    @click="$emit('selectsampleorder', sampleOrder)"
   >
-    <img class="mr-3" :src="sampleOrder.imageSrc ? sampleOrder.imageSrc : imgGreyAvatar" :alt="sampleOrder.title" />
+    <img class="mr-3" :src="sampleOrder.imageSrc" :alt="sampleOrder.title" />
     {{sampleOrder.title}}
   </button>
 </template>
 
 <script>
-import imgGreyAvatar from '../assets/GreyAvatar.svg';
 export default {
   name: "MasterDetailList",
   props: {
@@ -22,11 +21,6 @@ export default {
     isActive: {
       type: Boolean,
       required: true
-    }
-  },
-  data (){
-    return {
-      imgGreyAvatar
     }
   }
 };

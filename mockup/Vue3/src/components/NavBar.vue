@@ -6,12 +6,12 @@
       <a href="#mainContent">Skip to Main Content</a>
     </div>
     <div class="navbar navbar-expand-sm navbar-light border-bottom justify-content-between">
-      <a class="navbar-brand" href="/" role="heading" aria-level="1">myApp77</a>
+      <a class="navbar-brand" href="/" role="heading" aria-level="1">myApp85</a>
       <b-nav class="navbar-nav">
         <b-nav-item class="nav-item nav-link active" to="/">Blank</b-nav-item>
         <b-nav-item class="nav-item nav-link active" to="/Grid">Grid</b-nav-item>
-        <b-nav-item class="nav-item nav-link active" to="/Master_Detail">Master_Detail</b-nav-item>
         <b-nav-item class="nav-item nav-link active" to="/List">List</b-nav-item>
+        <b-nav-item class="nav-item nav-link active" to="/Master_Detail">Master_Detail</b-nav-item>
       </b-nav>
     </div>
   </div>
