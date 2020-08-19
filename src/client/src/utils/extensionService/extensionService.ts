@@ -34,14 +34,18 @@ const projectPathValidation = (projectPath: string, projectName: string, vscode:
   return promise;
 }
 
-const getFrameworks = (vscode: IVSCodeObject, isPreview: boolean): Promise<any> => {
+const getFrameworks = (vscode: IVSCodeObject, isPreview: boolean, projectType: string): Promise<any> => {
   return postMessageAsync(EXTENSION_COMMANDS.GET_FRAMEWORKS, {
     module: EXTENSION_MODULES.CORETS,
     command: EXTENSION_COMMANDS.GET_FRAMEWORKS,
-    payload: {
-      isPreview,
-      projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP
-    }
+    payload: { projectType }
+  }, vscode);
+}
+
+const getProjectTypes = (vscode: IVSCodeObject): Promise<any> => {
+  return postMessageAsync(EXTENSION_COMMANDS.GET_PROJECT_TYPES, {
+    module: EXTENSION_MODULES.CORETS,
+    command: EXTENSION_COMMANDS.GET_PROJECT_TYPES
   }, vscode);
 }
 
@@ -81,12 +85,12 @@ const getDependencyInfo = (vscode: IVSCodeObject, dependency: string): Promise<{
   });
 };
 
-const getPages = (vscode: IVSCodeObject, frontEndInternalName: string, backEndInternalName: string)=>{
+const getPages = (vscode: IVSCodeObject, projectType: string, frontEndInternalName: string, backEndInternalName: string)=>{
   return postMessageAsync( EXTENSION_COMMANDS.GET_PAGES, {
     module: EXTENSION_MODULES.CORETS,
     command: EXTENSION_COMMANDS.GET_PAGES,
     payload: {
-      projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
+      projectType,
       frontendFramework: frontEndInternalName,
       backendFramework: backEndInternalName
     }
@@ -259,6 +263,7 @@ const unsubscribeToExtensionEvents = (listener: any) => {
 export {
   projectPathValidation,
   getFrameworks,
+  getProjectTypes,
   getAllLicenses,
   getLatestVersion,
   getDependencyInfo,

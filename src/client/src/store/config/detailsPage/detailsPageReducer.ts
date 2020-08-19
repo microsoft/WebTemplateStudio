@@ -1,5 +1,5 @@
 import { IDetail } from "./model";
-import { NAVIGATION_ROUTES_TYPEKEYS } from "../typeKeys";
+import { NAVIGATION_ROUTES_TYPEKEYS } from "../../navigation/typeKeys";
 import RootAction from "../../ActionType";
 
 const initialState = {

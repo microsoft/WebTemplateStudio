@@ -566,12 +566,25 @@ const mockVsCodeApi = () => ({
                   validateEmptyNames:true,
                   validateExistingNames:false
                 },
-                preview:false
+                preview:false,
+                platform:"Web"
               }
             },
             "*"
           );
           break;
+        case EXTENSION_COMMANDS.GET_PROJECT_TYPES:
+            window.postMessage(
+              {
+                command: EXTENSION_COMMANDS.GET_PROJECT_TYPES,
+                payload: {
+                  scope:message.payload && message.payload.scope ? message.payload.scope : "",
+                  projectTypes:[{name:"FullStackWebApp"}]
+                }
+              },
+              "*"
+            );
+            break;
         case EXTENSION_COMMANDS.GEN_STATUS:
           break;
           case EXTENSION_COMMANDS.AZURE_LOGIN:

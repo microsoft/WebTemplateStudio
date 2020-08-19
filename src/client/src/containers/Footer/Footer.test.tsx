@@ -6,7 +6,7 @@ import { RenderResult } from "@testing-library/react";
 import { renderWithStore } from "../../testUtils";
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
-import { ROUTES } from "../../utils/constants/routes";
+import { ROUTE } from "../../utils/constants/routes";
 import { AppState } from "../../store/combineReducers";
 
 describe("Footer", () => {
@@ -48,7 +48,7 @@ describe("Footer", () => {
     });
 
     it("When page is SELECT_FRAMEWORKS next, back and create project button should be shown", () => {
-      setSelectedRoute(initialState, ROUTES.SELECT_FRAMEWORKS);
+      setSelectedRoute(initialState, ROUTE.SELECT_FRAMEWORKS);
       wrapper = renderWithStore(<Footer {...props} />, store);
       const nextButton = wrapper.getByText('Next');
       expect(nextButton).toBeDefined();
@@ -64,7 +64,7 @@ describe("Footer", () => {
     });
 
     it("When page is SELECT_PAGES next, back and create project button should be shown", () => {
-      setSelectedRoute(initialState, ROUTES.SELECT_PAGES);
+      setSelectedRoute(initialState, ROUTE.ADD_PAGES);
       wrapper = renderWithStore(<Footer {...props} />, store);
       const nextButton = wrapper.getByText('Next');
       expect(nextButton).toBeDefined();
@@ -80,7 +80,7 @@ describe("Footer", () => {
     });
 
     it("When page is ADD_SERVICES next, back and create project button should be shown", () => {
-      setSelectedRoute(initialState, ROUTES.ADD_SERVICES);
+      setSelectedRoute(initialState, ROUTE.ADD_SERVICES);
       wrapper = renderWithStore(<Footer {...props} />, store);
       const nextButton = wrapper.getByText('Next');
       expect(nextButton).toBeDefined();
@@ -96,7 +96,7 @@ describe("Footer", () => {
     });
 
     it("When page is REVIEW_AND_GENERATE back and generate button should be shown", () => {
-      setSelectedRoute(initialState, ROUTES.REVIEW_AND_GENERATE);
+      setSelectedRoute(initialState, ROUTE.REVIEW_AND_GENERATE);
       wrapper = renderWithStore(<Footer {...props} />, store);
 
       const backButton = wrapper.getByText('Back');
@@ -132,7 +132,7 @@ describe("Footer", () => {
       expect(nextButton).toHaveClass(styles.disabledOverlay);
 
       const createButton = wrapper.getByText('Create Project');
-      expect(createButton).toHaveClass(styles.disabledOverlay);
+       expect(createButton).toHaveClass(styles.disabledOverlay);
     });
   });
 
@@ -141,7 +141,7 @@ describe("Footer", () => {
       initialState = getInitialState();
       initialState.userSelection.pages[0].isValidTitle=false;
       store = mockStore(initialState);
-      setSelectedRoute(initialState, ROUTES.SELECT_FRAMEWORKS);
+      setSelectedRoute(initialState, ROUTE.SELECT_FRAMEWORKS);
     });
 
     it("renders without crashing", () => {

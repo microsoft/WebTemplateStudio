@@ -8,25 +8,23 @@ import SelectPages from "./SelectPages";
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import { KEY_EVENTS } from "../../utils/constants/constants";
-import { ROUTES } from "../../utils/constants/routes";
+import { ROUTE } from "../../utils/constants/routes";
 import messages from "./strings";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-
-import { AppState } from "../../store/combineReducers";
 import * as ModalActions from "../../store/navigation/modals/action";
 import { hasServices as hasServicesSelector } from "../../store/userSelection/services/servicesSelector";
 import ProjectDetails from "./ProjectDetails";
 import SelectFrameworks from "./SelectFrameworks";
+import { getSelectedRoute } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 
 type Props = InjectedIntlProps;
 
 const RightSidebar = (props: Props)=>{
   const [ isSidebarOpen, setIsSiderbarOpen ] = React.useState(true);
   const hasServices: boolean = useSelector(hasServicesSelector);
-  const selectedRoute = useSelector((state: AppState) => state.navigation.routes.selected);
-  const navigateIsDirty = useSelector((state: AppState) => state.navigation.isDirty);
-  const isFirstOrLastPage: boolean = React.useMemo<boolean>(()=>selectedRoute === ROUTES.NEW_PROJECT ||
-    selectedRoute === ROUTES.REVIEW_AND_GENERATE,[selectedRoute]);
+  const selectedRoute = useSelector(getSelectedRoute);
+  const isFirstOrLastPage: boolean = React.useMemo<boolean>(()=>selectedRoute === ROUTE.NEW_PROJECT ||
+    selectedRoute === ROUTE.REVIEW_AND_GENERATE,[selectedRoute]);
 
   const { intl } = props;
   const { formatMessage } = intl;
@@ -41,10 +39,6 @@ const RightSidebar = (props: Props)=>{
       showHideMenu();
     }
   };
-
-  React.useEffect(()=>{
-    if (navigateIsDirty===false) setIsSiderbarOpen(true);
-  },[navigateIsDirty]);
 
   return (
     <div>
@@ -71,7 +65,7 @@ const RightSidebar = (props: Props)=>{
       <div className={styles.summaryContainer} id="dvSummaryContainer">
         <Cancel
           tabIndex={0}
-          className={classnames(styles.icon,{[styles.iconHide]: selectedRoute === ROUTES.REVIEW_AND_GENERATE || selectedRoute === ROUTES.NEW_PROJECT})}
+          className={classnames(styles.icon,{[styles.iconHide]: selectedRoute === ROUTE.REVIEW_AND_GENERATE || selectedRoute === ROUTE.NEW_PROJECT})}
           onClick={showHideMenu}
           onKeyDown={cancelKeyDownHandler}
           aria-label={intl.formatMessage(messages.hideAriaLabel)}
@@ -82,7 +76,7 @@ const RightSidebar = (props: Props)=>{
         <SelectPages pathname={selectedRoute}/>
         {hasServices && <ServicesList />}
         <div className={styles.container}>
-          {selectedRoute !== ROUTES.REVIEW_AND_GENERATE && (
+          {selectedRoute !== ROUTE.REVIEW_AND_GENERATE && (
             <div className={styles.buttonContainer}>
               <button
                 className={classnames(
