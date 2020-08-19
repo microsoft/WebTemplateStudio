@@ -4,7 +4,6 @@ const EXTENSION_COMMANDS = {
   GENERATE: "generate",
   GET_OUTPUT_PATH_FROM_CONFIG: "get-output-path-from-config",
   BROWSE_NEW_OUTPUT_PATH: "browse-new-output-path",
-  UPDATE_OUTPUT_PATH_AFTER_GENERATING: "update-output-path-after-generating",
   GET_PROJECT_NAME: "get-project-name",
   GET_USER_STATUS: "get-user-status",
   VALIDATE_COSMOS_NAME: "validate-cosmos-name",

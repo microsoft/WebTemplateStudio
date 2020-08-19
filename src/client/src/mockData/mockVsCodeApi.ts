@@ -543,18 +543,6 @@ const mockVsCodeApi = () => ({
               "*"
             );
             break;
-          case EXTENSION_COMMANDS.UPDATE_OUTPUT_PATH_AFTER_GENERATING:
-            window.postMessage(
-              {
-                command: EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH,
-                payload: {
-                  scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                  outputPath: "/update_generic_output_path_after_generating"
-                }
-              },
-              "*"
-            );
-            break;
         case EXTENSION_COMMANDS.GET_TEMPLATE_INFO:
           window.postMessage(
             {

@@ -15,10 +15,8 @@ import PageDetails from "./containers/PageDetails";
 import { NAVIGATION_MODAL_TYPES } from "./store/navigation/typeKeys";
 import RightSidebar from "./containers/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
-import { setOutputPathAction } from "./store/userSelection/app/action";
 import { loadAction } from "./store/config/config/action";
 import loadable from '@loadable/component'
-import { EXTENSION_COMMANDS } from "./utils/constants/commands";
 import { ROUTE } from "./utils/constants/routes";
 import { getSelectedRoute } from "./store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 
@@ -55,21 +53,7 @@ const App = (props: Props) => {
 
   React.useEffect(()=>{
     dispatch(loadAction());
-    messageEventsFromExtension();
   },[]);
-
-  function messageEventsFromExtension(){
-    window.addEventListener("message", event => {
-      const message = event.data;
-      switch (message.command) {
-        case EXTENSION_COMMANDS.UPDATE_OUTPUT_PATH_AFTER_GENERATING:
-          if (message.payload !== null && message.payload.outputPath !== undefined) {
-            dispatch(setOutputPathAction(message.payload.outputPath));
-          }
-          break;
-      }
-    });
-  }
 
   return (
     <React.Fragment>

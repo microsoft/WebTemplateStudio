@@ -11,7 +11,7 @@ import { CoreTemplateStudio } from "../coreTemplateStudio";
 import { ResourceGroupSelection } from "../azure/azure-resource-group/resourceGroupModule";
 import { Logger } from "../utils/logger";
 import { IGenerationPayloadType, IServicesGenerationPayload } from "../types/generationPayloadType";
-import { sendToClientGenerationStatus, GenerationItemStatus, updateStatusMessage, sendToClientGenerationPath, GENERATION_NAMES } from "../utils/generationStatus";
+import { sendToClientGenerationStatus, GenerationItemStatus, updateStatusMessage, GENERATION_NAMES } from "../utils/generationStatus";
 import { MESSAGES } from "../constants/messages";
 import { EXTENSION_COMMANDS } from "../constants/commands";
 
@@ -38,7 +38,6 @@ export class Generation extends WizardServant {
     const generationPath = await this.generateProject(generationData);
 
     if (generationPath) {
-      sendToClientGenerationPath(generationPath);
       generationData.path = generationPath;
 
       if (this.hasAzureServices(generationData.services)) {
@@ -66,10 +65,11 @@ export class Generation extends WizardServant {
       sendToClientGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Generating);
       const cli = CoreTemplateStudio.GetExistingInstance();
       const result = await cli.generate({payload: generationData,liveMessageHandler: updateStatusMessage});
-      sendToClientGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Success, "The project generation has finished successfully");      
-      return result.generationPath;
+      const generationPath = result.generationPath;
+      sendToClientGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Success, "The project generation has finished successfully", { generationPath });
+      return generationPath;
     } catch (error) {
-      Logger.appendError("EXTENSION", "Error on generation project:", error);      
+      Logger.appendError("EXTENSION", "Error on generation project:", error);
       sendToClientGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Failed, `ERROR: Templates could not be generated`);
       return;
     }

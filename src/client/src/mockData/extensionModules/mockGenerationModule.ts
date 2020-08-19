@@ -35,9 +35,9 @@ const generateProject = async (pages: any[]) => {
   sendGenerationStatus(
     GENERATION_NAMES.TEMPLATES,
     GenerationItemStatus.Success,
-    "The project generation has finished successfully"
+    "The project generation has finished successfully",
+    { generationPath: "project_generation_path" }
   );
-  sendNewGenerationOutputhPath();
 };
 
 const generateAppService = async () => {
@@ -60,7 +60,7 @@ const generateCosmosDB = async () => {
   sendGenerationStatus(GENERATION_NAMES.COSMOS_DB, GenerationItemStatus.Failed, "ERROR: CosmosDB failed to deploy");
 };
 
-const sendGenerationStatus = (name: string, status: GenerationItemStatus, message?: string) => {
+const sendGenerationStatus = (name: string, status: GenerationItemStatus, message?: string, data?: any) => {
   window.postMessage(
     {
       command: EXTENSION_COMMANDS.GEN_STATUS,
@@ -68,17 +68,8 @@ const sendGenerationStatus = (name: string, status: GenerationItemStatus, messag
         name,
         status,
         message,
+        data
       },
-    },
-    "*"
-  );
-};
-
-const sendNewGenerationOutputhPath = () => {
-  window.postMessage(
-    {
-      command: EXTENSION_COMMANDS.UPDATE_OUTPUT_PATH_AFTER_GENERATING,
-    payload: { outputPath: "outputPath" },
     },
     "*"
   );
