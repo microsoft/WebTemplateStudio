@@ -11,19 +11,19 @@ interface IProps {
 
 class ModalClass extends React.Component {
   el: HTMLDivElement;
-  modalRoot: HTMLElement | null;
+  modalRoot: HTMLDivElement;
   constructor(props: any) {
     super(props);
-    this.el = document.createElement('div');
-    this.modalRoot = document.getElementById('modal-root');
+    this.el = document.getElementById('modal-el') as HTMLDivElement;
+    this.modalRoot = document.getElementById('modal-root') as HTMLDivElement;
   }
 
   componentDidMount() {
-    if (this.modalRoot) this.modalRoot.appendChild(this.el);
+    this.modalRoot.appendChild(this.el);
   }
 
   componentWillUnmount() {
-    if (this.modalRoot) this.modalRoot.removeChild(this.el);
+    this.modalRoot.removeChild(this.el);
   }
 
   render() {
@@ -46,15 +46,13 @@ const asModal = <P extends object>(
 
     render() {
       return (
-        <ModalClass>
-          <div className={classnames(styles.overlayModal)}>
-            <div className={classnames(styles.contentModal,{
-              [styles.width40percent]:MODAL_TYPE === NAVIGATION_MODAL_TYPES.GEN_MODAL || MODAL_TYPE === NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL,
-              [styles.width50percent]:(MODAL_TYPE !== NAVIGATION_MODAL_TYPES.GEN_MODAL && MODAL_TYPE !== NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL)})}>
-              <WrappedComponent {...this.props as P} />
-            </div>
+        <div className={classnames(styles.overlayModal)}>
+          <div className={classnames(styles.contentModal,{
+            [styles.width40percent]:MODAL_TYPE === NAVIGATION_MODAL_TYPES.GEN_MODAL || MODAL_TYPE === NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL,
+            [styles.width50percent]:(MODAL_TYPE !== NAVIGATION_MODAL_TYPES.GEN_MODAL && MODAL_TYPE !== NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL)})}>
+            <WrappedComponent {...this.props as P} />
           </div>
-        </ModalClass>
+        </div>
       );
     }
   };
