@@ -118,7 +118,7 @@ const getOutputPathFromConfig = (vscode: IVSCodeObject) => {
 
 const browseNewOutputPath = (vscode: IVSCodeObject) => {
   return postMessageAsync(EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH, {
-    module: EXTENSION_MODULES.VALIDATOR,
+    module: EXTENSION_MODULES.DEFAULTS,
     command: EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH
   }, vscode);
 }
