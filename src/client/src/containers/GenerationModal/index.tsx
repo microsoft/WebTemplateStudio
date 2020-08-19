@@ -119,7 +119,6 @@ const GenerationModal = ({ intl }: Props) => {
   const closeModalAndCreateNewProject = (param: any) => {
     trackCreateNewProjectTelemetry(param);
     dispatch(resetWizardAction());
-    dispatch(loadAction());
   };
 
   const closeKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
