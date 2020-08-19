@@ -23,7 +23,6 @@ export class Validator extends WizardServant {
 
     return {
       payload: {
-        scope: message.payload.scope,
         projectPathValidation: {
           isValid: !isInvalidProjectPath,
           error: projectPathError,

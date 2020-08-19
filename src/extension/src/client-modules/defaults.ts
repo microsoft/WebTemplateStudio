@@ -19,7 +19,6 @@ export class Defaults extends WizardServant {
     const projectName = await this.inferProjectName(outputPath);
     return {
       payload: {
-        scope: message.payload.scope,
         projectName,
       },
     };
@@ -29,7 +28,6 @@ export class Defaults extends WizardServant {
     const outputPath = this.getDefaultProjectPath();
     return {
       payload: {
-        scope: message.payload.scope,
         outputPath,
       },
     };
@@ -41,7 +39,6 @@ export class Defaults extends WizardServant {
       const outputPath = this.getOutputPath(response);
       return {
         payload: {
-          scope: message.payload.scope,
           outputPath,
         },
       };

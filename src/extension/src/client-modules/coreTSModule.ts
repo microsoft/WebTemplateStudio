@@ -16,7 +16,6 @@ export class CoreTSModule extends WizardServant {
     const projectTypes = await CoreTemplateStudio.GetExistingInstance().getProjectTypes();
     return {
       payload: {
-        scope: message.payload.scope,
         projectTypes,
       },
     };
@@ -26,7 +25,6 @@ export class CoreTSModule extends WizardServant {
     const frameworks = await CoreTemplateStudio.GetExistingInstance().getFrameworks(message.payload.projectType);
     return {
       payload: {
-        scope: message.payload.scope,
         frameworks,
       },
     };
@@ -36,7 +34,6 @@ export class CoreTSModule extends WizardServant {
     const licenses = await CoreTemplateStudio.GetExistingInstance().getAllLicenses(message);
     return {
       payload: {
-        scope: message.payload.scope,
         licenses,
       },
     };
@@ -57,7 +54,6 @@ export class CoreTSModule extends WizardServant {
     );
     return {
       payload: {
-        scope: message.payload.scope,
         pages,
       },
     };
@@ -72,7 +68,6 @@ export class CoreTSModule extends WizardServant {
     );
     return {
       payload: {
-        scope: message.payload.scope,
         features,
       },
     };

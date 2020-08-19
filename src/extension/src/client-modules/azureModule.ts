@@ -40,7 +40,7 @@ export class AzureModule extends WizardServant {
 
   public async logout(message: any): Promise<IPayloadResponse> {
     const success = await AzureServices.Logout();
-    const payload = { scope: message.payload.scope, success };
+    const payload = { success };
     return { payload };
   }
 
@@ -49,7 +49,6 @@ export class AzureModule extends WizardServant {
     const subscriptions = this.getFormattedSubscriptions(userStatus.subscriptions);
     return {
       payload: {
-        scope: message.payload.scope,
         email: userStatus.email,
         subscriptions,
       },
@@ -61,7 +60,6 @@ export class AzureModule extends WizardServant {
     return {
       payload: {
         resourceGroups,
-        scope: message.payload.scope,
       },
     };
   }
@@ -71,7 +69,6 @@ export class AzureModule extends WizardServant {
     return {
       payload: {
         locations,
-        scope: message.payload.scope,
       },
     };
   }
@@ -81,7 +78,6 @@ export class AzureModule extends WizardServant {
     return {
       payload: {
         validName,
-        scope: message.payload.scope,
       },
     };
   }
@@ -91,7 +87,6 @@ export class AzureModule extends WizardServant {
     return {
       payload: {
         validName,
-        scope: message.payload.scope,
       },
     };
   }
@@ -100,7 +95,6 @@ export class AzureModule extends WizardServant {
     const validateResult = await AzureServices.validateAppServiceName(message.appName, message.subscription);
     return {
       payload: {
-        scope: message.payload.scope,
         ...validateResult,
       },
     };
@@ -111,16 +105,11 @@ export class AzureModule extends WizardServant {
       const validateResult = await AzureServices.validateCosmosName(message.appName, message.subscription);
     return {
       payload: {
-        scope: message.payload.scope,
         ...validateResult,
       },
     };
     }catch(error) {
-      return {
-        payload: {
-          scope: message.payload.scope,
-        }
-      };
+      return { payload: undefined };
     }
   }
 
