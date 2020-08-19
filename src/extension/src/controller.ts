@@ -12,7 +12,7 @@ import { Generation } from "./client-modules/generation";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { LaunchExperience } from "./launchExperience";
 import { DependenciesModule } from "./client-modules/dependenciesModule";
-import { CoreTSModule } from "./coreTSModule";
+import { CoreTSModule } from "./client-modules/coreTSModule";
 import { Defaults } from "./client-modules/defaults";
 import { Telemetry } from "./client-modules/telemetry";
 import { AzureModule } from "./client-modules/azureModule";
