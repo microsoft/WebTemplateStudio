@@ -3,7 +3,7 @@
     class="list-group-item list-group-item-action styles.sidebarText"
     v-bind:class="{ active: isActive }"
     type="button"
-    @click="$emit('selectsampleorder', sampleOrder)"
+    @click="eventBus.emit('selectsampleorder', sampleOrder)"
   >
     <img class="mr-3" :src="sampleOrder.imageSrc" :alt="sampleOrder.title" />
     {{sampleOrder.title}}
@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import mitt from 'mitt';
+
 export default {
   name: "MasterDetailList",
   props: {
@@ -22,6 +24,10 @@ export default {
       type: Boolean,
       required: true
     }
+  },
+  setup(){
+    const eventBus = mitt();
+    return {eventBus};
   }
 };
 </script>

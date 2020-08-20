@@ -8,7 +8,6 @@
               v-for="(sampleOrder) in sampleOrders"
               :key="sampleOrder.id"
               :sampleOrder="sampleOrder"
-              @selectSampleOrder="selectSampleOrder"
               :isActive="sampleOrder === currentSampleOrder"
             />
           </div>
@@ -30,6 +29,7 @@ import MasterDetailPage from "@/components/MasterDetailPage";
 import MasterDetailList from "@/components/MasterDetailList";
 import BaseWarningMessage from "@/components/BaseWarningMessage";
 import { ref, onMounted} from "vue";
+import mitt from "mitt";
 
 export default {
   name: "Master_Detail",
@@ -70,7 +70,10 @@ export default {
 
     onMounted(()=> fetchTextAssets());
 
-    return {sampleOrders, currentSampleOrder, WarningMessageOpen, WarningMessageText, handleWarningClose, selectSampleOrder};
+    const eventBus = mitt();
+    eventBus.on('selectsampleorder', selectSampleOrder)
+
+    return {sampleOrders, currentSampleOrder, WarningMessageOpen, WarningMessageText, handleWarningClose};
   }
 };
 </script>

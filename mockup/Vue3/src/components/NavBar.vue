@@ -8,10 +8,10 @@
     <div class="navbar navbar-expand-sm navbar-light border-bottom justify-content-between">
       <a class="navbar-brand" href="/" role="heading" aria-level="1">myApp85</a>
       <b-nav class="navbar-nav">
-        <b-nav-item class="nav-item nav-link active" to="/">Blank</b-nav-item>
-        <b-nav-item class="nav-item nav-link active" to="/Grid">Grid</b-nav-item>
-        <b-nav-item class="nav-item nav-link active" to="/List">List</b-nav-item>
-        <b-nav-item class="nav-item nav-link active" to="/Master_Detail">Master_Detail</b-nav-item>
+        <a class="nav-item nav-link active" to="/">Blank</a>
+        <a class="nav-item nav-link active" to="/Grid">Grid</a>
+        <a class="nav-item nav-link active" to="/List">List</a>
+        <a class="nav-item nav-link active" to="/Master_Detail">Master_Detail</a>
       </b-nav>
     </div>
   </div>
