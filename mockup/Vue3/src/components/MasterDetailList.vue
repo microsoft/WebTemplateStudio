@@ -26,7 +26,7 @@ export default {
     }
   },
   setup(){
-    const eventBus = mitt();
+    const eventBus = new mitt();
     return {eventBus};
   }
 };

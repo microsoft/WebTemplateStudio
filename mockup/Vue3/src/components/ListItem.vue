@@ -11,7 +11,7 @@
           data-dismiss="alert"
           type="button"
           alt="delete"
-          @click="$emit('deletelistitem', listItem)"
+          @click="eventBus.emit('deletelistitem', listItem)"
         >
           <div aria-hidden="true">&times;</div>
         </button>
@@ -31,6 +31,10 @@ export default {
         return value.text !== undefined && value.id !== undefined;
       }
     }
+  },
+  setup(){
+    const eventBus = new mitt();
+    return {eventBus};
   }
 };
 </script>
