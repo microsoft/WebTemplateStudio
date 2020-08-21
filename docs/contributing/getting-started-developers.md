@@ -22,7 +22,9 @@ If you just want to take advantage from Web Template Studio extension, check the
 4. Install [.NET Core SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1)
 5. Install [Visual Studio Code](https://code.visualstudio.com/)
 6. Install [Yarn](https://yarnpkg.com/en/docs/install). You will need to finish installing Node.js before you install Yarn.
-7. Run the command `npm config set scripts-prepend-node-path true`. This tells VSCode which Node version to run during the extension compilation (otherwise you'll get an error during the build process).
+7. Install [Typescript](https://www.typescriptlang.org/) globally. `npm install -g typescript` 
+8. Install [React-scripts]() globally `npm install -g react-scripts`
+9. Run the command `npm config set scripts-prepend-node-path true`. This tells VSCode which Node version to run during the extension compilation (otherwise you'll get an error during the build process).
 
 _Note: If using Windows, use Git Bash_.
 
@@ -84,10 +86,11 @@ Changes on Core Template Studio should be done on the Core Template Studio repos
 ## How to develop the client
 As the client is injected as a static web app in the webview of the extension, debugging inside the extension can be challenging. Running the client in a browser is useful for quickly testing HTML or CSS changes and for debugging since you can use Chrome extensions such as React and Redux developer tools.
 
-When running in the browser communication with the extension is done agains the mock mockVsCodeApi.ts in the mockData folder. Note that the behavior of on the browser may differ from the behavior in the extension so make sure to test out both.
+When running in the browser, communication with the extension is done against the mock `mockVsCodeApi.ts` in the `mockData` folder. Note that the behaviour of the client on the browser may differ from the behaviour in the extension, so make sure to test out both.
 
 1. Run `./build-client.sh` from the _build folder.
 2. Open the `src/client` folder using `VSCode`.
+3. On the terminal run `yarn` or `yarn install`. Note that the first time you run this it can take some time.
 3. Start the client using `yarn start` to begin development in the browser. We recommend using a chromium based browser such as Chrome.
 
 More info:
@@ -98,7 +101,11 @@ More info:
 Install [Debugger for Chrome extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) in Visual Studio Code debug Wizard Client.
 After starting the client using `yarn start` in VSCode Debug View (Ctrl+Shift+D) select "Debug WebTS Client" and start debugging (F5)
 
-More info:
+#### Troubleshooting:
+- While making changes or debugging could happen that no changes appear to be done, it may be because you have Web Template Studio already installed and it is using that one instead of your working copy during the debug.
+Version number should be 0.0.x when debugging it  correctly.
+
+#### More info:
 - https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome
 - https://code.visualstudio.com/docs/editor/debugging
 
