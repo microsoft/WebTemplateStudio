@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import mitt from "mitt";
 export default {
   name: "ListItem",
   props: {
