@@ -27,7 +27,7 @@ const mockVsCodeApi = () => ({
             {
               command: EXTENSION_COMMANDS.GET_FRAMEWORKS,
               payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
+                scope: message.payload && message.payload.scope ? message.payload.scope : "",
                 frameworks: [
                   {
                     name: "React",
@@ -251,24 +251,24 @@ const mockVsCodeApi = () => ({
           );
           break;
         case EXTENSION_COMMANDS.GET_LATEST_VERSION:
-            const latestVersion = "v3.1.5";
-            window.postMessage(
-              {
-                command: EXTENSION_COMMANDS.GET_LATEST_VERSION,
-                payload: {
-                  scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                  latestVersion,
-                }
-              },
-              "*"
-            );
-            break;
+          const latestVersion = "v3.1.5";
+          window.postMessage(
+            {
+              command: EXTENSION_COMMANDS.GET_LATEST_VERSION,
+              payload: {
+                scope: message.payload && message.payload.scope ? message.payload.scope : "",
+                latestVersion,
+              }
+            },
+            "*"
+          );
+          break;
         case EXTENSION_COMMANDS.GET_PAGES:
           window.postMessage(
             {
               command: EXTENSION_COMMANDS.GET_PAGES,
               payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
+                scope: message.payload && message.payload.scope ? message.payload.scope : "",
                 pages: [
                   {
                     templateId: "wts.Page.React.Blank",
@@ -396,7 +396,7 @@ const mockVsCodeApi = () => ({
             {
               command: EXTENSION_COMMANDS.GET_FEATURES,
               payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
+                scope: message.payload && message.payload.scope ? message.payload.scope : "",
                 features: [
                   {
                     templateId: "wts.Feature.Azure.AppService",
@@ -487,7 +487,7 @@ const mockVsCodeApi = () => ({
             {
               command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
               payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
+                scope: message.payload && message.payload.scope ? message.payload.scope : "",
                 dependency: message.payload.dependency,
                 installed: message.payload.dependency === "node"
               }
@@ -524,7 +524,7 @@ const mockVsCodeApi = () => ({
             {
               command: EXTENSION_COMMANDS.GET_OUTPUT_PATH,
               payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
+                scope: message.payload && message.payload.scope ? message.payload.scope : "",
                 outputPath: "/generic_output_path"
               }
             },
@@ -536,70 +536,70 @@ const mockVsCodeApi = () => ({
             {
               command: EXTENSION_COMMANDS.GET_TEMPLATE_INFO,
               payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
+                scope: message.payload && message.payload.scope ? message.payload.scope : "",
                 wizardVersion: "1.x",
                 templatesVersion: "1.x",
-                itemNameValidationConfig:{
-                  regexs:[{
-                    "name":"nameStartLetter",
-                    "pattern" : "^[A-Za-z]"
+                itemNameValidationConfig: {
+                  regexs: [{
+                    "name": "nameStartLetter",
+                    "pattern": "^[A-Za-z]"
                   },
                   {
-                    "name":"nameContainLettersNumbersDashes",
-                    "pattern" : "^((?!\\d)[a-zA-Z0-9\\s_-]+)$"
+                    "name": "nameContainLettersNumbersDashes",
+                    "pattern": "^((?!\\d)[a-zA-Z0-9\\s_-]+)$"
                   }],
-                  reservedNames:[],
-                  validateDefaultNames:false,
-                  validateEmptyNames:true,
-                  validateExistingNames:true
+                  reservedNames: [],
+                  validateDefaultNames: false,
+                  validateEmptyNames: true,
+                  validateExistingNames: true
                 },
-                projectNameValidationConfig:{
-                  regexs:[{
-                    "name":"nameStartLetter",
-                    "pattern" : "^[A-Za-z]"
+                projectNameValidationConfig: {
+                  regexs: [{
+                    "name": "nameStartLetter",
+                    "pattern": "^[A-Za-z]"
                   },
                   {
-                    "name":"nameContainLettersNumbersDashes",
-                    "pattern" : "^((?!\\d)[a-zA-Z0-9_-]+)$"
+                    "name": "nameContainLettersNumbersDashes",
+                    "pattern": "^((?!\\d)[a-zA-Z0-9_-]+)$"
                   }],
-                  reservedNames:[],
-                  validateEmptyNames:true,
-                  validateExistingNames:false
+                  reservedNames: [],
+                  validateEmptyNames: true,
+                  validateExistingNames: false
                 },
-                preview:false,
-                platform:"Web"
+                preview: false,
+                platform: "Web"
               }
             },
             "*"
           );
           break;
         case EXTENSION_COMMANDS.GET_PROJECT_TYPES:
-            window.postMessage(
-              {
-                command: EXTENSION_COMMANDS.GET_PROJECT_TYPES,
-                payload: {
-                  scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                  projectTypes:[{name:"FullStackWebApp"}]
-                }
-              },
-              "*"
-            );
-            break;
+          window.postMessage(
+            {
+              command: EXTENSION_COMMANDS.GET_PROJECT_TYPES,
+              payload: {
+                scope: message.payload && message.payload.scope ? message.payload.scope : "",
+                projectTypes: [{ name: "FullStackWebApp" }]
+              }
+            },
+            "*"
+          );
+          break;
         case EXTENSION_COMMANDS.GEN_STATUS:
           break;
-          case EXTENSION_COMMANDS.AZURE_LOGIN:
-            mockAzureModule.login(message);
-            break;
-            case EXTENSION_COMMANDS.AZURE_LOGOUT:
-              mockAzureModule.logout(message);
-              break;
+        case EXTENSION_COMMANDS.AZURE_LOGIN:
+          mockAzureModule.login(message);
+          break;
+        case EXTENSION_COMMANDS.AZURE_LOGOUT:
+          mockAzureModule.logout(message);
+          break;
         case EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION:
           // produces a mock validation response from VSCode in development
           window.postMessage(
             {
               command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
               payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
+                scope: message.payload && message.payload.scope ? message.payload.scope : "",
                 projectPathValidation: {
                   isValid: true,
                   error: ""
@@ -609,12 +609,31 @@ const mockVsCodeApi = () => ({
             "*"
           );
           break;
-          
+
         case EXTENSION_COMMANDS.LOG:
           mockLoggerModule.logFromWizard(message);
           break;
         case EXTENSION_COMMANDS.OPEN_LOG:
           mockLoggerModule.openLog();
+          break;
+        case EXTENSION_COMMANDS.GET_ALL_LICENSES:
+          window.postMessage(
+            {
+              command: EXTENSION_COMMANDS.GET_ALL_LICENSES,
+              payload: {
+                scope: message.payload && message.payload.scope ? message.payload.scope : "",
+                licenses: [
+                  {
+                    text: 'Node', url: 'https://github.com/nodejs/node/blob/master/LICENSE'
+                  },
+                  {
+                    text: 'Gulp', url: 'https://github.com/gulpjs/gulp/blob/master/LICENSE'
+                  },
+                ]
+              }
+            },
+            "*"
+          );
           break;
       }
     }
