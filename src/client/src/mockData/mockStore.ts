@@ -2,7 +2,7 @@ import { ISelected } from "../types/selected";
 import { FormattedMessage } from "react-intl";
 import { AppState } from "../store/combineReducers";
 import { ModalType } from "../store/navigation/typeKeys";
-import { ROUTES } from "../utils/constants/routes";
+import { getNavItems } from "../utils/routes/routes";
 
 export const getISelected = () => {
   const selected: ISelected = {
@@ -19,6 +19,7 @@ export const getInitialState = (): AppState => {
       frontendOptions: [],
       pageOptions: [],
       featureOptions: [],
+      projectTypesOptions: []
     },
     config:{
       detailsPage: {
@@ -60,12 +61,7 @@ export const getInitialState = (): AppState => {
         subscriptions: [],
         email:''
       },
-      appType: {
-        title: 'Fullstack Web Application',
-        internalName: 'FullStackWebApp',
-        version: 'v1.0',
-        licenses: ''
-      }
+      platform: "Web"
     },
     userSelection: {
       frontendFramework: {
@@ -103,6 +99,7 @@ export const getInitialState = (): AppState => {
           isDirty: true
         }
       },
+      projectType:"",
       services: {
         cosmosDB: null,
         appService: null      
@@ -115,17 +112,7 @@ export const getInitialState = (): AppState => {
           modalData: null
         }
       },
-      routes: {
-        isVisited: {
-          '/': true,
-          '/SelectFrameworks': false,
-          '/SelectPages': false,
-          '/AddPages': false,
-          '/ReviewAndGenerate': false
-        },
-        selected: '/'
-      },
-      isDirty: false
+      routesNavItems:getNavItems("Web")
     }
   };
   return initialState;
@@ -397,26 +384,9 @@ export const setOpenModal = (store: AppState, modalType: ModalType) => {
 }
 
 export const setSelectedRoute = (store: AppState, seletedRoute: string) => {
-  store.navigation.routes.selected = seletedRoute;
-  switch (seletedRoute) 
-  {
-    case ROUTES.SELECT_FRAMEWORKS:
-      store.navigation.routes.isVisited = {
-        '/': true,
-        '/SelectFrameworks': true,
-        '/SelectPages': false,
-        '/AddPages': false,
-        '/ReviewAndGenerate': false
-      };
-    case ROUTES.REVIEW_AND_GENERATE:
-      store.navigation.routes.isVisited = {
-        '/': true,
-        '/SelectFrameworks': true,
-        '/SelectPages': true,
-        '/AddPages': true,
-        '/ReviewAndGenerate': true
-      }
-  }
+  //store.navigation.routes.selected = seletedRoute;
+  store.navigation.routesNavItems.forEach(route => {route.isSelected=false});
+  store.navigation.routesNavItems.filter(route => route.route === seletedRoute)[0].isSelected=true;
 }
 
 export const setAzureEmail = (store: AppState, email = "test@test.com") => {
