@@ -44,7 +44,8 @@ export function* frameworkSaga(vscode: any) {
             isValidTitle: blankPage.isValidTitle,
             licenses: blankPage.licenses,
             title: blankPage.defaultName ? blankPage.defaultName : "",
-            id:Math.random().toString()
+            id:Math.random().toString(),
+            editable: blankPage.editable
           };
           selectedPages.push(blankSelect)
         }else{

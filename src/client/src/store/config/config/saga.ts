@@ -145,7 +145,8 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
         isValidTitle: blankPage.isValidTitle,
         licenses: blankPage.licenses,
         title: blankPage.defaultName ? blankPage.defaultName : "",
-        id:Math.random().toString()
+        id: Math.random().toString(),
+        editable: blankPage.editable
       };
       selectedPages.push(blankSelect);
       yield put({ type: USERSELECTION_TYPEKEYS.SELECT_PAGES, payload: selectedPages });

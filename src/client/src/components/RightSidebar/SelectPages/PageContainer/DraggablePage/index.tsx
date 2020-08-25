@@ -104,14 +104,14 @@ const DraggablePage = ({
         <div className={styles.errorStack}>
           <div
             className={classnames(customInputStyle, {
-              [styles.pagesTextContainer]: true,
+              [styles.pagesTextContainer]: page.editable,
               [styles.textContainer]: true,
               [styles.largeIndentContainer]: false
             })}
           >
             <div className={styles.inputContainer}>
               {(getSvg(page!.internalName, styles.icon))}
-              {page && idx && (
+              {page && page.editable && idx && (
                 <input
                   aria-label={intl.formatMessage(messages.changeItemName)}
                   className={classnames(styles.input)}
@@ -141,6 +141,11 @@ const DraggablePage = ({
                   disabled={selectedPages.filter(selPage => selPage.title!==page.title && selPage.isValidTitle===false).length>0}
                   ref={inputRef}
                 />
+              )}
+              {page && !page.editable && idx && (
+                <div className={classnames({
+                  [styles.marginLeft10]:true
+                })}>{page.title}</div>
               )}
             </div>
           </div>

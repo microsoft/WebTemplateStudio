@@ -36,6 +36,7 @@ export const getPagesOptions = (json: any[]): IOption[] => {
     defaultName: val.defaultName,
     isValidTitle: true,
     author: val.author,
+    editable: val.itemNameEditable
   }));
 };
 
@@ -110,5 +111,6 @@ const getTemplateInfo = (items: any[]): IApiTemplateInfo[] => {
     defaultName: val.defaultName,
     author: val.author,
     group: val.group,
+    itemNameEditable: val.itemNameEditable
   }));
 };
