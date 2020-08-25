@@ -1,0 +1,52 @@
+.inputTitle {
+  line-height: 2em;
+  font-size: 1.2em;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
+.outputPathContainer {
+  box-sizing: border-box;
+  padding: 0.5em;
+  width: 100%;
+  font-size: 1em;
+  background-color: #3c3c3c;
+  border: 1px solid #ffffff;
+  border-radius: 2px;
+}
+
+.outputPathContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-height: 42px;
+}
+
+.inputContainer {
+  display: block;
+  position: relative;
+  width: 100%;
+  text-decoration: none;
+  outline: none;
+  margin-bottom: 40px;
+  font-size: 1.2em;
+}
+
+.errorMessage {
+  background: var(--vscode-inputValidation-errorBackground);
+  border: 1px solid var(--vscode-inputValidation-errorBorder);
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px;
+  opacity: 0.5;
+  min-height: 38px;
+}
+
+.test path {
+  fill: red;
+}

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import OutputPath from "../../../components/OutputPath";
 
 import {
@@ -26,33 +26,20 @@ import { validateProjectName} from "../../../utils/validations/projectName/proje
 import { IValidation} from "../../../utils/validations/validations";
 import { inferProjectName} from "../../../utils/infer/projectName";
 import messages from "./messages";
-import { getOutputPath as getOutputPathFromExtension } from "../../../utils/extensionService/extensionService";
 import { setProjectPathValidationAction } from "../../../store/config/validations/action";
-import { setProjectNameAction, setOutputPathAction } from "../../../store/userSelection/app/action";
+import { setProjectNameAction } from "../../../store/userSelection/app/action";
 import { IValidations } from "../../../store/config/validations/model";
 import { AppContext } from "../../../AppContext";
 import stylesInput from "../../../css/input.module.css";
 import classnames from "classnames";
-import { EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../../utils/constants/commands";
 
-interface IStateProps {
-  outputPath: string;
-  projectName: string;
-  projectPathValidation: IValidation;
-  projectNameValidation: IValidation;
-  validations: IValidations;
-}
-
-type Props = IStateProps & InjectedIntlProps;
+type Props = InjectedIntlProps;
 
 const ProjectNameAndOutput = (props: Props) => {
-  const {
-    outputPath,
-    projectPathValidation,
-    projectName,
-    validations,
-    projectNameValidation
-  } = props;
+  const outputPath = useSelector(getOutputPath);
+  const projectName = useSelector(getProjectName);
+  const validations = useSelector(getValidations);
+  const projectNameValidation = useSelector(getProjectNameValidation);
 
   const dispatch = useDispatch();
   const { vscode } = React.useContext(AppContext);
@@ -71,17 +58,6 @@ const ProjectNameAndOutput = (props: Props) => {
     }
   },[projectName, outputPath]);
 
-  React.useEffect(() => {
-    if (outputPath === "") {
-      getOutputPathFromExtension(vscode).then((event)=>{
-        const message = event.data;
-        if (message.payload !== null && message.payload.outputPath !== null) {
-          dispatch(setOutputPathAction(message.payload.outputPath));
-        }
-      })
-    }
-  }, [vscode]);
-
   const validateSetProjectValueAndSetDirty = (e: React.SyntheticEvent<HTMLInputElement>) => {
     const projectNameToSet: string = e.currentTarget.value;
     setName(projectNameToSet);
@@ -94,14 +70,6 @@ const ProjectNameAndOutput = (props: Props) => {
       dispatch(setProjectPathValidationAction({isValid: true}));
     }
   }
-
-  const handleSaveClick = () => {
-    vscode.postMessage({
-      module: EXTENSION_MODULES.VALIDATOR,
-      command: EXTENSION_COMMANDS.GET_OUTPUT_PATH,
-      track: false
-    });
-  };
 
   return (
     <React.Fragment>
@@ -123,31 +91,8 @@ const ProjectNameAndOutput = (props: Props) => {
           </div>
         )}
       </div>
-      <div className={styles.inputContainer}>
-        <div className={styles.inputTitle}>
-          {props.intl.formatMessage(messages.outputPathTitle)}
-        </div>
-        <div>
-          <OutputPath
-            handleSaveClick={handleSaveClick}
-            value={outputPath}
-            validation={projectPathValidation}
-            isEmpty={projectPathValidation && outputPath.length === 0}
-          />
-        </div>
-      </div>
     </React.Fragment>
   );
 };
 
-const mapStateToProps = (state: AppState): IStateProps => ({
-  outputPath: getOutputPath(state),
-  projectName: getProjectName(state),
-  validations: getValidations(state),
-  projectPathValidation: getOutputPathValidation(state),
-  projectNameValidation: getProjectNameValidation(state)
-});
-
-export default connect(
-  mapStateToProps
-)(injectIntl(ProjectNameAndOutput));
+export default injectIntl(ProjectNameAndOutput);

@@ -1,7 +1,8 @@
 import * as React from "react";
 import styles from "./styles.module.css";
 
-import ProjectNameAndOutput from "./ProjectNameAndOutput";
+import ProjectOutput from "./ProjectOutput";
+import ProjectName from "./ProjectName";
 import { FormattedMessage } from "react-intl";
 
 const NewProject = () => {
@@ -22,7 +23,8 @@ const NewProject = () => {
           />
         </div>
         <div className={styles.projectDetailsContainer}>
-          <ProjectNameAndOutput />
+          <ProjectName />
+          <ProjectOutput />
         </div>
       </div>
       
