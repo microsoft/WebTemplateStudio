@@ -72,7 +72,7 @@ const DraggablePage = ({
   }
   const setFocus = () =>{
     const node = inputRef.current!
-    node.focus();
+    if (node) node.focus();
   }
 
   const deletePageOnKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
