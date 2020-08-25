@@ -82,7 +82,6 @@ const AppServiceModal = ({ intl }: Props) => {
   };
 
   const saveAppServiceSelection = (): void => {
-    debugger;
     const appServiceSelection: IAppService = {
       subscription,
       resourceGroup,

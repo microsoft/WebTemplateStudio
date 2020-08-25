@@ -83,7 +83,6 @@ const CosmosModal = ({ intl }: Props) => {
   };
 
   const saveCosmosSelection = () => {
-    debugger;
     const cosmosSelection: ICosmosDB = {
       subscription,
       accountName,
