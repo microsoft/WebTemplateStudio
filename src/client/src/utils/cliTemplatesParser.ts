@@ -58,6 +58,7 @@ export const getFeaturesOptions = (json: any[]): IOption[] => {
         isValidTitle: true,
         author: val.author,
         group: val.group,
+        editable: val.itemNameEditable
       }
       result.push(option);
     }

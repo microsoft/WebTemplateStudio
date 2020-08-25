@@ -42,18 +42,21 @@ const CosmosDBSelection = ({
         <React.Fragment>
           <div className={styles.headerContainer}>
             <div>{intl.formatMessage(messages.title)}</div>
-            <div
-              role="button"
-              tabIndex={0}
-              className={styles.edit}
-              onClick={openCosmosDbModalAndSendTelemetry}
-              onKeyDown={onEditKeyDownHandler}
-            >
-              <EditIcon className={styles.editIcon} />
-            </div>
+            {cosmosSelection.editable &&
+              <div
+                role="button"
+                tabIndex={0}
+                className={styles.edit}
+                onClick={openCosmosDbModalAndSendTelemetry}
+                onKeyDown={onEditKeyDownHandler}
+              >
+                <EditIcon className={styles.editIcon} />
+              </div>
+            }
           </div>
           <SidebarItem
                 cosmosDB={true}
+                editable={cosmosSelection.editable}
                 customInputStyle={styles.input}
                 key={cosmosSelection.accountName}
                 text={cosmosSelection.accountName}

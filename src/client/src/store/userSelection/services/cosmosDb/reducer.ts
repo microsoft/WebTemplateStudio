@@ -19,6 +19,7 @@ const services = (state: ICosmosDB | null = initialState, action: RootAction) =>
         accountName: action.payload.accountName,
         internalName: action.payload.internalName,
         groupName: action.payload.groupName,
+        editable: action.payload.editable
       };
     default:
       return state;

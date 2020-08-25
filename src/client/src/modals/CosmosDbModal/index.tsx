@@ -38,6 +38,7 @@ const CosmosModal = ({ intl }: Props) => {
   const dispatch = useDispatch();
   const { vscode } = React.useContext(AppContext);
   const cosmosInStore = useSelector(getCosmosDB);
+  const templateCosmosDB = useSelector((state: AppState) => state.templates.featureOptions).filter(feature => feature.internalName === WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB)[0];
   const initialSubscription = cosmosInStore ? cosmosInStore.subscription : "";
   const initialAccountName = cosmosInStore ? cosmosInStore.accountName : "";
   const initialLocation = cosmosInStore ? cosmosInStore.location : AZURE.DEFAULT_LOCATION;
@@ -82,6 +83,7 @@ const CosmosModal = ({ intl }: Props) => {
   };
 
   const saveCosmosSelection = () => {
+    debugger;
     const cosmosSelection: ICosmosDB = {
       subscription,
       accountName,
@@ -92,6 +94,7 @@ const CosmosModal = ({ intl }: Props) => {
       internalName: api === AZURE.COSMOS_APIS.MONGO 
         ? WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO
         : WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL,
+      editable: templateCosmosDB.editable
     };
     dispatch(saveCosmosDbAction(cosmosSelection));
   };
