@@ -40,6 +40,7 @@ const AppServiceModal = ({ intl }: Props) => {
   const dispatch = useDispatch();
   const { vscode } = React.useContext(AppContext);
   const appServiceInStore = useSelector(getAppService);
+  const templateAppService = useSelector((state: AppState) => state.templates.featureOptions).filter(feature => feature.internalName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE)[0];
   const initialSubscription = appServiceInStore ? appServiceInStore.subscription : "";
   const initialAppServiceName = appServiceInStore ? appServiceInStore.siteName : "";
   const initialLocation = appServiceInStore ? appServiceInStore.location : AZURE.DEFAULT_LOCATION;
@@ -87,6 +88,7 @@ const AppServiceModal = ({ intl }: Props) => {
       location,
       siteName: appName,
       internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
+      editable: templateAppService.editable
     };
     dispatch(saveAppServiceAction(appServiceSelection));
   };

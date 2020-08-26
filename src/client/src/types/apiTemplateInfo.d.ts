@@ -12,4 +12,5 @@ export interface IApiTemplateInfo {
   defaultName: string;
   author: string;
   group?: string;
+  itemNameEditable?: boolean;
 }

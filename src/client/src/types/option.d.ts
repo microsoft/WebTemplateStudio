@@ -26,4 +26,5 @@ export interface IOption {
   group?: string;
   expectedTime?: string | FM.MessageDescriptor;
   expectedPrice?: string | FM.MessageDescriptor;
+  editable?: boolean;
 }
