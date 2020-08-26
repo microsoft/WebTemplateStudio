@@ -17,12 +17,9 @@ import {
   InjectedIntlProps
 } from "react-intl";
 
-import { AppState } from "../../../store/combineReducers";
-import { IValidation} from "../../../utils/validations/validations";
 import messages from "./messages";
 import { getOutputPath as getOutputPathFromExtension } from "../../../utils/extensionService/extensionService";
 import { setOutputPathAction } from "../../../store/userSelection/app/action";
-import { IValidations } from "../../../store/config/validations/model";
 import { AppContext } from "../../../AppContext";
 import { EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../../utils/constants/commands";
 

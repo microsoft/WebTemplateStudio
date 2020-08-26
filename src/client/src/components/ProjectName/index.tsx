@@ -1,18 +1,16 @@
 import * as React from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
-import OutputPath from "../../../components/OutputPath";
 
 import {
   getOutputPath,
   getProjectName,
   getProjectNameValidation,
-  getOutputPathValidation,
   getValidations
-} from "../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+} from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 
 import {
   PROJECT_NAME_CHARACTER_LIMIT
-} from "../../../utils/constants/constants";
+} from "../../utils/constants/constants";
 
 import styles from "./styles.module.css";
 
@@ -21,16 +19,14 @@ import {
   InjectedIntlProps
 } from "react-intl";
 
-import { AppState } from "../../../store/combineReducers";
-import { validateProjectName} from "../../../utils/validations/projectName/projectName";
-import { IValidation} from "../../../utils/validations/validations";
-import { inferProjectName} from "../../../utils/infer/projectName";
+import { validateProjectName} from "../../utils/validations/projectName/projectName";
+import { IValidation} from "../../utils/validations/validations";
+import { inferProjectName} from "../../utils/infer/projectName";
 import messages from "./messages";
-import { setProjectPathValidationAction } from "../../../store/config/validations/action";
-import { setProjectNameAction } from "../../../store/userSelection/app/action";
-import { IValidations } from "../../../store/config/validations/model";
-import { AppContext } from "../../../AppContext";
-import stylesInput from "../../../css/input.module.css";
+import { setProjectPathValidationAction } from "../../store/config/validations/action";
+import { setProjectNameAction } from "../../store/userSelection/app/action";
+import { AppContext } from "../../AppContext";
+import stylesInput from "../../css/input.module.css";
 import classnames from "classnames";
 
 type Props = InjectedIntlProps;

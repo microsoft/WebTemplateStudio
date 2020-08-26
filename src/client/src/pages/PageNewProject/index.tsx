@@ -2,7 +2,7 @@ import * as React from "react";
 import styles from "./styles.module.css";
 
 import ProjectOutput from "./ProjectOutput";
-import ProjectName from "./ProjectName";
+import ProjectName from "../../components/ProjectName";
 import { FormattedMessage } from "react-intl";
 
 const NewProject = () => {

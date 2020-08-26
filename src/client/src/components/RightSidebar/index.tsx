@@ -16,6 +16,7 @@ import { hasServices as hasServicesSelector } from "../../store/userSelection/se
 import ProjectDetails from "./ProjectDetails";
 import SelectFrameworks from "./SelectFrameworks";
 import { getSelectedRoute } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+import ProjectName from "../ProjectName";
 
 type Props = InjectedIntlProps;
 
@@ -75,6 +76,7 @@ const RightSidebar = (props: Props)=>{
         <SelectFrameworks/>
         <SelectPages pathname={selectedRoute}/>
         {hasServices && <ServicesList />}
+        <ProjectName />
         <div className={styles.container}>
           {selectedRoute !== ROUTE.REVIEW_AND_GENERATE && (
             <div className={styles.buttonContainer}>
