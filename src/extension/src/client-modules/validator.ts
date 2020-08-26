@@ -1,5 +1,3 @@
-import * as vscode from "vscode";
-import { CLI_SETTINGS } from "../constants/cli";
 import { EXTENSION_COMMANDS } from "../constants/commands";
 import fs = require("fs");
 import path = require("path");
@@ -7,67 +5,29 @@ import { WizardServant, IPayloadResponse } from "../wizardServant";
 import { MESSAGES } from "../constants/messages";
 
 export class Validator extends WizardServant {
-  clientCommandMap: Map<
-    EXTENSION_COMMANDS,
-    (message: any) => Promise<IPayloadResponse>
-  > = new Map([
-    [EXTENSION_COMMANDS.GET_OUTPUT_PATH, Validator.sendOutputPathSelectionToClient],
-    [
-      EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
-      Validator.handleProjectPathValidation
-    ]
+  clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
+    [EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION, Validator.handleProjectPathValidation],
   ]);
 
-  public static async sendOutputPathSelectionToClient(): Promise<IPayloadResponse> {
-    return vscode.window
-      .showOpenDialog({
-        canSelectFiles: false,
-        canSelectFolders: true,
-        canSelectMany: false
-      })
-      .then((res: any) => {
-        let path = undefined;
-
-        if (res !== undefined) {
-          if (process.platform === CLI_SETTINGS.WINDOWS_PLATFORM_VERSION) {
-            path = res[0].path.substring(1, res[0].path.length);
-          } else {
-            path = res[0].path;
-          }
-        }
-        return {
-          payload: {
-            outputPath: path
-          }
-        };
-      });
-  }
-
-  public static async handleProjectPathValidation(
-    message: any
-  ): Promise<IPayloadResponse> {
+  public static async handleProjectPathValidation(message: any): Promise<IPayloadResponse> {
     const projectPath = message.projectPath;
     const projectName = message.projectName;
 
     let projectPathError = "";
     let isInvalidProjectPath = false;
 
-    const validationObject = Validator.isValidProjectPath(
-      projectPath,
-      projectName
-    );
+    const validationObject = Validator.isValidProjectPath(projectPath, projectName);
 
     projectPathError = validationObject.error;
     isInvalidProjectPath = !validationObject.isValid;
 
     return {
       payload: {
-        scope:message.payload.scope,
         projectPathValidation: {
           isValid: !isInvalidProjectPath,
-          error: projectPathError
-        }
-      }
+          error: projectPathError,
+        },
+      },
     };
   }
 
@@ -92,7 +52,7 @@ export class Validator extends WizardServant {
     }
     return {
       isValid: isValid,
-      error: error
+      error: error,
     };
   };
 

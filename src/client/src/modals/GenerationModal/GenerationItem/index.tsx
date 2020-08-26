@@ -38,9 +38,11 @@ const GenerationItem = ({ intl, item }: Props) => {
         if (payload.status === GenerationItemStatus.Generating && payload.message) item.message.next(payload.message);
         if (payload.status === GenerationItemStatus.Failed) item.message.error(payload.message);
         if (payload.status === GenerationItemStatus.Success) {
-          if(payload.message) item.message.next(payload.message);
+          if (payload.message) item.message.next(payload.message);
+          if (payload.data && payload.data.generationPath && item.generationPath)
+            item.generationPath.next(payload.data.generationPath);
           item.message.complete();
-        };
+        }
       }
     }
 
