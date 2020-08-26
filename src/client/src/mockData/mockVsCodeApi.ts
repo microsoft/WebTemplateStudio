@@ -519,10 +519,10 @@ const mockVsCodeApi = () => ({
         case EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE:
           mockGenerationModule.openProjectVSCode(message);
           break;
-        case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
+        case EXTENSION_COMMANDS.GET_OUTPUT_PATH_FROM_CONFIG:
           window.postMessage(
             {
-              command: EXTENSION_COMMANDS.GET_OUTPUT_PATH,
+              command: EXTENSION_COMMANDS.GET_OUTPUT_PATH_FROM_CONFIG,
               payload: {
                 scope:message.payload && message.payload.scope ? message.payload.scope : "",
                 outputPath: "/generic_output_path"
@@ -531,6 +531,18 @@ const mockVsCodeApi = () => ({
             "*"
           );
           break;
+          case EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH:
+            window.postMessage(
+              {
+                command: EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH,
+                payload: {
+                  scope:message.payload && message.payload.scope ? message.payload.scope : "",
+                  outputPath: "/new_generic_output_path"
+                }
+              },
+              "*"
+            );
+            break;
         case EXTENSION_COMMANDS.GET_TEMPLATE_INFO:
           window.postMessage(
             {

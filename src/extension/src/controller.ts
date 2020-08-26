@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 
-import { Validator } from "./utils/validator";
+import { Validator } from "./client-modules/validator";
 import { CONSTANTS } from "./constants/constants";
 import { TelemetryEventName } from './constants/telemetry';
 import { ReactPanel } from "./reactPanel";
@@ -12,8 +12,8 @@ import { Generation } from "./client-modules/generation";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { LaunchExperience } from "./launchExperience";
 import { DependenciesModule } from "./client-modules/dependenciesModule";
-import { CoreTSModule } from "./coreTSModule";
-import { Defaults } from "./utils/defaults";
+import { CoreTSModule } from "./client-modules/coreTSModule";
+import { Defaults } from "./client-modules/defaults";
 import { Telemetry } from "./client-modules/telemetry";
 import { AzureModule } from "./client-modules/azureModule";
 import { getExtensionName, getExtensionVersionNumber } from "./utils/packageInfo";
@@ -76,7 +76,7 @@ export class Controller {
           Controller.TelemetryService
         );
         if (responsePayload) {
-          Controller.handleValidMessage(message.command, responsePayload);
+          Controller.handleValidMessage(message.command, message.payload.scope, responsePayload);
         }
       } else {
         vscode.window.showErrorMessage(MESSAGES.ERRORS.INVALID_COMMAND);
@@ -198,9 +198,11 @@ export class Controller {
 
   private static handleValidMessage(
     commandName: EXTENSION_COMMANDS,
+    scope: any,
     responsePayload?: any
   ): void {
     responsePayload.command = commandName;
+    responsePayload.payload.scope = scope;
     this.reactPanelContext.postMessageWebview(responsePayload);
   }
 

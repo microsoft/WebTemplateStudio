@@ -17,7 +17,6 @@ export class DependenciesModule extends WizardServant {
     const installed = await this.requirementsService.isInstalled(dependency);
     return {
       payload: {
-        scope: message.payload.scope,
         dependency,
         installed,
       },
@@ -37,7 +36,6 @@ export class DependenciesModule extends WizardServant {
 
     return {
       payload: {
-        scope: message.payload.scope,
         latestVersion: latestVersionStr,
       },
     };
