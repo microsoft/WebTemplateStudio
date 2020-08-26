@@ -31,16 +31,18 @@ import classnames from "classnames";
 
 type Props = InjectedIntlProps;
 
-const ProjectNameAndOutput = (props: Props) => {
+const ProjectName = (props: Props) => {
   const outputPath = useSelector(getOutputPath);
   const projectName = useSelector(getProjectName);
   const validations = useSelector(getValidations);
   const projectNameValidation = useSelector(getProjectNameValidation);
-
   const dispatch = useDispatch();
   const { vscode } = React.useContext(AppContext);
   const [name, setName] = React.useState("");
-  
+  const [hasFocus, setHasFocus] = React.useState(false);
+  const onFocus = () => setHasFocus(true);
+  const onBlur = () => setHasFocus(false);
+
   React.useEffect(()=>{
     setName(projectName);
   },[]);
@@ -81,9 +83,11 @@ const ProjectNameAndOutput = (props: Props) => {
         value={name}
         maxLength={PROJECT_NAME_CHARACTER_LIMIT}
         className={classnames(stylesInput.input)}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
 
-      {!projectNameValidation.isValid && projectNameValidation.isDirty && (
+      {!projectNameValidation.isValid && projectNameValidation.isDirty && hasFocus && (
         <div className={styles.errorMessage}>
           {props.intl.formatMessage(projectNameValidation.error) }
         </div>
@@ -92,4 +96,4 @@ const ProjectNameAndOutput = (props: Props) => {
   );
 };
 
-export default injectIntl(ProjectNameAndOutput);
+export default injectIntl(ProjectName);

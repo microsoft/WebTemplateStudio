@@ -1,15 +1,10 @@
 import * as React from "react";
 import styles from "./styles.module.css";
-
 import ProjectOutput from "./ProjectOutput";
 import ProjectName from "../../components/ProjectName";
-import { FormattedMessage, InjectedIntlProps } from "react-intl";
-import messages from "./messages";
+import { FormattedMessage } from "react-intl";
 
-type Props = InjectedIntlProps;
-
-const NewProject = (props: Props) => {
-  
+const NewProject = () => {
   return (
     <div className={styles.container}>
       <div className={styles.newProjectInfo}>
@@ -29,7 +24,7 @@ const NewProject = (props: Props) => {
           <div className={styles.inputContainer}>
             <div className={styles.inputTitle}>
               <FormattedMessage
-                id="projectName.projectNameTitle"
+                id="newProject.projectNameTitle"
                 defaultMessage="Project Name"
               />
             </div>

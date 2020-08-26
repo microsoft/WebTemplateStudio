@@ -101,6 +101,7 @@
   "licenses.viewLicenses": "View Licenses",
   "newProject.body": "Give your full-stack project a name, choose where to create it, then click 'Next' to get started.",
   "newProject.header": "Create Your Web App in Seconds",
+  "newProject.projectNameTitle": "Project Name",
   "outputPath.ariaOutputPath": "Input for Output Path",
   "outputPath.browseButtonLabel": "Browse",
   "outputPath.outputPath": "Output Path",
