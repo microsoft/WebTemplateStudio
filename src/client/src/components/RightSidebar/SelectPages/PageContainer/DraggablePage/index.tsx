@@ -61,7 +61,7 @@ const DraggablePage = ({
       page.isDirty = true;
       setTimeout(()=>{
         const node: any = document.getElementsByClassName("focus-visible")![0];
-        node.select();
+        if (node) node.select();
       },200);
     }
   },[selectedPages]);
