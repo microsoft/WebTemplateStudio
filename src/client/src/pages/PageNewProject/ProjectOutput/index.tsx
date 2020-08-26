@@ -1,13 +1,10 @@
 import * as React from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import OutputPath from "../../../components/OutputPath";
 
 import {
   getOutputPath,
-  getProjectName,
-  getProjectNameValidation,
-  getOutputPathValidation,
-  getValidations
+  getOutputPathValidation
 } from "../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 
 import styles from "./styles.module.css";
