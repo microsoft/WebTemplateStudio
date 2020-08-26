@@ -109,10 +109,17 @@ const getFeatures = (vscode: IVSCodeObject, frontEndInternalName: string, backEn
   }, vscode);
 }
 
-const getOutputPath = (vscode: IVSCodeObject) => {
-  return postMessageAsync(EXTENSION_COMMANDS.GET_OUTPUT_PATH, {
+const getOutputPathFromConfig = (vscode: IVSCodeObject) => {
+  return postMessageAsync(EXTENSION_COMMANDS.GET_OUTPUT_PATH_FROM_CONFIG, {
     module: EXTENSION_MODULES.DEFAULTS,
-    command: EXTENSION_COMMANDS.GET_OUTPUT_PATH
+    command: EXTENSION_COMMANDS.GET_OUTPUT_PATH_FROM_CONFIG
+  }, vscode);
+}
+
+const browseNewOutputPath = (vscode: IVSCodeObject) => {
+  return postMessageAsync(EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH, {
+    module: EXTENSION_MODULES.DEFAULTS,
+    command: EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH
   }, vscode);
 }
 
@@ -269,7 +276,8 @@ export {
   getDependencyInfo,
   getPages,
   getFeatures,
-  getOutputPath,
+  getOutputPathFromConfig,
+  browseNewOutputPath,
   sendTelemetry,
   getResourceGroups,
   GetValidAppServiceName,

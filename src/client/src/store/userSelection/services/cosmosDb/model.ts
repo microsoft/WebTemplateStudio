@@ -17,4 +17,5 @@ export interface ICosmosDB {
   api: string;
   internalName: string;
   groupName: string;
+  editable?: boolean;
 }

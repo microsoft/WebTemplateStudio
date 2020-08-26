@@ -32,7 +32,8 @@ const PageCard = (props: Props) => {
       isValidTitle: page.isValidTitle,
       licenses: page.licenses,
       title: inferItemName(page.defaultName, selectedPages),
-      id:Math.random().toString()
+      id:Math.random().toString(),
+      editable: page.editable
     };
 
     if (!pageOutOfBounds) {

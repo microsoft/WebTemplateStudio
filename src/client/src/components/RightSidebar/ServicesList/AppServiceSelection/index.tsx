@@ -42,6 +42,7 @@ const AppServiceSelection = ({
         <React.Fragment>
           <div className={styles.headerContainer}>
             <div>{intl.formatMessage(messages.title)}</div>
+            {appServiceSelection.editable &&
             <div
               role="button"
               tabIndex={0}
@@ -51,9 +52,11 @@ const AppServiceSelection = ({
             >
               <EditIcon className={styles.editIcon} />
             </div>
+            }
           </div>
           <SidebarItem
             appService={true}
+            editable={appServiceSelection.editable}
             customInputStyle={styles.input}
             key={appServiceSelection.siteName}
             text={appServiceSelection.siteName}

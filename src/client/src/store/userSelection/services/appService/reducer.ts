@@ -19,6 +19,7 @@ const appServiceReducer = (state: IAppService | null = initialState, action: Roo
           location: action.payload.location,
           internalName: action.payload.internalName,
           siteName: action.payload.siteName,
+          editable: action.payload.editable
       };
     default:
       return state;

@@ -205,7 +205,8 @@ const loadFeatures = (): Array<any> => {
     defaultName: "App Service",
     isValidTitle: true,
     author: "Microsoft",
-    group: "CloudHosting"
+    group: "CloudHosting",
+    editable:true
   };
   const cosmosDbFeature = {
     body: "Connect your web app to a distributed database service to access and query data using SQL or MongoDB API.",
@@ -219,7 +220,8 @@ const loadFeatures = (): Array<any> => {
     defaultName: "Cosmos DB",
     isValidTitle: true,
     author: "Microsoft",
-    group: "CloudDatabase"
+    group: "CloudDatabase",
+    editable:true
   };
   return new Array<any>(
     appServiceFeature,

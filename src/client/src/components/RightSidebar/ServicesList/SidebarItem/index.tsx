@@ -24,6 +24,7 @@ interface IStateProps {
   handleCloseClick?: (idx: number) => void;
   intl: InjectedIntl;
   customInputStyle?: string;
+  editable?: boolean;
 }
 
 interface ISortablePageListProps {
@@ -40,7 +41,8 @@ const DraggableSidebarItem = ({
   idx,
   handleCloseClick,
   intl,
-  customInputStyle
+  customInputStyle,
+  editable
 }: Props) => {
   const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
@@ -59,7 +61,7 @@ const DraggableSidebarItem = ({
           {cosmosDB && <CosmosDBIcon style={styles.reorderIcon}/>}
           {appService && <AppServiceIcon style={styles.reorderIcon}/>}
         </div>
-        <div className={styles.errorStack}>
+        { editable && <div className={styles.errorStack}>
           <div
             className={classnames(customInputStyle, {
               [styles.pagesTextContainer]: true
@@ -79,8 +81,14 @@ const DraggableSidebarItem = ({
               )}
             </div>
           </div>
-
-        </div>
+        </div>}
+        { !editable && <div className={styles.errorStack}>
+          <div className={classnames({
+              [styles.pagesTextContainerNoEdit]: true
+            })}> 
+            {text}
+          </div>
+        </div>}
           <CloseSVG
             tabIndex={0}
             onClick={handleCloseOnClick}

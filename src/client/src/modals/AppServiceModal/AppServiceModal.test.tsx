@@ -2,7 +2,7 @@ import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import "@testing-library/jest-dom";
 import AppServiceModal from ".";
-import { getInitialState, setOpenModal } from "../../mockData/mockStore";
+import { getInitialState, setOpenModal, addFeaturesOptions } from "../../mockData/mockStore";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import "@testing-library/jest-dom/extend-expect";
 import { renderWithStore } from "../../testUtils";
@@ -68,6 +68,7 @@ describe("AppServiceModal", () => {
 
   beforeEach(() => {
     initialState = getInitialState();
+    addFeaturesOptions(initialState);
     setOpenModal(initialState, NAVIGATION_MODAL_TYPES.APP_SERVICE_MODAL);
     store = mockStore(initialState);
     props = {
