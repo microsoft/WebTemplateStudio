@@ -76,7 +76,11 @@ const RightSidebar = (props: Props)=>{
         <SelectFrameworks/>
         <SelectPages pathname={selectedRoute}/>
         {hasServices && <ServicesList />}
-        <ProjectName />
+
+        <div className={styles.inputContainer}>
+          <div className={styles.inputTitle}>{intl.formatMessage(messages.projectNameTitle)}</div>
+          <ProjectName />
+        </div>
         <div className={styles.container}>
           {selectedRoute !== ROUTE.REVIEW_AND_GENERATE && (
             <div className={styles.buttonContainer}>

@@ -1,9 +1,3 @@
-.inputTitle {
-  line-height: 2em;
-  font-size: 1.2em;
-  font-weight: 600;
-  margin-bottom: 3px;
-}
 
 .outputPathContainer {
   box-sizing: border-box;
@@ -20,16 +14,6 @@
   justify-content: space-between;
   align-items: center;
   max-height: 42px;
-}
-
-.inputContainer {
-  display: block;
-  position: relative;
-  width: 100%;
-  text-decoration: none;
-  outline: none;
-  margin-bottom: 40px;
-  font-size: 1.2em;
 }
 
 .errorMessage {

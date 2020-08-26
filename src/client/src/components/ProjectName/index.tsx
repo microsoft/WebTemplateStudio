@@ -54,6 +54,12 @@ const ProjectNameAndOutput = (props: Props) => {
     }
   },[projectName, outputPath]);
 
+  React.useEffect(() => {
+    if (projectName !== name){
+      setName(projectName);
+    }
+  },[projectName]);
+
   const validateSetProjectValueAndSetDirty = (e: React.SyntheticEvent<HTMLInputElement>) => {
     const projectNameToSet: string = e.currentTarget.value;
     setName(projectNameToSet);
@@ -69,24 +75,19 @@ const ProjectNameAndOutput = (props: Props) => {
 
   return (
     <React.Fragment>
-      <div className={styles.inputContainer}>
-        <div className={styles.inputTitle}>
-          {props.intl.formatMessage(messages.projectNameTitle)}
-        </div>
-        <input
-          onChange={validateSetProjectValueAndSetDirty}
-          aria-label={props.intl.formatMessage(messages.ariaProjectNameLabel)}
-          value={name}
-          maxLength={PROJECT_NAME_CHARACTER_LIMIT}
-          className={classnames(stylesInput.input)}
-        />
+      <input
+        onChange={validateSetProjectValueAndSetDirty}
+        aria-label={props.intl.formatMessage(messages.ariaProjectNameLabel)}
+        value={name}
+        maxLength={PROJECT_NAME_CHARACTER_LIMIT}
+        className={classnames(stylesInput.input)}
+      />
 
-        {!projectNameValidation.isValid && projectNameValidation.isDirty && (
-          <div className={styles.errorMessage}>
-            {props.intl.formatMessage(projectNameValidation.error) }
-          </div>
-        )}
-      </div>
+      {!projectNameValidation.isValid && projectNameValidation.isDirty && (
+        <div className={styles.errorMessage}>
+          {props.intl.formatMessage(projectNameValidation.error) }
+        </div>
+      )}
     </React.Fragment>
   );
 };

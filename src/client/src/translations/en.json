@@ -122,6 +122,7 @@
   "rightSidebar.hideIcon": "Hide",
   "rightSidebar.location": "Location",
   "rightSidebar.projectName": "Name",
+  "rightSidebar.projectNameTitle": "Project Name",
   "rightSidebar.projectType": "Project Type",
   "rightSidebar.redirectLinkLabel": "GitHub.com",
   "rightSidebar.services": "Services",
