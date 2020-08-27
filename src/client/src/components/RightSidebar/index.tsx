@@ -73,14 +73,15 @@ const RightSidebar = (props: Props)=>{
           title={intl.formatMessage(messages.hideIcon)}
         />
         <ProjectDetails/>
-        <SelectFrameworks/>
-        <SelectPages pathname={selectedRoute}/>
-        {hasServices && <ServicesList />}
-
         <div className={styles.inputContainer}>
           <div className={styles.inputTitle}>{intl.formatMessage(messages.projectNameTitle)}</div>
           <ProjectName />
         </div>
+        <SelectFrameworks/>
+        <SelectPages pathname={selectedRoute}/>
+        {hasServices && <ServicesList />}
+
+        
         <div className={styles.container}>
           {selectedRoute !== ROUTE.REVIEW_AND_GENERATE && (
             <div className={styles.buttonContainer}>

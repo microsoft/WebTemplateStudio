@@ -55,7 +55,7 @@ const messages = defineMessages({
   },
   projectNameTitle: {
     id: "rightSidebar.projectNameTitle",
-    defaultMessage: "Project Name"
+    defaultMessage: "Name"
   }
 });
 

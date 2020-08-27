@@ -40,8 +40,18 @@ const ProjectName = (props: Props) => {
   const { vscode } = React.useContext(AppContext);
   const [name, setName] = React.useState("");
   const [hasFocus, setHasFocus] = React.useState(false);
-  const onFocus = () => setHasFocus(true);
-  const onBlur = () => setHasFocus(false);
+  const [validName, setValidName] = React.useState("");
+  const onFocus = () => {
+    setHasFocus(true);
+    setValidName(name);
+  }
+  const onBlur = () => {
+    setHasFocus(false);
+    if (!projectNameValidation.isValid)
+      setTimeout(() => {
+        dispatch(setProjectNameAction(validName, {isValid:true, error:"", isDirty:true}));
+      },400);
+  }
 
   React.useEffect(()=>{
     setName(projectName);
