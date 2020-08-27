@@ -33,7 +33,7 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
       licenses: blankPage.licenses,
       title: blankPage.defaultName ? blankPage.defaultName : "",
       id:Math.random().toString()
-    };;
+    };
     routesNavItems = routesNavItems.map((navItem, index)=>{
       if (index === 0){
         navItem.isSelected=true;

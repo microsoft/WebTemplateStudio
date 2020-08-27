@@ -15,7 +15,7 @@ import {
 } from "react-intl";
 
 import messages from "./messages";
-import { getOutputPath as getOutputPathFromExtension } from "../../../utils/extensionService/extensionService";
+import { getOutputPathFromConfig } from "../../../utils/extensionService/extensionService";
 import { setOutputPathAction } from "../../../store/userSelection/app/action";
 import { AppContext } from "../../../AppContext";
 import { EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../../utils/constants/commands";
@@ -31,7 +31,7 @@ const ProjectNameAndOutput = (props: Props) => {
 
   React.useEffect(() => {
     if (outputPath === "") {
-      getOutputPathFromExtension(vscode).then((event)=>{
+      getOutputPathFromConfig(vscode).then((event)=>{
         const message = event.data;
         if (message.payload !== null && message.payload.outputPath !== null) {
           dispatch(setOutputPathAction(message.payload.outputPath));
@@ -43,7 +43,7 @@ const ProjectNameAndOutput = (props: Props) => {
   const handleSaveClick = () => {
     vscode.postMessage({
       module: EXTENSION_MODULES.VALIDATOR,
-      command: EXTENSION_COMMANDS.GET_OUTPUT_PATH,
+      command: EXTENSION_COMMANDS.GET_OUTPUT_PATH_FROM_CONFIG,
       track: false
     });
   };
