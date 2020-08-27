@@ -15,7 +15,7 @@ import {
 } from "react-intl";
 
 import messages from "./messages";
-import { getOutputPathFromConfig } from "../../../utils/extensionService/extensionService";
+import { getOutputPathFromConfig, browseNewOutputPath } from "../../../utils/extensionService/extensionService";
 import { setOutputPathAction } from "../../../store/userSelection/app/action";
 import { AppContext } from "../../../AppContext";
 import { EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../../utils/constants/commands";
@@ -41,10 +41,11 @@ const ProjectNameAndOutput = (props: Props) => {
   }, [vscode]);
 
   const handleSaveClick = () => {
-    vscode.postMessage({
-      module: EXTENSION_MODULES.VALIDATOR,
-      command: EXTENSION_COMMANDS.GET_OUTPUT_PATH_FROM_CONFIG,
-      track: false
+    browseNewOutputPath(vscode).then(event => {
+      const message = event.data;
+        if (message.payload !== null && message.payload.outputPath !== undefined) {
+          dispatch(setOutputPathAction(message.payload.outputPath));
+        }
     });
   };
 
