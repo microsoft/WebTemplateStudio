@@ -32,7 +32,8 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
       isValidTitle: blankPage.isValidTitle,
       licenses: blankPage.licenses,
       title: blankPage.defaultName ? blankPage.defaultName : "",
-      id:Math.random().toString()
+      id:Math.random().toString(),
+      editable: blankPage.editable
     };
     routesNavItems = routesNavItems.map((navItem, index)=>{
       if (index === 0){
