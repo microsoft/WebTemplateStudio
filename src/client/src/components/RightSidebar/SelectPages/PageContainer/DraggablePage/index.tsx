@@ -127,7 +127,7 @@ const DraggablePage = ({
                     if (!page.isValidTitle)
                      setTimeout(() => {
                       validateNameAndSetStore(validValue)
-                     }, 400); 
+                     }, 200); 
                   }}
                   autoFocus={page.isDirty}
                   disabled={selectedPages.filter(selPage => selPage.title!==page.title && selPage.isValidTitle===false).length>0}
