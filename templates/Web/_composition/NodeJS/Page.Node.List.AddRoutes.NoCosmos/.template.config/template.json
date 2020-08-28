@@ -30,7 +30,7 @@
       "args": {
         "dict": "{'uuid': '8.2.0'}",
         "key": "dependencies",
-        "jsonPath": "package.json"
+        "jsonPath": "frontend/package.json"
       },
       "continueOnError": false
     },
@@ -41,7 +41,7 @@
       "args": {
         "dict": "{'uuid': '8.2.0'}",
         "key": "dependencies",
-        "jsonPath": "server/package.json"
+        "jsonPath": "backend/package.json"
       },
       "continueOnError": false
     }

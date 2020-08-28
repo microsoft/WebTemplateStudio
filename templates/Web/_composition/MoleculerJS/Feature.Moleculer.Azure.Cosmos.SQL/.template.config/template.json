@@ -31,7 +31,7 @@
       "args": {
         "dict": "{'dotenv': '8.2.0', 'moleculer-db': '0.8.4', 'moleculer-db-adapter-cosmos': '0.0.2'}",
         "key": "dependencies",
-        "jsonPath": "package.json"
+        "jsonPath": "frontend/package.json"
       },
       "continueOnError": false
     },
@@ -42,7 +42,7 @@
       "args": {
         "dict": "{'dotenv': '8.2.0', 'moleculer-db': '0.8.4', 'moleculer-db-adapter-cosmos': '0.0.2'}",
         "key": "dependencies",
-        "jsonPath": "server/package.json"
+        "jsonPath": "backend/package.json"
       },
       "continueOnError": false
     }

@@ -53,7 +53,7 @@
       "args": {
         "dict": "{'start-backend': 'dotnet run -p server/.', 'restore-packages': 'dotnet restore server/.'}",
         "key": "scripts",
-        "jsonPath": "package.json"
+        "jsonPath": "frontend/package.json"
       },
       "continueOnError": false
     }

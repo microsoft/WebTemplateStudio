@@ -67,7 +67,7 @@
       "args": {
         "dict": "{'start-backend': 'python3 server/server.py || python server/server.py || py -3 server/server.py', 'install-requirements': 'pip install -r server/requirements.txt'}",
         "key": "scripts",
-        "jsonPath": "package.json"
+        "jsonPath": "frontend/package.json"
       },
       "continueOnError": false
     }

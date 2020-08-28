@@ -31,7 +31,7 @@
       "args": {
         "dict": "{'start': 'concurrently \"yarn start-frontend || npm run start-frontend\" \"yarn start-backend || npm run start-backend\"'}",
         "key": "scripts",
-        "jsonPath": "package.json"
+        "jsonPath": "frontend/package.json"
       },
       "continueOnError": false
     },
@@ -42,7 +42,7 @@
       "args": {
         "dict": "{'concurrently': '5.2.0'}",
         "key": "devDependencies",
-        "jsonPath": "package.json"
+        "jsonPath": "frontend/package.json"
       },
       "continueOnError": false
     }
