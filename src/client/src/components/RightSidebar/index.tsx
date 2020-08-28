@@ -16,6 +16,7 @@ import { hasServices as hasServicesSelector } from "../../store/userSelection/se
 import ProjectDetails from "./ProjectDetails";
 import SelectFrameworks from "./SelectFrameworks";
 import { getSelectedRoute } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+import ProjectName from "../ProjectName";
 
 type Props = InjectedIntlProps;
 
@@ -72,9 +73,15 @@ const RightSidebar = (props: Props)=>{
           title={intl.formatMessage(messages.hideIcon)}
         />
         <ProjectDetails/>
+        <div className={styles.inputContainer}>
+          <div className={styles.inputTitle}>{intl.formatMessage(messages.projectNameTitle)}</div>
+          <ProjectName />
+        </div>
         <SelectFrameworks/>
         <SelectPages pathname={selectedRoute}/>
         {hasServices && <ServicesList />}
+
+        
         <div className={styles.container}>
           {selectedRoute !== ROUTE.REVIEW_AND_GENERATE && (
             <div className={styles.buttonContainer}>

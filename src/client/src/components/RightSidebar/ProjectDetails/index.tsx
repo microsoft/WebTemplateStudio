@@ -24,12 +24,6 @@ const ProjectDetails = (props: Props)=>{
       </div>
       <div className={styles.statics}>
         <div className={styles.projectStatic}>
-          {formatMessage(messages.projectName)}:
-          <span title={projectName} className={styles.value}>
-            {projectName}
-          </span>
-        </div>
-        <div className={styles.projectStatic}>
           {formatMessage(messages.location)}:
           <span title={outputPath} className={styles.value}>
             {outputPath}

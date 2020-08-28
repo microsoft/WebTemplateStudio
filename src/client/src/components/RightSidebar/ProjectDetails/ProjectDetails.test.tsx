@@ -30,10 +30,8 @@ describe("About", () => {
 
     it("should have messages", () => {
       const expectedTextYourProjectDetails = intl.formatMessage(messages.yourProjectDetails);
-      const expectedTextProjectName = intl.formatMessage(messages.projectName);
       const expectedTextLocation = intl.formatMessage(messages.location);
       expect(wrapper.getByText(expectedTextYourProjectDetails)).toBeDefined();
-      expect(wrapper.getByText(expectedTextProjectName + ':', { exact: false })).toBeDefined();
       expect(wrapper.getByText(expectedTextLocation + ':', { exact: false })).toBeDefined();
     });
   });

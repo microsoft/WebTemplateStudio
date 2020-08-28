@@ -118,24 +118,16 @@ const DraggablePage = ({
                   maxLength={maxInputLength}
                   value={namePage}
                   onChange={e => {
-                    const isDirty = namePage !== e.target.value;
-                    if (isDirty){
-                      if (validateNameAndSetStore && idx) {
-                        page.isDirty=true;
-                        validateNameAndSetStore(e.target.value);
-                      }
-                    }
+                    validateNameAndSetStore(e.target.value);
+                  }}
+                  onFocus={e=>{
+                    setValidValue(page.title);
                   }}
                   onBlur={e => {
-                    const isDirty = namePage !== e.target.value;
-                    if (isDirty){
-                      if (validateNameAndSetStore && idx && page && page.isValidTitle===false) {
-                        validateNameAndSetStore(validValue);
-                      }else{
-                        validateNameAndSetStore(e.target.value);
-                      }
-                      if (page.isValidTitle) setValidValue(page.title);
-                    }
+                    if (!page.isValidTitle)
+                     setTimeout(() => {
+                      validateNameAndSetStore(validValue)
+                     }, 200); 
                   }}
                   autoFocus={page.isDirty}
                   disabled={selectedPages.filter(selPage => selPage.title!==page.title && selPage.isValidTitle===false).length>0}
