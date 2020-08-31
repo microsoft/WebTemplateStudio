@@ -106,7 +106,7 @@ const AzureServicesModal = (props: Props) => {
             onKeyUp={keyUpHandler}
           >
             <FormattedMessage
-              id="azureLoginModal.azureReadMore"
+              id="azureServicesModal.azureReadMore"
               defaultMessage="Learn more about the Azure free account. Read the FAQ >"
             />
           </a>
@@ -118,7 +118,7 @@ const AzureServicesModal = (props: Props) => {
           className={classnames(buttonStyles.buttonDark, styles.button)}
         >
           <FormattedMessage
-            id="azureLoginModal.signIn"
+            id="azureServicesModal.signIn"
             defaultMessage="Sign In"
           />
         </button>
@@ -136,7 +136,7 @@ const AzureServicesModal = (props: Props) => {
               onKeyUp={keyUpHandler}
             >
               <FormattedMessage
-                id="azureLoginModal.createAccount"
+                id="azureServicesModal.createAccount"
                 defaultMessage="Create Free Account"
               />
             </a>
