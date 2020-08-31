@@ -10,7 +10,7 @@ const closeModalAction = (): ICloseModalAction => ({
   type: NAVIGATION_MODAL_TYPEKEYS.CLOSE_MODALS
 });
 
-const openAzureLoginModalAction = (serviceInternalName: string) => {
+const openAzureServicesModalAction = (serviceInternalName: string) => {
   return openModalAction({
     modalType: NAVIGATION_MODAL_TYPES.AZURE_LOGIN_MODAL,
     modalData: serviceInternalName
@@ -47,7 +47,7 @@ const openAppServiceModalAction = () => {
 
 export {
   closeModalAction,
-  openAzureLoginModalAction,
+  openAzureServicesModalAction,
   openCosmosDbModalAction,
   openGenModalAction,
   openViewLicensesModalAction,

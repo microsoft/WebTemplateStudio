@@ -6,7 +6,7 @@ import asModal from "../../components/Modal";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { closeModalAction } from "../../store/navigation/modals/action";
 import { AppState } from "../../store/combineReducers";
-import { isAzureLoginModalOpenSelector } from "../../store/navigation/modals/selector";
+import { isAzureServicesModalOpenSelector } from "../../store/navigation/modals/selector";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 import classnames from "classnames";
@@ -30,7 +30,7 @@ interface IStateProps {
 
 type Props = IStateProps & InjectedIntlProps;
 
-const AzureLoginModal = (props: Props) => {
+const AzureServicesModal = (props: Props) => {
   const { formatMessage } = props.intl;
   const { selectedAzureServiceName } = props;
   const { vscode } = React.useContext(AppContext);
@@ -149,9 +149,9 @@ const AzureLoginModal = (props: Props) => {
 
 const mapStateToProps = (state: AppState): IStateProps => {
   return {
-    isModalOpen: isAzureLoginModalOpenSelector(state),
+    isModalOpen: isAzureServicesModalOpenSelector(state),
     selectedAzureServiceName: state.navigation.modals.openModal.modalData
   };
 };
 
-export default connect(mapStateToProps)(asModal(injectIntl(AzureLoginModal)));
+export default connect(mapStateToProps)(asModal(injectIntl(AzureServicesModal)));
