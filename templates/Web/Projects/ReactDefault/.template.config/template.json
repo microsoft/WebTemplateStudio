@@ -76,7 +76,7 @@
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'start-frontend': 'react-scripts start', 'build': 'node ./buildScript', 'test': 'react-scripts test', 'eject': 'react-scripts eject', 'lint':'eslint src/**/*.js src/**/*.jsx'}",
+        "dict": "{'start': 'react-scripts start', 'build': 'react-scripts build', 'publish': 'node ./scripts/publish', 'test': 'react-scripts test', 'eject': 'react-scripts eject', 'lint':'eslint src/**/*.js src/**/*.jsx'}",
         "key": "scripts",
         "jsonPath": "frontend/package.json"
       },

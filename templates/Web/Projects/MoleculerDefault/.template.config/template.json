@@ -62,7 +62,7 @@
       "parameters": {
         "format": "yyyy"
       }
-    }, 
+    },
     "wts.ToLowerPackageJsonDefault":
     {
       "type": "generated",
@@ -74,39 +74,5 @@
       "replaces": "Param_ToLowerPackageJsonDefault"
     }
   },
-  "postActions": [
-    {
-      "description": "Add Moleculer Build Scripts",
-      "manualInstructions": [],
-      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
-      "args": {
-        "dict": "{'start-backend': 'moleculer-runner --repl --hot --config server/moleculer.config.js server/services'}",
-        "key": "scripts",
-        "jsonPath": "frontend/package.json"
-      },
-      "continueOnError": false
-    },
-    {
-      "description": "Add Moleculer Dependencies",
-      "manualInstructions": [],
-      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
-      "args": {
-        "dict": "{'moleculer': '0.14.8', 'moleculer-web': '0.9.1'}",
-        "key": "dependencies",
-        "jsonPath": "frontend/package.json"
-      },
-      "continueOnError": false
-    },
-    {
-      "description": "Add Moleculer Dev Dependencies",
-      "manualInstructions": [],
-      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
-      "args": {
-        "dict": "{'moleculer-repl': '0.6.4'}",
-        "key": "devDependencies",
-        "jsonPath": "frontend/package.json"
-      },
-      "continueOnError": false
-    }
-  ]
+  "postActions": []
 }
