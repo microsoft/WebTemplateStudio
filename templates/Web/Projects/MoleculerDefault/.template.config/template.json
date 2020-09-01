@@ -16,7 +16,7 @@
     "wts.backendframework": "Moleculer",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.displayOrder": "1",
+    "wts.compositionOrder": "2",
     "wts.licenses": "[Moleculer](https://github.com/moleculerjs/moleculer/blob/master/LICENSE)"
   },
   "sourceName": "wts.MoleculerDefault",

@@ -16,7 +16,7 @@
     "wts.backendframework": "Flask",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.displayOrder": "1",
+    "wts.compositionOrder": "2",
     "wts.licenses": "[Flask](https://github.com/pallets/flask/blob/master/LICENSE)"
   },
   "sourceName": "wts.FlaskDefault",

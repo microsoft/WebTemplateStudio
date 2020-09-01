@@ -16,7 +16,7 @@
     "wts.backendframework": "all",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.displayOrder": "1",
+    "wts.compositionOrder": "1",
     "wts.licenses": "[React](https://github.com/facebook/react/blob/master/LICENSE)|[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)|[Bootstrap](https://github.com/twbs/bootstrap/blob/master/LICENSE)"
   },
   "sourceName": "wts.ReactDefault",
