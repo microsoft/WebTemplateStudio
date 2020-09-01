@@ -17,13 +17,12 @@ import {
 
 import { AppState } from "../../store/combineReducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { getOutputPath } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { messages } from "./messages";
 import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";
 
 import { sendTelemetry, generateProject, openProjectInVSCode } from "../../utils/extensionService/extensionService";
-import { resetWizardAction, loadAction } from "../../store/config/config/action";
+import { resetWizardAction } from "../../store/config/config/action";
 import { AppContext } from "../../AppContext";
 import { getGenerationData } from "../../store/userSelection/app/selector";
 import { getCosmosDB, getAppService } from "../../store/userSelection/services/servicesSelector";
@@ -49,6 +48,7 @@ const GenerationModal = ({ intl }: Props) => {
       name: GENERATION_NAMES.TEMPLATES,
       title: formatMessage(messages.projectCreation),
       message: new Subject(),
+      generationPath: new Subject(),
     };
 
     templateItem.message.subscribe(
@@ -62,12 +62,12 @@ const GenerationModal = ({ intl }: Props) => {
   };
 
   const [statusMessage, setStatusMessage] = React.useState("");
+  const [generationPath, setGenerationPath] = React.useState("");
   const [generationItems, setGenerationItems] = React.useState(initialGenerationItems);
   const [errorMessages, setErrorMessages] = React.useState<string[]>([]);
   const generationData = useSelector(getGenerationData);
   const isCosmosSelected = useSelector(getCosmosDB) !== null;
   const isAppServiceSelected = useSelector(getAppService) !== null;
-  const outputPath = useSelector((state: AppState) => getOutputPath(state));
   const [isGenerationFinished, setIsGenerationFinished] = React.useState(false);
   const [isGenerationTemplatesSuccess, setIsGenerationTemplatesSuccess] = React.useState(false);
   const [isGenerationTemplatesFailed, setIsGenerationTemplatesFailed] = React.useState(false);
@@ -102,6 +102,10 @@ const GenerationModal = ({ intl }: Props) => {
         (message) => setStatusMessage(message),
         (error: string) => setErrorMessages((messages) => [...new Set([...messages, error])])
       );
+      if(item.generationPath) {
+        item.generationPath.subscribe(
+          (path) => setGenerationPath(path));
+      }
     });
 
     forkJoin(items.map((item) => item.message)).subscribe(
@@ -198,7 +202,7 @@ const GenerationModal = ({ intl }: Props) => {
               [buttonStyles.buttonDark]: !isGenerationTemplatesSuccess,
               [buttonStyles.buttonHighlighted]: isGenerationTemplatesSuccess,
             })}
-            onClick={() => openProjectInVSCode(outputPath, vscode)}
+            onClick={() => openProjectInVSCode(generationPath, vscode)}
             disabled={!isGenerationTemplatesSuccess}
           >
             {formatMessage(messages.openProject)}

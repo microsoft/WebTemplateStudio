@@ -61,7 +61,7 @@ const DraggablePage = ({
       page.isDirty = true;
       setTimeout(()=>{
         const node: any = document.getElementsByClassName("focus-visible")![0];
-        node.select();
+        if (node) node.select();
       },200);
     }
   },[selectedPages]);
@@ -72,7 +72,7 @@ const DraggablePage = ({
   }
   const setFocus = () =>{
     const node = inputRef.current!
-    node.focus();
+    if (node) node.focus();
   }
 
   const deletePageOnKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
@@ -104,43 +104,40 @@ const DraggablePage = ({
         <div className={styles.errorStack}>
           <div
             className={classnames(customInputStyle, {
-              [styles.pagesTextContainer]: true,
+              [styles.pagesTextContainer]: page.editable,
               [styles.textContainer]: true,
               [styles.largeIndentContainer]: false
             })}
           >
             <div className={styles.inputContainer}>
               {(getSvg(page!.internalName, styles.icon))}
-              {page && idx && (
+              {page && page.editable && idx && (
                 <input
                   aria-label={intl.formatMessage(messages.changeItemName)}
                   className={classnames(styles.input)}
                   maxLength={maxInputLength}
                   value={namePage}
                   onChange={e => {
-                    const isDirty = namePage !== e.target.value;
-                    if (isDirty){
-                      if (validateNameAndSetStore && idx) {
-                        page.isDirty=true;
-                        validateNameAndSetStore(e.target.value);
-                      }
-                    }
+                    validateNameAndSetStore(e.target.value);
+                  }}
+                  onFocus={e=>{
+                    setValidValue(page.title);
                   }}
                   onBlur={e => {
-                    const isDirty = namePage !== e.target.value;
-                    if (isDirty){
-                      if (validateNameAndSetStore && idx && page && page.isValidTitle===false) {
-                        validateNameAndSetStore(validValue);
-                      }else{
-                        validateNameAndSetStore(e.target.value);
-                      }
-                      if (page.isValidTitle) setValidValue(page.title);
-                    }
+                    if (!page.isValidTitle)
+                     setTimeout(() => {
+                      validateNameAndSetStore(validValue)
+                     }, 200); 
                   }}
                   autoFocus={page.isDirty}
                   disabled={selectedPages.filter(selPage => selPage.title!==page.title && selPage.isValidTitle===false).length>0}
                   ref={inputRef}
                 />
+              )}
+              {page && !page.editable && idx && (
+                <div className={classnames({
+                  [styles.marginLeft10]:true
+                })}>{page.title}</div>
               )}
             </div>
           </div>

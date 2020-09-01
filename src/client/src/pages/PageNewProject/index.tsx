@@ -1,11 +1,10 @@
 import * as React from "react";
 import styles from "./styles.module.css";
-
-import ProjectNameAndOutput from "./ProjectNameAndOutput";
+import ProjectOutput from "./ProjectOutput";
+import ProjectName from "../../components/ProjectName";
 import { FormattedMessage } from "react-intl";
 
 const NewProject = () => {
-
   return (
     <div className={styles.container}>
       <div className={styles.newProjectInfo}>
@@ -22,10 +21,18 @@ const NewProject = () => {
           />
         </div>
         <div className={styles.projectDetailsContainer}>
-          <ProjectNameAndOutput />
+          <div className={styles.inputContainer}>
+            <div className={styles.inputTitle}>
+              <FormattedMessage
+                id="newProject.projectNameTitle"
+                defaultMessage="Project Name"
+              />
+            </div>
+            <ProjectName />
+          </div>
+          <ProjectOutput />
         </div>
       </div>
-      
     </div>
   );
 };

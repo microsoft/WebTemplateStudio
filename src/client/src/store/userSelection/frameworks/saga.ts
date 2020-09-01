@@ -34,7 +34,6 @@ export function* frameworkSaga(vscode: any) {
         const event: any = yield call(getPages, vscode, projectType, selectedFrontend.internalName, selectedBackend.internalName);
         const pageOptions = getPagesOptions(event.data.payload.pages);
         yield put({ type: TEMPLATES_TYPEKEYS.SET_PAGES_OPTIONS_SUCCESS, payload: pageOptions });
-
         if (selectedPages.length === 0){
           const blankPage = pageOptions[0];
           const blankSelect: ISelected = {
@@ -44,7 +43,8 @@ export function* frameworkSaga(vscode: any) {
             isValidTitle: blankPage.isValidTitle,
             licenses: blankPage.licenses,
             title: blankPage.defaultName ? blankPage.defaultName : "",
-            id:Math.random().toString()
+            id:Math.random().toString(),
+            editable: blankPage.editable
           };
           selectedPages.push(blankSelect)
         }else{

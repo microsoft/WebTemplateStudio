@@ -8,10 +8,6 @@ const messages = defineMessages({
   ariaProjectNameLabel: {
     id: "projectName.ariaProjectName",
     defaultMessage: "Project Name Input"
-  },
-  outputPathTitle: {
-    id: "projectName.outputPathTitle",
-    defaultMessage: "Save To"
   }
 });
 export default messages;

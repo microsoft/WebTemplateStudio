@@ -100,7 +100,6 @@ const FrameworkCard = (props: Props) => {
   };
 
   const detailsClickWrapper = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    debugger;
     event.stopPropagation();
     setDetailPage(framework);
   };

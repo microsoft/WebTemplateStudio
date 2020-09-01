@@ -11,10 +11,8 @@ import PageDetails from "./pages/PageDetails";
 import { NAVIGATION_MODAL_TYPES } from "./store/navigation/typeKeys";
 import RightSidebar from "./components/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
-import { setOutputPathAction } from "./store/userSelection/app/action";
 import { loadAction } from "./store/config/config/action";
 import loadable from '@loadable/component'
-import { EXTENSION_COMMANDS } from "./utils/constants/commands";
 import { ROUTE } from "./utils/constants/routes";
 import { getSelectedRoute } from "./store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 
@@ -48,24 +46,10 @@ const App = (props: Props) => {
   const Header = loadable(() => import(/* webpackChunkName: "Header" */  "./components/Header"));
   const Footer = loadable(() => import(/* webpackChunkName: "Footer" */  "./components/Footer"));
   const PageNewProject = loadable(() => import(/* webpackChunkName: "PageNewProject" */ "./pages/PageNewProject"));
-  
+
   React.useEffect(()=>{
     dispatch(loadAction());
-    messageEventsFromExtension();
   },[]);
-
-  function messageEventsFromExtension(){
-    window.addEventListener("message", event => {
-      const message = event.data;
-      switch (message.command) {
-        case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
-          if (message.payload !== null && message.payload.outputPath !== undefined) {
-            dispatch(setOutputPathAction(message.payload.outputPath));
-          }
-          break;
-      }
-    });
-  }
 
   return (
     <React.Fragment>

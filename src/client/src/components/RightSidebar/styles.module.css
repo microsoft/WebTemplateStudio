@@ -196,3 +196,16 @@
 .hide {
   display: none;
 }
+
+.inputContainer {
+  margin: 15px;
+  margin-bottom: 30px;
+    font-size: 1.2em;
+}
+
+.inputTitle {
+  line-height: 2em;
+  font-size: 1em;
+  font-weight: 600;
+  margin-bottom: 3px;
+}

@@ -9,12 +9,12 @@ import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants/internal
 const getFeatures = (state: AppState) => state.templates.featureOptions;
 
 const getServiceGroups = createSelector(getFeatures, (features) => {
-  const result = features.reduce((result, feature) => {
-    const service = getService(feature);
-    const group = result.find((s) => s.name.description === service.group);
-    if (group) {
-      group.services.push(service);
-    } else {
+    const result = features.reduce((result, feature) => {
+      const service = getService(feature);
+      const group = result.find((s) => s.name.description === service.group);
+      if (group) {
+        group.services.push(service);
+      } else {
       const serviceGroupMetadata = getServiceGroupMetadata(service.group);
       result.push({
         name: serviceGroupMetadata.name,
@@ -35,6 +35,7 @@ const getService = (option: IOption): IService => {
     openModalAction: metadata ? metadata.openModalAction : undefined,
     expectedPrice: metadata ? metadata.expectedPrice : undefined,
     expectedTime: metadata ? metadata.expectedTime : undefined,
+    editable: option.editable
   };
 };
 

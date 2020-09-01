@@ -15,4 +15,5 @@ export interface IAppService {
   location: string;
   siteName: string;
   internalName: string;
+  editable?: boolean;
 }

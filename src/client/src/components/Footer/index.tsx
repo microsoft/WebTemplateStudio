@@ -105,9 +105,9 @@ const Footer = (props: Props) => {
                   {
                     [styles.disabledOverlay]: isFirstStep || !isEnableGenerateButton
                   })}
-                onClick={() => { if (!isFirstStep) navigateBack() }}
-                onKeyPress={(event) => { if (!isFirstStep) navigateBackOnKeyPress(event) }}
-                onKeyUp={(event: React.KeyboardEvent<HTMLAnchorElement>) => { if (!isFirstStep) keyUpHandler(event) }}
+                onClick={() => { if (!isFirstStep && isEnableGenerateButton) navigateBack() }}
+                onKeyPress={(event) => { if (!isFirstStep && isEnableGenerateButton) navigateBackOnKeyPress(event) }}
+                onKeyUp={(event: React.KeyboardEvent<HTMLAnchorElement>) => { if (!isFirstStep && isEnableGenerateButton) keyUpHandler(event) }}
               >
                 {formatMessage(messages.back)}
               </a>
@@ -117,9 +117,9 @@ const Footer = (props: Props) => {
                   [buttonStyles.buttonDark]: !isEnableNextPage,
                   [styles.disabledOverlay]: isLastStep || !isEnableNextPage || !isEnableGenerateButton
                 })}
-                onClick={() => { if (!isLastStep && isEnableNextPage) navigateForward()}}
-                onKeyPress={(event) => { if (!isLastStep) navigateForwardOnKeyPress(event)}}
-                onKeyUp={(event: React.KeyboardEvent<HTMLAnchorElement>) => { if (!isLastStep) keyUpHandler(event) }}
+                onClick={() => { if (!isLastStep && isEnableNextPage && isEnableGenerateButton) navigateForward()}}
+                onKeyPress={(event) => { if (!isLastStep && isEnableNextPage && isEnableGenerateButton) navigateForwardOnKeyPress(event)}}
+                onKeyUp={(event: React.KeyboardEvent<HTMLAnchorElement>) => { if (!isLastStep && isEnableNextPage && isEnableGenerateButton) keyUpHandler(event) }}
               >
                 {formatMessage(messages.next)}
                 {nextArrow && (
@@ -137,7 +137,7 @@ const Footer = (props: Props) => {
                 [buttonStyles.buttonHighlighted]: isEnableGenerateButton,
                 [styles.disabledOverlay]: !isEnableGenerateButton,
               })}
-              onClick={generateProject}
+              onClick={(e) => { if (isEnableGenerateButton) generateProject(e)}}
             >
               {formatMessage(messages.generate)}
             </button>

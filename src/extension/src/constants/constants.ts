@@ -74,6 +74,7 @@ export const CONSTANTS = {
   }
 };
 
+export const DEFAULT_PROJECT_NAME = "myApp";
 export const PROJECT_NAME_VALIDATION_LIMIT = 50;
 
 export const PAYLOAD_MESSAGES_TEXT = {
