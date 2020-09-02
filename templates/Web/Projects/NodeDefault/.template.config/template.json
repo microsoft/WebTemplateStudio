@@ -63,7 +63,7 @@
         "format": "yyyy"
       }
     },
-    "wts.ToLowerPackageJsonDefault":
+    "wts.ProjectNameToLower":
     {
       "type": "generated",
       "generator": "casing",
@@ -71,7 +71,7 @@
         "source":"wts.projectName",
         "toLower": true
       },
-      "replaces": "Param_ToLowerPackageJsonDefault"
+      "replaces": "Param_ProjectNameToLower"
     }
   },
   "postActions": []

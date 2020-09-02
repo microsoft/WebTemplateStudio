@@ -61,16 +61,6 @@
       "parameters": {
         "format": "yyyy"
       }
-    },
-    "wts.ToLowerPackageJsonDefault":
-    {
-      "type": "generated",
-      "generator": "casing",
-      "parameters": {
-        "source":"wts.projectName",
-        "toLower": true
-      },
-      "replaces": "Param_ToLowerPackageJsonDefault"
     }
   },
   "postActions": []

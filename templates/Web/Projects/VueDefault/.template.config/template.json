@@ -23,6 +23,11 @@
   "preferNameDirectory": true,
   "PrimaryOutputs": [],
   "symbols": {
+    "wts.projectName": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_ProjectName"
+    },
     "wts.userName": {
       "type": "parameter",
       "dataType": "string",
@@ -57,6 +62,16 @@
       "parameters": {
         "format": "yyyy"
       }
+    },
+    "wts.ProjectNameToLower":
+    {
+      "type": "generated",
+      "generator": "casing",
+      "parameters": {
+        "source":"wts.projectName",
+        "toLower": true
+      },
+      "replaces": "Param_ProjectNameToLower"
     }
   },
   "postActions": [

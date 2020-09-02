@@ -1,5 +1,5 @@
 {
-  "name": "Param_ToLowerPackageJsonDefault-server",
+  "name": "Param_ProjectNameToLower-backend",
   "version": "0.0.0",
   "private": true,
   "scripts": {
