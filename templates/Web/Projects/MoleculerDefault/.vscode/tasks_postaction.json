@@ -1,0 +1,28 @@
+{
+  "tasks": [
+    {
+      "label": "Install dependencies backend",
+      //{[{
+      "type": "npm",
+      "script": "install",
+      "path": "backend/"
+      //}]}
+    },
+    {
+      "label": "Publish backend",
+      //{[{
+      "type": "npm",
+      "script": "publish",
+      "path": "backend/"
+      //}]}
+    },
+    {
+      "label": "Start backend",
+      //{[{
+      "type": "npm",
+      "script": "start",
+      "path": "backend/"
+      //}]}
+    },
+  ]
+}
