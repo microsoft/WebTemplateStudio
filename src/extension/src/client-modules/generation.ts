@@ -40,13 +40,9 @@ export class Generation extends WizardServant {
     if (generationPath) {
       generationData.path = generationPath;
 
-      if (!this.hasAzureServices(generationData.services)) {
+      if (this.hasAzureServices(generationData.services)) {
         await this.generateResourceGroups(generationData);
         await this.generateAzureServices(generationData);
-        //REMOVE THIS !!!
-      } else {
-        sendToClientGenerationStatus(GENERATION_NAMES.APP_SERVICE, GenerationItemStatus.Failed, "ERROR: Azure Service deployment halted due to template error.");
-        sendToClientGenerationStatus(GENERATION_NAMES.COSMOS_DB, GenerationItemStatus.Failed, "ERROR: Azure Service deployment halted due to template error.");
       }
     } else if (this.hasAzureServices(generationData.services)) {
       sendToClientGenerationStatus(GENERATION_NAMES.APP_SERVICE, GenerationItemStatus.Failed, "ERROR: Azure Service deployment halted due to template error.");
