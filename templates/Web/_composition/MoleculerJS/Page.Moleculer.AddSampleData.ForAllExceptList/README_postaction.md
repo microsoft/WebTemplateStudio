@@ -3,7 +3,7 @@
 //{[{
 ### Sample Data
 
-Replace the sample data stored in `server/data/sampleData.js`.
+Replace the sample data stored in `backend/data/sampleData.js`.
 Replace the default images. Sample images are consumed from https://wtsrepository.blob.core.windows.net/sampledata/.
 //}]}
 
@@ -11,7 +11,7 @@ Replace the default images. Sample images are consumed from https://wtsrepositor
 
 ```
 .
-├── server/ Directory with everything backend-related
+├── backend/ Directory with everything backend-related
 │ ├── moleculer.config.js - Moleculer Service Broker configuration file. More info: https://moleculer.services/docs/0.14/broker.html
 │ ├── services/ - Moleculer services that provides API routes and serves front-end with data
 │ │ ├── api.service.js - HTTP gateway service

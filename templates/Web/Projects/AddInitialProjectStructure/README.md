@@ -1,9 +1,7 @@
 ﻿## Getting Started
 
-In the root directory of the project...
-
-1. Install node modules `yarn install` or `npm install`.
-2. Start development server `yarn start` or `npm start`.
+1. Install dependencies using `Install dependencies` task ().
+2. Start development app using `Start App` task ().
 
 ## Next Steps
 ### Deployment
@@ -16,17 +14,18 @@ If you selected Azure App Service when creating your project, follow these steps
 
 If you did not select Azure App Service and want to create a new Azure App Service web app, follow these steps:
 
-1. Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type/select `Azure App Service: Create New Web App...` to create a new web app.
+1. Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type/select `Tasks: Run Task`, select `Build App to publish` to build app in `publish` folder.
+2. Once the build is done, press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type/select `Azure App Service: Create New Web App...` to create a new web app.
    - Select your subscription
    - Enter your web app name
    - Select Linux as your OS
    - Select Node.js 12 LTS for a Node/Express application, Python 3.7 for a Flask application or .Net Core Latest runtime for ASP .NET application.
-2. Once the creation is done, click "Deploy" in the notification window on the lower right corner.
-   - Click "Browse" on the top middle section of your screen and select the "server" folder (or "publish" folder if ASP.NET backend is selected) within your project
+3. Once the creation is done, click "Deploy" in the notification window on the lower right corner.
+   - Click "Browse" on the top middle section of your screen and select the "publish" folder within your project
    - Click "Yes" in the notification window on the lower right corner (build prompt)
    - Click "Deploy" on the window pop up
    - Click "Yes" in the notification window on the lower right corner again
-3. Once the deployment is done, click "Browse website" in the notification window on the lower right corner to check out your newly deployed app.
+4. Once the deployment is done, click "Browse website" in the notification window on the lower right corner to check out your newly deployed app.
 
 Consider adding authentication and securing back-end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
 
