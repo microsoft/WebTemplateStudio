@@ -33,6 +33,7 @@
       "request": "launch",
       "program": "${workspaceFolder}/src/scripts/generate-test.ts",
       "outFiles": ["${workspaceFolder}/out/scripts/**/*.js"],
+      "outputCapture": "std",
       "preLaunchTask": "npm: watch"
     },
     {
@@ -41,6 +42,7 @@
       "request": "launch",
       "program": "${workspaceFolder}/src/scripts/run-tests.ts",
       "outFiles": ["${workspaceFolder}/out/scripts/**/*.js"],
+      "outputCapture": "std",
       "preLaunchTask": "npm: watch"
     }
   ]
