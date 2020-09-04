@@ -63,5 +63,28 @@
       }
     }
   },
-  "postActions": []
+  "postActions": [
+    {
+      "description": "Add Base Start Scripts",
+      "manualInstructions": [],
+      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
+      "args": {
+        "dict": "{'start': 'concurrently \"yarn start-frontend || npm run start-frontend\" \"yarn start-backend || npm run start-backend\"'}",
+        "key": "scripts",
+        "jsonPath": "package.json"
+      },
+      "continueOnError": false
+    },
+    {
+      "description": "Add Base Dev Dependencies",
+      "manualInstructions": [],
+      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
+      "args": {
+        "dict": "{'concurrently': '5.2.0'}",
+        "key": "devDependencies",
+        "jsonPath": "package.json"
+      },
+      "continueOnError": false
+    }
+  ]
 }
