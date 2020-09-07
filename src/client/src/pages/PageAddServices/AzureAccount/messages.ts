@@ -12,6 +12,6 @@ const messages = defineMessages({
   createAccount:{
     id: "pageAddServices.azureAccount.createAccount",
     defaultMessage: "Create Free Account",
-  }
+  },
 });
 export default messages;
