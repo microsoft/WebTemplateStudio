@@ -8,11 +8,11 @@ import keyUpHandler from "../../../utils/keyUpHandler";
 import buttonStyles from "../../../css/buttonStyles.module.css";
 import classnames from "classnames";
 import styles from "./styles.module.css";
-import messages from "./messages";
 
 import { azureLogin, azureLogout } from "../../../utils/extensionService/extensionService";
 import { logIntoAzureActionAction, logOutAzureAction } from "../../../store/config/azure/action";
 import { isLoggedInSelector } from "../../../store/config/azure/selector";
+import messages from "./messages";
 
 type Props = InjectedIntlProps;
 
@@ -29,21 +29,18 @@ const AzureAccount = ({ intl }: Props) => {
     }
   };
 
-  const handleSignInClick = () => {
-    azureLogin(vscode).then((event) => {
-      const message = event.data;
-      if (message.payload !== null) {
-        const loginData = message.payload as AzureProfile;
+  const handleSignInClick = async () => {
+    const event = await azureLogin(vscode);
+      if (event.data.payload !== null) {
+        const loginData = event.data.payload as AzureProfile;
         dispatch(logIntoAzureActionAction(loginData));
       }
-    })
   };
 
-  
   return (
     <>
       {isLoggedIn && (
-        <div className={styles.azureProfile}>
+        <div className={styles.azureProfile} data-testid="loggedInContainer">
           {email}
           <button className={classnames(buttonStyles.buttonLink, styles.signOutButton)}
             onClick={signOutAzure}>
@@ -58,22 +55,19 @@ const AzureAccount = ({ intl }: Props) => {
             {intl.formatMessage(messages.signIn)}
           </button>
 
-          <div className={styles.buttonContainer}>
+          <a className={classnames(styles.link, buttonStyles.buttonLink)}
+            href="https://azure.microsoft.com/free/"
+            target="_blank" rel='noreferrer'
+            onKeyUp={keyUpHandler}>
             <button
               className={classnames(
                 styles.button,
                 buttonStyles.buttonHighlighted
               )}>
-              <a
-                className={styles.buttonLink}
-                href="https://azure.microsoft.com/free/"
-                target="_blank" rel='noreferrer'
-                onKeyUp={keyUpHandler}>
-                {intl.formatMessage(messages.createAccount)}
-              </a>
+              {intl.formatMessage(messages.createAccount)}
             </button>
-          </div>
-      </div>
+          </a>
+        </div>
       )
       }
     </>

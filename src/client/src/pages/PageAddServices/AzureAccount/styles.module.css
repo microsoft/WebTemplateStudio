@@ -39,3 +39,11 @@
   align-items: center;
   position: relative;
 }
+
+.link {
+  text-decoration: none;
+}
+
+.link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}

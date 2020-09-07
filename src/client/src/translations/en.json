@@ -108,6 +108,7 @@
   "pageAddServices.azureAccount.createAccount": "Create Free Account",
   "pageAddServices.azureAccount.signIn": "Sign in",
   "pageAddServices.azureAccount.signOut": "sign out",
+  "pageAddServices.optionalBoxMessage": "This step is optional, click here to skip and create your project.",
   "pageAddServices.title": "Add Azure Cloud Services to Your Project",
   "pageCard.details": "Preview",
   "pageSelectFramework.backendTitle": "Select a back-end framework",
