@@ -62,7 +62,7 @@ function installBackendDependencies(projectName: string) {
   let command = "yarn install";
 
   if (projectName.indexOf("Flask") > -1) {
-    command = "pip install -r backend/requirements.txt";
+    command = "pip install -r ./requirements.txt";
   }
   if (projectName.indexOf("AspNet") > -1) {
     command = "dotnet restore";
@@ -120,7 +120,7 @@ function startBackend(projectName: string) {
   let command = "yarn start";
 
   if (projectName.indexOf("Flask") > -1) {
-    command = "python ./server.py";
+    command = "python3 ./server.py";
   }
   if (projectName.indexOf("AspNet") > -1) {
     command = "dotnet run";
