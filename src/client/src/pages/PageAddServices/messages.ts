@@ -9,9 +9,5 @@ const messages = defineMessages({
     id: "pageAddServices.optionalBoxMessage",
     defaultMessage: "This step is optional, click here to skip and create your project.",
   },
-  signOut: {
-    id: "pageAddServices.signOut",
-    defaultMessage: "sign out",
-  },
 });
 export default messages;

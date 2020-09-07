@@ -1,23 +1,3 @@
-.title {
-  font-size: 2.5em;
-  font-weight: lighter;
-  line-height: 25px;
-  color: var(--vscode-editor-foreground);
-}
-
-.questionaryContainer {
-  margin-top: 40px;
-}
-
-.selectionContainer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: var(--vscode-textLink-foreground);
-  font-size: var(--vscode-font-size);
-  max-width: 250px;
-}
-
 .headerContainer {
   display: flex;
   justify-content: space-between;
@@ -25,46 +5,11 @@
   margin-bottom: 2em;
 }
 
-.footerContainer {
-  margin-top: 60px;
-  float: right;
-  align-items: center;
-  display: flex;
-}
-
-.button {
-  align-items: center;
-  font-size: 1.2em;
-  margin-left: 1em;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 33px;
-}
-
-.button:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
-.linkToButton {
-  text-decoration: none;
-  color: #ffffff;
-  background: none;
-  border: none;
-  cursor: pointer;
-  outline: none;
-}
-
-.link {
-  color: var(--vscode-textLink-foreground);
-  font-size: 15px;
-  line-height: 1.5;
-  text-decoration: none;
-  font-weight: var(--vscode-font-weight);
-  font-family: var(--vscode-font-family);
-}
-
-.paragraph {
-  margin-top: 15px;
+.title {
+  font-size: 2.5em;
+  font-weight: lighter;
+  line-height: 25px;
+  color: var(--vscode-editor-foreground);
 }
 
 .cancelIcon {
@@ -81,4 +26,28 @@
 
 .cancelIcon:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.questionaryContainer {
+  margin-top: 40px;
+}
+
+.paragraph {
+  margin-top: 15px;
+}
+
+.link {
+  color: var(--vscode-textLink-foreground);
+  font-size: 15px;
+  line-height: 1.5;
+  text-decoration: none;
+  font-weight: var(--vscode-font-weight);
+  font-family: var(--vscode-font-family);
+}
+
+.footerContainer {
+  margin-top: 60px;
+  float: right;
+  align-items: center;
+  display: flex;
 }

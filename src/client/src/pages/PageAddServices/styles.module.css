@@ -22,41 +22,16 @@
   padding: 4vh 6vh;
 }
 
-.servicesContainer {  
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 3em;
-}
-
 .logInInfoBar {
   display: flex;
   justify-content: space-between;
   flex-flow: row wrap;
 }
 
-.azureProfile {
+.servicesContainer {  
   display: flex;
-  justify-content: space-between;
-  background-color: var(--vscode-editorWidget-border);
-  color: var(--vscode-editor-foreground);
-  padding: 0.5em 1em;
-  text-align: center;
-  margin: 10px;
-  font-size: 1.2em;
-}
-
-.signOutButton {
-  margin-left: 2em;
-  font-size: 1em;
-}
-.signOutButton:hover {
-  color: #ffffff;
-}
-
-@media (min-width: 830px) {
-  .azureProfile {
-    right: 7%;
-  }
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 3em;
 }
