@@ -120,7 +120,7 @@ function startBackend(projectName: string) {
   let command = "yarn start";
 
   if (projectName.indexOf("Flask") > -1) {
-    command = "python3 ./server.py";
+    command = "python ./server.py";
   }
   if (projectName.indexOf("AspNet") > -1) {
     command = "dotnet run";
