@@ -16,7 +16,7 @@
     "wts.backendframework": "AspNet",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.displayOrder": "1",
+    "wts.compositionOrder": "2",
     "wts.licenses": "[ASP.NET Core](https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt)|[Json.NET](https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md)",
     "wts.casing.sourceName": "pascal",
     "wts.casing.rootNamespace": "pascal"

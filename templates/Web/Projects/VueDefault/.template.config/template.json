@@ -16,7 +16,7 @@
     "wts.backendframework": "all",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.displayOrder": "1",
+    "wts.compositionOrder": "1",
     "wts.licenses": "[Vue](https://github.com/vuejs/vue/blob/dev/LICENSE)|[Vue CLI](https://github.com/vuejs/vue-cli/blob/dev/LICENSE)"
   },
   "sourceName": "wts.VueDefault",
