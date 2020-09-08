@@ -3,11 +3,11 @@ import { defineMessages } from "react-intl";
 const messages = defineMessages({
   signIn: {
     id: "pageAddServices.azureAccount.signIn",
-    defaultMessage: "Sign in",
+    defaultMessage: "Sign In",
   },
   signOut: {
     id: "pageAddServices.azureAccount.signOut",
-    defaultMessage: "Sign out",
+    defaultMessage: "Sign Out",
   },
   createAccount:{
     id: "pageAddServices.azureAccount.createAccount",
