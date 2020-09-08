@@ -7,7 +7,7 @@ const messages = defineMessages({
   },
   signOut: {
     id: "pageAddServices.azureAccount.signOut",
-    defaultMessage: "sign out",
+    defaultMessage: "Sign out",
   },
   createAccount:{
     id: "pageAddServices.azureAccount.createAccount",

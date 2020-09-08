@@ -31,44 +31,49 @@ const AzureAccount = ({ intl }: Props) => {
 
   const handleSignInClick = async () => {
     const event = await azureLogin(vscode);
-      if (event.data.payload !== null) {
-        const loginData = event.data.payload as AzureProfile;
-        dispatch(logIntoAzureActionAction(loginData));
-      }
+    if (event.data.payload !== null) {
+      const loginData = event.data.payload as AzureProfile;
+      dispatch(logIntoAzureActionAction(loginData));
+    }
   };
 
   return (
     <>
       {isLoggedIn && (
         <div className={styles.azureProfile} data-testid="loggedInContainer">
-          {email}
-          <button className={classnames(buttonStyles.buttonLink, styles.signOutButton)}
-            onClick={signOutAzure}>
-            {intl.formatMessage(messages.signOut)}
-          </button>
-        </div>
-      )}
-      {!isLoggedIn && (
-        <div className={styles.azureProfile}>
-          <button className={classnames(buttonStyles.buttonDark, styles.button)}
-            onClick={handleSignInClick}>
-            {intl.formatMessage(messages.signIn)}
-          </button>
-
-          <a className={classnames(styles.link, buttonStyles.buttonLink)}
-            href="https://azure.microsoft.com/free/"
-            target="_blank" rel='noreferrer'
-            onKeyUp={keyUpHandler}>
-            <button
-              className={classnames(
-                styles.button,
-                buttonStyles.buttonHighlighted
-              )}>
-              {intl.formatMessage(messages.createAccount)}
-            </button>
-          </a>
+          <div className={styles.loginDetails}>
+              {email}
+              <br/>
+                <a className={classnames(buttonStyles.buttonLink, styles.signOutButton)}
+                  onClick={signOutAzure}>
+                  {intl.formatMessage(messages.signOut)}
+                </a>              
+          </div>
         </div>
       )
+      }
+      {
+        !isLoggedIn && (
+          <div className={classnames(styles.azureProfile, styles.buttonContainer)}>
+            <button className={classnames(buttonStyles.buttonDark, styles.button)}
+              onClick={handleSignInClick}>
+              {intl.formatMessage(messages.signIn)}
+            </button>
+
+            <a className={classnames(styles.link, buttonStyles.buttonLink)}
+              href="https://azure.microsoft.com/free/"
+              target="_blank" rel='noreferrer'
+              onKeyUp={keyUpHandler}>
+              <button
+                className={classnames(
+                  styles.button,
+                  buttonStyles.buttonHighlighted
+                )}>
+                {intl.formatMessage(messages.createAccount)}
+              </button>
+            </a>
+          </div>
+        )
       }
     </>
   );

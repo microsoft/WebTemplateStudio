@@ -5,25 +5,19 @@
 }
 
 .azureProfile {
-  display: flex;
-  justify-content: space-between;
   color: var(--vscode-editor-foreground);
-  text-align: center;
-  margin: 10px;
-  font-size: 1.2em;
+  text-align: end;
+  margin: 0 10px 10px 10px;
 }
 
 .signOutButton {
   margin-left: 2em;
   font-size: 1em;
 }
-.signOutButton:hover {
-  color: #ffffff;
-}
 
 .button {
   align-items: center;
-  font-size: 1.2em;
+  justify-content: center;
   margin-left: 1em;
   display: flex;
   justify-content: space-between;
@@ -37,7 +31,6 @@
 .buttonContainer {
   display: flex;
   align-items: center;
-  position: relative;
 }
 
 .link {

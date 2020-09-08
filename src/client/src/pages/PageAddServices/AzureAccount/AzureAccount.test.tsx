@@ -1,7 +1,7 @@
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import { renderWithStore } from "../../../testUtils";
-import { getInitialState, addFeaturesOptions, setAzureEmail } from "../../../mockData/mockStore";
+import { getInitialState, setAzureEmail } from "../../../mockData/mockStore";
 import messages from "./messages";
 import { fireEvent, waitFor } from "@testing-library/react";
 import { azureLogout } from "../../../utils/extensionService/extensionService";
@@ -51,6 +51,20 @@ describe("AzureAccount", () => {
       props = {};
     });
 
+    it("Sign in button should be render", () => {
+      const wrapper = renderWithStore(<AzureAccount {...props} />, store);
+      const signInButton = wrapper.queryByText(intl.formatMessage(messages.signIn));
+
+      expect(signInButton).toBeInTheDocument();
+    });
+
+    it("Create new account should be render", () => {
+      const wrapper = renderWithStore(<AzureAccount {...props} />, store);
+      const createNewAccountButton = wrapper.queryByText(intl.formatMessage(messages.createAccount));
+
+      expect(createNewAccountButton).toBeInTheDocument();
+    });
+
     it("Email detail and sign out button should not be render", () => {
       const wrapper = renderWithStore(<AzureAccount {...props} />, store);
 
@@ -58,6 +72,7 @@ describe("AzureAccount", () => {
       expect(loggedInContainer).not.toBeInTheDocument();
     });
   });
+
   describe("When user is logged in", () => {
     const mockEmail = "test@test.com";
 
@@ -68,11 +83,10 @@ describe("AzureAccount", () => {
       props = {};
     });
 
-
     it("Sign out button should be render", () => {
       const wrapper = renderWithStore(<AzureAccount {...props} />, store);
       const signOutButton = wrapper.queryByText(intl.formatMessage(messages.signOut));
-     
+
       expect(signOutButton).toBeInTheDocument();
     });
 
