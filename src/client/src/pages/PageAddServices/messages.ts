@@ -5,9 +5,5 @@ const messages = defineMessages({
     id: "pageAddServices.title",
     defaultMessage: "Add Azure Cloud Services to Your Project",
   },
-  optionalBoxMessage: {
-    id: "pageAddServices.optionalBoxMessage",
-    defaultMessage: "This step is optional, click here to skip and create your project.",
-  },
 });
 export default messages;

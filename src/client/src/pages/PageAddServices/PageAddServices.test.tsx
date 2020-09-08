@@ -54,9 +54,8 @@ describe("PageAddServices", () => {
     expect(wrapper).toBeDefined();
   });
 
-  it("renders title and optional box message", () => {
+  it("renders title", () => {
     const wrapper = renderWithStore(<PageAddServices {...props} />, store);
-    expect(wrapper.getByText(intl.formatMessage(messages.optionalBoxMessage))).toBeDefined();
     expect(wrapper.getByText(intl.formatMessage(messages.title))).toBeDefined();
   });
 

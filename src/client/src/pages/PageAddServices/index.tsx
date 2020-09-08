@@ -24,7 +24,6 @@ const PageAddServices = ({ intl }: Props) => {
 
   return (
     <div className={styles.centerView}>
-      <div className={styles.optionalBox}>{formatMessage(messages.optionalBoxMessage)}</div>
       <div className={classnames(styles.container)}>
         <div className={styles.logInInfoBar}>
           <Title>{formatMessage(messages.title)}</Title>

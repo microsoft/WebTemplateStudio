@@ -3,20 +3,6 @@
   width: 100%;
 }
 
-.optionalBox {
-  display: flex;
-  justify-content: center;
-  z-index: 1000;
-  width: 100%;
-  background-color: #0067b8;
-  color: var(--vscode-extensionButton-prominentForeground);
-  text-align: center;
-  text-decoration: none;
-  font-weight: lighter;
-  font-size: 1.6em;
-  padding: 0.8em 0px;
-}
-
 .container {
   position: relative;
   padding: 4vh 6vh;
