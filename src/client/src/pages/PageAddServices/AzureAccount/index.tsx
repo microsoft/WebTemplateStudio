@@ -9,6 +9,7 @@ import buttonStyles from "../../../css/buttonStyles.module.css";
 import classnames from "classnames";
 import styles from "./styles.module.css";
 
+  import { AZURE_LINKS } from "../../../utils/constants/azure";
 import { azureLogin, azureLogout } from "../../../utils/extensionService/extensionService";
 import { logIntoAzureActionAction, logOutAzureAction } from "../../../store/config/azure/action";
 import { isLoggedInSelector } from "../../../store/config/azure/selector";
@@ -44,10 +45,11 @@ const AzureAccount = ({ intl }: Props) => {
           <div className={styles.loginDetails}>
               {email}
               <br/>
-                <a className={classnames(buttonStyles.buttonLink, styles.signOutButton)}
-                  onClick={signOutAzure}>
+                <button className={classnames(buttonStyles.buttonLink, styles.signOutButton)}
+                  onClick={signOutAzure}
+                  aria-label={intl.formatMessage(messages.ariaSignOutLabel)}>
                   {intl.formatMessage(messages.signOut)}
-                </a>              
+                </button>              
           </div>
         </div>
       )
@@ -56,19 +58,22 @@ const AzureAccount = ({ intl }: Props) => {
         !isLoggedIn && (
           <div className={classnames(styles.azureProfile, styles.buttonContainer)}>
             <button className={classnames(buttonStyles.buttonDark, styles.button)}
-              onClick={handleSignInClick}>
+              onClick={handleSignInClick}
+              aria-label={intl.formatMessage(messages.ariaSignInLabel)}>
               {intl.formatMessage(messages.signIn)}
             </button>
 
             <a className={classnames(styles.link, buttonStyles.buttonLink)}
-              href="https://azure.microsoft.com/free/"
+              href={AZURE_LINKS.CREATE_FREE_ACCOUNT}
               target="_blank" rel='noreferrer'
-              onKeyUp={keyUpHandler}>
+              onKeyUp={keyUpHandler}
+              tabIndex={-1}>
               <button
                 className={classnames(
                   styles.button,
                   buttonStyles.buttonHighlighted
-                )}>
+                )}
+                aria-label={intl.formatMessage(messages.ariaCreateAccountLabel)}>
                 {intl.formatMessage(messages.createAccount)}
               </button>
             </a>

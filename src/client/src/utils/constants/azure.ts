@@ -1,4 +1,6 @@
 const AZURE_LINKS = {
+  CREATE_FREE_ACCOUNT:"https://azure.microsoft.com/free/",
+  CREATE_FREE_STUDENTS_ACCOUNT:"https://azure.microsoft.com/en-us/free/students/",
   CREATE_NEW_SUBSCRIPTION: "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade",
   CREATE_NEW_RESOURCE_GROUP: "https://portal.azure.com/#create/Microsoft.ResourceGroup",
   APP_SERVICE_PLAN:"https://azure.microsoft.com/en-us/pricing/details/app-service/plans/",

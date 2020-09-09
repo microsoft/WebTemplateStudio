@@ -17,6 +17,10 @@ const messages = defineMessages({
     id: "CosmosModal.hideAdvancedMode",
     defaultMessage: "Hide advanced mode",
   },
+  ariaCloseModalLabel:{
+    id: "CosmosModal.ariaCloseModalLabel",
+    defaultMessage: "Close Cosmos DB Configuration Modal",
+  },
 });
 
 export default messages;
