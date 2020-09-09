@@ -33,8 +33,8 @@ if ($vsixName) {
 
   $vsixPackageJson = Join-Path $extensionPath "package.json"
   $vsixPackageNlsJson = Join-Path $extensionPath "package.nls.json"
-  $vsixPackagei18nJson = Join-Path $extensionPath (Join-Path "locales" (Join-Path "en" "package.i18n.json"))
-  $vsixExtensionTsFile = Join-Path $extensionPath (Join-Path "src" "extension.ts")
+  $vsixPackagei18nJson = Join-Path $extensionPath "locales/en/package.i18n.json"
+  $vsixExtensionTsFile = Join-Path $extensionPath "src/extension.ts"
 
   # REPLACE Version, Name, DisplayName and commands IN package.json
   if (Test-Path($vsixPackageJson)) {
