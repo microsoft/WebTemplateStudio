@@ -49,19 +49,19 @@
     "vscode-nls": "^4.0.0"
   },
   "activationEvents": [
-    "onCommand:webTemplateStudioExtension.wizardLaunch",
-    "onCommand:webTemplateStudioExtension.deployApp"
+    "onCommand:webTemplateStudioExtension.wizardLaunch.local",
+    "onCommand:webTemplateStudioExtension.deployApp.local"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "webTemplateStudioExtension.wizardLaunch",
+        "command": "webTemplateStudioExtension.wizardLaunch.local",
         "title": "%webTemplateStudioExtension.commands.wizardLaunch%",
         "category": "%webTemplateStudioExtension.commands.wts%"
       },
       {
-        "command": "webTemplateStudioExtension.deployApp",
+        "command": "webTemplateStudioExtension.deployApp.local",
         "title": "%webTemplateStudioExtension.commands.deployApp%",
         "category": "%webTemplateStudioExtension.commands.wts%"
       }
