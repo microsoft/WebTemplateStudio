@@ -26,6 +26,24 @@
       ],
       "outFiles": ["${workspaceFolder}/out/test/**/*.js"],
       "preLaunchTask": "npm: watch"
+    },
+    {
+      "name": "Generate templates",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/scripts/generate-test.ts",
+      "outFiles": ["${workspaceFolder}/out/scripts/**/*.js"],
+      "outputCapture": "std",
+      "preLaunchTask": "npm: watch"
+    },
+    {
+      "name": "Run templates tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/scripts/run-tests.ts",
+      "outFiles": ["${workspaceFolder}/out/scripts/**/*.js"],
+      "outputCapture": "std",
+      "preLaunchTask": "npm: watch"
     }
   ]
 }

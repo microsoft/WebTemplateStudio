@@ -1,5 +1,5 @@
 # vscode configuration
-.vscode/
+.vscode/settings.json
 
 //{[{
 # testing
@@ -19,6 +19,3 @@ yarn-error.log*
 # build-analytics
 .build-analytics
 //}]}
-
-# dependencies
-/node_modules

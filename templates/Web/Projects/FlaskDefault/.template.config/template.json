@@ -59,17 +59,5 @@
       }
     }
   },
-  "postActions": [
-    {
-      "description": "Add Flask Build Scripts",
-      "manualInstructions": [],
-      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
-      "args": {
-        "dict": "{'start-backend': 'python3 server/server.py || python server/server.py || py -3 server/server.py', 'install-requirements': 'pip install -r server/requirements.txt'}",
-        "key": "scripts",
-        "jsonPath": "package.json"
-      },
-      "continueOnError": false
-    }
-  ]
+  "postActions": []
 }

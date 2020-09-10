@@ -76,7 +76,7 @@ export class Controller {
           Controller.TelemetryService
         );
         if (responsePayload) {
-          Controller.handleValidMessage(message.command, message.payload.scope, responsePayload);
+          Controller.handleValidMessage(message.command, message.payload, responsePayload);
         }
       } else {
         vscode.window.showErrorMessage(MESSAGES.ERRORS.INVALID_COMMAND);
@@ -198,11 +198,13 @@ export class Controller {
 
   private static handleValidMessage(
     commandName: EXTENSION_COMMANDS,
-    scope: any,
+    payload: any,
     responsePayload?: any
   ): void {
     responsePayload.command = commandName;
-    responsePayload.payload.scope = scope;
+    if(payload && payload.scope) {
+      responsePayload.payload.scope = payload.scope;
+    }
     this.reactPanelContext.postMessageWebview(responsePayload);
   }
 

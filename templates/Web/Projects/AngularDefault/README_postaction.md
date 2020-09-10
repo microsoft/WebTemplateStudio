@@ -3,9 +3,9 @@
 //{[{
 ### Adding a New Page
 
-1. Create a folder in `/src/app/app-shell` with your angular modules.
-2. Add a child route for your page to `/src/app/app.module.ts`.
-3. Add a button to the navigation bar in `/src/app/app-shell/nav-bar/nav-bar.component.html`.
+1. Create a folder in `frontend/src/app/app-shell` with your angular modules.
+2. Add a child route for your page to `frontend/src/app/app.module.ts`.
+3. Add a button to the navigation bar in `frontend/src/app/app-shell/nav-bar/nav-bar.component.html`.
 //}]}
 
 ## File Structure
@@ -18,10 +18,11 @@ The front-end is based on [Angular cli "ng"](https://angular.io/cli). It is serv
 .
 //^^
 //{[{
-├── src - Angular front-end
-│ └── app - Angular main root module
-│    ├── app-shell - Angular main components
-│    └── app.module.ts - Angular root module.
+├── frontend/ - React front-end
+│ ├── src - Angular front-end
+│ │ ├── app - Angular main root module
+│ │ │ ├── app-shell - Angular main components
+│ └─└─└── app.module.ts - Angular root module.
 //}]}
 └── README.md
 ```

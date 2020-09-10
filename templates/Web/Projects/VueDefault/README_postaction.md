@@ -3,9 +3,9 @@
 //{[{
 ### Adding a New Page
 
-1. Create a file in `/src/views` with your Vue Template.
-2. Add a route for your page to `/src/router/index.js`.
-3. Add a button to the navigation bar in `/src/components/NavBar.vue`.
+1. Create a file in `frontend/src/views` with your Vue Template.
+2. Add a route for your page to `frontend/src/router/index.js`.
+3. Add a button to the navigation bar in `frontend/src/components/NavBar.vue`.
 //}]}
 
 ## File Structure
@@ -18,14 +18,15 @@ The front-end is based on [Vue CLI](https://cli.vuejs.org/). It is served on htt
 .
 //^^
 //{[{
-├── src - Vue front-end
-│   ├── assets/                     - Default images
-│   ├── components/                 - Common Vue components shared between different views
-│   ├── router/                     - Vue routes
-│   ├── views/                      - The main pages displayed
-│   ├── constants.js                - Contains constants for error messages and endpoints
-│   ├── App.vue                     - Base Vue template
-│   └── main.js                     - Root Vue Component
+├── frontend/ - Vue front-end app
+│ ├── src - Vue front-end
+│ │   ├── assets/                     - Default images
+│ │   ├── components/                 - Common Vue components shared between different views
+│ │   ├── router/                     - Vue routes
+│ │   ├── views/                      - The main pages displayed
+│ │   ├── constants.js                - Contains constants for error messages and endpoints
+│ │   ├── App.vue                     - Base Vue template
+│ └── └── main.js                     - Root Vue Component
 //}]}
 └── README.md
 ```

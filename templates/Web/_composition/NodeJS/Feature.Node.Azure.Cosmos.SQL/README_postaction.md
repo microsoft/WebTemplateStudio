@@ -1,14 +1,13 @@
 ﻿## File Structure
 
 ```
-├── server/ - Express server that provides API routes and serves front-end
+├── backend/ - Express server that provides API routes and serves front-end
 //{[{
 │ ├── sql/ - Handles all interactions with the cosmos database
 //}]}
-
-//^^
+│ ├── app.js - Adds middleware to the express server
 //{[{
-├── .env - API Keys
+│ ├── .env - API Keys
 //}]}
 └── README.md
 ```
