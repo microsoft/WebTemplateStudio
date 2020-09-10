@@ -14,7 +14,9 @@ If you selected Azure App Service when creating your project, follow these steps
 
 If you did not select Azure App Service and want to create a new Azure App Service web app, follow these steps:
 
-1. Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type/select `Tasks: Run Task`, select `Build App to publish` to build app in `publish` folder.
+1. Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type/select `Tasks: Run Task`, and execute the next tasks:
+   - `Install dependencies` to install dependecies in frontend and backend apps.
+   - `Publish` to build apps in `publish` folder.
 2. Once the build is done, press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type/select `Azure App Service: Create New Web App...` to create a new web app.
    - Select your subscription
    - Enter your web app name

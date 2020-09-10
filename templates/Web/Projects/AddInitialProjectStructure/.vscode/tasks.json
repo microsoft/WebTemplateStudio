@@ -38,18 +38,6 @@
       ]
     },
     {
-      "label": "Build App to publish",
-      "dependsOrder": "sequence",
-      "dependsOn": [
-        "Install dependencies",
-        "Publish"
-      ],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      }
-    },
-    {
       "label": "Start App",
       "dependsOn": [
         "Start backend",
