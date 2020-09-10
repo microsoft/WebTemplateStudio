@@ -1,7 +1,7 @@
 ﻿## File Structure
 ```
 .
-├── server/ - Flask server that provides API routes and serves front-end
+├── backend/ - Flask server that provides API routes and serves front-end
 //{[{
 │ ├── sql/ - Handles all interactions with the cosmos database
 //}]}

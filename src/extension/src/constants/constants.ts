@@ -97,3 +97,8 @@ export enum OS {
   Linux = "linux",
   Windows = "windows"
 }
+
+export const VSCODE_TASKS = {
+  INSTALL_DEPENDENCIES: "Install dependencies",
+  PUBLISH: "Publish",
+};

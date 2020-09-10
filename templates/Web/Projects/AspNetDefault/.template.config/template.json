@@ -45,17 +45,5 @@
       "replaces": "Param_RootNamespace_Pascal"
     }
   },
-  "postActions": [
-    {
-      "description": "Add AspNet Build Scripts",
-      "manualInstructions": [],
-      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
-      "args": {
-        "dict": "{'start-backend': 'dotnet run -p server/.', 'restore-packages': 'dotnet restore server/.'}",
-        "key": "scripts",
-        "jsonPath": "package.json"
-      },
-      "continueOnError": false
-    }
-  ]
+  "postActions": []
 }

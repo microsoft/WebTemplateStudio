@@ -63,7 +63,7 @@
         "format": "yyyy"
       }
     },
-    "wts.ToLowerPackageJsonDefault":
+    "wts.ProjectNameToLower":
     {
       "type": "generated",
       "generator": "casing",
@@ -71,42 +71,8 @@
         "source":"wts.projectName",
         "toLower": true
       },
-      "replaces": "Param_ToLowerPackageJsonDefault"
+      "replaces": "Param_ProjectNameToLower"
     }
   },
-  "postActions": [
-    {
-      "description": "Add Node Dependencies",
-      "manualInstructions": [],
-      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
-      "args": {
-        "dict": "{'cookie-parser': '1.4.5', 'debug': '4.1.1','express': '4.17.1','http-errors': '1.8.0','morgan': '1.10.0'}",
-        "key": "dependencies",
-        "jsonPath": "package.json"
-      },
-      "continueOnError": false
-    },
-    {
-      "description": "Add Node Dev Dependencies",
-      "manualInstructions": [],
-      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
-      "args": {
-        "dict": "{}",
-        "key": "devDependencies",
-        "jsonPath": "package.json"
-      },
-      "continueOnError": false
-    },
-    {
-      "description": "Add Node Build Scripts",
-      "manualInstructions": [],
-      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
-      "args": {
-        "dict": "{'start-backend': 'node server/server.js'}",
-        "key": "scripts",
-        "jsonPath": "package.json"
-      },
-      "continueOnError": false
-    }
-  ]
+  "postActions": []
 }

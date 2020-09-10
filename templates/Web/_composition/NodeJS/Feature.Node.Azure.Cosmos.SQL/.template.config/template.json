@@ -31,18 +31,7 @@
       "args": {
         "dict": "{'@azure/cosmos': '3.7.4', 'dotenv': '8.2.0'}",
         "key": "dependencies",
-        "jsonPath": "package.json"
-      },
-      "continueOnError": false
-    },
-    {
-      "description": "Add Cosmos Sql Dependencies to Server",
-      "manualInstructions": [],
-      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
-      "args": {
-        "dict": "{'@azure/cosmos': '3.7.4', 'dotenv': '8.2.0'}",
-        "key": "dependencies",
-        "jsonPath": "server/package.json"
+        "jsonPath": "backend/package.json"
       },
       "continueOnError": false
     }

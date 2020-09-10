@@ -23,6 +23,11 @@
   "preferNameDirectory": true,
   "PrimaryOutputs": [],
   "symbols": {
+    "wts.projectName": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_ProjectName"
+    },
     "wts.userName": {
       "type": "parameter",
       "dataType": "string",
@@ -57,30 +62,17 @@
       "parameters": {
         "format": "yyyy"
       }
+    },
+    "wts.ProjectNameToLower":
+    {
+      "type": "generated",
+      "generator": "casing",
+      "parameters": {
+        "source":"wts.projectName",
+        "toLower": true
+      },
+      "replaces": "Param_ProjectNameToLower"
     }
   },
-  "postActions": [
-    {
-      "description": "Add React Dependencies",
-      "manualInstructions": [],
-      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
-      "args": {
-        "dict": "{'bootstrap': '4.5.0', 'classnames': '2.2.6', 'react': '16.13.1', 'react-dom': '16.13.1', 'react-router-dom': '5.2.0', 'react-scripts': '3.4.1', 'fs-extra': '9.0.1'}",
-        "key": "dependencies",
-        "jsonPath": "package.json"
-      },
-      "continueOnError": false
-    },
-    {
-      "description": "Add React Build Scripts",
-      "manualInstructions": [],
-      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
-      "args": {
-        "dict": "{'start-frontend': 'react-scripts start', 'build': 'node ./buildScript', 'test': 'react-scripts test', 'eject': 'react-scripts eject', 'lint':'eslint src/**/*.js src/**/*.jsx'}",
-        "key": "scripts",
-        "jsonPath": "package.json"
-      },
-      "continueOnError": false
-    }
-  ]
+  "postActions": []
 }

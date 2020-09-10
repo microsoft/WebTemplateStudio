@@ -1,12 +1,12 @@
 # vscode configuration
-.vscode/
+.vscode/settings.json
 
-//{[{
 # production
-/server/bin
-/server/obj
+/publish
+//{[{
+/backend/bin
+/backend/obj
 
-#publish folder
-/publish/
+# App Settings
+/backend/appsettings.json
 //}]}
-
