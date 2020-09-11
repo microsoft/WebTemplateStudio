@@ -408,7 +408,7 @@ export class CosmosDBDeploy {
       connectionString
     );
 
-    const envPath = path.join(filePath, ".env");
+    const envPath = path.join(filePath, "backend", ".env");
     try {
       if (fs.existsSync(filePath)) {
         fs.writeFileSync(envPath, cosmosEnvironmentVariables);
@@ -417,25 +417,25 @@ export class CosmosDBDeploy {
       throw new Error(err);
     }
   }
-  
+
   public static updateConnectionStringInAppSettingsFile(
     filePath: string,
     connectionString: string
   ): void {
     try {
-      const appSettingsPath = path.join(filePath, "server", "appsettings.json");
+      const appSettingsPath = path.join(filePath, "backend", "appsettings.json");
       const appsettings = fs.readJSONSync(appSettingsPath);
 
       if(ConnectionString.isCosmosSQLConnectionString(connectionString)) {
         const sqlData = ConnectionString.getConnectionStringSqlData(connectionString);
         appsettings.CosmosDB.Account = sqlData.account;
         appsettings.CosmosDB.Key = sqlData.primaryKey;
-      } else {   
+      } else {
         appsettings.ConnectionStrings.CosmosDB = connectionString;
       }
 
       fs.writeJSONSync(appSettingsPath, appsettings, {spaces: 2});
-      
+
     } catch (err) {
       throw new Error(err);
     }

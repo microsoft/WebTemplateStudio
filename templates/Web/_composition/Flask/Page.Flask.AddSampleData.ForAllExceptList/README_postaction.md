@@ -3,7 +3,7 @@
 //{[{
 ### Sample Data
 
-Replace the sample data stored in /server/sample_data.py.
+Replace the sample data stored in /backend/sample_data.py.
 Replace the default images. Sample images are consumed from https://wtsrepository.blob.core.windows.net/sampledata/.
 //}]}
 
@@ -11,7 +11,7 @@ Replace the default images. Sample images are consumed from https://wtsrepositor
 
 ```
 .
-├── server/ - Flask server that provides API routes and serves front-end
+├── backend/ - Flask server that provides API routes and serves front-end
 │ ├── constants.py - Defines the constants for the endpoints and port
 //{[{
 │ ├── sample_data.py - Contains all sample text data for generate pages
