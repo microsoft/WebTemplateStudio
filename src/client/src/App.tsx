@@ -24,7 +24,7 @@ const GenerationModal = loadable(() => import(/* webpackChunkName: "GenerationMo
 const CosmosDbModal = loadable(() => import(/* webpackChunkName: "CosmosDbModal" */  "./modals/CosmosDbModal"));
 const AppServiceModal = loadable(() => import(/* webpackChunkName: "AppServiceModal" */  "./modals/AppServiceModal"));
 const ViewLicensesModal = loadable(() => import(/* webpackChunkName: "ViewLicensesModal" */  "./modals/ViewLicensesModal"));
-const AzureLoginModal = loadable(() => import(/* webpackChunkName: "AzureLoginModal" */  "./modals/AzureLoginModal"));
+const AzureServicesModal = loadable(() => import(/* webpackChunkName: "AzureServicesModal" */  "./modals/AzureServicesModal"));
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -59,7 +59,7 @@ const App = (props: Props) => {
         {(modalState.modalType === NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL) && (<ViewLicensesModal/>)}
         {(modalState.modalType === NAVIGATION_MODAL_TYPES.APP_SERVICE_MODAL) && (<AppServiceModal/>)}
         {(modalState.modalType === NAVIGATION_MODAL_TYPES.COSMOS_DB_MODAL) && (<CosmosDbModal/>)}
-        {(modalState.modalType === NAVIGATION_MODAL_TYPES.AZURE_LOGIN_MODAL) && (<AzureLoginModal/>)}
+        {(modalState.modalType === NAVIGATION_MODAL_TYPES.AZURE_LOGIN_MODAL) && (<AzureServicesModal/>)}
         {(modalState.modalType === NAVIGATION_MODAL_TYPES.GEN_MODAL) && (<GenerationModal/>)}
 
         <main

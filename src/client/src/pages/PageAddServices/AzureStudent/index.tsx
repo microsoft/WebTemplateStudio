@@ -4,6 +4,7 @@ import { FormattedMessage } from "react-intl";
 import keyUpHandler from "../../../utils/keyUpHandler";
 import styles from "./styles.module.css";
 import { ReactComponent as CloudServicesSVG } from "../../../assets/cloudservices.svg";
+import { AZURE_LINKS } from "../../../utils/constants/azure";
 
 const AzureStudent = () => {
   return (
@@ -29,7 +30,7 @@ const AzureStudent = () => {
           />
         </div>
         <a
-          href="https://azure.microsoft.com/en-us/free/students/"
+          href={AZURE_LINKS.CREATE_FREE_STUDENTS_ACCOUNT}
           className={styles.link}
           onKeyUp={keyUpHandler}
         >

@@ -1,0 +1,41 @@
+@media (min-width: 830px) {
+  .azureProfile {
+    right: 7%;
+  }
+}
+
+.azureProfile {
+  color: var(--vscode-editor-foreground);
+  text-align: end;
+  margin: 0 0 10px 10px;
+}
+
+.signOutButton {
+  margin-left: 2em;
+  font-size: 1em;
+}
+
+.button {
+  align-items: center;
+  justify-content: center;
+  margin-left: 1em;
+  display: flex;
+  justify-content: space-between;
+}
+
+.button:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}

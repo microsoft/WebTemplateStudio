@@ -45,18 +45,18 @@ const AppServiceModal = ({ intl }: Props) => {
   const initialAppServiceName = appServiceInStore ? appServiceInStore.siteName : "";
   const initialLocation = appServiceInStore ? appServiceInStore.location : AZURE.DEFAULT_LOCATION;
   const initialResourceGroup = appServiceInStore ? appServiceInStore.resourceGroup : AZURE.DEFAULT_RESOURCE_GROUP;
-  
+
   const [subscription, setSubscription] = useState(initialSubscription);
   const [appName, setAppName] = useState(initialAppServiceName);
   const [location, setLocation] = useState(initialLocation);
   const [resourceGroup, setResourceGroup] = useState(initialResourceGroup);
   const [isAvailableAppName, setIsAvailableAppName] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
-  
+
   React.useEffect(() => {
-    if(showAdvanced) {      
+    if (showAdvanced) {
       const azureServiceType = SERVICE_KEYS.APP_SERVICE;
-      sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_AZURE_SERVICE_ADVANCED_MODE, {azureServiceType});
+      sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_AZURE_SERVICE_ADVANCED_MODE, { azureServiceType });
     }
   }, [showAdvanced]);
 
@@ -98,6 +98,8 @@ const AppServiceModal = ({ intl }: Props) => {
       <div className={styles.header}>
         <div className={styles.title}>{formatMessage(messages.title)}</div>
         <Cancel
+          tabIndex={0}
+          aria-label={intl.formatMessage(messages.ariaCloseModalLabel)}
           data-testid="close-button"
           className={styles.closeIcon}
           onClick={() => dispatch(closeModalAction())}
@@ -133,17 +135,17 @@ const AppServiceModal = ({ intl }: Props) => {
         </div>
       </div>
       <div className={styles.footer}>
-          <button
-            className={buttonStyles.buttonLink}
-            onClick={() => setShowAdvanced(!showAdvanced)}>
-              {formatMessage(showAdvanced ? messages.hideAdvancedMode : messages.showAdvancedMode)}
-              <ArrowDown className={classNames(styles.advancedModeIcon, {[styles.rotateAdvancedModeIcon]: !showAdvanced})} />
-          </button>
+        <button
+          className={buttonStyles.buttonLink}
+          onClick={() => setShowAdvanced(!showAdvanced)}>
+          {formatMessage(showAdvanced ? messages.hideAdvancedMode : messages.showAdvancedMode)}
+          <ArrowDown className={classNames(styles.advancedModeIcon, { [styles.rotateAdvancedModeIcon]: !showAdvanced })} />
+        </button>
 
-          <button className={getButtonClassNames()} onClick={saveAppServiceSelection} disabled={!isEnableSaveButton()}>
-            {formatMessage(messages.save)}
-          </button>
-        </div>
+        <button className={getButtonClassNames()} onClick={saveAppServiceSelection} disabled={!isEnableSaveButton()}>
+          {formatMessage(messages.save)}
+        </button>
+      </div>
     </React.Fragment>
   );
 };
