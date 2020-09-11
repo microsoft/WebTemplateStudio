@@ -61,6 +61,10 @@ const TELEMETRY = {
   CREATE_NEW_PROJECT_BUTTON: "Generate Modal, create new project button"
 }
 
+enum PLATFORM {
+  WEB = "Web",
+}
+
 export {
   PRODUCTION,
   SERVICE_KEYS,
@@ -74,5 +78,6 @@ export {
   FRAMEWORK_TYPE,
   KEY_EVENTS,
   PAYLOAD_MESSAGES_TEXT,
-  TELEMETRY
+  TELEMETRY,
+  PLATFORM
 };
