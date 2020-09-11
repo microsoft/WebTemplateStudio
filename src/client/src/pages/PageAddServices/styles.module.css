@@ -14,7 +14,7 @@
   flex-flow: row wrap;
 }
 
-.servicesContainer {  
+.servicesContainer {
   display: flex;
   justify-content: center;
   align-items: center;

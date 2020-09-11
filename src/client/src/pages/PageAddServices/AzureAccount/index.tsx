@@ -9,7 +9,7 @@ import buttonStyles from "../../../css/buttonStyles.module.css";
 import classnames from "classnames";
 import styles from "./styles.module.css";
 
-  import { AZURE_LINKS } from "../../../utils/constants/azure";
+import { AZURE_LINKS } from "../../../utils/constants/azure";
 import { azureLogin, azureLogout } from "../../../utils/extensionService/extensionService";
 import { logIntoAzureActionAction, logOutAzureAction } from "../../../store/config/azure/action";
 import { isLoggedInSelector } from "../../../store/config/azure/selector";
@@ -43,13 +43,13 @@ const AzureAccount = ({ intl }: Props) => {
       {isLoggedIn && (
         <div className={styles.azureProfile} data-testid="loggedInContainer">
           <div className={styles.loginDetails}>
-              {email}
-              <br/>
-                <button className={classnames(buttonStyles.buttonLink, styles.signOutButton)}
-                  onClick={signOutAzure}
-                  aria-label={intl.formatMessage(messages.ariaSignOutLabel)}>
-                  {intl.formatMessage(messages.signOut)}
-                </button>              
+            {email}
+            <br />
+            <button className={classnames(buttonStyles.buttonLink, styles.signOutButton)}
+              onClick={signOutAzure}
+              aria-label={intl.formatMessage(messages.ariaSignOutLabel)}>
+              {intl.formatMessage(messages.signOut)}
+            </button>
           </div>
         </div>
       )

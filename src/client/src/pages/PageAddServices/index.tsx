@@ -28,7 +28,7 @@ const PageAddServices = ({ intl }: Props) => {
         <div className={styles.logInInfoBar}>
           <Title>{formatMessage(messages.title)}</Title>
 
-          <AzureAccount></AzureAccount>
+          <AzureAccount />
         </div>
         {!isLoggedIn && <AzureStudent />}
         <div className={styles.servicesContainer}>

@@ -13,6 +13,7 @@ import { isLoggedInSelector } from "../../store/config/azure/selector";
 import styles from "./styles.module.css";
 import messages from "./messages";
 import keyUpHandler from "../../utils/keyUpHandler";
+import { AZURE_LINKS } from "../../utils/constants/azure";
 import { KEY_EVENTS } from "../../utils/constants/constants";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants/internalNames";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
@@ -88,7 +89,7 @@ const AzureServicesModal = (props: Props) => {
         <div className={styles.paragraph}>
           <a
             className={styles.link}
-            href="https://azure.microsoft.com/en-us/free/free-account-faq/"
+            href={AZURE_LINKS.CREATE_FREE_ACCOUNT_FAQ}
             onKeyUp={keyUpHandler}
           >
             <FormattedMessage
@@ -99,7 +100,7 @@ const AzureServicesModal = (props: Props) => {
         </div>
       </div>
       <div className={styles.footerContainer}>
-        <AzureAccount></AzureAccount>
+        <AzureAccount />
       </div>
     </div>
   );
