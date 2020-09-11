@@ -1,3 +1,0 @@
-  "scripts": {
-    "start": "moleculer-runner /*{[{*/--envfile ../.env /*}]}*/services"
-  },
