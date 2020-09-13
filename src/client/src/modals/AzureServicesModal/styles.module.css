@@ -1,0 +1,53 @@
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+.title {
+  font-size: 2.5em;
+  font-weight: lighter;
+  line-height: 25px;
+  color: var(--vscode-editor-foreground);
+}
+
+.cancelIcon {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  padding: 1px;
+  margin-right: 2px;
+}
+
+.cancelIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.cancelIcon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.questionaryContainer {
+  margin-top: 40px;
+}
+
+.paragraph {
+  margin-top: 15px;
+}
+
+.link {
+  color: var(--vscode-textLink-foreground);
+  font-size: 15px;
+  line-height: 1.5;
+  text-decoration: none;
+  font-weight: var(--vscode-font-weight);
+  font-family: var(--vscode-font-family);
+}
+
+.footerContainer {
+  margin-top: 60px;
+  float: right;
+  align-items: center;
+  display: flex;
+}

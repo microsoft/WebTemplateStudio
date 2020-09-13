@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import {openAzureLoginModalAction} from "../../../store/navigation/modals/action";
+import {openAzureServicesModalAction} from "../../../store/navigation/modals/action";
 
 import buttonStyles from "../../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
@@ -45,7 +45,7 @@ export const ServiceCard = (props: Props) => {
   const openModal = () => {
     isLoggedIn && service.openModalAction
       ? dispatch(service.openModalAction)
-      : dispatch(openAzureLoginModalAction(service.internalName));
+      : dispatch(openAzureServicesModalAction(service.internalName));
   };
 
   return (

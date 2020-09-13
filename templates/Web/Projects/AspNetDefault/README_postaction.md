@@ -1,10 +1,7 @@
 ﻿## Getting Started
 
-1. Install node modules `yarn install` or `npm install`.
-//{[{
-2. Restore .Net packages `yarn restore-packages` or `npm restore-packages`
-//}]}
-2. Start development server `yarn start` or `npm start`.
+1. Install dependencies using `Install dependencies` task (/*{[{*/or use `yarn install` or `npm install` frontend folder and `dotnet restore` in backend folder/*}]}*/).
+2. Start development app using `Start App` task (/*{[{*/or use `yarn start` or `npm start` in frontend folder and `dotnet run` in backend folder/*}]}*/).
 
 ## File Structure
 //^^
@@ -15,7 +12,7 @@ The back-end is based on [ASP.NET Web API](https://dotnet.microsoft.com/apps/asp
 ```
 .
 //{[{
-├── server/ - ASP.NET Web Api that provides API routes and serves front-end
+├── backend/ - ASP.NET Web Api that provides API routes and serves front-end
 │ ├── Contracts/ - Interfaces for services
 │ ├── Controllers/ - Handles API calls for routes
 │ ├── Models/ - Data models

@@ -1,9 +1,8 @@
-﻿## Next Steps
-//^^
+﻿//^^
 //{[{
 ### Sample Data
 
-Replace the sample data stored in /server/sampleData.js.
+Replace the sample data stored in /backend/sampleData.js.
 Replace the default images. Sample images are consumed from https://wtsrepository.blob.core.windows.net/sampledata/.
 //}]}
 
@@ -11,7 +10,7 @@ Replace the default images. Sample images are consumed from https://wtsrepositor
 
 ```
 .
-├── server/ - Express server that provides API routes and serves front-end
+├── backend/ - Express server that provides API routes and serves front-end
 │ ├── routes/ - Handles API calls for routes
 │ ├── app.js - Adds middleware to the express server
 //{[{
