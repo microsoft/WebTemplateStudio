@@ -300,7 +300,7 @@ const pages = [
     isGroupExclusiveSelection: false,
     genGroup: 0,
     multipleInstance: true,
-    itemNameEditable: true,
+    itemNameEditable: false,
     licenses: [
       {
         text: "Bootstrap",
@@ -386,7 +386,7 @@ const features = [
     isGroupExclusiveSelection: false,
     genGroup: 0,
     multipleInstance: false,
-    itemNameEditable: true,
+    itemNameEditable: true,//does this one make sense for AppService?
     licenses: [],
     dependencies: [],
     requirements: [],
@@ -414,7 +414,7 @@ const features = [
     isGroupExclusiveSelection: false,
     genGroup: 0,
     multipleInstance: false,
-    itemNameEditable: true,
+    itemNameEditable: true,//does this one make sense for CosmosDB?
     licenses: [],
     dependencies: [],
     requirements: [],
@@ -442,7 +442,7 @@ const features = [
     isGroupExclusiveSelection: false,
     genGroup: 0,
     multipleInstance: false,
-    itemNameEditable: true,
+    itemNameEditable: true,//does this one make sense for CosmosDB?
     licenses: [],
     dependencies: [],
     requirements: [],
