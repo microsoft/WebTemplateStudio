@@ -3,11 +3,11 @@ import { defineMessages } from "react-intl";
 const messages = defineMessages({
   deleteItem: {
     id: "servicesList.SidebarItem.deleteItem",
-    defaultMessage: "Delete item"
+    defaultMessage: "Delete service"
   },
   configItem: {
     id: "servicesList.SidebarItem.configItem",
-    defaultMessage: "Configure item"
+    defaultMessage: "Configure service"
   },
 });
 export default messages;

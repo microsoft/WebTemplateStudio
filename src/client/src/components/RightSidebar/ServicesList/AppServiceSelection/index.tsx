@@ -1,13 +1,20 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import SidebarItem from "../SidebarItem";
-import { IAppService } from "../../../../store/userSelection/services/appService/model";
-import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
-import styles from "./styles.module.css";
 import { injectIntl, InjectedIntlProps } from "react-intl";
+import { AppContext } from "../../../../AppContext";
+
+import { IAppService } from "../../../../store/userSelection/services/appService/model";
+
 import { removeAppServiceAction } from "../../../../store/userSelection/services/appService/action";
 import { openAppServiceModalAction } from "../../../../store/navigation/modals/action";
+
+import { EXTENSION_COMMANDS, } from "../../../../utils/constants/commands";
+import { SERVICE_KEYS } from "../../../../utils/constants/constants";
+import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
+
 import messages from "./messages";
+import SidebarItem from "../SidebarItem";
+import styles from "./styles.module.css";
 
 interface IProps {
   appServiceSelection: IAppService | null;
@@ -20,7 +27,15 @@ const AppServiceSelection = ({
   intl
 }: Props) => {
   const dispatch = useDispatch();
+  const { vscode } = React.useContext(AppContext);
+  const [openModal, setOpenModal] = React.useState(false);
 
+  React.useEffect(() => {
+    if (openModal) {
+      const azureServiceType = SERVICE_KEYS.APP_SERVICE;
+      sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_APP_SERVICE_MODAL_FROM_SERVICES_LIST, { azureServiceType })
+    }
+  }, [openModal]);
 
   return (
     <React.Fragment>
@@ -37,8 +52,11 @@ const AppServiceSelection = ({
             key={appServiceSelection.siteName}
             text={appServiceSelection.siteName}
             withIndent={true}
-            handleCloseClick={() => dispatch(removeAppServiceAction())}
-            handleConfigClick={() => dispatch(openAppServiceModalAction())}
+            handleOnCloseClick={() => dispatch(removeAppServiceAction())}
+            handleConfigClick={() => {
+              setOpenModal(!openModal);
+              dispatch(openAppServiceModalAction())
+            }}
             idx={1}
           />
         </React.Fragment>
