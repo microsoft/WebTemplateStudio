@@ -71,7 +71,7 @@
   margin-left: 25%;
 }
 
-.cancelIcon {
+.editIcon, .cancelIcon {
   height: 15px;
   width: 15px;
   margin-left: 8px;
@@ -82,11 +82,11 @@
   padding-right: 1px;
 }
 
-.cancelIcon:hover {
+.editIcon:hover, .cancelIcon:hover {
   cursor: pointer;
 }
 
-.cancelIcon:focus {
+.editIcon:focus, .cancelIcon:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
@@ -102,6 +102,7 @@
   cursor: grab;
 }
 
+.editIcon,
 .cancelIcon path,
 .icon path,
 .reorderIcon path {
