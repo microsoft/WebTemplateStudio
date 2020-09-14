@@ -20,7 +20,7 @@ export namespace ConnectionString {
   }
 
   export function getConnectionStringMongoData(connectionString: string): ConnectionStringMongoData {
-    let url = Url(connectionString);
+    const url = Url(connectionString);
 
     return { origin: url.origin, username: url.username, password: url.password };
   }
