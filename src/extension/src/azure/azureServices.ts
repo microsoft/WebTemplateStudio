@@ -6,7 +6,6 @@ import { CONSTANTS, AzureResourceType} from "../constants/constants";
 import { SubscriptionError, ValidationError } from "../errors";
 import { ResourceGroupDeploy, ResourceGroupSelection } from "./azure-resource-group/resourceGroupModule";
 import { AppServiceProvider, AppServiceSelections } from "./azure-app-service/appServiceProvider";
-import { StringDictionary } from "azure-arm-website/lib/models";
 import { ConnectionString } from "./utils/connectionString";
 import { ICosmosDBGenerationPayload, IAppServiceGenerationPayload, IServicesGenerationPayload } from "../types/generationPayloadType";
 import * as fse from "fs-extra";
@@ -285,7 +284,7 @@ export class AzureServices {
       const settingsPath = path.join(filePath, ".vscode", "settings.json");
       const settings = fse.readJSONSync(settingsPath);
       settings["appService.defaultWebAppToDeploy"] = id;
-      fse.writeJSONSync(settingsPath, settings, {spaces: 2});      
+      fse.writeJSONSync(settingsPath, settings, {spaces: 2});
     } catch (err) {
       throw new Error(err);
     }
@@ -325,30 +324,26 @@ export class AzureServices {
     } else {
       CosmosDBDeploy.updateConnectionStringInEnvFile(path, connectionString);
     }
-  } 
+  }
 
   public static async updateAppSettings(
     resourceGroupName: string,
     webAppName: string,
     connectionString: string
   ): Promise<void> {
-    const parsed: string = ConnectionString.parseConnectionString(connectionString);
-    const settings: StringDictionary = {
-      properties: AzureServices.convertToSettings(parsed),
-    };
+    const properties: { [s: string]: string } = {};
 
-    AzureServices.AzureAppServiceProvider.updateAppSettings(resourceGroupName, webAppName, settings);
-  }
-
-  private static convertToSettings(parsedConnectionString: string): { [s: string]: string } {
-    // format of parsedConnectionString: "<key1>=<value1>\n<key2>=<value2>\n<key3>=<value3>\n"
-    const fields = parsedConnectionString.split("\n");
-    const result: { [s: string]: string } = {};
-    for (let i = 0; i < fields.length - 1; i++) {
-      const key = fields[i].substr(0, fields[i].indexOf("="));
-      const value = fields[i].substr(fields[i].indexOf("=") + 1);
-      result[key] = value;
+    if (ConnectionString.isCosmosSQLConnectionString(connectionString)) {
+      const sqlData = ConnectionString.getConnectionStringSqlData(connectionString);
+      properties[CONSTANTS.COSMOSDB_SQL.URI] = sqlData.origin;
+      properties[CONSTANTS.COSMOSDB_SQL.PRIMARY_KEY] = sqlData.primaryKey;
+    } else {
+      const mongoData = ConnectionString.getConnectionStringMongoData(connectionString);
+      properties[CONSTANTS.COSMOSDB_MONGO.CONNSTR] = `${mongoData.origin}/${mongoData.username}`;
+      properties[CONSTANTS.COSMOSDB_MONGO.USER] = mongoData.username;
+      properties[CONSTANTS.COSMOSDB_MONGO.PASSWORD] = mongoData.password;
     }
-    return result;
+
+    AzureServices.AzureAppServiceProvider.updateAppSettings(resourceGroupName, webAppName, properties);
   }
 }
