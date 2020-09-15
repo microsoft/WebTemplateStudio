@@ -1,27 +1,25 @@
 import * as React from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
+import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
+
+import { AppState } from "../../store/combineReducers";
 
 import asModal from "../../components/Modal";
 
-import { injectIntl, InjectedIntlProps } from "react-intl";
 import { closeModalAction } from "../../store/navigation/modals/action";
-import { AppState } from "../../store/combineReducers";
-import { isAzureLoginModalOpenSelector } from "../../store/navigation/modals/selector";
-import buttonStyles from "../../css/buttonStyles.module.css";
-import styles from "./styles.module.css";
-import classnames from "classnames";
-import { FormattedMessage } from "react-intl";
-import keyUpHandler from "../../utils/keyUpHandler";
-import messages from "./messages";
-import { KEY_EVENTS } from "../../utils/constants/constants";
-import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import CollapsibleInfoBox from "../../components/CollapsibleInfoBox";
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants/internalNames";
+import { isAzureServicesModalOpenSelector } from "../../store/navigation/modals/selector";
 import * as ModalActions from "../../store/navigation/modals/action";
-import { azureLogin } from "../../utils/extensionService/extensionService";
-import { AppContext } from "../../AppContext";
-import { logIntoAzureActionAction } from "../../store/config/azure/action";
 import { isLoggedInSelector } from "../../store/config/azure/selector";
+import styles from "./styles.module.css";
+import messages from "./messages";
+import keyUpHandler from "../../utils/keyUpHandler";
+import { AZURE_LINKS } from "../../utils/constants/azure";
+import { KEY_EVENTS } from "../../utils/constants/constants";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants/internalNames";
+import { ReactComponent as Cancel } from "../../assets/cancel.svg";
+
+import CollapsibleInfoBox from "../../components/CollapsibleInfoBox";
+import AzureAccount from "../../pages/PageAddServices/AzureAccount";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -30,22 +28,11 @@ interface IStateProps {
 
 type Props = IStateProps & InjectedIntlProps;
 
-const AzureLoginModal = (props: Props) => {
+const AzureServicesModal = (props: Props) => {
   const { formatMessage } = props.intl;
   const { selectedAzureServiceName } = props;
-  const { vscode } = React.useContext(AppContext);
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state: AppState) => isLoggedInSelector(state));
-
-  const handleSignInClick = () => {
-    azureLogin(vscode).then((event)=>{
-      const message = event.data;
-      if (message.payload !== null) {
-        const loginData = message.payload as AzureProfile;
-        dispatch(logIntoAzureActionAction(loginData));
-      }
-    })
-  };
 
   const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
@@ -76,7 +63,7 @@ const AzureLoginModal = (props: Props) => {
         <Cancel
           tabIndex={0}
           className={styles.cancelIcon}
-          onClick={()=> dispatch(closeModalAction())}
+          onClick={() => dispatch(closeModalAction())}
           onKeyDown={cancelKeyDownHandler}
         />
       </div>
@@ -102,46 +89,18 @@ const AzureLoginModal = (props: Props) => {
         <div className={styles.paragraph}>
           <a
             className={styles.link}
-            href="https://azure.microsoft.com/en-us/free/free-account-faq/"
+            href={AZURE_LINKS.CREATE_FREE_ACCOUNT_FAQ}
             onKeyUp={keyUpHandler}
           >
             <FormattedMessage
-              id="azureLoginModal.azureReadMore"
+              id="azureServicesModal.azureReadMore"
               defaultMessage="Learn more about the Azure free account. Read the FAQ >"
             />
           </a>
         </div>
       </div>
       <div className={styles.footerContainer}>
-        <button
-          onClick={handleSignInClick}
-          className={classnames(buttonStyles.buttonDark, styles.button)}
-        >
-          <FormattedMessage
-            id="azureLoginModal.signIn"
-            defaultMessage="Sign In"
-          />
-        </button>
-        <div className={styles.buttonContainer}>
-          <button
-            className={classnames(
-              styles.button,
-              styles.buttonNext,
-              buttonStyles.buttonHighlighted
-            )}
-          >
-            <a
-              className={styles.linkToButton}
-              href="https://azure.microsoft.com/free/"
-              onKeyUp={keyUpHandler}
-            >
-              <FormattedMessage
-                id="azureLoginModal.createAccount"
-                defaultMessage="Create Free Account"
-              />
-            </a>
-          </button>
-        </div>
+        <AzureAccount />
       </div>
     </div>
   );
@@ -149,9 +108,9 @@ const AzureLoginModal = (props: Props) => {
 
 const mapStateToProps = (state: AppState): IStateProps => {
   return {
-    isModalOpen: isAzureLoginModalOpenSelector(state),
+    isModalOpen: isAzureServicesModalOpenSelector(state),
     selectedAzureServiceName: state.navigation.modals.openModal.modalData
   };
 };
 
-export default connect(mapStateToProps)(asModal(injectIntl(AzureLoginModal)));
+export default connect(mapStateToProps)(asModal(injectIntl(AzureServicesModal)));

@@ -2,7 +2,7 @@
   "resources": [
     {
       "type": "Microsoft.Web/serverfarms",
-      "apiVersion": "2017-08-01",
+      "apiVersion": "2018-02-01",
       "kind": "linux",
       "name": "[parameters('appServicePlanName')]",
       "location": "[parameters('location')]",
