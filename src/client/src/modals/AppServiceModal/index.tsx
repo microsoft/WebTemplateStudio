@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useState } from "react";
+import  React, { useState, useContext, useEffect } from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { AppContext } from "../../AppContext";
@@ -20,14 +19,14 @@ import LocationSelection from "../../components/LocationSelection";
 import ResourceGroupSelection from "../../components/ResourceGroupSelection";
 
 import { KEY_EVENTS } from "../../utils/constants/constants";
-import { AZURE, SERVICE_KEYS, AzureResourceType } from "../../utils/constants/azure";
-import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
+import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants/internalNames";
+import { AZURE, SERVICE_KEYS, AzureResourceType } from "../../utils/constants/azure";
 
+import AppNameEditor from "./AppNameEditor";
 import RuntimeStackInfo from "./RuntimeStackInfo";
 import AppServicePlanInfo from "./AppServicePlanInfo";
-import AppNameEditor from "./AppNameEditor";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
@@ -43,7 +42,7 @@ type Props = IStateProps & InjectedIntlProps;
 const AppServiceModal = ({ intl }: Props) => {
   const { formatMessage } = intl;
   const dispatch = useDispatch();
-  const { vscode } = React.useContext(AppContext);
+  const { vscode } = useContext(AppContext);
   const appServiceInStore = useSelector(getAppService);
   const templateAppService = useSelector((state: AppState) => state.templates.featureOptions).filter(feature => feature.internalName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE)[0];
   const initialSubscription = appServiceInStore ? appServiceInStore.subscription : "";
@@ -58,7 +57,7 @@ const AppServiceModal = ({ intl }: Props) => {
   const [isAvailableAppName, setIsAvailableAppName] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (showAdvanced) {
       const azureServiceType = SERVICE_KEYS.APP_SERVICE;
       sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_AZURE_SERVICE_ADVANCED_MODE, { azureServiceType });

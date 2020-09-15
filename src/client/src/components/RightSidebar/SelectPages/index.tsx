@@ -1,19 +1,21 @@
-import classnames from "classnames";
-import * as React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { arrayMove } from "react-sortable-hoc";
 import { injectIntl, InjectedIntl } from "react-intl";
-import PageContainer from "./PageContainer";
-
-import { ReactComponent as ShowIcon } from "../../../assets/i-show.svg";
-import { ReactComponent as HideIcon } from "../../../assets/i-hide.svg";
-
-import styles from "./styles.module.css";
-import { AppState } from "../../../store/combineReducers";
 
 import { PAGE_NAME_CHARACTER_LIMIT } from "../../../utils/constants/constants";
-import messages from "./messages";
+
+import { AppState } from "../../../store/combineReducers";
 import { setPagesAction } from "../../../store/userSelection/pages/action";
+
+import PageContainer from "./PageContainer";
+
+import messages from "./messages";
+import classnames from "classnames";
+import styles from "./styles.module.css";
+
+import { ReactComponent as ShowIconSVG } from "../../../assets/i-show.svg";
+import { ReactComponent as HideIconSVG } from "../../../assets/i-hide.svg";
 
 interface IStateProps {
   pathname: string;
@@ -26,7 +28,7 @@ interface IIntlProps {
 type Props = IStateProps & IIntlProps;
 
 const SelectPages = (props: Props) => {
-  const [isMinimized, setMinimized] = React.useState(false);
+  const [isMinimized, setMinimized] = useState(false);
   const selectedPages: any[] = useSelector((state: AppState) => state.userSelection.pages);
   const dispatch = useDispatch();
 
@@ -40,14 +42,13 @@ const SelectPages = (props: Props) => {
     dispatch(setPagesAction(arrayMove(selectedPages, oldIndex, newIndex)));
   };
   const DRAG_PIXEL_THRESHOLD = 1;
+
   return (
     <div className={styles.sortablePages}>
-      <div>
       <div className={classnames(styles.pageListContainer, styles.sidebarItem)}>
         <div className={styles.dropdownTitle}>
-          {`${props.intl!.formatMessage(messages.pages)} (${
-            selectedPages.length >= 0 ? selectedPages.length : ""
-          })`}
+          {`${props.intl!.formatMessage(messages.pages)} (${selectedPages.length >= 0 ? selectedPages.length : ""
+            })`}
         </div>
         <div className={styles.iconsContainer}>
           <button
@@ -56,11 +57,11 @@ const SelectPages = (props: Props) => {
               setMinimized(!isMinimized);
             }}
           >
-             {isMinimized ? (
-              <ShowIcon className={styles.viewIcon} />
+            {isMinimized ? (
+              <ShowIconSVG className={styles.viewIcon} />
             ) : (
-              <HideIcon className={styles.viewIcon} />
-            )}
+                <HideIconSVG className={styles.viewIcon} />
+              )}
           </button>
         </div>
       </div>
@@ -75,7 +76,6 @@ const SelectPages = (props: Props) => {
           lockOffset='25%'
         />
       )}
-    </div>
     </div>
   );
 };

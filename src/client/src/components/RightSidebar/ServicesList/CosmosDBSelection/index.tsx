@@ -1,16 +1,19 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import SidebarItem from "../SidebarItem";
+import { injectIntl, InjectedIntlProps } from "react-intl";
+
+import { AppContext } from "../../../../AppContext";
 import { ICosmosDB } from "../../../../store/userSelection/services/cosmosDb/model";
 import { openCosmosDbModalAction } from "../../../../store/navigation/modals/action";
-import styles from "./styles.module.css";
-import { injectIntl, InjectedIntlProps } from "react-intl";
 import { removeCosmosDbAction } from "../../../../store/userSelection/services/cosmosDb/action";
-import messages from "./messages";
-import { AppContext } from "../../../../AppContext";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
 import { EXTENSION_COMMANDS } from "../../../../utils/constants/commands";
-import {SERVICE_KEYS } from "../../../../utils/constants/constants";
+import { SERVICE_KEYS } from "../../../../utils/constants/constants";
+
+import SidebarItem from "../SidebarItem";
+import styles from "./styles.module.css";
+
+import messages from "./messages";
 
 interface IProps {
   cosmosSelection: ICosmosDB | null;
@@ -34,16 +37,16 @@ const CosmosDBSelection = ({
   }, [openModal]);
 
   return (
-    <React.Fragment>
+    <>
       {cosmosSelection && (
-        <React.Fragment>
+        <>
           <div className={styles.headerContainer}>
             <div>{intl.formatMessage(messages.title)}</div>
           </div>
           <SidebarItem
             cosmosDB={true}
-            editable={false}
-            configurable={true}
+            editable={false}    //itemNameEditable does not make sense for AppServices
+            configurable={true} //we may need to update this in the future if we add this to the templates
             customInputStyle={styles.input}
             key={cosmosSelection.accountName}
             text={cosmosSelection.accountName}
@@ -55,9 +58,9 @@ const CosmosDBSelection = ({
             }}
             idx={1}
           />
-        </React.Fragment>
+        </>
       )}
-    </React.Fragment>
+    </>
   );
 };
 

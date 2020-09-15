@@ -1,7 +1,7 @@
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import ProjectDetails from "./index";
-import messages from "../strings";
+import messages from "./messages";
 import * as ReactRedux from 'react-redux'
 import { getInitialState } from "../../../mockData/mockStore";
 import { render, RenderResult } from "@testing-library/react";

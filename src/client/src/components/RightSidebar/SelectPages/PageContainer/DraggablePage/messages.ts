@@ -3,16 +3,12 @@ import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
   changeItemName: {
-    id: "draggableSidebarItem.changeItemName",
+    id: "rightSidebar.selectPages.pageContainer.draggablePage.changeItemName",
     defaultMessage: "Change Item Name"
-  },
-  pageNameMaxLength: {
-    id: "draggableSidebarItem.pageNameMaxLength",
-    defaultMessage: "Page name must be under {maxLength} characters long. "
-  },
+  },  
   deleteItem: {
-    id: "draggableSidebarItem.deleteItem",
+    id: "rightSidebar.selectPages.pageContainer.draggablePage.deleteItem",
     defaultMessage: "Delete item"
-  }
+  },
 });
 export default messages;

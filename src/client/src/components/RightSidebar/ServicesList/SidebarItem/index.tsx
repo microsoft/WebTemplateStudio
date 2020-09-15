@@ -1,21 +1,18 @@
-import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 import { injectIntl, InjectedIntl, InjectedIntlProps } from "react-intl";
-import { AppContext } from "../../../../AppContext";
-import { AppState } from "../../../../store/combineReducers";
 
 import loadable from '@loadable/component'
 
-import messages from "./messages";
-import styles from "./styles.module.css";
-
-import { ISelected } from "../../../../types/selected";
+import { AppState } from "../../../../store/combineReducers";
 import { getValidations } from "../../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { IValidations } from "../../../../store/config/validations/model";
-import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
-import { EXTENSION_COMMANDS } from "../../../../utils/constants/commands";
-import { KEY_EVENTS, SERVICE_KEYS } from "../../../../utils/constants/constants";
+import { ISelected } from "../../../../types/selected";
+import { KEY_EVENTS } from "../../../../utils/constants/constants";
+
+import messages from "./messages";
+import styles from "./styles.module.css";
+import classnames from "classnames";
 
 import { ReactComponent as EditSVG } from "../../../../assets/edit.svg";
 import { ReactComponent as CloseSVG } from "../../../../assets/cancel.svg";
@@ -44,7 +41,7 @@ interface ISortablePageListProps {
 type Props = IStateProps & ISortablePageListProps & InjectedIntlProps;
 
 //match name and component
-const DraggableSidebarItem = ({
+const SidebarItem = ({
   text,
   cosmosDB,
   appService,
@@ -140,4 +137,4 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps
-)(injectIntl(DraggableSidebarItem));
+)(injectIntl(SidebarItem));

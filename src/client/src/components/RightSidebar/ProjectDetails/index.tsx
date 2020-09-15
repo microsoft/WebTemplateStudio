@@ -1,16 +1,17 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import styles from "../styles.module.css";
-import messages from "../strings";
-import { getOutputPath, getProjectName } from "../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+
 import { AppState } from "../../../store/combineReducers";
+import { getOutputPath } from "../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+
+import styles from "./styles.module.css";
+import messages from "./messages";
 
 type Props = InjectedIntlProps;
 
 const ProjectDetails = (props: Props)=>{
   const outputPath: string = useSelector((state: AppState) => getOutputPath(state));
-  const projectName: string = useSelector((state: AppState) => getProjectName(state));
 
   const {
     intl
@@ -30,7 +31,6 @@ const ProjectDetails = (props: Props)=>{
           </span>
         </div>
       </div>
-      <div className={styles.decoratedLine} />
     </React.Fragment>
   );
 }

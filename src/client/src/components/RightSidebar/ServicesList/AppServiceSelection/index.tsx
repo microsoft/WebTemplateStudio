@@ -1,13 +1,12 @@
-import * as React from "react";
+
+import React, {useContext, useState, useEffect} from "react";
 import { useDispatch } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
+
 import { AppContext } from "../../../../AppContext";
-
 import { IAppService } from "../../../../store/userSelection/services/appService/model";
-
 import { removeAppServiceAction } from "../../../../store/userSelection/services/appService/action";
 import { openAppServiceModalAction } from "../../../../store/navigation/modals/action";
-
 import { EXTENSION_COMMANDS, } from "../../../../utils/constants/commands";
 import { SERVICE_KEYS } from "../../../../utils/constants/constants";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
@@ -27,10 +26,10 @@ const AppServiceSelection = ({
   intl
 }: Props) => {
   const dispatch = useDispatch();
-  const { vscode } = React.useContext(AppContext);
-  const [openModal, setOpenModal] = React.useState(false);
+  const { vscode } = useContext(AppContext);
+  const [openModal, setOpenModal] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (openModal) {
       const azureServiceType = SERVICE_KEYS.APP_SERVICE;
       sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_APP_SERVICE_MODAL_FROM_SERVICES_LIST, { azureServiceType })
@@ -38,16 +37,16 @@ const AppServiceSelection = ({
   }, [openModal]);
 
   return (
-    <React.Fragment>
+    <>
       {appServiceSelection && (
-        <React.Fragment>
+        <>
           <div className={styles.headerContainer}>
             <div>{intl.formatMessage(messages.title)}</div>
           </div>
           <SidebarItem
             appService={true}
-            editable={false}
-            configurable={true}
+            editable={false}    //itemNameEditable does not make sense for AppServices
+            configurable={true} //we may need to update this in the future if we add this to the templates
             customInputStyle={styles.input}
             key={appServiceSelection.siteName}
             text={appServiceSelection.siteName}
@@ -59,9 +58,9 @@ const AppServiceSelection = ({
             }}
             idx={1}
           />
-        </React.Fragment>
+        </>
       )}
-    </React.Fragment>
+    </>
   );
 };
 

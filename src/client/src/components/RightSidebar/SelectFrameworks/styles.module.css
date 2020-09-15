@@ -1,0 +1,12 @@
+/* this is used in all subfolder or right side bar - consider keeping shared */
+.sidebarItem {
+  margin: 15px;
+  margin-bottom: 30px;
+}
+
+/* this one it´s used in selectPages and selectFrameworks - consider keeping shared*/
+.dropdownTitle {
+  margin-bottom: 0.7em;
+  font-size: 1.2em;
+  font-weight: 500;
+}
