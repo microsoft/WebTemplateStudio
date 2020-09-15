@@ -20,11 +20,10 @@ using Microsoft.Azure.Cosmos;
         //{[{
         private async Task<CosmosClient> InitializeCosmosClientInstanceAsync()
         {
-            var cosmosSection = Configuration.GetSection("CosmosDB");
-            string databaseName = cosmosSection.GetSection("DatabaseName").Value;
-            string containerName = cosmosSection.GetSection("ContainerName").Value;
-            string account = cosmosSection.GetSection("Account").Value;
-            string key = cosmosSection.GetSection("Key").Value;
+            string account = Configuration["COSMOSDB_URI"];
+            string key = Configuration["COSMOSDB_PRIMARY_KEY"];
+            string databaseName = Configuration["COSMOSDB_DATABASE_NAME"];
+            string containerName = Configuration["COSMOSDB_CONTAINER_NAME"];
             var clientBuilder = new Microsoft.Azure.Cosmos.Fluent.CosmosClientBuilder(account, key);
             var client = clientBuilder
                                 .WithConnectionModeDirect()
