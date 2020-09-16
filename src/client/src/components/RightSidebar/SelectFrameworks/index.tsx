@@ -11,7 +11,7 @@ import { IOption } from "../../../types/option";
 
 import Dropdown from "../../../components/Dropdown";
 
-import styles from "./styles.module.css";
+import rightsidebarStyles from "../rightsidebarStyles.module.css";
 import messages from "./messages";
 
 type Props = InjectedIntlProps;
@@ -78,8 +78,8 @@ const SelectFrameworks = (props: Props)=>{
 
   return (
     <>
-      <div className={styles.sidebarItem}>
-        <div className={styles.dropdownTitle}>{formatMessage(messages.frontendFramework)}</div>
+      <div className={rightsidebarStyles.sidebarItem}>
+        <div className={rightsidebarStyles.dropdownTitle}>{formatMessage(messages.frontendFramework)}</div>
         <Dropdown
           handleChange={(dropDrownItem: IDropDownOptionType) => {
             handleFrontEndFrameworkChange(dropDrownItem);
@@ -91,8 +91,8 @@ const SelectFrameworks = (props: Props)=>{
           )}
         />
       </div>
-      <div className={styles.sidebarItem}>
-        <div className={styles.dropdownTitle}>{formatMessage(messages.backendFramework)}</div>
+      <div className={rightsidebarStyles.sidebarItem}>
+        <div className={rightsidebarStyles.dropdownTitle}>{formatMessage(messages.backendFramework)}</div>
         <Dropdown
           handleChange={(dropDrownItem: IDropDownOptionType) => {
             handleBackEndFrameworkChange(dropDrownItem);

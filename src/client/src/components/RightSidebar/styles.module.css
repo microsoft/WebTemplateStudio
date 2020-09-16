@@ -1,21 +1,43 @@
-.title {
-  font-size: 1.6em;
-  text-align: left;
-  margin: 15px;
-  margin-bottom: 20px;
-}
-
 .container {
   padding-bottom: 6vh;
   padding-top: 1vh;
 }
-.button {
-  margin-left: 1em;
-  font-size: 1em;
+
+.rightViewCropped {
+  background-color: var(--vscode-editor-background);
+  border-left: 0.5px solid #7f7f7f;
+  box-sizing: border-box;
+  position: relative;
+  right: 0;
+  height: calc(100vh - 70px);
+  flex-direction: column;
+  overflow: scroll;
+  display: block;
+  transition: display 100ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
+  padding: 6vh 2vh;
+  border-left: 1px solid #7f7f7f;
+  width: 500px;
 }
 
-.leftButton {
-  font-size: 1.1em;
+@media (max-width: 560px) {
+  .rightViewCropped {
+    position: fixed;
+    width: 100%;
+  }
+}
+
+.rightViewCroppedHamburguer {
+  background-color: var(--vscode-editor-background);
+  border-left: 0.5px solid #7f7f7f;
+  box-sizing: border-box;
+  height: calc(100vh - 70px);
+  flex-direction: column;
+  overflow: scroll;
+  display: block;
+  transition: display 100ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
+  padding: 40px 15px;
+  border-left: 1px solid #7f7f7f;
+  width: 56px;
 }
 
 .hamburgerButton {
@@ -37,108 +59,9 @@
   background: var(--vscode-editor-foreground);
 }
 
-.button:hover {
-  color: var(--vscode-editor-foreground);
-}
-
-.button:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
-.buttonContainer {
-  display: flex;
-  align-items: center;
-}
-
-.link {
-  color: var(--vscode-editor-foreground);
-  text-decoration: none;
-}
-
-.link:hover {
-  color: var(--vscode-editor-foreground);
-}
-
-.link:focus {
-  outline: none;
-  border: 0;
-}
-
-.rightViewCropped {
-  background-color: var(--vscode-editor-background);
-  border-left: 0.5px solid #7f7f7f;
-  box-sizing: border-box;
-  position: relative;
-  right: 0;
-  height: calc(100vh - 70px);
-  flex-direction: column;
-  overflow: scroll;
-  display: block;
-  transition: display 100ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
-  padding: 6vh 2vh;
-  border-left: 1px solid #7f7f7f;
-  width: 500px;
-}
-
-.rightViewCroppedHamburguer {
-  background-color: var(--vscode-editor-background);
-  border-left: 0.5px solid #7f7f7f;
-  box-sizing: border-box;
-  height: calc(100vh - 70px);
-  flex-direction: column;
-  overflow: scroll;
-  display: block;
-  transition: display 100ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
-  padding: 40px 15px;
-  border-left: 1px solid #7f7f7f;
-  width: 56px;
-}
-
-.rightViewCroppedSummaryPage {
-  width: 700px; /*change this width after top nav bar migration to change the width of the right side bar on summary page*/
-}
-
-.rightViewCroppedSummaryPage .summaryContainer {
-  width: auto;
-}
-
-@media (max-width: 560px) {
-  .rightViewCropped {
-    position: fixed;
-    width: 100%;
-  }
-}
-
 .summaryContainer {
-  width: 100%;
+  width: auto;
   flex: 1;
-}
-
-.dropdownTitle {
-  margin-bottom: 0.7em;
-  font-size: 1.2em;
-  font-weight: 500;
-}
-
-.sidebarItem {
-  margin: 15px;
-  margin-bottom: 30px;
-}
-
-
-.draggablePage {
-  display: flex;
-}
-
-.pagesTextContainer {
-  width: 100%;
-  height: 38px;
-  background: #dfdfdf;
-  border: 0.5px solid rgba(0, 0, 0, 0.5);
-  margin-left: 10px;
-  display: flex;
-  align-items: center;
-  padding: 0px 10px;
 }
 
 .icon {
@@ -164,34 +87,26 @@
   visibility:hidden;
 }
 
-.selection {
+.button {
+  margin-left: 1em;
+  font-size: 1em;
+}
+
+.button:hover {
+  color: var(--vscode-editor-foreground);
+}
+
+.button:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.buttonContainer {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
 }
 
-.statics {
-  margin-bottom: 30px;
-}
-
-.projectStatic {
-  font-size: 1.2em;
-  font-weight: 500;
-  text-align: left;
-  margin-left: 15px;
-  overflow-x: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding-right: 20px;
-}
-
-.value {
-  font-weight: normal;
-  margin-left: 7px;
-}
-
-.hide {
-  display: none;
+.leftButton {
+  font-size: 1.1em;
 }
 
 .inputContainer {

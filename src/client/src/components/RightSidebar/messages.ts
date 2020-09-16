@@ -4,7 +4,7 @@ const messages = defineMessages({
   viewLicenses: {
     id: "rightSidebar.viewLicenses",
     defaultMessage: "View Licenses"
-  },  
+  },
   showAriaLabel: {
     id: "rightSidebar.showAriaLabel",
     defaultMessage: "Show project details menu"

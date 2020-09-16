@@ -5,20 +5,8 @@
 .pageListContainer {
   display: flex;
   justify-content: space-between;
-}
-
-/* shared with other folders in this area */
-.sidebarItem {
   margin-left: 15px;
-  margin-right: 15px;
 }
-
-.dropdownTitle {
-  font-size: 1.2em;
-  margin-bottom: 0.7em;
-  font-weight: 500;
-}
-/* end more shared */
 
 .iconsContainer {
   display: flex;

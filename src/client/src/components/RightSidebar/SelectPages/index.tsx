@@ -12,6 +12,7 @@ import PageContainer from "./PageContainer";
 
 import messages from "./messages";
 import classnames from "classnames";
+import rightsidebarStyles from "../rightsidebarStyles.module.css";
 import styles from "./styles.module.css";
 
 import { ReactComponent as ShowIconSVG } from "../../../assets/i-show.svg";
@@ -45,8 +46,8 @@ const SelectPages = (props: Props) => {
 
   return (
     <div className={styles.sortablePages}>
-      <div className={classnames(styles.pageListContainer, styles.sidebarItem)}>
-        <div className={styles.dropdownTitle}>
+      <div className={classnames(styles.pageListContainer)}>
+        <div className={rightsidebarStyles.dropdownTitle}>
           {`${props.intl!.formatMessage(messages.pages)} (${selectedPages.length >= 0 ? selectedPages.length : ""
             })`}
         </div>
