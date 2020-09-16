@@ -299,7 +299,7 @@ const pages = [
     isHidden: false,
     isGroupExclusiveSelection: false,
     genGroup: 0,
-    multipleInstance: true,
+    multipleInstance: false,
     itemNameEditable: false,
     licenses: [
       {
@@ -386,7 +386,7 @@ const features = [
     isGroupExclusiveSelection: false,
     genGroup: 0,
     multipleInstance: false,
-    itemNameEditable: true,//does this one make sense for AppService?
+    itemNameEditable: true,
     licenses: [],
     dependencies: [],
     requirements: [],
@@ -414,7 +414,7 @@ const features = [
     isGroupExclusiveSelection: false,
     genGroup: 0,
     multipleInstance: false,
-    itemNameEditable: true,//does this one make sense for CosmosDB?
+    itemNameEditable: true,
     licenses: [],
     dependencies: [],
     requirements: [],
@@ -442,7 +442,7 @@ const features = [
     isGroupExclusiveSelection: false,
     genGroup: 0,
     multipleInstance: false,
-    itemNameEditable: true,//does this one make sense for CosmosDB?
+    itemNameEditable: true,
     licenses: [],
     dependencies: [],
     requirements: [],
