@@ -53,24 +53,13 @@
 }
 
 .homeSplash {
-  right: 500px;
+  right: 360px;
 }
 
-@media (max-height: 747px) and (max-width: 1700px) {
-  .homeSplash {
-    right: 518.5px;
-  }
-}
 
-@media (max-height: 610px) {
+@media (max-height: 650px){
   .homeSplash {
-    right: 517px;
-  }
-}
-
-@media (max-height: 580px) {
-  .homeSplash {
-    right: 515.2px;
+    right: 380px;
   }
 }
 
