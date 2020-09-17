@@ -47,7 +47,9 @@ export class Defaults extends WizardServant {
 
   private getDefaultProjectPath(): string {
     const projectPath = vscode.workspace.getConfiguration().get<string>("wts.changeSaveToLocation");
-    return projectPath ?? os.homedir();
+    return (projectPath !== undefined && projectPath !== "")
+      ? projectPath
+      : os.homedir();
   }
 
   private async inferProjectName(outputPath: string): Promise<string> {

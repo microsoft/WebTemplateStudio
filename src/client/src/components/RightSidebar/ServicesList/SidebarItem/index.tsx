@@ -1,17 +1,21 @@
-import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
-import loadable from '@loadable/component'
-import { ReactComponent as CloseSVG } from "../../../../assets/cancel.svg";
-import { ISelected } from "../../../../types/selected";
-import styles from "./styles.module.css";
-import { KEY_EVENTS } from "../../../../utils/constants/constants";
 import { injectIntl, InjectedIntl, InjectedIntlProps } from "react-intl";
+
+import loadable from '@loadable/component'
+
 import { AppState } from "../../../../store/combineReducers";
-import messages from "./messages";
 import { getValidations } from "../../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { IValidations } from "../../../../store/config/validations/model";
+import { ISelected } from "../../../../types/selected";
+import { KEY_EVENTS } from "../../../../utils/constants/constants";
 
+import messages from "./messages";
+import styles from "./styles.module.css";
+import classnames from "classnames";
+
+import { ReactComponent as EditSVG } from "../../../../assets/edit.svg";
+import { ReactComponent as CloseSVG } from "../../../../assets/cancel.svg";
 const CosmosDBIcon = loadable(() => import(/* webpackChunkName: "CosmosdbIcon" */  "../../../../utils/svgComponents/CosmosdbIcon"));
 const AppServiceIcon = loadable(() => import(/* webpackChunkName: "AppServiceIcon" */  "../../../../utils/svgComponents/AppserviceIcon"));
 
@@ -21,10 +25,12 @@ interface IStateProps {
   appService?: boolean;
   idx?: number;
   withIndent?: boolean;
-  handleCloseClick?: (idx: number) => void;
+  handleOnCloseClick?: (idx: number) => void;
+  handleConfigClick?: (idx: number) => void;
   intl: InjectedIntl;
   customInputStyle?: string;
   editable?: boolean;
+  configurable?: boolean;
 }
 
 interface ISortablePageListProps {
@@ -34,34 +40,46 @@ interface ISortablePageListProps {
 
 type Props = IStateProps & ISortablePageListProps & InjectedIntlProps;
 
-const DraggableSidebarItem = ({
+//match name and component
+const SidebarItem = ({
   text,
   cosmosDB,
   appService,
   idx,
-  handleCloseClick,
+  handleConfigClick,
+  handleOnCloseClick,
   intl,
   customInputStyle,
-  editable
+  editable,
+  configurable
 }: Props) => {
+
   const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      handleCloseOnClick();
+      handleOnCloseClickEvent();
     }
   };
+  const handleOnCloseClickEvent = () => {
+    idx && handleOnCloseClick && handleOnCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
+  };
 
-  const handleCloseOnClick = () => {
-    idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
+  const handleConfigKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
+      handleConfigOnClick();
+    }
+  };
+  const handleConfigOnClick = () => {
+    idx && handleConfigClick && handleConfigClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
   };
 
   return (
-    <div>
+    <>
       <div className={styles.draggablePage}>
         <div className={styles.iconContainer}>
-          {cosmosDB && <CosmosDBIcon style={styles.reorderIcon}/>}
-          {appService && <AppServiceIcon style={styles.reorderIcon}/>}
+          {cosmosDB && <CosmosDBIcon style={styles.reorderIcon} />}
+          {appService && <AppServiceIcon style={styles.reorderIcon} />}
         </div>
-        { editable && <div className={styles.errorStack}>
+        {editable && <div className={styles.errorStack}>
           <div
             className={classnames(customInputStyle, {
               [styles.pagesTextContainer]: true
@@ -82,22 +100,32 @@ const DraggableSidebarItem = ({
             </div>
           </div>
         </div>}
-        { !editable && <div className={styles.errorStack}>
+        {!editable && <div className={styles.errorStack}>
           <div className={classnames({
-              [styles.pagesTextContainerNoEdit]: true
-            })}> 
+            [styles.pagesTextContainerNoEdit]: true
+          })}>
             {text}
           </div>
         </div>}
-          <CloseSVG
+        {configurable &&
+          <EditSVG
             tabIndex={0}
-            onClick={handleCloseOnClick}
-            onKeyDown={handleKeyDown}
-            className={styles.cancelIcon}
-            aria-label={intl.formatMessage(messages.deleteItem)}
+            onClick={handleConfigOnClick}
+            onKeyDown={handleConfigKeyDown}
+            className={styles.editIcon}
+            aria-label={intl.formatMessage(messages.configItem)}
           />
+        }
+
+        <CloseSVG
+          tabIndex={0}
+          onClick={handleOnCloseClickEvent}
+          onKeyDown={handleKeyDown}
+          className={styles.cancelIcon}
+          aria-label={intl.formatMessage(messages.deleteItem)}
+        />
       </div>
-    </div>
+    </>
   );
 };
 
@@ -109,4 +137,4 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps
-)(injectIntl(DraggableSidebarItem));
+)(injectIntl(SidebarItem));
