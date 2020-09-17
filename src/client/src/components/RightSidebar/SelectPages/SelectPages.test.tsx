@@ -11,18 +11,18 @@ describe("About", () => {
   let wrapper: RenderResult;
   let store: any;
   const mockStore = configureMockStore();
-  const props: any = {pathname:"/"};
+  const props: any = { pathname: "/" };
 
   describe("Tests", () => {
     //const mockDispatch = jest.fn()
-    
+
     beforeEach(() => {
       //jest.spyOn(ReactRedux, 'useDispatch').mockReturnValue(mockDispatch);
       store = mockStore(getInitialState());
       wrapper = render(
         <IntlProvider locale="en">
           <ReactRedux.Provider store={store}>
-            <SelectPages {...props}/>
+            <SelectPages {...props} />
           </ReactRedux.Provider>
         </IntlProvider>
       );

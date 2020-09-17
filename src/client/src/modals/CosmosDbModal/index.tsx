@@ -1,31 +1,37 @@
 import * as React from "react";
-import { connect, useSelector, useDispatch } from "react-redux";
-import asModal from "../../components/Modal";
-import messages from "./messages";
-import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import { isCosmosDbModalOpenSelector } from "../../store/navigation/modals/selector";
-import AccountNameEditor from "./AccountNameEditor/index";
-import ApiSelection from "./APISelection/index";
-import SubscriptionSelection from "../../components/SubscriptionSelection";
+import { useState } from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import buttonStyles from "../../css/buttonStyles.module.css";
-import { KEY_EVENTS } from "../../utils/constants/constants";
-import { AZURE, SERVICE_KEYS, AzureResourceType } from "../../utils/constants/azure";
-import styles from "./styles.module.css";
+import { connect, useSelector, useDispatch } from "react-redux";
+import { AppContext } from "../../AppContext";
+
 import { AppState } from "../../store/combineReducers";
 import { ICosmosDB } from "../../store/userSelection/services/cosmosDb/model";
 import { getCosmosDB } from "../../store/userSelection/services/servicesSelector";
-import classNames from "classnames";
-import { useState } from "react";
 import { closeModalAction } from "../../store/navigation/modals/action";
 import { saveCosmosDbAction } from "../../store/userSelection/services/cosmosDb/action";
-import { sendTelemetry } from "../../utils/extensionService/extensionService";
+import { isCosmosDbModalOpenSelector } from "../../store/navigation/modals/selector";
+
+import asModal from "../../components/Modal";
 import LocationSelection from "../../components/LocationSelection";
-import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
-import { AppContext } from "../../AppContext";
 import ResourceGroupSelection from "../../components/ResourceGroupSelection";
+import SubscriptionSelection from "../../components/SubscriptionSelection";
+
+import { ReactComponent as Cancel } from "../../assets/cancel.svg";
+import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
+
+
+import { KEY_EVENTS } from "../../utils/constants/constants";
 import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
+import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants/internalNames";
+import { AZURE, SERVICE_KEYS, AzureResourceType } from "../../utils/constants/azure";
+
+import AccountNameEditor from "./AccountNameEditor/index";
+import ApiSelection from "./APISelection/index";
+import buttonStyles from "../../css/buttonStyles.module.css";
+import styles from "./styles.module.css";
+import messages from "./messages";
+import classNames from "classnames";
 
 interface IStateProps {
   isModalOpen: boolean;

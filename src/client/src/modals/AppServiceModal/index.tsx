@@ -1,33 +1,37 @@
-import * as React from "react";
-import { connect, useSelector, useDispatch } from "react-redux";
-import asModal from "../../components/Modal";
-import messages from "./messages";
-import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import { isAppServiceModalOpenSelector } from "../../store/navigation/modals/selector";
-import RuntimeStackInfo from "./RuntimeStackInfo";
-import AppServicePlanInfo from "./AppServicePlanInfo";
-import AppNameEditor from "./AppNameEditor";
-import SubscriptionSelection from "../../components/SubscriptionSelection";
+import  React, { useState, useContext, useEffect } from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import buttonStyles from "../../css/buttonStyles.module.css";
-import { KEY_EVENTS } from "../../utils/constants/constants";
-import { AZURE, SERVICE_KEYS, AzureResourceType } from "../../utils/constants/azure";
+import { connect, useSelector, useDispatch } from "react-redux";
+import { AppContext } from "../../AppContext";
 
-import styles from "./styles.module.css";
+import { isAppServiceModalOpenSelector } from "../../store/navigation/modals/selector";
 import { AppState } from "../../store/combineReducers";
 import { IAppService } from "../../store/userSelection/services/appService/model";
 import { getAppService } from "../../store/userSelection/services/servicesSelector";
-import classNames from "classnames";
-import { useState } from "react";
 import { saveAppServiceAction } from "../../store/userSelection/services/appService/action";
 import { closeModalAction } from "../../store/navigation/modals/action";
-import { sendTelemetry } from "../../utils/extensionService/extensionService";
-import LocationSelection from "../../components/LocationSelection";
+
+import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
-import { AppContext } from "../../AppContext";
+
+import SubscriptionSelection from "../../components/SubscriptionSelection";
+import asModal from "../../components/Modal";
+import LocationSelection from "../../components/LocationSelection";
 import ResourceGroupSelection from "../../components/ResourceGroupSelection";
+
+import { KEY_EVENTS } from "../../utils/constants/constants";
 import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
+import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants/internalNames";
+import { AZURE, SERVICE_KEYS, AzureResourceType } from "../../utils/constants/azure";
+
+import AppNameEditor from "./AppNameEditor";
+import RuntimeStackInfo from "./RuntimeStackInfo";
+import AppServicePlanInfo from "./AppServicePlanInfo";
+
+import buttonStyles from "../../css/buttonStyles.module.css";
+import styles from "./styles.module.css";
+import classNames from "classnames";
+import messages from "./messages";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -38,7 +42,7 @@ type Props = IStateProps & InjectedIntlProps;
 const AppServiceModal = ({ intl }: Props) => {
   const { formatMessage } = intl;
   const dispatch = useDispatch();
-  const { vscode } = React.useContext(AppContext);
+  const { vscode } = useContext(AppContext);
   const appServiceInStore = useSelector(getAppService);
   const templateAppService = useSelector((state: AppState) => state.templates.featureOptions).filter(feature => feature.internalName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE)[0];
   const initialSubscription = appServiceInStore ? appServiceInStore.subscription : "";
@@ -53,7 +57,7 @@ const AppServiceModal = ({ intl }: Props) => {
   const [isAvailableAppName, setIsAvailableAppName] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (showAdvanced) {
       const azureServiceType = SERVICE_KEYS.APP_SERVICE;
       sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_AZURE_SERVICE_ADVANCED_MODE, { azureServiceType });

@@ -2,25 +2,21 @@
 import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
+  visitRepo: {
+    id: "rightsidebar.about.visitRepo",
+    defaultMessage: "Visit our GitHub"
+  },
+  reportIssue: {
+    id: "rightsidebar.about.reportIssue",
+    defaultMessage: "Report an Issue"
+  },
   templatesVersion: {
-    id: "about.templatesVersion",
+    id: "rightsidebar.about.templatesVersion",
     defaultMessage: "Templates version:"
   },
   wizardVersion: {
-    id: "about.wizardVersion",
+    id: "rightsidebar.about.wizardVersion",
     defaultMessage: "Wizard version:"
   },
-  reportIssue: {
-    id: "about.reportAnIssue",
-    defaultMessage: "Report an Issue"
-  },
-  visitRepo: {
-    id: "about.visitRepo",
-    defaultMessage: "Visit our GitHub"
-  },
-  feedbackRedirectLinkLabel: {
-    id: "about.redirectLinkLabel",
-    defaultMessage: "GitHub.com"
-  }
 });
 export default messages;
