@@ -10,6 +10,11 @@ export const getTask = async (taskName: string): Promise<vscode.Task | undefined
   return task;
 };
 
+export const existTask = async (taskName: string): Promise<boolean> => {
+  const tasks = await getTasks();
+  return tasks.some((t) => t.name === taskName);
+};
+
 export const executeTask = async (task: vscode.Task): Promise<void> => {
   const execution = await vscode.tasks.executeTask(task);
   return new Promise<void>((resolve) => {
