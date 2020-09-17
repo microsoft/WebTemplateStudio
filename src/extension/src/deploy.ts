@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { Logger } from "./utils/logger";
 import { getExtensionName } from "./utils/packageInfo";
-import { getTask, executeTask } from "./utils/vscodeTaskService";
+import { getTask, executeTask, existTask } from "./utils/vscodeTaskService";
 import { VSCODE_TASKS } from "./constants/constants";
 
 export class Deploy {
@@ -15,19 +15,25 @@ export class Deploy {
   constructor(private context: vscode.ExtensionContext) {
     Logger.load(this.context.extensionPath);
     Logger.initializeOutputChannel(getExtensionName(this.context));
-    if (!this.checkValidFolderPath()) {
-      return;
-    }
-    this.prepareForDeployment();
   }
 
-  private checkValidFolderPath(): boolean {
-    const folderPath = Deploy.getCurrentWorkingDirectory();
-    if (!folderPath) {
-      vscode.window.showErrorMessage("No Project Opened Up");
-      return false;
+  async deployProject(): Promise<void> {
+    const isOpenProject = await this.isOpenWebTSProject();
+    if (!isOpenProject) {
+      vscode.window.showErrorMessage("There is no Web Template Studio project open");
+      return;
     }
-    return true;
+
+    await this.prepareForDeployment();
+  }
+
+  private async isOpenWebTSProject(): Promise<boolean> {
+    const folderPath = Deploy.getCurrentWorkingDirectory();
+    if (folderPath === undefined) return false;
+
+    const existInstallDepencenciesTask = await existTask(VSCODE_TASKS.INSTALL_DEPENDENCIES);
+    const existPublishTask = await existTask(VSCODE_TASKS.PUBLISH);
+    return existInstallDepencenciesTask && existPublishTask;
   }
 
   private async prepareForDeployment(): Promise<void> {

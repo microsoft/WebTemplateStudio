@@ -14,7 +14,7 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand(
       "webTemplateStudioExtension.deployApp.local",
       async () => {
-        Deploy.getInstance(context);
+        await Deploy.getInstance(context).deployProject();
       }
     )
   );

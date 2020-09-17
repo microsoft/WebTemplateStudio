@@ -169,3 +169,22 @@ export function* loadroutesNavItemsaSaga(){
     });
   }
 }
+export function* resetWizardSaga(){
+  yield takeEvery(
+    CONFIG_TYPEKEYS.RESET_WIZARD,
+    callBack
+  );
+
+  function* callBack (){
+    const frontendFramework = yield select((state: AppState) => state.userSelection.frontendFramework);
+    const backendFramework = yield select((state: AppState) => state.userSelection.backendFramework);
+    yield put ({
+      type: USERSELECTION_TYPEKEYS.SELECT_FRONTEND_FRAMEWORK,
+      payload: frontendFramework
+    });
+    yield put ({
+      type: USERSELECTION_TYPEKEYS.SELECT_BACKEND_FRAMEWORK,
+      payload: backendFramework
+    });
+  }
+}
