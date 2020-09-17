@@ -67,7 +67,7 @@ const getPages = (message: any) => {
       command: EXTENSION_COMMANDS.GET_PAGES,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        pages: mockData.pages,
+        pages: mockData.pages(message.payload.frontendFramework),
       },
     },
     "*"
