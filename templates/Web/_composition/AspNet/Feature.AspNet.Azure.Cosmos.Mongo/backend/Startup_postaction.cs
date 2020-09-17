@@ -21,9 +21,20 @@ using MongoDB.Driver;
 
         private IMongoClient InitializeCosmosClientInstance()
         {
-            var connectionString = Configuration.GetConnectionString("CosmosDB");
-            var settings = MongoClientSettings.FromUrl(new MongoUrl(connectionString));
+            var connectionString = Configuration["COSMOSDB_CONNSTR"];
+            var userName = Configuration["COSMOSDB_USER"];
+            var dbName = Configuration["COSMOSDB_DB_NAME"];
+            var password = Configuration["COSMOSDB_PASSWORD"];
+
+            var settings = MongoClientSettings.FromConnectionString(connectionString);
+
+            var identity = new MongoInternalIdentity(dbName, userName);
+            var evidence = new PasswordEvidence(password);
+            settings.Credential = new MongoCredential("SCRAM-SHA-1", identity, evidence);
+
+            settings.UseTls = true;
             settings.SslSettings = new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
+
             return new MongoClient(settings);
         }
         //}]}
