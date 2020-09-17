@@ -254,11 +254,13 @@ export class AppServiceProvider {
   public async updateAppSettings(
     resourceGroupName: string,
     webAppName: string,
-    settings: StringDictionary
+    properties: {[propertyName: string]: string}
   ): Promise<void> {
     if (this.webClient === undefined) {
       throw new AuthorizationError(MESSAGES.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
     }
+    const settings : StringDictionary = { properties };
+
     this.webClient.webApps.updateApplicationSettings(
       resourceGroupName,
       webAppName,
