@@ -1,9 +1,10 @@
 import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
-  pages: {
-    id: "rightSidebar.selectPages.pages",
-    defaultMessage: "Pages"
+  services: {
+    id: "rightSidebar.servicesList.services",
+    defaultMessage: "Services"
   },
 });
+
 export default messages;

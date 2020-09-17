@@ -300,8 +300,8 @@ const pages = (frontendFramework: string) => {
       isHidden: false,
       isGroupExclusiveSelection: false,
       genGroup: 0,
-      multipleInstance: true,
-      itemNameEditable: true,
+      multipleInstance: false,
+      itemNameEditable: false,
       licenses: [
         {
           text: "Bootstrap",
