@@ -2,14 +2,14 @@
 import ListItem from "./ListItem";
 import Form from "./Form";
 import WarningMessage from "../warningmessage/WarningMessage";
-import CONSTANTS from "../../constants";
+import { ERROR_MESSAGE, ENDPOINT } from "../../constants";
 
 const Param_SourceName_Pascal = () => {
   const [items, setItems] = useState([]);
   const [warningMessage, setWarningMessage] = useState({warningMessageOpen: false, warningMessageText: ""});
 
   const getItems = () => {
-    let promiseList = fetch(CONSTANTS.ENDPOINT.LIST)
+    let promiseList = fetch(ENDPOINT.LIST)
       .then(response => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -20,7 +20,7 @@ const Param_SourceName_Pascal = () => {
   }
 
   const deleteItem = (item) => {
-    fetch(`${CONSTANTS.ENDPOINT.LIST}/${item.id}`, { method: "DELETE" })
+    fetch(`${ENDPOINT.LIST}/${item.id}`, { method: "DELETE" })
       .then(response => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -33,7 +33,7 @@ const Param_SourceName_Pascal = () => {
       .catch(error => {
         setWarningMessage({
           warningMessageOpen: true,
-          warningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_DELETE} ${error}`
+          warningMessageText: `${ERROR_MESSAGE.LIST_DELETE} ${error}`
         });
       });
   }
@@ -43,12 +43,12 @@ const Param_SourceName_Pascal = () => {
     if (!textField) {
       setWarningMessage({
         warningMessageOpen: true,
-        warningMessageText: CONSTANTS.ERROR_MESSAGE.LIST_EMPTY_MESSAGE
+        warningMessageText: ERROR_MESSAGE.LIST_EMPTY_MESSAGE
       });
       return;
     }
 
-    fetch(CONSTANTS.ENDPOINT.LIST, {
+    fetch(ENDPOINT.LIST, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -67,7 +67,7 @@ const Param_SourceName_Pascal = () => {
       .catch(error =>
         setWarningMessage({
           warningMessageOpen: true,
-          warningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_ADD} ${error}`
+          warningMessageText: `${ERROR_MESSAGE.LIST_ADD} ${error}`
         })
       );
   };
@@ -85,7 +85,7 @@ const Param_SourceName_Pascal = () => {
       .catch(error =>
         setWarningMessage({
           warningMessageOpen: true,
-          warningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_GET} ${error}`
+          warningMessageText: `${ERROR_MESSAGE.LIST_GET} ${error}`
         })
       );
   }, []);
