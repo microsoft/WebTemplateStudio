@@ -1,4 +1,4 @@
-﻿import Footer from "./components/footer";
+﻿import Footer from "./components/footer/Footer";
 //^^
 //{[{
 import Param_SourceName_Pascal from "./components/Param_SourceName_Lower/Param_SourceName_Pascal";
