@@ -11,7 +11,8 @@
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$frontendframework == React & wts.type == page"
+    "wts.compositionFilter": "$frontendframework == React & wts.type == page",
+    "wts.casing.sourceName": "pascal|lower"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,
@@ -20,6 +21,14 @@
     "wts.rootNamespace": {
       "type": "parameter",
       "replaces": "Param_RootNamespace"
+    },
+    "wts.sourceName.casing.pascal": {
+      "type": "parameter",
+      "replaces": "Param_SourceName_Pascal"
+    },
+    "wts.sourceName.casing.lower": {
+      "type": "parameter",
+      "replaces": "Param_SourceName_Lower"
     }
   }
 }

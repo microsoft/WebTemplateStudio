@@ -1,11 +1,7 @@
-﻿import React from "react";
-import { Switch, Route } from "react-router-dom";
-import "./App.css";
-import NavBar from "./components/NavBar";
-import Footer from "./components/Footer";
+﻿import Footer from "./components/footer";
 //^^
 //{[{
-import wts.ItemName from "./components/wts.ItemName/wts.ItemName";
+import Param_SourceName_Pascal from "./components/Param_SourceName_Lower/Param_SourceName_Pascal";
 //}]}
 //TODO Web Template Studio: Add routes for your new pages here.
 const App = () => {

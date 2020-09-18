@@ -1,5 +1,5 @@
 ﻿import React, { useState } from "react";
-import WarningMessage from "../WarningMessage";
+import WarningMessage from "../warningmessage/WarningMessage";
 import CONSTANTS from "../../constants";
 import GridItem from "./GridItem";
 

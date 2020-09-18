@@ -1,7 +1,7 @@
 ﻿import React, { useState } from "react";
 import ListItem from "./ListItem";
 import Form from "./Form";
-import WarningMessage from "../WarningMessage";
+import WarningMessage from "../warningmessage/WarningMessage";
 import CONSTANTS from "../../constants";
 
 const Param_SourceName_Pascal = () => {

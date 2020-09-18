@@ -19,7 +19,7 @@
     "wts.displayOrder": "1",
     "wts.genGroup": "0",
     "wts.rightClickEnabled": "true",
-    "wts.casing.sourceName": "pascal"
+    "wts.casing.sourceName": "pascal|lower"
   },
   "sourceName": "ReactGrid",
   "preferNameDirectory": true,
@@ -35,7 +35,13 @@
     },
     "wts.sourceName.casing.pascal": {
       "type": "parameter",
-      "replaces": "Param_SourceName_Pascal"
+      "replaces": "Param_SourceName_Pascal",
+      "fileRename": "Param_SourceName_Pascal"
+    },
+    "wts.sourceName.casing.lower": {
+      "type": "parameter",
+      "replaces": "Param_SourceName_Lower",
+      "fileRename": "Param_SourceName_Lower"
     }
   }
 }

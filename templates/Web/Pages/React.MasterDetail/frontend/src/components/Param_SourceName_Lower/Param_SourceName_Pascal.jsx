@@ -1,6 +1,6 @@
 ﻿import React, { useState } from "react";
 import classnames from "classnames";
-import WarningMessage from "../WarningMessage";
+import WarningMessage from "../warningmessage/WarningMessage";
 import Detail from "./Detail";
 import MasterList from "./MasterList";
 import styles from "./styles.module.css";
