@@ -182,29 +182,29 @@ button:disabled {
   cursor: default;
 }
 
-.gridLayoutVersion{
+.gridLayoutVersion {
   display: grid;
   grid-template-columns: min-content auto;
 }
 
-.version{
+.version {
   margin-top: 0.5rem;
   font-size: 1.2rem;
   line-height: 1.5;
 }
-.latestVersion{
+.latestVersion {
   margin-top: 0.5rem;
   font-size: 1.2rem;
   line-height: 1.5;
   padding-left: 0.5rem;
 }
 
-.description{
+.description {
   font-size: 1.2rem;
   line-height: 1.5;
 }
 
-.DependencyInfo{
+.DependencyInfo {
   margin-top: 1rem;
   height: 4.5rem;
 }

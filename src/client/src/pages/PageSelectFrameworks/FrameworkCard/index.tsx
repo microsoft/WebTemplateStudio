@@ -14,20 +14,17 @@ import { getLatestVersion } from "../../../utils/extensionService/extensionServi
 import { AppContext } from "../../../AppContext";
 import { updateFrameworksAction } from "../../../store/templates/frameworks/action";
 import { IOption } from "../../../types/option";
-import { setSelectedBackendFrameworkAction, setSelectedFrontendFrameworkAction } from "../../../store/userSelection/frameworks/action";
+import {
+  setSelectedBackendFrameworkAction,
+  setSelectedFrontendFrameworkAction,
+} from "../../../store/userSelection/frameworks/action";
 import { ROUTE } from "../../../utils/constants/routes";
 import { setDetailPageAction } from "../../../store/config/detailsPage/action";
 
 type Props = ISelectProps & IStateProps & InjectedIntlProps;
 
 const FrameworkCard = (props: Props) => {
-  const {
-    framework,
-    frontEndSelect,
-    backEndSelect,
-    isFrontEnd,
-    intl
-  } = props;
+  const { framework, frontEndSelect, backEndSelect, isFrontEnd, intl } = props;
 
   const [selected, setSelected] = React.useState(false);
   const [latestVersion, setLatestVersion] = React.useState(framework.latestVersion);
@@ -58,7 +55,7 @@ const FrameworkCard = (props: Props) => {
 
   const setDetailPage = (detailPageInfo: IOption) => {
     dispatch(setDetailPageAction(detailPageInfo, false, ROUTE.SELECT_FRAMEWORKS));
-  }
+  };
   const selectWhenLoadWithoutSelection = () => {
     const frameworkSelectableFirstTime = isFrontEnd
       ? frontEndSelect.internalName === "" && framework.internalName === "React"
@@ -116,7 +113,19 @@ const FrameworkCard = (props: Props) => {
     >
       <div>
         <div className={styles.gridLayoutCardHeader}>
-          <div>{getSvg(framework.internalName) || (framework.svgUrl && <img src={framework.svgUrl} alt="" />)}</div>
+          <div>
+            {(framework.svgBase64 && (
+              <img
+                className={styles.iconHeight}
+                alt={framework.internalName}
+                src={"data:image/png;base64," + framework.svgBase64}
+              />
+            )) ||
+              //probably remove all this
+              //do we want default image or none
+              getSvg(framework.internalName) ||
+              (framework.svgUrl && <img src={framework.svgUrl} alt="" />)}
+          </div>
           <div
             className={classNames(styles.title, {
               [styles.titleLeftJustified]: framework.svgUrl === undefined ? true : false,

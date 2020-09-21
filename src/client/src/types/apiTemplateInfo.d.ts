@@ -6,6 +6,7 @@ export interface IApiTemplateInfo {
   longDescription: string;
   position: number;
   svgUrl: string | undefined;
+  svgBase64?: string;
   licenses: string[];
   selected: boolean;
   tags: any;
