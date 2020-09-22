@@ -43,7 +43,7 @@
   position: fixed;
   max-width: 90%;
   height: auto;
-  z-index: 0;  
+  z-index: 0;
   bottom: 65px;
 }
 @media (max-width: 1120px) {
@@ -56,8 +56,7 @@
   right: 360px;
 }
 
-
-@media (max-height: 650px){
+@media (max-height: 710px) {
   .homeSplash {
     right: 380px;
   }
