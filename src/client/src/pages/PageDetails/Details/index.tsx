@@ -9,11 +9,7 @@ import { KEY_EVENTS } from "../../../utils/constants/constants";
 import { IOption } from "../../../types/option";
 import { ILicenseObject, License } from "../../../types/license";
 
-import {
-  injectIntl,
-  InjectedIntl,
-  FormattedMessage
-} from "react-intl";
+import { injectIntl, InjectedIntl, FormattedMessage } from "react-intl";
 import messages from "./messages";
 
 interface IProps {
@@ -25,21 +21,10 @@ interface IProps {
 
 type Props = IProps;
 
-const Details = ({
-  detailInfo,
-  formatteDetailInfo,
-  handleBackClick,
-  intl
-}: Props) => {
+const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Props) => {
   const LinkRenderer = (props: any) => {
-
     return (
-      <a
-        className={styles.licenseButton}
-        href={String(props.href)}
-        target={"_blank"}
-        rel="noreferrer noopener"
-       >
+      <a className={styles.licenseButton} href={String(props.href)} target={"_blank"} rel="noreferrer noopener">
         {props.children}
       </a>
     );
@@ -61,20 +46,13 @@ const Details = ({
     isAuthorOrVersion?: boolean
   ) => {
     if (isAuthorOrVersion) {
-      return (
-        <ReactMarkdown
-          source={info as string}
-          renderers={{ link: LinkRenderer, paragraph: ParagraphRenderer }}
-        />
-      );
+      return <ReactMarkdown source={info as string} renderers={{ link: LinkRenderer, paragraph: ParagraphRenderer }} />;
     }
     if (formatteDetailInfo) {
       if (isMarkdown) {
         return (
           <ReactMarkdown
-            source={intl.formatMessage(
-              info as FormattedMessage.MessageDescriptor
-            )}
+            source={intl.formatMessage(info as FormattedMessage.MessageDescriptor)}
             renderers={{ link: LinkRenderer, paragraph: ParagraphRenderer }}
           />
         );
@@ -82,12 +60,7 @@ const Details = ({
       return intl.formatMessage(info as FormattedMessage.MessageDescriptor);
     }
     if (isMarkdown) {
-      return (
-        <ReactMarkdown
-          source={info as string}
-          renderers={{ link: LinkRenderer, paragraph: ParagraphRenderer }}
-        />
-      );
+      return <ReactMarkdown source={info as string} renderers={{ link: LinkRenderer, paragraph: ParagraphRenderer }} />;
     } else {
       return info;
     }
@@ -112,30 +85,30 @@ const Details = ({
         </div>
         <div className={styles.headerContainer}>
           {detailInfo.internalName &&
-            (getSvg(detailInfo.internalName, styles.icon) || (
-              <img className={styles.icon} src={detailInfo.svgUrl} alt="" />
-            ))}
-          <div className={styles.detailsTitle}>
-            {renderFormattedData(detailInfo.title, false)}
-          </div>
+            ((detailInfo.svgBase64 && (
+              <img
+                className={styles.icon}
+                alt={detailInfo.internalName}
+                src={"data:image/svg+xml;base64," + detailInfo.svgBase64}
+              />
+            )) ||
+              //ideally remove all this, right?
+              getSvg(detailInfo.internalName, styles.icon) || (
+                <img className={styles.icon} src={detailInfo.svgUrl} alt="" />
+              ))}
+          <div className={styles.detailsTitle}>{renderFormattedData(detailInfo.title, false)}</div>
         </div>
         <div className={styles.detailsContainer}>
           <div className={styles.spacer} />
           <div>
-            <div className={styles.detailsDescription}>
-              {renderFormattedData(detailInfo.longDescription, true)}
-            </div>
+            <div className={styles.detailsDescription}>{renderFormattedData(detailInfo.longDescription, true)}</div>
             <div>
               {detailInfo.author && (
                 <div className={classnames(styles.metaData, styles.row)}>
                   <div className={classnames(styles.category, styles.colWidth)}>
-                    <FormattedMessage
-                      id="details.author"
-                      defaultMessage="Author:"
-                    />
+                    <FormattedMessage id="details.author" defaultMessage="Author:" />
                   </div>
-                  {(detailInfo.author &&
-                    renderFormattedData(detailInfo.author, false, true)) ||
+                  {(detailInfo.author && renderFormattedData(detailInfo.author, false, true)) ||
                     intl!.formatMessage(messages.none)}
                 </div>
               )}
@@ -143,52 +116,35 @@ const Details = ({
             <div>
               {detailInfo.licenses && detailInfo.licenses.length > 0 && (
                 <div className={classnames(styles.metaData)}>
-                  <div
-                    className={classnames(
-                      styles.licenseCategory,
-                      styles.colWidth
-                    )}
-                  >
-                    <FormattedMessage
-                      id="details.licenses"
-                      defaultMessage="Licenses:"
-                    />
+                  <div className={classnames(styles.licenseCategory, styles.colWidth)}>
+                    <FormattedMessage id="details.licenses" defaultMessage="Licenses:" />
                   </div>
                   <div className={classnames(styles.col8, styles.licenses)}>
                     {Array.isArray(detailInfo.licenses)
-                      ? detailInfo.licenses.map(
-                          (license: License, idx: number) => {
-                            const licenseObject = license as ILicenseObject;
-                            return (
-                              <p key={license + idx.toString()}>
-                                <a
-                                  className={styles.licenseButton}
-                                  href={String(licenseObject.url)}
-                                  target={"_blank"}
-                                  rel="noreferrer noopener"
-                                >
-                                  {licenseObject.text}
-                                </a>
-                              </p>
-                            );
-                          }
-                        )
-                      : (
-                          <ReactMarkdown
-                            source={detailInfo.licenses}
-                            renderers={{ link: LinkRenderer }}
-                          />
-                        ) || intl!.formatMessage(messages.none)}
+                      ? detailInfo.licenses.map((license: License, idx: number) => {
+                          const licenseObject = license as ILicenseObject;
+                          return (
+                            <p key={license + idx.toString()}>
+                              <a
+                                className={styles.licenseButton}
+                                href={String(licenseObject.url)}
+                                target={"_blank"}
+                                rel="noreferrer noopener"
+                              >
+                                {licenseObject.text}
+                              </a>
+                            </p>
+                          );
+                        })
+                      : <ReactMarkdown source={detailInfo.licenses} renderers={{ link: LinkRenderer }} /> ||
+                        intl!.formatMessage(messages.none)}
                   </div>
                 </div>
               )}
               {detailInfo.version && (
                 <div className={classnames(styles.metaData, styles.row)}>
                   <div className={classnames(styles.category, styles.colWidth)}>
-                    <FormattedMessage
-                      id="details.version"
-                      defaultMessage="Version:"
-                    />
+                    <FormattedMessage id="details.version" defaultMessage="Version:" />
                   </div>
                   {renderFormattedData(detailInfo.version, true, true)}
                 </div>

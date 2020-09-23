@@ -12,7 +12,7 @@ export const getFrameworksOptions = (json: any[], type: FRAMEWORK_TYPE): IOption
     longDescription: val.longDescription,
     position: val.position,
     selected: val.selected,
-    svgUrl: "",
+    svgUrl: val.svgUrl,
     svgBase64: val.svgBase64,
     title: val.displayName,
     version: val.tags!.version,

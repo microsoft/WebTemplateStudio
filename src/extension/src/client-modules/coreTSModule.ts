@@ -2,6 +2,8 @@ import { WizardServant, IPayloadResponse } from "../wizardServant";
 import { EXTENSION_COMMANDS } from "../constants/commands";
 import { CoreTemplateStudio } from "../coreTemplateStudio";
 
+import fs = require("fs-extra");
+
 export class CoreTSModule extends WizardServant {
   clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
     [EXTENSION_COMMANDS.GET_PROJECT_TYPES, this.getProjectTypes],
@@ -23,6 +25,13 @@ export class CoreTSModule extends WizardServant {
 
   async getFrameworks(message: any): Promise<IPayloadResponse> {
     const frameworks = await CoreTemplateStudio.GetExistingInstance().getFrameworks(message.payload.projectType);
+
+    frameworks
+      .filter((framework: any) => framework.icon !== null && frameworks.icon !== "")
+      .forEach((framework: any) => {
+        framework.iconBase64 = fs.readFileSync(framework.icon, "base64");
+      });
+
     return {
       payload: {
         frameworks,

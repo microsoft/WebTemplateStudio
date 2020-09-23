@@ -117,14 +117,13 @@ const FrameworkCard = (props: Props) => {
             {(framework.svgBase64 && (
               <img
                 className={styles.iconHeight}
-                alt={framework.internalName}
-                src={"data:image/png;base64," + framework.svgBase64}
+                alt="{framework.internalName}"
+                src={"data:image/svg+xml;base64," + framework.svgBase64}
               />
             )) ||
-              //probably remove all this
-              //do we want default image or none
+              //ideally remove all this, right?
               getSvg(framework.internalName) ||
-              (framework.svgUrl && <img src={framework.svgUrl} alt="" />)}
+              (framework.svgUrl && <img src={framework.svgUrl} alt={framework.frameworkName} />)}
           </div>
           <div
             className={classNames(styles.title, {
