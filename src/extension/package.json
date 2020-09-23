@@ -145,6 +145,7 @@
     "node-fetch": "^2.6.1",
     "node-fs-extra": "^0.8.2",
     "opn": "^6.0.0",
+    "p-retry": "^4.2.0",
     "rimraf": "^3.0.2",
     "url-parse": "^1.4.7",
     "vsce": "^1.75.0",

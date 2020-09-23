@@ -1,118 +1,95 @@
 import { CoreTemplateStudio } from "../coreTemplateStudio";
 import { Platform } from "../constants/constants";
 import { CLI_SETTINGS } from "../constants/cli";
-
+import retry from "p-retry";
 
 let instance: CoreTemplateStudio;
 let backends: string[] = [];
 let frontends: string[] = [];
 const projType = "FullStackWebApp";
-let syncAttemptNum = 0;
 let prevPromise: Promise<any> = Promise.resolve(null);
 
-const delay = (time: number) => {
-  return new Promise((resolve) => {
-    setTimeout(resolve, time);
-  });
-};
+let syncTemplates = async () => {
+  try {
+    console.log(`Sync templates`);
+    const path = CLI_SETTINGS.DEVELOPMENT_PATH_TO_TEMPLATES;
+    const payload = { path, platform: Platform.Web };
+    const syncPayload = { payload, liveMessageHandler: (value: any) => value };
 
-let getPagesObj = (
-  instance: CoreTemplateStudio,
-  frontend: string,
-  backend: string
-) => {
-  return instance
-    .getPages(projType, frontend, backend)
-    .then(pages => {
-      return pages.map((page: { name: string; templateId: string }) => {
-        return { name: page.name, identity: page.templateId };
-      });
-    })
-    .catch((error: Error) => {
-      console.log(error.toString());
+    await retry(() => instance.sync(syncPayload), {
+      retries: CLI_SETTINGS.MAX_SYNC_REQUEST_ATTEMPTS,
     });
-};
-
-let generateProj = (
-  instance: CoreTemplateStudio,
-  backend: string,
-  frontend: string
-) => {
-  return getPagesObj(instance, frontend, backend).then(pagesObj => {
-    return instance.generate({
-      payload: {
-        backendFramework: backend,
-        frontendFramework: frontend,
-        backendFrameworkLinuxVersion: "",
-        pages: pagesObj,
-        path: "../../../../../template_test",
-        projectName: backend + "-" + frontend,
-        projectType: projType,
-        services: {
-          appService: null,
-          cosmosDB: null
-        }
-      },
-      liveMessageHandler: value => {
-        value;
-      }
-    });
-  });
-};
-
-let attemptSync: any = (
-  instanceObj: CoreTemplateStudio,
-  syncAttemptNum: number
-) => {
-  if (syncAttemptNum >= CLI_SETTINGS.MAX_SYNC_REQUEST_ATTEMPTS) {
+  } catch (error) {
     CoreTemplateStudio.DestroyInstance();
     throw new Error("too many failed sync requests");
   }
-  return instanceObj
-    .sync({
-      payload: { path: CLI_SETTINGS.DEVELOPMENT_PATH_TO_TEMPLATES, platform: Platform.Web },
-      liveMessageHandler: value => {
-        value;
+};
+
+let getFrameworks = async () => {
+  try {
+    const frameworks = await instance.getFrameworks(projType);
+    frameworks.forEach((obj: { tags: { type: string }; name: string }) => {
+      if (obj.tags.type == "frontend") {
+        frontends.push(obj.name);
+      } else if (obj.tags.type == "backend") {
+        backends.push(obj.name);
       }
-    })
-    .then(async () => {
-      return await instance.getFrameworks(projType);
-    })
-    .then(frameworks => {
-      frameworks.forEach((obj: { tags: { type: string }; name: string }) => {
-        if (obj.tags.type == "frontend") {
-          frontends.push(obj.name);
-        } else if (obj.tags.type == "backend") {
-          backends.push(obj.name);
-        }
-      });
-
-      frontends.forEach(frontendFrameWork => {
-        backends.forEach(backendFramework => {
-          prevPromise = prevPromise.then(() =>
-            generateProj(instance, backendFramework, frontendFrameWork)
-          );
-        });
-      });
-
-      prevPromise.then(() => {
-        console.log("project generation complete");
-        CoreTemplateStudio.DestroyInstance();
-      });
-    })
-    .catch(() => {
-      syncAttemptNum++;
-      return delay(3000).then(() => attemptSync(instance, syncAttemptNum));
     });
+  } catch (e) {
+    console.log(e.toString());
+  }
+};
+
+let getPages = async (frontend: string, backend: string) => {
+  try {
+    const pages = await instance.getPages(projType, frontend, backend);
+    return pages.map((page: { name: string; templateId: string }) => {
+      return { name: page.name, identity: page.templateId };
+    });
+  } catch (error) {
+    console.log(error.toString());
+  }
+};
+
+let generateProject = async (frontend: string, backend: string) => {
+  console.log(`Generating ${frontend}-${backend}`);
+  const pagesObj = await getPages(frontend, backend);
+  return instance.generate({
+    payload: {
+      backendFramework: backend,
+      frontendFramework: frontend,
+      backendFrameworkLinuxVersion: "",
+      pages: pagesObj,
+      path: "../../../../../template_test",
+      projectName: backend + "-" + frontend,
+      projectType: projType,
+      services: {
+        appService: null,
+        cosmosDB: null,
+      },
+    },
+    liveMessageHandler: (value) => value,
+  });
+};
+
+const generateProjects = async () => {
+  frontends.forEach((frontend) => {
+    backends.forEach((backend) => {
+      prevPromise = prevPromise.then(() => generateProject(frontend, backend));
+    });
+  });
+
+  prevPromise.then(() => {
+    console.log("project generation complete");
+    CoreTemplateStudio.DestroyInstance();
+  });
 };
 
 CoreTemplateStudio.GetInstance(undefined)
-  .then(res => {
-    instance = res;
-  })
-  .then(() => {
-    return attemptSync(instance, syncAttemptNum);
-  })
+  .then((res) => (instance = res))
+  .then(syncTemplates)
+  .then(getFrameworks)
+  .then(generateProjects)
   .catch((error: Error) => {
     throw Error(error.toString());
   });
