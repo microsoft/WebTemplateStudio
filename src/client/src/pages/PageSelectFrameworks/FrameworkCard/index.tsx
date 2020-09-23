@@ -20,6 +20,7 @@ import {
 } from "../../../store/userSelection/frameworks/action";
 import { ROUTE } from "../../../utils/constants/routes";
 import { setDetailPageAction } from "../../../store/config/detailsPage/action";
+import Icon from "../../../components/Icon";
 
 type Props = ISelectProps & IStateProps & InjectedIntlProps;
 
@@ -114,16 +115,9 @@ const FrameworkCard = (props: Props) => {
       <div>
         <div className={styles.gridLayoutCardHeader}>
           <div>
-            {(framework.internalName && framework.svgBase64 && (
-              <img
-                className={styles.iconHeight}
-                alt={framework.internalName}
-                src={"data:image/svg+xml;base64," + framework.svgBase64}
-              />
-            )) ||
-              (framework.svgUrl && framework.frameworkName && (
-                <img src={framework.svgUrl} alt={framework.frameworkName} />
-              ))}
+            {framework.internalName && (
+              <Icon name={framework.internalName} svgBase64={framework.svgBase64} svgUrl={framework.svgUrl} />
+            )}
           </div>
           <div
             className={classNames(styles.title, {

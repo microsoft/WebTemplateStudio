@@ -113,10 +113,6 @@
   margin-top: 3px;
 }
 
-.iconHeight {
-  height: 36px;
-}
-
 .gridLayoutCardHeader {
   display: grid;
   grid-template-columns: 3rem auto 3rem;

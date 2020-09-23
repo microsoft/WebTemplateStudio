@@ -11,6 +11,7 @@ import { ILicenseObject, License } from "../../../types/license";
 
 import { injectIntl, InjectedIntl, FormattedMessage } from "react-intl";
 import messages from "./messages";
+import Icon from "../../../components/Icon";
 
 interface IProps {
   detailInfo: IOption;
@@ -84,19 +85,9 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
           </div>
         </div>
         <div className={styles.headerContainer}>
-          {/* Componetise this so we don´t have this duplicated? 
-          Icon
-          params name & svgbase64? & svgUrl? */}
-          {(detailInfo.internalName && detailInfo.svgBase64 && (
-            <img
-              className={styles.icon}
-              alt={detailInfo.internalName}
-              src={"data:image/svg+xml;base64," + detailInfo.svgBase64}
-            />
-          )) ||
-            (detailInfo.svgUrl && detailInfo.internalName && (
-              <img className={styles.icon} src={detailInfo.svgUrl} alt={detailInfo.internalName} />
-            ))}
+          {detailInfo.internalName && (
+            <Icon name={detailInfo.internalName} svgBase64={detailInfo.svgBase64} svgUrl={detailInfo.svgUrl} />
+          )}
           <div className={styles.detailsTitle}>{renderFormattedData(detailInfo.title, false)}</div>
         </div>
         <div className={styles.detailsContainer}>
