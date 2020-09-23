@@ -24,12 +24,6 @@ const Blankscreenshot = loadable(
 );
 const List = loadable(() => import(/* webpackChunkName: "List" */ "./svgComponents/List"));
 //icons
-const ReactIcon = loadable(() => import(/* webpackChunkName: "ReactIcon" */ "./svgComponents/ReactIcon"));
-const AngularIcon = loadable(() => import(/* webpackChunkName: "AngularIcon" */ "./svgComponents/AngularIcon"));
-const VueIcon = loadable(() => import(/* webpackChunkName: "VueIcon" */ "./svgComponents/VueIcon"));
-const FlaskIcon = loadable(() => import(/* webpackChunkName: "FlaskIcon" */ "./svgComponents/FlaskIcon"));
-const MoleculerIcon = loadable(() => import(/* webpackChunkName: "MoleculerIcon" */ "./svgComponents/MoleculerIcon"));
-const AspNetIcon = loadable(() => import(/* webpackChunkName: "AspNetIcon" */ "./svgComponents/AspNetIcon"));
 const AzureIcon = loadable(() => import(/* webpackChunkName: "AzureIcon" */ "./svgComponents/AzureIcon"));
 const AppserviceIcon = loadable(
   () => import(/* webpackChunkName: "AppServiceIcon" */ "./svgComponents/AppserviceIcon")
@@ -37,12 +31,6 @@ const AppserviceIcon = loadable(
 const CosmosdbIcon = loadable(() => import(/* webpackChunkName: "CosmosdbIcon" */ "./svgComponents/CosmosdbIcon"));
 
 const SVG_MAPPINGS = {
-  [WIZARD_CONTENT_INTERNAL_NAMES.REACT]: (style: string) => <ReactIcon style={style} />,
-  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR]: (style: string) => <AngularIcon style={style} />,
-  [WIZARD_CONTENT_INTERNAL_NAMES.VUE]: (style: string) => <VueIcon style={style} />,
-  [WIZARD_CONTENT_INTERNAL_NAMES.MOLECULER]: (style: string) => <MoleculerIcon style={style} />,
-  [WIZARD_CONTENT_INTERNAL_NAMES.ASPNET]: (style: string) => <AspNetIcon style={style} />,
-  [WIZARD_CONTENT_INTERNAL_NAMES.FLASK]: (style: string) => <FlaskIcon style={style} />,
   [WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE]: (style: string) => <AppserviceIcon style={style} />,
   [WIZARD_CONTENT_INTERNAL_NAMES.AZURE]: (style: string) => <AzureIcon style={style} />,
   [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: (style: string) => <CosmosdbIcon style={style} />,

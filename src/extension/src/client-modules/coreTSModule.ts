@@ -27,7 +27,7 @@ export class CoreTSModule extends WizardServant {
     const frameworks = await CoreTemplateStudio.GetExistingInstance().getFrameworks(message.payload.projectType);
 
     frameworks
-      .filter((framework: any) => framework.icon !== null && frameworks.icon !== "")
+      .filter((framework: any) => framework.icon !== null && framework.icon !== "")
       .forEach((framework: any) => {
         framework.iconBase64 = fs.readFileSync(framework.icon, "base64");
       });
