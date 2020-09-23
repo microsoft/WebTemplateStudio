@@ -84,18 +84,19 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
           </div>
         </div>
         <div className={styles.headerContainer}>
-          {detailInfo.internalName &&
-            ((detailInfo.svgBase64 && (
-              <img
-                className={styles.icon}
-                alt={detailInfo.internalName}
-                src={"data:image/svg+xml;base64," + detailInfo.svgBase64}
-              />
-            )) ||
-              //ideally remove all this, right?
-              getSvg(detailInfo.internalName, styles.icon) || (
-                <img className={styles.icon} src={detailInfo.svgUrl} alt="" />
-              ))}
+          {/* Componetise this so we don´t have this duplicated? 
+          Icon
+          params name & svgbase64? & svgUrl? */}
+          {(detailInfo.internalName && detailInfo.svgBase64 && (
+            <img
+              className={styles.icon}
+              alt={detailInfo.internalName}
+              src={"data:image/svg+xml;base64," + detailInfo.svgBase64}
+            />
+          )) ||
+            (detailInfo.svgUrl && detailInfo.internalName && (
+              <img className={styles.icon} src={detailInfo.svgUrl} alt={detailInfo.internalName} />
+            ))}
           <div className={styles.detailsTitle}>{renderFormattedData(detailInfo.title, false)}</div>
         </div>
         <div className={styles.detailsContainer}>

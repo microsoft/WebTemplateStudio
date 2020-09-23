@@ -114,16 +114,16 @@ const FrameworkCard = (props: Props) => {
       <div>
         <div className={styles.gridLayoutCardHeader}>
           <div>
-            {(framework.svgBase64 && (
+            {(framework.internalName && framework.svgBase64 && (
               <img
                 className={styles.iconHeight}
-                alt="{framework.internalName}"
+                alt={framework.internalName}
                 src={"data:image/svg+xml;base64," + framework.svgBase64}
               />
             )) ||
-              //ideally remove all this, right?
-              getSvg(framework.internalName) ||
-              (framework.svgUrl && <img src={framework.svgUrl} alt={framework.frameworkName} />)}
+              (framework.svgUrl && framework.frameworkName && (
+                <img src={framework.svgUrl} alt={framework.frameworkName} />
+              ))}
           </div>
           <div
             className={classNames(styles.title, {
