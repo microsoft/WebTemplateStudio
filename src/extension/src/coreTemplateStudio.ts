@@ -6,7 +6,7 @@ import * as fs from "fs";
 import { ChildProcess, spawn } from "child_process";
 import { CLI, CLI_SETTINGS } from "./constants/cli";
 import { ICommandPayload } from "./types/commandPayload";
-import { IGenerationPayloadType } from "./types/generationPayloadType";
+import { IGenerationData } from "./types/generationPayloadType";
 import { EventEmitter } from "events";
 import { IEngineGenerationPayloadType } from "./types/engineGenerationPayloadType";
 import { ISyncPayloadType } from "./types/syncPayloadType";
@@ -186,7 +186,7 @@ export class CoreTemplateStudio {
   }
 
   public async getAllLicenses(payload: ICommandPayload): Promise<any> {
-    const typedPayload = payload.payload as IGenerationPayloadType;
+    const typedPayload = payload.payload as IGenerationData;
     const getAllLicensesPayload = JSON.stringify(
       this.makeEngineGenerationPayload(typedPayload)
     );
@@ -227,7 +227,7 @@ export class CoreTemplateStudio {
   }
 
   public async generate(payload: ICommandPayload): Promise<any> {
-    const typedPayload = payload.payload as IGenerationPayloadType;
+    const typedPayload = payload.payload as IGenerationData;
     const generatePayload = JSON.stringify(
       this.makeEngineGenerationPayload(typedPayload)
     );
@@ -238,8 +238,7 @@ export class CoreTemplateStudio {
     const itemsToGenerateCount =
       projectItemsToGenerateCount +
       typedPayload.pages.length +
-      (typedPayload.services.appService ? 1 : 0) +
-      (typedPayload.services.cosmosDB ? 1 : 0)
+      typedPayload.services.length
     let generatedItemsCount = 0;
 
     this.cliEvents.on(CLI.GENERATE_PROGRESS, data => {
@@ -255,7 +254,7 @@ export class CoreTemplateStudio {
   }
 
   private makeEngineGenerationPayload(
-    payload: IGenerationPayloadType
+    payload: IGenerationData
   ): IEngineGenerationPayloadType {
     const {
       projectName,

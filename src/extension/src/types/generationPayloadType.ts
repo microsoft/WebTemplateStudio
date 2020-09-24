@@ -1,6 +1,6 @@
 import { API } from "../azure/azure-cosmosDB/cosmosDbModule";
 
-export interface IGenerationPayloadType {
+export interface IGenerationData {
   backendFramework: string;
   frontendFramework: string;
   backendFrameworkLinuxVersion: string;
@@ -8,27 +8,46 @@ export interface IGenerationPayloadType {
   path: string;
   projectName: string;
   projectType: string;
-  services: IServicesGenerationPayload;
+  services: Array<IService>;
 }
 
-export interface IServicesGenerationPayload {
-  appService: IAppServiceGenerationPayload | null;
-  cosmosDB: ICosmosDBGenerationPayload | null;
-}
+export type IService = IDefaultService|IAzureService;
 
-export interface IAppServiceGenerationPayload {
-  subscription: string;
-  resourceGroup: string;
-  location: string;
-  siteName: string;
+export interface IBaseService {
   internalName: string;
+  type: SERVICE_TYPEKEYS;
 }
 
-export interface ICosmosDBGenerationPayload {
+export interface IDefaultService extends IBaseService {
+  type: SERVICE_TYPEKEYS.DEFAULT;
+}
+
+export interface IAzureService extends IBaseService{
+  type: SERVICE_TYPEKEYS.AZURE;
+  azureType: AZURE_SERVICE_TYPEKEYS;
   subscription: string;
   resourceGroup: string;
   location: string;
+}
+
+export interface IAppService extends IAzureService {
+  azureType: AZURE_SERVICE_TYPEKEYS.APPSERVICE;
+  siteName: string;
+}
+
+export interface ICosmosDB extends IAzureService{
+  azureType: AZURE_SERVICE_TYPEKEYS.COSMOSDB;
   accountName: string;
   api: API;
-  internalName: string;
+}
+
+
+export enum SERVICE_TYPEKEYS {
+  DEFAULT = "Default",
+  AZURE = "Azure"
+}
+
+export enum AZURE_SERVICE_TYPEKEYS {
+  APPSERVICE = "AppService",
+  COSMOSDB = "CosmosDB"
 }

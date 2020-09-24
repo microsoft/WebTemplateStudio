@@ -1,8 +1,7 @@
-import { IGenerationPayloadType } from "./generationPayloadType";
+import { IGenerationData } from "./generationPayloadType";
 import { ISyncPayloadType } from "./syncPayloadType";
 
-type CommandPayload = IGenerationPayloadType | ISyncPayloadType;
 export interface ICommandPayload {
-  payload: CommandPayload;
+  payload: IGenerationData | ISyncPayloadType;
   liveMessageHandler: (message: string, progress?: number) => any;
 }

@@ -7,10 +7,10 @@ import { SubscriptionError, ValidationError } from "../errors";
 import { ResourceGroupDeploy, ResourceGroupSelection } from "./azure-resource-group/resourceGroupModule";
 import { AppServiceProvider, AppServiceSelections } from "./azure-app-service/appServiceProvider";
 import { ConnectionString } from "./utils/connectionString";
-import { ICosmosDBGenerationPayload, IAppServiceGenerationPayload, IServicesGenerationPayload } from "../types/generationPayloadType";
 import * as fse from "fs-extra";
 import * as path from "path";
 import { MESSAGES } from "../constants/messages";
+import { IAppService, IAzureService, ICosmosDB, IService, SERVICE_TYPEKEYS } from "../types/generationPayloadType";
 
 interface UserStatus {
   email: string;
@@ -51,12 +51,12 @@ export class AzureServices {
     let subscriptions: SubscriptionItem[] = [];
 
     if (email) {
-      subscriptions = await AzureServices.getSubscriptions();
+      subscriptions = await AzureServices.getSubscriptionsFromAzure();
     }
     return { email, subscriptions };
   }
 
-  public static async getSubscriptions(): Promise<SubscriptionItem[]> {
+  public static async getSubscriptionsFromAzure(): Promise<SubscriptionItem[]> {
     if (AzureServices.subscriptionsCache.length === 0) {
       AzureServices.subscriptionsCache = await AzureAuth.getSubscriptions();
     }
@@ -75,6 +75,14 @@ export class AzureServices {
     }
 
     return subscription;
+  }
+
+  public static getSubscriptions(names: string[]): SubscriptionItem[] {
+    const subscriptions = AzureServices.subscriptionsCache.filter(item => names.includes(item.label));
+    if (subscriptions.length != names.length) {
+      throw new SubscriptionError(MESSAGES.ERRORS.SUBSCRIPTION_NOT_FOUND);
+    }
+    return subscriptions;
   }
 
   public static IsMicrosoftLearnSubscription(subscription: SubscriptionItem): boolean {
@@ -124,28 +132,13 @@ export class AzureServices {
   }
 
   public static async getResourceGroupSelections(
-    services: IServicesGenerationPayload
+    services: IService[]
   ): Promise<ResourceGroupSelection[]> {
     const selection: ResourceGroupSelection[] = [];
-    const { appService, cosmosDB } = services;
-    if (appService) {
-      const { subscription, resourceGroup } = appService;
-      const canCreateResourceGroup = await AzureServices.canCreateResourceGroup(
-        subscription,
-        resourceGroup,
-        selection
-      );
-      if (canCreateResourceGroup) {
-        const resourceGroupSelection = await AzureServices.getResourceGroupSelection(
-          subscription,
-          resourceGroup
-        );
-        selection.push(resourceGroupSelection);
-      }
-    }
 
-    if (cosmosDB) {
-      const { subscription, resourceGroup } = cosmosDB;
+    const azureServices = services.filter(s => s.type === SERVICE_TYPEKEYS.AZURE) as IAzureService[];
+    for(const service of azureServices) {
+      const { subscription, resourceGroup } = service;
       const canCreateResourceGroup = await AzureServices.canCreateResourceGroup(
         subscription,
         resourceGroup,
@@ -195,18 +188,16 @@ export class AzureServices {
 
   public static async generateValidResourceGroupName(
     projectName: string,
-    services: IServicesGenerationPayload
+    services: IService[]
   ): Promise<string> {
     const subscriptions: SubscriptionItem[] = [];
 
-    if (services.cosmosDB) {
-      const cosmosSubscription = AzureServices.getSubscription(services.cosmosDB.subscription);
-      subscriptions.push(cosmosSubscription);
-    }
+    const azureServices = services.filter(s => s.type === SERVICE_TYPEKEYS.AZURE) as IAzureService[];
 
-    if (services.appService) {
-      const appserviceSubscription = AzureServices.getSubscription(services.appService.subscription);
-      subscriptions.push(appserviceSubscription);
+    if (azureServices) {
+      const subscriptionNames = [...new Set(azureServices.map(s => s.subscription))];
+      const subscriptionItems = AzureServices.getSubscriptions(subscriptionNames);
+      subscriptions.push(...subscriptionItems);
     }
     const allSubscriptions: SubscriptionItem[] = [...new Set(subscriptions)];
 
@@ -227,7 +218,7 @@ export class AzureServices {
   }
 
   public static async deployAppService(
-    appService: IAppServiceGenerationPayload,
+    appService: IAppService,
     projectName: string,
     backendFrameworkLinuxVersion: string,
     path: string
@@ -290,7 +281,7 @@ export class AzureServices {
     }
   }
 
-  public static async deployCosmos(cosmosDB: ICosmosDBGenerationPayload, genPath: string): Promise<string> {
+  public static async deployCosmos(cosmosDB: ICosmosDB, genPath: string): Promise<string> {
     const subscription = AzureServices.getSubscription(cosmosDB.subscription);
 
     const userCosmosDBSelection: CosmosDBSelections = {
