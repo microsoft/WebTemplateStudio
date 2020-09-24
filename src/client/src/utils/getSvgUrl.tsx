@@ -25,17 +25,9 @@ const Blankscreenshot = loadable(
 const List = loadable(() => import(/* webpackChunkName: "List" */ "./svgComponents/List"));
 //icons
 const AzureIcon = loadable(() => import(/* webpackChunkName: "AzureIcon" */ "./svgComponents/AzureIcon"));
-const AppserviceIcon = loadable(
-  () => import(/* webpackChunkName: "AppServiceIcon" */ "./svgComponents/AppserviceIcon")
-);
-const CosmosdbIcon = loadable(() => import(/* webpackChunkName: "CosmosdbIcon" */ "./svgComponents/CosmosdbIcon"));
 
 const SVG_MAPPINGS = {
-  [WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE]: (style: string) => <AppserviceIcon style={style} />,
   [WIZARD_CONTENT_INTERNAL_NAMES.AZURE]: (style: string) => <AzureIcon style={style} />,
-  [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: (style: string) => <CosmosdbIcon style={style} />,
-  [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO]: (style: string) => <CosmosdbIcon style={style} />,
-  [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL]: (style: string) => <CosmosdbIcon style={style} />,
 };
 
 const SVG_REACTCOMPONENT_MAPPINGS = {

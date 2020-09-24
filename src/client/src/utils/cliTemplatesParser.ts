@@ -12,7 +12,7 @@ export const getFrameworksOptions = (json: any[], type: FRAMEWORK_TYPE): IOption
     longDescription: val.longDescription,
     position: val.position,
     selected: val.selected,
-    svgUrl: val.svgUrl,
+    svgUrl: val.svgUrl, //maybe remove? as it´s always set to ""... or we leave that for the future... I vote to remove this
     svgBase64: val.svgBase64,
     title: val.displayName,
     version: val.tags!.version,
@@ -53,7 +53,8 @@ export const getFeaturesOptions = (json: any[]): IOption[] => {
         licenses: val.licenses,
         longDescription: val.longDescription,
         selected: val.selected,
-        svgUrl: "",
+        svgUrl: val.svgUrl, //maybe remove? as it´s always set to ""... or we leave that for the future... I vote to remove this
+        svgBase64: val.svgBase64,
         title: val.displayName,
         defaultName: val.defaultName,
         isValidTitle: true,

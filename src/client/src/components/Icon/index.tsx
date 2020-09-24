@@ -11,8 +11,12 @@ export interface IIconProps {
 const Icon = ({ name, svgUrl, svgBase64 }: IIconProps) => {
   return (
     <>
-      {svgBase64 && <img className={styles.icon} alt={name} src={"data:image/svg+xml;base64," + svgBase64} />}
-      {svgUrl && <img className={styles.icon} alt={name} src={svgUrl} />}
+      {svgBase64 ? (
+        <img className={styles.icon} alt={name} src={"data:image/svg+xml;base64," + svgBase64} />
+      ) : (
+        svgUrl && <img className={styles.icon} alt={name} src={svgUrl} />
+      )}
+      {/* //TODO Add missing image. Cancel SVG? duplicate and call default  */}
     </>
   );
 };
