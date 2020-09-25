@@ -10,7 +10,7 @@ import { ConnectionString } from "./utils/connectionString";
 import * as fse from "fs-extra";
 import * as path from "path";
 import { MESSAGES } from "../constants/messages";
-import { IAppService, IAzureService, ICosmosDB, IService, SERVICE_TYPEKEYS } from "../types/generationPayloadType";
+import { IAppService, IAzureService, ICosmosDB, IService, SERVICE_CATEGORY } from "../types/generationPayloadType";
 
 interface UserStatus {
   email: string;
@@ -136,7 +136,7 @@ export class AzureServices {
   ): Promise<ResourceGroupSelection[]> {
     const selection: ResourceGroupSelection[] = [];
 
-    const azureServices = services.filter(s => s.type === SERVICE_TYPEKEYS.AZURE) as IAzureService[];
+    const azureServices = services.filter(s => s.category === SERVICE_CATEGORY.AZURE) as IAzureService[];
     for(const service of azureServices) {
       const { subscription, resourceGroup } = service;
       const canCreateResourceGroup = await AzureServices.canCreateResourceGroup(
@@ -192,7 +192,7 @@ export class AzureServices {
   ): Promise<string> {
     const subscriptions: SubscriptionItem[] = [];
 
-    const azureServices = services.filter(s => s.type === SERVICE_TYPEKEYS.AZURE) as IAzureService[];
+    const azureServices = services.filter(s => s.category === SERVICE_CATEGORY.AZURE) as IAzureService[];
 
     if (azureServices) {
       const subscriptionNames = [...new Set(azureServices.map(s => s.subscription))];

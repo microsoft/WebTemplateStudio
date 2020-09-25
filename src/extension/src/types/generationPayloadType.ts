@@ -11,43 +11,45 @@ export interface IGenerationData {
   services: Array<IService>;
 }
 
-export type IService = IDefaultService|IAzureService;
+export type IService = IAppService|ICosmosDB|IDefaultService;
 
-export interface IBaseService {
+export type IBaseService = {
   internalName: string;
-  type: SERVICE_TYPEKEYS;
-}
+  category: SERVICE_CATEGORY;
+  type: SERVICE_TYPE;
+};
 
 export interface IDefaultService extends IBaseService {
-  type: SERVICE_TYPEKEYS.DEFAULT;
+  category: SERVICE_CATEGORY.DEFAULT;
+  type: SERVICE_TYPE.DEFAULT;
 }
 
 export interface IAzureService extends IBaseService{
-  type: SERVICE_TYPEKEYS.AZURE;
-  azureType: AZURE_SERVICE_TYPEKEYS;
+  category: SERVICE_CATEGORY.AZURE;
   subscription: string;
   resourceGroup: string;
   location: string;
 }
 
 export interface IAppService extends IAzureService {
-  azureType: AZURE_SERVICE_TYPEKEYS.APPSERVICE;
+  type: SERVICE_TYPE.APPSERVICE;
   siteName: string;
 }
 
 export interface ICosmosDB extends IAzureService{
-  azureType: AZURE_SERVICE_TYPEKEYS.COSMOSDB;
+  type: SERVICE_TYPE.COSMOSDB;
   accountName: string;
   api: API;
 }
 
 
-export enum SERVICE_TYPEKEYS {
+export enum SERVICE_CATEGORY {
   DEFAULT = "Default",
   AZURE = "Azure"
 }
 
-export enum AZURE_SERVICE_TYPEKEYS {
+export enum SERVICE_TYPE {
+  DEFAULT = "Default",
   APPSERVICE = "AppService",
   COSMOSDB = "CosmosDB"
 }

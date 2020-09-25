@@ -10,7 +10,7 @@ import { AzureServices } from "../azure/azureServices";
 import { CoreTemplateStudio } from "../coreTemplateStudio";
 import { ResourceGroupSelection } from "../azure/azure-resource-group/resourceGroupModule";
 import { Logger } from "../utils/logger";
-import { AZURE_SERVICE_TYPEKEYS, IAppService, IAzureService, ICosmosDB, IGenerationData, SERVICE_TYPEKEYS } from "../types/generationPayloadType";
+import { IAppService, IAzureService, ICosmosDB, IGenerationData, SERVICE_CATEGORY, SERVICE_TYPE } from "../types/generationPayloadType";
 import { sendToClientGenerationStatus, GenerationItemStatus, updateStatusMessage, GENERATION_NAMES } from "../utils/generationStatus";
 import { MESSAGES } from "../constants/messages";
 import { EXTENSION_COMMANDS } from "../constants/commands";
@@ -34,7 +34,6 @@ export class Generation extends WizardServant {
   private async generate(message: any): Promise<IPayloadResponse> {
     this.trackWizardTotalSessionTimeToGenerate();
     const generationData = this.getGenerationData(message.payload);
-
     const generationPath = await this.generateProject(generationData);
 
     if (generationPath) {
@@ -82,7 +81,7 @@ export class Generation extends WizardServant {
     const defaultResourceGroupName = await AzureServices.generateValidResourceGroupName(projectName, services);
 
     services
-      .filter(s => s.type === SERVICE_TYPEKEYS.AZURE && s.resourceGroup === "")
+      .filter(s => s.category === SERVICE_CATEGORY.AZURE && s.resourceGroup === "")
       .forEach(s => (s as IAzureService).resourceGroup = defaultResourceGroupName);
 
     const resourceGroupsToGenerate = await AzureServices.getResourceGroupSelections(services);
@@ -115,8 +114,8 @@ export class Generation extends WizardServant {
   ): Promise<void> {
     const servicesQueue: Promise<DeployedServiceStatus>[] = [];
 
-    const appService = generationData.services.find(s => s.type === SERVICE_TYPEKEYS.AZURE && s.azureType === AZURE_SERVICE_TYPEKEYS.APPSERVICE) as IAppService;
-    const cosmosService = generationData.services.find(s => s.type === SERVICE_TYPEKEYS.AZURE && s.azureType === AZURE_SERVICE_TYPEKEYS.COSMOSDB) as ICosmosDB;
+    const appService = generationData.services.find(s => s.category === SERVICE_CATEGORY.AZURE && s.type === SERVICE_TYPE.APPSERVICE) as IAppService;
+    const cosmosService = generationData.services.find(s => s.category === SERVICE_CATEGORY.AZURE && s.type === SERVICE_TYPE.COSMOSDB) as ICosmosDB;
 
     if (appService) {
       servicesQueue.push(
@@ -157,7 +156,7 @@ export class Generation extends WizardServant {
       serviceType: AzureResourceType.AppService,
       isDeployed: false,
     };
-    const appService = generationData.services.find(s => s.type === SERVICE_TYPEKEYS.AZURE && s.azureType === AZURE_SERVICE_TYPEKEYS.APPSERVICE) as IAppService;
+    const appService = generationData.services.find(s => s.category === SERVICE_CATEGORY.AZURE && s.type === SERVICE_TYPE.APPSERVICE) as IAppService;
     if (appService) {
       try {
         sendToClientGenerationStatus(GENERATION_NAMES.APP_SERVICE, GenerationItemStatus.Generating, "Deploying Azure services (this may take a few minutes).");
@@ -181,7 +180,7 @@ export class Generation extends WizardServant {
       isDeployed: false,
       payload: { connectionString: "" },
     };
-    const cosmosService = generationData.services.find(s => s.type === SERVICE_TYPEKEYS.AZURE && s.azureType === AZURE_SERVICE_TYPEKEYS.COSMOSDB) as ICosmosDB;
+    const cosmosService = generationData.services.find(s => s.category === SERVICE_CATEGORY.AZURE && s.type === SERVICE_TYPE.COSMOSDB) as ICosmosDB;
     if (cosmosService) {
       try {
         sendToClientGenerationStatus(GENERATION_NAMES.COSMOS_DB, GenerationItemStatus.Generating, "Deploying Azure services (this may take a few minutes).");
@@ -257,8 +256,8 @@ export class Generation extends WizardServant {
 
       const appService: IAppService = {
         internalName,
-        type: SERVICE_TYPEKEYS.AZURE,
-        azureType: AZURE_SERVICE_TYPEKEYS.APPSERVICE,
+        category: SERVICE_CATEGORY.AZURE,
+        type: SERVICE_TYPE.APPSERVICE,
         subscription,
         resourceGroup,
         location,
@@ -272,8 +271,8 @@ export class Generation extends WizardServant {
 
       const cosmosDB: ICosmosDB = {
         internalName,
-        type: SERVICE_TYPEKEYS.AZURE,
-        azureType: AZURE_SERVICE_TYPEKEYS.COSMOSDB,
+        category: SERVICE_CATEGORY.AZURE,
+        type: SERVICE_TYPE.COSMOSDB,
         subscription,
         resourceGroup,
         location,
