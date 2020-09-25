@@ -2,8 +2,6 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { injectIntl, InjectedIntl, InjectedIntlProps } from "react-intl";
 
-import loadable from '@loadable/component'
-
 import { AppState } from "../../../../store/combineReducers";
 import { getValidations } from "../../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { IValidations } from "../../../../store/config/validations/model";
@@ -16,8 +14,6 @@ import classnames from "classnames";
 
 import { ReactComponent as EditSVG } from "../../../../assets/edit.svg";
 import { ReactComponent as CloseSVG } from "../../../../assets/cancel.svg";
-const CosmosDBIcon = loadable(() => import(/* webpackChunkName: "CosmosdbIcon" */  "../../../../utils/svgComponents/CosmosdbIcon"));
-const AppServiceIcon = loadable(() => import(/* webpackChunkName: "AppServiceIcon" */  "../../../../utils/svgComponents/AppserviceIcon"));
 
 interface IStateProps {
   text?: string;
@@ -51,9 +47,8 @@ const SidebarItem = ({
   intl,
   customInputStyle,
   editable,
-  configurable
+  configurable,
 }: Props) => {
-
   const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       handleOnCloseClickEvent();
@@ -76,38 +71,42 @@ const SidebarItem = ({
     <>
       <div className={styles.draggablePage}>
         <div className={styles.iconContainer}>
-          {cosmosDB && <CosmosDBIcon style={styles.reorderIcon} />}
-          {appService && <AppServiceIcon style={styles.reorderIcon} />}
+          {/* 
+          reorderIcon style => small property in ICON component 
+          choose cosmosDB or azure from prop
+          */}
         </div>
-        {editable && <div className={styles.errorStack}>
-          <div
-            className={classnames(customInputStyle, {
-              [styles.pagesTextContainer]: true
-            })}
-          >
-            <div className={styles.inputContainer}>
-              {idx && (
-                <input
-                  className={classnames(
-                    styles.disabledInput,
-                    styles.input,
-                    customInputStyle
-                  )}
-                  value={text}
-                  disabled={true}
-                />
-              )}
+        {editable && (
+          <div className={styles.errorStack}>
+            <div
+              className={classnames(customInputStyle, {
+                [styles.pagesTextContainer]: true,
+              })}
+            >
+              <div className={styles.inputContainer}>
+                {idx && (
+                  <input
+                    className={classnames(styles.disabledInput, styles.input, customInputStyle)}
+                    value={text}
+                    disabled={true}
+                  />
+                )}
+              </div>
             </div>
           </div>
-        </div>}
-        {!editable && <div className={styles.errorStack}>
-          <div className={classnames({
-            [styles.pagesTextContainerNoEdit]: true
-          })}>
-            {text}
+        )}
+        {!editable && (
+          <div className={styles.errorStack}>
+            <div
+              className={classnames({
+                [styles.pagesTextContainerNoEdit]: true,
+              })}
+            >
+              {text}
+            </div>
           </div>
-        </div>}
-        {configurable &&
+        )}
+        {configurable && (
           <EditSVG
             tabIndex={0}
             onClick={handleConfigOnClick}
@@ -115,7 +114,7 @@ const SidebarItem = ({
             className={styles.editIcon}
             aria-label={intl.formatMessage(messages.configItem)}
           />
-        }
+        )}
 
         <CloseSVG
           tabIndex={0}
@@ -131,10 +130,7 @@ const SidebarItem = ({
 
 const mapStateToProps = (state: AppState) => ({
   selectedPages: state.userSelection.pages,
-  validations: getValidations(state)
+  validations: getValidations(state),
 });
 
-
-export default connect(
-  mapStateToProps
-)(injectIntl(SidebarItem));
+export default connect(mapStateToProps)(injectIntl(SidebarItem));
