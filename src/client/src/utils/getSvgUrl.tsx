@@ -2,14 +2,7 @@ import * as React from "react";
 import loadable from "@loadable/component";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "./constants/internalNames";
 
-import warning from "../assets/warning.svg";
-import cancel from "../assets/cancel.svg";
-import greencheck from "../assets/checkgreen.svg";
-
 const FullStack = loadable(() => import(/* webpackChunkName: "FullStack" */ "./svgComponents/FullStack"));
-const MasterDetail = loadable(() => import(/* webpackChunkName: "MasterDetail" */ "./svgComponents/MasterDetail"));
-const BlankPage = loadable(() => import(/* webpackChunkName: "BlankPage" */ "./svgComponents/BlankPage"));
-const ContentGrid = loadable(() => import(/* webpackChunkName: "ContentGrid" */ "./svgComponents/ContentGrid"));
 const Masterdetailscreenshot = loadable(
   () => import(/* webpackChunkName: "Masterdetailscreenshot" */ "./svgComponents/Masterdetailscreenshot")
 );
@@ -22,7 +15,6 @@ const Gridscreenshot = loadable(
 const Blankscreenshot = loadable(
   () => import(/* webpackChunkName: "Blankscreenshot" */ "./svgComponents/Blankscreenshot")
 );
-const List = loadable(() => import(/* webpackChunkName: "List" */ "./svgComponents/List"));
 //icons
 const AzureIcon = loadable(() => import(/* webpackChunkName: "AzureIcon" */ "./svgComponents/AzureIcon"));
 
@@ -32,18 +24,6 @@ const SVG_MAPPINGS = {
 
 const SVG_REACTCOMPONENT_MAPPINGS = {
   [WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP]: (style: string) => <FullStack style={style} />,
-  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_MASTER_DETAIL]: (style: string) => <MasterDetail style={style} />,
-  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_BLANK_PAGE]: (style: string) => <BlankPage style={style} />,
-  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_CONTENT_GRID]: (style: string) => <ContentGrid style={style} />,
-  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_LIST]: (style: string) => <List style={style} />,
-  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_MASTER_DETAIL]: (style: string) => <MasterDetail style={style} />,
-  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_BLANK_PAGE]: (style: string) => <BlankPage style={style} />,
-  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_CONTENT_GRID]: (style: string) => <ContentGrid style={style} />,
-  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_LIST]: (style: string) => <List style={style} />,
-  [WIZARD_CONTENT_INTERNAL_NAMES.VUE_MASTER_DETAIL]: (style: string) => <MasterDetail style={style} />,
-  [WIZARD_CONTENT_INTERNAL_NAMES.VUE_BLANK_PAGE]: (style: string) => <BlankPage style={style} />,
-  [WIZARD_CONTENT_INTERNAL_NAMES.VUE_CONTENT_GRID]: (style: string) => <ContentGrid style={style} />,
-  [WIZARD_CONTENT_INTERNAL_NAMES.VUE_LIST]: (style: string) => <List style={style} />,
 };
 
 const SVG_SCREENSHOT_MAPPINGS = {
@@ -61,10 +41,6 @@ const SVG_SCREENSHOT_MAPPINGS = {
   [WIZARD_CONTENT_INTERNAL_NAMES.VUE_BLANK_PAGE]: (style: string) => <Blankscreenshot style={style} />,
 };
 
-export const withLocalPath = (absolutePath: string): string => {
-  return process.env.REACT_APP_RELATIVE_PATH + absolutePath;
-};
-
 export const getScreenShot = (internalName: string, style?: string) => {
   if (SVG_SCREENSHOT_MAPPINGS[internalName] !== undefined) {
     return SVG_SCREENSHOT_MAPPINGS[internalName](style || "");
@@ -79,7 +55,3 @@ export const getSvg = (internalName: string, style?: string) => {
     return SVG_MAPPINGS[internalName](style || "");
   }
 };
-
-export const getCancelSvg = (): string => withLocalPath(cancel);
-export const getWarningSvg = (): string => withLocalPath(warning);
-export const getGreenCheckSvg = (): string => withLocalPath(greencheck);
