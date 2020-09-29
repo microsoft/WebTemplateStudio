@@ -1,8 +1,8 @@
 ﻿import React from "react";
 import { Switch, Route } from "react-router-dom";
 import "./App.css";
-import NavBar from "./components/navbar/NavBar";
-import Footer from "./components/footer/Footer";
+import NavBar from "./components/NavBar/NavBar";
+import Footer from "./components/Footer/Footer";
 
 //TODO Web Template Studio: Add routes for your new pages here.
 const App = () => {

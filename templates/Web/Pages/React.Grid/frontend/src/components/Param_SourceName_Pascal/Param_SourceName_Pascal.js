@@ -1,5 +1,5 @@
 ﻿import React, { useState } from "react";
-import WarningMessage from "../warningmessage/WarningMessage";
+import WarningMessage from "../WarningMessage/WarningMessage";
 import { ENDPOINT } from "../../constants";
 import GridItem from "./GridItem";
 
