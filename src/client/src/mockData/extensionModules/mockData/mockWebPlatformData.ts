@@ -1,3 +1,5 @@
+import { backendImage, frontendImage, noImage, pageImage, serviceImage } from "./mockSvgData";
+
 const projectTypes = [
   {
     name: "FullStackWebApp",
@@ -9,7 +11,7 @@ const frameworks = [
     name: "React",
     displayName: "React",
     icon: "",
-    iconBase64: "",
+    iconBase64: frontendImage,
     summary: "JavaScript framework",
     description:
       "React is a component-based open source JavaScript library for building interfaces for single page applications. It is used for handling view layer for web and mobile apps. React allows you to design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.  \r\n\r\n  \r\nMore information about React can be found [here](https://reactjs.org).\r\n",
@@ -42,7 +44,7 @@ const frameworks = [
     name: "Angular",
     displayName: "Angular",
     summary: "JavaScript framework",
-    iconBase64: "", //just populate with info here
+    iconBase64: noImage,
     description:
       "Angular is a platform that makes it easy to build applications with the web. Angular combines declarative templates, dependency injection, end to end tooling, and integrated best practices to solve development challenges. Angular empowers developers to build applications that live on the web, mobile, or the desktop.\r\n\r\nMore information about Angular can be found [here](https://angular.io).\r\n",
     author: "Google",
@@ -78,6 +80,7 @@ const frameworks = [
       "Vue is a lightweight, progressive JavaScript framework for building user interfaces. Vue is heavily focused on the view layer, and is designed to be simple and flexible.\r\n\r\nMore information about Vue can be found [here](https://vuejs.org/).\r\n",
     author: "Evan You",
     order: 1,
+    iconBase64: frontendImage,
     metadataType: "Framework",
     licenses:
       "[Vue](https://github.com/vuejs/vue/blob/dev/LICENSE)  \n[Vue CLI](https://github.com/vuejs/vue-cli/blob/dev/LICENSE)",
@@ -105,8 +108,7 @@ const frameworks = [
     name: "Node",
     displayName: "Node.js/Express",
     icon: "",
-    iconBase64:
-      "PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNiAzNiI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiM1MjllNDU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5Ob2RlPC90aXRsZT48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xOCwzNmEyLjkxLDIuOTEsMCwwLDEtMS4zOS0uMzZMMTIuMjEsMzNjLS42Ni0uMzYtLjMzLS40OS0uMTMtLjU2YTgsOCwwLDAsMCwyLS44OS4zMi4zMiwwLDAsMSwuMzQsMGwzLjM3LDJhLjQ3LjQ3LDAsMCwwLC40LDBMMzEuMzYsMjZhLjM5LjM5LDAsMCwwLC4yLS4zNlYxMC4zN2EuMzkuMzksMCwwLDAtLjItLjM3TDE4LjE3LDIuNGEuNDEuNDEsMCwwLDAtLjQsMEw0LjU3LDEwYS40NC40NCwwLDAsMC0uMi4zN1YyNS42MmEuNDIuNDIsMCwwLDAsLjIuMzZsMy42MSwyLjA4YzIsMSwzLjE3LS4xNiwzLjE3LTEuMzJ2LTE1YS40MS40MSwwLDAsMSwuNC0uNGgxLjY5YS40MS40MSwwLDAsMSwuMzkuNFYyNi43NGMwLDIuNjEtMS40Miw0LjEzLTMuOSw0LjEzYTUuNjksNS42OSwwLDAsMS0zLS44MmwtMy40OC0yQTIuNzcsMi43NywwLDAsMSwyLDI1LjY1VjEwLjRBMi43NywyLjc3LDAsMCwxLDMuNDEsOEwxNi42MS4zNWEyLjkyLDIuOTIsMCwwLDEsMi43OCwwTDMyLjU5LDhBMi43NywyLjc3LDAsMCwxLDM0LDEwLjRWMjUuNjVhMi43NywyLjc3LDAsMCwxLTEuMzgsMi40MUwxOS4zOSwzNS43QTMuMzgsMy4zOCwwLDAsMSwxOCwzNlptNC4wNy0xMC40OGMtNS43OSwwLTctMi42NS03LTQuOWEuNC40LDAsMCwxLC40LS40aDEuNzJhLjM1LjM1LDAsMCwxLC4zNi4zM2MuMjYsMS43NiwxLDIuNjIsNC41MywyLjYyLDIuNzgsMCw0LS42Myw0LTIuMTIsMC0uODYtLjMzLTEuNDktNC42Ni0xLjkyLTMuNjEtLjM2LTUuODYtMS4xNS01Ljg2LTQsMC0yLjY4LDIuMjUtNC4yNyw2LTQuMjcsNC4yNCwwLDYuMzIsMS40Niw2LjU4LDQuNjNhLjUxLjUxLDAsMCwxLS4xLjMuMzYuMzYsMCwwLDEtLjI2LjEzSDI2LjA3YS4zNy4zNywwLDAsMS0uMzYtLjNjLS40LTEuODItMS40My0yLjQxLTQuMTQtMi40MS0zLDAtMy40LDEuMDYtMy40LDEuODUsMCwxLC40MywxLjI2LDQuNTMsMS43OXM2LDEuMjksNiw0LjEzLTIuNDEsNC41Ny02LjYxLDQuNTdaIi8+PC9zdmc+DQo=",
+    iconBase64: backendImage,
     summary: "JavaScript framework",
     description:
       "Node.js is an open source server environment based on JavaScript that helps you build fast and scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices. Node.js runs across various platforms like Windows, Linux, Unix, and Mac OS X.\r\n\r\nMore information about Node.js can be found [here](https://nodejs.org).\r\n",
@@ -144,7 +146,7 @@ const frameworks = [
     name: "Moleculer",
     displayName: "Moleculer",
     summary: "JavaScript framework",
-    iconBase64: "",
+    iconBase64: backendImage,
     author: "Various",
     order: "1",
     licenses: "[Moleculer](https://github.com/moleculerjs/moleculer/blob/master/LICENSE)",
@@ -162,7 +164,7 @@ const frameworks = [
     name: "Flask",
     displayName: "Flask",
     summary: "Python framework",
-    iconBase64: "",
+    iconBase64: backendImage,
     description:
       "Flask is a python microframework with a small core for building web applications. It is based on [Werkzeug](https://www.palletsprojects.com/p/werkzeug/) and [Jinja](https://www.palletsprojects.com/p/jinja/). It is licensed under [BSD](https://github.com/pallets/flask/blob/master/LICENSE) license.\r\nIt is developed and supported by Pallets organization.\r\n\r\nMore information on Flask can be found [here](http://flask.pocoo.org/)\r\n",
     author: "Various",
@@ -190,7 +192,7 @@ const frameworks = [
     name: "AspNet",
     displayName: "ASP.NET",
     summary: ".NET framework",
-    iconBase64: "",
+    iconBase64: backendImage,
     description: "",
     author: "Microsoft",
     order: 1,
@@ -276,6 +278,7 @@ const pages = (frontendFramework: string) => {
       author: "Microsoft",
       version: "1.0.0",
       icon: "",
+      iconBase64: pageImage,
       displayOrder: 0,
       isHidden: false,
       isGroupExclusiveSelection: false,
@@ -303,6 +306,7 @@ const pages = (frontendFramework: string) => {
       author: "Microsoft",
       version: "1.0.0",
       icon: "",
+      iconBase64: pageImage,
       displayOrder: 1,
       isHidden: false,
       isGroupExclusiveSelection: false,
@@ -330,6 +334,7 @@ const pages = (frontendFramework: string) => {
       author: "Microsoft",
       version: "1.0.0",
       icon: "",
+      iconBase64: pageImage,
       displayOrder: 1,
       isHidden: false,
       isGroupExclusiveSelection: false,
@@ -357,6 +362,7 @@ const pages = (frontendFramework: string) => {
       author: "Microsoft",
       version: "1.0.0",
       icon: "",
+      iconBase64: pageImage,
       displayOrder: 1,
       isHidden: false,
       isGroupExclusiveSelection: false,
@@ -389,6 +395,7 @@ const features = [
     author: "Microsoft",
     version: "1.0.0",
     icon: "",
+    iconBase64: serviceImage,
     displayOrder: 1,
     isHidden: false,
     group: "CloudHosting",
@@ -417,9 +424,8 @@ const features = [
     author: "Microsoft",
     version: "1.0.0",
     icon: "",
-    //MOCK ICONS do we want real or fake ones?
-    iconBase64:
-      "PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNiAzNiI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiM1MjllNDU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5Ob2RlPC90aXRsZT48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xOCwzNmEyLjkxLDIuOTEsMCwwLDEtMS4zOS0uMzZMMTIuMjEsMzNjLS42Ni0uMzYtLjMzLS40OS0uMTMtLjU2YTgsOCwwLDAsMCwyLS44OS4zMi4zMiwwLDAsMSwuMzQsMGwzLjM3LDJhLjQ3LjQ3LDAsMCwwLC40LDBMMzEuMzYsMjZhLjM5LjM5LDAsMCwwLC4yLS4zNlYxMC4zN2EuMzkuMzksMCwwLDAtLjItLjM3TDE4LjE3LDIuNGEuNDEuNDEsMCwwLDAtLjQsMEw0LjU3LDEwYS40NC40NCwwLDAsMC0uMi4zN1YyNS42MmEuNDIuNDIsMCwwLDAsLjIuMzZsMy42MSwyLjA4YzIsMSwzLjE3LS4xNiwzLjE3LTEuMzJ2LTE1YS40MS40MSwwLDAsMSwuNC0uNGgxLjY5YS40MS40MSwwLDAsMSwuMzkuNFYyNi43NGMwLDIuNjEtMS40Miw0LjEzLTMuOSw0LjEzYTUuNjksNS42OSwwLDAsMS0zLS44MmwtMy40OC0yQTIuNzcsMi43NywwLDAsMSwyLDI1LjY1VjEwLjRBMi43NywyLjc3LDAsMCwxLDMuNDEsOEwxNi42MS4zNWEyLjkyLDIuOTIsMCwwLDEsMi43OCwwTDMyLjU5LDhBMi43NywyLjc3LDAsMCwxLDM0LDEwLjRWMjUuNjVhMi43NywyLjc3LDAsMCwxLTEuMzgsMi40MUwxOS4zOSwzNS43QTMuMzgsMy4zOCwwLDAsMSwxOCwzNlptNC4wNy0xMC40OGMtNS43OSwwLTctMi42NS03LTQuOWEuNC40LDAsMCwxLC40LS40aDEuNzJhLjM1LjM1LDAsMCwxLC4zNi4zM2MuMjYsMS43NiwxLDIuNjIsNC41MywyLjYyLDIuNzgsMCw0LS42Myw0LTIuMTIsMC0uODYtLjMzLTEuNDktNC42Ni0xLjkyLTMuNjEtLjM2LTUuODYtMS4xNS01Ljg2LTQsMC0yLjY4LDIuMjUtNC4yNyw2LTQuMjcsNC4yNCwwLDYuMzIsMS40Niw2LjU4LDQuNjNhLjUxLjUxLDAsMCwxLS4xLjMuMzYuMzYsMCwwLDEtLjI2LjEzSDI2LjA3YS4zNy4zNywwLDAsMS0uMzYtLjNjLS40LTEuODItMS40My0yLjQxLTQuMTQtMi40MS0zLDAtMy40LDEuMDYtMy40LDEuODUsMCwxLC40MywxLjI2LDQuNTMsMS43OXM2LDEuMjksNiw0LjEzLTIuNDEsNC41Ny02LjYxLDQuNTdaIi8+PC9zdmc+DQo=",
+    iconBase64: serviceImage,
+
     displayOrder: 1,
     isHidden: false,
     group: "CloudDatabase",
@@ -448,6 +454,7 @@ const features = [
     author: "Microsoft",
     version: "1.0.0",
     icon: "",
+    iconBase64: serviceImage,
     displayOrder: 1,
     isHidden: false,
     group: "CloudDatabase",
