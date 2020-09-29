@@ -1,9 +1,7 @@
-import { AzureResourceType } from "../../constants/constants";
 import { IActionContext } from "../../telemetry/callWithTelemetryAndErrorHandling";
 import { ITelemetryService } from "../../telemetry/telemetryService";
 import {
   IAzureService,
-  IDefaultService,
   IService,
   SERVICE_CATEGORY,
   SERVICE_TYPE,
@@ -11,7 +9,7 @@ import {
 import { IGenerator } from "./IGenerator";
 import AppServiceGenerator from "./utils/AppServiceGenerator";
 import CosmosDBGenerator from "./utils/CosmosDBGenerator";
-import DefaultServiceGenerator from "./utils/DefaultServiceGenerator";
+import ResourceGroupGenerator from "./utils/ResourceGroupGenerator";
 
 export interface DeployedServiceStatus {
   serviceType: SERVICE_TYPE;
@@ -25,30 +23,24 @@ export default class GenerationServicesService {
 
   constructor(private Telemetry: ITelemetryService) {
     this.generators = new Map<SERVICE_TYPE, IGenerator>([
-      [SERVICE_TYPE.DEFAULT, new DefaultServiceGenerator()],
       [SERVICE_TYPE.APPSERVICE, new AppServiceGenerator()],
       [SERVICE_TYPE.COSMOSDB, new CosmosDBGenerator()],
     ]);
   }
 
-  public async generate(services: Array<IService>) {
+  public async generate(services: Array<IService>, projectName: string) {
     this.servicesQueue.length = 0;
 
-    this.generateAzureServices(services);
-    this.generateDefaultServices(services);
-
+    await this.generateAzureServices(services, projectName);
     const result = await Promise.all(this.servicesQueue);
     return result;
   }
 
-  private async generateAzureServices(services: Array<IService>) {
+  private async generateAzureServices(services: Array<IService>, projectName: string) {
     const azureServices = services.filter((s) => s.category === SERVICE_CATEGORY.AZURE) as Array<IAzureService>;
+    const resourceGroupGenerator = new ResourceGroupGenerator(this.Telemetry);
+    await resourceGroupGenerator.generate(projectName, azureServices);
     this.generateServices(azureServices as Array<IService>);
-  }
-
-  private generateDefaultServices(services: Array<IService>) {
-    const defaultServices = services.filter((s) => s.category === SERVICE_CATEGORY.DEFAULT) as Array<IDefaultService>;
-    this.generateServices(defaultServices);
   }
 
   private generateServices(services: Array<IService>) {

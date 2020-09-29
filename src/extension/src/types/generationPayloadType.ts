@@ -19,6 +19,7 @@ export type IBaseService = {
   type: SERVICE_TYPE;
 };
 
+//This interface is for services without azure generation (code generation only by cli)
 export interface IDefaultService extends IBaseService {
   category: SERVICE_CATEGORY.DEFAULT;
   type: SERVICE_TYPE.DEFAULT;

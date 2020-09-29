@@ -10,7 +10,7 @@ import { ConnectionString } from "./utils/connectionString";
 import * as fse from "fs-extra";
 import * as path from "path";
 import { MESSAGES } from "../constants/messages";
-import { IAppService, IAzureService, ICosmosDB, IService, SERVICE_CATEGORY } from "../types/generationPayloadType";
+import { IAppService, IAzureService, ICosmosDB } from "../types/generationPayloadType";
 
 interface UserStatus {
   email: string;
@@ -82,7 +82,7 @@ export class AzureServices {
     if (subscriptions.length != names.length) {
       throw new SubscriptionError(MESSAGES.ERRORS.SUBSCRIPTION_NOT_FOUND);
     }
-    return subscriptions;
+    return [...new Set(subscriptions)];
   }
 
   public static IsMicrosoftLearnSubscription(subscription: SubscriptionItem): boolean {
@@ -131,25 +131,19 @@ export class AzureServices {
     };
   }
 
-  public static async getResourceGroupSelections(
-    services: IService[]
-  ): Promise<ResourceGroupSelection[]> {
+  public static async getResourceGroupSelections(services: IAzureService[]): Promise<ResourceGroupSelection[]> {
     const selection: ResourceGroupSelection[] = [];
 
-    const azureServices = services.filter(s => s.category === SERVICE_CATEGORY.AZURE) as IAzureService[];
-    for(const service of azureServices) {
+    for (const service of services) {
       const { subscription, resourceGroup } = service;
-      const canCreateResourceGroup = await AzureServices.canCreateResourceGroup(
-        subscription,
-        resourceGroup,
-        selection
-      );
+      const subscriptionItem = AzureServices.getSubscription(subscription);
+      const canCreateResourceGroup = await AzureServices.canCreateResourceGroup(subscriptionItem, resourceGroup, selection);
       if (canCreateResourceGroup) {
-        const resourceGroupSelection = await AzureServices.getResourceGroupSelection(
-          subscription,
-          resourceGroup
-        );
-        selection.push(resourceGroupSelection);
+        selection.push({
+          subscriptionItem,
+          resourceGroupName: resourceGroup,
+          location: CONSTANTS.AZURE_LOCATION.CENTRAL_US,
+        });
       }
     }
 
@@ -157,11 +151,10 @@ export class AzureServices {
   }
 
   private static async canCreateResourceGroup(
-    subscription: string,
+    subscriptionItem: SubscriptionItem,
     resourceGroup: string,
     selection: ResourceGroupSelection[]
   ): Promise<boolean> {
-    const subscriptionItem = AzureServices.getSubscription(subscription);
     const isMicrosoftLearnSubscription = AzureServices.IsMicrosoftLearnSubscription(subscriptionItem);
     const existResourceGroup = await AzureServices.AzureResourceGroupProvider.ExistResourceGroup(
       resourceGroup,
@@ -173,38 +166,16 @@ export class AzureServices {
     return !(existResourceGroup || isResourceGroupInSelection || isMicrosoftLearnSubscription);
   }
 
-  private static async getResourceGroupSelection(
-    subscription: string,
-    resourceGroup: string
-  ): Promise<ResourceGroupSelection> {
-    const subscriptionItem = AzureServices.getSubscription(subscription);
-
-    return {
-      subscriptionItem,
-      resourceGroupName: resourceGroup,
-      location: CONSTANTS.AZURE_LOCATION.CENTRAL_US,
-    };
-  }
-
-  public static async generateValidResourceGroupName(
-    projectName: string,
-    services: IService[]
-  ): Promise<string> {
+  public static async generateValidResourceGroupName(projectName: string, services: IAzureService[]): Promise<string> {
     const subscriptions: SubscriptionItem[] = [];
 
-    const azureServices = services.filter(s => s.category === SERVICE_CATEGORY.AZURE) as IAzureService[];
-
-    if (azureServices) {
-      const subscriptionNames = [...new Set(azureServices.map(s => s.subscription))];
+      const subscriptionNames = services.map(s => s.subscription);
       const subscriptionItems = AzureServices.getSubscriptions(subscriptionNames);
       subscriptions.push(...subscriptionItems);
-    }
+
     const allSubscriptions: SubscriptionItem[] = [...new Set(subscriptions)];
 
-    return await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
-      projectName,
-      allSubscriptions
-    );
+    return await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(projectName, allSubscriptions);
   }
 
   public static async deployResourceGroup(resourceGroupSelection: ResourceGroupSelection): Promise<void> {

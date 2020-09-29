@@ -8,12 +8,12 @@ import { TelemetryEventName } from '../constants/telemetry';
 import { IActionContext, ITelemetryService } from "../telemetry/telemetryService";
 import { AzureServices } from "../azure/azureServices";
 import { CoreTemplateStudio } from "../coreTemplateStudio";
-import { ResourceGroupSelection } from "../azure/azure-resource-group/resourceGroupModule";
 import { Logger } from "../utils/logger";
-import { IAppService, IAzureService, ICosmosDB, IGenerationData, SERVICE_CATEGORY, SERVICE_TYPE } from "../types/generationPayloadType";
+import { IAppService, ICosmosDB, IGenerationData, SERVICE_CATEGORY, SERVICE_TYPE } from "../types/generationPayloadType";
 import { sendToClientGenerationStatus, GenerationItemStatus, updateStatusMessage, GENERATION_NAMES } from "../utils/generationStatus";
 import { MESSAGES } from "../constants/messages";
 import { EXTENSION_COMMANDS } from "../constants/commands";
+import GenerationServicesService from "../utils/generation/GenerationServicesService";
 
 interface DeployedServiceStatus {
   serviceType: AzureResourceType;
@@ -39,8 +39,11 @@ export class Generation extends WizardServant {
     if (generationPath) {
       generationData.path = generationPath;
 
-      if (this.hasAzureServices(generationData)) {
-        await this.generateResourceGroups(generationData);
+      const service = new GenerationServicesService(this.Telemetry);
+      const generationServicesStatus = await service.generate(generationData.services, generationData.projectName);
+      console.log(generationServicesStatus);
+
+      if (!this.hasAzureServices(generationData)) {
         await this.generateAzureServices(generationData);
       }
     } else if (this.hasAzureServices(generationData)) {
@@ -71,41 +74,6 @@ export class Generation extends WizardServant {
       Logger.appendError("EXTENSION", "Error on generation project:", error);
       sendToClientGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Failed, `ERROR: Templates could not be generated`);
       return;
-    }
-  }
-
-  private async generateResourceGroups(
-    generationData: IGenerationData
-  ): Promise<void> {
-    const { projectName, services } = generationData;
-    const defaultResourceGroupName = await AzureServices.generateValidResourceGroupName(projectName, services);
-
-    services
-      .filter(s => s.category === SERVICE_CATEGORY.AZURE && s.resourceGroup === "")
-      .forEach(s => (s as IAzureService).resourceGroup = defaultResourceGroupName);
-
-    const resourceGroupsToGenerate = await AzureServices.getResourceGroupSelections(services);
-
-    const resourceGroupQueue: Promise<void>[] = [];
-    resourceGroupsToGenerate.forEach((resourceGroup) => {
-      resourceGroupQueue.push(
-        this.deployWithTelemetry(
-          TelemetryEventName.ResourceGroupDeploy,
-          this.deployResourceGroup(resourceGroup)
-        )
-      );
-    });
-
-    await Promise.all(resourceGroupQueue);
-  }
-
-  private async deployResourceGroup(
-    resourceGroup: ResourceGroupSelection
-  ): Promise<void> {
-    try {
-      await AzureServices.deployResourceGroup(resourceGroup);
-    } catch (error) {
-      Logger.appendError("EXTENSION", "Error on Azure Resource Group creation:", error);
     }
   }
 
