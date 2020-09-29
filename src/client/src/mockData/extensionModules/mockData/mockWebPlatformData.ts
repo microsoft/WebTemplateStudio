@@ -183,7 +183,7 @@ const frameworks = [
   {
     name: "AspNet",
     displayName: "ASP.NET",
-    summary: ".NET framework",
+    summary: ".NET Core",
     description: "",
     author: "Microsoft",
     order: 1,
