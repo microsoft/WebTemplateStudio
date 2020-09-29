@@ -191,12 +191,12 @@ const frameworks = [
   {
     name: "AspNet",
     displayName: "ASP.NET",
-    summary: ".NET framework",
-    iconBase64: backendImage,
+    summary: ".NET Core",
     description: "",
     author: "Microsoft",
     order: 1,
     metadataType: "Framework",
+    iconBase64: backendImage,
     licenses: "[AspNet](https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt)",
     licenseTerms: [
       {

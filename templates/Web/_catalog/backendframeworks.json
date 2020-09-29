@@ -54,7 +54,7 @@
   {
     "name": "AspNet",
     "displayName": "ASP.NET",
-    "summary": ".NET framework",
+    "summary": ".NET Core",
     "author": "Microsoft",
     "order": "1",
     "licenses": "[ASP.NET](https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt)",
