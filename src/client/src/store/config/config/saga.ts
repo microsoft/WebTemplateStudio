@@ -109,7 +109,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
       const defaultSelectedBackEndFramework = {
         title: defaultOptionBack.title as string,
         internalName: defaultOptionBack.internalName,
-        svgBase64: defaultOptionBack.svgBase64, //TODO HERE
+        svgBase64: defaultOptionBack.svgBase64,
         version: `v${defaultOptionBack.version || "1.0"}`,
         author: defaultOptionBack.author,
         licenses: defaultOptionBack.licenses,
