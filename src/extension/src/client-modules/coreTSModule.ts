@@ -29,8 +29,6 @@ export class CoreTSModule extends WizardServant {
       .forEach((item: any) => {
         item.iconBase64 = fs.readFileSync(item.icon, "base64");
       });
-
-    //if some doesn´t have icon get default image
   };
 
   async getFrameworks(message: any): Promise<IPayloadResponse> {
@@ -66,6 +64,8 @@ export class CoreTSModule extends WizardServant {
       frontendFramework,
       backendFramework
     );
+    this.getBase64(pages);
+
     return {
       payload: {
         pages,
