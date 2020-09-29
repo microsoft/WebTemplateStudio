@@ -54,14 +54,11 @@ describe("PageCard", () => {
     expect(wrapper.queryByRole("figure")).toBe(null);
   });
 
-  xit("check img svg", () => {
-    //do we want to add different text for this one?
-    let svgUrl = props.page.internalName;
-    svgUrl = svgUrl.substring(svgUrl.indexOf(".") + 1);
-    svgUrl = svgUrl.substring(svgUrl.indexOf(".") + 1);
-    svgUrl = svgUrl.substring(svgUrl.indexOf(".") + 1).toLowerCase() + "page.svg";
-    const svgUrlWrapper = wrapper.getByText(svgUrl);
-    expect(svgUrlWrapper).toBeDefined();
+  it("check img from base64 renders ok", () => {
+    //UPDATE TEST to try checking this
+    // let svgBase64 = props.page.svgBase64;
+    // const svgUrlWrapper = wrapper.getByText(svgBase64gUrl);
+    // expect(svgUrlWrapper).toBeDefined();
   });
 
   it("on mouse over show button add page", () => {
