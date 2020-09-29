@@ -32,7 +32,8 @@ export const getPagesOptions = (json: any[]): IOption[] => {
     licenses: val.licenses,
     longDescription: val.longDescription,
     selected: val.selected,
-    svgUrl: "",
+    svgUrl: "", //TODELETE if possible
+    svgBase64: val.svgBase64,
     title: val.displayName,
     defaultName: val.defaultName,
     isValidTitle: true,

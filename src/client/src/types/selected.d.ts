@@ -5,6 +5,7 @@ export interface ISelected {
   defaultName?: string;
   internalName: string;
   id?: string;
+  svgBase64?: string;
   isValidTitle?: boolean;
   error?: FormattedMessage.MessageDescriptor;
   version?: string;

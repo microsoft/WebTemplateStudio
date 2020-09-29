@@ -14,12 +14,13 @@ const initialState = {
     longDescription: "",
     position: 0,
     svgUrl: undefined,
+    svgBase64: undefined,
     licenses: [],
     selected: false,
     author: "",
-    tags: undefined
+    tags: undefined,
   },
-  originRoute:''
+  originRoute: "",
 };
 
 const detailPage = (state: IDetail = initialState, action: RootAction) => {

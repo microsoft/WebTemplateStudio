@@ -84,7 +84,7 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
           </div>
         </div>
         <div className={styles.headerContainer}>
-          {detailInfo.defaultName && <Icon name={detailInfo.defaultName} svgBase64={detailInfo.svgBase64} />}
+          {detailInfo.title && <Icon name={detailInfo.title.toString()} svgBase64={detailInfo.svgBase64} />}
           <div className={styles.detailsTitle}>{renderFormattedData(detailInfo.title, false)}</div>
         </div>
         <div className={styles.detailsContainer}>
