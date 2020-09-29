@@ -4,7 +4,6 @@ import { connect, useDispatch } from "react-redux";
 import { ISelectProps, IStateProps } from "./interfaces";
 import { mapStateToProps } from "./store";
 import styles from "./styles.module.css";
-import { getSvg } from "../../../utils/getSvgUrl";
 import DependencyInfo from "./DependencyInfo";
 import messages from "./messages";
 import { KEY_EVENTS } from "../../../utils/constants/constants";
@@ -66,10 +65,11 @@ const FrameworkCard = (props: Props) => {
   };
 
   const selectCard = () => {
-    const { title, internalName, licenses, author, version } = framework;
+    const { title, internalName, licenses, author, version, svgBase64 } = framework;
     const shorthandVersionLabel = `v${version || "1.0"}`;
     const selectedFramework = {
       internalName,
+      svgBase64,
       title: title as string,
       version: shorthandVersionLabel,
       licenses,
@@ -114,18 +114,8 @@ const FrameworkCard = (props: Props) => {
     >
       <div>
         <div className={styles.gridLayoutCardHeader}>
-          <div>
-            {framework.internalName && (
-              <Icon name={framework.internalName} svgBase64={framework.svgBase64} svgUrl={framework.svgUrl} />
-            )}
-          </div>
-          <div
-            className={classNames(styles.title, {
-              [styles.titleLeftJustified]: framework.svgUrl === undefined ? true : false,
-            })}
-          >
-            {framework.title}
-          </div>
+          <div>{framework.internalName && <Icon name={framework.internalName} svgBase64={framework.svgBase64} />}</div>
+          <div className={styles.title}>{framework.title}</div>
         </div>
 
         <div className={styles.gridLayoutVersion}>
