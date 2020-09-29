@@ -14,9 +14,11 @@ import classnames from "classnames";
 
 import { ReactComponent as EditSVG } from "../../../../assets/edit.svg";
 import { ReactComponent as CloseSVG } from "../../../../assets/cancel.svg";
+import Icon from "../../../Icon";
 
 interface IStateProps {
   text?: string;
+  svgBase64?: string;
   cosmosDB?: boolean;
   appService?: boolean;
   idx?: number;
@@ -41,6 +43,7 @@ const SidebarItem = ({
   text,
   cosmosDB,
   appService,
+  svgBase64,
   idx,
   handleConfigClick,
   handleOnCloseClick,
@@ -71,10 +74,7 @@ const SidebarItem = ({
     <>
       <div className={styles.draggablePage}>
         <div className={styles.iconContainer}>
-          {/* 
-          reorderIcon style => small property in ICON component 
-          choose cosmosDB or azure from prop
-          */}
+          <Icon name="" svgBase64={svgBase64} small />
         </div>
         {editable && (
           <div className={styles.errorStack}>

@@ -16,6 +16,7 @@ export interface ICosmosDB {
   accountName: string;
   api: string;
   internalName: string;
+  svgBase64?: string;
   groupName: string;
   editable?: boolean;
 }

@@ -19,7 +19,6 @@ import SubscriptionSelection from "../../components/SubscriptionSelection";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
 
-
 import { KEY_EVENTS } from "../../utils/constants/constants";
 import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
@@ -44,7 +43,9 @@ const CosmosModal = ({ intl }: Props) => {
   const dispatch = useDispatch();
   const { vscode } = React.useContext(AppContext);
   const cosmosInStore = useSelector(getCosmosDB);
-  const templateCosmosDB = useSelector((state: AppState) => state.templates.featureOptions).filter(feature => feature.internalName === WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB)[0];
+  const templateCosmosDB = useSelector((state: AppState) => state.templates.featureOptions).filter(
+    (feature) => feature.internalName === WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB
+  )[0];
   const initialSubscription = cosmosInStore ? cosmosInStore.subscription : "";
   const initialAccountName = cosmosInStore ? cosmosInStore.accountName : "";
   const initialLocation = cosmosInStore ? cosmosInStore.location : AZURE.DEFAULT_LOCATION;
@@ -96,10 +97,12 @@ const CosmosModal = ({ intl }: Props) => {
       resourceGroup,
       api,
       groupName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
-      internalName: api === AZURE.COSMOS_APIS.MONGO
-        ? WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO
-        : WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL,
-      editable: templateCosmosDB.editable
+      internalName:
+        api === AZURE.COSMOS_APIS.MONGO
+          ? WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO
+          : WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL,
+      editable: templateCosmosDB.editable,
+      svgBase64: templateCosmosDB.svgBase64,
     };
     dispatch(saveCosmosDbAction(cosmosSelection));
   };
@@ -118,9 +121,7 @@ const CosmosModal = ({ intl }: Props) => {
         />
       </div>
       <div className={styles.body}>
-        <SubscriptionSelection
-          initialSubscription={subscription}
-          onSubscriptionChange={setSubscription} />
+        <SubscriptionSelection initialSubscription={subscription} onSubscriptionChange={setSubscription} />
 
         <AccountNameEditor
           subscription={subscription}
@@ -137,19 +138,21 @@ const CosmosModal = ({ intl }: Props) => {
             location={location}
             subscription={subscription}
             azureServiceType={AzureResourceType.Cosmos}
-            onLocationChange={setLocation} />
+            onLocationChange={setLocation}
+          />
           <ResourceGroupSelection
             subscription={subscription}
             resourceGroup={resourceGroup}
-            onResourceGroupChange={setResourceGroup} />
+            onResourceGroupChange={setResourceGroup}
+          />
         </div>
       </div>
       <div className={styles.footer}>
-        <button
-          className={buttonStyles.buttonLink}
-          onClick={() => setShowAdvanced(!showAdvanced)}>
+        <button className={buttonStyles.buttonLink} onClick={() => setShowAdvanced(!showAdvanced)}>
           {formatMessage(showAdvanced ? messages.hideAdvancedMode : messages.showAdvancedMode)}
-          <ArrowDown className={classNames(styles.advancedModeIcon, { [styles.rotateAdvancedModeIcon]: !showAdvanced })} />
+          <ArrowDown
+            className={classNames(styles.advancedModeIcon, { [styles.rotateAdvancedModeIcon]: !showAdvanced })}
+          />
         </button>
         <button className={getButtonClassNames()} onClick={saveCosmosSelection} disabled={!isEnableSaveButton()}>
           {formatMessage(messages.save)}

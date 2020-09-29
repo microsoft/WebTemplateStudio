@@ -15,5 +15,6 @@ export interface IAppService {
   location: string;
   siteName: string;
   internalName: string;
+  svgBase64?: string;
   editable?: boolean;
 }

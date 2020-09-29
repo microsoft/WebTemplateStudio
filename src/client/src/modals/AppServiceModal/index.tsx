@@ -1,4 +1,4 @@
-import  React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { AppContext } from "../../AppContext";
@@ -44,7 +44,9 @@ const AppServiceModal = ({ intl }: Props) => {
   const dispatch = useDispatch();
   const { vscode } = useContext(AppContext);
   const appServiceInStore = useSelector(getAppService);
-  const templateAppService = useSelector((state: AppState) => state.templates.featureOptions).filter(feature => feature.internalName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE)[0];
+  const templateAppService = useSelector((state: AppState) => state.templates.featureOptions).filter(
+    (feature) => feature.internalName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE
+  )[0];
   const initialSubscription = appServiceInStore ? appServiceInStore.subscription : "";
   const initialAppServiceName = appServiceInStore ? appServiceInStore.siteName : "";
   const initialLocation = appServiceInStore ? appServiceInStore.location : AZURE.DEFAULT_LOCATION;
@@ -92,7 +94,8 @@ const AppServiceModal = ({ intl }: Props) => {
       location,
       siteName: appName,
       internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
-      editable: templateAppService.editable
+      editable: templateAppService.editable,
+      svgBase64: templateAppService.svgBase64,
     };
     dispatch(saveAppServiceAction(appServiceSelection));
   };
@@ -111,9 +114,7 @@ const AppServiceModal = ({ intl }: Props) => {
         />
       </div>
       <div className={styles.body}>
-        <SubscriptionSelection
-          initialSubscription={subscription}
-          onSubscriptionChange={setSubscription} />
+        <SubscriptionSelection initialSubscription={subscription} onSubscriptionChange={setSubscription} />
 
         <AppNameEditor
           subscription={subscription}
@@ -126,24 +127,26 @@ const AppServiceModal = ({ intl }: Props) => {
         <RuntimeStackInfo />
 
         {/* Advanced Mode */}
-        <div className={classNames({ [styles.hide]: !showAdvanced })} >
+        <div className={classNames({ [styles.hide]: !showAdvanced })}>
           <LocationSelection
             location={location}
             subscription={subscription}
             azureServiceType={AzureResourceType.AppService}
-            onLocationChange={setLocation} />
+            onLocationChange={setLocation}
+          />
           <ResourceGroupSelection
             subscription={subscription}
             resourceGroup={resourceGroup}
-            onResourceGroupChange={setResourceGroup} />
+            onResourceGroupChange={setResourceGroup}
+          />
         </div>
       </div>
       <div className={styles.footer}>
-        <button
-          className={buttonStyles.buttonLink}
-          onClick={() => setShowAdvanced(!showAdvanced)}>
+        <button className={buttonStyles.buttonLink} onClick={() => setShowAdvanced(!showAdvanced)}>
           {formatMessage(showAdvanced ? messages.hideAdvancedMode : messages.showAdvancedMode)}
-          <ArrowDown className={classNames(styles.advancedModeIcon, { [styles.rotateAdvancedModeIcon]: !showAdvanced })} />
+          <ArrowDown
+            className={classNames(styles.advancedModeIcon, { [styles.rotateAdvancedModeIcon]: !showAdvanced })}
+          />
         </button>
 
         <button className={getButtonClassNames()} onClick={saveAppServiceSelection} disabled={!isEnableSaveButton()}>
