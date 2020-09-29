@@ -202,7 +202,7 @@ export class AzureServices {
       : CONSTANTS.SKU_DESCRIPTION.BASIC;
 
     const userAppServiceSelection: AppServiceSelections = {
-      siteName: appService.siteName,
+      siteName: appService.serviceName,
       subscriptionItem: subscription,
       resourceGroupItem: await AzureAuth.getResourceGroupItem(appService.resourceGroup, subscription),
       appServicePlanName: aspName,
@@ -257,7 +257,7 @@ export class AzureServices {
 
     const userCosmosDBSelection: CosmosDBSelections = {
       cosmosAPI: cosmosDB.api,
-      cosmosDBResourceName: cosmosDB.accountName,
+      cosmosDBResourceName: cosmosDB.serviceName,
       location: cosmosDB.location,
       resourceGroupItem: await AzureAuth.getResourceGroupItem(cosmosDB.resourceGroup, subscription),
       subscriptionItem: subscription,

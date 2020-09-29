@@ -6,10 +6,11 @@ import * as fs from "fs";
 import { ChildProcess, spawn } from "child_process";
 import { CLI, CLI_SETTINGS } from "./constants/cli";
 import { ICommandPayload } from "./types/commandPayload";
-import { IGenerationData } from "./types/generationPayloadType";
+import { IGenerationData, IService } from "./types/generationPayloadType";
 import { EventEmitter } from "events";
 import { IEngineGenerationPayloadType } from "./types/engineGenerationPayloadType";
 import { ISyncPayloadType } from "./types/syncPayloadType";
+import { IEngineGenerationTemplateType } from "./types/engineGenerationTemplateType";
 
 class CliEventEmitter extends EventEmitter {}
 
@@ -283,19 +284,15 @@ export class CoreTemplateStudio {
     };
   }
 
-  private getServiceTemplateInfo(services: any): any {
-    const servicesInfo = [];
-    if(services.appService) {
+  private getServiceTemplateInfo(services: IService[]): any {
+    const servicesInfo:IEngineGenerationTemplateType[] = [];
+
+    services.forEach(service => {
       servicesInfo.push({
-        name: services.appService.siteName, //AppService
-        templateid: services.appService.internalName
-      })
-    }if(services.cosmosDB) {
-      servicesInfo.push({
-        name: services.cosmosDB.accountName, //Cosmos
-        templateid: services.cosmosDB.internalName
-      })
-    }
+        name: service.serviceName,
+        templateid: service.internalName
+      })});
+
     return servicesInfo;
   }
 

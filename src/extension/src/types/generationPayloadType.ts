@@ -15,6 +15,7 @@ export type IService = IAppService|ICosmosDB|IDefaultService;
 
 export type IBaseService = {
   internalName: string;
+  serviceName: string;
   category: SERVICE_CATEGORY;
   type: SERVICE_TYPE;
 };
@@ -34,12 +35,10 @@ export interface IAzureService extends IBaseService{
 
 export interface IAppService extends IAzureService {
   type: SERVICE_TYPE.APPSERVICE;
-  siteName: string;
 }
 
 export interface ICosmosDB extends IAzureService{
   type: SERVICE_TYPE.COSMOSDB;
-  accountName: string;
   api: API;
 }
 

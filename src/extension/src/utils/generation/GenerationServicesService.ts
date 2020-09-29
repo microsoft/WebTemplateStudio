@@ -2,6 +2,7 @@ import { IActionContext } from "../../telemetry/callWithTelemetryAndErrorHandlin
 import { ITelemetryService } from "../../telemetry/telemetryService";
 import {
   IAzureService,
+  IGenerationData,
   IService,
   SERVICE_CATEGORY,
   SERVICE_TYPE,
@@ -20,34 +21,36 @@ export interface DeployedServiceStatus {
 export default class GenerationServicesService {
   private servicesQueue: Array<Promise<DeployedServiceStatus>> = [];
   private generators: Map<SERVICE_TYPE, IGenerator>;
+  private resourceGroupGenerator: ResourceGroupGenerator;
 
   constructor(private Telemetry: ITelemetryService) {
     this.generators = new Map<SERVICE_TYPE, IGenerator>([
       [SERVICE_TYPE.APPSERVICE, new AppServiceGenerator()],
       [SERVICE_TYPE.COSMOSDB, new CosmosDBGenerator()],
     ]);
+    this.resourceGroupGenerator = new ResourceGroupGenerator(this.Telemetry);
   }
 
-  public async generate(services: Array<IService>, projectName: string) {
+  public async generate(generationData: IGenerationData) {
     this.servicesQueue.length = 0;
 
-    await this.generateAzureServices(services, projectName);
+    await this.generateAzureServices(generationData);
     const result = await Promise.all(this.servicesQueue);
     return result;
   }
 
-  private async generateAzureServices(services: Array<IService>, projectName: string) {
+  private async generateAzureServices(generationData: IGenerationData) {
+    const {services, projectName} = generationData;
     const azureServices = services.filter((s) => s.category === SERVICE_CATEGORY.AZURE) as Array<IAzureService>;
-    const resourceGroupGenerator = new ResourceGroupGenerator(this.Telemetry);
-    await resourceGroupGenerator.generate(projectName, azureServices);
-    this.generateServices(azureServices as Array<IService>);
+    await this.resourceGroupGenerator.generate(projectName, azureServices);
+    this.generateServices(azureServices as Array<IService>, generationData);
   }
 
-  private generateServices(services: Array<IService>) {
+  private generateServices(services: Array<IService>, generationData: IGenerationData) {
     services.forEach((service) => {
       const generator = this.generators.get(service.type);
       if (generator) {
-        this.addToGenerationQueue(generator.telemetryEventName, generator.generate(service));
+        this.addToGenerationQueue(generator.telemetryEventName, generator.generate(service, generationData));
       }
     });
   }

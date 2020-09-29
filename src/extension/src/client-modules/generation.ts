@@ -40,7 +40,7 @@ export class Generation extends WizardServant {
       generationData.path = generationPath;
 
       const service = new GenerationServicesService(this.Telemetry);
-      const generationServicesStatus = await service.generate(generationData.services, generationData.projectName);
+      const generationServicesStatus = await service.generate(generationData);
       console.log(generationServicesStatus);
 
       if (!this.hasAzureServices(generationData)) {
@@ -82,17 +82,7 @@ export class Generation extends WizardServant {
   ): Promise<void> {
     const servicesQueue: Promise<DeployedServiceStatus>[] = [];
 
-    const appService = generationData.services.find(s => s.category === SERVICE_CATEGORY.AZURE && s.type === SERVICE_TYPE.APPSERVICE) as IAppService;
     const cosmosService = generationData.services.find(s => s.category === SERVICE_CATEGORY.AZURE && s.type === SERVICE_TYPE.COSMOSDB) as ICosmosDB;
-
-    if (appService) {
-      servicesQueue.push(
-        this.deployWithTelemetry(
-          TelemetryEventName.AppServiceDeploy,
-          this.createAppService(generationData)
-        )
-      );
-    }
 
     if (cosmosService) {
       servicesQueue.push(
@@ -104,39 +94,20 @@ export class Generation extends WizardServant {
     }
 
     const result = await Promise.all(servicesQueue);
+    console.log(result);
 
+    /*
     //if have deployed appservice and cosmos, update connectionString in appservice
     const cosmosResult = result.find((s) => s.serviceType === AzureResourceType.Cosmos);
     if (appService && cosmosResult && cosmosResult.payload.connectionString !== "") {
       AzureServices.updateAppSettings(
         appService.resourceGroup,
-        appService.siteName,
+        appService.serviceName,
         cosmosResult.payload.connectionString
       );
     }
-  }
 
-  private async createAppService(
-    generationData: IGenerationData
-  ): Promise<DeployedServiceStatus> {
-    const { projectName, backendFrameworkLinuxVersion, path } = generationData;
-    const result: DeployedServiceStatus = {
-      serviceType: AzureResourceType.AppService,
-      isDeployed: false,
-    };
-    const appService = generationData.services.find(s => s.category === SERVICE_CATEGORY.AZURE && s.type === SERVICE_TYPE.APPSERVICE) as IAppService;
-    if (appService) {
-      try {
-        sendToClientGenerationStatus(GENERATION_NAMES.APP_SERVICE, GenerationItemStatus.Generating, "Deploying Azure services (this may take a few minutes).");
-        await AzureServices.deployAppService(appService, projectName, backendFrameworkLinuxVersion, path);
-        sendToClientGenerationStatus(GENERATION_NAMES.APP_SERVICE, GenerationItemStatus.Success);
-        result.isDeployed = true;
-      } catch (error) {
-        Logger.appendError("EXTENSION", "Error on deploy Azure App Service:", error);
-        sendToClientGenerationStatus(GENERATION_NAMES.APP_SERVICE, GenerationItemStatus.Failed, "ERROR: App Service failed to deploy");
-      }
-    }
-    return result;
+    */
   }
 
   private async createCosmosDB(
@@ -220,7 +191,7 @@ export class Generation extends WizardServant {
     };
 
     if(data.services?.appService) {
-      const { internalName,subscription,resourceGroup,location,siteName } = data.services.appService;
+      const { internalName,subscription,resourceGroup,location, siteName } = data.services.appService;
 
       const appService: IAppService = {
         internalName,
@@ -229,13 +200,13 @@ export class Generation extends WizardServant {
         subscription,
         resourceGroup,
         location,
-        siteName,
+        serviceName: siteName,
       };
       generationData.services?.push(appService);
     }
 
     if(data.services?.cosmosDB) {
-      const { internalName,subscription,resourceGroup,location,accountName, api } = data.services.cosmosDB;
+      const { internalName,subscription,resourceGroup,location, accountName, api } = data.services.cosmosDB;
 
       const cosmosDB: ICosmosDB = {
         internalName,
@@ -244,7 +215,7 @@ export class Generation extends WizardServant {
         subscription,
         resourceGroup,
         location,
-        accountName,
+        serviceName: accountName,
         api
       };
       generationData.services?.push(cosmosDB);
