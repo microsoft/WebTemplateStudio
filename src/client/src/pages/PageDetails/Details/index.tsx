@@ -2,7 +2,6 @@ import classnames from "classnames";
 import * as React from "react";
 import ReactMarkdown from "react-markdown";
 import { ReactComponent as BackArrow } from "../../../assets/backarrow.svg";
-import { getSvg } from "../../../utils/getSvgUrl";
 import styles from "./styles.module.css";
 import backArrow from "../../../assets/backarrow.svg";
 import { KEY_EVENTS } from "../../../utils/constants/constants";
@@ -85,9 +84,7 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
           </div>
         </div>
         <div className={styles.headerContainer}>
-          {detailInfo.internalName && (
-            <Icon name={detailInfo.internalName} svgBase64={detailInfo.svgBase64} svgUrl={detailInfo.svgUrl} />
-          )}
+          {detailInfo.defaultName && <Icon name={detailInfo.defaultName} svgBase64={detailInfo.svgBase64} />}
           <div className={styles.detailsTitle}>{renderFormattedData(detailInfo.title, false)}</div>
         </div>
         <div className={styles.detailsContainer}>
