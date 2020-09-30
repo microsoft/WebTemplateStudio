@@ -7,8 +7,6 @@ import { setPageAction, setPagesAction } from "../../../../../store/userSelectio
 import { IValidations } from "../../../../../store/config/validations/model";
 import { AppState } from "../../../../../store/combineReducers";
 
-import loadable from "@loadable/component";
-
 import { ISelected } from "../../../../../types/selected";
 import { KEY_EVENTS } from "../../../../../utils/constants/constants";
 import { validateItemName } from "../../../../../utils/validations/itemName/itemName";
@@ -17,12 +15,9 @@ import messages from "./messages";
 import classnames from "classnames";
 import styles from "./styles.module.css";
 
+import { ReactComponent as ReorderIcon } from "../../../../../assets/reorder.svg";
 import { ReactComponent as CloseSVG } from "../../../../../assets/cancel.svg";
 import Icon from "../../../../Icon";
-
-const Reorder = loadable(
-  () => import(/* webpackChunkName: "ReorderIcon" */ "../../../../../utils/svgComponents/ReorderIcon")
-);
 
 interface IStateProps {
   page: ISelected;
@@ -106,7 +101,7 @@ const DraggablePage = ({
   return (
     <div className={styles.draggablePage}>
       <div className={styles.iconContainer}>
-        <Reorder style={styles.reorderIcon} />
+        <ReorderIcon className={styles.reorderIcon} />
       </div>
       <div className={styles.errorStack}>
         <div
