@@ -6,7 +6,7 @@ import { Controller } from "../../../controller";
 import { ICosmosDB, IGenerationData, IService, SERVICE_TYPE } from "../../../types/generationPayloadType";
 import { GenerationItemStatus, GENERATION_NAMES, sendToClientGenerationStatus } from "../../generationStatus";
 import { Logger } from "../../logger";
-import { DeployedServiceStatus } from "../GenerationServicesService";
+import { DeployedServiceStatus } from "../GenerationService";
 import { IGenerator } from "../IGenerator";
 
 export default class CosmosDBGenerator implements IGenerator {

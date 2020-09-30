@@ -3,7 +3,7 @@ import { TelemetryEventName } from "../../../constants/telemetry";
 import { IAppService, IGenerationData, IService, SERVICE_TYPE } from "../../../types/generationPayloadType";
 import { sendToClientGenerationStatus, GENERATION_NAMES, GenerationItemStatus } from "../../generationStatus";
 import { Logger } from "../../logger";
-import { DeployedServiceStatus } from "../GenerationServicesService";
+import { DeployedServiceStatus } from "../GenerationService";
 import { IGenerator } from "../IGenerator";
 
 export default class AppServiceGenerator implements IGenerator {

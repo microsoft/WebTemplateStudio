@@ -1,5 +1,5 @@
 import { IGenerationData, IService, SERVICE_TYPE } from "../../types/generationPayloadType";
-import { DeployedServiceStatus } from "./GenerationServicesService";
+import { DeployedServiceStatus } from "./GenerationService";
 
 export interface IGenerator {
   generate: (service: IService, generationData: IGenerationData) => Promise<DeployedServiceStatus>;

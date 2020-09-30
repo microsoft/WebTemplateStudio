@@ -20,7 +20,7 @@ export interface DeployedServiceStatus {
   payload?: any;
 }
 
-export default class GenerationServicesService {
+export default class GenerationService {
   private servicesQueue: Array<Promise<DeployedServiceStatus>> = [];
   private generators: Map<SERVICE_TYPE, IGenerator>;
   private resourceGroupGenerator: ResourceGroupGenerator;

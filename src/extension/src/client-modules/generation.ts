@@ -19,7 +19,7 @@ import {
   GENERATION_NAMES,
 } from "../utils/generationStatus";
 import { EXTENSION_COMMANDS } from "../constants/commands";
-import GenerationServicesService from "../utils/generation/GenerationServicesService";
+import GenerationService from "../utils/generation/GenerationService";
 
 export class Generation extends WizardServant {
   clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
@@ -33,7 +33,7 @@ export class Generation extends WizardServant {
 
   private async generate(message: any): Promise<IPayloadResponse> {
     this.trackWizardTotalSessionTimeToGenerate();
-    const generationService = new GenerationServicesService(this.Telemetry);
+    const generationService = new GenerationService(this.Telemetry);
     const generationData = this.getGenerationData(message.payload);
     const generationPath = await this.generateProject(generationData);
 
