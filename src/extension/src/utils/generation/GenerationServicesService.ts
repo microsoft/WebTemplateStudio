@@ -1,3 +1,4 @@
+import { AzureServices } from "../../azure/azureServices";
 import { IActionContext } from "../../telemetry/callWithTelemetryAndErrorHandling";
 import { ITelemetryService } from "../../telemetry/telemetryService";
 import {
@@ -7,6 +8,7 @@ import {
   SERVICE_CATEGORY,
   SERVICE_TYPE,
 } from "../../types/generationPayloadType";
+import { GenerationItemStatus, sendToClientGenerationStatus } from "../generationStatus";
 import { IGenerator } from "./IGenerator";
 import AppServiceGenerator from "./utils/AppServiceGenerator";
 import CosmosDBGenerator from "./utils/CosmosDBGenerator";
@@ -31,11 +33,19 @@ export default class GenerationServicesService {
     this.resourceGroupGenerator = new ResourceGroupGenerator(this.Telemetry);
   }
 
+  public rejectServices(services: Array<IService>) {
+    services.forEach((service) => {
+      const generator = this.generators.get(service.type);
+      if(generator)
+        sendToClientGenerationStatus(generator.generationName, GenerationItemStatus.Failed, "ERROR: Service deployment halted due to template error.");
+    });
+  }
+
   public async generate(generationData: IGenerationData) {
     this.servicesQueue.length = 0;
-
     await this.generateAzureServices(generationData);
     const result = await Promise.all(this.servicesQueue);
+    this.processAzureService(result);
     return result;
   }
 
@@ -44,6 +54,20 @@ export default class GenerationServicesService {
     const azureServices = services.filter((s) => s.category === SERVICE_CATEGORY.AZURE) as Array<IAzureService>;
     await this.resourceGroupGenerator.generate(projectName, azureServices);
     this.generateServices(azureServices as Array<IService>, generationData);
+  }
+
+  private  processAzureService(result: DeployedServiceStatus[] ) {
+    //if have deployed appservice and cosmos, update connectionString in appservice
+    const cosmosResult = result.find((s) => s.serviceType === SERVICE_TYPE.COSMOSDB);
+    const appServiceResult = result.find((s) => s.serviceType === SERVICE_TYPE.APPSERVICE);
+
+    if (appServiceResult?.isDeployed && cosmosResult?.isDeployed && cosmosResult.payload.connectionString !== "") {
+      AzureServices.updateAppSettings(
+        appServiceResult.payload.resourceGroup,
+        appServiceResult.payload.serviceName,
+        cosmosResult.payload.connectionString
+      );
+    }
   }
 
   private generateServices(services: Array<IService>, generationData: IGenerationData) {

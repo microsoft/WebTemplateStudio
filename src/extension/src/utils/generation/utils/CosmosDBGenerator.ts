@@ -12,6 +12,7 @@ import { IGenerator } from "../IGenerator";
 export default class CosmosDBGenerator implements IGenerator {
   telemetryEventName = TelemetryEventName.CosmosDBDeploy;
   serviceType = SERVICE_TYPE.COSMOSDB;
+  generationName = GENERATION_NAMES.COSMOS_DB;
 
   public async generate(service: IService, generationData: IGenerationData) {
     const cosmosService = service as ICosmosDB;
@@ -23,19 +24,19 @@ export default class CosmosDBGenerator implements IGenerator {
     };
     try {
       sendToClientGenerationStatus(
-        GENERATION_NAMES.COSMOS_DB,
+        this.generationName,
         GenerationItemStatus.Generating,
         "Deploying Azure services (this may take a few minutes)."
       );
       const connectionString = await AzureServices.deployCosmos(cosmosService, path);
-      sendToClientGenerationStatus(GENERATION_NAMES.COSMOS_DB, GenerationItemStatus.Success);
+      sendToClientGenerationStatus(this.generationName, GenerationItemStatus.Success);
       result.isDeployed = true;
       result.payload.connectionString = connectionString;
       await this.replaceConnectionString(path, connectionString, backendFramework);
     } catch (error) {
       Logger.appendError("EXTENSION", "Error on deploy CosmosDB Service:", error);
       sendToClientGenerationStatus(
-        GENERATION_NAMES.COSMOS_DB,
+        this.generationName,
         GenerationItemStatus.Failed,
         "ERROR: Cosmos DB failed to deploy"
       );
