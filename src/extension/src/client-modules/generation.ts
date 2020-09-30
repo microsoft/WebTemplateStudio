@@ -2,24 +2,15 @@ import * as vscode from "vscode";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
 import {
   CONSTANTS,
-  AzureResourceType
 } from "../constants/constants";
 import { TelemetryEventName } from '../constants/telemetry';
-import { IActionContext, ITelemetryService } from "../telemetry/telemetryService";
-import { AzureServices } from "../azure/azureServices";
+import { ITelemetryService } from "../telemetry/telemetryService";
 import { CoreTemplateStudio } from "../coreTemplateStudio";
 import { Logger } from "../utils/logger";
 import { IAppService, ICosmosDB, IGenerationData, SERVICE_CATEGORY, SERVICE_TYPE } from "../types/generationPayloadType";
 import { sendToClientGenerationStatus, GenerationItemStatus, updateStatusMessage, GENERATION_NAMES } from "../utils/generationStatus";
-import { MESSAGES } from "../constants/messages";
 import { EXTENSION_COMMANDS } from "../constants/commands";
 import GenerationServicesService from "../utils/generation/GenerationServicesService";
-
-interface DeployedServiceStatus {
-  serviceType: AzureResourceType;
-  isDeployed: boolean;
-  payload?: any;
-}
 
 export class Generation extends WizardServant {
   clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
@@ -44,7 +35,7 @@ export class Generation extends WizardServant {
       console.log(generationServicesStatus);
 
       if (!this.hasAzureServices(generationData)) {
-        await this.generateAzureServices(generationData);
+        await this.generateAzureServices();
       }
     } else if (this.hasAzureServices(generationData)) {
       sendToClientGenerationStatus(GENERATION_NAMES.APP_SERVICE, GenerationItemStatus.Failed, "ERROR: Azure Service deployment halted due to template error.");
@@ -77,24 +68,7 @@ export class Generation extends WizardServant {
     }
   }
 
-  private async generateAzureServices(
-    generationData: IGenerationData
-  ): Promise<void> {
-    const servicesQueue: Promise<DeployedServiceStatus>[] = [];
-
-    const cosmosService = generationData.services.find(s => s.category === SERVICE_CATEGORY.AZURE && s.type === SERVICE_TYPE.COSMOSDB) as ICosmosDB;
-
-    if (cosmosService) {
-      servicesQueue.push(
-        this.deployWithTelemetry(
-          TelemetryEventName.CosmosDBDeploy,
-          this.createCosmosDB(generationData)
-        )
-      );
-    }
-
-    const result = await Promise.all(servicesQueue);
-    console.log(result);
+  private async generateAzureServices(): Promise<void> {
 
     /*
     //if have deployed appservice and cosmos, update connectionString in appservice
@@ -110,47 +84,6 @@ export class Generation extends WizardServant {
     */
   }
 
-  private async createCosmosDB(
-    generationData: IGenerationData
-  ): Promise<DeployedServiceStatus> {
-    const { path, backendFramework } = generationData;
-    const result: DeployedServiceStatus = {
-      serviceType: AzureResourceType.Cosmos,
-      isDeployed: false,
-      payload: { connectionString: "" },
-    };
-    const cosmosService = generationData.services.find(s => s.category === SERVICE_CATEGORY.AZURE && s.type === SERVICE_TYPE.COSMOSDB) as ICosmosDB;
-    if (cosmosService) {
-      try {
-        sendToClientGenerationStatus(GENERATION_NAMES.COSMOS_DB, GenerationItemStatus.Generating, "Deploying Azure services (this may take a few minutes).");
-        const connectionString = await AzureServices.deployCosmos(cosmosService, path);
-        sendToClientGenerationStatus(GENERATION_NAMES.COSMOS_DB, GenerationItemStatus.Success);
-        result.isDeployed = true;
-        result.payload.connectionString = connectionString;
-        await this.replaceConnectionString(path, connectionString, backendFramework);
-      } catch (error) {
-        Logger.appendError("EXTENSION", "Error on deploy CosmosDB Service:", error);
-        sendToClientGenerationStatus(GENERATION_NAMES.COSMOS_DB, GenerationItemStatus.Failed, "ERROR: Cosmos DB failed to deploy");
-      }
-    }
-
-    return result;
-  }
-
-  private async replaceConnectionString(path: string, connectionString: string, backendFramework: string): Promise<void> {
-    const selection = await vscode.window.showInformationMessage(
-      MESSAGES.DIALOG_MESSAGES.cosmosDBConnectStringReplacePrompt,
-      ...[MESSAGES.DIALOG_RESPONSES.yes, MESSAGES.DIALOG_RESPONSES.no]
-    );
-
-    const start = Date.now();
-    if (selection === MESSAGES.DIALOG_RESPONSES.yes) {
-      AzureServices.updateConnectionStringToProject(path, connectionString, backendFramework);
-      vscode.window.showInformationMessage(MESSAGES.INFO.FILE_REPLACED_MESSAGE + path);
-      this.trackCosmosConnectionStringReplace(start);
-    }
-  }
-
   private trackWizardTotalSessionTimeToGenerate(): void {
     this.Telemetry.trackEventWithDuration(
       TelemetryEventName.WizardSession,
@@ -159,23 +92,8 @@ export class Generation extends WizardServant {
     );
   }
 
-  private trackCosmosConnectionStringReplace(startTime: number): void {
-    //log in telemetry how long it took replacement
-    // Temporary Disable
-    this.Telemetry.trackEventWithDuration(TelemetryEventName.ConnectionStringReplace, startTime, Date.now());
-  }
-
   private hasAzureServices(generationData: IGenerationData): boolean {
     return generationData.services.length > 0;
-  }
-
-  //TODO: Move to telemetryService?
-  private deployWithTelemetry<T>(telemetryEvent: string, callback: Promise<T>): Promise<any> {
-    return this.Telemetry.callWithTelemetryAndCatchHandleErrors(telemetryEvent, async function (
-      this: IActionContext
-    ): Promise<T> {
-      return await callback;
-    });
   }
 
   private getGenerationData(data: any): IGenerationData {

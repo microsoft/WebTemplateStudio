@@ -170,7 +170,7 @@ export class AzureServices {
     const subscriptions: SubscriptionItem[] = [];
 
       const subscriptionNames = services.map(s => s.subscription);
-      const subscriptionItems = AzureServices.getSubscriptions(subscriptionNames);
+      const subscriptionItems = AzureServices.getSubscriptions([...new Set(subscriptionNames)]);
       subscriptions.push(...subscriptionItems);
 
     const allSubscriptions: SubscriptionItem[] = [...new Set(subscriptions)];
