@@ -3,6 +3,16 @@
   padding-top: 1vh;
 }
 
+.title {
+  font-size: 1.6em;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.marginLeft {
+  margin: 15px;
+}
+
 .rightViewCropped {
   background-color: var(--vscode-editor-background);
   border-left: 0.5px solid #7f7f7f;
@@ -83,8 +93,8 @@
   fill: var(--vscode-editor-foreground);
 }
 
-.iconHide{
-  visibility:hidden;
+.iconHide {
+  visibility: hidden;
 }
 
 .button {
@@ -107,17 +117,4 @@
 
 .leftButton {
   font-size: 1.1em;
-}
-
-.inputContainer {
-  margin: 15px;
-  margin-bottom: 30px;
-    font-size: 1.2em;
-}
-
-.inputTitle {
-  line-height: 2em;
-  font-size: 1em;
-  font-weight: 600;
-  margin-bottom: 3px;
 }

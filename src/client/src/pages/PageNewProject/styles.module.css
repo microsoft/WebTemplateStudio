@@ -28,6 +28,7 @@
 .projectDetailsContainer {
   box-sizing: border-box;
   width: 80%;
+  font-size: 1.2em;
 }
 
 .getStarted {
