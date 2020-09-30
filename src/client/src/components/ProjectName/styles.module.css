@@ -1,19 +1,13 @@
-
-.outputPathContainer {
-  box-sizing: border-box;
-  padding: 0.5em;
-  width: 100%;
-  font-size: 1em;
-  background-color: #3c3c3c;
-  border: 1px solid #ffffff;
-  border-radius: 2px;
+.inputContainer {
+  margin-bottom: 30px;
+  font-size: 1.2em;
 }
 
-.outputPathContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-height: 42px;
+.inputTitle {
+  line-height: 2em;
+  font-size: 1em;
+  font-weight: 600;
+  margin-bottom: 3px;
 }
 
 .errorMessage {
@@ -28,8 +22,4 @@
   padding: 0px 10px;
   opacity: 0.5;
   min-height: 38px;
-}
-
-.test path {
-  fill: red;
 }
