@@ -5,7 +5,7 @@
         <Switch>
         //^^
         //{[{
-          <Route path = "/wts.ItemName" component = { wts.ItemName } />
+          <Route path = "/Param_SourceName_Pascal" component = { Param_SourceName_Pascal } />
         //}]}
         </Switch>
         <Footer />
