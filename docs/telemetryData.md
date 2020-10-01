@@ -1,4 +1,4 @@
-# Telemetry for Web Template Studio - 2020.08
+# Telemetry for Web Template Studio - 2020.09
 
 As new features and pages roll out, percentages  will adjust.
 
@@ -6,31 +6,32 @@ As new features and pages roll out, percentages  will adjust.
 
 |Framework Type|Percentage|
 |:---|:---:|
-|React|57.7%|
-|Angular|21.1%|
-|Vue|21.1%|
+|React|55.1%|
+|Angular|23.5%|
+|Vue|21.4%|
 
 ## Backend Frameworks
 
 |Framework Type|Percentage|
 |:---|:---:|
-|Node|60%|
-|AspNet|17%|
-|Flask|17%|
-|Moleculer|5.7%|
+|Node|52.4%|
+|AspNet|20%|
+|Flask|18.9%|
+|Moleculer|8.7%|
 
 ## Pages
 
 |Pages|Percentage|
 |:---|:---:|
-|Blank|38.2%|
-|Master Detail|22.1%|
-|Grid|20.6%|
-|List|19.1%|
+|Blank|34.3%|
+|Grid|23%|
+|Master Detail|22.2%|
+|List|20.5%|
 
 ## Services
 
 |Services|Percentage|
 |:---|:---:|
-|App Service|55.6%|
-|Cosmos DB|44.0%|
+|Cosmos DB|57.4%|
+|App Service|42.6%|
+
