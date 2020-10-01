@@ -9,7 +9,7 @@ import {
   IGenerationData,
   SERVICE_CATEGORY,
   SERVICE_TYPE,
-} from "../types/generationPayloadType";
+} from "../types/generationTypes";
 import { EXTENSION_COMMANDS } from "../constants/commands";
 import GenerationService from "../utils/generation/GenerationService";
 

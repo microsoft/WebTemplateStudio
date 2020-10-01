@@ -1,6 +1,6 @@
 import { MESSAGES } from "../../../constants/messages";
 import { CoreTemplateStudio } from "../../../coreTemplateStudio";
-import { IGenerationData } from "../../../types/generationPayloadType";
+import { IGenerationData } from "../../../types/generationTypes";
 import {
   GenerationItemStatus,
   sendGenerationStatus,

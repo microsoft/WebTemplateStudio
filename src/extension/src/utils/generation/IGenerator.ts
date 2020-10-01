@@ -1,4 +1,4 @@
-import { IGenerationData, IService, SERVICE_TYPE } from "../../types/generationPayloadType";
+import { IGenerationData, IService, SERVICE_TYPE } from "../../types/generationTypes";
 import { DeployedServiceStatus } from "./GenerationService";
 
 export interface IGenerator {

@@ -8,7 +8,7 @@ import {
   IService,
   SERVICE_CATEGORY,
   SERVICE_TYPE,
-} from "../../types/generationPayloadType";
+} from "../../types/generationTypes";
 import { GenerationItemStatus, sendGenerationStatus } from "../generationStatus";
 import { IGenerator } from "./IGenerator";
 import AppServiceGenerator from "./generators/AppServiceGenerator";

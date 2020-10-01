@@ -3,7 +3,7 @@ import { AzureServices } from "../../../azure/azureServices";
 import { MESSAGES } from "../../../constants/messages";
 import { TelemetryEventName } from "../../../constants/telemetry";
 import { Controller } from "../../../controller";
-import { ICosmosDB, IGenerationData, IService, SERVICE_TYPE } from "../../../types/generationPayloadType";
+import { ICosmosDB, IGenerationData, IService, SERVICE_TYPE } from "../../../types/generationTypes";
 import { GenerationItemStatus, sendGenerationStatus } from "../../generationStatus";
 import { Logger } from "../../logger";
 import { DeployedServiceStatus } from "../GenerationService";

@@ -6,7 +6,7 @@ import * as fs from "fs";
 import { ChildProcess, spawn } from "child_process";
 import { CLI, CLI_SETTINGS } from "./constants/cli";
 import { ICommandPayload } from "./types/commandPayload";
-import { IGenerationData, IService } from "./types/generationPayloadType";
+import { IGenerationData, IService } from "./types/generationTypes";
 import { EventEmitter } from "events";
 import { IEngineGenerationPayloadType } from "./types/engineGenerationPayloadType";
 import { ISyncPayloadType } from "./types/syncPayloadType";

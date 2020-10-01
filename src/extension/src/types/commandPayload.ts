@@ -1,4 +1,4 @@
-import { IGenerationData } from "./generationPayloadType";
+import { IGenerationData } from "./generationTypes";
 import { ISyncPayloadType } from "./syncPayloadType";
 
 export interface ICommandPayload {

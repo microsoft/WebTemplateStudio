@@ -10,7 +10,7 @@ import { ConnectionString } from "./utils/connectionString";
 import * as fse from "fs-extra";
 import * as path from "path";
 import { MESSAGES } from "../constants/messages";
-import { IAppService, IAzureService, ICosmosDB } from "../types/generationPayloadType";
+import { IAppService, IAzureService, ICosmosDB } from "../types/generationTypes";
 
 interface UserStatus {
   email: string;

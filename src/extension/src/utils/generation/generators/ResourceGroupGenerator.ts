@@ -3,7 +3,7 @@ import { AzureServices } from "../../../azure/azureServices";
 import { MESSAGES } from "../../../constants/messages";
 import { TelemetryEventName } from "../../../constants/telemetry";
 import { IActionContext, ITelemetryService } from "../../../telemetry/telemetryService";
-import { IAzureService } from "../../../types/generationPayloadType";
+import { IAzureService } from "../../../types/generationTypes";
 import { Logger } from "../../logger";
 
 export default class ResourceGroupGenerator {

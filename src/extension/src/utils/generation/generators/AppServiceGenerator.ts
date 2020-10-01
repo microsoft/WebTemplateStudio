@@ -1,7 +1,7 @@
 import { AzureServices } from "../../../azure/azureServices";
 import { MESSAGES } from "../../../constants/messages";
 import { TelemetryEventName } from "../../../constants/telemetry";
-import { IAppService, IGenerationData, IService, SERVICE_TYPE } from "../../../types/generationPayloadType";
+import { IAppService, IGenerationData, IService, SERVICE_TYPE } from "../../../types/generationTypes";
 import { sendGenerationStatus, GenerationItemStatus } from "../../generationStatus";
 import { Logger } from "../../logger";
 import { DeployedServiceStatus } from "../GenerationService";
