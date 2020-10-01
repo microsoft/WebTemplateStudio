@@ -1,6 +1,6 @@
 ﻿import React, { useState } from "react";
-import WarningMessage from "../WarningMessage";
-import CONSTANTS from "../../constants";
+import WarningMessage from "../WarningMessage/WarningMessage";
+import { ENDPOINT } from "../../constants";
 import GridItem from "./GridItem";
 
 const Param_SourceName_Pascal = () => {
@@ -8,7 +8,7 @@ const Param_SourceName_Pascal = () => {
   const [warningMessage, setWarningMessage] = useState({warningMessageOpen: false, warningMessageText: ""});
 
   const getItems = () => {
-    const promiseItems = fetch(CONSTANTS.ENDPOINT.GRID)
+    const promiseItems = fetch(ENDPOINT.GRID)
     .then(response => {
       if (!response.ok) {
         throw Error(response.statusText);

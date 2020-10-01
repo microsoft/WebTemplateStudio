@@ -1,10 +1,10 @@
 ﻿import React, { useState } from "react";
 import classnames from "classnames";
-import WarningMessage from "../WarningMessage";
+import WarningMessage from "../WarningMessage/WarningMessage";
 import Detail from "./Detail";
 import MasterList from "./MasterList";
 import styles from "./styles.module.css";
-import CONSTANTS from "../../constants";
+import { ERROR_MESSAGE, ENDPOINT } from "../../constants";
 
 const Param_SourceName_Pascal = () => {
   const [sampleOrders, setSampleOrders] = useState([]);
@@ -13,7 +13,7 @@ const Param_SourceName_Pascal = () => {
   const sidebarStyle = classnames("col-2","p-0","border-right", styles.sidebar);
 
   const getSampleOrders = () => {
-    let promiseSampleOrders = fetch(CONSTANTS.ENDPOINT.MASTERDETAIL)
+    let promiseSampleOrders = fetch(ENDPOINT.MASTERDETAIL)
       .then(response => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -36,7 +36,7 @@ const Param_SourceName_Pascal = () => {
     })
     .catch(error =>
     {
-      setWarningMessage({warningMessageOpen: true, warningMessageText: `${CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET} ${error}`});
+      setWarningMessage({warningMessageOpen: true, warningMessageText: `${ERROR_MESSAGE.MASTERDETAIL_GET} ${error}`});
     });
   }, []);
 
