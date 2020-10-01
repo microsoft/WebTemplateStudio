@@ -44,12 +44,12 @@ export interface ICosmosDB extends IAzureService{
 
 
 export enum SERVICE_CATEGORY {
-  DEFAULT = "Default",
-  AZURE = "Azure"
+  DEFAULT = "default",
+  AZURE = "azure"
 }
 
 export enum SERVICE_TYPE {
-  DEFAULT = "Default",
-  APPSERVICE = "AppService",
-  COSMOSDB = "CosmosDB"
+  DEFAULT = "default",
+  APPSERVICE = "appService",
+  COSMOSDB = "cosmosDB"
 }

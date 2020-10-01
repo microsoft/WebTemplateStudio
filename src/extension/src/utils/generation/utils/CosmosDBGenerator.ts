@@ -4,7 +4,7 @@ import { MESSAGES } from "../../../constants/messages";
 import { TelemetryEventName } from "../../../constants/telemetry";
 import { Controller } from "../../../controller";
 import { ICosmosDB, IGenerationData, IService, SERVICE_TYPE } from "../../../types/generationPayloadType";
-import { GenerationItemStatus, GENERATION_NAMES, sendGenerationStatus } from "../../generationStatus";
+import { GenerationItemStatus, sendGenerationStatus } from "../../generationStatus";
 import { Logger } from "../../logger";
 import { DeployedServiceStatus } from "../GenerationService";
 import { IGenerator } from "../IGenerator";
@@ -12,7 +12,6 @@ import { IGenerator } from "../IGenerator";
 export default class CosmosDBGenerator implements IGenerator {
   telemetryEventName = TelemetryEventName.CosmosDBDeploy;
   serviceType = SERVICE_TYPE.COSMOSDB;
-  generationName = GENERATION_NAMES.COSMOS_DB;
 
   public async generate(service: IService, generationData: IGenerationData) {
     const cosmosService = service as ICosmosDB;
@@ -27,15 +26,15 @@ export default class CosmosDBGenerator implements IGenerator {
     };
 
     try {
-      sendGenerationStatus(this.generationName, Generating, DEPLOY_AZURE_SERVICE);
+      sendGenerationStatus(this.serviceType, Generating, DEPLOY_AZURE_SERVICE);
       const connectionString = await AzureServices.deployCosmos(cosmosService, path);
       result.isDeployed = true;
       result.payload.connectionString = connectionString;
-      sendGenerationStatus(this.generationName, Success);
+      sendGenerationStatus(this.serviceType, Success);
       await this.replaceConnectionString(path, connectionString, backendFramework);
     } catch (error) {
       Logger.appendError("EXTENSION", MESSAGES.ERRORS.DEPLOY_AZURE_COSMOS_DB, error);
-      sendGenerationStatus(this.generationName, Failed, COSMOS_FAILED_TO_DEPLOY);
+      sendGenerationStatus(this.serviceType, Failed, COSMOS_FAILED_TO_DEPLOY);
     }
     return result;
   }

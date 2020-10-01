@@ -251,41 +251,5 @@ export const MESSAGES = {
       "generation.appServiceFailedToDeploy",
       "ERROR: App Service failed to deploy"
     ),
-    name: localize(
-      "",
-      ""
-    ),
-    name: localize(
-      "",
-      ""
-    ),
-    name: localize(
-      "",
-      ""
-    ),
-    name: localize(
-      "",
-      ""
-    ),
-    name: localize(
-      "",
-      ""
-    ),
-    name: localize(
-      "",
-      ""
-    ),
-    name: localize(
-      "",
-      ""
-    ),
-    name: localize(
-      "",
-      ""
-    ),
-    name: localize(
-      "",
-      ""
-    ),
   }
 }

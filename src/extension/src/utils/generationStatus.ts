@@ -8,11 +8,7 @@ export enum GenerationItemStatus {
   Success = "Success",
 }
 
-export const GENERATION_NAMES = {
-  TEMPLATES: "templates",
-  APP_SERVICE: "appService",
-  COSMOS_DB: "cosmosDB",
-};
+export const TEMPLATES_GENERATION_NAME = "templates";
 
 export const sendGenerationStatus = (name: string, status: string, message?: string, data?: any) => {
   Controller.reactPanelContext.postMessageWebview({
@@ -27,5 +23,5 @@ export const sendGenerationStatus = (name: string, status: string, message?: str
 };
 
 export const updateStatusMessage = (message: string) => {
-  sendGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Generating, message);
+  sendGenerationStatus(TEMPLATES_GENERATION_NAME, GenerationItemStatus.Generating, message);
 };

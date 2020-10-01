@@ -3,8 +3,6 @@ import { WizardServant, IPayloadResponse } from "../wizardServant";
 import { CONSTANTS } from "../constants/constants";
 import { TelemetryEventName } from "../constants/telemetry";
 import { ITelemetryService } from "../telemetry/telemetryService";
-import { CoreTemplateStudio } from "../coreTemplateStudio";
-import { Logger } from "../utils/logger";
 import {
   IAppService,
   ICosmosDB,
@@ -12,15 +10,8 @@ import {
   SERVICE_CATEGORY,
   SERVICE_TYPE,
 } from "../types/generationPayloadType";
-import {
-  sendGenerationStatus,
-  GenerationItemStatus,
-  updateStatusMessage,
-  GENERATION_NAMES,
-} from "../utils/generationStatus";
 import { EXTENSION_COMMANDS } from "../constants/commands";
 import GenerationService from "../utils/generation/GenerationService";
-import { MESSAGES } from "../constants/messages";
 
 export class Generation extends WizardServant {
   clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
@@ -36,14 +27,7 @@ export class Generation extends WizardServant {
     this.trackWizardTotalSessionTimeToGenerate();
     const generationService = new GenerationService(this.Telemetry);
     const generationData = this.getGenerationData(message.payload);
-    const generationPath = await this.generateProject(generationData);
-
-    if (generationPath) {
-      generationData.path = generationPath;
-      await generationService.generate(generationData);
-    } else {
-      generationService.rejectServices(generationData.services);
-    }
+    await generationService.generate(generationData);
     return { payload: undefined };
   }
 
@@ -54,26 +38,6 @@ export class Generation extends WizardServant {
       true
     );
     return { payload: true };
-  }
-
-  private async generateProject(generationData: IGenerationData): Promise<string | undefined> {
-    const { PROJECT_GENERATION_FINISHED, TEMPLATES_COULD_NOT_BE_GENERATED } = MESSAGES.GENERATION;
-    const { Generating, Success, Failed } = GenerationItemStatus;
-    const { TEMPLATES } = GENERATION_NAMES;
-    try {
-      sendGenerationStatus(TEMPLATES, Generating);
-      const cli = CoreTemplateStudio.GetExistingInstance();
-      const result = await cli.generate({ payload: generationData, liveMessageHandler: updateStatusMessage });
-      const generationPath = result.generationPath;
-      sendGenerationStatus(TEMPLATES, Success, PROJECT_GENERATION_FINISHED, {
-        generationPath,
-      });
-      return generationPath;
-    } catch (error) {
-      Logger.appendError("EXTENSION", MESSAGES.ERRORS.GENERATING_PROJECT, error);
-      sendGenerationStatus(TEMPLATES, Failed, TEMPLATES_COULD_NOT_BE_GENERATED);
-      return;
-    }
   }
 
   private trackWizardTotalSessionTimeToGenerate(): void {

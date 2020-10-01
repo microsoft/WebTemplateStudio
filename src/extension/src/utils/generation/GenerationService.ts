@@ -14,6 +14,7 @@ import { IGenerator } from "./IGenerator";
 import AppServiceGenerator from "./utils/AppServiceGenerator";
 import CosmosDBGenerator from "./utils/CosmosDBGenerator";
 import ResourceGroupGenerator from "./utils/ResourceGroupGenerator";
+import TemplatesGenerator from "./utils/TemplatesGenerator";
 
 export interface DeployedServiceStatus {
   serviceType: SERVICE_TYPE;
@@ -25,6 +26,7 @@ export default class GenerationService {
   private servicesQueue: Array<Promise<DeployedServiceStatus>> = [];
   private generators: Map<SERVICE_TYPE, IGenerator>;
   private resourceGroupGenerator: ResourceGroupGenerator;
+  private templatesGenerator: TemplatesGenerator;
 
   constructor(private Telemetry: ITelemetryService) {
     this.generators = new Map<SERVICE_TYPE, IGenerator>([
@@ -32,6 +34,18 @@ export default class GenerationService {
       [SERVICE_TYPE.COSMOSDB, new CosmosDBGenerator()],
     ]);
     this.resourceGroupGenerator = new ResourceGroupGenerator(this.Telemetry);
+    this.templatesGenerator = new TemplatesGenerator();
+  }
+
+  public async generate(generationData: IGenerationData) {
+    const generationPath = await this.templatesGenerator.generate(generationData);
+
+    if (generationPath) {
+      generationData.path = generationPath;
+      await this.generateServices(generationData);
+    } else {
+      this.rejectServices(generationData.services);
+    }
   }
 
   public rejectServices(services: Array<IService>) {
@@ -39,23 +53,23 @@ export default class GenerationService {
     services.forEach((service) => {
       const generator = this.generators.get(service.type);
       if (generator)
-        sendGenerationStatus(generator.generationName, GenerationItemStatus.Failed, SERVICE_DEPLOYMENT_HALTED);
+        sendGenerationStatus(generator.serviceType, GenerationItemStatus.Failed, SERVICE_DEPLOYMENT_HALTED);
     });
   }
 
-  public async generate(generationData: IGenerationData) {
+  public async generateServices(generationData: IGenerationData) {
     this.servicesQueue.length = 0;
-    await this.generateAzureServices(generationData);
+    await this.deployAzureServices(generationData);
     const result = await Promise.all(this.servicesQueue);
     this.processAzureService(result);
     return result;
   }
 
-  private async generateAzureServices(generationData: IGenerationData) {
+  private async deployAzureServices(generationData: IGenerationData) {
     const { services, projectName } = generationData;
     const azureServices = services.filter((s) => s.category === SERVICE_CATEGORY.AZURE) as Array<IAzureService>;
     await this.resourceGroupGenerator.generate(projectName, azureServices);
-    this.generateServices(azureServices as Array<IService>, generationData);
+    this.deployServices(azureServices as Array<IService>, generationData);
   }
 
   private processAzureService(result: DeployedServiceStatus[]) {
@@ -69,16 +83,16 @@ export default class GenerationService {
     }
   }
 
-  private generateServices(services: Array<IService>, generationData: IGenerationData) {
+  private deployServices(services: Array<IService>, generationData: IGenerationData) {
     services.forEach((service) => {
       const generator = this.generators.get(service.type);
       if (generator) {
-        this.addToGenerationQueue(generator.telemetryEventName, generator.generate(service, generationData));
+        this.addToDeployQueue(generator.telemetryEventName, generator.generate(service, generationData));
       }
     });
   }
 
-  private addToGenerationQueue(telemetryEventName: string, callback: Promise<DeployedServiceStatus>) {
+  private addToDeployQueue(telemetryEventName: string, callback: Promise<DeployedServiceStatus>) {
     this.servicesQueue.push(this.deployWithTelemetry(telemetryEventName, callback));
   }
 

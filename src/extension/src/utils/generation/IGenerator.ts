@@ -4,6 +4,5 @@ import { DeployedServiceStatus } from "./GenerationService";
 export interface IGenerator {
   generate: (service: IService, generationData: IGenerationData) => Promise<DeployedServiceStatus>;
   telemetryEventName: string;
-  generationName: string;
   serviceType: SERVICE_TYPE;
 }
