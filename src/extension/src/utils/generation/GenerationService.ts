@@ -11,10 +11,10 @@ import {
 } from "../../types/generationPayloadType";
 import { GenerationItemStatus, sendGenerationStatus } from "../generationStatus";
 import { IGenerator } from "./IGenerator";
-import AppServiceGenerator from "./utils/AppServiceGenerator";
-import CosmosDBGenerator from "./utils/CosmosDBGenerator";
-import ResourceGroupGenerator from "./utils/ResourceGroupGenerator";
-import TemplatesGenerator from "./utils/TemplatesGenerator";
+import AppServiceGenerator from "./generators/AppServiceGenerator";
+import CosmosDBGenerator from "./generators/CosmosDBGenerator";
+import ResourceGroupGenerator from "./generators/ResourceGroupGenerator";
+import TemplatesGenerator from "./generators/TemplatesGenerator";
 
 export interface DeployedServiceStatus {
   serviceType: SERVICE_TYPE;
@@ -24,12 +24,12 @@ export interface DeployedServiceStatus {
 
 export default class GenerationService {
   private servicesQueue: Array<Promise<DeployedServiceStatus>> = [];
-  private generators: Map<SERVICE_TYPE, IGenerator>;
+  private serviceGenerators: Map<SERVICE_TYPE, IGenerator>;
   private resourceGroupGenerator: ResourceGroupGenerator;
   private templatesGenerator: TemplatesGenerator;
 
   constructor(private Telemetry: ITelemetryService) {
-    this.generators = new Map<SERVICE_TYPE, IGenerator>([
+    this.serviceGenerators = new Map<SERVICE_TYPE, IGenerator>([
       [SERVICE_TYPE.APPSERVICE, new AppServiceGenerator()],
       [SERVICE_TYPE.COSMOSDB, new CosmosDBGenerator()],
     ]);
@@ -51,7 +51,7 @@ export default class GenerationService {
   public rejectServices(services: Array<IService>) {
     const { SERVICE_DEPLOYMENT_HALTED } = MESSAGES.GENERATION;
     services.forEach((service) => {
-      const generator = this.generators.get(service.type);
+      const generator = this.serviceGenerators.get(service.type);
       if (generator)
         sendGenerationStatus(generator.serviceType, GenerationItemStatus.Failed, SERVICE_DEPLOYMENT_HALTED);
     });
@@ -85,7 +85,7 @@ export default class GenerationService {
 
   private deployServices(services: Array<IService>, generationData: IGenerationData) {
     services.forEach((service) => {
-      const generator = this.generators.get(service.type);
+      const generator = this.serviceGenerators.get(service.type);
       if (generator) {
         this.addToDeployQueue(generator.telemetryEventName, generator.generate(service, generationData));
       }
