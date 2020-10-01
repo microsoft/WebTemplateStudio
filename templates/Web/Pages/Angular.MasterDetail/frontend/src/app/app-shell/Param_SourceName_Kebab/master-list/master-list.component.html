@@ -1,9 +1,0 @@
-﻿<button
-  (click)="selectSampleOrder()"
-  type="button"
-  class="list-group-item list-group-item-action sidebarText"
-  [ngClass]="{'active' : isActive}"
->
-  <img src="{{ sampleOrder.imageSrc ? sampleOrder.imageSrc : '../../../assets/GreyAvatar.svg' }}" alt="{{ sampleOrder.title }}" class="mr-3" />
-  {{ sampleOrder.title }}
-</button>
