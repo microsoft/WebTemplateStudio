@@ -13,7 +13,7 @@ import {
   SERVICE_TYPE,
 } from "../types/generationPayloadType";
 import {
-  sendToClientGenerationStatus,
+  sendGenerationStatus,
   GenerationItemStatus,
   updateStatusMessage,
   GENERATION_NAMES,
@@ -57,25 +57,21 @@ export class Generation extends WizardServant {
   }
 
   private async generateProject(generationData: IGenerationData): Promise<string | undefined> {
+    const { PROJECT_GENERATION_FINISHED, TEMPLATES_COULD_NOT_BE_GENERATED } = MESSAGES.GENERATION;
+    const { Generating, Success, Failed } = GenerationItemStatus;
+    const { TEMPLATES } = GENERATION_NAMES;
     try {
-      sendToClientGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Generating);
+      sendGenerationStatus(TEMPLATES, Generating);
       const cli = CoreTemplateStudio.GetExistingInstance();
       const result = await cli.generate({ payload: generationData, liveMessageHandler: updateStatusMessage });
       const generationPath = result.generationPath;
-      sendToClientGenerationStatus(
-        GENERATION_NAMES.TEMPLATES,
-        GenerationItemStatus.Success,
-        MESSAGES.GENERATION.PROJECT_GENERATION_FINISHED,
-        { generationPath }
-      );
+      sendGenerationStatus(TEMPLATES, Success, PROJECT_GENERATION_FINISHED, {
+        generationPath,
+      });
       return generationPath;
     } catch (error) {
       Logger.appendError("EXTENSION", MESSAGES.ERRORS.GENERATING_PROJECT, error);
-      sendToClientGenerationStatus(
-        GENERATION_NAMES.TEMPLATES,
-        GenerationItemStatus.Failed,
-        MESSAGES.GENERATION.TEMPLATES_COULD_NOT_BE_GENERATED
-      );
+      sendGenerationStatus(TEMPLATES, Failed, TEMPLATES_COULD_NOT_BE_GENERATED);
       return;
     }
   }

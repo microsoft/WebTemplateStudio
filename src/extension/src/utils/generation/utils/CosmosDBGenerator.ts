@@ -4,7 +4,7 @@ import { MESSAGES } from "../../../constants/messages";
 import { TelemetryEventName } from "../../../constants/telemetry";
 import { Controller } from "../../../controller";
 import { ICosmosDB, IGenerationData, IService, SERVICE_TYPE } from "../../../types/generationPayloadType";
-import { GenerationItemStatus, GENERATION_NAMES, sendToClientGenerationStatus } from "../../generationStatus";
+import { GenerationItemStatus, GENERATION_NAMES, sendGenerationStatus } from "../../generationStatus";
 import { Logger } from "../../logger";
 import { DeployedServiceStatus } from "../GenerationService";
 import { IGenerator } from "../IGenerator";
@@ -18,6 +18,8 @@ export default class CosmosDBGenerator implements IGenerator {
     const cosmosService = service as ICosmosDB;
     const { path, backendFramework } = generationData;
     const { DEPLOY_AZURE_SERVICE, COSMOS_FAILED_TO_DEPLOY } = MESSAGES.GENERATION;
+    const { Generating, Success, Failed } = GenerationItemStatus;
+
     const result: DeployedServiceStatus = {
       serviceType: this.serviceType,
       isDeployed: false,
@@ -25,15 +27,15 @@ export default class CosmosDBGenerator implements IGenerator {
     };
 
     try {
-      sendToClientGenerationStatus(this.generationName, GenerationItemStatus.Generating, DEPLOY_AZURE_SERVICE);
+      sendGenerationStatus(this.generationName, Generating, DEPLOY_AZURE_SERVICE);
       const connectionString = await AzureServices.deployCosmos(cosmosService, path);
       result.isDeployed = true;
       result.payload.connectionString = connectionString;
-      sendToClientGenerationStatus(this.generationName, GenerationItemStatus.Success);
+      sendGenerationStatus(this.generationName, Success);
       await this.replaceConnectionString(path, connectionString, backendFramework);
     } catch (error) {
       Logger.appendError("EXTENSION", MESSAGES.ERRORS.DEPLOY_AZURE_COSMOS_DB, error);
-      sendToClientGenerationStatus(this.generationName, GenerationItemStatus.Failed, COSMOS_FAILED_TO_DEPLOY);
+      sendGenerationStatus(this.generationName, Failed, COSMOS_FAILED_TO_DEPLOY);
     }
     return result;
   }

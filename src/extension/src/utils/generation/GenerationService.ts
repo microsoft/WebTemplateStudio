@@ -9,7 +9,7 @@ import {
   SERVICE_CATEGORY,
   SERVICE_TYPE,
 } from "../../types/generationPayloadType";
-import { GenerationItemStatus, sendToClientGenerationStatus } from "../generationStatus";
+import { GenerationItemStatus, sendGenerationStatus } from "../generationStatus";
 import { IGenerator } from "./IGenerator";
 import AppServiceGenerator from "./utils/AppServiceGenerator";
 import CosmosDBGenerator from "./utils/CosmosDBGenerator";
@@ -39,7 +39,7 @@ export default class GenerationService {
     services.forEach((service) => {
       const generator = this.generators.get(service.type);
       if (generator)
-        sendToClientGenerationStatus(generator.generationName, GenerationItemStatus.Failed, SERVICE_DEPLOYMENT_HALTED);
+        sendGenerationStatus(generator.generationName, GenerationItemStatus.Failed, SERVICE_DEPLOYMENT_HALTED);
     });
   }
 

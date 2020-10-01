@@ -14,7 +14,7 @@ export const GENERATION_NAMES = {
   COSMOS_DB: "cosmosDB",
 };
 
-export const sendToClientGenerationStatus = (name: string, status: string, message?: string, data?: any) => {
+export const sendGenerationStatus = (name: string, status: string, message?: string, data?: any) => {
   Controller.reactPanelContext.postMessageWebview({
     command: EXTENSION_COMMANDS.GEN_STATUS,
     payload: {
@@ -27,5 +27,5 @@ export const sendToClientGenerationStatus = (name: string, status: string, messa
 };
 
 export const updateStatusMessage = (message: string) => {
-  sendToClientGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Generating, message);
+  sendGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Generating, message);
 };
