@@ -1,4 +1,5 @@
 import { AzureServices } from "../../../azure/azureServices";
+import { MESSAGES } from "../../../constants/messages";
 import { TelemetryEventName } from "../../../constants/telemetry";
 import { IAppService, IGenerationData, IService, SERVICE_TYPE } from "../../../types/generationPayloadType";
 import { sendToClientGenerationStatus, GENERATION_NAMES, GenerationItemStatus } from "../../generationStatus";
@@ -13,33 +14,25 @@ export default class AppServiceGenerator implements IGenerator {
 
   public async generate(service: IService, generationData: IGenerationData) {
     const appService = service as IAppService;
-
     const { projectName, backendFrameworkLinuxVersion, path } = generationData;
+    const { DEPLOY_AZURE_SERVICE, APPSERVICE_FAILED_TO_DEPLOY } = MESSAGES.GENERATION;
     const result: DeployedServiceStatus = {
       serviceType: this.serviceType,
       isDeployed: false,
       payload: {
         resourceGroup: appService.resourceGroup,
-        serviceName:appService.serviceName
-      }
+        serviceName: appService.serviceName,
+      },
     };
 
     try {
-      sendToClientGenerationStatus(
-        this.generationName,
-        GenerationItemStatus.Generating,
-        "Deploying Azure services (this may take a few minutes)."
-      );
+      sendToClientGenerationStatus(this.generationName, GenerationItemStatus.Generating, DEPLOY_AZURE_SERVICE);
       await AzureServices.deployAppService(appService, projectName, backendFrameworkLinuxVersion, path);
       sendToClientGenerationStatus(this.generationName, GenerationItemStatus.Success);
       result.isDeployed = true;
     } catch (error) {
-      Logger.appendError("EXTENSION", "Error on deploy Azure App Service:", error);
-      sendToClientGenerationStatus(
-        this.generationName,
-        GenerationItemStatus.Failed,
-        "ERROR: App Service failed to deploy"
-      );
+      Logger.appendError("EXTENSION", MESSAGES.ERRORS.DEPLOY_AZURE_APP_SERVICE, error);
+      sendToClientGenerationStatus(this.generationName, GenerationItemStatus.Failed, APPSERVICE_FAILED_TO_DEPLOY);
     }
 
     return result;

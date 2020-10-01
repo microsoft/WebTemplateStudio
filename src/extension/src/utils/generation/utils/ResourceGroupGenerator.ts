@@ -1,5 +1,6 @@
 import { ResourceGroupSelection } from "../../../azure/azure-resource-group/resourceGroupModule";
 import { AzureServices } from "../../../azure/azureServices";
+import { MESSAGES } from "../../../constants/messages";
 import { TelemetryEventName } from "../../../constants/telemetry";
 import { IActionContext, ITelemetryService } from "../../../telemetry/telemetryService";
 import { IAzureService } from "../../../types/generationPayloadType";
@@ -28,7 +29,7 @@ export default class ResourceGroupGenerator {
     try {
       await AzureServices.deployResourceGroup(resourceGroup);
     } catch (error) {
-      Logger.appendError("EXTENSION", "Error on Azure Resource Group creation:", error);
+      Logger.appendError("EXTENSION", MESSAGES.ERRORS.CREATING_RESOURCE_GROUP, error);
     }
   }
 

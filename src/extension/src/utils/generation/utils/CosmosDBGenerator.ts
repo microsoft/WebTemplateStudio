@@ -17,29 +17,23 @@ export default class CosmosDBGenerator implements IGenerator {
   public async generate(service: IService, generationData: IGenerationData) {
     const cosmosService = service as ICosmosDB;
     const { path, backendFramework } = generationData;
+    const { DEPLOY_AZURE_SERVICE, COSMOS_FAILED_TO_DEPLOY } = MESSAGES.GENERATION;
     const result: DeployedServiceStatus = {
       serviceType: this.serviceType,
       isDeployed: false,
       payload: { connectionString: "" },
     };
+
     try {
-      sendToClientGenerationStatus(
-        this.generationName,
-        GenerationItemStatus.Generating,
-        "Deploying Azure services (this may take a few minutes)."
-      );
+      sendToClientGenerationStatus(this.generationName, GenerationItemStatus.Generating, DEPLOY_AZURE_SERVICE);
       const connectionString = await AzureServices.deployCosmos(cosmosService, path);
-      sendToClientGenerationStatus(this.generationName, GenerationItemStatus.Success);
       result.isDeployed = true;
       result.payload.connectionString = connectionString;
+      sendToClientGenerationStatus(this.generationName, GenerationItemStatus.Success);
       await this.replaceConnectionString(path, connectionString, backendFramework);
     } catch (error) {
-      Logger.appendError("EXTENSION", "Error on deploy CosmosDB Service:", error);
-      sendToClientGenerationStatus(
-        this.generationName,
-        GenerationItemStatus.Failed,
-        "ERROR: Cosmos DB failed to deploy"
-      );
+      Logger.appendError("EXTENSION", MESSAGES.ERRORS.DEPLOY_AZURE_COSMOS_DB, error);
+      sendToClientGenerationStatus(this.generationName, GenerationItemStatus.Failed, COSMOS_FAILED_TO_DEPLOY);
     }
     return result;
   }
@@ -49,6 +43,7 @@ export default class CosmosDBGenerator implements IGenerator {
     connectionString: string,
     backendFramework: string
   ): Promise<void> {
+    const eventName = TelemetryEventName.ConnectionStringReplace;
     const { cosmosDBConnectStringReplacePrompt } = MESSAGES.DIALOG_MESSAGES;
     const { yes, no } = MESSAGES.DIALOG_RESPONSES;
     const { FILE_REPLACED_MESSAGE } = MESSAGES.INFO;
@@ -59,11 +54,7 @@ export default class CosmosDBGenerator implements IGenerator {
     if (selection === yes) {
       AzureServices.updateConnectionStringToProject(path, connectionString, backendFramework);
       vscode.window.showInformationMessage(FILE_REPLACED_MESSAGE + path);
-      Controller.TelemetryService.trackEventWithDuration(
-        TelemetryEventName.ConnectionStringReplace,
-        startTime,
-        Date.now()
-      );
+      Controller.TelemetryService.trackEventWithDuration(eventName, startTime, Date.now());
     }
   }
 }

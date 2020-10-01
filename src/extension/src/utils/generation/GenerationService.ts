@@ -1,4 +1,5 @@
 import { AzureServices } from "../../azure/azureServices";
+import { MESSAGES } from "../../constants/messages";
 import { IActionContext } from "../../telemetry/callWithTelemetryAndErrorHandling";
 import { ITelemetryService } from "../../telemetry/telemetryService";
 import {
@@ -34,10 +35,11 @@ export default class GenerationService {
   }
 
   public rejectServices(services: Array<IService>) {
+    const { SERVICE_DEPLOYMENT_HALTED } = MESSAGES.GENERATION;
     services.forEach((service) => {
       const generator = this.generators.get(service.type);
-      if(generator)
-        sendToClientGenerationStatus(generator.generationName, GenerationItemStatus.Failed, "ERROR: Service deployment halted due to template error.");
+      if (generator)
+        sendToClientGenerationStatus(generator.generationName, GenerationItemStatus.Failed, SERVICE_DEPLOYMENT_HALTED);
     });
   }
 
@@ -50,23 +52,20 @@ export default class GenerationService {
   }
 
   private async generateAzureServices(generationData: IGenerationData) {
-    const {services, projectName} = generationData;
+    const { services, projectName } = generationData;
     const azureServices = services.filter((s) => s.category === SERVICE_CATEGORY.AZURE) as Array<IAzureService>;
     await this.resourceGroupGenerator.generate(projectName, azureServices);
     this.generateServices(azureServices as Array<IService>, generationData);
   }
 
-  private  processAzureService(result: DeployedServiceStatus[] ) {
+  private processAzureService(result: DeployedServiceStatus[]) {
     //if have deployed appservice and cosmos, update connectionString in appservice
     const cosmosResult = result.find((s) => s.serviceType === SERVICE_TYPE.COSMOSDB);
     const appServiceResult = result.find((s) => s.serviceType === SERVICE_TYPE.APPSERVICE);
 
     if (appServiceResult?.isDeployed && cosmosResult?.isDeployed && cosmosResult.payload.connectionString !== "") {
-      AzureServices.updateAppSettings(
-        appServiceResult.payload.resourceGroup,
-        appServiceResult.payload.serviceName,
-        cosmosResult.payload.connectionString
-      );
+      const { resourceGroup, serviceName, connectionString } = appServiceResult.payload;
+      AzureServices.updateAppSettings(resourceGroup, serviceName, connectionString);
     }
   }
 

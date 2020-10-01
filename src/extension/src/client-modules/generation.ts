@@ -20,6 +20,7 @@ import {
 } from "../utils/generationStatus";
 import { EXTENSION_COMMANDS } from "../constants/commands";
 import GenerationService from "../utils/generation/GenerationService";
+import { MESSAGES } from "../constants/messages";
 
 export class Generation extends WizardServant {
   clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
@@ -64,16 +65,16 @@ export class Generation extends WizardServant {
       sendToClientGenerationStatus(
         GENERATION_NAMES.TEMPLATES,
         GenerationItemStatus.Success,
-        "The project generation has finished successfully",
+        MESSAGES.GENERATION.PROJECT_GENERATION_FINISHED,
         { generationPath }
       );
       return generationPath;
     } catch (error) {
-      Logger.appendError("EXTENSION", "Error on generation project:", error);
+      Logger.appendError("EXTENSION", MESSAGES.ERRORS.GENERATING_PROJECT, error);
       sendToClientGenerationStatus(
         GENERATION_NAMES.TEMPLATES,
         GenerationItemStatus.Failed,
-        `ERROR: Templates could not be generated`
+        MESSAGES.GENERATION.TEMPLATES_COULD_NOT_BE_GENERATED
       );
       return;
     }
