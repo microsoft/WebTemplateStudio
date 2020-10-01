@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import {
   getOutputPath,
@@ -7,26 +8,25 @@ import {
   getProjectNameValidation,
   getValidations,
 } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
-
-import { PROJECT_NAME_CHARACTER_LIMIT } from "../../utils/constants/constants";
-
-import styles from "./styles.module.css";
-
-import { injectIntl, InjectedIntlProps } from "react-intl";
-
-import { validateProjectName } from "../../utils/validations/projectName/projectName";
-import { IValidation } from "../../utils/validations/validations";
-import { inferProjectName } from "../../utils/infer/projectName";
-import messages from "./messages";
 import { setProjectPathValidationAction } from "../../store/config/validations/action";
 import { setProjectNameAction } from "../../store/userSelection/app/action";
+
+import { validateProjectName } from "../../utils/validations/projectName/projectName";
+import { PROJECT_NAME_CHARACTER_LIMIT } from "../../utils/constants/constants";
+import { IValidation } from "../../utils/validations/validations";
+import { inferProjectName } from "../../utils/infer/projectName";
+
 import { AppContext } from "../../AppContext";
+
 import stylesInput from "../../css/input.module.css";
-import classnames from "classnames";
+import styles from "./styles.module.css";
+import messages from "./messages";
 
 type Props = InjectedIntlProps;
 
-const ProjectName = ({ intl }: Props) => {
+const ProjectName = (props: Props) => {
+  //#region CONSTANTS
+  const { formatMessage } = props.intl;
   const outputPath = useSelector(getOutputPath);
   const projectName = useSelector(getProjectName);
   const validations = useSelector(getValidations);
@@ -48,6 +48,23 @@ const ProjectName = ({ intl }: Props) => {
       }, 400);
   };
 
+  const validateSetProjectValueAndSetDirty = (e: React.SyntheticEvent<HTMLInputElement>) => {
+    const projectNameToSet: string = e.currentTarget.value;
+    setName(projectNameToSet);
+    validateProjectName(projectNameToSet, outputPath, validations.projectNameValidationConfig, vscode).then(
+      (validateState: IValidation) => {
+        validateState.isDirty = projectNameValidation.isDirty;
+        dispatch(setProjectNameAction(projectNameToSet, validateState));
+      }
+    );
+
+    if (projectNameToSet !== "") {
+      dispatch(setProjectPathValidationAction({ isValid: true }));
+    }
+  };
+
+  //#endregion
+
   React.useEffect(() => {
     setName(projectName);
   }, []);
@@ -67,41 +84,24 @@ const ProjectName = ({ intl }: Props) => {
     }
   }, [projectName]);
 
-  const validateSetProjectValueAndSetDirty = (e: React.SyntheticEvent<HTMLInputElement>) => {
-    const projectNameToSet: string = e.currentTarget.value;
-    setName(projectNameToSet);
-    validateProjectName(projectNameToSet, outputPath, validations.projectNameValidationConfig, vscode).then(
-      (validateState: IValidation) => {
-        validateState.isDirty = projectNameValidation.isDirty;
-        dispatch(setProjectNameAction(projectNameToSet, validateState));
-      }
-    );
-
-    if (projectNameToSet !== "") {
-      dispatch(setProjectPathValidationAction({ isValid: true }));
-    }
-  };
-
   return (
-    <>
-      <div className={styles.inputContainer}>
-        <div className={styles.inputTitle}>{intl.formatMessage(messages.projectNameTitle)}</div>
+    <div className={styles.inputContainer}>
+      <div className={styles.inputTitle}>{formatMessage(messages.projectNameTitle)}</div>
 
-        <input
-          onChange={validateSetProjectValueAndSetDirty}
-          aria-label={intl.formatMessage(messages.ariaProjectNameLabel)}
-          value={name}
-          maxLength={PROJECT_NAME_CHARACTER_LIMIT}
-          className={classnames(stylesInput.input)}
-          onFocus={onFocus}
-          onBlur={onBlur}
-        />
+      <input
+        onChange={validateSetProjectValueAndSetDirty}
+        aria-label={formatMessage(messages.ariaProjectNameLabel)}
+        value={name}
+        maxLength={PROJECT_NAME_CHARACTER_LIMIT}
+        className={stylesInput.input}
+        onFocus={onFocus}
+        onBlur={onBlur}
+      />
 
-        {!projectNameValidation.isValid && projectNameValidation.isDirty && hasFocus && (
-          <div className={styles.errorMessage}>{intl.formatMessage(projectNameValidation.error)}</div>
-        )}
-      </div>
-    </>
+      {!projectNameValidation.isValid && projectNameValidation.isDirty && hasFocus && (
+        <div className={styles.errorMessage}>{formatMessage(projectNameValidation.error)}</div>
+      )}
+    </div>
   );
 };
 
