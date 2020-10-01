@@ -1,16 +1,11 @@
-﻿const CONSTANTS = {};
+﻿const ENDPOINT = {
+  //{[{
+  MASTERDETAIL: "/api/masterdetail",
+  //}]}
+};
 
-CONSTANTS.ERROR_MESSAGE = {};
-//^^
-//{[{
-CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET =
-  "Request to get master detail text failed:";
-//}]}
-
-CONSTANTS.ENDPOINT = {};
-//^^
-//{[{
-CONSTANTS.ENDPOINT.MASTERDETAIL = "/api/masterdetail";
-//}]}
-
-export default CONSTANTS;
+const ERROR_MESSAGE = {
+  //{[{
+  MASTERDETAIL_GET: "Request to get master detail text failed:",
+  //}]}
+};

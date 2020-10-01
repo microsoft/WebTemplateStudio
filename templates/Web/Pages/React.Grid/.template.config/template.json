@@ -35,7 +35,8 @@
     },
     "wts.sourceName.casing.pascal": {
       "type": "parameter",
-      "replaces": "Param_SourceName_Pascal"
+      "replaces": "Param_SourceName_Pascal",
+      "fileRename": "Param_SourceName_Pascal"
     }
   }
 }

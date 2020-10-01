@@ -1,6 +1,6 @@
 ﻿import React from "react";
 import classnames from "classnames";
-import styles from "./warningmessage.module.css";
+import styles from "./WarningMessage.module.css";
 import PropTypes from "prop-types";
 
 // A pop up message used to warn users about failed API calls to the back end
