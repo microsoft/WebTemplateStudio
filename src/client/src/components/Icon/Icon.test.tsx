@@ -14,7 +14,7 @@ describe("Icon", () => {
     expect(wrapper).toBeDefined();
   });
 
-  describe("Icon component has base64", () => {
+  describe("has base64", () => {
     beforeEach(() => {
       props = {
         name: "THIS NAME",
@@ -41,7 +41,7 @@ describe("Icon", () => {
     });
   });
 
-  describe("When base64 not available show empty image", () => {
+  describe("does not have base64", () => {
     beforeEach(() => {
       props = {
         name: "THIS NAME",
