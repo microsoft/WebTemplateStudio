@@ -54,13 +54,6 @@ describe("PageCard", () => {
     expect(wrapper.queryByRole("figure")).toBe(null);
   });
 
-  it("check img from base64 renders ok", () => {
-    //UPDATE TEST to try checking this
-    // let svgBase64 = props.page.svgBase64;
-    // const svgUrlWrapper = wrapper.getByText(svgBase64gUrl);
-    // expect(svgUrlWrapper).toBeDefined();
-  });
-
   it("on mouse over show button add page", () => {
     fireEvent.mouseOver(wrapper.getByRole("button"));
     const addPage = wrapper.getByRole("figure");
