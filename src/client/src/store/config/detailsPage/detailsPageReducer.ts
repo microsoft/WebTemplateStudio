@@ -13,7 +13,6 @@ const initialState = {
     summary: "",
     longDescription: "",
     position: 0,
-    svgUrl: undefined,
     svgBase64: undefined,
     licenses: [],
     selected: false,

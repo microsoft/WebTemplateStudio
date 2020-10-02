@@ -66,7 +66,7 @@ const Footer = (props: Props) => {
     newRoutesNavItems.forEach((route) => (route.isSelected = false));
     newRoutesNavItems.filter((route) => route.index === currentIndex - 1)[0].isSelected = true;
     newRoutesNavItems.filter((route) => route.index === currentIndex - 1)[0].wasVisited = true;
-    const optionDetailPageBack: IOption = { title: "", internalName: "", body: "", svgUrl: "", svgBase64: "" };
+    const optionDetailPageBack: IOption = { title: "", internalName: "", body: "", svgBase64: "" };
     dispatch(setDetailPageAction(optionDetailPageBack, false, ""));
     dispatch(setRoutesAction(newRoutesNavItems));
   };
@@ -78,7 +78,7 @@ const Footer = (props: Props) => {
     newRoutesNavItems.forEach((route) => (route.isSelected = false));
     newRoutesNavItems.filter((route) => route.index === currentIndex + 1)[0].isSelected = true;
     newRoutesNavItems.filter((route) => route.index === currentIndex + 1)[0].wasVisited = true;
-    const optionDetailPageBack: IOption = { title: "", internalName: "", body: "", svgUrl: "", svgBase64: "" };
+    const optionDetailPageBack: IOption = { title: "", internalName: "", body: "", svgBase64: "" };
     dispatch(setDetailPageAction(optionDetailPageBack, false, ""));
     dispatch(setRoutesAction(newRoutesNavItems));
   };

@@ -70,7 +70,6 @@ const TopNavBar = (props: Props) => {
                         title: "",
                         internalName: "",
                         body: "",
-                        svgUrl: "",
                         svgBase64: "",
                       };
                       dispatch(setDetailPageAction(optionDetailPageBack, false, ""));

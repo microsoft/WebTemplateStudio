@@ -2,7 +2,6 @@ import { FormattedMessage } from "react-intl";
 
 export interface RowType {
   title: string;
-  svgUrl?: string;
   svgBase64?: string;
   company?: string;
   originalTitle?: string;
