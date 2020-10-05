@@ -10,7 +10,7 @@ export interface IOption {
   body: string | FM.MessageDescriptor;
   longDescription?: string | FM.MessageDescriptor;
   position?: number;
-  svgBase64?: string;
+  icon: string;
   licenses?: string[];
   selected?: boolean;
   author?: string;

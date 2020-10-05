@@ -17,8 +17,8 @@ import { ReactComponent as CloseSVG } from "../../../../assets/cancel.svg";
 import Icon from "../../../Icon";
 
 interface IStateProps {
-  text?: string;
-  svgBase64?: string;
+  text: string;
+  icon: string;
   cosmosDB?: boolean;
   appService?: boolean;
   idx?: number;
@@ -41,9 +41,7 @@ type Props = IStateProps & ISortablePageListProps & InjectedIntlProps;
 //match name and component
 const SidebarItem = ({
   text,
-  cosmosDB,
-  appService,
-  svgBase64,
+  icon,
   idx,
   handleConfigClick,
   handleOnCloseClick,
@@ -74,7 +72,7 @@ const SidebarItem = ({
     <>
       <div className={styles.draggablePage}>
         <div className={styles.iconContainer}>
-          <Icon name="" svgBase64={svgBase64} small />
+          <Icon name={text} icon={icon} small />
         </div>
         {editable && (
           <div className={styles.errorStack}>

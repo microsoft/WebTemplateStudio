@@ -2,7 +2,7 @@ import { FormattedMessage } from "react-intl";
 
 export interface RowType {
   title: string;
-  svgBase64?: string;
+  icon: string;
   company?: string;
   originalTitle?: string;
   serviceTitle?: FormattedMessage.MessageDescriptor;

@@ -6,13 +6,16 @@ const options: IOption[] = [
     title: "Full Stack App",
     internalName: "FullstackApp",
     body: "A single page application with a local back-end server.",
-    selected: false
+    selected: false,
+    icon: "",
+
   },
   {
     title: "RESTful API",
     internalName: "RestulfApi",
     body: "A RESTful API with no front-end user interface.",
-    selected: false
+    selected: false,
+    icon: "",
   }
 ];
 

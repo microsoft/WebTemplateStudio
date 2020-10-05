@@ -18,7 +18,7 @@ describe("Icon", () => {
     beforeEach(() => {
       props = {
         name: "THIS NAME",
-        svgBase64: "SOMETHING",
+        icon: "SOMETHING",
         small: false,
       };
 
@@ -41,31 +41,11 @@ describe("Icon", () => {
     });
   });
 
-  describe("does not have base64", () => {
-    beforeEach(() => {
-      props = {
-        name: "THIS NAME",
-        svgBase64: undefined,
-        small: false,
-      };
-
-      wrapper = render(<Icon {...props} />);
-    });
-    it("Should not have alt text", () => {
-      expect(wrapper.getAllByRole("img")[0]).not.toHaveAttribute("alt");
-      expect(wrapper.getAllByRole("img")[0]).toHaveClass(styles.icon);
-    });
-
-    it("Should not show any image", () => {
-      expect(wrapper.getAllByRole("img")[0]).not.toHaveAttribute("src");
-    });
-  });
-
   describe("When small style set", () => {
     beforeEach(() => {
       props = {
         name: "THIS NAME",
-        svgBase64: "SOMETHING",
+        icon: "SOMETHING",
         small: true,
       };
 

@@ -41,7 +41,7 @@ const AppServiceSelection = ({ appServiceSelection, intl }: Props) => {
           </div>
           <SidebarItem
             appService={true}
-            svgBase64={appServiceSelection.svgBase64}
+            icon={appServiceSelection.icon}
             editable={false} //itemNameEditable does not make sense for AppServices
             configurable={true} //we may need to update this in the future if we add this to the templates
             customInputStyle={styles.input}

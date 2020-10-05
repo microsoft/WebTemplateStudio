@@ -28,7 +28,7 @@ const PageCard = (props: Props) => {
     const select: ISelected = {
       author: page.author,
       defaultName: page.defaultName,
-      svgBase64: page.svgBase64,
+      icon: page.icon,
       internalName: page.internalName,
       isValidTitle: page.isValidTitle,
       licenses: page.licenses,
@@ -82,7 +82,7 @@ const PageCard = (props: Props) => {
       <div>
         <div className={styles.gridLayoutCardHeader}>
           <div>
-            <Icon name={page.defaultName} svgBase64={page.svgBase64} />
+            <Icon name={page.defaultName} icon={page.icon} />
           </div>
           <div className={classNames(styles.title)}>{page.defaultName}</div>
           {showPlusIcon && (

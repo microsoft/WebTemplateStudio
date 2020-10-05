@@ -18,7 +18,7 @@ const services = (state: ICosmosDB | null = initialState, action: RootAction) =>
         api: action.payload.api,
         accountName: action.payload.accountName,
         internalName: action.payload.internalName,
-        svgBase64: action.payload.svgBase64,
+        icon: action.payload.icon,
         groupName: action.payload.groupName,
         editable: action.payload.editable,
       };

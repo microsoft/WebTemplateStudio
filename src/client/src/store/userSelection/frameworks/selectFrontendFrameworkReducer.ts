@@ -5,7 +5,7 @@ import WizardSelectionActionType from "../selectionActionType";
 const initialState = {
   title: "",
   internalName: "",
-  svgBase64: "",
+  icon: "",
   version: "",
   author: "",
 };

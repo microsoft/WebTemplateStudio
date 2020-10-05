@@ -95,7 +95,7 @@ const AppServiceModal = ({ intl }: Props) => {
       siteName: appName,
       internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
       editable: templateAppService.editable,
-      svgBase64: templateAppService.svgBase64,
+      icon: templateAppService.icon,
     };
     dispatch(saveAppServiceAction(appServiceSelection));
   };

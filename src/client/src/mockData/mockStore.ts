@@ -9,6 +9,7 @@ export const getISelected = () => {
   const selected: ISelected = {
     title: "title1",
     internalName: "internamName1",
+    icon: ""
   };
   return selected;
 };
@@ -34,6 +35,7 @@ export const getInitialState = (): AppState => {
           licenses: [],
           selected: false,
           author: "",
+          icon:"",
         },
         originRoute: "",
       },
@@ -69,12 +71,14 @@ export const getInitialState = (): AppState => {
         internalName: "",
         version: "",
         author: "",
+        icon:"",
       },
       backendFramework: {
         title: "",
         internalName: "",
         version: "",
         author: "",
+        icon:"",
       },
       pages: [
         {
@@ -90,6 +94,7 @@ export const getInitialState = (): AppState => {
           ],
           title: "Blank",
           id: "0.7087795384523403",
+          icon:"",
         },
       ],
       outputPathObject: {
@@ -135,7 +140,7 @@ const loadPages = (frameWorkName: string): Array<any> => {
     longDescription:
       "This is the most basic page. A blank canvas to mold into whatever you wish. The blank page leaves pretty much everything up to you.",
     selected: false,
-    svgBase64: pageImage,
+    icon: pageImage,
     title: "Blank",
     defaultName: "Blank",
     isValidTitle: true,
@@ -152,7 +157,7 @@ const loadPages = (frameWorkName: string): Array<any> => {
     ],
     longDescription:
       "A page displaying simple image and text components which are organized into a grid. Grid pages are a system for creating order among elements in a website.",
-    svgBase64: pageImage,
+    icon: pageImage,
     selected: false,
     title: "Grid",
     defaultName: "Grid",
@@ -170,7 +175,7 @@ const loadPages = (frameWorkName: string): Array<any> => {
     ],
     longDescription:
       "The list page allows you to add custom text in the form of an adaptive list. This pattern is frequently used for blog pages and messaging apps. If a database is selected from the Azure Cloud Services the list page will automatically connect to the deployed Azure database.",
-    svgBase64: pageImage,
+    icon: pageImage,
     selected: false,
     title: "List",
     defaultName: "List",
@@ -188,7 +193,7 @@ const loadPages = (frameWorkName: string): Array<any> => {
     ],
     longDescription:
       "The master-detail page has a master pane and a details pane for content. When an item in the master list is selected, the details pane is updated. This pattern is frequently used for email and address books.",
-    svgBase64: pageImage,
+    icon: pageImage,
     selected: false,
     title: "Master Detail",
     defaultName: "Master Detail",
@@ -213,7 +218,7 @@ const loadFeatures = (): Array<any> => {
     longDescription:
       "Quickly build, deploy, and scale web apps with confidence. Meet rigorous, enterprise-grade performance, security, and compliance requirements by using the fully managed platform for your operational and monitoring tasks.",
     selected: false,
-    svgBase64: serviceImage,
+    icon: serviceImage,
     title: "App Service",
     defaultName: "App Service",
     isValidTitle: true,
@@ -229,7 +234,7 @@ const loadFeatures = (): Array<any> => {
     longDescription:
       "Azure Cosmos DB is Microsoft's proprietary globally-distributed, multi-model database service for managing data on a global scale. It offers a variety of APIs for your database including Azure Table, Core (SQL), MongoDB and Gremlin (GraphQL). Web Template Studio offers you the functionality to deploy a Cosmos DB instance from the wizard itself and select an initial location to deploy your database with the ability to scale it to multiple locations at a future time. As an added feature, deploying with the MongoDB API enables you to quickly connect the project Web Template Studio generates to your database instance.",
     selected: false,
-    svgBase64: serviceImage,
+    icon: serviceImage,
     title: "Cosmos DB",
     defaultName: "Cosmos DB",
     isValidTitle: true,
@@ -269,7 +274,7 @@ export const addFrontEndFrameworksOptions = (store: AppState) => {
         "React is a component-based open source JavaScript library for building interfaces for single page applications. It is used for handling view layer for web and mobile apps. React allows you to design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.  \r\n\r\n  \r\nMore information about React can be found [here](https://reactjs.org).\r\n",
       position: 1,
       selected: false,
-      svgBase64: frontendImage,
+      icon: frontendImage,
       title: "React",
       version: "16.8.4",
       latestVersion: "0.0.1",
@@ -286,7 +291,7 @@ export const addFrontEndFrameworksOptions = (store: AppState) => {
         "Angular is a platform that makes it easy to build applications with the web. Angular combines declarative templates, dependency injection, end to end tooling, and integrated best practices to solve development challenges. Angular empowers developers to build applications that live on the web, mobile, or the desktop.\r\n\r\nMore information about Angular can be found [here](https://angular.io).\r\n",
       position: 1,
       selected: false,
-      svgBase64: frontendImage,
+      icon: frontendImage,
       title: "Angular",
       version: "7.2.0",
       latestVersion: "0.0.1",
@@ -303,7 +308,7 @@ export const addFrontEndFrameworksOptions = (store: AppState) => {
         "Vue is a lightweight, progressive JavaScript framework for building user interfaces. Vue is heavily focused on the view layer, and is designed to be simple and flexible.\r\n\r\nMore information about Vue can be found [here](https://vuejs.org/).\r\n",
       position: 1,
       selected: false,
-      svgBase64: frontendImage,
+      icon: frontendImage,
       title: "Vue.js",
       version: "2.6.6",
       latestVersion: "0.0.1",
@@ -328,7 +333,7 @@ export const addBackEndFrameworksOptions = (store: AppState) => {
         "Node.js is an open source server environment based on JavaScript that helps you build fast and scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices. Node.js runs across various platforms like Windows, Linux, Unix, and Mac OS X.\r\n\r\nMore information about Node.js can be found [here](https://nodejs.org).\r\n",
       position: 1,
       selected: false,
-      svgBase64: backendImage,
+      icon: backendImage,
       title: "Node.js/Express",
       version: "12.0.0",
       linuxVersion: "node|12-lts",
@@ -340,7 +345,7 @@ export const addBackEndFrameworksOptions = (store: AppState) => {
       internalName: "Moleculer",
       licenses: ["[Moleculer](https://github.com/moleculerjs/moleculer/blob/master/LICENSE)"],
       selected: false,
-      svgBase64: backendImage,
+      icon: backendImage,
       title: "Moleculer",
       version: "0.14.3",
       linuxVersion: "node|12-lts",
@@ -355,7 +360,7 @@ export const addBackEndFrameworksOptions = (store: AppState) => {
         "Flask is a python microframework with a small core for building web applications. It is based on [Werkzeug](https://www.palletsprojects.com/p/werkzeug/) and [Jinja](https://www.palletsprojects.com/p/jinja/). It is licensed under [BSD](https://github.com/pallets/flask/blob/master/LICENSE) license.\r\nIt is developed and supported by Pallets organization.\r\n\r\nMore information on Flask can be found [here](http://flask.pocoo.org/)\r\n",
       position: 1,
       selected: false,
-      svgBase64: backendImage,
+      icon: backendImage,
       title: "Flask",
       version: "1.0.3",
       linuxVersion: "python|3.7",
@@ -369,7 +374,7 @@ export const addBackEndFrameworksOptions = (store: AppState) => {
       longDescription: "ASP.NET long description",
       position: 1,
       selected: false,
-      svgBase64: backendImage,
+      icon: backendImage,
       title: "ASP.NET",
       version: "3.1.5",
       linuxVersion: "DOTNETCORE|3.1",
@@ -428,7 +433,7 @@ export const setGenerationData = (store: AppState) => {
     location: "",
     siteName: "",
     internalName: "",
-    svgBase64: "",
+    icon: "",
   };
   store.userSelection.services.cosmosDB = {
     subscription: "",
@@ -438,7 +443,7 @@ export const setGenerationData = (store: AppState) => {
     api: "",
     internalName: "",
     groupName: "",
-    svgBase64: "",
+    icon: "",
   };
   return 3;
 };

@@ -88,7 +88,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
       const defaultSelectedFrontEndFramework = {
         internalName: defaultOptionFront.internalName,
         title: defaultOptionFront.title as string,
-        svgBase64: defaultOptionFront.svgBase64,
+        icon: defaultOptionFront.icon,
         version: `v${defaultOptionFront.version || "1.0"}`,
         licenses: defaultOptionFront.licenses,
         author: defaultOptionFront.author,
@@ -109,7 +109,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
       const defaultSelectedBackEndFramework = {
         title: defaultOptionBack.title as string,
         internalName: defaultOptionBack.internalName,
-        svgBase64: defaultOptionBack.svgBase64,
+        icon: defaultOptionBack.icon,
         version: `v${defaultOptionBack.version || "1.0"}`,
         author: defaultOptionBack.author,
         licenses: defaultOptionBack.licenses,
@@ -135,7 +135,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
         author: blankPage.author,
         defaultName: blankPage.defaultName,
         internalName: blankPage.internalName,
-        svgBase64: blankPage.svgBase64,
+        icon: blankPage.icon,
         isValidTitle: blankPage.isValidTitle,
         licenses: blankPage.licenses,
         title: blankPage.defaultName ? blankPage.defaultName : "",

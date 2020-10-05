@@ -13,7 +13,7 @@ const initialState = {
     summary: "",
     longDescription: "",
     position: 0,
-    svgBase64: undefined,
+    icon: "",
     licenses: [],
     selected: false,
     author: "",

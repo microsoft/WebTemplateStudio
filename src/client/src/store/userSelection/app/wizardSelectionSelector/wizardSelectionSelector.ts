@@ -102,14 +102,14 @@ const frameworksRowItems = (selection: UserSelectionState): RowType[] => {
     {
       title: frontendFramework.title,
       internalName: frontendFramework.internalName,
-      svgBase64: frontendFramework.svgBase64,
+      icon: frontendFramework.icon,
       version: frontendFramework.version!,
       author: frontendFramework.author,
     },
     {
       title: backendFramework.title,
       internalName: backendFramework.internalName,
-      svgBase64: backendFramework.svgBase64,
+      icon: backendFramework.icon,
       version: backendFramework.version!,
       author: backendFramework.author,
     },

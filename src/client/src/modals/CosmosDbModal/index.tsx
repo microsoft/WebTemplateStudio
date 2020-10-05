@@ -102,7 +102,7 @@ const CosmosModal = ({ intl }: Props) => {
           ? WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO
           : WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL,
       editable: templateCosmosDB.editable,
-      svgBase64: templateCosmosDB.svgBase64,
+      icon: templateCosmosDB.icon,
     };
     dispatch(saveCosmosDbAction(cosmosSelection));
   };

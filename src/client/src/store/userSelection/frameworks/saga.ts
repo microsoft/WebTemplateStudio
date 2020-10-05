@@ -39,7 +39,7 @@ export function* frameworkSaga(vscode: any) {
           defaultName: blankPage.defaultName,
           internalName: blankPage.internalName,
           isValidTitle: blankPage.isValidTitle,
-          svgBase64: blankPage.svgBase64,
+          icon: blankPage.icon,
           licenses: blankPage.licenses,
           title: blankPage.defaultName ? blankPage.defaultName : "",
           id: Math.random().toString(),

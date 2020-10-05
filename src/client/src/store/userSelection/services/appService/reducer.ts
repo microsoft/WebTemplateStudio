@@ -18,7 +18,7 @@ const appServiceReducer = (state: IAppService | null = initialState, action: Roo
         resourceGroup: action.payload.resourceGroup,
         location: action.payload.location,
         internalName: action.payload.internalName,
-        svgBase64: action.payload.svgBase64,
+        icon: action.payload.icon,
         siteName: action.payload.siteName,
         editable: action.payload.editable,
       };

@@ -60,8 +60,8 @@ const SelectFrameworks = (props: Props)=>{
     const optionBackEnd =
       backendOptions.find((optionBack: IOption) => optionBack.internalName === option.value);
     if (optionBackEnd){
-      const { title, internalName, version, author, licenses } = optionBackEnd;
-      const newBackEndFramework = { title: title as string, internalName, version, author, licenses };
+      const { title, internalName, version, author, licenses, icon } = optionBackEnd;
+      const newBackEndFramework = { title: title as string, internalName, version, author, licenses, icon };
       dispatch(setSelectedBackendFrameworkAction(newBackEndFramework));
     }
   };
@@ -70,9 +70,9 @@ const SelectFrameworks = (props: Props)=>{
     const optionFrontEnd =
       frontEndOptions.find((optionFront: IOption) => optionFront.internalName === option.value);
     if (optionFrontEnd){
-      const { title, internalName, version, author, licenses } = optionFrontEnd;
-      const newBackEndFramework = { title: title as string, internalName, version, author, licenses };
-      dispatch(setSelectedFrontendFrameworkAction(newBackEndFramework));
+      const { title, internalName, version, author, licenses, icon } = optionFrontEnd;
+      const newFrontEndFramework = { title: title as string, internalName, version, author, licenses, icon };
+      dispatch(setSelectedFrontendFrameworkAction(newFrontEndFramework));
     }
   };
 

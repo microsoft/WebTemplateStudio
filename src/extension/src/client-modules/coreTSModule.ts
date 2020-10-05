@@ -23,18 +23,18 @@ export class CoreTSModule extends WizardServant {
     };
   }
 
-  private getBase64 = (array: any): any => {
+  private transformIconToBase64 = (array: any): any => {
     array
       .filter((item: any) => item.icon !== null && item.icon !== "")
       .forEach((item: any) => {
-        item.iconBase64 = fs.readFileSync(item.icon, "base64");
+        item.icon = fs.readFileSync(item.icon, "base64");
       });
   };
 
   async getFrameworks(message: any): Promise<IPayloadResponse> {
     const frameworks = await CoreTemplateStudio.GetExistingInstance().getFrameworks(message.payload.projectType);
 
-    this.getBase64(frameworks);
+    this.transformIconToBase64(frameworks);
 
     return {
       payload: {
@@ -64,7 +64,7 @@ export class CoreTSModule extends WizardServant {
       frontendFramework,
       backendFramework
     );
-    this.getBase64(pages);
+    this.transformIconToBase64(pages);
 
     return {
       payload: {
@@ -80,7 +80,7 @@ export class CoreTSModule extends WizardServant {
       frontendFramework,
       backendFramework
     );
-    this.getBase64(features);
+    this.transformIconToBase64(features);
 
     return {
       payload: {

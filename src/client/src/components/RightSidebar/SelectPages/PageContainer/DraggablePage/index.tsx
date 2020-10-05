@@ -112,7 +112,7 @@ const DraggablePage = ({
           })}
         >
           <div className={styles.inputContainer}>
-            <Icon name={namePage} svgBase64={page!.svgBase64} small />
+            <Icon name={namePage} icon={page!.icon} small />
 
             {page && page.editable && idx && (
               <input

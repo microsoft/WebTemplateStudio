@@ -56,7 +56,7 @@ export const ServiceCard = (props: Props) => {
     <div className={styles.container}>
       <div className={styles.cardContainer}>
         <div className={styles.header}>
-          <Icon name={service.title} svgBase64={service.svgBase64} />
+          <Icon name={service.title} icon={service.icon} />
           <div className={styles.title}>{service.title}</div>
         </div>
         <div className={styles.body}>

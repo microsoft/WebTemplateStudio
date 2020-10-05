@@ -65,11 +65,11 @@ const FrameworkCard = (props: Props) => {
   };
 
   const selectCard = () => {
-    const { title, internalName, licenses, author, version, svgBase64 } = framework;
+    const { title, internalName, licenses, author, version, icon } = framework;
     const shorthandVersionLabel = `v${version || "1.0"}`;
     const selectedFramework = {
       internalName,
-      svgBase64,
+      icon,
       title: title as string,
       version: shorthandVersionLabel,
       licenses,
@@ -114,7 +114,7 @@ const FrameworkCard = (props: Props) => {
     >
       <div>
         <div className={styles.gridLayoutCardHeader}>
-          <div>{framework.internalName && <Icon name={framework.internalName} svgBase64={framework.svgBase64} />}</div>
+          <div>{framework.internalName && <Icon name={framework.internalName} icon={framework.icon} />}</div>
           <div className={styles.title}>{framework.title}</div>
         </div>
 

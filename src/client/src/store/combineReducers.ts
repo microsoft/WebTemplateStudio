@@ -29,7 +29,7 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
       author: blankPage.author,
       defaultName: blankPage.defaultName,
       internalName: blankPage.internalName,
-      svgBase64: blankPage.svgBase64,
+      icon: blankPage.icon,
       isValidTitle: blankPage.isValidTitle,
       licenses: blankPage.licenses,
       title: blankPage.defaultName ? blankPage.defaultName : "",

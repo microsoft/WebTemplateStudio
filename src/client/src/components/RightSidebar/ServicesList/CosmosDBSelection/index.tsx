@@ -43,7 +43,7 @@ const CosmosDBSelection = ({ cosmosSelection, intl }: Props) => {
             <div>{intl.formatMessage(messages.title)}</div>
           </div>
           <SidebarItem
-            svgBase64={cosmosSelection.svgBase64}
+            icon={cosmosSelection.icon}
             cosmosDB={true}
             editable={false} //itemNameEditable does not make sense for AppServices
             configurable={true} //we may need to update this in the future if we add this to the templates
