@@ -57,7 +57,7 @@ export default class GenerationService {
     });
   }
 
-  public async generateServices(generationData: IGenerationData) {
+  private async generateServices(generationData: IGenerationData) {
     this.servicesQueue.length = 0;
     await this.deployAzureServices(generationData);
     const result = await Promise.all(this.servicesQueue);
@@ -78,7 +78,8 @@ export default class GenerationService {
     const appServiceResult = result.find((s) => s.serviceType === SERVICE_TYPE.APPSERVICE);
 
     if (appServiceResult?.isDeployed && cosmosResult?.isDeployed && cosmosResult.payload.connectionString !== "") {
-      const { resourceGroup, serviceName, connectionString } = appServiceResult.payload;
+      const { resourceGroup, serviceName } = appServiceResult.payload;
+      const { connectionString } = cosmosResult.payload;
       AzureServices.updateAppSettings(resourceGroup, serviceName, connectionString);
     }
   }
