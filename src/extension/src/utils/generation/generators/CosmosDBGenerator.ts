@@ -4,7 +4,7 @@ import { MESSAGES } from "../../../constants/messages";
 import { TelemetryEventName } from "../../../constants/telemetry";
 import { Controller } from "../../../controller";
 import { ICosmosDB, IGenerationData, IService, SERVICE_TYPE } from "../../../types/generationTypes";
-import { GenerationItemStatus, sendGenerationStatus } from "../../generationStatus";
+import { GenerationItemStatus, sendGenerationStatus } from "../generationStatus";
 import { Logger } from "../../logger";
 import { DeployedServiceStatus } from "../GenerationService";
 import { IGenerator } from "../IGenerator";

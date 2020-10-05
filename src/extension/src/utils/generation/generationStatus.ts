@@ -1,5 +1,5 @@
-import { EXTENSION_COMMANDS } from "../constants/commands";
-import { Controller } from "../controller";
+import { EXTENSION_COMMANDS } from "../../constants/commands";
+import { Controller } from "../../controller";
 
 export enum GenerationItemStatus {
   Stopped = "Stopped",

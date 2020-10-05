@@ -9,7 +9,7 @@ import {
   SERVICE_CATEGORY,
   SERVICE_TYPE,
 } from "../../types/generationTypes";
-import { GenerationItemStatus, sendGenerationStatus } from "../generationStatus";
+import { GenerationItemStatus, sendGenerationStatus } from "./generationStatus";
 import { IGenerator } from "./IGenerator";
 import AppServiceGenerator from "./generators/AppServiceGenerator";
 import CosmosDBGenerator from "./generators/CosmosDBGenerator";

@@ -6,7 +6,7 @@ import {
   sendGenerationStatus,
   TEMPLATES_GENERATION_NAME,
   updateStatusMessage,
-} from "../../generationStatus";
+} from "../generationStatus";
 import { Logger } from "../../logger";
 
 export default class TemplatesGenerator {
