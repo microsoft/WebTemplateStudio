@@ -1,25 +1,29 @@
-﻿## Getting Started
-
-1. Install dependencies using `Install dependencies` task (/*{[{*/or use `yarn install` or `npm install` in frontend and backend folders/*}]}*/).
-2. Start development app using `Start App` task (/*{[{*/or use `yarn start` or `npm start` in frontend and backend folders/*}]}*/).
-
-## File Structure
-//^^
-//{[{
-The back-end is based on [Moleculer CLI](https://moleculer.services/docs/0.14/usage.html#Create-a-Moleculer-project). It is served on http://localhost:3001/.
-//}]}
-
-```
+﻿## File Structure
 .
 //{[{
 ├── backend/ Directory with everything backend-related
 │ ├── moleculer.config.js - Moleculer Service Broker configuration file. More info: https://moleculer.services/docs/0.14/broker.html
-│ ├── services/ - Moleculer services that provides API routes and serves front-end with data
+│ ├── services/ - Moleculer services that provides API routes and serves frontend with data
 │ │ ├── api.service.js - HTTP gateway service
 │ │ └── pages.service.js - Service that serves the data and contains the actual handlers for the API calls
 //}]}
 └── README.md
-```
+
+### Backend
+
+//{[{
+The backend is based on [Moleculer CLI](https://moleculer.services/docs/0.14/usage.html#Create-a-Moleculer-project).
+
+The most important scripts in the package.json are:
+  - start: serves the backend on http://localhost:3001/.
+  - start-dev: serves the backend in development on http://localhost:3001/.
+  - publish: copies the backend files to the publish folder.
+
+To start the backend application manually:
+  1. Open a terminal and navigate to the backend folder path.
+  2. Use `yarn install` or `npm install` to install backend dependencies.
+  3. Use `yarn start` or `npm start` to start backend app in development.
+//}]}
 
 ## Additional Documentation
 
@@ -27,4 +31,3 @@ The back-end is based on [Moleculer CLI](https://moleculer.services/docs/0.14/us
 //{[{
 - Moleculer - https://moleculer.services/
 //}]}
-

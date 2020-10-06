@@ -1,31 +1,25 @@
-﻿## Next Steps
-
-//{[{
-### Adding a New Page
-
-1. Create a folder in `frontend/src/components` with your react components.
-2. Add a route for your page to `frontend/src/App.js`.
-3. Add a button to the navigation bar in `frontend/src/components/NavBar/index.js`.
-//}]}
-
-## File Structure
-
-//{[{
-The front-end is based on [create-react-app](https://github.com/facebook/create-react-app). It is served on http://localhost:3000/.
-//}]}
-
-```
-.
+﻿## File Structure
 //^^
 //{[{
-├── frontend/ - React front-end
+├── frontend/ - React frontend
 │ ├── src
 │ │ ├── components - React components for each page
 │ │ ├── App.js - React routing
 │ └─└── index.js - React root component
 //}]}
 └── README.md
-```
+
+### Frontend
+
+//{[{
+The frontend is based on [create-react-app](https://github.com/facebook/create-react-app).
+
+The most important scripts in the package.json are:
+  - start: serves the frontend in development on http://localhost:3000/.
+  - build: Builds the app for production to the `build` folder.
+  - publish: Builds the app for production and moves the output to the publish folder.
+  - test: Launches the test runner in the interactive watch mode.
+//}]}
 
 ## Additional Documentation
 
@@ -33,4 +27,3 @@ The front-end is based on [create-react-app](https://github.com/facebook/create-
 - React - https://reactjs.org/
 - React Router - https://reacttraining.com/react-router/
 //}]}
-- Bootstrap CSS - https://getbootstrap.com/
