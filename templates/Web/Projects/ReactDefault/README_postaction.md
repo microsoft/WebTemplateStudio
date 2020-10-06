@@ -4,8 +4,8 @@
 ### Adding a New Page
 
 1. Create a folder in `frontend/src/components` with your react components.
-2. Add a route for your page to `frontend/src/App.jsx`.
-3. Add a button to the navigation bar in `frontend/src/components/NavBar/index.jsx`.
+2. Add a route for your page to `frontend/src/App.js`.
+3. Add a button to the navigation bar in `frontend/src/components/NavBar/index.js`.
 //}]}
 
 ## File Structure
@@ -21,8 +21,8 @@ The front-end is based on [create-react-app](https://github.com/facebook/create-
 ├── frontend/ - React front-end
 │ ├── src
 │ │ ├── components - React components for each page
-│ │ ├── App.jsx - React routing
-│ └─└── index.jsx - React root component
+│ │ ├── App.js - React routing
+│ └─└── index.js - React root component
 //}]}
 └── README.md
 ```
