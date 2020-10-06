@@ -67,6 +67,7 @@
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^3.0.0",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
     "react-intl-translations-manager": "^5.0.3",
     "redux-mock-store": "^1.5.4"
   },
