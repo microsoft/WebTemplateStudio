@@ -5,6 +5,7 @@ export enum TelemetryEventName {
   AppServiceDeploy = "Azure-App-Service-Deployment",
   CosmosDBDeploy = "Azure-Cosmos-Deployment",
   ResourceGroupDeploy = "Azure-Resource-Group-Deployment",
+  DefaultServiceDeploy = "Default-Service-Deployment",
   PageChange = "Wizard-Page-Change",
   CreateNewProject = "Create-New-Project",
   SyncEngine = "Sync-Engine",
