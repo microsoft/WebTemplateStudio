@@ -1,5 +1,6 @@
 ﻿## File Structure
-.
+
+├── backend/ - Backend App
 //{[{
 ├── backend/ - Flask server that provides API routes and serves frontend
 │ ├── constants.py - Defines the constants for the endpoints and port

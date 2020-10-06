@@ -14,6 +14,9 @@ To run the project:
 ## File Structure
 ```
 .
+├── .vscode/ - Visual Studio Code configuration files
+├── backend/ - Backend App
+├── frontend/ - Frontend App
 └── README.md
 ```
 

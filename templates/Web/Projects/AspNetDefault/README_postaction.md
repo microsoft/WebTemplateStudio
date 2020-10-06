@@ -1,5 +1,6 @@
 ﻿## File Structure
-.
+
+├── backend/ - Backend App
 //{[{
 ├── backend/ - ASP.NET Web Api that provides API routes and serves frontend
 │ ├── Contracts/ - Interfaces for services

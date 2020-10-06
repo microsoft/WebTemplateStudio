@@ -1,7 +1,7 @@
 ﻿## File Structure
-.
+
+├── backend/ - Backend App
 //{[{
-├── backend/ Directory with everything backend-related
 │ ├── moleculer.config.js - Moleculer Service Broker configuration file. More info: https://moleculer.services/docs/0.14/broker.html
 │ ├── services/ - Moleculer services that provides API routes and serves frontend with data
 │ │ ├── api.service.js - HTTP gateway service

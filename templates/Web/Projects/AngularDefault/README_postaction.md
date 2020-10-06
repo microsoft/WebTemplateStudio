@@ -1,7 +1,7 @@
 ﻿## File Structure
-//^^
+
+├── frontend/ - Frontend App
 //{[{
-├── frontend/ - Angular frontend
 │ ├── src
 │ │ ├── app - Angular main root module
 │ │ │ ├── app-shell - Angular main components

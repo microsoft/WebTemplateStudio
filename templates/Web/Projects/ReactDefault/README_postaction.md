@@ -1,7 +1,7 @@
 ﻿## File Structure
-//^^
+
+├── frontend/ - Frontend App
 //{[{
-├── frontend/ - React frontend
 │ ├── src
 │ │ ├── components - React components for each page
 │ │ ├── App.js - React routing

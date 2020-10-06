@@ -1,7 +1,7 @@
 ﻿## File Structure
-.
+
+├── backend/ - Backend App
 //{[{
-├── backend/ - Express server that provides API routes and serves frontend
 │ ├── routes/ - Handles API calls for routes
 │ ├── app.js - Adds middleware to the express server
 │ ├── constants.js - Defines the constants for the endpoints and port

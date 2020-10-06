@@ -1,7 +1,7 @@
 ﻿## File Structure
-//^^
+
+├── frontend/ - Frontend App
 //{[{
-├── frontend/ - Vue frontend app
 │ ├── src - Vue frontend
 │ │   ├── assets/                     - Default images
 │ │   ├── components/                 - Common Vue components shared between different views
