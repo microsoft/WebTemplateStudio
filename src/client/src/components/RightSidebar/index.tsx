@@ -68,16 +68,18 @@ const RightSidebar = (props: Props) => {
       {(isSidebarOpen || isFirstOrLastPage) && (
         <div role="complementary" id="dvRightSideBar" className={classnames(styles.container, styles.rightViewCropped)}>
           <div className={styles.summaryContainer} id="dvSummaryContainer">
-            <CancelSVG
-              tabIndex={0}
-              className={classnames(styles.icon, {
-                [styles.iconHide]: selectedRoute === ROUTE.REVIEW_AND_GENERATE || selectedRoute === ROUTE.NEW_PROJECT,
-              })}
-              onClick={showHideMenu}
-              onKeyDown={cancelKeyDownHandler}
-              aria-label={intl.formatMessage(messages.hideAriaLabel)}
-              title={intl.formatMessage(messages.hideIcon)}
-            />
+            <div className={classnames(styles.endAlign, styles.marginLeft)}>
+              <CancelSVG
+                tabIndex={0}
+                className={classnames(styles.icon, {
+                  [styles.iconHide]: selectedRoute === ROUTE.REVIEW_AND_GENERATE || selectedRoute === ROUTE.NEW_PROJECT,
+                })}
+                onClick={showHideMenu}
+                onKeyDown={cancelKeyDownHandler}
+                aria-label={intl.formatMessage(messages.hideAriaLabel)}
+                title={intl.formatMessage(messages.hideIcon)}
+              />
+            </div>
 
             <div className={styles.marginLeft}>
               <div className={styles.title}>{formatMessage(messages.yourProjectDetails)}</div>
