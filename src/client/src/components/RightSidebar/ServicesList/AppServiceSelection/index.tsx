@@ -12,7 +12,7 @@ import { sendTelemetry } from "../../../../utils/extensionService/extensionServi
 
 import messages from "./messages";
 import SidebarItem from "../SidebarItem";
-import styles from "./styles.module.css";
+import servicelistStyles from "../servicelistStyles.module.css";
 
 interface IProps {
   appServiceSelection: IAppService | null;
@@ -36,7 +36,7 @@ const AppServiceSelection = ({ appServiceSelection, intl }: Props) => {
     <>
       {appServiceSelection && (
         <>
-          <div className={styles.headerContainer}>
+          <div className={servicelistStyles.headerContainer}>
             <div>{intl.formatMessage(messages.title)}</div>
           </div>
           <SidebarItem

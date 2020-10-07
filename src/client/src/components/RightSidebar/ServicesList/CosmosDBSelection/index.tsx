@@ -11,7 +11,7 @@ import { EXTENSION_COMMANDS } from "../../../../utils/constants/commands";
 import { SERVICE_KEYS } from "../../../../utils/constants/constants";
 
 import SidebarItem from "../SidebarItem";
-import styles from "./styles.module.css";
+import servicelistStyles from "../servicelistStyles.module.css";
 
 import messages from "./messages";
 
@@ -39,7 +39,7 @@ const CosmosDBSelection = ({ cosmosSelection, intl }: Props) => {
     <>
       {cosmosSelection && (
         <>
-          <div className={styles.headerContainer}>
+          <div className={servicelistStyles.headerContainer}>
             <div>{intl.formatMessage(messages.title)}</div>
           </div>
           <SidebarItem
