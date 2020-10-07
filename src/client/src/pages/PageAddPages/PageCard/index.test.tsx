@@ -54,15 +54,6 @@ describe("PageCard", () => {
     expect(wrapper.queryByRole("figure")).toBe(null);
   });
 
-  it("check img svg", () => {
-    let svgUrl = props.page.internalName;
-    svgUrl = svgUrl.substring(svgUrl.indexOf(".") + 1);
-    svgUrl = svgUrl.substring(svgUrl.indexOf(".") + 1);
-    svgUrl = svgUrl.substring(svgUrl.indexOf(".") + 1).toLowerCase() + "page.svg";
-    const svgUrlWrapper = wrapper.getByText(svgUrl);
-    expect(svgUrlWrapper).toBeDefined();
-  });
-
   it("on mouse over show button add page", () => {
     fireEvent.mouseOver(wrapper.getByRole("button"));
     const addPage = wrapper.getByRole("figure");

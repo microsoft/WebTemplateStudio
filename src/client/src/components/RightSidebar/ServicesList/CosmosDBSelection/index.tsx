@@ -21,10 +21,7 @@ interface IProps {
 
 type Props = IProps & InjectedIntlProps;
 
-const CosmosDBSelection = ({
-  cosmosSelection,
-  intl
-}: Props) => {
+const CosmosDBSelection = ({ cosmosSelection, intl }: Props) => {
   const dispatch = useDispatch();
   const { vscode } = React.useContext(AppContext);
   const [openModal, setOpenModal] = React.useState(false);
@@ -32,7 +29,9 @@ const CosmosDBSelection = ({
   React.useEffect(() => {
     if (openModal) {
       const azureServiceType = SERVICE_KEYS.COSMOS_DB;
-      sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_COSMOSDB_SERVICE_MODAL_FROM_SERVICES_LIST, { azureServiceType })
+      sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_COSMOSDB_SERVICE_MODAL_FROM_SERVICES_LIST, {
+        azureServiceType,
+      });
     }
   }, [openModal]);
 
@@ -44,8 +43,9 @@ const CosmosDBSelection = ({
             <div>{intl.formatMessage(messages.title)}</div>
           </div>
           <SidebarItem
+            icon={cosmosSelection.icon}
             cosmosDB={true}
-            editable={false}    //itemNameEditable does not make sense for AppServices
+            editable={false} //itemNameEditable does not make sense for AppServices
             configurable={true} //we may need to update this in the future if we add this to the templates
             customInputStyle={styles.input}
             key={cosmosSelection.accountName}
@@ -54,7 +54,7 @@ const CosmosDBSelection = ({
             handleOnCloseClick={() => dispatch(removeCosmosDbAction())}
             handleConfigClick={() => {
               setOpenModal(!openModal);
-              dispatch(openCosmosDbModalAction())
+              dispatch(openCosmosDbModalAction());
             }}
             idx={1}
           />
