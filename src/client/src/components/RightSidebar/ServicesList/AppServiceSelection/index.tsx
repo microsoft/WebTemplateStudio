@@ -12,7 +12,7 @@ import { sendTelemetry } from "../../../../utils/extensionService/extensionServi
 
 import messages from "./messages";
 import SidebarItem from "../SidebarItem";
-import styles from "./styles.module.css";
+import servicelistStyles from "../servicelistStyles.module.css";
 
 interface IProps {
   appServiceSelection: IAppService | null;
@@ -36,7 +36,7 @@ const AppServiceSelection = ({ appServiceSelection, intl }: Props) => {
     <>
       {appServiceSelection && (
         <>
-          <div className={styles.headerContainer}>
+          <div className={servicelistStyles.headerContainer}>
             <div>{intl.formatMessage(messages.title)}</div>
           </div>
           <SidebarItem
@@ -44,7 +44,6 @@ const AppServiceSelection = ({ appServiceSelection, intl }: Props) => {
             icon={appServiceSelection.icon}
             editable={false} //itemNameEditable does not make sense for AppServices
             configurable={true} //we may need to update this in the future if we add this to the templates
-            customInputStyle={styles.input}
             key={appServiceSelection.siteName}
             text={appServiceSelection.siteName}
             withIndent={true}
