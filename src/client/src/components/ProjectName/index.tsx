@@ -29,8 +29,7 @@ interface IProps {
 
 type Props = IProps & InjectedIntlProps;
 
-const ProjectName = (props: Props) => {
-  //#region CONSTANTS
+const ProjectName = (props: Props) => {  
   const { formatMessage } = props.intl;
   const outputPath = useSelector(getOutputPath);
   const projectName = useSelector(getProjectName);
@@ -67,8 +66,6 @@ const ProjectName = (props: Props) => {
       dispatch(setProjectPathValidationAction({ isValid: true }));
     }
   };
-
-  //#endregion
 
   React.useEffect(() => {
     setName(projectName);
