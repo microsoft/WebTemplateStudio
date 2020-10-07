@@ -63,10 +63,7 @@ let generateProject = async (frontend: string, backend: string) => {
       path: "../../../../../template_test",
       projectName: backend + "-" + frontend,
       projectType: projType,
-      services: {
-        appService: null,
-        cosmosDB: null,
-      },
+      services: [],
     },
     liveMessageHandler: (value) => value,
   });

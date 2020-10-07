@@ -5,6 +5,7 @@ export interface ISelected {
   defaultName?: string;
   internalName: string;
   id?: string;
+  icon: string;
   isValidTitle?: boolean;
   error?: FormattedMessage.MessageDescriptor;
   version?: string;
