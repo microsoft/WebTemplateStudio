@@ -4,7 +4,6 @@ import { connect, useDispatch } from "react-redux";
 import { ISelectProps, IStateProps } from "./interfaces";
 import { mapStateToProps } from "./store";
 import styles from "./styles.module.css";
-import { getSvg } from "../../../utils/getSvgUrl";
 import DependencyInfo from "./DependencyInfo";
 import messages from "./messages";
 import { KEY_EVENTS } from "../../../utils/constants/constants";
@@ -14,20 +13,18 @@ import { getLatestVersion } from "../../../utils/extensionService/extensionServi
 import { AppContext } from "../../../AppContext";
 import { updateFrameworksAction } from "../../../store/templates/frameworks/action";
 import { IOption } from "../../../types/option";
-import { setSelectedBackendFrameworkAction, setSelectedFrontendFrameworkAction } from "../../../store/userSelection/frameworks/action";
+import {
+  setSelectedBackendFrameworkAction,
+  setSelectedFrontendFrameworkAction,
+} from "../../../store/userSelection/frameworks/action";
 import { ROUTE } from "../../../utils/constants/routes";
 import { setDetailPageAction } from "../../../store/config/detailsPage/action";
+import Icon from "../../../components/Icon";
 
 type Props = ISelectProps & IStateProps & InjectedIntlProps;
 
 const FrameworkCard = (props: Props) => {
-  const {
-    framework,
-    frontEndSelect,
-    backEndSelect,
-    isFrontEnd,
-    intl
-  } = props;
+  const { framework, frontEndSelect, backEndSelect, isFrontEnd, intl } = props;
 
   const [selected, setSelected] = React.useState(false);
   const [latestVersion, setLatestVersion] = React.useState(framework.latestVersion);
@@ -58,7 +55,7 @@ const FrameworkCard = (props: Props) => {
 
   const setDetailPage = (detailPageInfo: IOption) => {
     dispatch(setDetailPageAction(detailPageInfo, false, ROUTE.SELECT_FRAMEWORKS));
-  }
+  };
   const selectWhenLoadWithoutSelection = () => {
     const frameworkSelectableFirstTime = isFrontEnd
       ? frontEndSelect.internalName === "" && framework.internalName === "React"
@@ -68,10 +65,11 @@ const FrameworkCard = (props: Props) => {
   };
 
   const selectCard = () => {
-    const { title, internalName, licenses, author, version } = framework;
+    const { title, internalName, licenses, author, version, icon } = framework;
     const shorthandVersionLabel = `v${version || "1.0"}`;
     const selectedFramework = {
       internalName,
+      icon,
       title: title as string,
       version: shorthandVersionLabel,
       licenses,
@@ -116,14 +114,8 @@ const FrameworkCard = (props: Props) => {
     >
       <div>
         <div className={styles.gridLayoutCardHeader}>
-          <div>{getSvg(framework.internalName) || (framework.svgUrl && <img src={framework.svgUrl} alt="" />)}</div>
-          <div
-            className={classNames(styles.title, {
-              [styles.titleLeftJustified]: framework.svgUrl === undefined ? true : false,
-            })}
-          >
-            {framework.title}
-          </div>
+          <div>{framework.internalName && <Icon name={framework.internalName} icon={framework.icon} />}</div>
+          <div className={styles.title}>{framework.title}</div>
         </div>
 
         <div className={styles.gridLayoutVersion}>
