@@ -29,7 +29,6 @@ export default {
     "&:hover": {
       outline: "0.5px solid rgba(0,0,0,0.5)"
     },
-    fontSize: "1.2em",
     padding: "5px",
     cursor: "pointer"
   }),

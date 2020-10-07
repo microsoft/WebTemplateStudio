@@ -1,4 +1,3 @@
-import blankpage from "../assets/blankpage.svg";
 import { IOption } from "../types/option";
 
 const options: IOption[] = [
@@ -13,7 +12,7 @@ const options: IOption[] = [
   {
     title: "RESTful API",
     internalName: "RestulfApi",
-    body: "A RESTful API with no front-end user interface.",
+    body: "A RESTful API with no frontend user interface.",
     selected: false,
     icon: "",
   }

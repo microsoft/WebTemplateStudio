@@ -103,7 +103,6 @@
 
 .button {
   margin-left: 1em;
-  font-size: 1em;
 }
 
 .button:hover {
@@ -117,8 +116,4 @@
 .buttonContainer {
   display: flex;
   align-items: center;
-}
-
-.leftButton {
-  font-size: 1.1em;
 }
