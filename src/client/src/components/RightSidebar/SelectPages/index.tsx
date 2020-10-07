@@ -47,7 +47,7 @@ const SelectPages = (props: Props) => {
   return (
     <div className={styles.sortablePages}>
       <div className={classnames(styles.pageListContainer)}>
-        <div className={rightsidebarStyles.dropdownTitle}>
+        <div className={rightsidebarStyles.title}>
           {`${props.intl!.formatMessage(messages.pages)} (${selectedPages.length >= 0 ? selectedPages.length : ""
             })`}
         </div>
