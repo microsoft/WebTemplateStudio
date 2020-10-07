@@ -2,7 +2,9 @@
 
 ├── frontend/ - Frontend App
 //{[{
-│ ├── src
+│ ├── e2e/ - end to end tests
+│ ├── scripts/ - scripts to publish
+│ ├── src/ Angular app folder
 │ │ ├── app - Angular main root module
 │ │ │ ├── app-shell - Angular main components
 │ └─└─└── app.module.ts - Angular root module.
@@ -28,4 +30,3 @@ The most important scripts in the package.json are:
 - Angular Docs - https://angular.io/docs
 - Angular Router - https://angular.io/guide/router
 //}]}
-

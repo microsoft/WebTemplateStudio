@@ -2,10 +2,11 @@
 
 ├── backend/ - Backend App
 //{[{
-│ ├── moleculer.config.js - Moleculer Service Broker configuration file. More info: https://moleculer.services/docs/0.14/broker.html
+│ ├── scripts/ - scripts to publish
 │ ├── services/ - Moleculer services that provides API routes and serves frontend with data
 │ │ ├── api.service.js - HTTP gateway service
 │ │ └── pages.service.js - Service that serves the data and contains the actual handlers for the API calls
+│ └── moleculer.config.js - Moleculer Service Broker configuration file. More info: https://moleculer.services/docs/0.14/broker.html
 //}]}
 └── README.md
 
@@ -26,8 +27,8 @@ To start the backend application manually:
 //}]}
 
 ## Additional Documentation
-
-- Bootstrap CSS - https://getbootstrap.com/
+//^^
 //{[{
 - Moleculer - https://moleculer.services/
 //}]}
+- Bootstrap CSS - https://getbootstrap.com/

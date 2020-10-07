@@ -3,6 +3,7 @@
 ├── backend/ - Backend App
 //{[{
 │ ├── routes/ - Handles API calls for routes
+│ ├── scripts/ - scripts to publish
 │ ├── app.js - Adds middleware to the express server
 │ ├── constants.js - Defines the constants for the endpoints and port
 │ └── server.js - Configures Port and HTTP Server
@@ -25,8 +26,8 @@ To start the backend application manually:
 //}]}
 
 ## Additional Documentation
-
-- Bootstrap CSS - https://getbootstrap.com/
+//^^
 //{[{
 - Express - https://expressjs.com/
 //}]}
+- Bootstrap CSS - https://getbootstrap.com/

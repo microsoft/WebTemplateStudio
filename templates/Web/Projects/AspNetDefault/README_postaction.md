@@ -2,10 +2,10 @@
 
 ├── backend/ - Backend App
 //{[{
-├── backend/ - ASP.NET Web Api that provides API routes and serves frontend
 │ ├── Contracts/ - Interfaces for services
 │ ├── Controllers/ - Handles API calls for routes
 │ ├── Models/ - Data models
+│ ├── Scripts/ - scripts to publish
 │ ├── Services/ - Data services
 │ ├── appsettings.json - Configuration data file
 │ ├── Program.cs - Contains create host and run application
@@ -26,9 +26,9 @@ To start the backend application manually:
 //}]}
 
 ## Additional Documentation
-
-- Bootstrap CSS - https://getbootstrap.com/
+//^^
 //{[{
 - .NET - https://dotnet.microsoft.com/
 - ASP.NET - https://dotnet.microsoft.com/apps/aspnet
 //}]}
+- Bootstrap CSS - https://getbootstrap.com/

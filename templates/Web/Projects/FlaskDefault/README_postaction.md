@@ -2,7 +2,7 @@
 
 ├── backend/ - Backend App
 //{[{
-├── backend/ - Flask server that provides API routes and serves frontend
+│ ├── scripts/ - scripts to publish
 │ ├── constants.py - Defines the constants for the endpoints and port
 │ └── server.py - Configures Port and HTTP Server and provides API routes
 //}]}
@@ -20,8 +20,8 @@ To start the backend application manually:
 //}]}
 
 ## Additional Documentation
-
-- Bootstrap CSS - https://getbootstrap.com/
+//^^
 //{[{
 - Flask - http://flask.pocoo.org/
 //}]}
+- Bootstrap CSS - https://getbootstrap.com/

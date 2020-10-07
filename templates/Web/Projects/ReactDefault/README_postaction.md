@@ -2,7 +2,9 @@
 
 ├── frontend/ - Frontend App
 //{[{
-│ ├── src
+│ ├── public/ - public static files
+│ ├── scripts/ - scripts to publish
+│ ├── src/ - react app folder
 │ │ ├── components - React components for each page
 │ │ ├── App.js - React routing
 │ └─└── index.js - React root component
