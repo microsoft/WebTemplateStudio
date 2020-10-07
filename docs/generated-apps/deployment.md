@@ -14,46 +14,44 @@ NOTE: Make sure that the [Web Template Studio](https://marketplace.visualstudio.
 The easiest way to deploy an application generated with Web Template Studio is to use the `Web Template Studio: Deploy Application` command. To execute this command, follow these steps:
 
 1. Open the application generated with Web Template Studio in Visual Studio Code.
-   
+
 2. Press `Ctrl + Shift + P` on Windows/Linux or `Command ⌘ + Shift + P` to open the Command Palette.
-   
+
 3. In the Command Palette, type `Web Template Studio: Deploy App` and press `Enter` to launch the deploy.
 
 ![Web Template Studio Deploy App Command](../resources/select-webts-deploy-command.png)
 
 Web Template Studio will begin preparing the application for deployment. You can see the progress in the Visual Studio Code output. In addition, a notification will be launched for each step executed.
 
- - It will run the `npm install` command to install all the necessary dependencies for the frontend and the backend apps.
+ - It will run the tasks to install all the necessary dependencies for the frontend and the backend apps.
 
 ![Install Dependencies](../resources/preparing-deploy-install-dependencies.png)
-  
- - Create a Production Build: This step will creates a build directory with a production build of your frontend app.
+
+ - Create a Production Build: This step will creates a publish directory with a production build of your frontend and backend apps.
 
 ![Build project](../resources/preparing-deploy-build-project.png)
- 
- - Copy the build directory to:
-   -  `server/build` if Node, Flask or Moleculer backend framework is selected.
-   -  `publish/ClientApp/build` if ASP.NET backend framework is selected.
+
 - This folder will contain all the necessary frontend and backend files for the deployment.
 
-![Build directory](../resources/deploy-build-directory.png)
-  
+![Build directory](../resources/deploy-publish-directory.png)
+
  - Web Template Studio will then automatically launch the command `Azure App Service: Deploy to Web App...`, which will be in charge of deploying the application to an Azure App Service.
 
     - If you have added an Azure App Service when creating your application with Web Template Studio, the application already has a deployment configuration, so it will use the created Azure App Service.
 
-    - Otherwise, Visual Studio Code will ask you for the deployment directory and if you want to create a new Azure App Service or use a previously created. 
-    
-       **IMPORTANT**:exclamation: -  Remember to select the `server` (or `publish` if ASP.NET backend framework is selected) folder for deployment to be successful.
-  
-![Select deploy directory](../resources/select-folder-to-deploy.png)
-  
+    - Otherwise, the Azure App Service extension will ask you for the configuration settings to create a new Azure App Service:
+      - The folder that contains the app to deploy to the App Service. Select the `publish` folder for deployment to be successful.
+      - Select `Create New Web App...`
+      - Enter your web app name
+      - Select Linux as your OS
+      - Select Node.js 12 LTS for a Node/Express application, Python 3.7 for a Flask application or .Net Core Latest runtime for ASP .NET application.
+
   - Start the application deployment to Azure App Service. We can see the progress of the deployment in the output of the Azure App Service extension.
-  
+
 ![Deploying app service](../resources/deploying-azure-app-service.png)
-  
+
   - At the end of the deployment, Visual Studio Code shows us a notification that the deployment has been successful.
-  
+
 ![Deploying app service finished](../resources/deploying-azure-app-service-finished.png)
 
 

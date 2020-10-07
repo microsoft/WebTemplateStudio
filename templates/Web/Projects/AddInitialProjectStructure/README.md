@@ -29,13 +29,9 @@ To start the frontend application manually:
 ### Backend
 ## Deployment
 
-If you selected Azure App Service when creating your project, follow these steps:
+To deploy the application in an Azure App Service follow the deployment instructions:
 
 - [Deployment using Web Template Studio Deploy command](https://github.com/microsoft/WebTemplateStudio/blob/dev/docs/generated-apps/deployment.md)
-
-If you did not select Azure App Service and want to create a new Azure App Service web app, follow these steps:
-
-- [Deployment using Azure App Service extension](https://github.com/microsoft/WebTemplateStudio/blob/dev/docs/generated-apps/deployment.md)
 
 Consider adding authentication and securing backend API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
 
