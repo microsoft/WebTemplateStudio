@@ -5,13 +5,13 @@
 │ ├── public/ - public static files
 │ ├── scripts/ - scripts to publish
 │ ├── src/ - Vue app folder
-│ │   ├── assets/                     - Default images
-│ │   ├── components/                 - Common Vue components shared between different views
-│ │   ├── router/                     - Vue routes
-│ │   ├── views/                      - The main pages displayed
-│ │   ├── App.vue                     - Base Vue template
-│ │   ├── constants.js                - Contains constants for error messages and endpoints
-│ └── └── main.js                     - Root Vue Component
+│ │   ├── assets/ - Default images
+│ │   ├── components/ - Common Vue components shared between different views
+│ │   ├── router/ -  Vue routes
+│ │   ├── views/ - The main pages displayed
+│ │   ├── App.vue - Base Vue template
+│ │   ├── constants.js - Contains constants for error messages and endpoints
+│ └── └── main.js - Root Vue Component
 //}]}
 └── README.md
 
