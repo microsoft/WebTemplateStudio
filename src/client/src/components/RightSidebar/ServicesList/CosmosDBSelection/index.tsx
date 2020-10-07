@@ -47,7 +47,6 @@ const CosmosDBSelection = ({ cosmosSelection, intl }: Props) => {
             cosmosDB={true}
             editable={false} //itemNameEditable does not make sense for AppServices
             configurable={true} //we may need to update this in the future if we add this to the templates
-            customInputStyle={styles.input}
             key={cosmosSelection.accountName}
             text={cosmosSelection.accountName}
             withIndent={true}

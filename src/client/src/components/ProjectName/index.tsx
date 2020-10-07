@@ -21,8 +21,13 @@ import { AppContext } from "../../AppContext";
 import stylesInput from "../../css/input.module.css";
 import styles from "./styles.module.css";
 import messages from "./messages";
+import rightsidebarStyles from "../RightSidebar/rightsidebarStyles.module.css";
 
-type Props = InjectedIntlProps;
+interface IProps {
+  rightsidebar?: boolean;
+}
+
+type Props = IProps & InjectedIntlProps;
 
 const ProjectName = (props: Props) => {
   //#region CONSTANTS
@@ -85,8 +90,8 @@ const ProjectName = (props: Props) => {
   }, [projectName]);
 
   return (
-    <div className={styles.inputContainer}>
-      <div className={styles.inputTitle}>{formatMessage(messages.projectNameTitle)}</div>
+    <div className={props.rightsidebar? rightsidebarStyles.inputContainer: styles.inputContainer}>
+      <div className={props.rightsidebar? rightsidebarStyles.title: styles.inputTitle}>{formatMessage(messages.projectNameTitle)}</div>
 
       <input
         onChange={validateSetProjectValueAndSetDirty}

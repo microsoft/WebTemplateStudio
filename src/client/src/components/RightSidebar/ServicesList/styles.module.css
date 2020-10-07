@@ -1,11 +1,9 @@
 .servicesSection {
-    margin: 15px;
-    margin-bottom: 30px;
+    margin: 15px 15px 30px 0px;
   }
 
 .title {
     margin-bottom: 0.7em;
-    font-size: 1.2em;
     font-weight: 500;
   }
 

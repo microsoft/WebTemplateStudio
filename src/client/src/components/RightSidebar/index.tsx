@@ -82,9 +82,9 @@ const RightSidebar = (props: Props) => {
             <div className={styles.marginLeft}>
               <div className={styles.title}>{formatMessage(messages.yourProjectDetails)}</div>
 
-              <ProjectName />
+              <ProjectName rightsidebar={true} />
 
-              <ProjectOutput />
+              <ProjectOutput rightsidebar={true} />
 
               <SelectFrameworks />
               <SelectPages pathname={selectedRoute} />

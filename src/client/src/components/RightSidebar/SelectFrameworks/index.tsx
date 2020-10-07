@@ -79,7 +79,7 @@ const SelectFrameworks = (props: Props)=>{
   return (
     <>
       <div className={rightsidebarStyles.sidebarItem}>
-        <div className={rightsidebarStyles.dropdownTitle}>{formatMessage(messages.frontendFramework)}</div>
+        <div className={rightsidebarStyles.title}>{formatMessage(messages.frontendFramework)}</div>
         <Dropdown
           handleChange={(dropDrownItem: IDropDownOptionType) => {
             handleFrontEndFrameworkChange(dropDrownItem);
@@ -92,7 +92,7 @@ const SelectFrameworks = (props: Props)=>{
         />
       </div>
       <div className={rightsidebarStyles.sidebarItem}>
-        <div className={rightsidebarStyles.dropdownTitle}>{formatMessage(messages.backendFramework)}</div>
+        <div className={rightsidebarStyles.title}>{formatMessage(messages.backendFramework)}</div>
         <Dropdown
           handleChange={(dropDrownItem: IDropDownOptionType) => {
             handleBackEndFrameworkChange(dropDrownItem);

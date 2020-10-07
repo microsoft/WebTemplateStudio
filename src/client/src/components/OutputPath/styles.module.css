@@ -1,7 +1,6 @@
 .pathInput {
   outline: none;
   text-decoration: none;
-  font-size: 1em;
   background-color: var(--vscode-editorWidget-border);
   width: 100%;
   border: none;
@@ -54,19 +53,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-height: 42px;
+  max-height: 38px;
   box-sizing: border-box;
   padding: 0.5em;
   width: 100%;
-  font-size: 1em;
   background-color: var(--vscode-editorWidget-border);
 }
 
 .browseButton {
   float: right;
   width: 15%;
-  height: 42px;
-  min-width: 80px;
-  font-size: 1em;
+  height: 38px;
+  min-width: 70px;
   outline: none !important;
 }

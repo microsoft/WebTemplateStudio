@@ -14,8 +14,13 @@ import { AppContext } from "../../AppContext";
 
 import styles from "./styles.module.css";
 import messages from "./messages";
+import rightsidebarStyles from "../RightSidebar/rightsidebarStyles.module.css";
 
-type Props = InjectedIntlProps;
+interface IProps {
+  rightsidebar?: boolean;
+}
+
+type Props = IProps & InjectedIntlProps;
 
 const ProjectNameAndOutput = (props: Props) => {
   const dispatch = useDispatch();
@@ -45,7 +50,7 @@ const ProjectNameAndOutput = (props: Props) => {
 
   return (
     <>
-      <div className={styles.inputContainer}>
+      <div className={props.rightsidebar? styles.inputContainer: rightsidebarStyles.inputContainer}>
         <div className={styles.inputTitle}>{props.intl.formatMessage(messages.outputPathTitle)}</div>
         <div>
           <OutputPath
