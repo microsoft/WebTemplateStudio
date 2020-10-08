@@ -82,7 +82,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
     if (projectType === WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP) {
       const event: any = yield call(getFrameworks, vscode, isPreview, projectType);
       const message = event.data;
-      const optionFrontEndFrameworks = getFrameworksOptions(message.payload.frameworks, FRAMEWORK_TYPE.FRONTEND);
+      const optionFrontEndFrameworks = getFrameworksOptions(message.payload.frameworks, FRAMEWORK_TYPE.FRONTEND, isPreview);
 
       const defaultOptionFront = optionFrontEndFrameworks[0];
       const defaultSelectedFrontEndFramework = {
@@ -103,7 +103,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
         type: USERSELECTION_TYPEKEYS.SELECT_FRONTEND_FRAMEWORK,
         payload: defaultSelectedFrontEndFramework,
       });
-      const optionBackEndFrameworks = getFrameworksOptions(message.payload.frameworks, FRAMEWORK_TYPE.BACKEND);
+      const optionBackEndFrameworks = getFrameworksOptions(message.payload.frameworks, FRAMEWORK_TYPE.BACKEND, isPreview);
 
       const defaultOptionBack = optionBackEndFrameworks[0];
       const defaultSelectedBackEndFramework = {
