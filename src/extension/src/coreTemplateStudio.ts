@@ -186,10 +186,9 @@ export class CoreTemplateStudio {
     );
   }
 
-  public async getAllLicenses(payload: ICommandPayload): Promise<any> {
-    const typedPayload = payload.payload as IGenerationData;
+  public async getAllLicenses(generationData: IGenerationData): Promise<any> {
     const getAllLicensesPayload = JSON.stringify(
-      this.makeEngineGenerationPayload(typedPayload)
+      this.makeEngineGenerationPayload(generationData)
     );
     const getAllLicensesCommand = `${
       CLI.GET_ALL_LICENSES
