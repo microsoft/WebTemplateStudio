@@ -153,7 +153,24 @@ export const MESSAGES = {
     },
     CANNOT_START_GENERATION_ENGINE: localize(
       "error.cannotStartGenerationEngine",
-      "Cannot start generation engine.")
+      "Cannot start generation engine."
+    ),
+    GENERATING_PROJECT: localize(
+      "error.generatingProject",
+      "Error on generation project:"
+    ),
+    CREATING_RESOURCE_GROUP: localize(
+      "error.creatingResourceGroup",
+      "Error on Azure Resource Group creation:"
+    ),
+    DEPLOY_AZURE_COSMOS_DB: localize(
+      "error.deployAzureCosmosDB",
+      "Error on deploy CosmosDB Service:"
+    ),
+    DEPLOY_AZURE_APP_SERVICE: localize(
+      "error.deployAzureAppService",
+      "Error on deploy Azure App Service:"
+    ),
   },
   INFO: {
     COSMOS_ACCOUNT_DEPLOYED: (accountName: string): string => {
@@ -208,5 +225,31 @@ export const MESSAGES = {
       "dialog.logoutPrompt",
       "Are you sure you want to sign out of your Azure account?"
     )
+  },
+  GENERATION: {
+    PROJECT_GENERATION_FINISHED: localize(
+      "generation.projectGenerationFinished",
+      "The project generation has finished successfully"
+    ),
+    TEMPLATES_COULD_NOT_BE_GENERATED: localize(
+      "generation.templatesCouldNotBeGenerated",
+      "ERROR: Templates could not be generated"
+    ),
+    SERVICE_DEPLOYMENT_HALTED: localize(
+      "generation.serviceDeploymentHalted",
+      "ERROR: Service deployment halted due to template error."
+    ),
+    DEPLOY_AZURE_SERVICE: localize(
+      "generation.deployAzureService",
+      "Deploying Azure services (this may take a few minutes)."
+    ),
+    COSMOS_FAILED_TO_DEPLOY: localize(
+      "generation.cosmosFailedToDeploy",
+      "ERROR: Cosmos DB failed to deploy"
+    ),
+    APPSERVICE_FAILED_TO_DEPLOY: localize(
+      "generation.appServiceFailedToDeploy",
+      "ERROR: App Service failed to deploy"
+    ),
   }
 }

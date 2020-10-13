@@ -37,6 +37,7 @@ const About = ({ intl }: Props) => {
           {formatMessage(messages.reportIssue)}
         </a>
       </div>
+      <br/>
 
       <div className={styles.wizardInfo}>
         {formatMessage(messages.templatesVersion) + ` ${templatesVersion}`}

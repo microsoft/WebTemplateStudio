@@ -35,7 +35,6 @@
   min-height: 38px;
   border: none;
   color: var(--vscode-input-foreground);
-  font-size: 1.2em;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -61,7 +60,6 @@
   padding-left: 0.5em;
   width: 100%;
   outline: none !important;
-  font-size: 1em;
   box-sizing: border-box;
   background: var(--vscode-editorWidget-border);
   color: var(--vscode-editor-foreground);

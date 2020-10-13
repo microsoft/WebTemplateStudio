@@ -3,28 +3,29 @@ import { defineMessages } from "react-intl";
 const messages = defineMessages({
   viewLicenses: {
     id: "rightSidebar.viewLicenses",
-    defaultMessage: "View Licenses"
+    defaultMessage: "View Licenses",
   },
   showAriaLabel: {
     id: "rightSidebar.showAriaLabel",
-    defaultMessage: "Show project details menu"
+    defaultMessage: "Show project details menu",
   },
   hideAriaLabel: {
     id: "rightSidebar.hideAriaLabel",
-    defaultMessage: "Hide project details menu"
+    defaultMessage: "Hide project details menu",
   },
   showIcon: {
     id: "rightSidebar.showIcon",
-    defaultMessage: "Show"
+    defaultMessage: "Show",
   },
   hideIcon: {
     id: "rightSidebar.hideIcon",
-    defaultMessage: "Hide"
+    defaultMessage: "Hide",
   },
-  projectNameTitle: {
-    id: "rightSidebar.projectNameTitle",
-    defaultMessage: "Name"
-  }
+
+  yourProjectDetails: {
+    id: "rightSidebar.yourProjectDetails",
+    defaultMessage: "Your Project Details",
+  },
 });
 
 export default messages;

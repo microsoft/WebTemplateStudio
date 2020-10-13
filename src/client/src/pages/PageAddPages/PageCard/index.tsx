@@ -5,7 +5,6 @@ import { connect, useDispatch } from "react-redux";
 import { IProps, IStateProps } from "./interfaces";
 import { mapStateToProps } from "./store";
 import styles from "./styles.module.css";
-import { getSvg } from "../../../utils/getSvgUrl";
 import messages from "./messages";
 import { KEY_EVENTS } from "../../../utils/constants/constants";
 import { ROUTE } from "../../../utils/constants/routes";
@@ -16,6 +15,7 @@ import { ISelected } from "../../../types/selected";
 import { inferItemName } from "../../../utils/infer/itemName";
 import { setPagesAction } from "../../../store/userSelection/pages/action";
 import { setDetailPageAction } from "../../../store/config/detailsPage/action";
+import Icon from "../../../components/Icon";
 
 type Props = IProps & IStateProps & InjectedIntlProps;
 
@@ -28,12 +28,13 @@ const PageCard = (props: Props) => {
     const select: ISelected = {
       author: page.author,
       defaultName: page.defaultName,
+      icon: page.icon,
       internalName: page.internalName,
       isValidTitle: page.isValidTitle,
       licenses: page.licenses,
       title: inferItemName(page.defaultName, selectedPages),
-      id:Math.random().toString(),
-      editable: page.editable
+      id: Math.random().toString(),
+      editable: page.editable,
     };
 
     if (!pageOutOfBounds) {
@@ -71,7 +72,7 @@ const PageCard = (props: Props) => {
       onClick={addPage}
       className={classNames(styles.container, styles.boundingBox, {
         [styles.selected]:
-          selectedPages.filter(selectedPage => selectedPage.defaultName === page.defaultName).length > 0,
+          selectedPages.filter((selectedPage) => selectedPage.defaultName === page.defaultName).length > 0,
       })}
       onFocus={() => setShowPlusIcon(true)}
       onBlur={() => setShowPlusIcon(false)}
@@ -80,7 +81,9 @@ const PageCard = (props: Props) => {
     >
       <div>
         <div className={styles.gridLayoutCardHeader}>
-          <div>{getSvg(page.internalName, styles.icon) || (page.svgUrl && <img src={page.svgUrl} alt="" />)}</div>
+          <div>
+            <Icon name={page.defaultName} icon={page.icon} />
+          </div>
           <div className={classNames(styles.title)}>{page.defaultName}</div>
           {showPlusIcon && (
             <div className={classNames(styles.headerIconContainer)}>
@@ -98,7 +101,7 @@ const PageCard = (props: Props) => {
             )}
           </div>
           <div className={styles.pageCounter}>
-            {selectedPages.filter(selectedPage => selectedPage.defaultName === page.defaultName).length}
+            {selectedPages.filter((selectedPage) => selectedPage.defaultName === page.defaultName).length}
           </div>
         </div>
       </div>
