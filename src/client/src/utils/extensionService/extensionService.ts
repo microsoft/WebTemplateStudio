@@ -3,6 +3,7 @@ import { PAYLOAD_MESSAGES_TEXT } from "../constants/constants";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../constants/internalNames";
 import { ILoggingPayload } from "../../types/logger";
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../constants/commands";
+import { IVersionPackage } from "../../types/option";
 
 const postMessageAsync = (command: string, paramsMessage: any, vscode: IVSCodeObject, scopeId: number = Math.random())=>{
   const promise = new Promise<any>((resolve) => {
@@ -57,13 +58,12 @@ const getTemplateInfo = (vscode: IVSCodeObject): Promise<any> => {
   }, vscode);
 }
 
-const getLatestVersion = (vscode: IVSCodeObject, checkVersionPackageName: string, checkVersionPackageSource: string): Promise<any> => {
+const getLatestVersion = (vscode: IVSCodeObject, checkVersionPackage: IVersionPackage): Promise<any> => {
   return postMessageAsync(EXTENSION_COMMANDS.GET_LATEST_VERSION, {
     module: EXTENSION_MODULES.DEPENDENCYCHECKER,
     command: EXTENSION_COMMANDS.GET_LATEST_VERSION,
     payload: {
-      checkVersionPackageName,
-      checkVersionPackageSource
+      checkVersionPackage,
     }
   }, vscode).then((event)=>{
     const latestVersion = event.data.payload.latestVersion;

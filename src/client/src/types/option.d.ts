@@ -18,8 +18,7 @@ export interface IOption {
   linuxVersion?: string;
   latestVersion?: string = "";
   latestVersionLoaded?: boolean = false;
-  checkVersionPackageName?: string = "";
-  checkVersionPackageSource?: string = "";
+  checkVersionPackage?: IVersionPackage;
   unselectable?: boolean;
   isValidTitle?: boolean;
   author?: string;
@@ -27,4 +26,9 @@ export interface IOption {
   expectedTime?: string | FM.MessageDescriptor;
   expectedPrice?: string | FM.MessageDescriptor;
   editable?: boolean;
+}
+
+export interface IVersionPackage {
+  source: string;
+  name: string;
 }

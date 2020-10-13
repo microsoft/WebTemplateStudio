@@ -34,7 +34,7 @@ const FrameworkCard = (props: Props) => {
   React.useEffect(() => {
     selectWhenLoadWithoutSelection();
     if (!framework.latestVersionLoaded) {
-      getLatestVersion(vscode, framework.checkVersionPackageName, framework.checkVersionPackageSource).then(
+      getLatestVersion(vscode, framework.checkVersionPackage).then(
         (latestVersionValidation: boolean) => {
           framework.latestVersion = latestVersionValidation;
           framework.latestVersionLoaded = true;

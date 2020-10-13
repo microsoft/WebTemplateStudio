@@ -37,6 +37,8 @@ const frameworks = [
       preview: false,
       enabled: true,
       type: "frontend",
+      checkVersionPackage: "npm|react",
+      requirements:"node|>=12.0.x",
     },
   },
   {
@@ -69,6 +71,8 @@ const frameworks = [
       preview: false,
       enabled: true,
       type: "frontend",
+      checkVersionPackage: "npm|@angular/core",
+      requirements:"node|>=12.0.x",
     },
   },
   {
@@ -101,6 +105,8 @@ const frameworks = [
       preview: true,
       enabled: true,
       type: "frontend",
+      checkVersionPackage: "npm|vue",
+      requirements:"node|>=12.0.x",
     },
   },
   {
@@ -138,6 +144,8 @@ const frameworks = [
       enabled: true,
       type: "backend",
       linuxVersion: "node|12-lts",
+      checkVersionPackage: "npm|express",
+      requirements:"node|>=12.0.x",
     },
   },
   {
@@ -156,6 +164,8 @@ const frameworks = [
       preview: false,
       type: "backend",
       linuxVersion: "node|12-lts",
+      checkVersionPackage: "npm|moleculer",
+      requirements:"node|>=12.0.x",
     },
   },
   {
@@ -184,6 +194,8 @@ const frameworks = [
       enabled: true,
       type: "backend",
       linuxVersion: "python|3.7",
+      checkVersionPackage: "github|pallets/flask",
+      requirements:"python|>=3.5.x",
     },
   },
   {
@@ -211,6 +223,8 @@ const frameworks = [
       enabled: true,
       type: "backend",
       linuxVersion: "DOTNETCORE|3.1",
+      checkVersionPackage: "github|dotnet/aspnetcore",
+      requirements:"netcore|>=3.1.x",
     },
   },
 ];

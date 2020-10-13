@@ -10,8 +10,8 @@
     "languages": ["Any"],
     "tags": {
       "version": "4.17.1",
-      "checkVersionPackageName":"express",
-      "checkVersionPackageSource":"npm",
+      "checkVersionPackage": "npm|express",
+      "requirements":"node|>=12.0.x",
       "preview": false,
       "linuxVersion": "node|12-lts"
     }
@@ -27,8 +27,8 @@
     "languages": ["Any"],
     "tags": {
       "version": "1.1.2",
-      "checkVersionPackageName":"pallets/flask",
-      "checkVersionPackageSource":"github",
+      "checkVersionPackage": "github|pallets/flask",
+      "requirements":"python|>=3.5.x",
       "preview": false,
       "linuxVersion": "python|3.7"
     }
@@ -45,8 +45,8 @@
     "tags": {
       "version": "0.14.8",
       "latestVersion":"",
-      "checkVersionPackageName":"moleculer",
-      "checkVersionPackageSource":"npm",
+      "checkVersionPackage": "npm|moleculer",
+      "requirements":"node|>=12.0.x",
       "preview": false,
       "linuxVersion": "node|12-lts"
     }
@@ -62,8 +62,8 @@
     "languages": ["Any"],
     "tags": {
       "version": "3.1.5",
-      "checkVersionPackageName":"dotnet/aspnetcore",
-      "checkVersionPackageSource":"github",
+      "checkVersionPackage": "github|dotnet/aspnetcore",
+      "requirements":"netcore|>=3.1.x",
       "preview": true,
       "linuxVersion": "DOTNETCORE|3.1"
     }
