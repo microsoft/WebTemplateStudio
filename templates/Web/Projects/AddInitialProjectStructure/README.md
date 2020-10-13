@@ -22,7 +22,7 @@ To run the project:
 
 ### Frontend
 To start the frontend application manually:
-  1. Open a terminal and navigate to the frontend folder path.
+  1. Open a terminal and navigate to the `frontend` folder path.
   2. Use `yarn install` or `npm install` to install frontend dependencies.
   3. Use `yarn start` or `npm start` to start frontend app in development.
 
