@@ -3,6 +3,7 @@ import { EXTENSION_COMMANDS } from "../constants/commands";
 import { CoreTemplateStudio } from "../coreTemplateStudio";
 
 import fs = require("fs-extra");
+import { getGenerationData } from "../utils/generation/generationUtils";
 
 export class CoreTSModule extends WizardServant {
   clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
@@ -44,7 +45,9 @@ export class CoreTSModule extends WizardServant {
   }
 
   async getAllLicenses(message: any): Promise<IPayloadResponse> {
-    const licenses = await CoreTemplateStudio.GetExistingInstance().getAllLicenses(message);
+    const generationData = getGenerationData(message.payload);
+    const cli = CoreTemplateStudio.GetExistingInstance()
+    const licenses = await cli.getAllLicenses(generationData);
     return {
       payload: {
         licenses,
