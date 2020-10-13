@@ -2,9 +2,9 @@ import { IApiTemplateInfo } from "../types/apiTemplateInfo";
 import { IOption } from "../types/option";
 import { FRAMEWORK_TYPE } from "./constants/constants";
 
-export const getFrameworksOptions = (json: any[], type: FRAMEWORK_TYPE, isPreview: boolean): IOption[] => {
+export const getFrameworksOptions = (json: any[], type: FRAMEWORK_TYPE): IOption[] => {
   const items = getFrameworksTemplateInfo(json, type);
-  return items.filter(val=>isPreview || val.tags.preview === isPreview).map<IOption>((val) => ({
+  return items.map<IOption>((val) => ({
     author: val.author,
     body: val.summary,
     internalName: val.name,
