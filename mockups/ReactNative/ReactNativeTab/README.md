@@ -5,8 +5,9 @@ This sample demonstrates a React Native blank application:
 
 ### Initialize the sample
 
+1. Open Powershell with **admin rights**.
 1. Clone the repository on your machine
-2. From the project root folder, run the following command to restore all the dependencies:
+1. From the project root folder, run the following command to restore all the dependencies:
 
     ```bash
     yarn install
@@ -18,7 +19,7 @@ Make sure your computer satisfies all the system requirements listed in the [off
 
 **Option 1**
 
-1. Open a terminal with administrator rights on the project root folder
+1. Open a terminal with **administrator rights** on the project root folder
 2. Run the following command:
 
     ```bash
