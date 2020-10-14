@@ -124,7 +124,7 @@ const FrameworkCard = (props: Props) => {
         </div>
         <div className={styles.description}>{framework.body}</div>
         <div className={styles.DependencyInfo}>
-          {selected && <DependencyInfo frameworkName={framework.internalName} />}
+          {selected && !framework.isRequirementInstalled && <DependencyInfo requirement={framework.requirement} />}
         </div>
         <div className={styles.gridLayoutCardFooter}>
           <div>

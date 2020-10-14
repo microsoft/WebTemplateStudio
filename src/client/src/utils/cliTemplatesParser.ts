@@ -21,6 +21,8 @@ export const getFrameworksOptions = (json: any[], type: FRAMEWORK_TYPE): IOption
       source: (val.tags!.checkVersionPackage as string).split("|")[0],
       name: (val.tags!.checkVersionPackage as string).split("|")[1],
     },
+    requirement: (val.tags!.requirements as string).split("|")[0],
+    isRequirementInstalled: val.tags!.isRequirementInstalled as boolean,
     isPreview: val.tags.preview,
   }));
 };

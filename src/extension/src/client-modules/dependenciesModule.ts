@@ -13,7 +13,7 @@ export class DependenciesModule extends WizardServant {
 
   async requirementIsInstalled(message: any): Promise<IPayloadResponse> {
     const dependency = message.payload.dependency as string;
-    const installed = await this.requirementsService.isInstalled(dependency);
+    const installed = await this.requirementsService.isInstalled(dependency, ">=20.x");
     return {
       payload: {
         dependency,

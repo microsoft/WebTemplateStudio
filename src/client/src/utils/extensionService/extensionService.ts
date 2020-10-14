@@ -71,20 +71,6 @@ const getLatestVersion = (vscode: IVSCodeObject, checkVersionPackage: IVersionPa
   });
 }
 
-const getDependencyInfo = (vscode: IVSCodeObject, dependency: string): Promise<{dependency: string; installed: boolean}> => {
-  return postMessageAsync(EXTENSION_COMMANDS.GET_DEPENDENCY_INFO, {
-      module: EXTENSION_MODULES.DEPENDENCYCHECKER,
-      command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
-      payload: { dependency },
-    }, vscode).then((event) => {
-    const { dependency, installed } = event.data.payload;
-    return {
-      dependency,
-      installed,
-    };
-  });
-};
-
 const getPages = (vscode: IVSCodeObject, projectType: string, frontEndInternalName: string, backEndInternalName: string)=>{
   return postMessageAsync( EXTENSION_COMMANDS.GET_PAGES, {
     module: EXTENSION_MODULES.CORETS,
@@ -273,7 +259,6 @@ export {
   getProjectTypes,
   getAllLicenses,
   getLatestVersion,
-  getDependencyInfo,
   getPages,
   getFeatures,
   getOutputPathFromConfig,

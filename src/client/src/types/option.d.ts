@@ -19,6 +19,8 @@ export interface IOption {
   latestVersion?: string = "";
   latestVersionLoaded?: boolean = false;
   checkVersionPackage?: IVersionPackage;
+  requirement?: string;
+  isRequirementInstalled?: boolean;
   unselectable?: boolean;
   isValidTitle?: boolean;
   author?: string;

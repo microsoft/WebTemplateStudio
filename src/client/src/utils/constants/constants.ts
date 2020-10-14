@@ -65,6 +65,12 @@ enum PLATFORM {
   WEB = "Web",
 }
 
+enum FRAMEWORK_DEPENDENCY {
+  NODE = "node",
+  PYTHON = "python",
+  NETCORE = "netcore"
+}
+
 export {
   PRODUCTION,
   SERVICE_KEYS,
@@ -79,5 +85,6 @@ export {
   KEY_EVENTS,
   PAYLOAD_MESSAGES_TEXT,
   TELEMETRY,
-  PLATFORM
+  PLATFORM,
+  FRAMEWORK_DEPENDENCY
 };

@@ -1,3 +1,3 @@
 interface IRequirementValidator {
-  isInstalled: () => Promise<boolean>;
+  isInstalled: (minVersion: string) => Promise<boolean>;
 }

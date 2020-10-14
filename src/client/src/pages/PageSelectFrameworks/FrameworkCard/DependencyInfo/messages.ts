@@ -4,7 +4,7 @@ const messages = defineMessages({
   notInstalled: {
     id: "dependencyChecker.notInstalledMessage",
     defaultMessage:
-      "{dependencyName} {minimumVersion} not detected. Click to install."
+      "{name} {minimumVersion} not detected. Click to install."
   },
   iconAltMessage: {
     id: "dependencyChecker.iconAltMessage",

@@ -279,6 +279,7 @@ export const addFrontEndFrameworksOptions = (store: AppState) => {
       version: "16.8.4",
       latestVersion: "0.0.1",
       latestVersionLoaded: true,
+      isRequirementInstalled: true,
     },
     {
       author: "Google",
@@ -296,6 +297,7 @@ export const addFrontEndFrameworksOptions = (store: AppState) => {
       version: "7.2.0",
       latestVersion: "0.0.1",
       latestVersionLoaded: true,
+      isRequirementInstalled: true,
     },
     {
       author: "Evan You",
@@ -313,6 +315,7 @@ export const addFrontEndFrameworksOptions = (store: AppState) => {
       version: "2.6.6",
       latestVersion: "0.0.1",
       latestVersionLoaded: true,
+      isRequirementInstalled: true,
     },
   ];
   return store;
@@ -338,6 +341,7 @@ export const addBackEndFrameworksOptions = (store: AppState) => {
       version: "12.0.0",
       linuxVersion: "node|12-lts",
       latestVersionLoaded: true,
+      isRequirementInstalled: true,
     },
     {
       author: "Various",
@@ -350,6 +354,7 @@ export const addBackEndFrameworksOptions = (store: AppState) => {
       version: "0.14.3",
       linuxVersion: "node|12-lts",
       latestVersionLoaded: true,
+      isRequirementInstalled: true,
     },
     {
       author: "Various",
@@ -365,6 +370,7 @@ export const addBackEndFrameworksOptions = (store: AppState) => {
       version: "1.0.3",
       linuxVersion: "python|3.7",
       latestVersionLoaded: true,
+      isRequirementInstalled: true,
     },
     {
       author: "Microsoft",
@@ -379,6 +385,7 @@ export const addBackEndFrameworksOptions = (store: AppState) => {
       version: "3.1.5",
       linuxVersion: "DOTNETCORE|3.1",
       latestVersionLoaded: true,
+      isRequirementInstalled: true,
     },
   ];
   return store;
