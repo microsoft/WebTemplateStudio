@@ -2,12 +2,7 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
-import {
-  getOutputPath,
-  getProjectName,
-  getProjectNameValidation,
-  getValidations,
-} from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+import * as wizardSelectionSelector from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { setProjectPathValidationAction } from "../../store/config/validations/action";
 import { setProjectNameAction } from "../../store/userSelection/app/action";
 
@@ -31,15 +26,18 @@ type Props = IProps & InjectedIntlProps;
 
 const ProjectName = (props: Props) => {  
   const { formatMessage } = props.intl;
-  const outputPath = useSelector(getOutputPath);
-  const projectName = useSelector(getProjectName);
-  const validations = useSelector(getValidations);
-  const projectNameValidation = useSelector(getProjectNameValidation);
   const dispatch = useDispatch();
   const { vscode } = React.useContext(AppContext);
+
+  const outputPath = useSelector(wizardSelectionSelector.getOutputPath);
+  const projectName = useSelector(wizardSelectionSelector.getProjectName);
+  const validations = useSelector(wizardSelectionSelector.getValidations);
+  const projectNameValidation = useSelector(wizardSelectionSelector.getProjectNameValidation);
+  
   const [name, setName] = React.useState("");
   const [hasFocus, setHasFocus] = React.useState(false);
   const [validName, setValidName] = React.useState("");
+  
   const onFocus = () => {
     setHasFocus(true);
     setValidName(name);
