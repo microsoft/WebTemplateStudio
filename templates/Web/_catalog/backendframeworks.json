@@ -11,7 +11,7 @@
     "tags": {
       "version": "4.17.1",
       "checkVersionPackage": "npm|express",
-      "requirements":"node|>=12.0.x",
+      "requirements":"node|12.0.x",
       "preview": false,
       "linuxVersion": "node|12-lts"
     }
@@ -28,7 +28,7 @@
     "tags": {
       "version": "1.1.2",
       "checkVersionPackage": "github|pallets/flask",
-      "requirements":"python|>=3.5.x",
+      "requirements":"python|3.5.x",
       "preview": false,
       "linuxVersion": "python|3.7"
     }
@@ -46,7 +46,7 @@
       "version": "0.14.8",
       "latestVersion":"",
       "checkVersionPackage": "npm|moleculer",
-      "requirements":"node|>=12.0.x",
+      "requirements":"node|12.0.x",
       "preview": false,
       "linuxVersion": "node|12-lts"
     }
@@ -63,7 +63,7 @@
     "tags": {
       "version": "3.1.5",
       "checkVersionPackage": "github|dotnet/aspnetcore",
-      "requirements":"netcore|>=3.1.x",
+      "requirements":"netcore|3.1.x",
       "preview": true,
       "linuxVersion": "DOTNETCORE|3.1"
     }

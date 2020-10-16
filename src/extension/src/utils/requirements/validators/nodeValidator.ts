@@ -10,7 +10,8 @@ export default class NodeValidator implements IRequirementValidator {
     try {
       const { stdout } = await this.exec(CONSTANTS.DEPENDENCY_CHECKER.NODE + " --version");
       const version = stdout.match(this.NODE_REGEX)[1];
-      const result = semver.satisfies(version, minVersion);
+      const range = `>=${minVersion}`;
+      const result = semver.satisfies(version, range);
       return result;
     } catch (err) {
       return false;

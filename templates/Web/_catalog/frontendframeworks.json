@@ -13,7 +13,7 @@
     "tags": {
       "version": "16.13.1",
       "checkVersionPackage": "npm|react",
-      "requirements":"node|>=12.0.x",
+      "requirements":"node|12.0.x",
       "preview": false
     }
   },
@@ -31,7 +31,7 @@
     "tags": {
       "version": "10.0.2",
       "checkVersionPackage": "npm|@angular/core",
-      "requirements":"node|>=12.0.x",
+      "requirements":"node|12.0.x",
       "preview": false
     }
   },
@@ -49,7 +49,7 @@
     "tags": {
       "version": "2.6.11",
       "checkVersionPackage": "npm|vue",
-      "requirements":"node|>=12.0.x",
+      "requirements":"node|12.0.x",
       "preview": false
     }
   }

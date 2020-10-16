@@ -9,7 +9,8 @@ export default class NetCoreValidator implements IRequirementValidator {
     try {
       const { stdout } = await this.exec("dotnet --version");
       const version = stdout.match(this.NETCORE_REGEX)[1];
-      const result = semver.satisfies(version, minVersion);
+      const range = `>=${minVersion}`;
+      const result = semver.satisfies(version, range);
       return result;
     } catch (err) {
       return false;

@@ -31,7 +31,8 @@ export default class PythonValidator implements IRequirementValidator {
       // stderr is also processed for older versions of anaconda!
       const matches = stdout.match(PYTHON_REGEX) || stderr.match(PYTHON_REGEX);
       const version: string = matches[1];
-      installed = semver.satisfies(version, minVersion);
+      const range = `>=${minVersion}`;
+      installed = semver.satisfies(version, range);
     } catch (err) {
       installed = false;
     }
