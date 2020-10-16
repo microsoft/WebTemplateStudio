@@ -65,11 +65,22 @@ enum PLATFORM {
   WEB = "Web",
 }
 
-enum FRAMEWORK_DEPENDENCY {
-  NODE = "node",
-  PYTHON = "python",
-  NETCORE = "netcore"
-}
+const REQUIREMENTS_DATA = [
+  {
+    name: "node",
+    displayName: "Node.js",
+    downloadLink: "https://nodejs.org/en/download/"
+  },
+  {
+    name: "python",
+    displayName: "Python",
+    downloadLink: "https://www.python.org/downloads/"
+  },
+  {
+    name: "netcore",
+    displayName: ".NET Core",
+    downloadLink: "https://dotnet.microsoft.com/download"
+  }];
 
 export {
   PRODUCTION,
@@ -86,5 +97,5 @@ export {
   PAYLOAD_MESSAGES_TEXT,
   TELEMETRY,
   PLATFORM,
-  FRAMEWORK_DEPENDENCY
+  REQUIREMENTS_DATA
 };

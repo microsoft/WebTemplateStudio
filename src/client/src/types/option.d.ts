@@ -19,8 +19,7 @@ export interface IOption {
   latestVersion?: string = "";
   latestVersionLoaded?: boolean = false;
   checkVersionPackage?: IVersionPackage;
-  requirement?: string;
-  isRequirementInstalled?: boolean;
+  requirement?: IRequirement;
   unselectable?: boolean;
   isValidTitle?: boolean;
   author?: string;
@@ -33,4 +32,10 @@ export interface IOption {
 export interface IVersionPackage {
   source: string;
   name: string;
+}
+
+export interface IRequirement {
+  name: string;
+  version: string;
+  isInstalled: boolean;
 }
