@@ -1,9 +1,15 @@
+import * as vscode from "vscode";
+
 import { WizardServant, IPayloadResponse } from "../wizardServant";
 import { EXTENSION_COMMANDS } from "../constants/commands";
 import { CoreTemplateStudio } from "../coreTemplateStudio";
 
 import fs = require("fs-extra");
 import { getGenerationData } from "../utils/generation/generationUtils";
+
+const previewOptionSelected = vscode.workspace
+      .getConfiguration()
+      .get<boolean>("wts.enablePreviewMode");
 
 export class CoreTSModule extends WizardServant {
   clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
@@ -33,8 +39,8 @@ export class CoreTSModule extends WizardServant {
   };
 
   async getFrameworks(message: any): Promise<IPayloadResponse> {
-    const frameworks = await CoreTemplateStudio.GetExistingInstance().getFrameworks(message.payload.projectType);
-
+    const frameworks = (await CoreTemplateStudio.GetExistingInstance().getFrameworks(message.payload.projectType))
+                    .filter((item: any)  => previewOptionSelected || item.tags.preview == previewOptionSelected);
     this.transformIconToBase64(frameworks);
 
     return {
