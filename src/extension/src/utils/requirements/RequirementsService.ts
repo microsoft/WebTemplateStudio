@@ -14,9 +14,9 @@ export default class RequirementsService {
     ]);
   }
 
-  public async isInstalled(requirementName: string) {
+  public async isInstalled(requirementName: string, minVersion: string) {
     const requirementValidator = this.validators.get(requirementName);
-    const result = requirementValidator ? await requirementValidator.isInstalled() : false;
+    const result = requirementValidator ? await requirementValidator.isInstalled(minVersion) : false;
     return result;
   }
 }

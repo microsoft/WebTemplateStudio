@@ -17,8 +17,15 @@ export const getFrameworksOptions = (json: any[], type: FRAMEWORK_TYPE): IOption
     version: val.tags!.version,
     linuxVersion: val.tags!.linuxVersion,
     latestVersion: val.tags!.latestVersion,
-    checkVersionPackageName: val.tags!.checkVersionPackageName,
-    checkVersionPackageSource: val.tags!.checkVersionPackageSource,
+    checkVersionPackage: {
+      source: (val.tags!.checkVersionPackage as string).split("|")[0],
+      name: (val.tags!.checkVersionPackage as string).split("|")[1],
+    },
+    requirement: {
+      name: (val.tags!.requirements as string).split("|")[0],
+      version: (val.tags!.requirements as string).split("|")[1],
+      isInstalled: val.tags!.isRequirementInstalled
+    },
     isPreview: val.tags.preview,
   }));
 };

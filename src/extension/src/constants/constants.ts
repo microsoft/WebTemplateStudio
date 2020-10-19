@@ -35,6 +35,10 @@ export const CONSTANTS = {
     PYTHON_LAUNCHER: "py -3",
     NETCORE: "netcore"
   },
+  PACKAGE_SOURCES: {
+    NPM: "npm",
+    GITHUB: "github",
+  },
   AZURE_LOCATION: {
     CENTRAL_US: "Central US"
   },
