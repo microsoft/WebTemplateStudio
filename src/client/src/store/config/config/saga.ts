@@ -67,7 +67,6 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
     const event: any = yield call(getProjectTypes, vscode);
     const projectTypes = event.data.payload.projectTypes.map((projectType: any) => projectType.name);
     const projectType = projectTypes[0];
-    const isPreview = yield select((state: AppState) => state.config.previewStatus);
 
     yield put({
       type: TEMPLATES_TYPEKEYS.SET_PROJECT_TYPES,
@@ -80,7 +79,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
     });
 
     if (projectType === WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP) {
-      const event: any = yield call(getFrameworks, vscode, isPreview, projectType);
+      const event: any = yield call(getFrameworks, vscode, projectType);
       const message = event.data;
       const optionFrontEndFrameworks = getFrameworksOptions(message.payload.frameworks, FRAMEWORK_TYPE.FRONTEND);
 
