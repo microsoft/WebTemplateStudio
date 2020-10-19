@@ -15,13 +15,13 @@
 //{[{
 The backend is based on [Moleculer CLI](https://moleculer.services/docs/0.14/usage.html#Create-a-Moleculer-project).
 
-The most important scripts in the package.json are:
+The most important scripts in the `package.json` are:
   - start: serves the backend on http://localhost:3001/.
   - start-dev: serves the backend in development on http://localhost:3001/.
-  - publish: copies the backend files to the publish folder.
+  - publish: copies the backend files to the `publish` folder.
 
 To start the backend application manually:
-  1. Open a terminal and navigate to the backend folder path.
+  1. Open a terminal and navigate to the `backend` folder path.
   2. Use `yarn install` or `npm install` to install backend dependencies.
   3. Use `yarn start` or `npm start` to start backend app in development.
 //}]}

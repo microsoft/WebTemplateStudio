@@ -35,7 +35,7 @@ const projectPathValidation = (projectPath: string, projectName: string, vscode:
   return promise;
 }
 
-const getFrameworks = (vscode: IVSCodeObject, isPreview: boolean, projectType: string): Promise<any> => {
+const getFrameworks = (vscode: IVSCodeObject, projectType: string): Promise<any> => {
   return postMessageAsync(EXTENSION_COMMANDS.GET_FRAMEWORKS, {
     module: EXTENSION_MODULES.CORETS,
     command: EXTENSION_COMMANDS.GET_FRAMEWORKS,
