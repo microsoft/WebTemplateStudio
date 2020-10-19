@@ -42,19 +42,6 @@ const mockVsCodeApi = () => ({
         case EXTENSION_COMMANDS.GET_FEATURES:
           mockCoreTSModule.getFeatures(message);
           break;
-        case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
-          window.postMessage(
-            {
-              command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                dependency: message.payload.dependency,
-                installed: message.payload.dependency === "node"
-              }
-            },
-            "*"
-          );
-          break;
         case EXTENSION_COMMANDS.VALIDATE_COSMOS_NAME:
           mockAzureModule.validateCosmosName(message);
           break;
