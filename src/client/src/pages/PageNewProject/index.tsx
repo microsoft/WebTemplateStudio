@@ -1,8 +1,7 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
-import ProjectOutput from "../../components/ProjectOutput";
-import ProjectName from "../../components/ProjectName";
+import ProjectDetails from "../../components/ProjectDetails";
 
 import styles from "./styles.module.css";
 import messages from "./messages";
@@ -16,9 +15,7 @@ const NewProject = (props: Props) => {
         <h1 className={styles.header}>{props.intl.formatMessage(messages.header)}</h1>
         <div className={styles.body}>{props.intl.formatMessage(messages.body)}</div>
         <div className={styles.projectDetailsContainer}>
-          <ProjectName />
-
-          <ProjectOutput />
+          <ProjectDetails />
         </div>
       </div>
     </div>
