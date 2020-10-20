@@ -101,7 +101,7 @@ const ProjectName = (props: Props) => {
           onBlur={onBlur}
         />
 
-        {!projectNameValidation.isValid && projectNameValidation.isDirty && hasFocus && (
+        {!projectNameValidation.isValid && projectNameValidation.isDirty && (
           <div className={styles.errorMessage}>{formatMessage(projectNameValidation.error)}</div>
         )}
       </div>
