@@ -19,16 +19,12 @@
     "wts.displayOrder": "3",
     "wts.genGroup": "0",
     "wts.rightClickEnabled": "true",
-    "wts.casing.sourceName": "kebab|pascal|camel"
+    "wts.casing.sourceName": "kebab|pascal"
   },
   "sourceName": "AngularMasterDetail",
   "preferNameDirectory": true,
   "PrimaryOutputs": [],
   "symbols": {
-    "wts.rootNamespace": {
-      "type": "parameter",
-      "replaces": "Param_RootNamespace"
-    },
     "wts.sourceName.casing.kebab": {
       "type": "parameter",
       "replaces": "Param_SourceName_Kebab",

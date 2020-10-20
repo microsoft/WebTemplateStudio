@@ -17,18 +17,12 @@
     "wts.backendframework": "all",
     "wts.version": "1.0.0",
     "wts.displayOrder": "2",
-    "wts.genGroup": "0",
-    "wts.rightClickEnabled": "true",
     "wts.casing.sourceName": "pascal"
   },
   "sourceName": "ReactList",
   "preferNameDirectory": true,
   "PrimaryOutputs": [],
   "symbols": {
-    "wts.rootNamespace": {
-      "type": "parameter",
-      "replaces": "Param_RootNamespace"
-    },
     "wts.sourceName.casing.pascal": {
       "type": "parameter",
       "replaces": "Param_SourceName_Pascal",

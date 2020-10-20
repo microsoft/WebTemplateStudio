@@ -7,7 +7,7 @@
   "identity": "wts.Feature.Azure.AppService.SetDeployConfig",
   "tags": {
     "language": "Any",
-    "type": "project",
+    "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
