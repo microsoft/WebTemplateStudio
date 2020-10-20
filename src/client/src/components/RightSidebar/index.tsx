@@ -13,8 +13,7 @@ import { ReactComponent as CancelSVG } from "../../assets/cancel.svg";
 
 import About from "./About";
 import SelectPages from "./SelectPages";
-import ProjectName from "../ProjectName";
-import ProjectOutput from "../ProjectOutput";
+import ProjectDetails from "../ProjectDetails";
 import ServicesList from "./ServicesList";
 import SelectFrameworks from "./SelectFrameworks";
 
@@ -84,9 +83,7 @@ const RightSidebar = (props: Props) => {
             <div className={styles.marginLeft}>
               <div className={styles.title}>{formatMessage(messages.yourProjectDetails)}</div>
 
-              <ProjectName rightsidebar={true} />
-
-              <ProjectOutput rightsidebar={true} />
+              <ProjectDetails rightsidebar={true} />
 
               <SelectFrameworks />
               <SelectPages pathname={selectedRoute} />
