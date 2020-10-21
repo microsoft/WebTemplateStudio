@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import styles from "./styles.module.css";
+import { ReactComponent as DefaultIconSVG } from "../../assets/defaultIcon.svg";
 
 export interface IIconProps {
   name: string;
@@ -8,20 +9,15 @@ export interface IIconProps {
   small?: boolean;
 }
 
-
 const Icon = ({ name, icon, small = false }: IIconProps) => {
   return (
     <>
-    {icon !== null &&
-      <img className={small ? styles.small : styles.icon} alt={name} src={"data:image/svg+xml;base64," + icon} />
-    }{
-      icon === null &&
-      <img className={small ? styles.small : styles.icon} alt={name} src={"data:image/svg+xml;base64," + defaultIcon} />
-    }
+      {icon !== null && (
+        <img className={small ? styles.small : styles.icon} alt={name} src={"data:image/svg+xml;base64," + icon} />
+      )}
+      {icon === null && <DefaultIconSVG className={small ? styles.small : styles.icon} />}
     </>
   );
 };
-
-const defaultIcon="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgeG1sbnM6c29kaXBvZGk9Imh0dHA6Ly9zb2RpcG9kaS5zb3VyY2Vmb3JnZS5uZXQvRFREL3NvZGlwb2RpLTAuZHRkIgogICB4bWxuczppbmtzY2FwZT0iaHR0cDovL3d3dy5pbmtzY2FwZS5vcmcvbmFtZXNwYWNlcy9pbmtzY2FwZSIKICAgdmVyc2lvbj0iMS4wIgogICB3aWR0aD0iODAuMDAwMDAwcHQiCiAgIGhlaWdodD0iODAuMDAwMDAwcHQiCiAgIHZpZXdCb3g9IjAgMCA4MC4wMDAwMDAgODAuMDAwMDAwIgogICBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0IgogICBpZD0ic3ZnMjA4NSIKICAgc29kaXBvZGk6ZG9jbmFtZT0iRGVmYXVsdEljb24uc3ZnIgogICBpbmtzY2FwZTp2ZXJzaW9uPSIxLjAuMSAoM2JjMmU4MTNmNSwgMjAyMC0wOS0wNykiPgogIDxtZXRhZGF0YQogICAgIGlkPSJtZXRhZGF0YTIwOTEiPgogICAgPHJkZjpSREY+CiAgICAgIDxjYzpXb3JrCiAgICAgICAgIHJkZjphYm91dD0iIj4KICAgICAgICA8ZGM6Zm9ybWF0PmltYWdlL3N2Zyt4bWw8L2RjOmZvcm1hdD4KICAgICAgICA8ZGM6dHlwZQogICAgICAgICAgIHJkZjpyZXNvdXJjZT0iaHR0cDovL3B1cmwub3JnL2RjL2RjbWl0eXBlL1N0aWxsSW1hZ2UiIC8+CiAgICAgIDwvY2M6V29yaz4KICAgIDwvcmRmOlJERj4KICA8L21ldGFkYXRhPgogIDxkZWZzCiAgICAgaWQ9ImRlZnMyMDg5IiAvPgogIDxzb2RpcG9kaTpuYW1lZHZpZXcKICAgICBwYWdlY29sb3I9IiNmZmZmZmYiCiAgICAgYm9yZGVyY29sb3I9IiM2NjY2NjYiCiAgICAgYm9yZGVyb3BhY2l0eT0iMSIKICAgICBvYmplY3R0b2xlcmFuY2U9IjEwIgogICAgIGdyaWR0b2xlcmFuY2U9IjEwIgogICAgIGd1aWRldG9sZXJhbmNlPSIxMCIKICAgICBpbmtzY2FwZTpwYWdlb3BhY2l0eT0iMCIKICAgICBpbmtzY2FwZTpwYWdlc2hhZG93PSIyIgogICAgIGlua3NjYXBlOndpbmRvdy13aWR0aD0iMTkyMCIKICAgICBpbmtzY2FwZTp3aW5kb3ctaGVpZ2h0PSI5ODYiCiAgICAgaWQ9Im5hbWVkdmlldzIwODciCiAgICAgc2hvd2dyaWQ9ImZhbHNlIgogICAgIGlua3NjYXBlOnpvb209IjcuNSIKICAgICBpbmtzY2FwZTpjeD0iMjMiCiAgICAgaW5rc2NhcGU6Y3k9IjUzLjMzMzMzMyIKICAgICBpbmtzY2FwZTp3aW5kb3cteD0iMjg2OSIKICAgICBpbmtzY2FwZTp3aW5kb3cteT0iLTExIgogICAgIGlua3NjYXBlOndpbmRvdy1tYXhpbWl6ZWQ9IjEiCiAgICAgaW5rc2NhcGU6Y3VycmVudC1sYXllcj0iZzIwODMiIC8+CiAgPGcKICAgICB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCw4MC4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiCiAgICAgZmlsbD0iIzAwMDAwMCIKICAgICBzdHJva2U9Im5vbmUiCiAgICAgaWQ9ImcyMDgzIj4KICAgIDxwYXRoCiAgICAgICBkPSJNMCA0MDAgbDAgLTQwMCA0MDAgMCA0MDAgMCAwIDQwMCAwIDQwMCAtNDAwIDAgLTQwMCAwIDAgLTQwMHogbTU1NyAxOTMgbC0xNjcgLTE2OCAtMTY3IDE2OCAtMTY4IDE2NyAzMzUgMCAzMzUgMCAtMTY4IC0xNjd6IG0yMDMgLTE5NSBsMCAtMzQzIC0xNzIgMTcyIC0xNzMgMTczIDE3MCAxNzAgYzkzIDkzIDE3MSAxNzAgMTcyIDE3MCAyIDAgMyAtMTU0IDMgLTM0MnogbS01NTggLTE2MCBsLTE2MiAtMTYzIDAgMzI1IDAgMzI1IDE2MiAtMTYzIDE2MyAtMTYyIC0xNjMgLTE2MnogbTM1OCAtMzMgbDE2NSAtMTY1IC0zMzUgMCAtMzM1IDAgMTY1IDE2NSBjOTEgOTEgMTY3IDE2NSAxNzAgMTY1IDMgMCA3OSAtNzQgMTcwIC0xNjV6IgogICAgICAgaWQ9InBhdGgyMDgxIgogICAgICAgc3R5bGU9ImZpbGw6I2ZmZmZmZjtmaWxsLW9wYWNpdHk6MSIgLz4KICA8L2c+Cjwvc3ZnPgo=";
 
 export default Icon;
