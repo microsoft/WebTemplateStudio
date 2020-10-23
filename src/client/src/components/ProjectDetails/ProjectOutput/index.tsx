@@ -5,16 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getOutputPath,
   getOutputPathValidation,
-} from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
-import { setOutputPathAction } from "../../store/userSelection/app/action";
-import { getOutputPathFromConfig, browseNewOutputPath } from "../../utils/extensionService/extensionService";
+} from "../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { setOutputPathAction } from "../../../store/userSelection/app/action";
+import { getOutputPathFromConfig, browseNewOutputPath } from "../../../utils/extensionService/extensionService";
 
-import OutputPath from "../OutputPath";
-import { AppContext } from "../../AppContext";
+import OutputPath from "../../OutputPath";
+import { AppContext } from "../../../AppContext";
 
 import styles from "./styles.module.css";
 import messages from "./messages";
-import rightsidebarStyles from "../RightSidebar/rightsidebarStyles.module.css";
+import rightsidebarStyles from "../../RightSidebar/rightsidebarStyles.module.css";
 
 interface IProps {
   rightsidebar?: boolean;
@@ -22,7 +22,7 @@ interface IProps {
 
 type Props = IProps & InjectedIntlProps;
 
-const ProjectNameAndOutput = (props: Props) => {
+const ProjectOutput = (props: Props) => {
   const dispatch = useDispatch();
   const { vscode } = React.useContext(AppContext);
   const outputPath = useSelector(getOutputPath);
@@ -65,4 +65,4 @@ const ProjectNameAndOutput = (props: Props) => {
   );
 };
 
-export default injectIntl(ProjectNameAndOutput);
+export default injectIntl(ProjectOutput);

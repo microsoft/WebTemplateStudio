@@ -7,7 +7,7 @@
   "identity": "wts.Feature.Azure.Cosmos.Mongo.AddEnvFile",
   "tags": {
     "language": "Any",
-    "type": "project",
+    "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",

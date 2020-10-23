@@ -10,17 +10,13 @@
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
-    "wts.compositionOrder": 3,
     "wts.version": "1.0.0",
+    "wts.compositionOrder": 3,
     "wts.compositionFilter": "$frontendframework == React & identity == wts.Page.React.List"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,
   "PrimaryOutputs": [],
   "symbols": {
-    "wts.rootNamespace": {
-      "type": "parameter",
-      "replaces": "Param_RootNamespace"
-    }
   }
 }

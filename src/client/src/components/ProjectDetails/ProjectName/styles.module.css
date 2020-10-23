@@ -9,16 +9,21 @@
   margin-bottom: 3px;
 }
 
+.error{
+  border: 0.5px solid var(--vscode-inputValidation-errorBorder);
+}
+
 .errorMessage {
+  min-height: 38px;
   background: var(--vscode-inputValidation-errorBackground);
-  border: 1px solid var(--vscode-inputValidation-errorBorder);
-  box-sizing: border-box;
-  z-index: 1;
-  width: 100%;
+  border: 0.5px solid var(--vscode-inputValidation-errorBorder);
+  color: var(--vscode-editor-foreground);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0px 10px;
-  opacity: 0.5;
-  min-height: 38px;
+  box-sizing: border-box;
+  position: absolute;
+  width: calc(100 - 8px);
+  z-index: 1;
 }
