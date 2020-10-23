@@ -1,5 +1,5 @@
-# React Native Blank
-This sample demonstrates a React Native blank application:
+# React Native Tab
+This sample demonstrates a React Native application with Tab Menu:
 
 - Runs on Windows and MacOS
 
