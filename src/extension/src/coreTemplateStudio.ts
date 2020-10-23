@@ -6,10 +6,11 @@ import * as fs from "fs";
 import { ChildProcess, spawn } from "child_process";
 import { CLI, CLI_SETTINGS } from "./constants/cli";
 import { ICommandPayload } from "./types/commandPayload";
-import { IGenerationPayloadType } from "./types/generationPayloadType";
+import { IGenerationData, IService } from "./types/generationTypes";
 import { EventEmitter } from "events";
 import { IEngineGenerationPayloadType } from "./types/engineGenerationPayloadType";
 import { ISyncPayloadType } from "./types/syncPayloadType";
+import { IEngineGenerationTemplateType } from "./types/engineGenerationTemplateType";
 
 class CliEventEmitter extends EventEmitter {}
 
@@ -185,10 +186,9 @@ export class CoreTemplateStudio {
     );
   }
 
-  public async getAllLicenses(payload: ICommandPayload): Promise<any> {
-    const typedPayload = payload.payload as IGenerationPayloadType;
+  public async getAllLicenses(generationData: IGenerationData): Promise<any> {
     const getAllLicensesPayload = JSON.stringify(
-      this.makeEngineGenerationPayload(typedPayload)
+      this.makeEngineGenerationPayload(generationData)
     );
     const getAllLicensesCommand = `${
       CLI.GET_ALL_LICENSES
@@ -227,7 +227,7 @@ export class CoreTemplateStudio {
   }
 
   public async generate(payload: ICommandPayload): Promise<any> {
-    const typedPayload = payload.payload as IGenerationPayloadType;
+    const typedPayload = payload.payload as IGenerationData;
     const generatePayload = JSON.stringify(
       this.makeEngineGenerationPayload(typedPayload)
     );
@@ -238,8 +238,7 @@ export class CoreTemplateStudio {
     const itemsToGenerateCount =
       projectItemsToGenerateCount +
       typedPayload.pages.length +
-      (typedPayload.services.appService ? 1 : 0) +
-      (typedPayload.services.cosmosDB ? 1 : 0)
+      typedPayload.services.length
     let generatedItemsCount = 0;
 
     this.cliEvents.on(CLI.GENERATE_PROGRESS, data => {
@@ -255,7 +254,7 @@ export class CoreTemplateStudio {
   }
 
   private makeEngineGenerationPayload(
-    payload: IGenerationPayloadType
+    payload: IGenerationData
   ): IEngineGenerationPayloadType {
     const {
       projectName,
@@ -284,19 +283,15 @@ export class CoreTemplateStudio {
     };
   }
 
-  private getServiceTemplateInfo(services: any): any {
-    const servicesInfo = [];
-    if(services.appService) {
+  private getServiceTemplateInfo(services: IService[]): any {
+    const servicesInfo:IEngineGenerationTemplateType[] = [];
+
+    services.forEach(service => {
       servicesInfo.push({
-        name: services.appService.siteName, //AppService
-        templateid: services.appService.internalName
-      })
-    }if(services.cosmosDB) {
-      servicesInfo.push({
-        name: services.cosmosDB.accountName, //Cosmos
-        templateid: services.cosmosDB.internalName
-      })
-    }
+        name: service.serviceName,
+        templateid: service.internalName
+      })});
+
     return servicesInfo;
   }
 

@@ -6,7 +6,7 @@ import * as path from "path";
 import {
   SubscriptionError,
   AuthorizationError,
-  DeploymentError
+  DeploymentError,
 } from "../../errors";
 import {
   ResourceManagementClient,
@@ -398,44 +398,55 @@ export class CosmosDBDeploy {
   public static updateConnectionStringInEnvFile(
     filePath: string,
     connectionString: string
-  ): void {
+    ): void {
     /**
      * Updates .env file in generated project directory once the connection string is received.
      * Throws an error if the user deleted the project directory
      * @filePath: path of .env file
      */
-    const cosmosEnvironmentVariables = ConnectionString.parseConnectionString(
-      connectionString
-    );
 
-    const envPath = path.join(filePath, ".env");
+    let envText;
+    if (ConnectionString.isCosmosSQLConnectionString(connectionString)) {
+      const sqlData = ConnectionString.getConnectionStringSqlData(connectionString);
+      envText = `${CONSTANTS.COSMOSDB_SQL.URI}=${sqlData.origin}
+${CONSTANTS.COSMOSDB_SQL.PRIMARY_KEY}=${sqlData.primaryKey}`;
+    } else {
+      const mongoData = ConnectionString.getConnectionStringMongoData(connectionString);
+      envText = `${CONSTANTS.COSMOSDB_MONGO.CONNSTR}=${mongoData.origin}/${mongoData.username}
+${CONSTANTS.COSMOSDB_MONGO.USER}=${mongoData.username}
+${CONSTANTS.COSMOSDB_MONGO.PASSWORD}=${mongoData.password}`;
+    }
+
+    const envPath = path.join(filePath, "backend", ".env");
     try {
       if (fs.existsSync(filePath)) {
-        fs.writeFileSync(envPath, cosmosEnvironmentVariables);
+        fs.writeFileSync(envPath, envText);
       }
     } catch (err) {
       throw new Error(err);
     }
   }
-  
+
   public static updateConnectionStringInAppSettingsFile(
     filePath: string,
     connectionString: string
-  ): void {
+    ): void {
     try {
-      const appSettingsPath = path.join(filePath, "server", "appsettings.json");
+      const appSettingsPath = path.join(filePath, "backend", "appsettings.json");
       const appsettings = fs.readJSONSync(appSettingsPath);
 
-      if(ConnectionString.isCosmosSQLConnectionString(connectionString)) {
+      if (ConnectionString.isCosmosSQLConnectionString(connectionString)) {
         const sqlData = ConnectionString.getConnectionStringSqlData(connectionString);
-        appsettings.CosmosDB.Account = sqlData.account;
-        appsettings.CosmosDB.Key = sqlData.primaryKey;
-      } else {   
-        appsettings.ConnectionStrings.CosmosDB = connectionString;
+        appsettings.COSMOSDB_URI = sqlData.origin;
+        appsettings.COSMOSDB_PRIMARY_KEY = sqlData.primaryKey;
+      } else {
+        const mongoData = ConnectionString.getConnectionStringMongoData(connectionString);
+        appsettings.COSMOSDB_CONNSTR = `${mongoData.origin}/${mongoData.username}`;
+        appsettings.COSMOSDB_USER = mongoData.username;
+        appsettings.COSMOSDB_PASSWORD = mongoData.password;
       }
 
-      fs.writeJSONSync(appSettingsPath, appsettings, {spaces: 2});
-      
+      fs.writeJSONSync(appSettingsPath, appsettings, { spaces: 2 });
     } catch (err) {
       throw new Error(err);
     }

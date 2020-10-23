@@ -1,33 +1,25 @@
 import * as React from "react";
+import { injectIntl, InjectedIntlProps } from "react-intl";
+
+import ProjectDetails from "../../components/ProjectDetails";
+
 import styles from "./styles.module.css";
+import messages from "./messages";
 
-import ProjectNameAndOutput from "./ProjectNameAndOutput";
-import { FormattedMessage } from "react-intl";
+type Props = InjectedIntlProps;
 
-const NewProject = () => {
-
+const NewProject = (props: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.newProjectInfo}>
-        <h1 className={styles.header}>
-          <FormattedMessage
-            id="newProject.header"
-            defaultMessage="Create Your Web App in Seconds"
-          />
-        </h1>
-        <div className={styles.body}>
-          <FormattedMessage
-            id="newProject.body"
-            defaultMessage="Give your full-stack project a name, choose where to create it, then click 'Next' to get started."
-          />
-        </div>
+        <h1 className={styles.header}>{props.intl.formatMessage(messages.header)}</h1>
+        <div className={styles.body}>{props.intl.formatMessage(messages.body)}</div>
         <div className={styles.projectDetailsContainer}>
-          <ProjectNameAndOutput />
+          <ProjectDetails />
         </div>
       </div>
-      
     </div>
   );
 };
 
-export default NewProject;
+export default injectIntl(NewProject);

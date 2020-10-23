@@ -6,7 +6,7 @@ import { getInitialState, setAzureEmail } from "../../../mockData/mockStore";
 import messages from "./messages";
 import { fireEvent } from "@testing-library/react";
 import { setDetailPageAction } from "../../../store/config/detailsPage/action";
-import { openAzureLoginModalAction } from "../../../store/navigation/modals/action";
+import { openAzureServicesModalAction } from "../../../store/navigation/modals/action";
 import { IOption } from "../../../types/option";
 import { AppState } from "../../../store/combineReducers";
 
@@ -30,12 +30,12 @@ jest.mock("../../../store/config/detailsPage/action", () => {
 });
 
 jest.mock("../../../store/navigation/modals/action", () => {
-  const openAzureLoginModalAction = jest.fn((serviceInternalName: string) => ({
+  const openAzureServicesModalAction = jest.fn((serviceInternalName: string) => ({
     type: "AZURE_LOGIN_MODAL",
     payload: serviceInternalName,
   }));
   return {
-    openAzureLoginModalAction,
+    openAzureServicesModalAction,
   };
 });
 
@@ -61,7 +61,7 @@ xdescribe("ServiceCard", () => {
     longDescription:
       "Quickly build, deploy, and scale web apps with confidence. Meet rigorous, enterprise-grade performance, security, and compliance requirements by using the fully managed platform for your operational and monitoring tasks.",
     selected: false,
-    svgUrl: "",
+    icon: "",
     title: "App Service",
     defaultName: "App Service",
     isValidTitle: true,
@@ -119,13 +119,13 @@ xdescribe("ServiceCard", () => {
     expect(setDetailPageAction).toBeCalled();
   });
 
-  it("If user is not Logged in and click on open modal button, openAzureLoginModalAction should be called  ", () => {
+  it("If user is not Logged in and click on open modal button, openAzureServicesModalAction should be called  ", () => {
     const wrapper = renderWithStore(<ServiceCard {...props} />, store);
     expect(wrapper).toBeDefined();
 
     const openModalButton = wrapper.getByText(intl.formatMessage(messages.addToProject));
     fireEvent.click(openModalButton);
-    expect(openAzureLoginModalAction).toBeCalled();
+    expect(openAzureServicesModalAction).toBeCalled();
   });
 
   it("If user is Logged in and click on open modal button, serviceOpenModalAction should be called", () => {

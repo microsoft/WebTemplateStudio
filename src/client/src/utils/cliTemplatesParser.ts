@@ -12,14 +12,21 @@ export const getFrameworksOptions = (json: any[], type: FRAMEWORK_TYPE): IOption
     longDescription: val.longDescription,
     position: val.position,
     selected: val.selected,
-    svgUrl: "",
+    icon: val.icon,
     title: val.displayName,
     version: val.tags!.version,
     linuxVersion: val.tags!.linuxVersion,
     latestVersion: val.tags!.latestVersion,
-    checkVersionPackageName: val.tags!.checkVersionPackageName,
-    checkVersionPackageSource: val.tags!.checkVersionPackageSource,
-    isPreview: val.tags.preview
+    checkVersionPackage: {
+      source: (val.tags!.checkVersionPackage as string).split("|")[0],
+      name: (val.tags!.checkVersionPackage as string).split("|")[1],
+    },
+    requirement: {
+      name: (val.tags!.requirements as string).split("|")[0],
+      version: (val.tags!.requirements as string).split("|")[1],
+      isInstalled: val.tags!.isRequirementInstalled
+    },
+    isPreview: val.tags.preview,
   }));
 };
 
@@ -31,18 +38,19 @@ export const getPagesOptions = (json: any[]): IOption[] => {
     licenses: val.licenses,
     longDescription: val.longDescription,
     selected: val.selected,
-    svgUrl: "",
+    icon: val.icon,
     title: val.displayName,
     defaultName: val.defaultName,
     isValidTitle: true,
     author: val.author,
+    editable: val.itemNameEditable,
   }));
 };
 
 export const getFeaturesOptions = (json: any[]): IOption[] => {
   const items = getFeaturesTemplateInfo(json);
   const stored = items.reduce((result, val) => {
-    if(!result.some(option => option.templateGroupIdentity === val.templateGroupIdentity)) {
+    if (!result.some((option) => option.templateGroupIdentity === val.templateGroupIdentity)) {
       const option: IOption = {
         body: val.summary,
         //internalName: val.name,
@@ -51,26 +59,25 @@ export const getFeaturesOptions = (json: any[]): IOption[] => {
         licenses: val.licenses,
         longDescription: val.longDescription,
         selected: val.selected,
-        svgUrl: "",
+        icon: val.icon,
         title: val.displayName,
         defaultName: val.defaultName,
         isValidTitle: true,
         author: val.author,
         group: val.group,
-      }
+        editable: val.itemNameEditable,
+      };
       result.push(option);
     }
     return result;
   }, [] as IOption[]);
-
-
 
   return stored;
 };
 
 const getFrameworksTemplateInfo = (items: any[], type: FRAMEWORK_TYPE): IApiTemplateInfo[] => {
   return items
-    .filter(val => val.tags.type === type)
+    .filter((val) => val.tags.type === type)
     .map<IApiTemplateInfo>((val) => ({
       author: val.author,
       templateGroupIdentity: val.templateGroupIdentity,
@@ -82,7 +89,7 @@ const getFrameworksTemplateInfo = (items: any[], type: FRAMEWORK_TYPE): IApiTemp
       position: val.order,
       selected: false,
       summary: val.summary,
-      svgUrl: val.icon,
+      icon: val.icon,
       tags: val.tags,
     }));
 };
@@ -105,10 +112,11 @@ const getTemplateInfo = (items: any[]): IApiTemplateInfo[] => {
     position: val.displayOrder,
     selected: false,
     summary: val.description,
-    svgUrl: val.icon,
+    icon: val.icon,
     tags: val.tags,
     defaultName: val.defaultName,
     author: val.author,
     group: val.group,
+    itemNameEditable: val.itemNameEditable,
   }));
 };

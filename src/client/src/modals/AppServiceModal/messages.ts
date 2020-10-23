@@ -17,6 +17,10 @@ const messages = defineMessages({
     id: "AppServiceModal.hideAdvancedMode",
     defaultMessage: "Hide advanced mode",
   },
+  ariaCloseModalLabel:{
+    id: "AppServiceModal.ariaCloseModalLabel",
+    defaultMessage: "Close App Service Configuration Modal",
+  },
 });
 
 export default messages;

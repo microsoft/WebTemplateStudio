@@ -10,15 +10,16 @@ export const CONSTANTS = {
   },
   GENERATE_ENDPOINT: "/api/generate",
   ENGINE_DIRECTORY: "./src/api/darwin/CoreTemplateStudio.Api",
-  CONNECTION_STRING_MONGO: (
-    username: string,
-    password: string,
-    origin: string
-  ): string => {
-    return `COSMOSDB_CONNSTR=${origin}/${username}\nCOSMOSDB_USER=${username}\nCOSMOSDB_PASSWORD=${password}\n`;
+  COSMOSDB_MONGO:
+  {
+    CONNSTR :"COSMOSDB_CONNSTR",
+    USER :"COSMOSDB_USER",
+    PASSWORD: "COSMOSDB_PASSWORD"
   },
-  CONNECTION_STRING_SQL: (origin: string, primaryKey: string): string => {
-    return `COSMOSDB_URI=${origin}\nCOSMOSDB_PRIMARY_KEY=${primaryKey}\n`;
+  COSMOSDB_SQL:
+  {
+    URI: "COSMOSDB_URI",
+    PRIMARY_KEY: "COSMOSDB_PRIMARY_KEY",
   },
   SQL_CONNECTION_STRING_PREFIX: "accountendpoint=",
   ASPNET_BACKEND_FRAMEWORK_NAME: "AspNet",
@@ -33,6 +34,10 @@ export const CONSTANTS = {
     PYTHON3: "python3",
     PYTHON_LAUNCHER: "py -3",
     NETCORE: "netcore"
+  },
+  PACKAGE_SOURCES: {
+    NPM: "npm",
+    GITHUB: "github",
   },
   AZURE_LOCATION: {
     CENTRAL_US: "Central US"
@@ -74,6 +79,7 @@ export const CONSTANTS = {
   }
 };
 
+export const DEFAULT_PROJECT_NAME = "myApp";
 export const PROJECT_NAME_VALIDATION_LIMIT = 50;
 
 export const PAYLOAD_MESSAGES_TEXT = {
@@ -96,3 +102,8 @@ export enum OS {
   Linux = "linux",
   Windows = "windows"
 }
+
+export const VSCODE_TASKS = {
+  INSTALL_DEPENDENCIES: "Install dependencies",
+  PUBLISH: "Publish",
+};

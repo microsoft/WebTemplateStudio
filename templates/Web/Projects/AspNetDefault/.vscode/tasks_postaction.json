@@ -1,0 +1,28 @@
+{
+  "tasks": [
+    {
+      "label": "Install dependencies backend",
+      //{[{
+      "type": "shell",
+      "command": "dotnet restore backend"
+      //}]}
+    },
+    {
+      "label": "Publish backend",
+      //{[{
+      "type": "shell",
+      "command": "./backend/scripts/publish.sh",
+      "windows": {
+        "command": "powershell ./backend/scripts/publish.ps1",
+      }
+      //}]}
+    },
+    {
+      "label": "Start backend",
+      //{[{
+      "type": "shell",
+      "command": "dotnet run -p backend/."
+      //}]}
+    },
+  ]
+}

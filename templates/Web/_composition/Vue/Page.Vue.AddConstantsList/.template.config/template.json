@@ -12,8 +12,8 @@
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
-    "wts.compositionOrder": 3,
     "wts.version": "1.0.0",
+    "wts.compositionOrder": 3,
     "wts.compositionFilter": "$frontendframework == Vue & identity == wts.Page.Vue.List"
   },
     "sourceName": "wts.ItemName",
@@ -21,9 +21,5 @@
     "PrimaryOutputs": [
     ],
     "symbols": {
-      "wts.rootNamespace": {
-        "type": "parameter",
-        "replaces": "Param_RootNamespace"
-      }
     }
   }

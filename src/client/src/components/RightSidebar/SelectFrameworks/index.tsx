@@ -1,15 +1,18 @@
 import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import styles from "../styles.module.css";
-import messages from "../strings";
-import { ISelected } from "../../../types/selected";
-import Dropdown from "../../../components/Dropdown";
 import { AppState } from "../../../store/combineReducers";
 import { UserSelectionState } from "../../../store/userSelection/combineReducers";
-import { IOption } from "../../../types/option";
 import { TemplateType } from "../../../store/templates/combineReducers";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/userSelection/frameworks/action";
+
+import { ISelected } from "../../../types/selected";
+import { IOption } from "../../../types/option";
+
+import Dropdown from "../../../components/Dropdown";
+
+import rightsidebarStyles from "../rightsidebarStyles.module.css";
+import messages from "./messages";
 
 type Props = InjectedIntlProps;
 
@@ -57,8 +60,8 @@ const SelectFrameworks = (props: Props)=>{
     const optionBackEnd =
       backendOptions.find((optionBack: IOption) => optionBack.internalName === option.value);
     if (optionBackEnd){
-      const { title, internalName, version, author, licenses } = optionBackEnd;
-      const newBackEndFramework = { title: title as string, internalName, version, author, licenses };
+      const { title, internalName, version, author, licenses, icon } = optionBackEnd;
+      const newBackEndFramework = { title: title as string, internalName, version, author, licenses, icon };
       dispatch(setSelectedBackendFrameworkAction(newBackEndFramework));
     }
   };
@@ -67,16 +70,16 @@ const SelectFrameworks = (props: Props)=>{
     const optionFrontEnd =
       frontEndOptions.find((optionFront: IOption) => optionFront.internalName === option.value);
     if (optionFrontEnd){
-      const { title, internalName, version, author, licenses } = optionFrontEnd;
-      const newBackEndFramework = { title: title as string, internalName, version, author, licenses };
-      dispatch(setSelectedFrontendFrameworkAction(newBackEndFramework));
+      const { title, internalName, version, author, licenses, icon } = optionFrontEnd;
+      const newFrontEndFramework = { title: title as string, internalName, version, author, licenses, icon };
+      dispatch(setSelectedFrontendFrameworkAction(newFrontEndFramework));
     }
   };
 
   return (
-    <React.Fragment>
-      <div className={styles.sidebarItem}>
-        <div className={styles.dropdownTitle}>{formatMessage(messages.frontendFramework)}</div>
+    <>
+      <div className={rightsidebarStyles.sidebarItem}>
+        <div className={rightsidebarStyles.title}>{formatMessage(messages.frontendFramework)}</div>
         <Dropdown
           handleChange={(dropDrownItem: IDropDownOptionType) => {
             handleFrontEndFrameworkChange(dropDrownItem);
@@ -88,8 +91,8 @@ const SelectFrameworks = (props: Props)=>{
           )}
         />
       </div>
-      <div className={styles.sidebarItem}>
-        <div className={styles.dropdownTitle}>{formatMessage(messages.backendFramework)}</div>
+      <div className={rightsidebarStyles.sidebarItem}>
+        <div className={rightsidebarStyles.title}>{formatMessage(messages.backendFramework)}</div>
         <Dropdown
           handleChange={(dropDrownItem: IDropDownOptionType) => {
             handleBackEndFrameworkChange(dropDrownItem);
@@ -101,7 +104,7 @@ const SelectFrameworks = (props: Props)=>{
           )}
         />
       </div>
-    </React.Fragment>
+    </>
   );
 }
 

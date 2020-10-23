@@ -11,20 +11,16 @@
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
-	"wts.platform" : "Web",
+	  "wts.platform" : "Web",
     "wts.version": "1.0.0",
     "wts.compositionFilter": "$frontendframework == Angular & wts.type == page",
-    "wts.casing.sourceName": "kebab|pascal|camel"
+    "wts.casing.sourceName": "kebab|pascal"
   },
     "sourceName": "wts.ItemName",
     "preferNameDirectory": true,
     "PrimaryOutputs": [
     ],
     "symbols": {
-      "wts.rootNamespace": {
-        "type": "parameter",
-        "replaces": "Param_RootNamespace"
-      },
       "wts.sourceName.casing.kebab": {
         "type": "parameter",
         "replaces": "Param_SourceName_Kebab"

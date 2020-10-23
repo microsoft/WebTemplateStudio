@@ -1,0 +1,48 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Install dependencies frontend",
+    },
+    {
+      "label": "Install dependencies backend",
+    },
+    {
+      "label": "Publish frontend",
+    },
+    {
+      "label": "Publish backend",
+    },
+    {
+      "label": "Start frontend",
+    },
+    {
+      "label": "Start backend",
+    },
+    {
+      "label": "Install dependencies",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Install dependencies frontend",
+        "Install dependencies backend"
+      ]
+    },
+    {
+      "label": "Publish",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Publish frontend",
+        "Publish backend"
+      ]
+    },
+    {
+      "label": "Start App",
+      "dependsOn": [
+        "Start backend",
+        "Start frontend"
+      ]
+    }
+  ]
+}

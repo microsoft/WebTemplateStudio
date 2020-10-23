@@ -1,33 +1,37 @@
-import * as React from "react";
-import { connect, useSelector, useDispatch } from "react-redux";
-import asModal from "../../components/Modal";
-import messages from "./messages";
-import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import { isAppServiceModalOpenSelector } from "../../store/navigation/modals/selector";
-import RuntimeStackInfo from "./RuntimeStackInfo";
-import AppServicePlanInfo from "./AppServicePlanInfo";
-import AppNameEditor from "./AppNameEditor";
-import SubscriptionSelection from "../../components/SubscriptionSelection";
+import React, { useState, useContext, useEffect } from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import buttonStyles from "../../css/buttonStyles.module.css";
-import { KEY_EVENTS } from "../../utils/constants/constants";
-import { AZURE, SERVICE_KEYS, AzureResourceType } from "../../utils/constants/azure";
+import { connect, useSelector, useDispatch } from "react-redux";
+import { AppContext } from "../../AppContext";
 
-import styles from "./styles.module.css";
+import { isAppServiceModalOpenSelector } from "../../store/navigation/modals/selector";
 import { AppState } from "../../store/combineReducers";
 import { IAppService } from "../../store/userSelection/services/appService/model";
 import { getAppService } from "../../store/userSelection/services/servicesSelector";
-import classNames from "classnames";
-import { useState } from "react";
 import { saveAppServiceAction } from "../../store/userSelection/services/appService/action";
 import { closeModalAction } from "../../store/navigation/modals/action";
-import { sendTelemetry } from "../../utils/extensionService/extensionService";
-import LocationSelection from "../../components/LocationSelection";
+
+import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
-import { AppContext } from "../../AppContext";
+
+import SubscriptionSelection from "../../components/SubscriptionSelection";
+import asModal from "../../components/Modal";
+import LocationSelection from "../../components/LocationSelection";
 import ResourceGroupSelection from "../../components/ResourceGroupSelection";
+
+import { KEY_EVENTS } from "../../utils/constants/constants";
 import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
+import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants/internalNames";
+import { AZURE, SERVICE_KEYS, AzureResourceType } from "../../utils/constants/azure";
+
+import AppNameEditor from "./AppNameEditor";
+import RuntimeStackInfo from "./RuntimeStackInfo";
+import AppServicePlanInfo from "./AppServicePlanInfo";
+
+import buttonStyles from "../../css/buttonStyles.module.css";
+import styles from "./styles.module.css";
+import classNames from "classnames";
+import messages from "./messages";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -38,24 +42,27 @@ type Props = IStateProps & InjectedIntlProps;
 const AppServiceModal = ({ intl }: Props) => {
   const { formatMessage } = intl;
   const dispatch = useDispatch();
-  const { vscode } = React.useContext(AppContext);
+  const { vscode } = useContext(AppContext);
   const appServiceInStore = useSelector(getAppService);
+  const templateAppService = useSelector((state: AppState) => state.templates.featureOptions).filter(
+    (feature) => feature.internalName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE
+  )[0];
   const initialSubscription = appServiceInStore ? appServiceInStore.subscription : "";
   const initialAppServiceName = appServiceInStore ? appServiceInStore.siteName : "";
   const initialLocation = appServiceInStore ? appServiceInStore.location : AZURE.DEFAULT_LOCATION;
   const initialResourceGroup = appServiceInStore ? appServiceInStore.resourceGroup : AZURE.DEFAULT_RESOURCE_GROUP;
-  
+
   const [subscription, setSubscription] = useState(initialSubscription);
   const [appName, setAppName] = useState(initialAppServiceName);
   const [location, setLocation] = useState(initialLocation);
   const [resourceGroup, setResourceGroup] = useState(initialResourceGroup);
   const [isAvailableAppName, setIsAvailableAppName] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
-  
-  React.useEffect(() => {
-    if(showAdvanced) {      
+
+  useEffect(() => {
+    if (showAdvanced) {
       const azureServiceType = SERVICE_KEYS.APP_SERVICE;
-      sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_AZURE_SERVICE_ADVANCED_MODE, {azureServiceType});
+      sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_AZURE_SERVICE_ADVANCED_MODE, { azureServiceType });
     }
   }, [showAdvanced]);
 
@@ -87,6 +94,8 @@ const AppServiceModal = ({ intl }: Props) => {
       location,
       siteName: appName,
       internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
+      editable: templateAppService.editable,
+      icon: templateAppService.icon,
     };
     dispatch(saveAppServiceAction(appServiceSelection));
   };
@@ -96,6 +105,8 @@ const AppServiceModal = ({ intl }: Props) => {
       <div className={styles.header}>
         <div className={styles.title}>{formatMessage(messages.title)}</div>
         <Cancel
+          tabIndex={0}
+          aria-label={intl.formatMessage(messages.ariaCloseModalLabel)}
           data-testid="close-button"
           className={styles.closeIcon}
           onClick={() => dispatch(closeModalAction())}
@@ -103,9 +114,7 @@ const AppServiceModal = ({ intl }: Props) => {
         />
       </div>
       <div className={styles.body}>
-        <SubscriptionSelection
-          initialSubscription={subscription}
-          onSubscriptionChange={setSubscription} />
+        <SubscriptionSelection initialSubscription={subscription} onSubscriptionChange={setSubscription} />
 
         <AppNameEditor
           subscription={subscription}
@@ -118,30 +127,32 @@ const AppServiceModal = ({ intl }: Props) => {
         <RuntimeStackInfo />
 
         {/* Advanced Mode */}
-        <div className={classNames({ [styles.hide]: !showAdvanced })} >
+        <div className={classNames({ [styles.hide]: !showAdvanced })}>
           <LocationSelection
             location={location}
             subscription={subscription}
             azureServiceType={AzureResourceType.AppService}
-            onLocationChange={setLocation} />
+            onLocationChange={setLocation}
+          />
           <ResourceGroupSelection
             subscription={subscription}
             resourceGroup={resourceGroup}
-            onResourceGroupChange={setResourceGroup} />
+            onResourceGroupChange={setResourceGroup}
+          />
         </div>
       </div>
       <div className={styles.footer}>
-          <button
-            className={buttonStyles.buttonLink}
-            onClick={() => setShowAdvanced(!showAdvanced)}>
-              {formatMessage(showAdvanced ? messages.hideAdvancedMode : messages.showAdvancedMode)}
-              <ArrowDown className={classNames(styles.advancedModeIcon, {[styles.rotateAdvancedModeIcon]: !showAdvanced})} />
-          </button>
+        <button className={buttonStyles.buttonLink} onClick={() => setShowAdvanced(!showAdvanced)}>
+          {formatMessage(showAdvanced ? messages.hideAdvancedMode : messages.showAdvancedMode)}
+          <ArrowDown
+            className={classNames(styles.advancedModeIcon, { [styles.rotateAdvancedModeIcon]: !showAdvanced })}
+          />
+        </button>
 
-          <button className={getButtonClassNames()} onClick={saveAppServiceSelection} disabled={!isEnableSaveButton()}>
-            {formatMessage(messages.save)}
-          </button>
-        </div>
+        <button className={getButtonClassNames()} onClick={saveAppServiceSelection} disabled={!isEnableSaveButton()}>
+          {formatMessage(messages.save)}
+        </button>
+      </div>
     </React.Fragment>
   );
 };

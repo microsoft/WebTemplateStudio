@@ -1,17 +1,18 @@
-import * as React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import SidebarItem from "../SidebarItem";
-import { IAppService } from "../../../../store/userSelection/services/appService/model";
-import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
-import styles from "./styles.module.css";
-import { KEY_EVENTS } from "../../../../utils/constants/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
-import { removeAppServiceAction } from "../../../../store/userSelection/services/appService/action";
+
 import { AppContext } from "../../../../AppContext";
+import { IAppService } from "../../../../store/userSelection/services/appService/model";
+import { removeAppServiceAction } from "../../../../store/userSelection/services/appService/action";
 import { openAppServiceModalAction } from "../../../../store/navigation/modals/action";
-import messages from "./messages";
 import { EXTENSION_COMMANDS } from "../../../../utils/constants/commands";
+import { SERVICE_KEYS } from "../../../../utils/constants/constants";
+import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
+
+import messages from "./messages";
+import SidebarItem from "../SidebarItem";
+import servicelistStyles from "../servicelistStyles.module.css";
 
 interface IProps {
   appServiceSelection: IAppService | null;
@@ -19,51 +20,43 @@ interface IProps {
 
 type Props = IProps & InjectedIntlProps;
 
-const AppServiceSelection = ({
-  appServiceSelection,
-  intl
-}: Props) => {
-  const { vscode } = React.useContext(AppContext);
+const AppServiceSelection = ({ appServiceSelection, intl }: Props) => {
   const dispatch = useDispatch();
+  const { vscode } = useContext(AppContext);
+  const [openModal, setOpenModal] = useState(false);
 
-  const openAppServiceModalAndSendTelemetry = () => {
-    sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_APP_SERVICE_MODAL_FROM_SERVICES_LIST)
-    dispatch(openAppServiceModalAction());
-  }
-
-  const onEditKeyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      openAppServiceModalAndSendTelemetry();
+  useEffect(() => {
+    if (openModal) {
+      const azureServiceType = SERVICE_KEYS.APP_SERVICE;
+      sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_APP_SERVICE_MODAL_FROM_SERVICES_LIST, { azureServiceType });
     }
-  };
+  }, [openModal]);
+
   return (
-    <React.Fragment>
+    <>
       {appServiceSelection && (
-        <React.Fragment>
-          <div className={styles.headerContainer}>
+        <>
+          <div className={servicelistStyles.headerContainer}>
             <div>{intl.formatMessage(messages.title)}</div>
-            <div
-              role="button"
-              tabIndex={0}
-              className={styles.edit}
-              onClick={openAppServiceModalAndSendTelemetry}
-              onKeyDown={onEditKeyDownHandler}
-            >
-              <EditIcon className={styles.editIcon} />
-            </div>
           </div>
           <SidebarItem
             appService={true}
-            customInputStyle={styles.input}
+            icon={appServiceSelection.icon}
+            editable={false} //itemNameEditable does not make sense for AppServices
+            configurable={true} //we may need to update this in the future if we add this to the templates
             key={appServiceSelection.siteName}
             text={appServiceSelection.siteName}
             withIndent={true}
-            handleCloseClick={()=> dispatch(removeAppServiceAction())}
+            handleOnCloseClick={() => dispatch(removeAppServiceAction())}
+            handleConfigClick={() => {
+              setOpenModal(!openModal);
+              dispatch(openAppServiceModalAction());
+            }}
             idx={1}
           />
-        </React.Fragment>
+        </>
       )}
-    </React.Fragment>
+    </>
   );
 };
 

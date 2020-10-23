@@ -1,16 +1,5 @@
-.title {
-  font-weight: bold;
-  margin-bottom: 3px;
-  font-size: 14px;
-}
-
 .container {
   margin: 15px;
-}
-
-.wizardInfo {
-  font-size: 0.9em;
-  margin-left: -0.4em;
 }
 
 .buttonToLink {
@@ -27,4 +16,9 @@
 
 .buttonToLink:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.wizardInfo {
+  font-size: 0.9em;
+  margin-left: -0.4em;
 }

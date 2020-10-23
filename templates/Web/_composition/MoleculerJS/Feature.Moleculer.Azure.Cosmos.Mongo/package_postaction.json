@@ -1,3 +1,0 @@
-  "scripts": {
-    "start-backend": "moleculer-runner --repl --hot /*{[{*/--env /*}]}*/--config server/moleculer.config.js server/services"
-  },

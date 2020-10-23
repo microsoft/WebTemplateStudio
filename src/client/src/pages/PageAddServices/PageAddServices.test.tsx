@@ -3,9 +3,6 @@ import configureMockStore from "redux-mock-store";
 import { renderWithStore } from "../../testUtils";
 import { getInitialState, addFeaturesOptions, setAzureEmail, getServicesGroups } from "../../mockData/mockStore";
 import messages from "./messages";
-import { fireEvent, waitFor } from "@testing-library/react";
-import { azureLogout } from "../../utils/extensionService/extensionService";
-import { logOutAzureAction } from "../../store/config/azure/action";
 import { AppState } from "../../store/combineReducers";
 import PageAddServices from ".";
 
@@ -57,9 +54,8 @@ describe("PageAddServices", () => {
     expect(wrapper).toBeDefined();
   });
 
-  it("renders title and optional box message", () => {
+  it("renders title", () => {
     const wrapper = renderWithStore(<PageAddServices {...props} />, store);
-    expect(wrapper.getByText(intl.formatMessage(messages.optionalBoxMessage))).toBeDefined();
     expect(wrapper.getByText(intl.formatMessage(messages.title))).toBeDefined();
   });
 
@@ -74,12 +70,6 @@ describe("PageAddServices", () => {
       const wrapper = renderWithStore(<PageAddServices {...props} />, store);
       const AzureStudentComponent = wrapper.queryByTestId("azure-student-component");
       expect(AzureStudentComponent).toBeInTheDocument();
-    });
-
-    it("Sign out button should not be render", () => {
-      const wrapper = renderWithStore(<PageAddServices {...props} />, store);
-      const signOutButton = wrapper.queryByText(intl.formatMessage(messages.signOut));
-      expect(signOutButton).not.toBeInTheDocument();
     });
   });
 
@@ -97,25 +87,6 @@ describe("PageAddServices", () => {
       const wrapper = renderWithStore(<PageAddServices {...props} />, store);
       const AzureStudentComponent = wrapper.queryByTestId("azure-student-component");
       expect(AzureStudentComponent).not.toBeInTheDocument();
-    });
-
-    it("Email detail and sign out button should be render", () => {
-      const wrapper = renderWithStore(<PageAddServices {...props} />, store);
-
-      expect(wrapper.queryByTestId(mockEmail)).toBeDefined();
-      const signOutButton = wrapper.getByText(intl.formatMessage(messages.signOut));
-      expect(signOutButton).toBeDefined();
-    });
-
-    it("If click on sign out button, logOutAzureAction should be called", async () => {
-      const wrapper = renderWithStore(<PageAddServices {...props} />, store);
-      const signOutButton = wrapper.getByText(intl.formatMessage(messages.signOut));
-      fireEvent.click(signOutButton);
-
-      await waitFor(() => {
-        expect(azureLogout).toBeCalled();
-        expect(logOutAzureAction).toHaveBeenCalled();
-      });
     });
   });
 });

@@ -61,6 +61,27 @@ const TELEMETRY = {
   CREATE_NEW_PROJECT_BUTTON: "Generate Modal, create new project button"
 }
 
+enum PLATFORM {
+  WEB = "Web",
+}
+
+const REQUIREMENTS_DATA = [
+  {
+    name: "node",
+    displayName: "Node.js",
+    downloadLink: "https://nodejs.org/en/download/"
+  },
+  {
+    name: "python",
+    displayName: "Python",
+    downloadLink: "https://www.python.org/downloads/"
+  },
+  {
+    name: "netcore",
+    displayName: ".NET Core",
+    downloadLink: "https://dotnet.microsoft.com/download"
+  }];
+
 export {
   PRODUCTION,
   SERVICE_KEYS,
@@ -74,5 +95,7 @@ export {
   FRAMEWORK_TYPE,
   KEY_EVENTS,
   PAYLOAD_MESSAGES_TEXT,
-  TELEMETRY
+  TELEMETRY,
+  PLATFORM,
+  REQUIREMENTS_DATA
 };

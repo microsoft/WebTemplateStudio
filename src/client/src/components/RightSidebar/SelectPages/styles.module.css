@@ -1,17 +1,14 @@
-.dropdownTitle {
-  font-size: 1.2em;
-  margin-bottom: 0.7em;
-  font-weight: 500;
-}
-
-.sidebarItem {
-  margin-left: 15px;
-  margin-right: 15px;
+.sortablePages {
+  margin-bottom: 30px;
 }
 
 .pageListContainer {
   display: flex;
   justify-content: space-between;
+}
+
+.iconsContainer {
+  display: flex;
 }
 
 .hideOrShow {
@@ -31,8 +28,4 @@
 
 .viewIcon path {
   fill: var(--vscode-editor-foreground);
-}
-
-.iconsContainer {
-  display: flex;
 }

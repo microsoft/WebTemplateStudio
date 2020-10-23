@@ -14,11 +14,13 @@ const appServiceReducer = (state: IAppService | null = initialState, action: Roo
       return initialState;
     case SERVICES_TYPEKEYS.SAVE_APP_SERVICE:
       return {
-          subscription: action.payload.subscription,
-          resourceGroup: action.payload.resourceGroup,
-          location: action.payload.location,
-          internalName: action.payload.internalName,
-          siteName: action.payload.siteName,
+        subscription: action.payload.subscription,
+        resourceGroup: action.payload.resourceGroup,
+        location: action.payload.location,
+        internalName: action.payload.internalName,
+        icon: action.payload.icon,
+        siteName: action.payload.siteName,
+        editable: action.payload.editable,
       };
     default:
       return state;

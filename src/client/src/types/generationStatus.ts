@@ -18,4 +18,5 @@ export interface GenerationItemData {
   title: string;
   link?: string;
   message: Subject<string>;
+  generationPath?: Subject<string>;
 }

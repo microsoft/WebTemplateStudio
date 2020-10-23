@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  z-index: 1;
   height: auto;
   position: relative;
 }
@@ -26,18 +25,9 @@
   width: 85%;
 }
 
-.projectDetailsContainer {
-  box-sizing: border-box;
+.projectDetailsContainer {  
   width: 80%;
-}
-
-.getStarted {
-  align-self: flex-end;
-}
-
-.quickStartContainer {
-  margin-top: 1em;
-  position: relative;
+  font-size: 1em;
 }
 
 .newProjectInfo {
@@ -56,3 +46,4 @@
     max-width: 100%;
   }
 }
+

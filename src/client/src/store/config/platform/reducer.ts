@@ -1,7 +1,8 @@
 import SelectionActionType from "./actionTypes";
 import { CONFIG_TYPEKEYS } from "../configTypeKeys";
+import { PLATFORM } from "../../../utils/constants/constants";
 
-const initialState = "Web";
+const initialState = PLATFORM.WEB;
 
 const platformReducer = (
   state: string = initialState,

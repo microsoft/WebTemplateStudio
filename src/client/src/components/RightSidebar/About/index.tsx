@@ -1,11 +1,13 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
-import styles from "./styles.module.css";
-import { IVersions } from "../../../types/version";
 import { InjectedIntlProps, injectIntl } from "react-intl";
+import { IVersions } from "../../../types/version";
+
 import { AppState } from "../../../store/combineReducers";
 import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants/constants";
+
 import messages from "./messages";
+import styles from "./styles.module.css";
 
 type Props = InjectedIntlProps;
 
@@ -35,6 +37,7 @@ const About = ({ intl }: Props) => {
           {formatMessage(messages.reportIssue)}
         </a>
       </div>
+      <br/>
 
       <div className={styles.wizardInfo}>
         {formatMessage(messages.templatesVersion) + ` ${templatesVersion}`}
