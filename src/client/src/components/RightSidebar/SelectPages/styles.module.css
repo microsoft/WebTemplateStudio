@@ -5,7 +5,6 @@
 .pageListContainer {
   display: flex;
   justify-content: space-between;
-  margin-left: 15px;
 }
 
 .iconsContainer {
@@ -30,4 +29,3 @@
 .viewIcon path {
   fill: var(--vscode-editor-foreground);
 }
-

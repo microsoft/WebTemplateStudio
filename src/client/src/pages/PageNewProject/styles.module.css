@@ -25,18 +25,9 @@
   width: 85%;
 }
 
-.projectDetailsContainer {
-  box-sizing: border-box;
+.projectDetailsContainer {  
   width: 80%;
-}
-
-.getStarted {
-  align-self: flex-end;
-}
-
-.quickStartContainer {
-  margin-top: 1em;
-  position: relative;
+  font-size: 1em;
 }
 
 .newProjectInfo {
@@ -56,19 +47,3 @@
   }
 }
 
-.inputContainer {
-  display: block;
-  position: relative;
-  width: 100%;
-  text-decoration: none;
-  outline: none;
-  margin-bottom: 40px;
-  font-size: 1.2em;
-}
-
-.inputTitle {
-  line-height: 2em;
-  font-size: 1.2em;
-  font-weight: 600;
-  margin-bottom: 3px;
-}

@@ -1,45 +1,39 @@
-﻿## Getting Started
+﻿This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).
 
-1. Install dependencies using `Install dependencies` task ().
-2. Start development app using `Start App` task ().
+## Getting Started
 
-## Next Steps
-### Deployment
+The best way to launch the application is using the [Visual Studio Code Tasks](https://code.visualstudio.com/docs/editor/tasks). In the `vscode/tasks.json` file you can find all the tasks configured for this project.
 
-If you selected Azure App Service when creating your project, follow these steps:
+To launch a task click on the menu `Terminal > Run Task` and select the task to launch (or press `Ctrl+Shift+P` and choose the `Tasks:Run Task` command).
 
-1. Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type/select `Web Template Studio: Deploy App` to start deploying your app.
-2. After your project is built, click "Deploy" on the window pop up.
-3. Once the deployment is done, click "Browse website" in the notification window on the lower right corner to check out your newly deployed app.
+To run the project:
 
-If you did not select Azure App Service and want to create a new Azure App Service web app, follow these steps:
-
-1. Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type/select `Tasks: Run Task`, and execute the next tasks:
-   - `Install dependencies` to install dependecies in frontend and backend apps.
-   - `Publish` to build apps in `publish` folder.
-2. Once the build is done, press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type/select `Azure App Service: Create New Web App...` to create a new web app.
-   - Select your subscription
-   - Enter your web app name
-   - Select Linux as your OS
-   - Select Node.js 12 LTS for a Node/Express application, Python 3.7 for a Flask application or .Net Core Latest runtime for ASP .NET application.
-3. Once the creation is done, click "Deploy" in the notification window on the lower right corner.
-   - Click "Browse" on the top middle section of your screen and select the "publish" folder within your project
-   - Click "Yes" in the notification window on the lower right corner (build prompt)
-   - Click "Deploy" on the window pop up
-   - Click "Yes" in the notification window on the lower right corner again
-4. Once the deployment is done, click "Browse website" in the notification window on the lower right corner to check out your newly deployed app.
-
-Consider adding authentication and securing back-end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
-
-Full documentation for deployment to Azure App Service can be found here: [Deployment Docs](https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/deployment.md).
+1. Install dependencies using `Install dependencies` task.
+2. Start development app using `Start App` task.
 
 ## File Structure
 ```
 .
+├── .vscode/ - Visual Studio Code configuration files
+├── backend/ - Backend App
+├── frontend/ - Frontend App
 └── README.md
 ```
 
+### Frontend
+To start the frontend application manually:
+  1. Open a terminal and navigate to the `frontend` folder path.
+  2. Use `yarn install` or `npm install` to install frontend dependencies.
+  3. Use `yarn start` or `npm start` to start frontend app in development.
+
+### Backend
+## Deployment
+
+To deploy the application in an Azure App Service follow the deployment instructions:
+
+- [Deployment using Web Template Studio Deploy command](https://github.com/microsoft/WebTemplateStudio/blob/dev/docs/generated-apps/deployment.md)
+
+Consider adding authentication and securing backend API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
+
 ## Additional Documentation
 - Bootstrap CSS - https://getbootstrap.com/
-
-  This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).

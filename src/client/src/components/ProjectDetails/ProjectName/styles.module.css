@@ -1,0 +1,29 @@
+.inputContainer {
+  margin-bottom: 30px;
+}
+
+.inputTitle {
+  line-height: 2em;
+  font-size: 1em;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
+.error{
+  border: 0.5px solid var(--vscode-inputValidation-errorBorder);
+}
+
+.errorMessage {
+  min-height: 38px;
+  background: var(--vscode-inputValidation-errorBackground);
+  border: 0.5px solid var(--vscode-inputValidation-errorBorder);
+  color: var(--vscode-editor-foreground);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px;
+  box-sizing: border-box;
+  position: absolute;
+  width: calc(100 - 8px);
+  z-index: 1;
+}

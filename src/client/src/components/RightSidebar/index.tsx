@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from "react";
+import React, { useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
@@ -13,9 +13,8 @@ import { ReactComponent as CancelSVG } from "../../assets/cancel.svg";
 
 import About from "./About";
 import SelectPages from "./SelectPages";
-import ProjectName from "../ProjectName";
+import ProjectDetails from "../ProjectDetails";
 import ServicesList from "./ServicesList";
-import ProjectDetails from "./ProjectDetails";
 import SelectFrameworks from "./SelectFrameworks";
 
 import messages from "./messages";
@@ -29,8 +28,10 @@ const RightSidebar = (props: Props) => {
   const [isSidebarOpen, setIsSiderbarOpen] = useState(true);
   const hasServices: boolean = useSelector(hasServicesSelector);
   const selectedRoute = useSelector(getSelectedRoute);
-  const isFirstOrLastPage: boolean = useMemo<boolean>(() => selectedRoute === ROUTE.NEW_PROJECT ||
-    selectedRoute === ROUTE.REVIEW_AND_GENERATE, [selectedRoute]);
+  const isFirstOrLastPage: boolean = useMemo<boolean>(
+    () => selectedRoute === ROUTE.NEW_PROJECT || selectedRoute === ROUTE.REVIEW_AND_GENERATE,
+    [selectedRoute]
+  );
 
   const { intl } = props;
   const { formatMessage } = intl;
@@ -64,38 +65,36 @@ const RightSidebar = (props: Props) => {
         </div>
       )}
       {(isSidebarOpen || isFirstOrLastPage) && (
-        <div
-          role="complementary" id="dvRightSideBar"
-          className={classnames(styles.container, styles.rightViewCropped)}
-        >
+        <div role="complementary" id="dvRightSideBar" className={classnames(styles.container, styles.rightViewCropped)}>
           <div className={styles.summaryContainer} id="dvSummaryContainer">
-            <CancelSVG
-              tabIndex={0}
-              className={classnames(styles.icon, { [styles.iconHide]: selectedRoute === ROUTE.REVIEW_AND_GENERATE || selectedRoute === ROUTE.NEW_PROJECT })}
-              onClick={showHideMenu}
-              onKeyDown={cancelKeyDownHandler}
-              aria-label={intl.formatMessage(messages.hideAriaLabel)}
-              title={intl.formatMessage(messages.hideIcon)}
-            />
-            <ProjectDetails />
-            <div className={styles.inputContainer}>
-              <div className={styles.inputTitle}>{intl.formatMessage(messages.projectNameTitle)}</div>
-              <ProjectName />
+            <div className={classnames(styles.endAlign, styles.marginLeft)}>
+              <CancelSVG
+                tabIndex={0}
+                className={classnames(styles.icon, {
+                  [styles.iconHide]: selectedRoute === ROUTE.REVIEW_AND_GENERATE || selectedRoute === ROUTE.NEW_PROJECT,
+                })}
+                onClick={showHideMenu}
+                onKeyDown={cancelKeyDownHandler}
+                aria-label={intl.formatMessage(messages.hideAriaLabel)}
+                title={intl.formatMessage(messages.hideIcon)}
+              />
             </div>
-            <SelectFrameworks />
-            <SelectPages pathname={selectedRoute} />
-            {hasServices && <ServicesList />}
 
+            <div className={styles.marginLeft}>
+              <div className={styles.title}>{formatMessage(messages.yourProjectDetails)}</div>
+
+              <ProjectDetails rightsidebar={true} />
+
+              <SelectFrameworks />
+              <SelectPages pathname={selectedRoute} />
+              {hasServices && <ServicesList />}
+            </div>
 
             <div className={styles.container}>
               {selectedRoute !== ROUTE.REVIEW_AND_GENERATE && (
                 <div className={styles.buttonContainer}>
                   <button
-                    className={classnames(
-                      buttonStyles.buttonDark,
-                      styles.button,
-                      styles.leftButton
-                    )}
+                    className={classnames(buttonStyles.buttonDark, styles.button)}
                     onClick={() => dispatch(ModalActions.openViewLicensesModalAction())}
                   >
                     {formatMessage(messages.viewLicenses)}
@@ -109,6 +108,6 @@ const RightSidebar = (props: Props) => {
       )}
     </>
   );
-}
+};
 
 export default injectIntl(RightSidebar);

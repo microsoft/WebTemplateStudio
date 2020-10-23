@@ -1,0 +1,12 @@
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8em;
+}
+
+.input {
+  color: var(--vscode-editor-foreground);
+  background: var(--vscode-editorWidget-border);
+  text-overflow: ellipsis;
+}
+

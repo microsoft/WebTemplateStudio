@@ -1,35 +1,30 @@
-﻿## Next Steps
+﻿## File Structure
 
+├── frontend/ - Frontend App
 //{[{
-### Adding a New Page
-
-1. Create a file in `frontend/src/views` with your Vue Template.
-2. Add a route for your page to `frontend/src/router/index.js`.
-3. Add a button to the navigation bar in `frontend/src/components/NavBar.vue`.
-//}]}
-
-## File Structure
-
-//{[{
-The front-end is based on [Vue CLI](https://cli.vuejs.org/). It is served on http://localhost:3000/.
-//}]}
-
-```
-.
-//^^
-//{[{
-├── frontend/ - Vue front-end app
-│ ├── src - Vue front-end
-│ │   ├── assets/                     - Default images
-│ │   ├── components/                 - Common Vue components shared between different views
-│ │   ├── router/                     - Vue routes
-│ │   ├── views/                      - The main pages displayed
-│ │   ├── constants.js                - Contains constants for error messages and endpoints
-│ │   ├── App.vue                     - Base Vue template
-│ └── └── main.js                     - Root Vue Component
+│ ├── public/ - public static files
+│ ├── scripts/ - scripts to publish
+│ ├── src/ - Vue app folder
+│ │   ├── assets/ - Default images
+│ │   ├── components/ - Common Vue components shared between different views
+│ │   ├── router/ -  Vue routes
+│ │   ├── views/ - The main pages displayed
+│ │   ├── App.vue - Base Vue template
+│ │   ├── constants.js - Contains constants for error messages and endpoints
+│ └── └── main.js - Root Vue Component
 //}]}
 └── README.md
-```
+
+### Frontend
+
+//{[{
+The frontend is based on [Vue CLI](https://cli.vuejs.org/).
+
+The most important scripts in the `package.json` are:
+  - start: serves the frontend in development on http://localhost:3000/.
+  - build: Builds the app for production to the `build` folder.
+  - publish: Builds the app for production and moves the output to the `publish` folder.
+//}]}
 
 ## Additional Documentation
 
@@ -37,4 +32,3 @@ The front-end is based on [Vue CLI](https://cli.vuejs.org/). It is served on htt
 - Vue - https://vuejs.org/v2/guide/
 - Vue Router - https://router.vuejs.org/
 //}]}
-- Bootstrap CSS - https://getbootstrap.com/

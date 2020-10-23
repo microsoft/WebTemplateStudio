@@ -12,7 +12,7 @@ const appReducer = combineReducers({
   templates,
   config,
   userSelection,
-  navigation
+  navigation,
 });
 
 export type AppState = ReturnType<typeof appReducer>;
@@ -29,53 +29,52 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
       author: blankPage.author,
       defaultName: blankPage.defaultName,
       internalName: blankPage.internalName,
+      icon: blankPage.icon,
       isValidTitle: blankPage.isValidTitle,
       licenses: blankPage.licenses,
       title: blankPage.defaultName ? blankPage.defaultName : "",
-      id:Math.random().toString(),
-      editable: blankPage.editable
+      id: Math.random().toString(),
+      editable: blankPage.editable,
     };
-    routesNavItems = routesNavItems.map((navItem, index)=>{
-      if (index === 0){
-        navItem.isSelected=true;
-        navItem.wasVisited=true;
-      }else{
-        navItem.isSelected=false;
-        navItem.wasVisited=false;
+    routesNavItems = routesNavItems.map((navItem, index) => {
+      if (index === 0) {
+        navItem.isSelected = true;
+        navItem.wasVisited = true;
+      } else {
+        navItem.isSelected = false;
+        navItem.wasVisited = false;
       }
       return navItem;
-    })
+    });
 
     passedState = {
       navigation: {
-        modals:undefined,
-        routesNavItems
+        modals: undefined,
+        routesNavItems,
       },
       userSelection: {
-        projectNameObject:{
-          projectName:"",
-          validation:{
-            isValid:true,
-            error:"",
-            isDirty:false
-          }
+        projectNameObject: {
+          projectName: "",
+          validation: {
+            isValid: true,
+            error: "",
+            isDirty: false,
+          },
         },
-        frontendFramework:frontendOptions[0],
-        backendFramework:backendOptions[0],
-        pages:[blankSelect]
+        frontendFramework: frontendOptions[0],
+        backendFramework: backendOptions[0],
+        pages: [blankSelect],
       },
       templates: { backendOptions, frontendOptions, pageOptions, featureOptions, projectTypesOptions },
-      config:{
+      config: {
         previewStatus,
         validations,
         detailsPage,
         versions,
         azureProfileData,
-        platform
-      }
+        platform,
+      },
     };
-
-
   } else {
     passedState = state;
   }

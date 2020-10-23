@@ -5,7 +5,10 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import TopNavBarLink from "../TopNavBarLink";
 import styles from "./styles.module.css";
 
-import { isEnableNextPageSelector, getSelectedRoute } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+import {
+  isEnableNextPageSelector,
+  getSelectedRoute,
+} from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import messages from "./messages";
 import { AppState } from "../../store/combineReducers";
 import { IRoutesNavItems } from "../../types/route";
@@ -26,19 +29,17 @@ const TopNavBar = (props: Props) => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    if (selectedRoute && routesNavItems.length>0){
-      const index = routesNavItems.filter(route => route.route === selectedRoute)[0].index;
-      const page = document.getElementById('page' + (index + 1));
+    if (selectedRoute && routesNavItems.length > 0) {
+      const index = routesNavItems.filter((route) => route.route === selectedRoute)[0].index;
+      const page = document.getElementById("page" + (index + 1));
       if (page) page.focus();
     }
   }, [selectedRoute]);
 
-  const navigateToPageAndSetVisited = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>, item: IRoutesNavItems
-  ) => {
+  const navigateToPageAndSetVisited = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, item: IRoutesNavItems) => {
     event.preventDefault();
     const newRoutesNavItems = routesNavItems.splice(0);
-    for (let i=0; i<= item.index; i++){
+    for (let i = 0; i <= item.index; i++) {
       if (i < item.index) newRoutesNavItems[i].isSelected = false;
       if (i === item.index) newRoutesNavItems[i].isSelected = true;
       newRoutesNavItems[i].wasVisited = true;
@@ -49,10 +50,7 @@ const TopNavBar = (props: Props) => {
   return (
     <React.Fragment>
       {
-        <nav
-          className={classnames(styles.topNavBar)}
-          aria-label={intl.formatMessage(messages.ariaNavLabel)}
-        >
+        <nav className={classnames(styles.topNavBar)} aria-label={intl.formatMessage(messages.ariaNavLabel)}>
           <div>
             {routesNavItems.map((item, idx) => {
               const alreadyVisitedRouteAndCanVisit = item.wasVisited && isEnableNextPage;
@@ -62,13 +60,18 @@ const TopNavBar = (props: Props) => {
                 <div
                   className={classnames(styles.itemBorder, {
                     [styles.visitedPath]: alreadyVisitedRouteAndCanVisit,
-                    [styles.itemBorderTop]: idx === 0
+                    [styles.itemBorderTop]: idx === 0,
                   })}
                   key={formatMessage(item.messageDescriptor)}
                   onClick={(event) => {
                     if (projectNameValidation.isValid) {
-                      navigateToPageAndSetVisited(event, item) 
-                      const optionDetailPageBack: IOption = {title: "", internalName: "", body: "", svgUrl: ""};
+                      navigateToPageAndSetVisited(event, item);
+                      const optionDetailPageBack: IOption = {
+                        title: "",
+                        internalName: "",
+                        body: "",
+                        icon: "",
+                      };
                       dispatch(setDetailPageAction(optionDetailPageBack, false, ""));
                     }
                   }}
@@ -91,4 +94,4 @@ const TopNavBar = (props: Props) => {
   );
 };
 
-export default (injectIntl(TopNavBar));
+export default injectIntl(TopNavBar);

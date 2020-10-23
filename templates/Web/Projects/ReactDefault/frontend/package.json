@@ -21,7 +21,7 @@
     "publish": "node ./scripts/publish",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint src/**/*.js src/**/*.jsx"
+    "lint": "eslint src/**/*.js"
   },
   "browserslist": [
     ">0.2%",
