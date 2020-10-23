@@ -90,7 +90,6 @@ When running in the browser, communication with the extension is done against th
 
 1. Run `./build-client.sh` from the _build folder.
 2. Open the `src/client` folder using `VSCode`.
-3. On the terminal run `yarn` or `yarn install`. Note that the first time you run this it can take some time.
 3. Start the client using `yarn start` to begin development in the browser. We recommend using a chromium based browser such as Chrome.
 
 More info:
@@ -100,10 +99,6 @@ More info:
 ### To debug from Visual Studio Code:
 Install [Debugger for Chrome extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) in Visual Studio Code debug Wizard Client.
 After starting the client using `yarn start` in VSCode Debug View (Ctrl+Shift+D) select "Debug WebTS Client" and start debugging (F5)
-
-#### Troubleshooting:
-- While making changes or debugging could happen that no changes appear to be done, it may be because you have Web Template Studio already installed and it is using that one instead of your working copy during the debug.
-Version number should be 0.0.x when debugging it  correctly.
 
 #### More info:
 - https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome
