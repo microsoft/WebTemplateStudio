@@ -36,27 +36,18 @@ const ProjectName = (props: Props) => {
   const projectNameValidation = useSelector(wizardSelectionSelector.getProjectNameValidation);
 
   const [name, setName] = React.useState("");
-  const [hasFocus, setHasFocus] = React.useState(false);
-
-  //We need those to control wether we are in the rightsidebar or the main page
-  const onFocus = () => {
-    setHasFocus(true);
-  };
-  const onBlur = () => {
-    setHasFocus(false);
-  };
 
   const validate = (projectName: string) =>{
-    validateProjectName(projectName, outputPath, validations.projectNameValidationConfig, vscode).then(
-      (validationResult) => {
-        validationResult.isDirty = projectNameValidation.isDirty;
-        dispatch(setProjectNameAction(projectName, validationResult));
+      validateProjectName(projectName, outputPath, validations.projectNameValidationConfig, vscode).then(
+        (validationResult) => {
+          validationResult.isDirty = projectNameValidation.isDirty;
+          dispatch(setProjectNameAction(projectName, validationResult));
 
-        if (projectName !== "") {
-          dispatch(setProjectPathValidationAction({ isValid: validationResult.isValid }));
+          if (projectName !== "") {
+            dispatch(setProjectPathValidationAction({ isValid: validationResult.isValid }));
+          }
         }
-      }
-    );
+      );
   }
 
   const validateAndSetProjectName = (e: React.SyntheticEvent<HTMLInputElement>) => {
@@ -97,8 +88,6 @@ const ProjectName = (props: Props) => {
           value={name}
           maxLength={PROJECT_NAME_CHARACTER_LIMIT}
           className={classnames(stylesInput.input, !projectNameValidation.isValid ? styles.error : "")}
-          onFocus={onFocus}
-          onBlur={onBlur}
         />
 
         {!projectNameValidation.isValid && projectNameValidation.isDirty && (
