@@ -19,17 +19,17 @@ const messages = defineMessages({
     id: "topNavBar.pages",
     defaultMessage: "Add Pages"
   },
-  services: {
-    defaultMessage: "Add Optional Cloud Services",
-    id: "topNavBar.services"
+  services: {    
+    id: "topNavBar.services",
+	  defaultMessage: "Add Optional Cloud Services"
   },
-  summary: {
-    defaultMessage: "Summary",
-    id: "topNavBar.summary"
+  summary: {    
+    id: "topNavBar.summary",
+	  defaultMessage: "Summary"
   },
-  welcome: {
-    defaultMessage: "New Project",
-    id: "topNavBar.newProject"
+  welcome: {    
+    id: "topNavBar.newProject",
+	  defaultMessage: "New Project"
   }
 });
 
