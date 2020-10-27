@@ -35,15 +35,12 @@ export class Defaults extends WizardServant {
     });
   }
 
-  private getDefaultProjectPath(logPathError?: boolean): string {
+  private getDefaultProjectPath(): string {
     let projectPath = vscode.workspace.getConfiguration().get<string>("wts.changeSaveToLocation");
-    Logger.appendLog("EXTENSION", "error", `Testing what´s stored ... ${projectPath}`);
-
 
     //if path is wrong return default path
     if (projectPath !== undefined && !fs.existsSync(path.join(projectPath, ""))) {
-      logPathError?
-      Logger.appendLog("EXTENSION", "error", `The configured default path '${projectPath}' does not seem to be valid.`):"";
+      Logger.appendLog("EXTENSION", "error", `The configured default path '${projectPath}' does not seem to be valid.`);
       projectPath = os.homedir();
     }
 
