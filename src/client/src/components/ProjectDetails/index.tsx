@@ -4,7 +4,7 @@ import ProjectOutput from "./ProjectOutput";
 import ProjectName from "./ProjectName";
 
 interface IProps {
-  rightsidebar?: boolean;
+  isRightsidebar?: boolean;
 }
 
 type Props = IProps;
@@ -12,8 +12,8 @@ type Props = IProps;
 const ProjectDetails = (props: Props) => {
   return (
     <>
-      <ProjectName rightsidebar={props.rightsidebar} />
-      <ProjectOutput rightsidebar={props.rightsidebar} />
+      <ProjectName isRightsidebar={props.isRightsidebar} />
+      <ProjectOutput isRightsidebar={props.isRightsidebar} />
     </>
   );
 };
