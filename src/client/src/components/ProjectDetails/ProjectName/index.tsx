@@ -19,7 +19,7 @@ import messages from "./messages";
 import rightsidebarStyles from "../../RightSidebar/rightsidebarStyles.module.css";
 
 interface IProps {
-  rightsidebar?: boolean;
+  isRightsidebar?: boolean;
 }
 
 type Props = IProps & InjectedIntlProps;
@@ -36,27 +36,18 @@ const ProjectName = (props: Props) => {
   const projectNameValidation = useSelector(wizardSelectionSelector.getProjectNameValidation);
 
   const [name, setName] = React.useState("");
-  const [hasFocus, setHasFocus] = React.useState(false);
-
-  //We need those to control wether we are in the rightsidebar or the main page
-  const onFocus = () => {
-    setHasFocus(true);
-  };
-  const onBlur = () => {
-    setHasFocus(false);
-  };
 
   const validate = (projectName: string) =>{
-    validateProjectName(projectName, outputPath, validations.projectNameValidationConfig, vscode).then(
-      (validationResult) => {
-        validationResult.isDirty = projectNameValidation.isDirty;
-        dispatch(setProjectNameAction(projectName, validationResult));
+      validateProjectName(projectName, outputPath, validations.projectNameValidationConfig, vscode).then(
+        (validationResult) => {
+          validationResult.isDirty = projectNameValidation.isDirty;
+          dispatch(setProjectNameAction(projectName, validationResult));
 
-        if (projectName !== "") {
-          dispatch(setProjectPathValidationAction({ isValid: validationResult.isValid }));
+          if (projectName !== "") {
+            dispatch(setProjectPathValidationAction({ isValid: validationResult.isValid }));
+          }
         }
-      }
-    );
+      );
   }
 
   const validateAndSetProjectName = (e: React.SyntheticEvent<HTMLInputElement>) => {
@@ -85,8 +76,8 @@ const ProjectName = (props: Props) => {
   }, [projectName]);
 
   return (
-    <div className={props.rightsidebar ? rightsidebarStyles.inputContainer : styles.inputContainer}>
-      <div className={props.rightsidebar ? rightsidebarStyles.title : styles.inputTitle}>
+    <div className={props.isRightsidebar ? rightsidebarStyles.inputContainer : styles.inputContainer}>
+      <div className={props.isRightsidebar ? rightsidebarStyles.title : styles.inputTitle}>
         {formatMessage(messages.projectNameTitle)}
       </div>
 
@@ -97,8 +88,6 @@ const ProjectName = (props: Props) => {
           value={name}
           maxLength={PROJECT_NAME_CHARACTER_LIMIT}
           className={classnames(stylesInput.input, !projectNameValidation.isValid ? styles.error : "")}
-          onFocus={onFocus}
-          onBlur={onBlur}
         />
 
         {!projectNameValidation.isValid && projectNameValidation.isDirty && (
