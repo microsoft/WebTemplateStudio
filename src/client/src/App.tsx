@@ -27,7 +27,7 @@ const ViewLicensesModal = loadable(() => import(/* webpackChunkName: "ViewLicens
 const AzureServicesModal = loadable(() => import(/* webpackChunkName: "AzureServicesModal" */  "./modals/AzureServicesModal"));
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
-  require("./css/themes.css");
+  require("./css/mockThemes.css");
 }
 
 interface IStateProps {
