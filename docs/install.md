@@ -5,7 +5,8 @@
 Web Template Studio runs as a VSCode extension and hence you'll need to have _VScode_ version 1.38 or above installed.
 Also, you'll need [_Node_](https://nodejs.org/en/download/),[_Python_](https://www.python.org/downloads/) or [_ASP.NET_](https://dotnet.microsoft.com/download) and _npm_/[_yarn_](https://yarnpkg.com/en/docs/install) to run the generated templates.
 
-## Where is the offical release?
+## Where is the official release?
+//TODO HERE. We do have a released beta version, init? No need of this section
 We are currently early in our development phase and only have a dev nightly on Visual Studio Marketplace.
 
 ## Installing the nightly dev branch build _preferred_

@@ -4,7 +4,7 @@
 
 Microsoft Web Template Studio (_WebTS_) is a Visual Studio Code Extension that accelerates the creation of new web applications using a
 wizard-based experience. WebTS enables developers to generate boilerplate code for a web application
-by choosing between different front-end frameworks, back-end frameworks, pages and cloud services.
+by choosing between different frontend frameworks, backend frameworks, pages and cloud services.
 The resulting web app is well-formed, readable code that incorporates cloud services on
 Azure while implementing proven patterns and best practices. Sprinkled throughout the generated code we have links to
 Docs to provide useful insights. WebTS was created using TypeScript and React. Different combinations of generated code
@@ -30,8 +30,8 @@ Everyone should read these.
 ## Using WebTS to build apps
 These will help if using WebTS to build apps.
 
-- [Front-end frameworks](docs/generated-apps/frontend-frameworks/readme.md)
-- [Back-end frameworks](docs/generated-apps/backend-frameworks/readme.md)
+- [Frontend frameworks](docs/generated-apps/frontend-frameworks/readme.md)
+- [Backend frameworks](docs/generated-apps/backend-frameworks/readme.md)
 - [Pages](docs/generated-apps/pages/readme.md)
 - [Services](docs/generated-apps/services/readme.md)
 - [Deployment of the generated apps](docs/generated-apps/deployment.md)

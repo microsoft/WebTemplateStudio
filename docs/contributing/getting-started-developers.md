@@ -35,7 +35,7 @@ This folder contains the source code for the different components of Web Templat
 
 - client: This folder contains the client or wizard code.
     - src:
-        - Assets: Assets directory contains all the SVGs used for the front-end.
+        - Assets: Assets directory contains all the SVGs used for the frontend.
         - Components: Components contains all React components that are not connected to the Redux store.
         - Containers: Containers are React components that are connected to the Redux store. This is the only difference between components and containers.
         - CSS: CSS contains styling that is global.
