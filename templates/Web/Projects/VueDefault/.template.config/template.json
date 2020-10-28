@@ -53,7 +53,7 @@
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'bootstrap': '4.5.0', 'bootstrap-vue': '2.15.0', 'core-js': '3.6.5', 'vue': '2.6.11', 'vue-router': '3.3.4', 'fs-extra': '9.0.1'}",
+        "dict": "{'bootstrap': '4.5.3', 'bootstrap-vue': '2.18.1', 'core-js': '3.6.5', 'vue': '2.6.12', 'vue-router': '3.4.8', 'fs-extra': '9.0.1'}",
         "key": "dependencies",
         "jsonPath": "frontend/package.json"
       },
@@ -64,7 +64,7 @@
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'@vue/cli-plugin-babel': '4.3.1', '@vue/cli-plugin-eslint': '4.3.1', '@vue/cli-service': '4.3.1',  'babel-eslint': '10.1.0', 'eslint': '6.8.0', 'eslint-plugin-vue': '6.2.2', 'vue-template-compiler': '2.6.11'}",
+        "dict": "{'@vue/cli-plugin-babel': '4.5.8', '@vue/cli-plugin-eslint': '4.5.8', '@vue/cli-service': '4.5.8',  'babel-eslint': '10.1.0', 'eslint': '6.8.0', 'eslint-plugin-vue': '6.2.2', 'vue-template-compiler': '2.6.12'}",
         "key": "devDependencies",
         "jsonPath": "frontend/package.json"
       },
