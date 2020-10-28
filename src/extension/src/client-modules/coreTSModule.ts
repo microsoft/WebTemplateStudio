@@ -6,7 +6,7 @@ import { CoreTemplateStudio } from "../coreTemplateStudio";
 
 import fs = require("fs-extra");
 import { getGenerationData } from "../utils/generation/generationUtils";
-import RequirementsService from "../utils/requirements/requirementsService";
+import RequirementsService from "../utils/requirements/RequirementsService";
 import { Logger } from "../utils/logger";
 
 const previewOptionSelected = vscode.workspace
