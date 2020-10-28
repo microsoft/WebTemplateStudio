@@ -7,7 +7,7 @@ red='\033[0;31m'
 nc='\033[0m'
 
 # Build the client
-sh ./build-client.sh
+bash ./build-client.sh
 
 # Build the cli in debug
-sh ./build-coretscli.sh "debug"
+bash ./build-coretscli.sh "debug"
