@@ -20,7 +20,7 @@
     <BaseWarningMessage
       v-if="WarningMessageOpen"
       :text="WarningMessageText"
-      @onWarningClose="handleWarningClose"
+      @on-warning-close="handleWarningClose"
     />
   </div>
 </template>

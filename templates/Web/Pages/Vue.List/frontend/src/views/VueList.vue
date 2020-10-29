@@ -5,18 +5,18 @@
     </div>
     <div class="row">
       <div class="col-12 p-0">
-        <ListForm v-model="textField" @addListItem="addListItem" />
+        <ListForm v-model="textField" @add-list-item="addListItem" />
       </div>
       <ListItem
         v-for="listItem in listItems"
         :key="listItem.id"
         :listItem="listItem"
-        @deleteListItem="deleteListItem"
+        @delete-list-item="deleteListItem"
       />
       <BaseWarningMessage
         v-if="WarningMessageOpen"
         :text="WarningMessageText"
-        @onWarningClose="handleWarningClose"
+        @on-warning-close="handleWarningClose"
       />
     </div>
   </main>

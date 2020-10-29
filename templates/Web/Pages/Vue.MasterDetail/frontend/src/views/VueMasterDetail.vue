@@ -8,7 +8,7 @@
               v-for="(sampleOrder) in sampleOrders"
               :key="sampleOrder.id"
               :sampleOrder="sampleOrder"
-              @selectSampleOrder="selectSampleOrder"
+              @select-sample-order="selectSampleOrder"
               :isActive="sampleOrder === currentSampleOrder"
             />
           </div>
@@ -19,7 +19,7 @@
     <BaseWarningMessage
       v-if="WarningMessageOpen"
       :text="WarningMessageText"
-      @onWarningClose="handleWarningClose"
+      @on-warning-close="handleWarningClose"
     />
   </div>
 </template>
