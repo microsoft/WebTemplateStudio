@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start-dev": "moleculer-runner services",
-    "start": "moleculer-runner --repl --hot --config ./moleculer.config.js ./services",
+    "start-dev": "moleculer-runner --repl --hot services",
+    "start": "moleculer-runner services",
     "publish": "node ./scripts/publish"
   },
   "dependencies": {

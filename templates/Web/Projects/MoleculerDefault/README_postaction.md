@@ -23,7 +23,7 @@ The most important scripts in the `package.json` are:
 To start the backend application manually:
   1. Open a terminal and navigate to the `backend` folder path.
   2. Use `yarn install` or `npm install` to install backend dependencies.
-  3. Use `yarn start` or `npm start` to start backend app in development.
+  3. Use `yarn start-dev` or `npm start-dev` to start backend app in development.
 //}]}
 
 ## Additional Documentation
