@@ -8,11 +8,11 @@
   },
   "dependencies": {
     "cookie-parser": "1.4.5",
-    "debug": "4.2.0",
-    "express": "4.17.1",
+    "debug": "2.6.9",
+    "express": "4.16.4",
     "fs-extra": "9.0.1",
-    "http-errors": "1.8.0",
-    "morgan": "1.10.1"
+    "http-errors": "1.6.3",
+    "morgan": "1.9.1"
   },
   "engines": {
     "node": ">=12.0.0"
