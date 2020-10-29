@@ -11,7 +11,7 @@
           data-dismiss="alert"
           type="button"
           alt="delete"
-          @click="$emit('deleteListItem', listItem)"
+          @click="$emit('delete-list-item', listItem)"
         >
           <div aria-hidden="true">&times;</div>
         </button>

@@ -1,5 +1,5 @@
 ﻿<template>
-  <form class="input-group my-3" @submit.prevent="$emit('addListItem')">
+  <form class="input-group my-3" @submit.prevent="$emit('add-list-item')">
     <div class="col-11">
       <input
         :value="value"

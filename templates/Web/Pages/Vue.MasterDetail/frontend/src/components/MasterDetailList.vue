@@ -3,7 +3,7 @@
     class="list-group-item list-group-item-action styles.sidebarText"
     v-bind:class="{ active: isActive }"
     type="button"
-    @click="$emit('selectSampleOrder', sampleOrder)"
+    @click="$emit('select-sample-order', sampleOrder)"
   >
     <img class="mr-3" :src="sampleOrder.imageSrc ? sampleOrder.imageSrc : imgGreyAvatar" :alt="sampleOrder.title" />
     {{sampleOrder.title}}

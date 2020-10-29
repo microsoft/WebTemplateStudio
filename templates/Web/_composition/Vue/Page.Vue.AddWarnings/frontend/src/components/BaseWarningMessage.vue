@@ -1,7 +1,7 @@
 ﻿<template>
   <div class="alert alert-warning ml-3 warningPosition" role="alert">
     {{text}}
-    <button @click="$emit('onWarningClose')" class="close ml-2" aria-label="Close">
+    <button @click="$emit('on-warning-close')" class="close ml-2" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
