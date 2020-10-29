@@ -17,7 +17,7 @@ import messages from "./messages";
 import rightsidebarStyles from "../../RightSidebar/rightsidebarStyles.module.css";
 
 interface IProps {
-  rightsidebar?: boolean;
+  isRightsidebar?: boolean;
 }
 
 type Props = IProps & InjectedIntlProps;
@@ -29,7 +29,7 @@ const ProjectOutput = (props: Props) => {
   const projectPathValidation = useSelector(getOutputPathValidation);
 
   React.useEffect(() => {
-    if (outputPath === "") {
+    if (outputPath === "" && !props.isRightsidebar) {
       getOutputPathFromConfig(vscode).then((event) => {
         const message = event.data;
         if (message.payload !== null && message.payload.outputPath !== null) {
@@ -50,7 +50,7 @@ const ProjectOutput = (props: Props) => {
 
   return (
     <>
-      <div className={props.rightsidebar? styles.inputContainer: rightsidebarStyles.inputContainer}>
+      <div className={props.isRightsidebar? styles.inputContainer: rightsidebarStyles.inputContainer}>
         <div className={styles.inputTitle}>{props.intl.formatMessage(messages.outputPathTitle)}</div>
         <div>
           <OutputPath

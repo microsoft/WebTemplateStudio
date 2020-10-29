@@ -1,3 +1,6 @@
+/*** ================================================ ***/
+/*** Styles to mimic application style in the browser ***/
+/*** ================================================ ***/
 :root {
   --vscode-activityBar-background: #333333;
   --vscode-activityBar-dropBackground: rgba(255, 255, 255, 0.12);
