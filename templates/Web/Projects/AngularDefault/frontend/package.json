@@ -15,7 +15,7 @@
     "@ng-bootstrap/ng-bootstrap": "7.0.0",
     "bootstrap": "4.5.3",
     "rxjs": "6.6.3",
-    "tslib": "^2.0.0",
+    "tslib": "2.0.3",
     "zone.js": "0.11.2",
     "core-js": "3.6.5",
     "fs-extra": "9.0.1"
