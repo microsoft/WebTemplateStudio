@@ -20,7 +20,7 @@
       "label": "Start backend",
       //{[{
       "type": "npm",
-      "script": "start",
+      "script": "start-dev",
       "path": "backend/"
       //}]}
     },
