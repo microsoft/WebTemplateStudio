@@ -25,7 +25,7 @@
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'dotenv': '8.2.0', 'moleculer-db': '0.8.4', 'moleculer-db-adapter-mongo': '0.4.6'}",
+        "dict": "{'dotenv': '8.2.0', 'moleculer-db': '0.8.10', 'moleculer-db-adapter-mongo': '0.4.10'}",
         "key": "dependencies",
         "jsonPath": "backend/package.json"
       },
