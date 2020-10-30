@@ -43,7 +43,7 @@
     "platform": "Web",
     "languages": ["Any"],
     "tags": {
-      "version": "0.14.8",
+      "version": "0.14.11",
       "latestVersion":"",
       "checkVersionPackage": "npm|moleculer",
       "requirements":"node|12.0.x",
