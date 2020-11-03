@@ -8,7 +8,9 @@
     ],
     "experimentalDecorators": true,
     "allowJs": true,
-    "target": "es5"
+    "target": "es5",
+    "module": "ESNext",
+    "moduleResolution": "node"
   },
   "files": [
     "test.ts",
