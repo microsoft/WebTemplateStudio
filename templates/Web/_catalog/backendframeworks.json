@@ -9,7 +9,7 @@
     "platform": "Web",
     "languages": ["Any"],
     "tags": {
-      "version": "4.17.1",
+      "version": "4.16.4",
       "checkVersionPackage": "npm|express",
       "requirements":"node|12.0.x",
       "preview": false,
@@ -43,7 +43,7 @@
     "platform": "Web",
     "languages": ["Any"],
     "tags": {
-      "version": "0.14.8",
+      "version": "0.14.11",
       "latestVersion":"",
       "checkVersionPackage": "npm|moleculer",
       "requirements":"node|12.0.x",
@@ -61,7 +61,7 @@
     "platform": "Web",
     "languages": ["Any"],
     "tags": {
-      "version": "3.1.5",
+      "version": "3.1.9",
       "checkVersionPackage": "github|dotnet/aspnetcore",
       "requirements":"netcore|3.1.x",
       "preview": true,
