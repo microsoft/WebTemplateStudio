@@ -1,5 +1,5 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
     "types": [
@@ -8,9 +8,7 @@
     ],
     "experimentalDecorators": true,
     "allowJs": true,
-    "target": "es5",
-    "module": "ESNext",
-    "moduleResolution": "node"
+    "target": "es5"
   },
   "files": [
     "test.ts",
