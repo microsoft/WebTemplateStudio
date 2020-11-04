@@ -64,7 +64,7 @@
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'@vue/cli-plugin-babel': '4.5.8', '@vue/cli-plugin-eslint': '4.5.8', '@vue/cli-service': '4.5.8',  'babel-eslint': '10.1.0', 'eslint': '7.12.1', 'eslint-plugin-vue': '7.1.0', 'vue-template-compiler': '2.6.12'}",
+        "dict": "{'@vue/cli-plugin-babel': '4.5.8', '@vue/cli-plugin-eslint': '4.5.8', '@vue/cli-service': '4.5.8',  'babel-eslint': '10.1.0', 'eslint': '6.8.0', 'eslint-plugin-vue': '6.2.2', 'vue-template-compiler': '2.6.12'}",
         "key": "devDependencies",
         "jsonPath": "frontend/package.json"
       },
