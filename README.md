@@ -17,17 +17,17 @@ are merged together by [Core Template Studio](https://github.com/Microsoft/CoreT
 | dev     |    [![Build Status](https://winappstudio.visualstudio.com/Vegas/_apis/build/status/WebTemplateStudio%20-%20CI%20and%20Deploy?branchName=dev)](https://winappstudio.visualstudio.com/Vegas/_build/latest?definitionId=158&branchName=dev)    |
 | release |   [![Build Status](https://winappstudio.visualstudio.com/Vegas/_apis/build/status/webTS/webts.staging.version.create?branchName=release)](https://winappstudio.visualstudio.com/Vegas/_build/latest?definitionId=161&branchName=release)    |
 
-# Documentation
+## Documentation
 Web Template Studio (WebTS) documentation is divided into three areas.
 
 
-## General
+### General
 Everyone should read these.
 
 - [Installing the extension](/docs/install.md)
 - [Core Concepts](/docs/concepts.md)
 
-## Using WebTS to build apps
+### Using WebTS to build apps
 These will help if using WebTS to build apps.
 
 - [Frontend frameworks](docs/generated-apps/frontend-frameworks/readme.md)
@@ -37,7 +37,7 @@ These will help if using WebTS to build apps.
 - [Deployment of the generated apps](docs/generated-apps/deployment.md)
 
 
-## Working on WebTS
+### Working on WebTS
 These will help if you want to know more about WebTS or contribute to the project.
 
 - [Application Arquitecture](docs/contributing/application-architecture.md)

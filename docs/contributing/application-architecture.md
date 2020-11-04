@@ -3,7 +3,7 @@
 Web Template Studio is a [Visual Studio Code Extension](https://code.visualstudio.com/api) that has three major components: 
 
   - The extension's backend (referred to as the [extension](https://github.com/Microsoft/WebTemplateStudio/tree/dev/src/extension)), which is written in [Typescript](https://www.typescriptlang.org/).
-  -  The frontend wizard (referred to as the [client](https://github.com/Microsoft/WebTemplateStudio/tree/dev/src/client)), written in [React](https://reactjs.org/) and [Typescript](https://www.typescriptlang.org/).
+  - The frontend wizard (referred to as the [client](https://github.com/Microsoft/WebTemplateStudio/tree/dev/src/client)), written in [React](https://reactjs.org/) and [Typescript](https://www.typescriptlang.org/).
   - Generation engine (referred to as [Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio)) written in [.NET Core](https://dotnet.microsoft.com/download). 
   
 ![Architecture Diagram](../resources/webts-architecture-diagram.png)
@@ -12,13 +12,14 @@ All three components are included in Web Template Studio vsix.
 
 ## Extension
 
-The extension is the main part of Web Template Studio. It has been built using the [Visual Studio Code Extensibility API](https://code.visualstudio.com/api) to build extensions. It is responsible for launching the client in a Visual Studio Code tab and for communication between the wizard client and the Core Template Studio CLI. It is also responsible for creating the Azure Services (App Service and CosmosDB Service) and the deployment the generated applications.
+The extension is the main part of Web Template Studio. It has been built using the [Visual Studio Code Extensibility API](https://code.visualstudio.com/api) to build extensions. It is responsible for launching the client in a Visual Studio Code tab and for communication between the wizard client and the Core Template Studio CLI. It is also responsible for creating the Azure Services (App Service and CosmosDB Service) and the deployment of the generated applications.
 
 It contains two commands that can be called from Visual Studio Code:
 
 - [webTemplateStudioExtension.wizardLaunch](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/extension.ts#L7-L11): This command is executed when we launch the "Web Template Studio: Launch" command from Visual Studio Code. It is responsible to start the Core Template Studio CLI in a `child_process`, synchronizing the templates and opening the wizard in a Visual Studio Code tab. While the wizard is open, it is also responsible for maintaining communication between the wizard client and the Core Template Studio CLI to obtain templates and generate projects.
   
-- [webTemplateStudioExtension.deployApp](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/extension.ts#L13-L18): This command is executed when we launch the "Web Template Studio: Deploy App" command from Visual Studio Code. It is responsible for deploying a generated application in Azure. Note: For this command to work properly, we need a web application generated with Web Template Studio opened and configured with an App Service.
+- [webTemplateStudioExtension.deployApp](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/extension.ts#L13-L18): This command is executed when we launch the "Web Template Studio: Deploy App" command from Visual Studio Code. It is responsible for deploying a generated application in Azure. <br>
+**Note**: For this command to work properly, we need a web application generated with Web Template Studio opened and configured with an App Service.
 
 
 ## Client
@@ -33,7 +34,7 @@ The wizard client keeps track of the state using [Redux](https://react-redux.js.
 Web Template Studio supports Visual Studio Code's **light, dark, and high contrast theme**. You can press `Ctrl + K` in Windows/Linux or `Command ⌘ + K` then `Ctrl + T` in Windows/Linux or `Command ⌘ + T` to choose different color themes in Visual Studio Code.
 
 
-Example of Light Theme:
+ #### Example of Light Theme:
 ![image](../resources/webts-light-theme.png)
 
 To support different color themes, VSCode CSS theme variables are used so that the webview matches the look and feel of a developer’s VSCode. VSCode's documentation on theme color can be found [here](https://code.visualstudio.com/api/references/theme-color). You can also look at the VSCode CSS variables for each theme by pressing `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Visual Studio Code and then running the `Developer: Generate Color Theme From Current Settings` command.
@@ -53,7 +54,7 @@ For more Info see [Core Template Studio Docs](https://github.com/microsoft/CoreT
 
 The communication between the extension and the Core Template Studio CLI is defined in the [coreTemplateStudio.ts](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/coreTemplateStudio.ts) file. This static class is responsible for starting/stopping the Core Template Studio CLI in a `child_process`, and managing the Core Template Studio CLI requests and responses (including notifications and errors). 
 
-It also exposes public functions to call the Core Template Studio CLI commands. Currently the functions offered by the [coreTemplateStudio](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/coreTemplateStudio.ts) class are:
+It also exposes public functions to call the Core Template Studio CLI commands. Some of the main functions offered by the [coreTemplateStudio](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/coreTemplateStudio.ts) class are:
 
 ```js
 - sync(payload: ICommandPayload): Promise<any>
@@ -67,13 +68,13 @@ It also exposes public functions to call the Core Template Studio CLI commands. 
 
 To execute a Core Template Studio CLI command from the extension we have to instantiate the [coreTemplateStudio](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/coreTemplateStudio.ts) class and execute the function that has the command we want to execute.
 
- Example:
+ #### Example:
 
 ```js
 async getPages(): Promise<void> {
     const coreTS = CoreTemplateStudio.GetExistingInstance();
     const pages = await coreTS.getPages("projectType", "frontendFramework", "backendFramework");
-    console.log(pages);
+    ...
     };
   }
 ```
@@ -108,13 +109,13 @@ When the extension create the webview (that includes the client), the `routingMe
 
 The modules inherit from [WizardServant](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/wizardServant.ts) which is the class responsible for executing the function associated with each command, controlling errors and recording telemetry if necessary.
 
-NOTE: In the development environment (running the app in the browser), the Visual Studio Code extension is not available for the client to interact with. The communication is mocked using the [mockVsCodeAPI.ts](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/client/src/mockData/mockVsCodeApi.ts), which uses the native `window.postMessage()` command to send messages to the application.
+**Note**: In the development environment - when you run the app in the browser, the Visual Studio Code extension is not available for the client. The communication is mocked using the [mockVsCodeAPI.ts](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/client/src/mockData/mockVsCodeApi.ts), which uses the native `window.postMessage()` command to send messages to the application.
 
 ### Client receive from extension
 
 Messages sent from the extension are received in the `messageEventsFromExtension()` function in  [App.tsx](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/client/src/App.tsx). This function configures an `addEventListener` to listen all messages sent from the extension and through a switch executes the necessary instructions according to the command received.
 
-Example:
+ #### Example:
 
 ```js
  function messageEventsFromExtension(){
@@ -131,16 +132,16 @@ Example:
  }
 ```
 
-NOTE: currently, we are developing [extensionService.ts](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/client/src/utils/extensionService/extensionService.ts) that will handle communication between client and extension through promises and will offer a simple and centralized way to call extension commands and receive responses.
+**Note**: The [extensionService.ts](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/client/src/utils/extensionService/extensionService.ts) file handle communication between the client and extension through promises and offers a simple and centralized way to call extension commands and receive responses.
 
 ### Extension to client
 
-When the extension needs to send a request to the client, it will call `postMessageWebview()` function in [reactPanel.ts](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/reactPanel.ts). This function communicates with the webview (that contains the client), passing through parameters an object with the following properties:
+When the extension needs to send a request to the client, it will call `postMessageWebview()` function in [reactPanel.ts](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/reactPanel.ts). This function communicates with the webview that contains the client, passing through parameters an object with the following properties:
 
 - command: extension command that processed the request.
 - payload: data that we send in the request.
 
-Example:
+ #### Example:
 
 ```js
 reactPanelContext.postMessageWebview({
@@ -158,4 +159,8 @@ reactPanelContext.postMessageWebview({
 
 ## Separating the UI from the Logic:
 
-One of our main concerns is increasing the speed of the wizard and making it as light as possible. Therefore, the wizard does not perform any expensive computations, and does not make any API requests. Most of these actions are done in the extension. So as the user navigates through the wizard, the selections are validated in the wizard and stored. When the user clicks generate, these selections will then be sent to the extension, which will deal with them synchronously. The extension starts with the templates (if any were selected), which will get sent to the Engine (Core Template Studio). After their successful generation, the extension uses Azure SDK to deploy the resources if the user selects any.
+One of our main concerns is increasing the speed of the wizard and making it as light as possible.<br>
+Therefore, the wizard does not perform any expensive computations, and does not make any API requests. Most of these actions are done in the extension. <br>
+So as the user navigates through the wizard, the selections are validated in the wizard and stored. When the user clicks generate, these selections will then be sent to the extension, which will deal with them synchronously. <br>
+The extension starts with the templates, which will get sent to the [Engine](https://github.com/Microsoft/CoreTemplateStudio). <br>
+Once it´s generated, the extension will use the Azure SDK to deploy the resources if the user selected any while creating their application.
