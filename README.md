@@ -58,14 +58,14 @@ To verify the integrity of the package, download the vsix from the Marketplace, 
 ### Create a new project
 
 - Open **VSCode**
-- Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac to open VSCode's extension launcher
+- Press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open VSCode's extension launcher
 - Type/Select `Web Template Studio: Launch` and press `Enter` to launch the extension
 
 ### Deploy the generated project
 
 - Open **VSCode**
 - Open the generated project
-- Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac to open VSCode's extension launcher
+- Press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open VSCode's extension launcher
 - Type/Select `Web Template Studio: Deploy App` and press `Enter` to begin the deployment
 
 ## Example Scenario

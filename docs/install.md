@@ -26,5 +26,5 @@ w
 #### Run the Release
 
 - Open **VSCode**
-- Press `ctrl+shift+p`to open VSCode's extension launcher
+- Press `Ctrl + Shift ⇧ + P` (Windows/Linux) or `Command ⌘ + Shift ⇧ + P` (Mac) to open VSCode's extension launcher
 - Type/Select `Web Template Studio: Launch` and press `Enter` to launch the extension

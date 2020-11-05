@@ -15,7 +15,7 @@ The easiest way to deploy an application generated with Web Template Studio is t
 
 1. Open the application generated with Web Template Studio in Visual Studio Code.
 
-2. Press `Ctrl + Shift + P` on Windows/Linux or `Command ⌘ + Shift + P` to open the Command Palette.
+2. Press `Ctrl + Shift ⇧ + P` (Windows/Linux) or `Command ⌘ + Shift ⇧ + P` (Mac) to open the Command Palette.
 
 3. In the Command Palette, type `Web Template Studio: Deploy App` and press `Enter` to launch the deploy.
 

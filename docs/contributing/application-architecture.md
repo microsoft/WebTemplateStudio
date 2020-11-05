@@ -31,13 +31,13 @@ It is responsible for the interaction with the user and is responsible for colle
 The wizard client keeps track of the state using [Redux](https://react-redux.js.org/).
 
 ### Color Themes
-Web Template Studio supports Visual Studio Code's **light, dark, and high contrast theme**. You can press `Ctrl + K` in Windows/Linux or `Command ⌘ + K` then `Ctrl + T` in Windows/Linux or `Command ⌘ + T` to choose different color themes in Visual Studio Code.
+Web Template Studio supports Visual Studio Code's **light, dark, and high contrast theme**. You can press `Ctrl + K` then `Ctrl + T` in Windows/Linux or `Command ⌘ + K` then `Command ⌘ + T` in Mac to choose different color themes in Visual Studio Code.
 
 
  #### Example of Light Theme:
 ![image](../resources/webts-light-theme.png)
 
-To support different color themes, VSCode CSS theme variables are used so that the webview matches the look and feel of a developer’s VSCode. VSCode's documentation on theme color can be found [here](https://code.visualstudio.com/api/references/theme-color). You can also look at the VSCode CSS variables for each theme by pressing `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Visual Studio Code and then running the `Developer: Generate Color Theme From Current Settings` command.
+To support different color themes, VSCode CSS theme variables are used so that the webview matches the look and feel of a developer’s VSCode. VSCode's documentation on theme color can be found [here](https://code.visualstudio.com/api/references/theme-color). You can also look at the VSCode CSS variables for each theme by pressing `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac and then running the `Developer: Generate Color Theme From Current Settings` command.
 
 If you want to use these variables in the client, you have to follow a certain format. For example, if you want to apply  VSCode's `"editor.background": "#252526"`, you would convert it to `var(--vscode-editor-background)` in the CSS file. More documentation can be found on the [webview API docs](https://code.visualstudio.com/api/extension-guides/webview#theming-webview-content).
 

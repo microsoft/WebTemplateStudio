@@ -95,7 +95,7 @@ Changes on Core Template Studio should be done on the Core Template Studio repos
     - For the extension (`build-extension.sh`).
 2. Open the `src/extension` folder using `VSCode`.
 3. Start the debugger by pressing `F5`. This should open the Extension Development Host in a new Visual Studio Code window.
-4. In the Extension Development Host, press `Ctrl + Shift + P` on Windows/Linux or `Command ⌘ + Shift + P` to open the Command Palette.
+4. In the Extension Development Host, press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open the Command Palette.
 5. In the Command Palette, type `Web Template Studio (local): Launch` and press `Enter` to launch the extension. We recently added concurrent installation support.
     - `Web Template Studio: Launch`: this would launch the marketplace version.
     - `Web Template Studio (nightly): Launch`: this would launch an installed instance of the extension.
@@ -116,7 +116,7 @@ Styles are mocked in the Browser using the file [`mockThemes.css`](../../src/cli
 
 ### To debug from Visual Studio Code:
 Install [Debugger for Chrome extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) in Visual Studio Code debug Wizard Client.
-After starting the client using `yarn start` in VSCode Debug View (`Ctrl+Shift+D`) select "Debug WebTS Client" and start debugging (`F5`).
+After starting the client using `yarn start` in VSCode Debug View (`Ctrl + Shift ⇧ + D` (Windows/Linux) or `Shift ⇧ + Command ⌘ + D` (Mac) in Visual Studio Code) select "*Debug WebTS Client*" and start debugging (`F5`).
 
 #### More info:
 - https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome
@@ -135,7 +135,7 @@ code --install-extension [extensionName].vsix
 
 Alternatively, the extension can be installed from the context menu of the extension section in Visual Studio code using the "**install from VSIX...**" command. The installed vsix package can be found in the extensions folder. For _Windows_, it is `%USERPROFILE%\.vscode\extensions`. For _Mac/Linux_, it is `~/.vscode/extensions` (By Default).
 
-After installation, use `ctrl+shift+p (Windows)` or `cmd+shift+p (Mac)` to open the Extension Launcher and select `Web Template Studio: Launch` to run the extension.
+After installation, use `Ctrl + Shift ⇧ + P` (Windows/Linux) or `Command ⌘ + Shift ⇧ + P` (Mac) in Visual Studio Code to open the Extension Launcher and select `Web Template Studio: Launch` to run the extension.
 
 ## Tests
 
