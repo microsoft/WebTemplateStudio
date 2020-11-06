@@ -1,14 +1,15 @@
 # Application Architecture
 
-Web Template Studio is a [Visual Studio Code Extension](https://code.visualstudio.com/api) that has three major components: 
+Web Template Studio is a [Visual Studio Code Extension](https://code.visualstudio.com/api) that has three major components. All of them are included in Web Template Studio **vsix**: 
 
-  - The extension's backend (referred to as the [extension](https://github.com/Microsoft/WebTemplateStudio/tree/dev/src/extension)), which is written in [Typescript](https://www.typescriptlang.org/).
-  - The frontend wizard (referred to as the [client](https://github.com/Microsoft/WebTemplateStudio/tree/dev/src/client)), written in [React](https://reactjs.org/) and [Typescript](https://www.typescriptlang.org/).
-  - Generation engine (referred to as [Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio)) written in [.NET Core](https://dotnet.microsoft.com/download). 
-  
-![Architecture Diagram](../resources/webts-architecture-diagram.png)
+  1. The [extension's backend](#extension) (referred to as the [extension](../../src/extension)). Written in [Typescript](https://www.typescriptlang.org/).
+  1. The [frontend wizard](#client) (referred to as the [client](../../src/client)). Written in [React](https://reactjs.org/) and [Typescript](https://www.typescriptlang.org/).
+  1. The [generation engine](#Core-template-studio) (referred to as [Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio)) written in [.NET Core](https://dotnet.microsoft.com/download). 
 
-All three components are included in Web Template Studio vsix.
+
+<img alt="VSIX Download" src="../resources/webts-architecture-diagram.png" width="80%"  />
+<br/>
+
 
 ## Extension
 
@@ -37,18 +38,24 @@ Web Template Studio supports Visual Studio Code's **light, dark, and high contra
  #### Example of Light Theme:
 ![image](../resources/webts-light-theme.png)
 
+#### Example of Dark Theme:
+![image](../resources/webts-dark-theme.png)
+
 To support different color themes, VSCode CSS theme variables are used so that the webview matches the look and feel of a developer’s VSCode. VSCode's documentation on theme color can be found [here](https://code.visualstudio.com/api/references/theme-color). You can also look at the VSCode CSS variables for each theme by pressing `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac and then running the `Developer: Generate Color Theme From Current Settings` command.
 
 If you want to use these variables in the client, you have to follow a certain format. For example, if you want to apply  VSCode's `"editor.background": "#252526"`, you would convert it to `var(--vscode-editor-background)` in the CSS file. More documentation can be found on the [webview API docs](https://code.visualstudio.com/api/extension-guides/webview#theming-webview-content).
 
 When the app is being run in the browser imitates these VSCode themes using `themes.css` and `themeslight.css` for dark and light mode respectively. Otherwise, if it is being ran in the extension, the CSS variables will map to VSCode directly.
 
-## Generation Engine (Core Template Studio)
+## Core Template Studio
 
 The Generation Engine is responsible for template synchronisation, get frameworks, get templates and generating projects. It consists of a [CLI](https://github.com/microsoft/CoreTemplateStudio/blob/dev/docs/getting-started-developers.md#cli-project) that receives requests from the extension and get processed by [Core Template Studio](https://github.com/microsoft/CoreTemplateStudio/). Once the request is processed, it returns the response in json format to the extension.
 
 For more Info see [Core Template Studio Docs](https://github.com/microsoft/CoreTemplateStudio/blob/dev/docs/getting-started-developers.md).
 
+
+
+# Communication
 
 ## Extension and CLI Core Template Studio communication
 
@@ -86,10 +93,11 @@ To see the Core Template Studio CLI available commands visit [Core Template Stud
 ### Client send to extension
 
 When the client wants to execute an extension command, it will call `vscode.postMessage()` function, passing through parameters an object with the following properties:
-
+```
 - module: extension module that should process this request.
 - command: extension command that should process the request.
 - payload: data that we send in the request.
+```
 
  Example:
 
@@ -134,13 +142,13 @@ Messages sent from the extension are received in the `messageEventsFromExtension
 
 **Note**: The [extensionService.ts](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/client/src/utils/extensionService/extensionService.ts) file handle communication between the client and extension through promises and offers a simple and centralized way to call extension commands and receive responses.
 
-### Extension to client
+### Extension send to client
 
 When the extension needs to send a request to the client, it will call `postMessageWebview()` function in [reactPanel.ts](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/reactPanel.ts). This function communicates with the webview that contains the client, passing through parameters an object with the following properties:
-
+```
 - command: extension command that processed the request.
 - payload: data that we send in the request.
-
+```
  #### Example:
 
 ```js

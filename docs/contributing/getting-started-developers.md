@@ -78,7 +78,7 @@ Web Template Studio relies on Core Template Studio for template synchronization 
 
 Core Template Studio is integrated into Web Template Studio using a git submodule under the folder [CoreTemplateStudio](../src/CoreTemplateStudio). The submodule points to a specific commit in Core Template Studio, that you can see in github:
 
-![Core Template Studio Submodule](../resources/corets-submodule.png)
+<img alt="Core Template Studio Submodule" src="../resources/corets-submodule.png" width="500px"  />
 
 ### Init /update
 When you clone Web Template Studio you have to run two commands: `git submodule init` and `git submodule update` to fetch all the data from Core Template Studio. When fetching changes, also execute `git submodule update` after doing git fetch to be sure you're submodule is up to date.
