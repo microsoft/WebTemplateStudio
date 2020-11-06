@@ -11,7 +11,7 @@ The *Web Template Studio* allow you to combine different templates to generate t
 
 ## Interested in contributing
 
-Do you want to contribute? Here are our [contribution guidelines](../CONTRIBUTING.md).
+Do you want to contribute? Here are our [contribution guidelines](../../CONTRIBUTING.md).
 
 ## Anatomy of Templates and Template Authoring
 

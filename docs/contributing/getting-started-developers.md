@@ -45,7 +45,7 @@ This folder contains the source code for the different components of *Web Templa
         - `modals`: React components and its subcomponents displayed as modals.
         - `pages`:  React components and its subcomponents displayed as main pages on the Wizard.
         - `store`: contains reducers, actions, interfaces and selectors for the Redux store.
-        - `utils`: contains helper functions, constants and others. 
+        - `utils`: contains helper functions, constants and others.
         *For example*: validation, routes and extensionService.
             - `extensionService`: allows client-extension communication.
 
@@ -74,7 +74,7 @@ This folder contains the templates that are used to generate the code. For more 
 This folder will contain all the combination of possible generated applications when running the script "**template-tests**" existing on the extension.
 
 ## Core Template Studio Submodule
-*Web Template Studio* relies on Core Template Studio for template synchronization and template composition, generation and postaction. Core Template Studio has its [own Github repository](github.com/Microsoft/CoreTemplateStudio) as it is shared with the sibling project [Windows Template Studio](github.com/Microsoft/WindowsTemplateStudio).
+*Web Template Studio* relies on Core Template Studio for template synchronization and template composition, generation and postaction. Core Template Studio has its [own Github repository](https://github.com/Microsoft/CoreTemplateStudio) as it is shared with the sibling project [Windows Template Studio](https://github.com/Microsoft/WindowsTemplateStudio).
 
 Core Template Studio is integrated into *Web Template Studio* using a git submodule under the folder `/src/CoreTemplateStudio`. The submodule points to a specific commit in Core Template Studio, that you can see in github:
 
