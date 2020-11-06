@@ -37,7 +37,7 @@ Once you hit generate on the summary page, *Web Template Studio* will create an 
 
 *Web Template Studio* uses an arm-template for *Azure App Service*s (generated under the arm-templates directory). This template contains the definitions and parameters for all resources that need to deploy. Once Azure receives your template, it takes about 2-3 minutes to create the App Service and the App Service Plan. The app service initially contains an empty web app.
 
-***Note for advanced users***: The *arm templates* used to deploy your application, are also available under the *arm-templates* directory in your generated project.
+**Note for advanced users**: The *arm templates* used to deploy your application, are also available under the *arm-templates* directory in your generated project.
 
 ## How to deploy
 

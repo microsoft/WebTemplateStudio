@@ -20,16 +20,16 @@ If you just want to take advantage from *Web Template Studio* extension, check t
 ## Prerequisites
 
 1. Install [Node.js](https://nodejs.org/en/download/)
-2. Install [Gulp](https://gulpjs.com/)
-3. Install [Git](https://git-scm.com/downloads)
-4. Install [.NET Core SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1)
-5. Install [Visual Studio Code](https://code.visualstudio.com/)
-6. Install [Yarn](https://yarnpkg.com/en/docs/install). You will need to finish installing Node.js before you install Yarn.
-7. Install [Typescript](https://www.typescriptlang.org/) globally. `npm install -g typescript` 
-8. Install [React-scripts]() globally `npm install -g react-scripts`
-9. Run the command `npm config set scripts-prepend-node-path true`. This tells VSCode which Node version to run during the extension compilation (otherwise you'll get an error during the build process).
+1. Install [Gulp](https://gulpjs.com/)
+1. Install [Git](https://git-scm.com/downloads)
+1. Install [.NET Core SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1)
+1. Install [Visual Studio Code](https://code.visualstudio.com/)
+1. Install [Yarn](https://yarnpkg.com/en/docs/install). You will need to finish installing Node.js before you install Yarn.
+1. Run the command `npm config set scripts-prepend-node-path true`. This tells VSCode which Node version to run during the extension compilation (otherwise you'll get an error during the build process).
 
-**Note**: If using Windows, use Git Bash.
+**Note**: If using Windows, use Git Bash. 
+
+At some point you may also need to install [React-scripts](https://yarnpkg.com/package/react-scripts) and [Typescript](https://www.typescriptlang.org/).
 
 ## Project folder structure
 

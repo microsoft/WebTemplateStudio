@@ -75,7 +75,7 @@ To send telemetry from the extension code we must use the `telemetryService` cla
 
 Communication between the client and the extension is done using sending requests with the method `vscode.postmessage` ([more info](https://code.visualstudio.com/api/extension-guides/webview#passing-messages-from-an-extension-to-a-webview)), passing through parameters the module and the extension command that have to process this request. If we want to track the client request, send the property `track: true`. 
 
-Example:
+### Example:
 
 ```javascript
 vscode.postMessage({

@@ -19,7 +19,7 @@ Navigate to the "**Add Optional Cloud Services**" step. Click the "**Add to my p
 
 Select a **Subscription** from the **Create Cosmos DB Account** modal that just opened. Use the **Create New** option if you want to create a new **Subscription**. 
 
-***Note***: **Create New** will take you to the Azure portal website, so you can create a subscription.
+**Note**: **Create New** will take you to the Azure portal website, so you can create a subscription.
 
 Enter an **Account Name** for your cosmos account. This name is globally unique since your database will be available as
   `<cosmos_account_name>.documents.azure.com`.
