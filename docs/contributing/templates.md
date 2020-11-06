@@ -1,13 +1,13 @@
 # Understanding the Templates
 
-Templates are used to generate the code. In Web Template Studio we have the following kinds of templates: Frameworks, Projects Types, Pages and Features.
+Templates are used to generate the code. In *Web Template Studio* we have the following kinds of templates: Frameworks, Projects Types, Pages and Features.
 
 For example, consider the following scenarios:
 
 - **Scenario #1**: you want to generate a project to create a target web app which uses the *React* on the frontend and *Node* on the backend, with some pages (Home, Products -a master detail page-, Todo -a list page-, etc. ) and including some extra features like Azure App Service and Cosmos DB...
 - **Scenario #2**: you want to create as in *Scenario #1* but with Angular as frontend framework and without CosmosDB support.
 
-The Web Template Studio allow you to combine different templates to generate the project you want, using your preferred framework, and using the features you most like. Moreover, the templates available in Web Template Studio are extensible.
+The *Web Template Studio* allow you to combine different templates to generate the project you want, using your preferred framework, and using the features you most like. Moreover, the templates available in *Web Template Studio* are extensible.
 
 ## Interested in contributing
 

@@ -2,16 +2,16 @@
 
 *Azure Cosmos DB* is Microsoft’s proprietary globally-distributed, multi-model database service for managing data on a
 global scale. It offers a variety of APIs for your database including Azure Table, Core (SQL), MongoDB and Gremlin
-(GraphQL). 
+(GraphQL).
 
-**Web Template Studio** offers you the functionality to deploy a Cosmos DB instance from the wizard itself
+*Web Template Studio* offers you the functionality to deploy a Cosmos DB instance from the wizard itself
 and select an initial location to deploy your database with the ability to scale it to multiple locations at a future
-time. As an added feature, deploying with the MongoDB API enables you to quickly connect the project **Web Template Studio**
+time. As an added feature, deploying with the MongoDB API enables you to quickly connect the project *Web Template Studio*
 generates to your database instance.
 
 ## Getting started
 
-To deploy Cosmos DB using **Web Template Studio**:
+To deploy Cosmos DB using *Web Template Studio*:
 
 Navigate to the "**Add Optional Cloud Services**" step. Click the "**Add to my project**" button in **CosmosDB card**.
 
@@ -24,13 +24,15 @@ Select a **Subscription** from the **Create Cosmos DB Account** modal that just 
 Enter an **Account Name** for your cosmos account. This name is globally unique since your database will be available as
   `<cosmos_account_name>.documents.azure.com`.
 
-Select an API for your database. ***Note***: **Web Template Studio** only supports MongoDB API and SQL API.
+Select an API for your database. 
+
+**Note**: *Web Template Studio* only supports MongoDB API and SQL API.
 
 <img alt="Azure Cosmos Create Modal" src="../../resources/azure-cosmos-modal.png" width="500px"  />
 
 ### Advanced mode
 
-By default, **Web Template Studio** deploys the Cosmos DB in the location Central US and creates a Resource Group with the same name as the web app.
+By default, *Web Template Studio* deploys the Cosmos DB in the location Central US and creates a Resource Group with the same name as the web app.
 
 We can change these settings using the *advanced mode*. To access those, click on the "Advanced mode" link and the Cosmos DB modal will show two new configuration options.
 
@@ -42,7 +44,7 @@ We can change these settings using the *advanced mode*. To access those, click o
 
 ## Creating Cosmos DB
 
-Once you hit **Create Project**, **Web Template Studio** will deploy your database and display a popup with your
+Once you hit **Create Project**, *Web Template Studio* will deploy your database and display a popup with your
 database connection string once it's available (usually within 5-6 minutes). This will prompt you to replace the
 connection string in your configuration file with the new connection string.
 
@@ -56,10 +58,10 @@ The generated project stores API keys in the `.env` file (`appsettings.json` for
 
 ## How this works
 
-**Web Template Studio** uses an arm-template for Cosmos to deploy your Cosmos DB instance. This is generated under the `arm-templates` directory.
+*Web Template Studio* uses an arm-template for Cosmos to deploy your Cosmos DB instance. This is generated under the `arm-templates` directory.
 This template contains the definitions and parameters for all resources and storage accounts that need to be created for your database. Once Azure receives your template, it takes about 5-6 minutes to assign VMs for your database account, get them up and running with your selected API and have the database connection string available for you to connect to your database.
 
-Once the connection string is available, **Web Template Studio** will prompt you to replace the variables in your `.env/appsettings.json` file with this string and your keys.
+Once the connection string is available, *Web Template Studio* will prompt you to replace the variables in your `.env/appsettings.json` file with this string and your keys.
 
 ***Warning***: Accepting this prompt will override your current `.env/appsettings.json`. If you have made
 any changes to this file, consider saving them! You will also need to restart your server to sync changes on your configuration

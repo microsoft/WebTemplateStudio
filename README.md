@@ -2,7 +2,7 @@
 
 <img src="https://img.shields.io/badge/platform-linux--64%20%7C%20win--64%20%7C%20osx--64%20-lightgrey.svg" alt="Platforms Supported: MacOSX, Linux, Windows"/> <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed." /></a> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: We are using the MIT License"></a> <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-Welcome-brightgreen.svg" alt="We are welcoming PRS!"></a>
 
-Microsoft Web Template Studio (_WebTS_) is a Visual Studio Code Extension that accelerates the creation of new web applications using a
+Microsoft *Web Template Studio* (aka *WebTS*) is a Visual Studio Code Extension that accelerates the creation of new web applications using a
 wizard-based experience. WebTS enables developers to generate boilerplate code for a web application
 by choosing between different frontend frameworks, backend frameworks, pages and cloud services.
 The resulting web app is well-formed, readable code that incorporates cloud services on
@@ -76,7 +76,7 @@ I need a full-stack web app that is deployed on Azure App Service Web App.
 
 ## Features
 
-Web Template Studio approaches full-stack web app creation using the following three attribute sets:
+*Web Template Studio* approaches full-stack web app creation using the following three attribute sets:
 
 - **Frameworks**: First, which frameworks do you want to use for your frontend and backend? We currently support three frameworks for frontend: _[React](https://reactjs.org/)_, _[Angular](https://angular.io/)_, _[Vue.js](https://vuejs.org/)_ and four frameworks for backend: _[Node](https://nodejs.org/en/)_, _[Flask](http://flask.pocoo.org/)_,  _[Moleculer](https://moleculer.services/)_ and _[ASP.NET Core](https://dotnet.microsoft.com/apps/aspnet)_. We also provide a dependency checker to make sure you have the required version of Node, Python and/or .NET Core installed.
 - **App pages**: Next, to accelerate app creation, we provide a number of app page templates that you can use to add common UI pages into your new app. The current page templates include: _blank page_, common layouts (*e.g., master detail) and pages that implement common patterns (*e.g., grid, list). Using the wizard, add as many of the pages as you need, providing a name for each one, and we'll generate them for you.
@@ -126,4 +126,4 @@ The extension does [log basic telemetry](docs/telemetry.md) for what is being se
 
 ## Acknowledgments
 
-Microsoft Web Template Studio was [initially created by Microsoft Garage interns](docs/acknowledgments.md). We hope many more continue with the project
+Microsoft *Web Template Studio* was [initially created by Microsoft Garage interns](docs/acknowledgments.md). We hope many more continue with the project.

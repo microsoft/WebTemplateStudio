@@ -1,6 +1,6 @@
 # Application Architecture
 
-Web Template Studio is a [Visual Studio Code Extension](https://code.visualstudio.com/api) that has three major components. All of them are included in Web Template Studio **vsix**: 
+*Web Template Studio* is a [Visual Studio Code Extension](https://code.visualstudio.com/api) that has three major components. All of them are included in *Web Template Studio* **vsix**: 
 
   1. The [extension's backend](#extension) (referred to as the [extension](../../src/extension)). Written in [Typescript](https://www.typescriptlang.org/).
   1. The [frontend wizard](#client) (referred to as the [client](../../src/client)). Written in [React](https://reactjs.org/) and [Typescript](https://www.typescriptlang.org/).
@@ -13,26 +13,26 @@ Web Template Studio is a [Visual Studio Code Extension](https://code.visualstudi
 
 ## Extension
 
-The extension is the main part of Web Template Studio. It has been built using the [Visual Studio Code Extensibility API](https://code.visualstudio.com/api) to build extensions. It is responsible for launching the client in a Visual Studio Code tab and for communication between the wizard client and the Core Template Studio CLI. It is also responsible for creating the Azure Services (App Service and CosmosDB Service) and the deployment of the generated applications.
+The extension is the main part of *Web Template Studio*. It has been built using the [Visual Studio Code Extensibility API](https://code.visualstudio.com/api) to build extensions. It is responsible for launching the client in a Visual Studio Code tab and for communication between the wizard client and the Core Template Studio CLI. It is also responsible for creating the Azure Services (App Service and CosmosDB Service) and the deployment of the generated applications.
 
 It contains two commands that can be called from Visual Studio Code:
 
-- [webTemplateStudioExtension.wizardLaunch](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/extension.ts#L7-L11): This command is executed when we launch the "Web Template Studio: Launch" command from Visual Studio Code. It is responsible to start the Core Template Studio CLI in a `child_process`, synchronizing the templates and opening the wizard in a Visual Studio Code tab. While the wizard is open, it is also responsible for maintaining communication between the wizard client and the Core Template Studio CLI to obtain templates and generate projects.
-  
-- [webTemplateStudioExtension.deployApp](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/extension.ts#L13-L18): This command is executed when we launch the "Web Template Studio: Deploy App" command from Visual Studio Code. It is responsible for deploying a generated application in Azure. <br>
-**Note**: For this command to work properly, we need a web application generated with Web Template Studio opened and configured with an App Service.
+- [webTemplateStudioExtension.wizardLaunch](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/extension.ts#L7-L11): This command is executed when we launch the `Web Template Studio: Launch` command from Visual Studio Code. It is responsible to start the Core Template Studio CLI in a `child_process`, synchronizing the templates and opening the wizard in a Visual Studio Code tab. While the wizard is open, it is also responsible for maintaining communication between the wizard client and the Core Template Studio CLI to obtain templates and generate projects.
+
+- [webTemplateStudioExtension.deployApp](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/extension.ts#L13-L18): This command is executed when we launch the `Web Template Studio: Deploy App` command from Visual Studio Code. It is responsible for deploying a generated application in Azure. <br>
+**Note**: For this command to work properly, we need a web application generated with *Web Template Studio* opened and configured with an App Service.
 
 
 ## Client
 
-The wizard client is the visual component of the extension. It is a [React](https://reactjs.org/) app that is compiled into JavaScript that gets injected into html, which then gets served using [VSCode's Webview API](https://code.visualstudio.com/api/extension-guides/webview). It is shown in a Visual Studio Code tab when the user executes the "Web Template Studio: Launch" extension command.
+The wizard client is the visual component of the extension. It is a [React](https://reactjs.org/) app that is compiled into JavaScript that gets injected into html, which then gets served using [VSCode's Webview API](https://code.visualstudio.com/api/extension-guides/webview). It is shown in a Visual Studio Code tab when the user executes the `Web Template Studio: Launch` extension command.
 
 It is responsible for the interaction with the user and is responsible for collecting the name and route of the project, the selected frameworks, pages and services and sending them to the extension for processing with Core Template Studio.
 
 The wizard client keeps track of the state using [Redux](https://react-redux.js.org/).
 
 ### Color Themes
-Web Template Studio supports Visual Studio Code's **light, dark, and high contrast theme**. You can press `Ctrl + K` then `Ctrl + T` in Windows/Linux or `Command ⌘ + K` then `Command ⌘ + T` in Mac to choose different color themes in Visual Studio Code.
+*Web Template Studio* supports Visual Studio Code's **light, dark, and high contrast theme**. You can press `Ctrl + K` then `Ctrl + T` in Windows/Linux or `Command ⌘ + K` then `Command ⌘ + T` in Mac to choose different color themes in Visual Studio Code.
 
 
  #### Example of Light Theme:
@@ -93,13 +93,13 @@ To see the Core Template Studio CLI available commands visit [Core Template Stud
 ### Client send to extension
 
 When the client wants to execute an extension command, it will call `vscode.postMessage()` function, passing through parameters an object with the following properties:
-```
+
 - module: extension module that should process this request.
 - command: extension command that should process the request.
 - payload: data that we send in the request.
-```
 
- Example:
+
+#### Example:
 
 ```js
 vscode.postMessage({
@@ -145,10 +145,10 @@ Messages sent from the extension are received in the `messageEventsFromExtension
 ### Extension send to client
 
 When the extension needs to send a request to the client, it will call `postMessageWebview()` function in [reactPanel.ts](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/reactPanel.ts). This function communicates with the webview that contains the client, passing through parameters an object with the following properties:
-```
+
 - command: extension command that processed the request.
 - payload: data that we send in the request.
-```
+
  #### Example:
 
 ```js

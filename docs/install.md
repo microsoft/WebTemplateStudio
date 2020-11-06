@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-Web Template Studio runs as a VSCode extension and hence you'll need to have *VScode* version 1.38 or above installed.
+*Web Template Studio* runs as a VSCode extension and hence you'll need to have *VScode* version 1.38 or above installed.
 Also, you'll need [node](https://nodejs.org/en/download/), [python](https://www.python.org/downloads/) or [ASP.NET](https://dotnet.microsoft.com/download) and [npm](https://www.npmjs.com/get-npm)/[yarn](https://yarnpkg.com/en/docs/install) to run the generated templates.
 
 ## Installing the official release
@@ -19,7 +19,7 @@ Head over to [Visual Studio Marketplace’s Web Template Studio page](https://ma
 4. Open the extensions menu from VSCode sidebar
 5. Click on the ellipsis in the upper right hand corner
 6. Choose *Install from VSIX*
-7. Select the `.vsix` you downloaded earlier. Web Template Studio is now ready to use
+7. Select the `.vsix` you downloaded earlier. *Web Template Studio* is now ready to use
 
 <img alt="VSIX Install Instructions" src="./resources/vsix-install-instructions.png" width="400px"  />
 
