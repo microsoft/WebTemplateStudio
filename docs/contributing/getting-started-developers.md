@@ -76,7 +76,7 @@ This folder will contain all the combination of possible generated applications 
 ## Core Template Studio Submodule
 *Web Template Studio* relies on Core Template Studio for template synchronization and template composition, generation and postaction. Core Template Studio has its [own Github repository](github.com/Microsoft/CoreTemplateStudio) as it is shared with the sibling project [Windows Template Studio](github.com/Microsoft/WindowsTemplateStudio).
 
-Core Template Studio is integrated into *Web Template Studio* using a git submodule under the folder [CoreTemplateStudio](../src/CoreTemplateStudio). The submodule points to a specific commit in Core Template Studio, that you can see in github:
+Core Template Studio is integrated into *Web Template Studio* using a git submodule under the folder `/src/CoreTemplateStudio`. The submodule points to a specific commit in Core Template Studio, that you can see in github:
 
 <img alt="Core Template Studio Submodule" src="../resources/corets-submodule.png" width="500px"  />
 
@@ -104,7 +104,7 @@ Changes on Core Template Studio should be done on the Core Template Studio repos
 As the client is injected as a static web app in the webview of the extension, debugging inside the extension can be challenging. Running the client in a browser is useful for quickly testing HTML or CSS changes and for debugging since you can use **Chrome extensions** such as `React and Redux developer tools`.
 
 When running in the browser, communication with the extension is done against the mock `mockVsCodeApi.ts` in the `mockData` folder. Note that the behaviour of the client on the browser may differ from the behaviour in the extension, so make sure to test out both.
-Styles are mocked in the Browser using the file [`mockThemes.css`](../../../src/client/src/mockThemes.css).
+Styles are mocked in the Browser using the file [`mockThemes.css`](../../src/client/src/mockThemes.css).
 
 1. Run `./build-client.sh` from the _build folder.
 2. Open the `src/client` folder using `VSCode`.
