@@ -164,3 +164,7 @@ repository by [rebornix](https://github.com/rebornix):
 - We inline `index.html` content in `ext-src/extension.ts`  when creating the webview
 - For all resources going to the webview, their scheme is `vscode-resource`
 - We add a baseUrl `<base href="${vscode.Uri.file(path.join(this._extensionPath, 'build')).with({ scheme: 'vscode-resource' })}/">` and then all relative paths work.
+
+## Learn more
+
+- [All docs](../README.md)

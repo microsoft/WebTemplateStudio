@@ -59,3 +59,8 @@ At the end of the deployment, Visual Studio Code shows us a notification that th
 - [Deploy the app to Azure](https://docs.microsoft.com/en-us/azure/app-service/app-service-web-get-started-nodejs#deploy-the-app-to-azure)
 - [Azure App Service for Visual Studio Code](https://github.com/Microsoft/vscode-azureappservice)
 - [Azure App Service documentation](https://docs.microsoft.com/en-us/azure/app-service/)
+
+
+## Learn more
+
+- [All docs](../README.md)

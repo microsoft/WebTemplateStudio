@@ -162,9 +162,6 @@ reactPanelContext.postMessageWebview({
       }
 ```
 
-
-
-
 ## Separating the UI from the Logic:
 
 One of our main concerns is increasing the speed of the wizard and making it as light as possible.<br>
@@ -172,3 +169,7 @@ Therefore, the wizard does not perform any expensive computations, and does not 
 So as the user navigates through the wizard, the selections are validated in the wizard and stored. When the user clicks generate, these selections will then be sent to the extension, which will deal with them synchronously. <br>
 The extension starts with the templates, which will get sent to the [Engine](https://github.com/Microsoft/CoreTemplateStudio). <br>
 Once it´s generated, the extension will use the Azure SDK to deploy the resources if the user selected any while creating their application.
+
+## Learn more
+
+- [All docs](../README.md)
