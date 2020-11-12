@@ -22,7 +22,7 @@ import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
 import { KEY_EVENTS } from "../../utils/constants/constants";
 import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants/internalNames";
+import { WIZARD_CONTENT_FEATURES } from "../../utils/constants/internalNames";
 import { AZURE, SERVICE_KEYS, AzureResourceType } from "../../utils/constants/azure";
 
 import AccountNameEditor from "./AccountNameEditor/index";
@@ -44,7 +44,7 @@ const CosmosModal = ({ intl }: Props) => {
   const { vscode } = React.useContext(AppContext);
   const cosmosInStore = useSelector(getCosmosDB);
   const templateCosmosDB = useSelector((state: AppState) => state.templates.featureOptions).filter(
-    (feature) => feature.internalName === WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB
+    (feature) => feature.internalName === WIZARD_CONTENT_FEATURES.COSMOS_DB
   )[0];
   const initialSubscription = cosmosInStore ? cosmosInStore.subscription : "";
   const initialAccountName = cosmosInStore ? cosmosInStore.accountName : "";
@@ -96,11 +96,11 @@ const CosmosModal = ({ intl }: Props) => {
       location,
       resourceGroup,
       api,
-      groupName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
+      groupName: WIZARD_CONTENT_FEATURES.COSMOS_DB,
       internalName:
         api === AZURE.COSMOS_APIS.MONGO
-          ? WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO
-          : WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL,
+          ? WIZARD_CONTENT_FEATURES.COSMOS_DB_MONGO
+          : WIZARD_CONTENT_FEATURES.COSMOS_DB_SQL,
       editable: templateCosmosDB.editable,
       icon: templateCosmosDB.icon,
     };

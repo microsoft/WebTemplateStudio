@@ -1,7 +1,23 @@
-const WIZARD_CONTENT_INTERNAL_NAMES = {
+const WIZARD_PLATFORM = {
+  FULL_STACK_APP: "FullStackWebApp",
+  RN_TABBED_APP: "Tabbed",
+  RN_DRAWER_APP: "Drawer",
+}
+
+const FRONTEND_FRAMEWORKS = {
+  REACT: "React",
   ANGULAR: "Angular",
-  APP_SERVICE: "wts.Feature.Azure.AppService",
-  AZURE: "wts.Feature.Azure",
+  VUE: "Vue",
+}
+
+const BACKEND_FRAMEWORKS = {
+  NODE: "Node",
+  MOLECULER: "Moleculer",
+  ASPNET: "AspNet",
+  FLASK: "Flask",
+}
+
+const PAGES={
   REACT_BLANK_PAGE: "wts.Page.React.Blank",
   REACT_CONTENT_GRID: "wts.Page.React.Grid",
   REACT_MASTER_DETAIL: "wts.Page.React.MasterDetail",
@@ -10,23 +26,24 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   ANGULAR_CONTENT_GRID: "wts.Page.Angular.Grid",
   ANGULAR_MASTER_DETAIL: "wts.Page.Angular.MasterDetail",
   ANGULAR_LIST: "wts.Page.Angular.List",
-  COSMOS_DB: "wts.Feature.Azure.Cosmos",
-  COSMOS_DB_MONGO: "wts.Feature.Azure.Cosmos.Mongo",
-  COSMOS_DB_SQL: "wts.Feature.Azure.Cosmos.SQL",
-  FULL_STACK_APP: "FullStackWebApp",
-  NODE: "Node",
-  MOLECULER: "Moleculer",
-  ASPNET: "AspNet",
-  FLASK: "Flask",
-  REACT: "React",
-  REST_API: "RestAPI",
-  VUE: "Vue",
   VUE_BLANK_PAGE: "wts.Page.Vue.Blank",
   VUE_CONTENT_GRID: "wts.Page.Vue.Grid",
   VUE_MASTER_DETAIL: "wts.Page.Vue.MasterDetail",
-  VUE_LIST: "wts.Page.Vue.List"
+  VUE_LIST: "wts.Page.Vue.List",
+}
+
+const WIZARD_CONTENT_FEATURES = {
+  APP_SERVICE: "wts.Feature.Azure.AppService",
+  AZURE: "wts.Feature.Azure",
+  COSMOS_DB: "wts.Feature.Azure.Cosmos",
+  COSMOS_DB_MONGO: "wts.Feature.Azure.Cosmos.Mongo",
+  COSMOS_DB_SQL: "wts.Feature.Azure.Cosmos.SQL",
 };
 
 export {
-  WIZARD_CONTENT_INTERNAL_NAMES,
+  WIZARD_CONTENT_FEATURES,
+  WIZARD_PLATFORM,
+  FRONTEND_FRAMEWORKS,
+  BACKEND_FRAMEWORKS,
+  PAGES
 };
