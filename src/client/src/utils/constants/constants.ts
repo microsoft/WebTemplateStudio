@@ -63,6 +63,7 @@ const TELEMETRY = {
 
 enum PLATFORM {
   WEB = "Web",
+  RN = "ReactNative"
 }
 
 const REQUIREMENTS_DATA = [
