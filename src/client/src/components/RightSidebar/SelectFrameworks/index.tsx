@@ -78,19 +78,22 @@ const SelectFrameworks = (props: Props)=>{
 
   return (
     <>
+      {(selection.frontendFramework.internalName !== "" && (
       <div className={rightsidebarStyles.sidebarItem}>
         <div className={rightsidebarStyles.title}>{formatMessage(messages.frontendFramework)}</div>
         <Dropdown
           handleChange={(dropDrownItem: IDropDownOptionType) => {
             handleFrontEndFrameworkChange(dropDrownItem);
           }}
-          ariaLabel={formatMessage(messages.backendFramework)}
+          ariaLabel={formatMessage(messages.frontendFramework)}
           options={frontendDropdownItems}
           value={convertOptionToDropdownItem(
             selection.frontendFramework
           )}
         />
       </div>
+      ))}
+      {(selection.backendFramework.internalName !== "" && (
       <div className={rightsidebarStyles.sidebarItem}>
         <div className={rightsidebarStyles.title}>{formatMessage(messages.backendFramework)}</div>
         <Dropdown
@@ -104,6 +107,7 @@ const SelectFrameworks = (props: Props)=>{
           )}
         />
       </div>
+      ))}
     </>
   );
 }

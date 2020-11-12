@@ -177,9 +177,15 @@ export class CoreTemplateStudio {
     frontendFramework: string,
     backendFramework: string
   ): Promise<any> {
-    const getPagesCommand = `${
-      CLI.GET_PAGES
-    } -p ${projectType} -f ${frontendFramework} -b ${backendFramework}\n`;
+    let getPagesCommand = `${CLI.GET_PAGES} -p ${projectType} `;
+    if (frontendFramework.length > 0) {
+      getPagesCommand = getPagesCommand.concat(`-f ${frontendFramework} `);
+    }
+    if (backendFramework.length > 0) {
+      getPagesCommand = getPagesCommand.concat(`-b ${backendFramework}`);
+    }
+    getPagesCommand = getPagesCommand.concat(`\n`);
+
     return this.awaitCliEvent(
       CLI.GET_PAGES_RESULT,
       getPagesCommand
