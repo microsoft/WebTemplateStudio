@@ -7,7 +7,7 @@
   1. The [generation engine](#Core-template-studio) (referred to as [Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio)) written in [.NET Core](https://dotnet.microsoft.com/download). 
 
 
-<img alt="VSIX Download" src="../resources/webts-architecture-diagram.png" width="80%"  />
+<img alt="Architecture Diagram" src="../resources/webts-architecture-diagram.png" width="80%"  />
 <br/>
 
 
