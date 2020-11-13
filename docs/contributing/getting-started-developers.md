@@ -163,7 +163,7 @@ The Architecture of this app was inspired by the [vscode-webview-react](https://
 Find some notes about it below if you wish to get started with it:
 repository by [rebornix](https://github.com/rebornix):
 
-- We inline `index.html` content in `ext-src/extension.ts`  when creating the webview
+- We inline the initial html `<!DOCTYPE html> ... ` content in `src/extension/src/reactPanel.ts`  when creating the webview
 - For all resources going to the webview, their scheme is `vscode-resource`
 - We add a baseUrl `<base href="${vscode.Uri.file(path.join(this._extensionPath, 'build')).with({ scheme: 'vscode-resource' })}/">` and then all relative paths work.
 
