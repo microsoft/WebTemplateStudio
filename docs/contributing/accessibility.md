@@ -40,3 +40,7 @@ The following test results hold as of July 2, 2020.
 More than one way is available to locate a web page within a set of web pages except where the Web Page is the result of, or a step in, a process.
 
 In order to make the generated code as easy to build off of as possible the only form of navigation included in the generated code is the navbar. Developers who build off of the generated code are encouraged to add a second form of navigation (preferably site search) to ensure that the web app is fully compliant with WCAG 2.0 Level AA Success Criteria.
+
+## Learn more
+
+- [All docs](../README.md)

@@ -4,7 +4,7 @@ const options: IOption[] = [
   {
     title: "Full Stack App",
     internalName: "FullstackApp",
-    body: "A single page application with a local back-end server.",
+    body: "A single page application with a local backend server.",
     selected: false,
     icon: "",
 

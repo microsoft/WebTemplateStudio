@@ -34,9 +34,7 @@ export class CoreTemplateStudio {
     throw new Error("Cannot GetExistingInstance as none has been created");
   }
 
-  public static async GetInstance(
-    context: vscode.ExtensionContext | undefined
-  ): Promise<CoreTemplateStudio> {
+  public static async GetInstance(context: vscode.ExtensionContext | undefined): Promise<CoreTemplateStudio> {
     if (CoreTemplateStudio._instance) {
       return Promise.resolve(CoreTemplateStudio._instance);
     }
@@ -55,20 +53,9 @@ export class CoreTemplateStudio {
       cliExecutableName += ".exe";
     }
 
-    const cliPath = path.join(
-      extensionPath,
-      "src",
-      "corets-cli",
-      platform,
-      cliExecutableName
-    );
+    const cliPath = path.join(extensionPath, "src", "corets-cli", platform, cliExecutableName);
 
-    const cliWorkingDirectory = path.join(
-      extensionPath,
-      "src",
-      "corets-cli",
-      platform
-    );
+    const cliWorkingDirectory = path.join(extensionPath, "src", "corets-cli", platform);
 
     if (os.platform() !== CLI_SETTINGS.WINDOWS_PLATFORM_VERSION) {
       // Not unsafe as the parameter comes from trusted source
@@ -76,7 +63,7 @@ export class CoreTemplateStudio {
     }
 
     const spawnedProcessCli = spawn(cliPath, [], {
-      cwd: cliWorkingDirectory
+      cwd: cliWorkingDirectory,
     });
 
     CoreTemplateStudio._instance = new CoreTemplateStudio(spawnedProcessCli);
@@ -101,8 +88,8 @@ export class CoreTemplateStudio {
   // then it will always get triggered when a command is write to the cli and there is responses from cli, until the process gets killed
   public async readStream(process: ChildProcess): Promise<void> {
     let data = "";
-    if(process.stdout) {
-      process.stdout.on("data", chunk => {
+    if (process.stdout) {
+      process.stdout.on("data", (chunk) => {
         data += chunk;
         const responses = data.toString().split("\n");
         for (let i = 0; i < responses.length - 1; i++) {
@@ -112,32 +99,27 @@ export class CoreTemplateStudio {
         data = responses[responses.length - 1];
       });
     }
-    
-    if(process.stderr) {
-      process.stderr.on("data", data => {
+
+    if (process.stderr) {
+      process.stderr.on("data", (data) => {
         this.cliEvents.emit("eventError", data.toString());
       });
-      process.on("exit", code =>
-        this.cliEvents.emit("eventError", `process exited with code ${code}`)
-      );
-    }    
+      process.on("exit", (code) => this.cliEvents.emit("eventError", `process exited with code ${code}`));
+    }
   }
 
-  private async awaitCliEvent(
-    eventName: string,
-    command: string
-  ): Promise<any> {
+  private async awaitCliEvent(eventName: string, command: string): Promise<any> {
     this.promiseChain = this.promiseChain.then(() => {
-      if(this._processCli.stdin) {
+      if (this._processCli.stdin) {
         this._processCli.stdin.write(command);
-      }      
+      }
       return new Promise((resolve, reject) => {
         this.cliEvents
-          .once(eventName, data => {
+          .once(eventName, (data) => {
             this.cliEvents.removeAllListeners();
             resolve(data);
           })
-          .once("eventError", data => {
+          .once("eventError", (data) => {
             this.cliEvents.removeAllListeners();
             reject(new Error(data));
             //Reset promise chain to allow execute next Cli command
@@ -150,22 +132,16 @@ export class CoreTemplateStudio {
 
   public async sync(payload: ICommandPayload): Promise<any> {
     const typedPayload = payload.payload as ISyncPayloadType;
-    const syncCommand = `${CLI.SYNC_COMMAND_PREFIX
-    } -p ${typedPayload.path} -t ${typedPayload.platform}\n`;
-    this.cliEvents.on(CLI.SYNC_PROGRESS_STATE, data => {
+    const syncCommand = `${CLI.SYNC_COMMAND_PREFIX} -p ${typedPayload.path} -t ${typedPayload.platform}\n`;
+    this.cliEvents.on(CLI.SYNC_PROGRESS_STATE, (data) => {
       payload.liveMessageHandler(data["status"], data["progress"]);
     });
     return this.awaitCliEvent(CLI.SYNC_COMPLETE_STATE, syncCommand);
   }
 
   public async getFrameworks(projectType: string): Promise<any> {
-    const getFrameworksCommand = `${
-      CLI.GET_FRAMEWORKS
-    } -p ${projectType}\n`;
-    return this.awaitCliEvent(
-      CLI.GET_FRAMEWORKS_RESULT,
-      getFrameworksCommand
-    );
+    const getFrameworksCommand = `${CLI.GET_FRAMEWORKS} -p ${projectType}\n`;
+    return this.awaitCliEvent(CLI.GET_FRAMEWORKS_RESULT, getFrameworksCommand);
   }
 
   public getTemplateConfig(): any {
@@ -193,84 +169,43 @@ export class CoreTemplateStudio {
   }
 
   public async getAllLicenses(generationData: IGenerationData): Promise<any> {
-    const getAllLicensesPayload = JSON.stringify(
-      this.makeEngineGenerationPayload(generationData)
-    );
-    const getAllLicensesCommand = `${
-      CLI.GET_ALL_LICENSES
-    } -d ${getAllLicensesPayload}\n`;
+    const getAllLicensesPayload = JSON.stringify(this.makeEngineGenerationPayload(generationData));
+    const getAllLicensesCommand = `${CLI.GET_ALL_LICENSES} -d ${getAllLicensesPayload}\n`;
 
-    return this.awaitCliEvent(
-      CLI.GET_ALL_LICENSES_RESULT,
-      getAllLicensesCommand
-    );
+    return this.awaitCliEvent(CLI.GET_ALL_LICENSES_RESULT, getAllLicensesCommand);
   }
 
-  public async getFeatures(
-    projectType: string,
-    frontendFramework: string,
-    backendFramework: string
-  ): Promise<any> {
+  public async getFeatures(projectType: string, frontendFramework: string, backendFramework: string): Promise<any> {
     // to use this in client
-    const getFeaturesCommand = `${
-      CLI.GET_FEATURES
-    } -p ${projectType} -f ${frontendFramework} -b ${backendFramework}\n`;
-    return this.awaitCliEvent(
-      CLI.GET_FEATURES_RESULT,
-      getFeaturesCommand
-    );
+    const getFeaturesCommand = `${CLI.GET_FEATURES} -p ${projectType} -f ${frontendFramework} -b ${backendFramework}\n`;
+    return this.awaitCliEvent(CLI.GET_FEATURES_RESULT, getFeaturesCommand);
   }
 
   public async getProjectTypes(): Promise<any> {
     // to use this in client
-    const getProjectTypesCommand = `${
-      CLI.GET_PROJECT_TYPES
-    }\n`;
-    return this.awaitCliEvent(
-      CLI.GET_PROJECT_TYPES_RESULT,
-      getProjectTypesCommand
-    );
+    const getProjectTypesCommand = `${CLI.GET_PROJECT_TYPES}\n`;
+    return this.awaitCliEvent(CLI.GET_PROJECT_TYPES_RESULT, getProjectTypesCommand);
   }
 
   public async generate(payload: ICommandPayload): Promise<any> {
     const typedPayload = payload.payload as IGenerationData;
-    const generatePayload = JSON.stringify(
-      this.makeEngineGenerationPayload(typedPayload)
-    );
-    const generateCommand = `${
-      CLI.GENERATE
-    } -d ${generatePayload}\n`;
+    const generatePayload = JSON.stringify(this.makeEngineGenerationPayload(typedPayload));
+    const generateCommand = `${CLI.GENERATE} -d ${generatePayload}\n`;
     const projectItemsToGenerateCount = 4; // Derived from CoreTS logic
-    const itemsToGenerateCount =
-      projectItemsToGenerateCount +
-      typedPayload.pages.length +
-      typedPayload.services.length
+    const itemsToGenerateCount = projectItemsToGenerateCount + typedPayload.pages.length + typedPayload.services.length;
     let generatedItemsCount = 0;
 
-    this.cliEvents.on(CLI.GENERATE_PROGRESS, data => {
+    this.cliEvents.on(CLI.GENERATE_PROGRESS, (data) => {
       generatedItemsCount++;
       const percentage = (generatedItemsCount / itemsToGenerateCount) * 100;
       const messageWithProgress = `(${percentage.toFixed(0)}%) ${data}`;
       payload.liveMessageHandler(messageWithProgress);
     });
-    return await this.awaitCliEvent(
-      CLI.GENERATE_RESULT,
-      generateCommand
-    );
+    return await this.awaitCliEvent(CLI.GENERATE_RESULT, generateCommand);
   }
 
-  private makeEngineGenerationPayload(
-    payload: IGenerationData
-  ): IEngineGenerationPayloadType {
-    const {
-      projectName,
-      path,
-      projectType,
-      frontendFramework,
-      backendFramework,
-      pages,
-      services
-    } = payload;
+  private makeEngineGenerationPayload(payload: IGenerationData): IEngineGenerationPayloadType {
+    const { projectName, path, projectType, frontendFramework, backendFramework, pages, services } = payload;
 
     return {
       projectName: projectName,
@@ -283,20 +218,21 @@ export class CoreTemplateStudio {
       homeName: "Test",
       pages: pages.map((page: any) => ({
         name: page.name,
-        templateid: page.identity
+        templateid: page.identity,
       })),
-      features: this.getServiceTemplateInfo(services)
+      features: this.getServiceTemplateInfo(services),
     };
   }
 
   private getServiceTemplateInfo(services: IService[]): any {
-    const servicesInfo:IEngineGenerationTemplateType[] = [];
+    const servicesInfo: IEngineGenerationTemplateType[] = [];
 
-    services.forEach(service => {
+    services.forEach((service) => {
       servicesInfo.push({
         name: service.serviceName,
-        templateid: service.internalName
-      })});
+        templateid: service.internalName,
+      });
+    });
 
     return servicesInfo;
   }

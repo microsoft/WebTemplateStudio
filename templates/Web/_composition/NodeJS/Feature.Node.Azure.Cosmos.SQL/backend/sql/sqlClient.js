@@ -1,7 +1,7 @@
 ﻿const CosmosClient = require("@azure/cosmos").CosmosClient;
 require("dotenv").config();
 
-// Connects the back-end to the Cosmos Core SQL Database (https://docs.microsoft.com/en-us/azure/cosmos-db/create-sql-api-nodejs)
+// Connects the backend to the Cosmos Core SQL Database (https://docs.microsoft.com/en-us/azure/cosmos-db/create-sql-api-nodejs)
 module.exports = class SQLClient {
   constructor(databaseId, containerId) {
     this.client = new CosmosClient({
