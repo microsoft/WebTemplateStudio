@@ -1,9 +1,9 @@
 # Contributing to Web Template Studio
 
-The foundation of _Web Template Studio_ is to get developers up and running with a new
+The foundation of *Web Template Studio* is to get developers up and running with a new
 web app that incorporates cloud services on Azure as fast as possible.
 
-Using Web Template Studio, a developer can select their preferred web
+Using *Web Template Studio*, a developer can select their preferred web
 frameworks, pages and Azure cloud services to generate boilerplate code for their web app.
 The generated code not only follows best practices and design guidelines, but also
 includes comments to guide the developer through the logic and adding functionality to

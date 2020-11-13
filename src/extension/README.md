@@ -2,7 +2,7 @@
 
 Web Template Studio (_WebTS_) is a Visual Studio Code Extension that accelerates the creation of new web applications using a
 wizard-based experience. WebTS enables developers to generate boilerplate code for a web app
-by choosing between different front-end frameworks, back-end frameworks, pages and cloud services.
+by choosing between different frontend frameworks, backend frameworks, pages and cloud services.
 The resulting web application is well-formed, readable code that incorporates cloud services on
 Azure while implementing proven patterns and best practices. Sprinkled throughout the generated code we have links to
 Docs to provide useful insights.
@@ -12,14 +12,14 @@ Docs to provide useful insights.
 ### Create a new project
 
 - Open **VSCode**
-- Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac to open VSCode's extension launcher
+- Press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open VSCode's extension launcher
 - Type/Select `Web Template Studio: Launch` and press `Enter` to launch the extension
 
 ### Deploy the generated project
 
 - Open **VSCode**
 - Open the generated project
-- Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac to open VSCode's extension launcher
+- Press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open VSCode's extension launcher
 - Type/Select `Web Template Studio: Deploy App` and press `Enter` to begin the deployment
 
 ## Features

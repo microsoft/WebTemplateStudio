@@ -1,5 +1,5 @@
 # Documentation
-Web Template Studio (WebTS) documentation is divided into three areas.
+*Web Template Studio* (WebTS) documentation is divided into three areas.
 
 
 ## General
