@@ -178,10 +178,10 @@ export class CoreTemplateStudio {
     backendFramework: string
   ): Promise<any> {
     let getPagesCommand = `${CLI.GET_PAGES} -p ${projectType} `;
-    if (frontendFramework.length > 0) {
+    if (frontendFramework !== "") {
       getPagesCommand = getPagesCommand.concat(`-f ${frontendFramework} `);
     }
-    if (backendFramework.length > 0) {
+    if (backendFramework !== "") {
       getPagesCommand = getPagesCommand.concat(`-b ${backendFramework}`);
     }
     getPagesCommand = getPagesCommand.concat(`\n`);
