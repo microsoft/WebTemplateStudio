@@ -158,7 +158,9 @@ To run the template tests go to the [`extension` folder](../../src/extension) an
 
 ## Under the Hood
 
-The following notes are inspired by the [vscode-webview-react](https://github.com/rebornix/vscode-webview-react)
+The Architecture of this app was inspired by the [vscode-webview-react](https://github.com/rebornix/vscode-webview-react)
+
+Find some notes about it below if you wish to get started with it:
 repository by [rebornix](https://github.com/rebornix):
 
 - We inline `index.html` content in `ext-src/extension.ts`  when creating the webview
