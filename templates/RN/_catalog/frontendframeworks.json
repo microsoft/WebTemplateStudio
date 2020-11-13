@@ -5,7 +5,7 @@
       "summary": "JavaScript framework",
       "author": "Facebook",
       "order": "1",
-      "licenses": "[React](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)",
+      "licenses": "",
       "platform": "RN",
       "languages": [
         "Any"
