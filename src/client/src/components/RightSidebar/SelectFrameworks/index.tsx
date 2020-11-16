@@ -84,7 +84,7 @@ const SelectFrameworks = (props: Props)=>{
           handleChange={(dropDrownItem: IDropDownOptionType) => {
             handleFrontEndFrameworkChange(dropDrownItem);
           }}
-          ariaLabel={formatMessage(messages.backendFramework)}
+          ariaLabel={formatMessage(messages.frontendFramework)}
           options={frontendDropdownItems}
           value={convertOptionToDropdownItem(
             selection.frontendFramework
