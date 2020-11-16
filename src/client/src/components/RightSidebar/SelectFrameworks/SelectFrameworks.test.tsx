@@ -13,7 +13,7 @@ describe("SelectFrameworks", () => {
   let store: any;
   const mockStore = configureMockStore();
 
-  describe("Tests", () => {
+  describe("With both frontend and backend frameworks", () => {
     beforeEach(() => {
       const initialState: AppState = getInitialState();
       addFrontEndFrameworksOptions(initialState);
@@ -40,6 +40,37 @@ describe("SelectFrameworks", () => {
       const expectedTextBackendFramework = intl.formatMessage(messages.backendFramework);
       expect(wrapper.getByText(expectedTextFrontendFramework)).toBeDefined();
       expect(wrapper.getByText(expectedTextBackendFramework)).toBeDefined();
+    });
+  });
+
+  describe("When backend framework is optional", () => {
+    beforeEach(() => {
+      const initialState: AppState = getInitialState();
+      addFrontEndFrameworksOptions(initialState);
+      setFrontendFramework(initialState,"Node");
+
+      store = mockStore(initialState);
+      wrapper = render(
+        <IntlProvider locale="en">
+          <ReactRedux.Provider store={store}>
+            <SelectFrameworks/>
+          </ReactRedux.Provider>
+        </IntlProvider>
+      );
+    });
+
+    it("renders without crashing", () => {
+      expect(wrapper).toBeDefined();
+    });
+
+    it("should have frontend framework messages", () => {
+      const expectedTextFrontendFramework = intl.formatMessage(messages.frontendFramework);
+      expect(wrapper.getByText(expectedTextFrontendFramework)).toBeDefined();
+    });
+
+    it("should not have backend framework messages", () => {
+      const expectedTextBackendFramework = intl.formatMessage(messages.backendFramework);
+      expect(wrapper.queryByText(expectedTextBackendFramework)).not.toBeInTheDocument();
     });
   });
 });

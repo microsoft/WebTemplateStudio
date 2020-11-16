@@ -3,7 +3,7 @@ import * as React from "react";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 import { KEY_EVENTS } from "../../utils/constants/constants";
-import { ROUTE } from "../../utils/constants/routes";
+import { ROUTE } from "../../utils/routes/constants";
 
 import { IVSCodeObject } from "../../types/vscode";
 

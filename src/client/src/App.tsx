@@ -13,7 +13,7 @@ import RightSidebar from "./components/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
 import { loadAction } from "./store/config/config/action";
 import loadable from '@loadable/component'
-import { ROUTE } from "./utils/constants/routes";
+import { ROUTE } from "./utils/routes/constants";
 import { getSelectedRoute } from "./store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 
 const PageSelectFrameworks = loadable(()=> import(/* webpackChunkName: "PageSelectFrameworks" */  "./pages/PageSelectFrameworks"));

@@ -441,7 +441,7 @@ export const setBackendFramework = (store: AppState, internalName: string) => {
 };
 
 export const setFrontendFramework = (store: AppState, internalName: string) => {
-  store.userSelection.backendFramework.internalName = internalName;
+  store.userSelection.frontendFramework.internalName = internalName;
 };
 
 export const setOpenModal = (store: AppState, modalType: ModalType) => {

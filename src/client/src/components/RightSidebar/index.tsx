@@ -7,7 +7,7 @@ import { hasServices as hasServicesSelector } from "../../store/userSelection/se
 import { getSelectedRoute } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 
 import { KEY_EVENTS } from "../../utils/constants/constants";
-import { ROUTE } from "../../utils/constants/routes";
+import { ROUTE } from "../../utils/routes/constants";
 
 import { ReactComponent as CancelSVG } from "../../assets/cancel.svg";
 

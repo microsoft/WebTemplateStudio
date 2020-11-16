@@ -6,7 +6,7 @@ import { getInitialState } from "../../mockData/mockStore";
 import { RenderResult, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { renderWithStore } from "../../testUtils";
-import {messages} from "../../utils/constants/routes";
+import messages from "../../utils/routes/messages";
 import stylesTopNavBarLink from "../TopNavBarLink/styles.module.css";
 import { AppState } from "../../store/combineReducers";
 import * as routesNavsAction from "../../store/navigation/routesNavItems/actions";

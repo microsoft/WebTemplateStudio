@@ -9,7 +9,7 @@ import { setDetailPageAction } from "../../../store/config/detailsPage/action";
 import { AppState } from "../../../store/combineReducers";
 
 import { KEY_EVENTS } from "../../../utils/constants/constants";
-import { ROUTE } from "../../../utils/constants/routes";
+import { ROUTE } from "../../../utils/routes/constants";
 
 import Icon from "../../../components/Icon";
 

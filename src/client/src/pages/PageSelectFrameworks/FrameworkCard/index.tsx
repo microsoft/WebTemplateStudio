@@ -17,7 +17,7 @@ import {
   setSelectedBackendFrameworkAction,
   setSelectedFrontendFrameworkAction,
 } from "../../../store/userSelection/frameworks/action";
-import { ROUTE } from "../../../utils/constants/routes";
+import { ROUTE } from "../../../utils/routes/constants";
 import { setDetailPageAction } from "../../../store/config/detailsPage/action";
 import Icon from "../../../components/Icon";
 
