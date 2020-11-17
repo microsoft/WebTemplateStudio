@@ -11,7 +11,7 @@ const messages = defineMessages({
   },
   ariaDropdownLabel: {
     id: "SubscriptionSelection.ariaDropdownLabel",
-    defaultMessage: "Subscription Drop Down",
+    defaultMessage: "Subscription dropdown",
   },
   newSubscriptionLink: {
     id: "SubscriptionSelection.newSubscriptionLink",
