@@ -9,9 +9,9 @@
     "platform": "Web",
     "languages": ["Any"],
     "tags": {
-      "version": "4.17.1",
-      "checkVersionPackageName":"express",
-      "checkVersionPackageSource":"npm",
+      "version": "4.16.4",
+      "checkVersionPackage": "npm|express",
+      "requirements":"node|12.0.x",
       "preview": false,
       "linuxVersion": "node|12-lts"
     }
@@ -21,14 +21,14 @@
     "displayName": "Flask",
     "summary": "Python framework",
     "author": "Various",
-    "order": "1",
+    "order": "3",
     "licenses": "[Flask](https://github.com/pallets/flask/blob/master/LICENSE)",
     "platform": "Web",
     "languages": ["Any"],
     "tags": {
       "version": "1.1.2",
-      "checkVersionPackageName":"pallets/flask",
-      "checkVersionPackageSource":"github",
+      "checkVersionPackage": "github|pallets/flask",
+      "requirements":"python|3.5.x",
       "preview": false,
       "linuxVersion": "python|3.7"
     }
@@ -38,15 +38,15 @@
     "displayName": "Moleculer",
     "summary": "JavaScript framework",
     "author": "Various",
-    "order": "1",
+    "order": "4",
     "licenses": "[Moleculer](https://github.com/moleculerjs/moleculer/blob/master/LICENSE)",
     "platform": "Web",
     "languages": ["Any"],
     "tags": {
-      "version": "0.14.8",
+      "version": "0.14.11",
       "latestVersion":"",
-      "checkVersionPackageName":"moleculer",
-      "checkVersionPackageSource":"npm",
+      "checkVersionPackage": "npm|moleculer",
+      "requirements":"node|12.0.x",
       "preview": false,
       "linuxVersion": "node|12-lts"
     }
@@ -54,17 +54,17 @@
   {
     "name": "AspNet",
     "displayName": "ASP.NET",
-    "summary": ".NET framework",
+    "summary": ".NET Core",
     "author": "Microsoft",
-    "order": "1",
+    "order": "2",
     "licenses": "[ASP.NET](https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt)",
     "platform": "Web",
     "languages": ["Any"],
     "tags": {
-      "version": "3.1.5",
-      "checkVersionPackageName":"dotnet/aspnetcore",
-      "checkVersionPackageSource":"github",
-      "preview": true,
+      "version": "3.1.9",
+      "checkVersionPackage": "github|dotnet/aspnetcore",
+      "requirements":"netcore|3.1.x",
+      "preview": false,
       "linuxVersion": "DOTNETCORE|3.1"
     }
   }

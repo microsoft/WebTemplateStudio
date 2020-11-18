@@ -21,10 +21,6 @@
     "PrimaryOutputs": [
     ],
     "symbols": {
-      "wts.rootNamespace": {
-        "type": "parameter",
-        "replaces": "Param_RootNamespace"
-      },
       "wts.sourceName.casing.kebab": {
         "type": "parameter",
         "replaces": "Param_SourceName_Kebab"

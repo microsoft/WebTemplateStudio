@@ -1,15 +1,10 @@
 import * as vscode from "vscode";
 
-import { Validator } from "./utils/validator";
-import {
-  CONSTANTS,
-  ExtensionModule,
-  TelemetryEventName,
-  ExtensionCommand
-} from "./constants";
+import { Validator } from "./client-modules/validator";
+import { CONSTANTS } from "./constants/constants";
+import { TelemetryEventName } from './constants/telemetry';
 import { ReactPanel } from "./reactPanel";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
-import { VSCodeUI } from "./utils/vscodeUI";
 import { TelemetryService, IActionContext, ITelemetryService } from "./telemetry/telemetryService";
 import { Logger } from "./utils/logger";
 import { WizardServant } from "./wizardServant";
@@ -17,13 +12,16 @@ import { Generation } from "./client-modules/generation";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { LaunchExperience } from "./launchExperience";
 import { DependenciesModule } from "./client-modules/dependenciesModule";
-import { CoreTSModule } from "./coreTSModule";
-import { Defaults } from "./utils/defaults";
+import { CoreTSModule } from "./client-modules/coreTSModule";
+import { Defaults } from "./client-modules/defaults";
 import { Telemetry } from "./client-modules/telemetry";
 import { AzureModule } from "./client-modules/azureModule";
 import { getExtensionName, getExtensionVersionNumber } from "./utils/packageInfo";
 import { ISyncReturnType } from "./types/syncReturnType";
 import { LoggerModule } from "./client-modules/loggerModule";
+import { MESSAGES } from "./constants/messages";
+import { ExtensionModule } from "./constants/commands";
+import { EXTENSION_COMMANDS } from "./constants/commands";
 
 export class Controller {
   /**
@@ -33,7 +31,6 @@ export class Controller {
   private static _instance: Controller | undefined;
   public static reactPanelContext: ReactPanel;
   public static TelemetryService: ITelemetryService;
-  private vscodeUI: VSCodeUI;
   public static Logger: Logger;
   private loggerModule: LoggerModule;
   private AzureModule: AzureModule;
@@ -53,7 +50,6 @@ export class Controller {
   private defineExtensionModule(): void {
     Controller.extensionModuleMap = new Map([
       [ExtensionModule.Telemetry, this.Telemetry],
-      [ExtensionModule.VSCodeUI, this.vscodeUI],
       [ExtensionModule.Azure, this.AzureModule],
       [ExtensionModule.Validator, this.Validator],
       [ExtensionModule.Generate, this.Generation],
@@ -80,13 +76,13 @@ export class Controller {
           Controller.TelemetryService
         );
         if (responsePayload) {
-          Controller.handleValidMessage(message.command, responsePayload);
+          Controller.handleValidMessage(message.command, message.payload, responsePayload);
         }
       } else {
-        vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
+        vscode.window.showErrorMessage(MESSAGES.ERRORS.INVALID_COMMAND);
       }
     } else {
-      vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_MODULE);
+      vscode.window.showErrorMessage(MESSAGES.ERRORS.INVALID_MODULE);
     }
   }
 
@@ -96,18 +92,20 @@ export class Controller {
    * @returns Singleton Controller type
    */
   public static getInstance(
-    context: vscode.ExtensionContext
+    context: vscode.ExtensionContext,
+    platform: string
   ): Controller {
     if (this._instance) {
       this._instance.showReactPanel();
     } else {
-      this._instance = new Controller(context);
+      this._instance = new Controller(context, platform);
     }
     return this._instance;
   }
 
   private constructor(
-    private context: vscode.ExtensionContext
+    private context: vscode.ExtensionContext,
+    private platform : string
   ) {
     Controller.vsContext = context;
     Controller.TelemetryService = new TelemetryService(
@@ -116,7 +114,6 @@ export class Controller {
 
     Controller.TelemetryService.trackEvent(TelemetryEventName.ExtensionLaunch);
 
-    this.vscodeUI = new VSCodeUI();
     this.Validator = new Validator();
     this.AzureModule = new AzureModule();
     this.Generation = new Generation(Controller.TelemetryService);
@@ -135,7 +132,7 @@ export class Controller {
       },
       async (progress: vscode.Progress<IVSCodeProgressType>) => {
         const launchExperience = new LaunchExperience(progress);
-        await this.launchWizard(this.context, launchExperience);
+        await this.launchWizard(this.context, launchExperience, this.platform);
       }
     );
   }
@@ -147,14 +144,15 @@ export class Controller {
    */
   public async launchWizard(
     context: vscode.ExtensionContext,
-    launchExperience: LaunchExperience
+    launchExperience: LaunchExperience,
+    platform: string
   ): Promise<void> {
      let syncObject
      await Controller.TelemetryService.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SyncEngine,
       async function(this: IActionContext) {
         return await launchExperience
-          .launchApiSyncModule(context)
+          .launchApiSyncModule(context, platform)
           .then(data => syncObject=data)
           .catch(error => {
             console.log(error);
@@ -170,7 +168,8 @@ export class Controller {
 
       Controller.getTemplateInfoAndStore(
         context,
-        syncObject
+        syncObject,
+        platform
       );
       this.Telemetry.trackCreateNewProject({
         entryPoint: CONSTANTS.TELEMETRY.LAUNCH_WIZARD_STARTED_POINT
@@ -180,7 +179,8 @@ export class Controller {
 
   private static getTemplateInfoAndStore(
     ctx: vscode.ExtensionContext,
-    syncObject: ISyncReturnType
+    syncObject: ISyncReturnType,
+    platform: string
   ): void {
     const preview = vscode.workspace
       .getConfiguration()
@@ -191,15 +191,20 @@ export class Controller {
       wizardVersion: getExtensionVersionNumber(ctx),
       itemNameValidationConfig: syncObject.itemNameValidationConfig,
       projectNameValidationConfig: syncObject.projectNameValidationConfig,
-      preview
+      preview,
+      platform,
     };
   }
 
   private static handleValidMessage(
-    commandName: ExtensionCommand,
+    commandName: EXTENSION_COMMANDS,
+    payload: any,
     responsePayload?: any
   ): void {
     responsePayload.command = commandName;
+    if(payload && payload.scope) {
+      responsePayload.payload.scope = payload.scope;
+    }
     this.reactPanelContext.postMessageWebview(responsePayload);
   }
 

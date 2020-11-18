@@ -16,21 +16,11 @@
     "wts.frontendframework": "Vue",
     "wts.backendframework": "all",
     "wts.version": "1.0.0",
-    "wts.displayOrder": "1",
-    "wts.genGroup": "0",
-    "wts.rightClickEnabled": "true"
+    "wts.displayOrder": "1"
   },
   "sourceName": "VueGrid",
   "preferNameDirectory": true,
   "PrimaryOutputs": [],
   "symbols": {
-    "wts.rootNamespace": {
-      "type": "parameter",
-      "replaces": "Param_RootNamespace"
-    },
-    "wts.projectName": {
-      "type": "parameter",
-      "replaces": "Param_ProjectName"
-    }
   }
 }

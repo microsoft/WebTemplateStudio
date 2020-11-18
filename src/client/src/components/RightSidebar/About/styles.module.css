@@ -1,0 +1,24 @@
+.container {
+  margin: 15px;
+}
+
+.buttonToLink {
+  text-decoration: none;
+  font-size: var(--vscode-font-size);
+  color: var(--vscode-textLink-foreground);
+  font-weight: var(--vscode-font-weight);
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: inherit;
+  margin-left: -5px;
+}
+
+.buttonToLink:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.wizardInfo {
+  font-size: 0.9em;
+  margin-left: -0.4em;
+}

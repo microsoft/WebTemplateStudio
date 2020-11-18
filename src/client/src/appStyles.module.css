@@ -11,7 +11,7 @@
   width: 100%;
   box-sizing: border-box;
   background-color: var(--vscode-editor-background);
-  height: calc(100vh - 124px);
+  height: calc(100vh - 88px);
   justify-content: flex-start;
   position: relative;
   flex: 1 1 auto;
@@ -43,7 +43,7 @@
   position: fixed;
   max-width: 90%;
   height: auto;
-  z-index: 0;  
+  z-index: 0;
   bottom: 65px;
 }
 @media (max-width: 1120px) {
@@ -53,24 +53,12 @@
 }
 
 .homeSplash {
-  right: 500px;
+  right: 360px;
 }
 
-@media (max-height: 747px) and (max-width: 1700px) {
+@media (max-height: 710px) {
   .homeSplash {
-    right: 518.5px;
-  }
-}
-
-@media (max-height: 610px) {
-  .homeSplash {
-    right: 517px;
-  }
-}
-
-@media (max-height: 580px) {
-  .homeSplash {
-    right: 515.2px;
+    right: 380px;
   }
 }
 

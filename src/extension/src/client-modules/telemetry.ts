@@ -1,25 +1,25 @@
 import { IPayloadResponse, WizardServant } from "../wizardServant";
-import { ExtensionCommand, TelemetryEventName } from "../constants";
+import { TelemetryEventName } from "../constants/telemetry";
+import { EXTENSION_COMMANDS } from "../constants/commands";
 import { ITelemetryService } from "../telemetry/telemetryService";
 
 export class Telemetry extends WizardServant {
   clientCommandMap: Map<
-    ExtensionCommand,
+    EXTENSION_COMMANDS,
     (message: any) => Promise<IPayloadResponse>
   > = new Map([
-    [ExtensionCommand.TrackPageSwitch, this.trackWizardPageTimeToNext],
-    [ExtensionCommand.TrackCreateNewProject, this.trackCreateNewProject],
-    [ExtensionCommand.TrackOpenAddPagesModal, this.trackOpenAddPagesModal],
-    [ExtensionCommand.TrackPressQuickstart, this.trackPressQuickstart],
+    [EXTENSION_COMMANDS.TRACK_PAGE_SWITCH, this.trackWizardPageTimeToNext],
+    [EXTENSION_COMMANDS.TRACK_CREATE_NEW_PROJECT, this.trackCreateNewProject],
+    [EXTENSION_COMMANDS.TRACK_PRESS_QUICKSTART, this.trackPressQuickstart],
     [
-      ExtensionCommand.TrackOpenAppServiceModalFromServicesList,
+      EXTENSION_COMMANDS.TRACK_OPEN_APP_SERVICE_MODAL_FROM_SERVICES_LIST,
       this.trackOpenAppServiceModalFromServicesList
     ],
     [
-      ExtensionCommand.TrackOpenCosmosDBServiceModalFromServicesList,
+      EXTENSION_COMMANDS.TRACK_OPEN_COSMOSDB_SERVICE_MODAL_FROM_SERVICES_LIST,
       this.trackOpenCosmosDBServiceModalFromServicesList
     ],
-    [ExtensionCommand.TrackOpenAzureServiceAdvancedMode, this.TrackOpenAzureServiceAdvancedMode]
+    [EXTENSION_COMMANDS.TRACK_OPEN_AZURE_SERVICE_ADVANCED_MODE, this.TrackOpenAzureServiceAdvancedMode]
   ]);
 
   constructor(private telemetry: ITelemetryService) {
@@ -52,11 +52,6 @@ export class Telemetry extends WizardServant {
     return { payload: true };
   }
 
-  public async trackOpenAddPagesModal(): Promise<IPayloadResponse> {
-    this.telemetry.trackEvent(TelemetryEventName.TrackOpenAddPagesModal);
-    return { payload: true };
-  }
-
   public async trackOpenAppServiceModalFromServicesList(): Promise<
     IPayloadResponse
   > {
@@ -73,7 +68,7 @@ export class Telemetry extends WizardServant {
       TelemetryEventName.OpenCosmosDBServiceModalFromServicesList
     );
     return { payload: true };
-  }  
+  }
 
   public async TrackOpenAzureServiceAdvancedMode(payload: any): Promise<IPayloadResponse> {
     this.telemetry.trackEvent(TelemetryEventName.OpenAzureServiceAdvancedMode, {

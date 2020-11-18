@@ -1,5 +1,5 @@
 import * as React from "react";
-import { INTL_MESSAGES, KEY_EVENTS } from "../../utils/constants";
+import { INTL_MESSAGES, KEY_EVENTS } from "../../utils/constants/constants";
 
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
@@ -19,13 +19,7 @@ interface IProps {
   isEmpty: boolean;
   placeholder?: string;
 }
-const OutputPath = ({
-  handleSaveClick,
-  value,
-  isEmpty,
-  intl,
-  placeholder
-}: IProps & InjectedIntlProps) => {
+const OutputPath = ({ handleSaveClick, value, isEmpty, intl, placeholder }: IProps & InjectedIntlProps) => {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       handleSaveClick();
@@ -33,11 +27,11 @@ const OutputPath = ({
   };
 
   return (
-    <React.Fragment>
+    <>
       <div className={styles.container} tabIndex={0} onKeyDown={handleKeyDown}>
         <div className={styles.errorStack}>
           <div className={styles.outputPath} onClick={handleSaveClick}>
-            <input 
+            <input
               aria-label={intl.formatMessage(messages.ariaOutputPathLabel)}
               value={value}
               placeholder={placeholder}
@@ -45,26 +39,23 @@ const OutputPath = ({
               className={classnames(stylesInput.input, styles.pathInput)}
             />
           </div>
-          {(isEmpty && (
+          {isEmpty && (
             <div className={styles.errorMessage}>
               {intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
-                fieldId: intl.formatMessage(messages.outputPath)
+                fieldId: intl.formatMessage(messages.outputPath),
               })}
             </div>
-          ))}
+          )}
         </div>
         <button
-          className={classNames(
-            buttonStyles.buttonHighlighted,
-            styles.browseButton
-          )}
+          className={classNames(buttonStyles.buttonHighlighted, styles.browseButton)}
           onClick={handleSaveClick}
           tabIndex={-1}
         >
           {intl.formatMessage(messages.browseButtonLabel)}
         </button>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

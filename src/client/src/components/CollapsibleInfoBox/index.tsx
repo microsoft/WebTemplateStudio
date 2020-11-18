@@ -3,7 +3,7 @@ import { ReactComponent as Down } from "../../assets/i-collapsibleDown.svg";
 import { ReactComponent as Up } from "../../assets/i-collapsibleUp.svg";
 
 import styles from "./styles.module.css";
-import { KEY_EVENTS } from "../../utils/constants";
+import { KEY_EVENTS } from "../../utils/constants/constants";
 
 interface IProps {
   question: string;

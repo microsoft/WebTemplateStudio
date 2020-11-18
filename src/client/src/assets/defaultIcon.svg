@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.0"
+   width="80.000000pt"
+   height="80.000000pt"
+   viewBox="0 0 80.000000 80.000000"
+   preserveAspectRatio="xMidYMid meet"
+   id="svg2085">
+  <g
+     transform="translate(0.000000,80.000000) scale(0.100000,-0.100000)"
+     fill="#000000"
+     stroke="none"
+     id="g2083">
+    <path
+       d="M0 400 l0 -400 400 0 400 0 0 400 0 400 -400 0 -400 0 0 -400z m557 193 l-167 -168 -167 168 -168 167 335 0 335 0 -168 -167z m203 -195 l0 -343 -172 172 -173 173 170 170 c93 93 171 170 172 170 2 0 3 -154 3 -342z m-558 -160 l-162 -163 0 325 0 325 162 -163 163 -162 -163 -162z m358 -33 l165 -165 -335 0 -335 0 165 165 c91 91 167 165 170 165 3 0 79 -74 170 -165z"
+       id="path2081"
+       style="fill:#ffffff;fill-opacity:1" />
+  </g>
+</svg>

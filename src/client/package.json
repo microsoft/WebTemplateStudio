@@ -23,10 +23,8 @@
     "classnames": "^2.2.6",
     "focus-visible": "^5.1.0",
     "global": "^4.4.0",
-    "latest-version": "^5.1.0",
     "lodash": "^4.17.19",
-    "node-fetch": "^2.6.0",
-    "npm": "^6.14.6",
+    "node-fetch": "^2.6.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-intl": "^2.8.0",
@@ -42,7 +40,7 @@
     "reselect": "^4.0.0",
     "rewire": "^5.0.0",
     "rxjs": "^6.5.5",
-    "typescript": "3.2.4",
+    "typescript": "^3.7.2",
     "typescript-react-intl": "^0.3.0"
   },
   "scripts": {

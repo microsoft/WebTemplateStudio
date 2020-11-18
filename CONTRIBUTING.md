@@ -1,9 +1,9 @@
 # Contributing to Web Template Studio
 
-The foundation of _Web Template Studio_ is to get developers up and running with a new
+The foundation of *Web Template Studio* is to get developers up and running with a new
 web app that incorporates cloud services on Azure as fast as possible.
 
-Using Web Template Studio, a developer can select their preferred web
+Using *Web Template Studio*, a developer can select their preferred web
 frameworks, pages and Azure cloud services to generate boilerplate code for their web app.
 The generated code not only follows best practices and design guidelines, but also
 includes comments to guide the developer through the logic and adding functionality to
@@ -72,9 +72,7 @@ We encourage developers to consider the following guidelines when submitting pul
 
 ## Naming and styling conventions
 
-All code that gets merged in must be formatted with [Prettier](https://prettier.io/). Also,
-we use [TSLint](https://palantir.github.io/tslint/) to lint our TypeScript code and [ESLint](https://eslint.org/)
-for JavaScript.
+All code that gets merged in must be formatted with [Prettier](https://prettier.io/). Also, we use [ESLint](hhttps://eslint.org/) to lint our code.
 
 ## Documentation
 

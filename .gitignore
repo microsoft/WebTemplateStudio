@@ -52,7 +52,6 @@ BenchmarkDotNet.Artifacts/
 project.lock.json
 project.fragment.lock.json
 artifacts/
-**/Properties/launchSettings.json
 
 # StyleCop
 StyleCopReport.xml
@@ -369,3 +368,5 @@ src/extension/src/corets-cli/win32/
 
 # Template tests
 template_test/
+src/client/src/translations/en.json
+src/client/src/translations/whitelist_en.json

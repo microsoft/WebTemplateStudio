@@ -4,11 +4,13 @@ import * as os from "os";
 import * as fs from "fs";
 
 import { ChildProcess, spawn } from "child_process";
-import { CONSTANTS } from "./constants";
+import { CLI, CLI_SETTINGS } from "./constants/cli";
 import { ICommandPayload } from "./types/commandPayload";
-import { IGenerationPayloadType } from "./types/generationPayloadType";
+import { IGenerationData, IService } from "./types/generationTypes";
 import { EventEmitter } from "events";
 import { IEngineGenerationPayloadType } from "./types/engineGenerationPayloadType";
+import { ISyncPayloadType } from "./types/syncPayloadType";
+import { IEngineGenerationTemplateType } from "./types/engineGenerationTemplateType";
 
 class CliEventEmitter extends EventEmitter {}
 
@@ -32,15 +34,13 @@ export class CoreTemplateStudio {
     throw new Error("Cannot GetExistingInstance as none has been created");
   }
 
-  public static async GetInstance(
-    context: vscode.ExtensionContext | undefined
-  ): Promise<CoreTemplateStudio> {
+  public static async GetInstance(context: vscode.ExtensionContext | undefined): Promise<CoreTemplateStudio> {
     if (CoreTemplateStudio._instance) {
       return Promise.resolve(CoreTemplateStudio._instance);
     }
 
     const platform = process.platform;
-    let cliExecutableName = CONSTANTS.CLI.BASE_CLI_TOOL_NAME;
+    let cliExecutableName = CLI.BASE_CLI_TOOL_NAME;
     let extensionPath;
 
     if (context) {
@@ -49,32 +49,21 @@ export class CoreTemplateStudio {
       extensionPath = path.join(__dirname, "..");
     }
 
-    if (platform === CONSTANTS.CLI.WINDOWS_PLATFORM_VERSION) {
+    if (platform === CLI_SETTINGS.WINDOWS_PLATFORM_VERSION) {
       cliExecutableName += ".exe";
     }
 
-    const cliPath = path.join(
-      extensionPath,
-      "src",
-      "corets-cli",
-      platform,
-      cliExecutableName
-    );
+    const cliPath = path.join(extensionPath, "src", "corets-cli", platform, cliExecutableName);
 
-    const cliWorkingDirectory = path.join(
-      extensionPath,
-      "src",
-      "corets-cli",
-      platform
-    );
+    const cliWorkingDirectory = path.join(extensionPath, "src", "corets-cli", platform);
 
-    if (os.platform() !== CONSTANTS.CLI.WINDOWS_PLATFORM_VERSION) {
+    if (os.platform() !== CLI_SETTINGS.WINDOWS_PLATFORM_VERSION) {
       // Not unsafe as the parameter comes from trusted source
       fs.chmodSync(cliPath, 0o755);
     }
 
     const spawnedProcessCli = spawn(cliPath, [], {
-      cwd: cliWorkingDirectory
+      cwd: cliWorkingDirectory,
     });
 
     CoreTemplateStudio._instance = new CoreTemplateStudio(spawnedProcessCli);
@@ -99,8 +88,8 @@ export class CoreTemplateStudio {
   // then it will always get triggered when a command is write to the cli and there is responses from cli, until the process gets killed
   public async readStream(process: ChildProcess): Promise<void> {
     let data = "";
-    if(process.stdout) {
-      process.stdout.on("data", chunk => {
+    if (process.stdout) {
+      process.stdout.on("data", (chunk) => {
         data += chunk;
         const responses = data.toString().split("\n");
         for (let i = 0; i < responses.length - 1; i++) {
@@ -110,32 +99,27 @@ export class CoreTemplateStudio {
         data = responses[responses.length - 1];
       });
     }
-    
-    if(process.stderr) {
-      process.stderr.on("data", data => {
+
+    if (process.stderr) {
+      process.stderr.on("data", (data) => {
         this.cliEvents.emit("eventError", data.toString());
       });
-      process.on("exit", code =>
-        this.cliEvents.emit("eventError", `process exited with code ${code}`)
-      );
-    }    
+      process.on("exit", (code) => this.cliEvents.emit("eventError", `process exited with code ${code}`));
+    }
   }
 
-  private async awaitCliEvent(
-    eventName: string,
-    command: string
-  ): Promise<any> {
+  private async awaitCliEvent(eventName: string, command: string): Promise<any> {
     this.promiseChain = this.promiseChain.then(() => {
-      if(this._processCli.stdin) {
+      if (this._processCli.stdin) {
         this._processCli.stdin.write(command);
-      }      
+      }
       return new Promise((resolve, reject) => {
         this.cliEvents
-          .once(eventName, data => {
+          .once(eventName, (data) => {
             this.cliEvents.removeAllListeners();
             resolve(data);
           })
-          .once("eventError", data => {
+          .once("eventError", (data) => {
             this.cliEvents.removeAllListeners();
             reject(new Error(data));
             //Reset promise chain to allow execute next Cli command
@@ -147,124 +131,66 @@ export class CoreTemplateStudio {
   }
 
   public async sync(payload: ICommandPayload): Promise<any> {
-    const syncCommand = `${CONSTANTS.CLI.SYNC_COMMAND_PREFIX} -p ${
-      payload.payload.path
-    }\n`;
-    this.cliEvents.on(CONSTANTS.CLI.SYNC_PROGRESS_STATE, data => {
+    const typedPayload = payload.payload as ISyncPayloadType;
+    const syncCommand = `${CLI.SYNC_COMMAND_PREFIX} -p ${typedPayload.path} -t ${typedPayload.platform}\n`;
+    this.cliEvents.on(CLI.SYNC_PROGRESS_STATE, (data) => {
       payload.liveMessageHandler(data["status"], data["progress"]);
     });
-    return this.awaitCliEvent(CONSTANTS.CLI.SYNC_COMPLETE_STATE, syncCommand);
+    return this.awaitCliEvent(CLI.SYNC_COMPLETE_STATE, syncCommand);
   }
 
   public async getFrameworks(projectType: string): Promise<any> {
-    const getFrameworksCommand = `${
-      CONSTANTS.CLI.GET_FRAMEWORKS_COMMAND_PREFIX
-    } -p ${projectType}\n`;
-    return this.awaitCliEvent(
-      CONSTANTS.CLI.GET_FRAMEWORKS_COMPLETE_STATE,
-      getFrameworksCommand
-    );
+    const getFrameworksCommand = `${CLI.GET_FRAMEWORKS} -p ${projectType}\n`;
+    return this.awaitCliEvent(CLI.GET_FRAMEWORKS_RESULT, getFrameworksCommand);
   }
 
   public getTemplateConfig(): any {
     return CoreTemplateStudio._templateConfig;
   }
 
-  public async getPages(
-    projectType: string,
-    frontendFramework: string,
-    backendFramework: string
-  ): Promise<any> {
-    const getPagesCommand = `${
-      CONSTANTS.CLI.GET_PAGES_COMMAND_PREFIX
-    } -p ${projectType} -f ${frontendFramework} -b ${backendFramework}\n`;
-    return this.awaitCliEvent(
-      CONSTANTS.CLI.GET_PAGES_COMPLETE_STATE,
-      getPagesCommand
-    );
+  public async getPages(projectType: string, frontendFramework: string, backendFramework: string): Promise<any> {
+    const getPagesCommand = `${CLI.GET_PAGES} -p ${projectType} -f ${frontendFramework} -b ${backendFramework}\n`;
+    return this.awaitCliEvent(CLI.GET_PAGES_RESULT, getPagesCommand);
   }
 
-  public async getAllLicenses(payload: ICommandPayload): Promise<any> {
-    const typedPayload = payload.payload as IGenerationPayloadType;
-    const getAllLicensesPayload = JSON.stringify(
-      this.makeEngineGenerationPayload(typedPayload)
-    );
-    const getAllLicensesCommand = `${
-      CONSTANTS.CLI.GET_ALL_LICENSES_COMMAND_PREFIX
-    } -d ${getAllLicensesPayload}\n`;
+  public async getAllLicenses(generationData: IGenerationData): Promise<any> {
+    const getAllLicensesPayload = JSON.stringify(this.makeEngineGenerationPayload(generationData));
+    const getAllLicensesCommand = `${CLI.GET_ALL_LICENSES} -d ${getAllLicensesPayload}\n`;
 
-    return this.awaitCliEvent(
-      CONSTANTS.CLI.GET_ALL_LICENSES_COMPLETE_STATE,
-      getAllLicensesCommand
-    );
+    return this.awaitCliEvent(CLI.GET_ALL_LICENSES_RESULT, getAllLicensesCommand);
   }
 
-  public async getFeatures(
-    projectType: string,
-    frontendFramework: string,
-    backendFramework: string
-  ): Promise<any> {
+  public async getFeatures(projectType: string, frontendFramework: string, backendFramework: string): Promise<any> {
     // to use this in client
-    const getFeaturesCommand = `${
-      CONSTANTS.CLI.GET_FEATURES_COMMAND_PREFIX
-    } -p ${projectType} -f ${frontendFramework} -b ${backendFramework}\n`;
-    return this.awaitCliEvent(
-      CONSTANTS.CLI.GET_FEATURES_COMPLETE_STATE,
-      getFeaturesCommand
-    );
+    const getFeaturesCommand = `${CLI.GET_FEATURES} -p ${projectType} -f ${frontendFramework} -b ${backendFramework}\n`;
+    return this.awaitCliEvent(CLI.GET_FEATURES_RESULT, getFeaturesCommand);
   }
 
   public async getProjectTypes(): Promise<any> {
     // to use this in client
-    const getProjectTypesCommand = `${
-      CONSTANTS.CLI.GET_PROJECT_TYPES_COMMAND_PREFIX
-    }\n`;
-    return this.awaitCliEvent(
-      CONSTANTS.CLI.GET_PROJECT_TYPES_COMPLETE_STATE,
-      getProjectTypesCommand
-    );
+    const getProjectTypesCommand = `${CLI.GET_PROJECT_TYPES}\n`;
+    return this.awaitCliEvent(CLI.GET_PROJECT_TYPES_RESULT, getProjectTypesCommand);
   }
 
   public async generate(payload: ICommandPayload): Promise<any> {
-    const typedPayload = payload.payload as IGenerationPayloadType;
-    const generatePayload = JSON.stringify(
-      this.makeEngineGenerationPayload(typedPayload)
-    );
-    const generateCommand = `${
-      CONSTANTS.CLI.GENERATE_COMMAND_PREFIX
-    } -d ${generatePayload}\n`;
+    const typedPayload = payload.payload as IGenerationData;
+    const generatePayload = JSON.stringify(this.makeEngineGenerationPayload(typedPayload));
+    const generateCommand = `${CLI.GENERATE} -d ${generatePayload}\n`;
     const projectItemsToGenerateCount = 4; // Derived from CoreTS logic
-    const itemsToGenerateCount =
-      projectItemsToGenerateCount +
-      typedPayload.pages.length +
-      (typedPayload.services.appService ? 1 : 0) +
-      (typedPayload.services.cosmosDB ? 1 : 0)
+    const itemsToGenerateCount = projectItemsToGenerateCount + typedPayload.pages.length + typedPayload.services.length;
     let generatedItemsCount = 0;
 
-    this.cliEvents.on(CONSTANTS.CLI.GENERATE_PROGRESS_STATE, data => {
+    this.cliEvents.on(CLI.GENERATE_PROGRESS, (data) => {
       generatedItemsCount++;
       const percentage = (generatedItemsCount / itemsToGenerateCount) * 100;
       const messageWithProgress = `(${percentage.toFixed(0)}%) ${data}`;
       payload.liveMessageHandler(messageWithProgress);
     });
-    return await this.awaitCliEvent(
-      CONSTANTS.CLI.GENERATE_COMPLETE_STATE,
-      generateCommand
-    );
+    return await this.awaitCliEvent(CLI.GENERATE_RESULT, generateCommand);
   }
 
-  private makeEngineGenerationPayload(
-    payload: IGenerationPayloadType
-  ): IEngineGenerationPayloadType {
-    const {
-      projectName,
-      path,
-      projectType,
-      frontendFramework,
-      backendFramework,
-      pages,
-      services
-    } = payload;
+  private makeEngineGenerationPayload(payload: IGenerationData): IEngineGenerationPayloadType {
+    const { projectName, path, projectType, frontendFramework, backendFramework, pages, services } = payload;
 
     return {
       projectName: projectName,
@@ -277,25 +203,22 @@ export class CoreTemplateStudio {
       homeName: "Test",
       pages: pages.map((page: any) => ({
         name: page.name,
-        templateid: page.identity
+        templateid: page.identity,
       })),
-      features: this.getServiceTemplateInfo(services)
+      features: this.getServiceTemplateInfo(services),
     };
   }
 
-  private getServiceTemplateInfo(services: any): any {
-    const servicesInfo = [];
-    if(services.appService) {
+  private getServiceTemplateInfo(services: IService[]): any {
+    const servicesInfo: IEngineGenerationTemplateType[] = [];
+
+    services.forEach((service) => {
       servicesInfo.push({
-        name: services.appService.siteName, //AppService
-        templateid: services.appService.internalName
-      })
-    }if(services.cosmosDB) {
-      servicesInfo.push({
-        name: services.cosmosDB.accountName, //Cosmos
-        templateid: services.cosmosDB.internalName
-      })
-    }
+        name: service.serviceName,
+        templateid: service.internalName,
+      });
+    });
+
     return servicesInfo;
   }
 
@@ -306,7 +229,7 @@ export class CoreTemplateStudio {
   }
 
   private killProcess(processToKill: ChildProcess): void {
-    if (process.platform === CONSTANTS.CLI.WINDOWS_PLATFORM_VERSION) {
+    if (process.platform === CLI_SETTINGS.WINDOWS_PLATFORM_VERSION) {
       const pid = processToKill.pid;
       const spawn = require("child_process").spawn;
       spawn("taskkill", ["/pid", pid, "/f", "/t"]);

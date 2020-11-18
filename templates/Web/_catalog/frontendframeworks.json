@@ -11,9 +11,9 @@
       "Any"
     ],
     "tags": {
-      "version": "16.13.1",
-      "checkVersionPackageName":"react",
-      "checkVersionPackageSource":"npm",
+      "version": "16.14.0",
+      "checkVersionPackage": "npm|react",
+      "requirements":"node|12.0.x",
       "preview": false
     }
   },
@@ -29,9 +29,9 @@
       "Any"
     ],
     "tags": {
-      "version": "10.0.2",
-      "checkVersionPackageName":"@angular/core",
-      "checkVersionPackageSource":"npm",
+      "version": "10.2.0",
+      "checkVersionPackage": "npm|@angular/core",
+      "requirements":"node|12.0.x",
       "preview": false
     }
   },
@@ -47,9 +47,9 @@
       "Any"
     ],
     "tags": {
-      "version": "2.6.11",
-      "checkVersionPackageName":"vue",
-      "checkVersionPackageSource":"npm",
+      "version": "2.6.12",
+      "checkVersionPackage": "npm|vue",
+      "requirements":"node|12.0.x",
       "preview": false
     }
   }

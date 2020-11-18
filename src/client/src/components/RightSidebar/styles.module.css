@@ -1,0 +1,119 @@
+.container {
+  padding-bottom: 6vh;
+  padding-top: 1vh;
+}
+
+.title {
+  font-size: 1.6em;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.marginLeft {
+  margin: 15px;
+}
+
+.endAlign{
+  text-align: end;
+}
+
+.rightViewCropped {
+  background-color: var(--vscode-editor-background);
+  border-left: 0.5px solid #7f7f7f;
+  box-sizing: border-box;
+  position: relative;
+  right: 0;
+  height: calc(100vh - 70px);
+  flex-direction: column;
+  overflow: scroll;
+  display: block;
+  transition: display 100ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
+  padding: 4vh 2vh;
+  border-left: 1px solid #7f7f7f;
+  width: 500px;
+}
+
+@media (max-width: 560px) {
+  .rightViewCropped {
+    position: fixed;
+    width: 100%;
+  }
+}
+
+.rightViewCroppedHamburguer {
+  background-color: var(--vscode-editor-background);
+  border-left: 0.5px solid #7f7f7f;
+  box-sizing: border-box;
+  height: calc(100vh - 70px);
+  flex-direction: column;
+  overflow: scroll;
+  display: block;
+  transition: display 100ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
+  padding: 40px 15px;
+  border-left: 1px solid #7f7f7f;
+  width: 56px;
+}
+
+.hamburgerButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 26px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  box-sizing: border-box;
+  width: 25px;
+}
+
+.hamburgerLine {
+  width: 25px;
+  height: 1px;
+  background: var(--vscode-editor-foreground);
+}
+
+.summaryContainer {
+  width: auto;
+  flex: 1;
+}
+
+.icon {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin-left: 15px;
+}
+
+.icon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.icon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.icon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.iconHide {
+  visibility: hidden;
+}
+
+.button {
+  margin-left: 1em;
+}
+
+.button:hover {
+  color: var(--vscode-editor-foreground);
+}
+
+.button:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+}

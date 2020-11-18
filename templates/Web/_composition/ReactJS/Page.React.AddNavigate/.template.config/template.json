@@ -11,15 +11,16 @@
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$frontendframework == React & wts.type == page & $ishomepage == false"
+    "wts.compositionFilter": "$frontendframework == React & wts.type == page & $ishomepage == false",
+    "wts.casing.sourceName": "pascal"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,
   "PrimaryOutputs": [],
   "symbols": {
-    "wts.rootNamespace": {
+    "wts.sourceName.casing.pascal": {
       "type": "parameter",
-      "replaces": "Param_RootNamespace"
+      "replaces": "Param_SourceName_Pascal"
     }
   }
 }

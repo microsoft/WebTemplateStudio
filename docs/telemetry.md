@@ -1,10 +1,10 @@
 # Web Template Studio Telemetry
 
-Web Template Studio logs usage data and diagnostics telemetry through [Application Insights](https://azure.microsoft.com/en-us/services/monitor/).
+*Web Template Studio* logs usage data and diagnostics telemetry through [Application Insights](https://azure.microsoft.com/en-us/services/monitor/).
 
 The class [TelemetryService](../src/extension/src/telemetry/telemetryService.ts), within the extension code, isolates the telemetry service implementation details and offers a smooth and easy way to invoke telemetry events.
 
-Apart from the data logged in Web Template Studio, Core Template Studio tracks telemetry data on generation. For more info see [Core Template Studio Telemetry](https://github.com/microsoft/CoreTemplateStudio/blob/dev/docs/telemetry.md)
+Apart from the data logged in *Web Template Studio*, Core Template Studio tracks telemetry data on generation. For more info see [Core Template Studio Telemetry](https://github.com/microsoft/CoreTemplateStudio/blob/dev/docs/telemetry.md)
 
 ## Trends
 
@@ -12,7 +12,7 @@ Please head to our [Telemetry Data](telemetryData.md) where we show trends from 
 
 ## Telemetry Gathered
 
-The wizard for Web Template Studio collects basic diagnostics telemetry and usage data:
+The wizard for *Web Template Studio* collects basic diagnostics telemetry and usage data:
 
 - **Diagnostics telemetry:** Unhandled error and exceptions that happened while running the
   wizard are logged with Application Insights. This includes the stack trace of the error
@@ -20,7 +20,7 @@ The wizard for Web Template Studio collects basic diagnostics telemetry and usag
 
 ## Usage Telemetry
 
-Through the Application Insights API, telemetry events are collected to gather basic information regarding Web Template Studio extension usage. The following table describes the Telemetry Events we collect:
+Through the Application Insights API, telemetry events are collected to gather basic information regarding *Web Template Studio* extension usage. The following table describes the Telemetry Events we collect:
 
 |Event Name Tracked |Notes |
 |:-------------:|:-----|
@@ -29,7 +29,7 @@ Through the Application Insights API, telemetry events are collected to gather b
 |**Sync-Engine**|Track the time it takes to synchronize the templates in the extension|
 |**Create-New-Project**|Track the start of creating a new project. Save the entry-point of this action (Launch wizard or Create New Project button).|
 |**Wizard-To-Generate-Session-Time**|Track the time that elapses since the extension is launched until the start generation a new project.|
-|**Wizard-Page-Change**|Track the total time the user views a Web Template Studio extension page.|
+|**Wizard-Page-Change**|Track the total time the user views a *Web Template Studio* extension page.|
 |**login**|Track the time it takes for a user to log in to Azure.|
 |**logout**|Track the time it takes for a user to log out of their Azure account.|
 |**get-user-status**|Track the time it takes for the extension to obtain the data of a user logged in to Azure.|
@@ -75,7 +75,7 @@ To send telemetry from the extension code we must use the `telemetryService` cla
 
 Communication between the client and the extension is done using sending requests with the method `vscode.postmessage` ([more info](https://code.visualstudio.com/api/extension-guides/webview#passing-messages-from-an-extension-to-a-webview)), passing through parameters the module and the extension command that have to process this request. If we want to track the client request, send the property `track: true`. 
 
-Example:
+### Example:
 
 ```javascript
 vscode.postMessage({

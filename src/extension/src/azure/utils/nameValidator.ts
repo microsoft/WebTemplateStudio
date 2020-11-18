@@ -1,4 +1,5 @@
-import { CONSTANTS } from "../../constants";
+import { CONSTANTS } from "../../constants/constants";
+import { MESSAGES } from "../../constants/messages";
 
 export interface AppNameValidationResult {
   isValid: boolean;
@@ -13,7 +14,7 @@ export namespace NameValidator {
     if (!regexp.test(name)) {
       return {
         isValid: false,
-        message: CONSTANTS.ERRORS.APP_INVALID_NAME(name)
+        message: MESSAGES.ERRORS.APP_INVALID_NAME(name)
       };
     }
     return { isValid: true, message: "" };
@@ -27,7 +28,7 @@ export namespace NameValidator {
     ) {
       return {
         isValid: false,
-        message: CONSTANTS.ERRORS.NAME_MIN_MAX(
+        message: MESSAGES.ERRORS.NAME_MIN_MAX(
           CONSTANTS.APP_NAME.MIN_LENGTH,
           CONSTANTS.APP_NAME.MAX_LENGTH
         )

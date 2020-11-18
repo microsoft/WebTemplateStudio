@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <!--^^-->
+    <!--{[{-->
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.14.0" />
+    <!--}]}-->
+  </ItemGroup>
+
+</Project>

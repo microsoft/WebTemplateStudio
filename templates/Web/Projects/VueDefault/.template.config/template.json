@@ -16,39 +16,17 @@
     "wts.backendframework": "all",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.displayOrder": "1",
+    "wts.compositionOrder": "1",
     "wts.licenses": "[Vue](https://github.com/vuejs/vue/blob/dev/LICENSE)|[Vue CLI](https://github.com/vuejs/vue-cli/blob/dev/LICENSE)"
   },
   "sourceName": "wts.VueDefault",
   "preferNameDirectory": true,
   "PrimaryOutputs": [],
   "symbols": {
-    "wts.userName": {
+    "wts.projectName": {
       "type": "parameter",
       "dataType": "string",
-      "replaces": "Param_UserName"
-    },
-    "wts.wizardVersion": {
-      "type": "parameter",
-      "dataType": "string",
-      "replaces": "Param_Wizard.Version"
-    },
-    "wts.templatesVersion": {
-      "type": "parameter",
-      "dataType": "string",
-      "replaces": "Param_Templates.Version"
-    },
-    "wts.generationProjectType": {
-      "type": "parameter",
-      "replaces": "Param_ProjectType"
-    },
-    "wts.generationFramework": {
-      "type": "parameter",
-      "replaces": "Param_Framework"
-    },
-    "wts.generationPlatform": {
-      "type": "parameter",
-      "replaces": "Param_Platform"
+      "replaces": "Param_ProjectName"
     },
     "copyrightYear": {
       "type": "generated",
@@ -57,41 +35,17 @@
       "parameters": {
         "format": "yyyy"
       }
+    },
+    "wts.ProjectNameToLower":
+    {
+      "type": "generated",
+      "generator": "casing",
+      "parameters": {
+        "source":"wts.projectName",
+        "toLower": true
+      },
+      "replaces": "Param_ProjectNameToLower"
     }
   },
-  "postActions": [
-    {
-      "description": "Add Vue Dependencies",
-      "manualInstructions": [],
-      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
-      "args": {
-        "dict": "{'bootstrap': '4.5.0', 'bootstrap-vue': '2.15.0', 'core-js': '3.6.5', 'vue': '2.6.11', 'vue-router': '3.3.4', 'fs-extra': '9.0.1'}",
-        "key": "dependencies",
-        "jsonPath": "package.json"
-      },
-      "continueOnError": false
-    },
-    {
-      "description": "Add Vue Dev Dependencies",
-      "manualInstructions": [],
-      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
-      "args": {
-        "dict": "{'@vue/cli-plugin-babel': '4.3.1', '@vue/cli-plugin-eslint': '4.3.1', '@vue/cli-service': '4.3.1',  'babel-eslint': '10.1.0', 'eslint': '6.8.0', 'eslint-plugin-vue': '6.2.2', 'vue-template-compiler': '2.6.11'}",
-        "key": "devDependencies",
-        "jsonPath": "package.json"
-      },
-      "continueOnError": false
-    },
-    {
-      "description": "Add Vue Build Scripts",
-      "manualInstructions": [],
-      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
-      "args": {
-        "dict": "{'start-frontend': 'vue-cli-service serve --open', 'build': 'node ./buildScript', 'lint': 'vue-cli-service lint'}",
-        "key": "scripts",
-        "jsonPath": "package.json"
-      },
-      "continueOnError": false
-    }
-  ]
+  "postActions": []
 }

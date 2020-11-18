@@ -6,7 +6,7 @@ import * as path from "path";
 import {
   SubscriptionError,
   AuthorizationError,
-  DeploymentError
+  DeploymentError,
 } from "../../errors";
 import {
   ResourceManagementClient,
@@ -14,10 +14,11 @@ import {
 } from "azure-arm-resource/lib/resource/resourceManagementClient";
 import { ResourceManager } from "../azure-arm/resourceManager";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
-import { CONSTANTS } from "../../constants";
+import { CONSTANTS } from "../../constants/constants";
 import fs = require("fs-extra");
 import { ConnectionString } from "../utils/connectionString";
 import { Controller } from "../../controller";
+import { MESSAGES } from "../../constants/messages";
 
 export interface CosmosDBSelections {
   cosmosDBResourceName: string;
@@ -228,7 +229,7 @@ export class CosmosDBDeploy {
     try {
       if (this.SubscriptionItemCosmosClient === undefined) {
         throw new AuthorizationError(
-          CONSTANTS.ERRORS.COSMOS_CLIENT_NOT_DEFINED
+          MESSAGES.ERRORS.COSMOS_CLIENT_NOT_DEFINED
         );
       }
 
@@ -302,7 +303,7 @@ export class CosmosDBDeploy {
       userSubscriptionItem.subscription === undefined ||
       userSubscriptionItem.subscriptionId === undefined
     ) {
-      throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_DEFINED);
+      throw new SubscriptionError(MESSAGES.ERRORS.SUBSCRIPTION_NOT_DEFINED);
     }
     return new CosmosDBManagementClient(
       userCredentials,
@@ -331,7 +332,7 @@ export class CosmosDBDeploy {
     name: string
   ): Promise<string | undefined> {
     if (this.SubscriptionItemCosmosClient === undefined) {
-      throw new AuthorizationError(CONSTANTS.ERRORS.COSMOS_CLIENT_NOT_DEFINED);
+      throw new AuthorizationError(MESSAGES.ERRORS.COSMOS_CLIENT_NOT_DEFINED);
     }
     name = name ? name.trim() : "";
 
@@ -339,15 +340,15 @@ export class CosmosDBDeploy {
     const max = CONSTANTS.COSMOS_DB_NAME.MAX_LENGTH;
 
     if (name.length < min || name.length > max) {
-      return CONSTANTS.ERRORS.NAME_MIN_MAX(min, max);
+      return MESSAGES.ERRORS.NAME_MIN_MAX(min, max);
     } else if (name.match(/[^a-z0-9-]/)) {
-      return CONSTANTS.ERRORS.COSMOS_VALID_CHARACTERS;
+      return MESSAGES.ERRORS.COSMOS_VALID_CHARACTERS;
     } else if (
       await this.SubscriptionItemCosmosClient.databaseAccounts.checkNameExists(
         name
       )
     ) {
-      return CONSTANTS.ERRORS.COSMOS_ACCOUNT_NOT_AVAILABLE(name);
+      return MESSAGES.ERRORS.COSMOS_ACCOUNT_NOT_AVAILABLE(name);
     } else {
       return undefined;
     }
@@ -382,7 +383,7 @@ export class CosmosDBDeploy {
         cosmosClient = this.createCosmosClient(cosmosClientOrSubscriptionItem);
       } catch (error) {
         throw new AuthorizationError(
-          CONSTANTS.ERRORS.CONNECTION_STRING_FAILED + error.message
+          MESSAGES.ERRORS.CONNECTION_STRING_FAILED + error.message
         );
       }
     }
@@ -397,44 +398,55 @@ export class CosmosDBDeploy {
   public static updateConnectionStringInEnvFile(
     filePath: string,
     connectionString: string
-  ): void {
+    ): void {
     /**
      * Updates .env file in generated project directory once the connection string is received.
      * Throws an error if the user deleted the project directory
      * @filePath: path of .env file
      */
-    const cosmosEnvironmentVariables = ConnectionString.parseConnectionString(
-      connectionString
-    );
 
-    const envPath = path.join(filePath, ".env");
+    let envText;
+    if (ConnectionString.isCosmosSQLConnectionString(connectionString)) {
+      const sqlData = ConnectionString.getConnectionStringSqlData(connectionString);
+      envText = `${CONSTANTS.COSMOSDB_SQL.URI}=${sqlData.origin}
+${CONSTANTS.COSMOSDB_SQL.PRIMARY_KEY}=${sqlData.primaryKey}`;
+    } else {
+      const mongoData = ConnectionString.getConnectionStringMongoData(connectionString);
+      envText = `${CONSTANTS.COSMOSDB_MONGO.CONNSTR}=${mongoData.origin}/${mongoData.username}
+${CONSTANTS.COSMOSDB_MONGO.USER}=${mongoData.username}
+${CONSTANTS.COSMOSDB_MONGO.PASSWORD}=${mongoData.password}`;
+    }
+
+    const envPath = path.join(filePath, "backend", ".env");
     try {
       if (fs.existsSync(filePath)) {
-        fs.writeFileSync(envPath, cosmosEnvironmentVariables);
+        fs.writeFileSync(envPath, envText);
       }
     } catch (err) {
       throw new Error(err);
     }
   }
-  
+
   public static updateConnectionStringInAppSettingsFile(
     filePath: string,
     connectionString: string
-  ): void {
+    ): void {
     try {
-      const appSettingsPath = path.join(filePath, "server", "appsettings.json");
+      const appSettingsPath = path.join(filePath, "backend", "appsettings.json");
       const appsettings = fs.readJSONSync(appSettingsPath);
 
-      if(ConnectionString.isCosmosSQLConnectionString(connectionString)) {
+      if (ConnectionString.isCosmosSQLConnectionString(connectionString)) {
         const sqlData = ConnectionString.getConnectionStringSqlData(connectionString);
-        appsettings.CosmosDB.Account = sqlData.account;
-        appsettings.CosmosDB.Key = sqlData.primaryKey;
-      } else {   
-        appsettings.ConnectionStrings.CosmosDB = connectionString;
+        appsettings.COSMOSDB_URI = sqlData.origin;
+        appsettings.COSMOSDB_PRIMARY_KEY = sqlData.primaryKey;
+      } else {
+        const mongoData = ConnectionString.getConnectionStringMongoData(connectionString);
+        appsettings.COSMOSDB_CONNSTR = `${mongoData.origin}/${mongoData.username}`;
+        appsettings.COSMOSDB_USER = mongoData.username;
+        appsettings.COSMOSDB_PASSWORD = mongoData.password;
       }
 
-      fs.writeJSONSync(appSettingsPath, appsettings, {spaces: 2});
-      
+      fs.writeJSONSync(appSettingsPath, appsettings, { spaces: 2 });
     } catch (err) {
       throw new Error(err);
     }

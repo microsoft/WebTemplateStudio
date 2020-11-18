@@ -1,0 +1,31 @@
+.sortablePages {
+  margin-bottom: 30px;
+}
+
+.pageListContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.iconsContainer {
+  display: flex;
+}
+
+.hideOrShow {
+  margin-left: 1px;
+  cursor: pointer;
+  color: var(--vscode-textLink-foreground);
+  border: none;
+  font-size: var(--vscode-font-size);
+  background-color: var(--vscode-editor-background);
+}
+
+.hideOrShow:focus,
+.addPagesButton:focus,
+.resetButton:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.viewIcon path {
+  fill: var(--vscode-editor-foreground);
+}

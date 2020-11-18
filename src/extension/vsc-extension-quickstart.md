@@ -15,14 +15,14 @@
 ## Get up and running straight away
 
 - Press `F5` to open a new window with your extension loaded.
-- Run your command from the command palette by pressing (`Ctrl+Shift+P` or `Cmd+Shift+P` on Mac) and typing `Hello World`.
+- Run your command from the command palette by pressing (`Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac) and typing `Hello World`.
 - Set breakpoints in your code inside `src/extension.ts` to debug your extension.
 - Find output from your extension in the debug console.
 
 ## Make changes
 
 - You can relaunch the extension from the debug toolbar after changing code in `src/extension.ts`.
-- You can also reload (`Ctrl+R` or `Cmd+R` on Mac) the VS Code window with your extension to load your changes.
+- You can also reload (`Ctrl + R` in Windows/Linux or `Command ⌘ + R` in Mac) the VS Code window with your extension to load your changes.
 
 ## Explore the API
 
@@ -30,7 +30,7 @@
 
 ## Run tests
 
-- Open the debug viewlet (`Ctrl+Shift+D` or `Cmd+Shift+D` on Mac) and from the launch configuration dropdown pick `Extension Tests`.
+- Open the debug viewlet (`Ctrl + Shift ⇧ + D` or `Command ⌘ + Shift ⇧ + D` in Mac) and from the launch configuration dropdown pick `Extension Tests`.
 - Press `F5` to run the tests in a new window with your extension loaded.
 - See the output of the test result in the debug console.
 - Make changes to `test/extension.test.ts` or create new test files inside the `test` folder.

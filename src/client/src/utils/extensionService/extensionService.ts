@@ -1,8 +1,9 @@
 import { IVSCodeObject } from "../../types/vscode";
-import {
-  EXTENSION_COMMANDS, EXTENSION_MODULES, WIZARD_CONTENT_INTERNAL_NAMES, PAYLOAD_MESSAGES_TEXT
-} from "../constants";
+import { PAYLOAD_MESSAGES_TEXT } from "../constants/constants";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../constants/internalNames";
 import { ILoggingPayload } from "../../types/logger";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../constants/commands";
+import { IVersionPackage } from "../../types/option";
 
 const postMessageAsync = (command: string, paramsMessage: any, vscode: IVSCodeObject, scopeId: number = Math.random())=>{
   const promise = new Promise<any>((resolve) => {
@@ -34,18 +35,18 @@ const projectPathValidation = (projectPath: string, projectName: string, vscode:
   return promise;
 }
 
-const getValidationsConfig = (paramsMessage: any, vscode: IVSCodeObject): Promise<any> => {
-  return postMessageAsync(EXTENSION_COMMANDS.GET_VALIDATIONS, paramsMessage, vscode);
-}
-
-const getFrameworks = (vscode: IVSCodeObject, isPreview: boolean): Promise<any> => {
+const getFrameworks = (vscode: IVSCodeObject, projectType: string): Promise<any> => {
   return postMessageAsync(EXTENSION_COMMANDS.GET_FRAMEWORKS, {
     module: EXTENSION_MODULES.CORETS,
     command: EXTENSION_COMMANDS.GET_FRAMEWORKS,
-    payload: {
-      isPreview,
-      projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP
-    }
+    payload: { projectType }
+  }, vscode);
+}
+
+const getProjectTypes = (vscode: IVSCodeObject): Promise<any> => {
+  return postMessageAsync(EXTENSION_COMMANDS.GET_PROJECT_TYPES, {
+    module: EXTENSION_MODULES.CORETS,
+    command: EXTENSION_COMMANDS.GET_PROJECT_TYPES
   }, vscode);
 }
 
@@ -57,13 +58,12 @@ const getTemplateInfo = (vscode: IVSCodeObject): Promise<any> => {
   }, vscode);
 }
 
-const getLatestVersion = (vscode: IVSCodeObject, checkVersionPackageName: string, checkVersionPackageSource: string): Promise<any> => {
+const getLatestVersion = (vscode: IVSCodeObject, checkVersionPackage: IVersionPackage): Promise<any> => {
   return postMessageAsync(EXTENSION_COMMANDS.GET_LATEST_VERSION, {
     module: EXTENSION_MODULES.DEPENDENCYCHECKER,
     command: EXTENSION_COMMANDS.GET_LATEST_VERSION,
     payload: {
-      checkVersionPackageName,
-      checkVersionPackageSource
+      checkVersionPackage,
     }
   }, vscode).then((event)=>{
     const latestVersion = event.data.payload.latestVersion;
@@ -71,26 +71,12 @@ const getLatestVersion = (vscode: IVSCodeObject, checkVersionPackageName: string
   });
 }
 
-const getDependencyInfo = (vscode: IVSCodeObject, dependency: string): Promise<{dependency: string; installed: boolean}> => {
-  return postMessageAsync(EXTENSION_COMMANDS.GET_DEPENDENCY_INFO, {
-      module: EXTENSION_MODULES.DEPENDENCYCHECKER,
-      command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
-      payload: { dependency },
-    }, vscode).then((event) => {
-    const { dependency, installed } = event.data.payload;
-    return {
-      dependency,
-      installed,
-    };
-  });
-};
-
-const getPages = (vscode: IVSCodeObject, frontEndInternalName: string, backEndInternalName: string)=>{
+const getPages = (vscode: IVSCodeObject, projectType: string, frontEndInternalName: string, backEndInternalName: string)=>{
   return postMessageAsync( EXTENSION_COMMANDS.GET_PAGES, {
     module: EXTENSION_MODULES.CORETS,
     command: EXTENSION_COMMANDS.GET_PAGES,
     payload: {
-      projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
+      projectType,
       frontendFramework: frontEndInternalName,
       backendFramework: backEndInternalName
     }
@@ -109,10 +95,17 @@ const getFeatures = (vscode: IVSCodeObject, frontEndInternalName: string, backEn
   }, vscode);
 }
 
-const getOutputPath = (vscode: IVSCodeObject) => {
-  return postMessageAsync(EXTENSION_COMMANDS.GET_OUTPUT_PATH, {
+const getOutputPathFromConfig = (vscode: IVSCodeObject) => {
+  return postMessageAsync(EXTENSION_COMMANDS.GET_OUTPUT_PATH_FROM_CONFIG, {
     module: EXTENSION_MODULES.DEFAULTS,
-    command: EXTENSION_COMMANDS.GET_OUTPUT_PATH
+    command: EXTENSION_COMMANDS.GET_OUTPUT_PATH_FROM_CONFIG
+  }, vscode);
+}
+
+const browseNewOutputPath = (vscode: IVSCodeObject) => {
+  return postMessageAsync(EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH, {
+    module: EXTENSION_MODULES.DEFAULTS,
+    command: EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH
   }, vscode);
 }
 
@@ -262,14 +255,14 @@ const unsubscribeToExtensionEvents = (listener: any) => {
 
 export {
   projectPathValidation,
-  getValidationsConfig,
   getFrameworks,
+  getProjectTypes,
   getAllLicenses,
   getLatestVersion,
-  getDependencyInfo,
   getPages,
   getFeatures,
-  getOutputPath,
+  getOutputPathFromConfig,
+  browseNewOutputPath,
   sendTelemetry,
   getResourceGroups,
   GetValidAppServiceName,

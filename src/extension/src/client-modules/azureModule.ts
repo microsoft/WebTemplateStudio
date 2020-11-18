@@ -1,12 +1,14 @@
 import { SubscriptionItem } from "../azure/azure-auth/azureAuth";
 
-import { CONSTANTS, AzureResourceType, ExtensionCommand } from "../constants";
+import { AzureResourceType } from "../constants/constants";
+import { EXTENSION_COMMANDS } from "../constants/commands";
 
 import { AuthorizationError } from "../errors";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
 import { Logger } from "../utils/logger";
 import { AzureServices } from "../azure/azureServices";
 import { NameGenerator } from "../azure/utils/nameGenerator";
+import { MESSAGES } from "../constants/messages";
 
 interface Subscription {
   name: string;
@@ -14,40 +16,39 @@ interface Subscription {
 }
 
 export class AzureModule extends WizardServant {
-  clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
-    [ExtensionCommand.Login, this.login],
-    [ExtensionCommand.Logout, this.logout],
-    [ExtensionCommand.GetUserStatus, this.getUserStatus],
-    [ExtensionCommand.GetResourceGroups, this.getResourceGroups],
-    [ExtensionCommand.GetLocations, this.getLocations],
-    [ExtensionCommand.GetValidAppServiceName, this.getValidAppServiceName],
-    [ExtensionCommand.GetValidCosmosName, this.getValidCosmosName],
-    [ExtensionCommand.ValidateCosmosName, this.validateCosmosName],
-    [ExtensionCommand.ValidateAppServiceName, this.validateAppServiceName],
+  clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
+    [EXTENSION_COMMANDS.AZURE_LOGIN, this.login],
+    [EXTENSION_COMMANDS.AZURE_LOGOUT, this.logout],
+    [EXTENSION_COMMANDS.GET_USER_STATUS, this.getUserStatus],
+    [EXTENSION_COMMANDS.GET_RESOURCE_GROUPS, this.getResourceGroups],
+    [EXTENSION_COMMANDS.GET_LOCATIONS, this.getLocations],
+    [EXTENSION_COMMANDS.GET_VALID_APP_SERVICE_NAME, this.getValidAppServiceName],
+    [EXTENSION_COMMANDS.GET_VALID_COSMOS_NAME, this.getValidCosmosName],
+    [EXTENSION_COMMANDS.VALIDATE_COSMOS_NAME, this.validateCosmosName],
+    [EXTENSION_COMMANDS.VALIDATE_APPSERVICE_NAME, this.validateAppServiceName],
   ]);
 
-  public async login(message: any): Promise<IPayloadResponse> {
+  public async login(): Promise<IPayloadResponse> {
     Logger.appendLog("EXTENSION", "info", "Attempt to log user in");
     const isLoggedIn = await AzureServices.Login();
     if (isLoggedIn) {
       Logger.appendLog("EXTENSION", "info", "User logged in");
-      return this.getUserStatus(message);
+      return this.getUserStatus();
     }
-    throw new AuthorizationError(CONSTANTS.ERRORS.LOGIN_TIMEOUT);
+    throw new AuthorizationError(MESSAGES.ERRORS.LOGIN_TIMEOUT);
   }
 
-  public async logout(message: any): Promise<IPayloadResponse> {
+  public async logout(): Promise<IPayloadResponse> {
     const success = await AzureServices.Logout();
-    const payload = { scope: message.payload.scope, success };
+    const payload = { success };
     return { payload };
   }
 
-  public async getUserStatus(message: any): Promise<IPayloadResponse> {
+  public async getUserStatus(): Promise<IPayloadResponse> {
     const userStatus = await AzureServices.getUserStatus();
     const subscriptions = this.getFormattedSubscriptions(userStatus.subscriptions);
     return {
       payload: {
-        scope: message.payload.scope,
         email: userStatus.email,
         subscriptions,
       },
@@ -59,7 +60,6 @@ export class AzureModule extends WizardServant {
     return {
       payload: {
         resourceGroups,
-        scope: message.payload.scope,
       },
     };
   }
@@ -69,7 +69,6 @@ export class AzureModule extends WizardServant {
     return {
       payload: {
         locations,
-        scope: message.payload.scope,
       },
     };
   }
@@ -79,7 +78,6 @@ export class AzureModule extends WizardServant {
     return {
       payload: {
         validName,
-        scope: message.payload.scope,
       },
     };
   }
@@ -89,7 +87,6 @@ export class AzureModule extends WizardServant {
     return {
       payload: {
         validName,
-        scope: message.payload.scope,
       },
     };
   }
@@ -98,7 +95,6 @@ export class AzureModule extends WizardServant {
     const validateResult = await AzureServices.validateAppServiceName(message.appName, message.subscription);
     return {
       payload: {
-        scope: message.payload.scope,
         ...validateResult,
       },
     };
@@ -109,16 +105,11 @@ export class AzureModule extends WizardServant {
       const validateResult = await AzureServices.validateCosmosName(message.appName, message.subscription);
     return {
       payload: {
-        scope: message.payload.scope,
         ...validateResult,
       },
     };
     }catch(error) {
-      return {
-        payload: {
-          scope: message.payload.scope,
-        }
-      };
+      return { payload: undefined };
     }
   }
 

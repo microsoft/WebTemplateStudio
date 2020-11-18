@@ -10,20 +10,32 @@ export interface IOption {
   body: string | FM.MessageDescriptor;
   longDescription?: string | FM.MessageDescriptor;
   position?: number;
-  svgUrl: string | undefined;
+  icon: string;
   licenses?: string[];
   selected?: boolean;
   author?: string;
   version?: string;
   linuxVersion?: string;
-  latestVersion?: string="";
+  latestVersion?: string = "";
   latestVersionLoaded?: boolean = false;
-  checkVersionPackageName?: string="";
-  checkVersionPackageSource?: string="";
+  checkVersionPackage?: IVersionPackage;
+  requirement?: IRequirement;
   unselectable?: boolean;
   isValidTitle?: boolean;
   author?: string;
   group?: string;
   expectedTime?: string | FM.MessageDescriptor;
   expectedPrice?: string | FM.MessageDescriptor;
+  editable?: boolean;
+}
+
+export interface IVersionPackage {
+  source: string;
+  name: string;
+}
+
+export interface IRequirement {
+  name: string;
+  version: string;
+  isInstalled: boolean;
 }
