@@ -11,7 +11,7 @@ const messages = defineMessages({
   },
   ariaDropdownLabel: {
     id: "CosmosModal.ApiSelection.ariaDropdownLabel",
-    defaultMessage: "CosmosDB API Drop Down",
+    defaultMessage: "CosmosDB API dropdown",
   },
 });
 
