@@ -8,6 +8,7 @@ const FRONTEND_FRAMEWORKS = {
   REACT: "React",
   ANGULAR: "Angular",
   VUE: "Vue",
+  RN: "ReactNative",
 }
 
 const BACKEND_FRAMEWORKS = {
