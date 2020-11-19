@@ -7,7 +7,7 @@ const messages = defineMessages({
   },
   ariaSignOutLabel: {
     id: "pageAddServices.azureAccount.ariaSignOut",
-    defaultMessage: "Sign Out from Azure"
+    defaultMessage: "Sign Out from Azure",
   },
   signIn: {
     id: "pageAddServices.azureAccount.signIn",
@@ -15,13 +15,13 @@ const messages = defineMessages({
   },
   ariaSignInLabel: {
     id: "pageAddServices.azureAccount.ariaSignIn",
-    defaultMessage: "Azure Sign In"
+    defaultMessage: "Azure Sign In",
   },
-  createAccount:{
+  createAccount: {
     id: "pageAddServices.azureAccount.createAccount",
     defaultMessage: "Create Free Account",
   },
-  ariaCreateAccountLabel:{
+  ariaCreateAccountLabel: {
     id: "pageAddServices.azureAccount.ariaCreateAccountLabel",
     defaultMessage: "Create Free Azure Account",
   },

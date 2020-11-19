@@ -1,4 +1,3 @@
-
 import { IRoutesActionType } from "./models";
 import { TEMPLATES_TYPEKEYS } from "../../templates/templateTypeKeys";
 import { IRoutesNavItems } from "../../../types/route";

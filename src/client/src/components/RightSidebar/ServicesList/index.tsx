@@ -33,7 +33,7 @@ function ServicesList({ services, intl }: Props) {
 }
 
 const mapStateToProps = (state: AppState): IProps => ({
-  services: getServices(state)
+  services: getServices(state),
 });
 
 export default connect(mapStateToProps)(injectIntl(ServicesList));

@@ -22,27 +22,22 @@ const PageDetails = (props: Props) => {
   return (
     <div className={styles.detailsContainer}>
       <Details
-        handleBackClick={()=>{
-          const optionDetailPageBack: IOption = {title: "", internalName: "", body: "", icon: ""};
+        handleBackClick={() => {
+          const optionDetailPageBack: IOption = { title: "", internalName: "", body: "", icon: "" };
           dispatch(setDetailPageAction(optionDetailPageBack, false, ""));
         }}
         detailInfo={detailsPageInfo}
         formatteDetailInfo={isIntlFormatted ? detailsPageInfo : undefined}
       />
-      <div className={styles.screenShotContainer}>
-      {getScreenShot(detailsPageInfo.internalName, styles.screenshot)}
-      </div>
+      <div className={styles.screenShotContainer}>{getScreenShot(detailsPageInfo.internalName, styles.screenshot)}</div>
     </div>
   );
 };
 
 const mapStateToProps = (state: AppState): IPageDetailsProps => ({
-  originRoute : state.config.detailsPage.originRoute,
-    detailsPageInfo: state.config.detailsPage.data,
-    isIntlFormatted: state.config.detailsPage.isIntlFormatted
+  originRoute: state.config.detailsPage.originRoute,
+  detailsPageInfo: state.config.detailsPage.data,
+  isIntlFormatted: state.config.detailsPage.isIntlFormatted,
 });
 
-export default
-  connect(
-    mapStateToProps
-  )(PageDetails);
+export default connect(mapStateToProps)(PageDetails);

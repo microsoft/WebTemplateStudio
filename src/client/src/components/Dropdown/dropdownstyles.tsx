@@ -3,34 +3,32 @@
 
 export default {
   input: () => ({
-    color: "var(--vscode-editor-foreground)"
+    color: "var(--vscode-editor-foreground)",
   }),
   indicatorSeparator: (base: any) => ({
     ...base,
-    display: "none"
+    display: "none",
   }),
   singleValue: (base: any) => ({
     ...base,
-    color: "var(--vscode-editor-foreground)"
+    color: "var(--vscode-editor-foreground)",
   }),
   placeholder: (base: any) => ({
     ...base,
-    color: "var(--vscode-menu-foreground)"
+    color: "var(--vscode-menu-foreground)",
   }),
   control: (base: any, state: any): any => ({
     ...base,
     color: "white",
-    border: state.isFocused
-      ? "1px solid var(--vscode-contrastActiveBorder)"
-      : "none",
+    border: state.isFocused ? "1px solid var(--vscode-contrastActiveBorder)" : "none",
     borderRadius: 0,
     boxShadow: "none",
     background: "var(--vscode-editorWidget-border)",
     "&:hover": {
-      outline: "0.5px solid rgba(0,0,0,0.5)"
+      outline: "0.5px solid rgba(0,0,0,0.5)",
     },
     padding: "5px",
-    cursor: "pointer"
+    cursor: "pointer",
   }),
   option: (provided: any, state: any) => ({
     ...provided,
@@ -39,9 +37,9 @@ export default {
     "&:hover": {
       background: "var(--vscode-menu-foreground)",
       border: 0,
-      color: "var(--vscode-editor-background)"
+      color: "var(--vscode-editor-background)",
     },
-    cursor: "pointer"
+    cursor: "pointer",
   }),
   menu: (base: any) => ({
     ...base,
@@ -54,7 +52,7 @@ export default {
     marginBottom: 0,
     textAlign: "left",
     // prevent menu to scroll y
-    wordWrap: "break-word"
+    wordWrap: "break-word",
   }),
   menuList: (base: any) => ({
     ...base,
@@ -62,6 +60,6 @@ export default {
     padding: 0,
     background: "var(--vscode-editorWidget-border)",
     border: "none",
-    maxHeight: "130px"
-  })
+    maxHeight: "130px",
+  }),
 };

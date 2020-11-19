@@ -34,14 +34,12 @@ const FrameworkCard = (props: Props) => {
   React.useEffect(() => {
     selectWhenLoadWithoutSelection();
     if (!framework.latestVersionLoaded) {
-      getLatestVersion(vscode, framework.checkVersionPackage).then(
-        (latestVersionValidation: boolean) => {
-          framework.latestVersion = latestVersionValidation;
-          framework.latestVersionLoaded = true;
-          dispatch(updateFrameworksAction([framework]));
-          setLatestVersion(latestVersionValidation);
-        }
-      );
+      getLatestVersion(vscode, framework.checkVersionPackage).then((latestVersionValidation: boolean) => {
+        framework.latestVersion = latestVersionValidation;
+        framework.latestVersionLoaded = true;
+        dispatch(updateFrameworksAction([framework]));
+        setLatestVersion(latestVersionValidation);
+      });
     }
   }, []);
 
@@ -124,9 +122,7 @@ const FrameworkCard = (props: Props) => {
         </div>
         <div className={styles.description}>{framework.body}</div>
         <div className={styles.DependencyInfo}>
-          {selected && !framework.requirement?.isInstalled && (
-            <DependencyInfo requirement={framework.requirement} />
-          )}
+          {selected && !framework.requirement?.isInstalled && <DependencyInfo requirement={framework.requirement} />}
         </div>
         <div className={styles.gridLayoutCardFooter}>
           <div>

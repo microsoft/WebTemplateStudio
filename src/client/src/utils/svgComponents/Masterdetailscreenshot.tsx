@@ -7,5 +7,5 @@ interface IProps {
 }
 
 export default (props: IProps) => {
-  return (<Masterdetailscreenshot className={classnames(props.style)}/>);
-}
+  return <Masterdetailscreenshot className={classnames(props.style)} />;
+};

@@ -33,13 +33,7 @@ const SelectPages = (props: Props) => {
   const selectedPages: any[] = useSelector((state: AppState) => state.userSelection.pages);
   const dispatch = useDispatch();
 
-  const onSortEnd = ({
-    oldIndex,
-    newIndex
-  }: {
-    oldIndex: number;
-    newIndex: number;
-  }) => {
+  const onSortEnd = ({ oldIndex, newIndex }: { oldIndex: number; newIndex: number }) => {
     dispatch(setPagesAction(arrayMove(selectedPages, oldIndex, newIndex)));
   };
   const DRAG_PIXEL_THRESHOLD = 1;
@@ -48,8 +42,7 @@ const SelectPages = (props: Props) => {
     <div className={styles.sortablePages}>
       <div className={classnames(styles.pageListContainer)}>
         <div className={rightsidebarStyles.title}>
-          {`${props.intl!.formatMessage(messages.pages)} (${selectedPages.length >= 0 ? selectedPages.length : ""
-            })`}
+          {`${props.intl!.formatMessage(messages.pages)} (${selectedPages.length >= 0 ? selectedPages.length : ""})`}
         </div>
         <div className={styles.iconsContainer}>
           <button
@@ -58,11 +51,7 @@ const SelectPages = (props: Props) => {
               setMinimized(!isMinimized);
             }}
           >
-            {isMinimized ? (
-              <ShowIconSVG className={styles.viewIcon} />
-            ) : (
-                <HideIconSVG className={styles.viewIcon} />
-              )}
+            {isMinimized ? <ShowIconSVG className={styles.viewIcon} /> : <HideIconSVG className={styles.viewIcon} />}
           </button>
         </div>
       </div>
@@ -73,8 +62,8 @@ const SelectPages = (props: Props) => {
           onSortEnd={onSortEnd}
           distance={DRAG_PIXEL_THRESHOLD}
           lockToContainerEdges
-          lockAxis='y'
-          lockOffset='25%'
+          lockAxis="y"
+          lockOffset="25%"
         />
       )}
     </div>

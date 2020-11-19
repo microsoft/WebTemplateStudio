@@ -12,10 +12,10 @@ const emptyCosmosDB = null;
 const emptyAppService = null;
 
 const mockVsCode = {
-  vscodeObject:{
-    postMessage: jest.fn()
-  }
-}
+  vscodeObject: {
+    postMessage: jest.fn(),
+  },
+};
 
 describe("ServicesList", () => {
   let props: any;
@@ -26,9 +26,9 @@ describe("ServicesList", () => {
     beforeEach(() => {
       initialState = getInitialState();
       initialState.userSelection.services = {
-        appService: emptyAppService
+        appService: emptyAppService,
       };
-      initialState.vscode= mockVsCode
+      initialState.vscode = mockVsCode;
 
       wrapper = mountWithIntl(
         <Provider store={mockStore(initialState)}>
@@ -52,7 +52,7 @@ describe("ServicesList", () => {
       const appService = { ...emptyAppService, selection: {} };
       initialState = getInitialState();
       initialState.userSelection.services = {
-        appService: appService
+        appService: appService,
       };
       initialState.vscode = mockVsCode;
 
@@ -68,7 +68,7 @@ describe("ServicesList", () => {
     });
 
     it("Should have a rendered AppServiceSelection component", () => {
-    const appServiceComponent = wrapper.find(AppServiceSelection);
+      const appServiceComponent = wrapper.find(AppServiceSelection);
       expect(appServiceComponent).toHaveLength(1);
     });
   });
@@ -77,7 +77,7 @@ describe("ServicesList", () => {
     beforeEach(() => {
       initialState = getInitialState();
       initialState.userSelection.services = {
-        cosmosDB: emptyCosmosDB
+        cosmosDB: emptyCosmosDB,
       };
       initialState.vscode = mockVsCode;
 

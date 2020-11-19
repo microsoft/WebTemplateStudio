@@ -6,7 +6,7 @@ interface ILogOutResponse {
 const logOutOfAzure = (): Promise<ILogOutResponse> => {
   return Promise.resolve({
     status: "200 OK",
-    body: "success"
+    body: "success",
   });
 };
 

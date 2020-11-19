@@ -1,6 +1,6 @@
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 import SubscriptionSelection from ".";
 import { getInitialState, setSubscriptions } from "../../mockData/mockStore";
 import { RenderResult, fireEvent } from "@testing-library/react";
@@ -9,7 +9,7 @@ import { renderWithStore } from "../../testUtils";
 import { AZURE_LINKS } from "../../utils/constants/azure";
 import messages from "./messages";
 
-jest.mock("../Dropdown", () => require('../../testUtils').dropdownMock);
+jest.mock("../Dropdown", () => require("../../testUtils").dropdownMock);
 
 describe("SubscriptionSelection", () => {
   let props: any;
@@ -31,11 +31,11 @@ describe("SubscriptionSelection", () => {
   it("renders without crashing", () => {
     wrapper = renderWithStore(<SubscriptionSelection {...props} />, store);
     expect(wrapper).toBeDefined();
-  }); 
+  });
 
   it("Has a create new subscription link", () => {
     wrapper = renderWithStore(<SubscriptionSelection {...props} />, store);
-    const link = wrapper.getByText(intl.formatMessage(messages.newSubscriptionLink))
+    const link = wrapper.getByText(intl.formatMessage(messages.newSubscriptionLink));
     expect(link).toHaveAttribute("href", AZURE_LINKS.CREATE_NEW_SUBSCRIPTION);
   });
 
@@ -49,7 +49,7 @@ describe("SubscriptionSelection", () => {
   it("When selected a subscription in a dropdown, onSubscriptionChange notify selected subscription", () => {
     wrapper = renderWithStore(<SubscriptionSelection {...props} />, store);
     const dropdown = wrapper.getByTestId("dropdown");
-    fireEvent.change(dropdown, { target: { label:"subscription 1", value:"subscription 1"}});
+    fireEvent.change(dropdown, { target: { label: "subscription 1", value: "subscription 1" } });
     expect(props.onSubscriptionChange).toHaveBeenCalledTimes(1);
     expect(props.onSubscriptionChange).toHaveBeenCalledWith("subscription 1");
   });

@@ -12,7 +12,7 @@ const configReducer = combineReducers({
   validations,
   versions,
   azureProfileData,
-  platform
+  platform,
 });
 
 export default configReducer;

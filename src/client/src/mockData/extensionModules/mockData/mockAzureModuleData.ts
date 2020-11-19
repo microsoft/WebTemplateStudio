@@ -12,7 +12,7 @@ const locations: AzureLocation[] = [
   { name: "West Central US" },
   { name: "West Europe" },
   { name: "West India" },
-  { name: "West US" }
+  { name: "West US" },
 ];
 
 const resourceGroups: ResourceGroup[] = Array.from(Array(5).keys()).map((key) => {
@@ -21,7 +21,7 @@ const resourceGroups: ResourceGroup[] = Array.from(Array(5).keys()).map((key) =>
   };
 });
 
-const sandboxResourceGroups: ResourceGroup[] = [{name: "Sandbox resourceGroupMock"}];
+const sandboxResourceGroups: ResourceGroup[] = [{ name: "Sandbox resourceGroupMock" }];
 
 const subscriptions: Subscription[] = Array.from(Array(5).keys()).map((element: number) => {
   return {

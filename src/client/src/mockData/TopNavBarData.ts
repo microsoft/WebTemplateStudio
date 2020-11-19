@@ -3,7 +3,7 @@ const topNavBarData: string[] = [
   "Add Frameworks",
   "Add Pages",
   "Add Optional Cloud Services",
-  "Summary"
+  "Summary",
 ];
 
 export default topNavBarData;

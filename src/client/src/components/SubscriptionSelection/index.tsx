@@ -23,7 +23,7 @@ const SubscriptionSelection = (props: Props) => {
   const [selectedSubscription, setSelectedSubscription] = useState<IDropDownOptionType | undefined>(undefined);
 
   React.useEffect(() => {
-    const subscription = subscriptions.find(s => s.value === initialSubscription);
+    const subscription = subscriptions.find((s) => s.value === initialSubscription);
     if (subscription) {
       setSelectedSubscription(subscription);
     }
@@ -34,7 +34,7 @@ const SubscriptionSelection = (props: Props) => {
       onSubscriptionChange(selectedSubscription.value);
     }
   }, [selectedSubscription]);
-  
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -47,7 +47,7 @@ const SubscriptionSelection = (props: Props) => {
       <Dropdown
         ariaLabel={formatMessage(messages.ariaDropdownLabel)}
         options={subscriptions}
-        handleChange={subscription => setSelectedSubscription(subscription)}
+        handleChange={(subscription) => setSelectedSubscription(subscription)}
         value={selectedSubscription}
       />
     </div>

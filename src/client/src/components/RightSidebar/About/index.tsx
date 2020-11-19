@@ -37,14 +37,10 @@ const About = ({ intl }: Props) => {
           {formatMessage(messages.reportIssue)}
         </a>
       </div>
-      <br/>
+      <br />
 
-      <div className={styles.wizardInfo}>
-        {formatMessage(messages.templatesVersion) + ` ${templatesVersion}`}
-      </div>
-      <div className={styles.wizardInfo}>
-        {formatMessage(messages.wizardVersion) + ` ${wizardVersion}`}
-      </div>
+      <div className={styles.wizardInfo}>{formatMessage(messages.templatesVersion) + ` ${templatesVersion}`}</div>
+      <div className={styles.wizardInfo}>{formatMessage(messages.wizardVersion) + ` ${wizardVersion}`}</div>
     </div>
   );
 };

@@ -8,4 +8,3 @@ export interface IOpenModalAction {
 export interface ICloseModalAction {
   type: NAVIGATION_MODAL_TYPEKEYS.CLOSE_MODALS;
 }
-

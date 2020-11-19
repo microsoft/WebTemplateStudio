@@ -1,6 +1,5 @@
 import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 
-
 export interface IProjectPathValidationAction {
   type: CONFIG_TYPEKEYS.SET_PROJECT_PATH_VALIDATION;
   payload: any; //FIXME: Type is declared in future PR in validation reducer, replace when merged

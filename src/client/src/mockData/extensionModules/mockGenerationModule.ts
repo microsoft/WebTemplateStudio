@@ -68,7 +68,7 @@ const sendGenerationStatus = (name: string, status: GenerationItemStatus, messag
         name,
         status,
         message,
-        data
+        data,
       },
     },
     "*"

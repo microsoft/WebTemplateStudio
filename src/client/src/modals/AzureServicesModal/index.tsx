@@ -57,9 +57,7 @@ const AzureServicesModal = (props: Props) => {
   return (
     <div>
       <div className={styles.headerContainer}>
-        <div className={styles.title}>
-          {formatMessage(messages.getStartedWithAzure)}
-        </div>
+        <div className={styles.title}>{formatMessage(messages.getStartedWithAzure)}</div>
         <Cancel
           tabIndex={0}
           className={styles.cancelIcon}
@@ -87,11 +85,7 @@ const AzureServicesModal = (props: Props) => {
           answer={formatMessage(messages.freeTrialUpgradeAnswer)}
         />
         <div className={styles.paragraph}>
-          <a
-            className={styles.link}
-            href={AZURE_LINKS.CREATE_FREE_ACCOUNT_FAQ}
-            onKeyUp={keyUpHandler}
-          >
+          <a className={styles.link} href={AZURE_LINKS.CREATE_FREE_ACCOUNT_FAQ} onKeyUp={keyUpHandler}>
             <FormattedMessage
               id="azureServicesModal.azureReadMore"
               defaultMessage="Learn more about the Azure free account. Read the FAQ >"
@@ -109,7 +103,7 @@ const AzureServicesModal = (props: Props) => {
 const mapStateToProps = (state: AppState): IStateProps => {
   return {
     isModalOpen: isAzureServicesModalOpenSelector(state),
-    selectedAzureServiceName: state.navigation.modals.openModal.modalData
+    selectedAzureServiceName: state.navigation.modals.openModal.modalData,
   };
 };
 

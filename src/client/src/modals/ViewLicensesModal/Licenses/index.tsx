@@ -13,29 +13,29 @@ const Licenses = () => {
   const { vscode } = React.useContext(AppContext);
   const generationData = useSelector(getGenerationData);
   const [licenses, setLicenses] = React.useState<ILicenseObject[]>([]);
-  React.useEffect(()=>{
-    getAllLicenses(generationData, vscode).then((event)=>{
+  React.useEffect(() => {
+    getAllLicenses(generationData, vscode).then((event) => {
       setLicenses(event.data.payload.licenses);
     });
-  },[]);
+  }, []);
 
   return (
     <div className={styles.container}>
       {licenses.map((license: ILicenseObject) => (
-          <p key={license.url}>
-            <a
-              className={styles.licenseButton}
-              href={String(license.url)}
-              key={license.text}
-              target={"_blank"}
-              rel="noreferrer noopener"
-            >
-              {license.text}
-            </a>
-          </p>
-        ))}
+        <p key={license.url}>
+          <a
+            className={styles.licenseButton}
+            href={String(license.url)}
+            key={license.text}
+            target={"_blank"}
+            rel="noreferrer noopener"
+          >
+            {license.text}
+          </a>
+        </p>
+      ))}
     </div>
   );
 };
 
-export default (injectIntl(Licenses));
+export default injectIntl(Licenses);
