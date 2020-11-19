@@ -1,6 +1,4 @@
 from azure.cosmos import CosmosClient, errors, http_constants, PartitionKey
-import azure.cosmos.errors as errors
-import azure.cosmos.http_constants as http_constants
 from .settings import connection_key, master_key
 from constants import CONSTANTS
 
