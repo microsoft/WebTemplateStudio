@@ -10,7 +10,7 @@ import "./index.css";
 import reducers from "./store/combineReducers";
 import runSagaMiddelware from "./store/rootSaga";
 import { IntlProvider } from "react-intl";
-import { AppContext} from "./AppContext";
+import { AppContext, platform} from "./AppContext";
 import { PRODUCTION } from "./utils/constants/constants";
 import mockVsCodeApi from "./mockData/mockVsCodeApi";
 
@@ -26,7 +26,7 @@ const store = createStoreWithMiddleware(
 const vscode = process.env.NODE_ENV === PRODUCTION ?
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore because function does not exist in dev environment
-  acquireVsCodeApi(): mockVsCodeApi();
+  acquireVsCodeApi(): mockVsCodeApi(platform);
 
 runSagaMiddelware(vscode, sagaMiddleware);
 

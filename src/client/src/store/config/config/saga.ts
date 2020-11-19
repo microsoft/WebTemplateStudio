@@ -65,6 +65,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
 
   function* callBack() {
     const event: any = yield call(getProjectTypes, vscode);
+    //TODO: need to re work this to have multiple types of projects
     const projectTypes = event.data.payload.projectTypes.map((projectType: any) => projectType.name);
     const projectType = projectTypes[0];
 
@@ -80,52 +81,54 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
 
     const rnProjectTypeList = [WIZARD_PROJECT_TYPE.RN_TABBED_APP, WIZARD_PROJECT_TYPE.RN_DRAWER_APP];
 
-    if (projectType === WIZARD_PROJECT_TYPE.FULL_STACK_APP
-      || rnProjectTypeList.indexOf(projectType) > -1) {
+    if (projectType === WIZARD_PROJECT_TYPE.FULL_STACK_APP || rnProjectTypeList.indexOf(projectType) > -1) {
       const event: any = yield call(getFrameworks, vscode, projectType);
       const message = event.data;
       const optionFrontEndFrameworks = getFrameworksOptions(message.payload.frameworks, FRAMEWORK_TYPE.FRONTEND);
 
-      const defaultOptionFront = optionFrontEndFrameworks[0];
-      const defaultSelectedFrontEndFramework = {
-        internalName: defaultOptionFront.internalName,
-        title: defaultOptionFront.title as string,
-        icon: defaultOptionFront.icon,
-        version: `v${defaultOptionFront.version || "1.0"}`,
-        licenses: defaultOptionFront.licenses,
-        author: defaultOptionFront.author,
-      };
+      if (optionFrontEndFrameworks.length > 0) {
+        const defaultOptionFront = optionFrontEndFrameworks[0];
+        const defaultSelectedFrontEndFramework = {
+          internalName: defaultOptionFront.internalName,
+          title: defaultOptionFront.title as string,
+          icon: defaultOptionFront.icon,
+          version: `v${defaultOptionFront.version || "1.0"}`,
+          licenses: defaultOptionFront.licenses,
+          author: defaultOptionFront.author,
+        };
 
-      yield put({
-        type: TEMPLATES_TYPEKEYS.SET_FRONTEND_FRAMEWORKS,
-        payload: optionFrontEndFrameworks,
-      });
+        yield put({
+          type: TEMPLATES_TYPEKEYS.SET_FRONTEND_FRAMEWORKS,
+          payload: optionFrontEndFrameworks,
+        });
 
-      yield put({
-        type: USERSELECTION_TYPEKEYS.SELECT_FRONTEND_FRAMEWORK,
-        payload: defaultSelectedFrontEndFramework,
-      });
+        yield put({
+          type: USERSELECTION_TYPEKEYS.SELECT_FRONTEND_FRAMEWORK,
+          payload: defaultSelectedFrontEndFramework,
+        });
+      }
       const optionBackEndFrameworks = getFrameworksOptions(message.payload.frameworks, FRAMEWORK_TYPE.BACKEND);
+      if (optionBackEndFrameworks.length > 0) {
+        const defaultOptionBack = optionBackEndFrameworks[0];
+        const defaultSelectedBackEndFramework = {
+          title: defaultOptionBack.title as string,
+          internalName: defaultOptionBack.internalName,
+          icon: defaultOptionBack.icon,
+          version: `v${defaultOptionBack.version || "1.0"}`,
+          author: defaultOptionBack.author,
+          licenses: defaultOptionBack.licenses,
+        };
 
-      const defaultOptionBack = optionBackEndFrameworks[0];
-      const defaultSelectedBackEndFramework = {
-        title: defaultOptionBack.title as string,
-        internalName: defaultOptionBack.internalName,
-        icon: defaultOptionBack.icon,
-        version: `v${defaultOptionBack.version || "1.0"}`,
-        author: defaultOptionBack.author,
-        licenses: defaultOptionBack.licenses,
-      };
+        yield put({
+          type: TEMPLATES_TYPEKEYS.SET_BACKEND_FRAMEWORKS,
+          payload: optionBackEndFrameworks,
+        });
 
-      yield put({
-        type: TEMPLATES_TYPEKEYS.SET_BACKEND_FRAMEWORKS,
-        payload: optionBackEndFrameworks,
-      });
-
-      yield put({
-        type: USERSELECTION_TYPEKEYS.SELECT_BACKEND_FRAMEWORK,
-        payload: defaultSelectedBackEndFramework,
-      });
+        yield put({
+          type: USERSELECTION_TYPEKEYS.SELECT_BACKEND_FRAMEWORK,
+          payload: defaultSelectedBackEndFramework,
+        });
+      }
     } else {
       const event: any = yield call(getPages, vscode, projectType, "", "");
       const pageOptions = getPagesOptions(event.data.payload.pages);
