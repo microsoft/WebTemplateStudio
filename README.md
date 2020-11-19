@@ -49,7 +49,7 @@ These will help if you want to know more about WebTS or contribute to the projec
 
 Visual Studio Code extensions are currently not signed. WebTS provides the Secure Hash Algorithm (SHA) of each version we publish. You can find the current extensions sha256 value in the following files:
 
-- staging-weekly: [sha256-staging-weekly.md](sha256-staging-weekly.md)
+- [sha256-release.md](sha256-release.md)
 
 To verify the integrity of the package, download the vsix from the Marketplace, calculate the hash of the package using the powershell command ‘Get-FileHash’ or any other tool that allows you to calculate the packages hash, and compare both.
 
