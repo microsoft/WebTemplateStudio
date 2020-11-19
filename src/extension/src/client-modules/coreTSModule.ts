@@ -9,9 +9,7 @@ import { getGenerationData } from "../utils/generation/generationUtils";
 import RequirementsService from "../utils/requirements/RequirementsService";
 import { Logger } from "../utils/logger";
 
-const previewOptionSelected = vscode.workspace
-      .getConfiguration()
-      .get<boolean>("wts.enablePreviewMode");
+const previewOptionSelected = vscode.workspace.getConfiguration().get<boolean>("wts.enablePreviewMode");
 
 export class CoreTSModule extends WizardServant {
   private requirementsService = new RequirementsService();
@@ -42,8 +40,9 @@ export class CoreTSModule extends WizardServant {
   };
 
   async getFrameworks(message: any): Promise<IPayloadResponse> {
-    const frameworks = (await CoreTemplateStudio.GetExistingInstance().getFrameworks(message.payload.projectType))
-                    .filter((item: any)  => previewOptionSelected || item.tags.preview == previewOptionSelected);
+    const frameworks = (
+      await CoreTemplateStudio.GetExistingInstance().getFrameworks(message.payload.projectType)
+    ).filter((item: any) => previewOptionSelected || item.tags.preview == previewOptionSelected);
     this.transformIconToBase64(frameworks);
     await this.updateRequirements(frameworks);
 

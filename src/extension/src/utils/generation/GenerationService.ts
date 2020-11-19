@@ -2,13 +2,7 @@ import { AzureServices } from "../../azure/azureServices";
 import { MESSAGES } from "../../constants/messages";
 import { IActionContext } from "../../telemetry/callWithTelemetryAndErrorHandling";
 import { ITelemetryService } from "../../telemetry/telemetryService";
-import {
-  IAzureService,
-  IGenerationData,
-  IService,
-  SERVICE_CATEGORY,
-  SERVICE_TYPE,
-} from "../../types/generationTypes";
+import { IAzureService, IGenerationData, IService, SERVICE_CATEGORY, SERVICE_TYPE } from "../../types/generationTypes";
 import { GenerationItemStatus, sendGenerationStatus } from "./generationStatus";
 import { IGenerator } from "./IGenerator";
 import AppServiceGenerator from "./generators/AppServiceGenerator";

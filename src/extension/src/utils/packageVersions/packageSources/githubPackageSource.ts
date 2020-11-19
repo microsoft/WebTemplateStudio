@@ -15,7 +15,7 @@ export default class githubPackageSource implements IPackageSource {
           if (version && !semver.prerelease(version) && semver.gt(version, latestVersion)) {
             latestVersion = version;
           }
-      });
+        });
     } catch (error) {
       Logger.appendError("EXTENSION", `Error getting latest version of ${packageName} package from GitHub:`, error);
     }

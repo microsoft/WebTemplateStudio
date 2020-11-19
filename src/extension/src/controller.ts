@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 
 import { Validator } from "./client-modules/validator";
 import { CONSTANTS } from "./constants/constants";
-import { TelemetryEventName } from './constants/telemetry';
+import { TelemetryEventName } from "./constants/telemetry";
 import { ReactPanel } from "./reactPanel";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
 import { TelemetryService, IActionContext, ITelemetryService } from "./telemetry/telemetryService";
@@ -56,7 +56,7 @@ export class Controller {
       [ExtensionModule.Logger, this.loggerModule],
       [ExtensionModule.DependencyChecker, this.dependencies],
       [ExtensionModule.CoreTSModule, this.CoreTSModule],
-      [ExtensionModule.Defaults, this.Defaults]
+      [ExtensionModule.Defaults, this.Defaults],
     ]);
   }
 
@@ -91,10 +91,7 @@ export class Controller {
    * @param message The payload received from the wizard client. Message payload must include field 'module'
    * @returns Singleton Controller type
    */
-  public static getInstance(
-    context: vscode.ExtensionContext,
-    platform: string
-  ): Controller {
+  public static getInstance(context: vscode.ExtensionContext, platform: string): Controller {
     if (this._instance) {
       this._instance.showReactPanel();
     } else {
@@ -103,14 +100,9 @@ export class Controller {
     return this._instance;
   }
 
-  private constructor(
-    private context: vscode.ExtensionContext,
-    private platform : string
-  ) {
+  private constructor(private context: vscode.ExtensionContext, private platform: string) {
     Controller.vsContext = context;
-    Controller.TelemetryService = new TelemetryService(
-      this.context
-    );
+    Controller.TelemetryService = new TelemetryService(this.context);
 
     Controller.TelemetryService.trackEvent(TelemetryEventName.ExtensionLaunch);
 
@@ -128,7 +120,7 @@ export class Controller {
     vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: "Launching WebTS"
+        title: "Launching WebTS",
       },
       async (progress: vscode.Progress<IVSCodeProgressType>) => {
         const launchExperience = new LaunchExperience(progress);
@@ -147,14 +139,14 @@ export class Controller {
     launchExperience: LaunchExperience,
     platform: string
   ): Promise<void> {
-     let syncObject
-     await Controller.TelemetryService.callWithTelemetryAndCatchHandleErrors(
+    let syncObject;
+    await Controller.TelemetryService.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SyncEngine,
-      async function(this: IActionContext) {
+      async function (this: IActionContext) {
         return await launchExperience
           .launchApiSyncModule(context, platform)
-          .then(data => syncObject=data)
-          .catch(error => {
+          .then((data) => (syncObject = data))
+          .catch((error) => {
             console.log(error);
             CoreTemplateStudio.DestroyInstance();
             throw error;
@@ -166,13 +158,9 @@ export class Controller {
       this.SyncCompleted = true;
       Controller.reactPanelContext = ReactPanel.createOrShow(this.routingMessageReceieverDelegate);
 
-      Controller.getTemplateInfoAndStore(
-        context,
-        syncObject,
-        platform
-      );
+      Controller.getTemplateInfoAndStore(context, syncObject, platform);
       this.Telemetry.trackCreateNewProject({
-        entryPoint: CONSTANTS.TELEMETRY.LAUNCH_WIZARD_STARTED_POINT
+        entryPoint: CONSTANTS.TELEMETRY.LAUNCH_WIZARD_STARTED_POINT,
       });
     }
   }
@@ -182,12 +170,10 @@ export class Controller {
     syncObject: ISyncReturnType,
     platform: string
   ): void {
-    const preview = vscode.workspace
-      .getConfiguration()
-      .get<boolean>("wts.enablePreviewMode");
+    const preview = vscode.workspace.getConfiguration().get<boolean>("wts.enablePreviewMode");
 
     CoreTemplateStudio._templateConfig = {
-      templatesVersion:syncObject.templatesVersion,
+      templatesVersion: syncObject.templatesVersion,
       wizardVersion: getExtensionVersionNumber(ctx),
       itemNameValidationConfig: syncObject.itemNameValidationConfig,
       projectNameValidationConfig: syncObject.projectNameValidationConfig,
@@ -196,13 +182,9 @@ export class Controller {
     };
   }
 
-  private static handleValidMessage(
-    commandName: EXTENSION_COMMANDS,
-    payload: any,
-    responsePayload?: any
-  ): void {
+  private static handleValidMessage(commandName: EXTENSION_COMMANDS, payload: any, responsePayload?: any): void {
     responsePayload.command = commandName;
-    if(payload && payload.scope) {
+    if (payload && payload.scope) {
       responsePayload.payload.scope = payload.scope;
     }
     this.reactPanelContext.postMessageWebview(responsePayload);
@@ -215,9 +197,9 @@ export class Controller {
   }
 
   static dispose(): void {
-    if(this._instance){
+    if (this._instance) {
       Controller.TelemetryService.trackEvent(TelemetryEventName.ExtensionClosed, {
-        syncCompleted: this._instance.SyncCompleted.toString()
+        syncCompleted: this._instance.SyncCompleted.toString(),
       });
     }
     CoreTemplateStudio.DestroyInstance();

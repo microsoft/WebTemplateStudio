@@ -7,11 +7,8 @@ import { MESSAGES } from "../../constants/messages";
 export class ResourceManager {
   private AzureResourceManagementClient: ResourceManagementClient | undefined;
 
-  private createResourceManagementClient(
-    userSubscriptionItem: SubscriptionItem
-  ): ResourceManagementClient {
-    const userCredentials: ServiceClientCredentials =
-      userSubscriptionItem.session.credentials;
+  private createResourceManagementClient(userSubscriptionItem: SubscriptionItem): ResourceManagementClient {
+    const userCredentials: ServiceClientCredentials = userSubscriptionItem.session.credentials;
     if (
       userSubscriptionItem === undefined ||
       userSubscriptionItem.subscription === undefined ||
@@ -26,17 +23,12 @@ export class ResourceManager {
     );
   }
 
-  public getResourceManagementClient(
-    userSubscriptionItem: SubscriptionItem
-  ): ResourceManagementClient {
+  public getResourceManagementClient(userSubscriptionItem: SubscriptionItem): ResourceManagementClient {
     if (
       this.AzureResourceManagementClient === undefined ||
-      this.AzureResourceManagementClient.subscriptionId !==
-        userSubscriptionItem.subscriptionId
+      this.AzureResourceManagementClient.subscriptionId !== userSubscriptionItem.subscriptionId
     ) {
-      this.AzureResourceManagementClient = this.createResourceManagementClient(
-        userSubscriptionItem
-      );
+      this.AzureResourceManagementClient = this.createResourceManagementClient(userSubscriptionItem);
     }
     return this.AzureResourceManagementClient;
   }
