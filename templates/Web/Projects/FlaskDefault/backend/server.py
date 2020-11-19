@@ -15,7 +15,7 @@ def catch_all(path):
     return send_from_directory(app.static_folder, file_to_serve)
 
 # Error Handler
-@app.errorhandler(404)
+@app.errorhandler(CONSTANTS['HTTP_STATUS']['404_NOT_FOUND'])
 def page_not_found(error):
     json_response = jsonify({'error': 'Page not found'})
     return make_response(json_response, CONSTANTS['HTTP_STATUS']['404_NOT_FOUND'])
