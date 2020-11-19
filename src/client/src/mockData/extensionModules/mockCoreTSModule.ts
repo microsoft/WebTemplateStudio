@@ -1,4 +1,5 @@
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/commands";
+import { WIZARD_PROJECT_TYPE } from "../../utils/constants/internalNames";
 
 import * as mockData from "./mockData/mockWebPlatformData";
 
@@ -16,16 +17,16 @@ const getProjectTypes = (message: any) => {
   );
 };
 
-const getFrameworks = (message: any) => {
+const getFrameworks = (platform: string, message: any) => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
       command: EXTENSION_COMMANDS.GET_FRAMEWORKS,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        frameworks: mockData.frameworks,
+        frameworks: mockData.frameworks(platform),
         isPreview: true,
-        projectType: "FullStackWebApp",
+        projectType: WIZARD_PROJECT_TYPE.RN_TABBED_APP,//TODO HERE This should vary too
       },
     },
     "*"
@@ -46,28 +47,28 @@ const getAllLicenses = (message: any) => {
   );
 };
 
-const getTemplateConfig = (message: any) => {
+const getTemplateConfig = (platform: string, message: any) => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
       command: EXTENSION_COMMANDS.GET_TEMPLATE_INFO,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        ...mockData.templatesInfo,
+        ...mockData.templatesInfo(platform),
       },
     },
     "*"
   );
 };
 
-const getPages = (message: any) => {
+const getPages = (platform: string, message: any) => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
       command: EXTENSION_COMMANDS.GET_PAGES,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        pages: mockData.pages(message.payload.frontendFramework),
+        pages: mockData.pages(platform, message.payload.frontendFramework),
       },
     },
     "*"
