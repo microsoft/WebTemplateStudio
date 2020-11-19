@@ -11,7 +11,9 @@ app = Flask(__name__, static_folder='build')
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
-    file_to_serve = path if path and exists(join(app.static_folder, path)) else 'index.html'
+    file_to_serve = 'index.html'
+    if path and exists(join(app.static_folder, path)):
+        file_to_serve = path
     return send_from_directory(app.static_folder, file_to_serve)
 
 # Error Handler
