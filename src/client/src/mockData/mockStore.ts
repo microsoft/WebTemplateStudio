@@ -4,17 +4,21 @@ import { AppState } from "../store/combineReducers";
 import { ModalType } from "../store/navigation/typeKeys";
 import { getNavItems } from "../utils/routes/routes";
 import { backendImage, frontendImage, pageImage, serviceImage } from "./extensionModules/mockData/mockSvgData";
+import { PLATFORM } from "../utils/constants/constants";
+import { FRONTEND_FRAMEWORKS } from "../utils/constants/internalNames";
 
 export const getISelected = () => {
   const selected: ISelected = {
     title: "title1",
     internalName: "internamName1",
-    icon: ""
+    icon: "",
   };
   return selected;
 };
 
-export const getInitialState = (): AppState => {
+//TODO check. Is this file just created for testing purposes?
+//TODO check. If so. Make clearer the difference between this mock and the needed mock to be able to debug and dev on the browser
+export const getInitialStateByPlatform = (_platform: string): AppState => {
   const initialState: AppState = {
     templates: {
       backendOptions: [],
@@ -35,7 +39,7 @@ export const getInitialState = (): AppState => {
           licenses: [],
           selected: false,
           author: "",
-          icon:"",
+          icon: "",
         },
         originRoute: "",
       },
@@ -63,7 +67,7 @@ export const getInitialState = (): AppState => {
         subscriptions: [],
         email: "",
       },
-      platform: "Web",
+      platform: _platform,
     },
     userSelection: {
       frontendFramework: {
@@ -71,14 +75,14 @@ export const getInitialState = (): AppState => {
         internalName: "",
         version: "",
         author: "",
-        icon:"",
+        icon: "",
       },
       backendFramework: {
         title: "",
         internalName: "",
         version: "",
         author: "",
-        icon:"",
+        icon: "",
       },
       pages: [
         {
@@ -94,7 +98,7 @@ export const getInitialState = (): AppState => {
           ],
           title: "Blank",
           id: "0.7087795384523403",
-          icon:"",
+          icon: "",
         },
       ],
       outputPathObject: {
@@ -121,13 +125,20 @@ export const getInitialState = (): AppState => {
           modalData: null,
         },
       },
-      routesNavItems: getNavItems("Web"),
+      routesNavItems: getNavItems(_platform),
     },
   };
   return initialState;
 };
 
+//TODO check. Is this file just created for testing purposes?
+//TODO check. If so. Make clearer the difference between this mock and the needed mock to be able to debug and dev on the browser
+export const getInitialState = () => {
+  getInitialStateByPlatform(PLATFORM.RN);
+};
+
 const loadPages = (frameWorkName: string): Array<any> => {
+  const pages: Array<any> = new Array<any>();
   const blankPage = {
     body: "A blank page for you to build your web application from scratch.",
     internalName: "wts.Page." + frameWorkName + ".Blank",
@@ -146,69 +157,74 @@ const loadPages = (frameWorkName: string): Array<any> => {
     isValidTitle: true,
     author: "Microsoft",
   };
-  const gridPage = {
-    body: "Simple image and text components which are organized into a grid.",
-    internalName: "wts.Page." + frameWorkName + ".Grid",
-    licenses: [
-      {
-        text: "Bootstrap",
-        url: "https://github.com/twbs/bootstrap/blob/master/LICENSE",
-      },
-    ],
-    longDescription:
-      "A page displaying simple image and text components which are organized into a grid. Grid pages are a system for creating order among elements in a website.",
-    icon: pageImage,
-    selected: false,
-    title: "Grid",
-    defaultName: "Grid",
-    isValidTitle: true,
-    author: "Microsoft",
-  };
-  const listPage = {
-    body: "Add and remove text from an adaptive list.",
-    internalName: "wts.Page." + frameWorkName + ".List",
-    licenses: [
-      {
-        text: "Bootstrap",
-        url: "https://github.com/twbs/bootstrap/blob/master/LICENSE",
-      },
-    ],
-    longDescription:
-      "The list page allows you to add custom text in the form of an adaptive list. This pattern is frequently used for blog pages and messaging apps. If a database is selected from the Azure Cloud Services the list page will automatically connect to the deployed Azure database.",
-    icon: pageImage,
-    selected: false,
-    title: "List",
-    defaultName: "List",
-    isValidTitle: true,
-    author: "Microsoft",
-  };
-  const masterPage = {
-    body: "A master pane and a details pane for content.",
-    internalName: "wts.Page." + frameWorkName + ".MasterDetail",
-    licenses: [
-      {
-        text: "Bootstrap",
-        url: "https://github.com/twbs/bootstrap/blob/master/LICENSE",
-      },
-    ],
-    longDescription:
-      "The master-detail page has a master pane and a details pane for content. When an item in the master list is selected, the details pane is updated. This pattern is frequently used for email and address books.",
-    icon: pageImage,
-    selected: false,
-    title: "Master Detail",
-    defaultName: "Master Detail",
-    isValidTitle: true,
-    author: "Microsoft",
-  };
-  const pages: Array<any> = new Array<any>();
   pages.push(blankPage);
-  pages.push(gridPage);
-  pages.push(listPage);
-  pages.push(masterPage);
+
+  if (frameWorkName !== FRONTEND_FRAMEWORKS.RN) {
+    const gridPage = {
+      body: "Simple image and text components which are organized into a grid.",
+      internalName: "wts.Page." + frameWorkName + ".Grid",
+      licenses: [
+        {
+          text: "Bootstrap",
+          url: "https://github.com/twbs/bootstrap/blob/master/LICENSE",
+        },
+      ],
+      longDescription:
+        "A page displaying simple image and text components which are organized into a grid. Grid pages are a system for creating order among elements in a website.",
+      icon: pageImage,
+      selected: false,
+      title: "Grid",
+      defaultName: "Grid",
+      isValidTitle: true,
+      author: "Microsoft",
+    };
+    pages.push(gridPage);
+
+    const listPage = {
+      body: "Add and remove text from an adaptive list.",
+      internalName: "wts.Page." + frameWorkName + ".List",
+      licenses: [
+        {
+          text: "Bootstrap",
+          url: "https://github.com/twbs/bootstrap/blob/master/LICENSE",
+        },
+      ],
+      longDescription:
+        "The list page allows you to add custom text in the form of an adaptive list. This pattern is frequently used for blog pages and messaging apps. If a database is selected from the Azure Cloud Services the list page will automatically connect to the deployed Azure database.",
+      icon: pageImage,
+      selected: false,
+      title: "List",
+      defaultName: "List",
+      isValidTitle: true,
+      author: "Microsoft",
+    };
+    pages.push(listPage);
+
+    const masterPage = {
+      body: "A master pane and a details pane for content.",
+      internalName: "wts.Page." + frameWorkName + ".MasterDetail",
+      licenses: [
+        {
+          text: "Bootstrap",
+          url: "https://github.com/twbs/bootstrap/blob/master/LICENSE",
+        },
+      ],
+      longDescription:
+        "The master-detail page has a master pane and a details pane for content. When an item in the master list is selected, the details pane is updated. This pattern is frequently used for email and address books.",
+      icon: pageImage,
+      selected: false,
+      title: "Master Detail",
+      defaultName: "Master Detail",
+      isValidTitle: true,
+      author: "Microsoft",
+    };
+    pages.push(masterPage);
+  }
 
   return pages;
 };
 
+//TODO HERE: get and set this only when needed
 const loadFeatures = (): Array<any> => {
   const appServiceFeature = {
     body: "Quickly build, deploy, and scale your web apps with confidence.",
@@ -262,174 +278,214 @@ const getSubscriptionsSelector = (): Array<Subscription> => {
 };
 
 export const addFrontEndFrameworksOptions = (store: AppState) => {
-  store.templates.frontendOptions = [
-    {
-      author: "Facebook",
-      body: "JavaScript framework",
-      internalName: "React",
-      licenses: [
-        "[React](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)",
-      ],
-      longDescription:
-        "React is a component-based open source JavaScript library for building interfaces for single page applications. It is used for handling view layer for web and mobile apps. React allows you to design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.  \r\n\r\n  \r\nMore information about React can be found [here](https://reactjs.org).\r\n",
-      position: 1,
-      selected: false,
-      icon: frontendImage,
-      title: "React",
-      version: "16.8.4",
-      latestVersion: "0.0.1",
-      latestVersionLoaded: true,
-      requirement: {
-        name: "node",
-        version: "12.0.x",
-        isInstalled: true
-      }
-    },
-    {
-      author: "Google",
-      body: "JavaScript framework",
-      internalName: "Angular",
-      licenses: [
-        "[Angular](https://github.com/angular/angular/blob/master/LICENSE)  \n[Angular CLI](https://github.com/angular/angular-cli/blob/master/LICENSE)",
-      ],
-      longDescription:
-        "Angular is a platform that makes it easy to build applications with the web. Angular combines declarative templates, dependency injection, end to end tooling, and integrated best practices to solve development challenges. Angular empowers developers to build applications that live on the web, mobile, or the desktop.\r\n\r\nMore information about Angular can be found [here](https://angular.io).\r\n",
-      position: 1,
-      selected: false,
-      icon: frontendImage,
-      title: "Angular",
-      version: "7.2.0",
-      latestVersion: "0.0.1",
-      latestVersionLoaded: true,
-      requirement: {
-        name: "node",
-        version: "12.0.x",
-        isInstalled: true
-      }
-    },
-    {
-      author: "Evan You",
-      body: "JavaScript framework",
-      internalName: "Vue",
-      licenses: [
-        "Vue](https://github.com/vuejs/vue/blob/dev/LICENSE)  \n[Vue CLI](https://github.com/vuejs/vue-cli/blob/dev/LICENSE)",
-      ],
-      longDescription:
-        "Vue is a lightweight, progressive JavaScript framework for building user interfaces. Vue is heavily focused on the view layer, and is designed to be simple and flexible.\r\n\r\nMore information about Vue can be found [here](https://vuejs.org/).\r\n",
-      position: 1,
-      selected: false,
-      icon: frontendImage,
-      title: "Vue.js",
-      version: "2.6.6",
-      latestVersion: "0.0.1",
-      latestVersionLoaded: true,
-      requirement: {
-        name: "node",
-        version: "12.0.x",
-        isInstalled: true
-      }
-    },
-  ];
+  switch (store.config.platform) {
+    case PLATFORM.WEB:
+      store.templates.frontendOptions = [
+        {
+          author: "Facebook",
+          body: "JavaScript framework",
+          internalName: "React",
+          licenses: [
+            "[React](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)",
+          ],
+          longDescription:
+            "React is a component-based open source JavaScript library for building interfaces for single page applications. It is used for handling view layer for web and mobile apps. React allows you to design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.  \r\n\r\n  \r\nMore information about React can be found [here](https://reactjs.org).\r\n",
+          position: 1,
+          selected: false,
+          icon: frontendImage,
+          title: "React",
+          version: "16.8.4",
+          latestVersion: "0.0.1",
+          latestVersionLoaded: true,
+          requirement: {
+            name: "node",
+            version: "12.0.x",
+            isInstalled: true,
+          },
+        },
+        {
+          author: "Google",
+          body: "JavaScript framework",
+          internalName: "Angular",
+          licenses: [
+            "[Angular](https://github.com/angular/angular/blob/master/LICENSE)  \n[Angular CLI](https://github.com/angular/angular-cli/blob/master/LICENSE)",
+          ],
+          longDescription:
+            "Angular is a platform that makes it easy to build applications with the web. Angular combines declarative templates, dependency injection, end to end tooling, and integrated best practices to solve development challenges. Angular empowers developers to build applications that live on the web, mobile, or the desktop.\r\n\r\nMore information about Angular can be found [here](https://angular.io).\r\n",
+          position: 1,
+          selected: false,
+          icon: frontendImage,
+          title: "Angular",
+          version: "7.2.0",
+          latestVersion: "0.0.1",
+          latestVersionLoaded: true,
+          requirement: {
+            name: "node",
+            version: "12.0.x",
+            isInstalled: true,
+          },
+        },
+        {
+          author: "Evan You",
+          body: "JavaScript framework",
+          internalName: "Vue",
+          licenses: [
+            "Vue](https://github.com/vuejs/vue/blob/dev/LICENSE)  \n[Vue CLI](https://github.com/vuejs/vue-cli/blob/dev/LICENSE)",
+          ],
+          longDescription:
+            "Vue is a lightweight, progressive JavaScript framework for building user interfaces. Vue is heavily focused on the view layer, and is designed to be simple and flexible.\r\n\r\nMore information about Vue can be found [here](https://vuejs.org/).\r\n",
+          position: 1,
+          selected: false,
+          icon: frontendImage,
+          title: "Vue.js",
+          version: "2.6.6",
+          latestVersion: "0.0.1",
+          latestVersionLoaded: true,
+          requirement: {
+            name: "node",
+            version: "12.0.x",
+            isInstalled: true,
+          },
+        },
+      ];
+      break;
+    case PLATFORM.RN:
+      store.templates.frontendOptions = [
+        {
+          author: "Facebook",
+          body: "JavaScript framework",
+          internalName: "React Native",
+          licenses: [],
+          longDescription:
+            "React is a component-based open source JavaScript library for building interfaces for single page applications. It is used for handling view layer for web and mobile apps. React allows you to design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.  \r\n\r\n  \r\nMore information about React can be found [here](https://reactjs.org).\r\n",
+          position: 1,
+          selected: false,
+          icon: frontendImage,
+          title: "React Native",
+          version: "0.*.*",
+          latestVersion: "0.*.*",
+          latestVersionLoaded: true,
+          requirement: {
+            name: "",
+            version: "",
+            isInstalled: true,
+          },
+        },
+      ];
+      break;
+  }
   return store;
 };
 
 export const addBackEndFrameworksOptions = (store: AppState) => {
-  store.templates.backendOptions = [
-    {
-      author: "Various",
-      body: "JavaScript framework",
-      internalName: "Node",
-      licenses: [
-        "[Node](https://github.com/nodejs/node/blob/master/LICENSE)",
-        "[Express](https://github.com/expressjs/express/blob/master/LICENSE)",
-        "[Express Generator](https://github.com/expressjs/generator/blob/master/LICENSE)",
-      ],
-      longDescription:
-        "Node.js is an open source server environment based on JavaScript that helps you build fast and scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices. Node.js runs across various platforms like Windows, Linux, Unix, and Mac OS X.\r\n\r\nMore information about Node.js can be found [here](https://nodejs.org).\r\n",
-      position: 1,
-      selected: false,
-      icon: backendImage,
-      title: "Node.js/Express",
-      version: "12.0.0",
-      linuxVersion: "node|12-lts",
-      latestVersionLoaded: true,
-      requirement: {
-        name: "node",
-        version: "12.0.x",
-        isInstalled: true
-      }
-    },
-    {
-      author: "Various",
-      body: "JavaScript framework",
-      internalName: "Moleculer",
-      licenses: ["[Moleculer](https://github.com/moleculerjs/moleculer/blob/master/LICENSE)"],
-      selected: false,
-      icon: backendImage,
-      title: "Moleculer",
-      version: "0.14.3",
-      linuxVersion: "node|12-lts",
-      latestVersionLoaded: true,
-      requirement: {
-        name: "node",
-        version: "12.0.x",
-        isInstalled: true
-      }
-    },
-    {
-      author: "Various",
-      body: "Python framework",
-      internalName: "Flask",
-      licenses: ["[Flask](https://github.com/pallets/flask/blob/master/LICENSE)"],
-      longDescription:
-        "Flask is a python microframework with a small core for building web applications. It is based on [Werkzeug](https://www.palletsprojects.com/p/werkzeug/) and [Jinja](https://www.palletsprojects.com/p/jinja/). It is licensed under [BSD](https://github.com/pallets/flask/blob/master/LICENSE) license.\r\nIt is developed and supported by Pallets organization.\r\n\r\nMore information on Flask can be found [here](http://flask.pocoo.org/)\r\n",
-      position: 1,
-      selected: false,
-      icon: backendImage,
-      title: "Flask",
-      version: "1.0.3",
-      linuxVersion: "python|3.7",
-      latestVersionLoaded: true,
-      requirement: {
-        name: "python",
-        version: "3.5.x",
-        isInstalled: true
-      }
-    },
-    {
-      author: "Microsoft",
-      body: "ASP.NET Framework",
-      internalName: "AspNet",
-      licenses: ["[AspNet](https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt)"],
-      longDescription: "ASP.NET long description",
-      position: 1,
-      selected: false,
-      icon: backendImage,
-      title: "ASP.NET",
-      version: "3.1.5",
-      linuxVersion: "DOTNETCORE|3.1",
-      latestVersionLoaded: true,
-      requirement: {
-        name: "netcore",
-        version: "3.1.x",
-        isInstalled: true
-      }
-    },
-  ];
+  switch (store.config.platform) {
+    case PLATFORM.WEB:
+      store.templates.backendOptions = [
+        {
+          author: "Various",
+          body: "JavaScript framework",
+          internalName: "Node",
+          licenses: [
+            "[Node](https://github.com/nodejs/node/blob/master/LICENSE)",
+            "[Express](https://github.com/expressjs/express/blob/master/LICENSE)",
+            "[Express Generator](https://github.com/expressjs/generator/blob/master/LICENSE)",
+          ],
+          longDescription:
+            "Node.js is an open source server environment based on JavaScript that helps you build fast and scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices. Node.js runs across various platforms like Windows, Linux, Unix, and Mac OS X.\r\n\r\nMore information about Node.js can be found [here](https://nodejs.org).\r\n",
+          position: 1,
+          selected: false,
+          icon: backendImage,
+          title: "Node.js/Express",
+          version: "12.0.0",
+          linuxVersion: "node|12-lts",
+          latestVersionLoaded: true,
+          requirement: {
+            name: "node",
+            version: "12.0.x",
+            isInstalled: true,
+          },
+        },
+        {
+          author: "Various",
+          body: "JavaScript framework",
+          internalName: "Moleculer",
+          licenses: ["[Moleculer](https://github.com/moleculerjs/moleculer/blob/master/LICENSE)"],
+          selected: false,
+          icon: backendImage,
+          title: "Moleculer",
+          version: "0.14.3",
+          linuxVersion: "node|12-lts",
+          latestVersionLoaded: true,
+          requirement: {
+            name: "node",
+            version: "12.0.x",
+            isInstalled: true,
+          },
+        },
+        {
+          author: "Various",
+          body: "Python framework",
+          internalName: "Flask",
+          licenses: ["[Flask](https://github.com/pallets/flask/blob/master/LICENSE)"],
+          longDescription:
+            "Flask is a python microframework with a small core for building web applications. It is based on [Werkzeug](https://www.palletsprojects.com/p/werkzeug/) and [Jinja](https://www.palletsprojects.com/p/jinja/). It is licensed under [BSD](https://github.com/pallets/flask/blob/master/LICENSE) license.\r\nIt is developed and supported by Pallets organization.\r\n\r\nMore information on Flask can be found [here](http://flask.pocoo.org/)\r\n",
+          position: 1,
+          selected: false,
+          icon: backendImage,
+          title: "Flask",
+          version: "1.0.3",
+          linuxVersion: "python|3.7",
+          latestVersionLoaded: true,
+          requirement: {
+            name: "python",
+            version: "3.5.x",
+            isInstalled: true,
+          },
+        },
+        {
+          author: "Microsoft",
+          body: "ASP.NET Framework",
+          internalName: "AspNet",
+          licenses: ["[AspNet](https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt)"],
+          longDescription: "ASP.NET long description",
+          position: 1,
+          selected: false,
+          icon: backendImage,
+          title: "ASP.NET",
+          version: "3.1.5",
+          linuxVersion: "DOTNETCORE|3.1",
+          latestVersionLoaded: true,
+          requirement: {
+            name: "netcore",
+            version: "3.1.x",
+            isInstalled: true,
+          },
+        },
+      ];
+      break;
+  }
   return store;
 };
 
 export const addFeaturesOptions = (store: AppState) => {
-  store.templates.featureOptions = loadFeatures();
+  switch (store.config.platform) {
+    case PLATFORM.WEB:
+      store.templates.featureOptions = loadFeatures();
+      break;
+  }
 };
 
 export const getServicesGroups = (store: AppState) => {
-  const groups = store.templates.featureOptions.map((g) => g.group) as string[];
-  return [...new Set(groups)];
+  switch (store.config.platform) {
+    case PLATFORM.WEB:
+      const groups = store.templates.featureOptions.map((g) => g.group) as string[];
+      return [...new Set(groups)];
+  }
 };
 
 export const loadMasters = (store: AppState) => {
-  store.templates.pageOptions = loadPages("React");
+  store.templates.pageOptions =
+    store.config.platform === PLATFORM.WEB ? loadPages(FRONTEND_FRAMEWORKS.REACT) : loadPages(FRONTEND_FRAMEWORKS.RN);
 };
 
 export const setSubscriptions = (store: AppState) => {
@@ -437,7 +493,11 @@ export const setSubscriptions = (store: AppState) => {
 };
 
 export const setBackendFramework = (store: AppState, internalName: string) => {
-  store.userSelection.backendFramework.internalName = internalName;
+  switch (store.config.platform) {
+    case PLATFORM.WEB:
+      store.userSelection.backendFramework.internalName = internalName;
+      break;
+  }
 };
 
 export const setFrontendFramework = (store: AppState, internalName: string) => {
