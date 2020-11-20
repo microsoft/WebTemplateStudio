@@ -67,7 +67,11 @@ describe("wizardSelectionSelector", () => {
       mock.userSelection.frontendFramework.title = "";
       mock.userSelection.backendFramework.title = "sfsdf";
       const store = mockStore(mock);
-      expect(isEnableNextPageSelector(store.getState())).toBeFalsy();
+      if(mock.templates.frontendOptions.length > 0){
+        expect(isEnableNextPageSelector(store.getState())).toBeFalsy();
+      }else{
+        expect(isEnableNextPageSelector(store.getState())).toBeTruthy();
+      }
     })
 
     it("isEnableNextPage invalid (backendFramework unselected)",()=>{
@@ -78,7 +82,11 @@ describe("wizardSelectionSelector", () => {
       mock.userSelection.frontendFramework.title = "sdfsdf";
       mock.userSelection.backendFramework.title = "";
       const store = mockStore(mock);
-      expect(isEnableNextPageSelector(store.getState())).toBeFalsy();
+      if(mock.templates.backendOptions.length > 0){
+        expect(isEnableNextPageSelector(store.getState())).toBeFalsy();
+      }else{
+        expect(isEnableNextPageSelector(store.getState())).toBeTruthy();
+      }
     })
   });
 
@@ -88,7 +96,7 @@ describe("wizardSelectionSelector", () => {
       //mock.navigation.routes.selected = ROUTE.ADD_PAGES;
       mock.navigation.routesNavItems.forEach(route => {route.isSelected=false});
       mock.navigation.routesNavItems.filter(route => route.route === ROUTE.ADD_PAGES)[0].isSelected=true;
-      const validPage: ISelected = {title:"", isValidTitle:true, internalName:"wts.mock.blank"};
+      const validPage: ISelected = {title:"", isValidTitle:true, internalName:"wts.mock.blank", icon: ""};
       mock.userSelection.pages.push(validPage);
       const store = mockStore(mock);
       expect(isEnableNextPageSelector(store.getState())).toBeTruthy();
