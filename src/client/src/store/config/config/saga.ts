@@ -79,6 +79,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
       payload: projectType,
     });
 
+    //TODO: probably move and rename this 
     const rnProjectTypeList = [WIZARD_PROJECT_TYPE.RN_TABBED_APP, WIZARD_PROJECT_TYPE.RN_DRAWER_APP];
 
     if (projectType === WIZARD_PROJECT_TYPE.FULL_STACK_APP || rnProjectTypeList.indexOf(projectType) > -1) {

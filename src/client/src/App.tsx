@@ -3,7 +3,7 @@ import * as React from "react";
 import { connect, useDispatch } from "react-redux";
 import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
 import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
-import { DEVELOPMENT } from "./utils/constants/constants";
+import { DEVELOPMENT, ROUTE } from "./utils/constants/constants";
 import appStyles from "./appStyles.module.css";
 import { AppState } from "./store/combineReducers";
 import { IOption } from "./types/option";
@@ -13,7 +13,6 @@ import RightSidebar from "./components/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
 import { loadAction } from "./store/config/config/action";
 import loadable from '@loadable/component'
-import { ROUTE } from "./utils/routes/constants";
 import { getSelectedRoute } from "./store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 
 const PageSelectFrameworks = loadable(()=> import(/* webpackChunkName: "PageSelectFrameworks" */  "./pages/PageSelectFrameworks"));

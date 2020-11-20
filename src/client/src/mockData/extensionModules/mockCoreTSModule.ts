@@ -26,7 +26,8 @@ const getFrameworks = (platform: string, message: any) => {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
         frameworks: mockData.frameworks(platform),
         isPreview: true,
-        projectType: WIZARD_PROJECT_TYPE.RN_TABBED_APP,//TODO HERE This should vary too
+        //TODO: This should probably depend on a mocked shared var
+        projectType: WIZARD_PROJECT_TYPE.RN_TABBED_APP,
       },
     },
     "*"

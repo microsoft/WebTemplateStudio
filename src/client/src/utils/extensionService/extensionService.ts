@@ -88,8 +88,8 @@ const getFeatures = (vscode: IVSCodeObject, frontEndInternalName: string, backEn
     module: EXTENSION_MODULES.CORETS,
     command: EXTENSION_COMMANDS.GET_FEATURES,
     payload: {
-      //TODO HERE
-      projectType: WIZARD_PROJECT_TYPE.RN_TABBED_APP,
+      //TODO: This needs to be changed/shared
+      projectType: WIZARD_PROJECT_TYPE.FULL_STACK_APP,
       frontendFramework: frontEndInternalName,
       backendFramework: backEndInternalName
     }

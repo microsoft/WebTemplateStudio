@@ -1,6 +1,5 @@
-import { PLATFORM } from "../constants/constants";
+import { PLATFORM, ROUTE } from "../constants/constants";
 import { IRoutesNavItems } from "../../types/route";
-import { ROUTE } from "./constants";
 import messages from "./messages";
 
 

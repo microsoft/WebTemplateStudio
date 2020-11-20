@@ -4,7 +4,7 @@ import { ISelected } from "../../../../types/selected";
 import { IValidation } from "../../../../utils/validations/validations";
 import { AppState } from "../../../combineReducers";
 import { UserSelectionState } from "../../combineReducers";
-import { ROUTE } from "../../../../utils/routes/constants";
+import { ROUTE } from "../../../../utils/constants/constants";
 import { IValidations } from "../../../config/validations/model";
 
 const getWizardSelectionsSelector = (state: AppState): UserSelectionState => state.userSelection;
@@ -24,27 +24,36 @@ const getSelectedRoute = (state: AppState): string => {
 
 const isEnableNextPageSelector = (state: AppState): boolean => {
   let valid = false;
-  if (getSelectedRoute(state) === ROUTE.NEW_PROJECT) {
+  const selectedRoute = getSelectedRoute(state);
+
+  if (selectedRoute === ROUTE.NEW_PROJECT) {
     valid =
       state.userSelection.projectNameObject.validation.isValid === true &&
       state.userSelection.outputPathObject.outputPath !== "";
   }
 
+  //TODO: Would need to add projectType validation here so we can click next 
+  //TODO: change on next issue #1664
+  if(selectedRoute === ROUTE.SELECT_PROJECT_TYPE){
+    valid=true;
+  }
+
   if (
-    getSelectedRoute(state) === ROUTE.SELECT_FRAMEWORKS &&
-    state.templates.frontendOptions &&
-    state.templates.backendOptions &&
-    state.userSelection.frontendFramework.title !== "" &&
-    state.userSelection.backendFramework.title !== ""
+    selectedRoute === ROUTE.SELECT_FRAMEWORKS &&
+    (state.templates.frontendOptions &&
+    state.userSelection.frontendFramework.title !== "")
+    ||
+    (state.templates.backendOptions &&
+    state.userSelection.backendFramework.title !== "")
   ) {
     valid = true;
   }
 
-  if (getSelectedRoute(state) === ROUTE.ADD_PAGES && state.userSelection.pages.length > 0) {
+  if (selectedRoute === ROUTE.ADD_PAGES && state.userSelection.pages.length > 0) {
     valid = true;
   }
 
-  if (getSelectedRoute(state) === ROUTE.ADD_SERVICES || getSelectedRoute(state) === ROUTE.REVIEW_AND_GENERATE) {
+  if (selectedRoute === ROUTE.ADD_SERVICES || selectedRoute === ROUTE.REVIEW_AND_GENERATE) {
     valid = true;
   }
 

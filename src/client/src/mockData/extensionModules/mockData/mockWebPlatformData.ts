@@ -362,7 +362,6 @@ const pages = (platform: string, frontendFramework: string) => {
 
   switch (platform) {
     case PLATFORM.WEB:
-      console.log(JSON.stringify(frontendFrameworks))
       frontendFrameworks = frontendFrameworks.concat(
         {
           templateId: `wts.Page.${frontendFramework}.Grid`,

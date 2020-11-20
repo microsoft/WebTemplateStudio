@@ -4,7 +4,8 @@ import { WIZARD_PROJECT_TYPE } from "../../../utils/constants/internalNames";
 import { DEVELOPMENT } from "../../../utils/constants/constants";
 
 //TODO: need to be changed/improved #1664 
-const devProjectType = WIZARD_PROJECT_TYPE.RN_TABBED_APP;
+//TODO: decide from command Palette launch command
+const devProjectType = WIZARD_PROJECT_TYPE.FULL_STACK_APP;
 const initialState = (process.env.NODE_ENV === DEVELOPMENT) ? devProjectType : WIZARD_PROJECT_TYPE.FULL_STACK_APP;
 
 const backendFramework = (

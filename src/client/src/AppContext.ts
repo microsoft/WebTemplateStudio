@@ -8,7 +8,10 @@ interface IAppContext {
 }
 
 //TODO: THIS COULD BE IMPROVED FOR DEV
-//TODO: USE LAUNCH COMMAND HERE
+//TODO: Add something on the mocked to choose between platform
+//TODO: USE LAUNCH COMMAND HERE. When you choose that from Command Palette:
+//TODO: Web Template Studio: Create Web App
+//TODO: Web Template Studio: Create React Native App
 const devPlatform = PLATFORM.RN;
 export const platform = (process.env.NODE_ENV === DEVELOPMENT) ? devPlatform : PLATFORM.WEB;
 

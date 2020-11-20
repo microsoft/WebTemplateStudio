@@ -66,6 +66,16 @@ enum PLATFORM {
   RN = "ReactNative"
 }
 
+const ROUTE = {
+  PAGE_DETAILS: "/PageDetail",
+  SELECT_FRAMEWORKS: "/SelectFrameworks",
+  SELECT_PROJECT_TYPE: "/SelectProjectType",
+  ADD_PAGES: "/AddPages",
+  ADD_SERVICES: "/AddServices",
+  REVIEW_AND_GENERATE: "/ReviewAndGenerate",
+  NEW_PROJECT: "/",
+};
+
 const REQUIREMENTS_DATA = [
   {
     name: "node",
@@ -98,5 +108,6 @@ export {
   PAYLOAD_MESSAGES_TEXT,
   TELEMETRY,
   PLATFORM,
+  ROUTE,
   REQUIREMENTS_DATA
 };
