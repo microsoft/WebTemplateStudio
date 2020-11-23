@@ -9,9 +9,16 @@ const WEB_TEMPLATE_STUDIO_LINKS = {
   ISSUES: "https://github.com/Microsoft/WebTemplateStudio/issues"
 };
 
-const PRODUCTION = "production";
-const DEVELOPMENT = "development";
-const TEST = "test";
+const ENVIRONMENT ={
+   PRODUCTION: "production",
+   DEVELOPMENT: "development",
+   TEST: "test",
+}
+
+enum PLATFORM {
+  WEB = "Web",
+  RN = "ReactNative"
+}
 
 const INTL_MESSAGES = defineMessages({
   EMPTY_FIELD: {
@@ -61,11 +68,6 @@ const TELEMETRY = {
   CREATE_NEW_PROJECT_BUTTON: "Generate Modal, create new project button"
 }
 
-enum PLATFORM {
-  WEB = "Web",
-  RN = "ReactNative"
-}
-
 const ROUTE = {
   PAGE_DETAILS: "/PageDetail",
   SELECT_FRAMEWORKS: "/SelectFrameworks",
@@ -94,12 +96,10 @@ const REQUIREMENTS_DATA = [
   }];
 
 export {
-  PRODUCTION,
   SERVICE_KEYS,
   INTL_MESSAGES,
   ARIA_LABELS_NAVIGATION,
-  DEVELOPMENT,
-  TEST,
+  ENVIRONMENT,
   PROJECT_NAME_CHARACTER_LIMIT,
   PAGE_NAME_CHARACTER_LIMIT,
   WEB_TEMPLATE_STUDIO_LINKS,

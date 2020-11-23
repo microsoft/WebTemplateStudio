@@ -3,7 +3,7 @@ import * as React from "react";
 import { connect, useDispatch } from "react-redux";
 import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
 import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
-import { DEVELOPMENT, ROUTE } from "./utils/constants/constants";
+import { ENVIRONMENT, ROUTE } from "./utils/constants/constants";
 import appStyles from "./appStyles.module.css";
 import { AppState } from "./store/combineReducers";
 import { IOption } from "./types/option";
@@ -25,7 +25,7 @@ const AppServiceModal = loadable(() => import(/* webpackChunkName: "AppServiceMo
 const ViewLicensesModal = loadable(() => import(/* webpackChunkName: "ViewLicensesModal" */  "./modals/ViewLicensesModal"));
 const AzureServicesModal = loadable(() => import(/* webpackChunkName: "AzureServicesModal" */  "./modals/AzureServicesModal"));
 
-if (process.env.NODE_ENV === DEVELOPMENT) {
+if (process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT) {
   require("./css/mockThemes.css");
 }
 
