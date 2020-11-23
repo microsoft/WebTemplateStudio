@@ -1,9 +1,9 @@
 import { IVSCodeObject } from "../../types/vscode";
 import { PAYLOAD_MESSAGES_TEXT } from "../constants/constants";
-import { WIZARD_PROJECT_TYPE } from "../constants/internalNames";
 import { ILoggingPayload } from "../../types/logger";
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../constants/commands";
 import { IVersionPackage } from "../../types/option";
+import { projectType } from "../../AppContext";
 
 const postMessageAsync = (command: string, paramsMessage: any, vscode: IVSCodeObject, scopeId: number = Math.random())=>{
   const promise = new Promise<any>((resolve) => {
@@ -88,8 +88,7 @@ const getFeatures = (vscode: IVSCodeObject, frontEndInternalName: string, backEn
     module: EXTENSION_MODULES.CORETS,
     command: EXTENSION_COMMANDS.GET_FEATURES,
     payload: {
-      //TODO: This needs to be changed/shared
-      projectType: WIZARD_PROJECT_TYPE.FULL_STACK_APP,
+      projectType: projectType,
       frontendFramework: frontEndInternalName,
       backendFramework: backEndInternalName
     }
