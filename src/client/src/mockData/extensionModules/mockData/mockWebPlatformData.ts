@@ -3,7 +3,7 @@ import { backendImage, frontendImage, noImage, pageImage, serviceImage } from ".
 
 const projectTypes = [
   {
-    name: "Tabbed", //TODO: need to rework this
+    name: "FullStackWebApp",
   },
 ];
 
