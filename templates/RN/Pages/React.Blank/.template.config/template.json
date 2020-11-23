@@ -5,7 +5,7 @@
   "name": "Blank",
   "shortName": "Blank",
   "groupIdentity": "wts.Page.RN.Blank",
-  "identity": "wts.Page.React.RN.Blank",
+  "identity": "wts.Page.RN.Blank",
   "description": "*** REACT NATIVE *** A blank page for you to build your web application from scratch.",
   "tags": {
     "language": "Any",
