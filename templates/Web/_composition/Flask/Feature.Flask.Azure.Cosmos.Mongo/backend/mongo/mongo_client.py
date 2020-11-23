@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 import sys
 
-from constants import CONSTANTS
+import constants
 
 from .settings import connection_str, cosmosDB_user, cosmosDB_password
 
@@ -9,7 +9,7 @@ from .settings import connection_str, cosmosDB_user, cosmosDB_password
 
 client = MongoClient(connection_str + '?ssl=true&replicaSet=globaldb')
 
-db = client[CONSTANTS['COSMOS']['COLLECTION']]
+db = client[constants.COSMOS_COLLECTION]
 
 db.authenticate(cosmosDB_user, cosmosDB_password)
 

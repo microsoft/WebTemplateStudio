@@ -4,7 +4,7 @@ import azure.cosmos.http_constants as http_constants
 
 from .settings import connection_key, master_key
 
-from constants import CONSTANTS
+import constants
 
 
 class SQLObj():
@@ -16,11 +16,11 @@ class SQLObj():
 
         try:
             self.db = self.client.CreateDatabase(
-                {'id': CONSTANTS['COSMOS']['DATABASE']}
+                {'id': constants.COSMOS_DATABASE}
             ) 
         except errors.HTTPFailure as e:
             if e.status_code == http_constants.StatusCodes.CONFLICT:
-                self.db = self.client.ReadDatabase("dbs/" + CONSTANTS['COSMOS']['DATABASE'])
+                self.db = self.client.ReadDatabase("dbs/" + constants.COSMOS_DATABASE)
             else:
                 raise e
 
@@ -28,7 +28,7 @@ class SQLObj():
             self.container = self.client.CreateContainer(
                 self.db['_self'],
                 {
-                    'id': CONSTANTS['COSMOS']['CONTAINER']
+                    'id': constants.COSMOS_CONTAINER
                 }, 
                 {
                     'offerThroughput': 400
@@ -36,7 +36,7 @@ class SQLObj():
         )
         except errors.HTTPFailure as e:
             if e.status_code == http_constants.StatusCodes.CONFLICT:
-                self.container = self.client.ReadContainer("dbs/" + CONSTANTS['COSMOS']['DATABASE'] + "/colls/" + CONSTANTS['COSMOS']['CONTAINER'])
+                self.container = self.client.ReadContainer("dbs/" + constants.COSMOS_DATABASE + "/colls/" + constants.COSMOS_CONTAINER)
             else:
                 raise e
 

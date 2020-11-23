@@ -1,10 +1,7 @@
 import os
 
-CONSTANTS = {
-    'PORT': os.environ.get('PORT', 3001),
-    //{[{
-    'COSMOS': {
-        'DATABASE': 'List',
-        'CONTAINER': 'ListItems',
-    },
-    //}]}
+PORT = os.environ.get('PORT', 3001)
+//{[{
+COSMOS_DATABASE = 'List'
+COSMOS_CONTAINER = 'ListItems'
+//}]}
