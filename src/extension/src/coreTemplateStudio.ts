@@ -11,6 +11,7 @@ import { EventEmitter } from "events";
 import { IEngineGenerationPayloadType } from "./types/engineGenerationPayloadType";
 import { ISyncPayloadType } from "./types/syncPayloadType";
 import { IEngineGenerationTemplateType } from "./types/engineGenerationTemplateType";
+import { ENVIRONMENT, PLATFORM } from "./constants/constants";
 
 class CliEventEmitter extends EventEmitter {}
 
@@ -207,6 +208,10 @@ export class CoreTemplateStudio {
   private makeEngineGenerationPayload(payload: IGenerationData): IEngineGenerationPayloadType {
     const { projectName, path, projectType, frontendFramework, backendFramework, pages, services } = payload;
 
+    //TODO: this will need to be set from the command
+    const devPlatform = PLATFORM.RN;
+    const platform = (process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT) ? devPlatform : PLATFORM.WEB;//WEB to dev
+
     return {
       projectName: projectName,
       genPath: path,
@@ -214,7 +219,7 @@ export class CoreTemplateStudio {
       frontendFramework: frontendFramework,
       backendFramework: backendFramework,
       language: "Any",
-      platform: "Web",
+      platform: platform,
       homeName: "Test",
       pages: pages.map((page: any) => ({
         name: page.name,
