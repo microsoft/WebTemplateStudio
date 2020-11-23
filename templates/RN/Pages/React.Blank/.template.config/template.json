@@ -4,8 +4,8 @@
   "classifications": ["Universal"],
   "name": "Blank",
   "shortName": "Blank",
-  "groupIdentity": "wts.Page.RN.Blank",
-  "identity": "wts.Page.RN.Blank",
+  "groupIdentity": "wts.Page.ReactNative.Blank",
+  "identity": "wts.Page.ReactNative.Blank",
   "description": "*** REACT NATIVE *** A blank page for you to build your web application from scratch.",
   "tags": {
     "language": "Any",
