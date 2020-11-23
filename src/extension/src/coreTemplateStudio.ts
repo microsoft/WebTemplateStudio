@@ -209,7 +209,7 @@ export class CoreTemplateStudio {
     const { projectName, path, projectType, frontendFramework, backendFramework, pages, services } = payload;
 
     //TODO: this will need to be set from the command
-    const devPlatform = PLATFORM.RN;
+    const devPlatform = PLATFORM.WEB;
     const platform = (process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT) ? devPlatform : PLATFORM.WEB;
 
     return {
