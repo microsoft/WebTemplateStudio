@@ -210,7 +210,7 @@ export class CoreTemplateStudio {
 
     //TODO: this will need to be set from the command
     const devPlatform = PLATFORM.RN;
-    const platform = (process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT) ? devPlatform : PLATFORM.WEB;//WEB to dev
+    const platform = (process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT) ? devPlatform : PLATFORM.WEB;
 
     return {
       projectName: projectName,
