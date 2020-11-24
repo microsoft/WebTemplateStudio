@@ -1,32 +1,28 @@
-from flask import Flask, jsonify, make_response, send_from_directory
+
 import os
-from os.path import exists, join
-
 //{[{
-from mongo.mongo_service import get, create, delete
+import mongo.mongo_service
 //}]}
-import constants
 
-
-app = Flask(__name__, static_folder='build')
+app = flask.Flask(__name__, static_folder='build')
 
 //{[{
 # List Endpoints
 @app.route(constants.ENDPOINT_LIST)
 def get_list():
-    return jsonify(get())
+    return flask.jsonify(mongo.mongo_service.get())
 
 @app.route(constants.ENDPOINT_LIST, methods=['POST'])
 def add_list_item():
-    json_response = jsonify(create())
-    return make_response(json_response, constants.HTTP_STATUS_201_CREATED)
+    json_response = flask.jsonify(mongo.mongo_service.create())
+    return flask.make_response(json_response, constants.HTTP_STATUS_201_CREATED)
 
 @app.route(constants.ENDPOINT_LIST + '/<id>', methods=['DELETE'])
 def delete_list_item(id):
     try:
-        removed_item = jsonify(delete(id))
+        removed_item = flask.jsonify(mongo.mongo_service.delete(id))
         return removed_item
     except Exception as ex:
-        err_response = jsonify({'error': str(ex)})
-        return make_response(err_response, constants.HTTP_STATUS_404_NOT_FOUND)
+        err_response = flask.jsonify({'error': str(ex)})
+        return flask.make_response(err_response, constants.HTTP_STATUS_404_NOT_FOUND)
 //}]}

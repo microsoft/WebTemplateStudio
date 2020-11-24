@@ -1,20 +1,19 @@
-from azure.cosmos import CosmosClient, errors, http_constants, PartitionKey
-from .settings import connection_key, master_key
-
+import azure.cosmos
+from . import settings
 import constants
 
 class SQLObj():
     def __init__(self):
-        self.client = CosmosClient(
-            url = connection_key,
-            credential = master_key
+        self.client = azure.cosmos.CosmosClient(
+            url = settings.connection_key,
+            credential = settings.master_key
         )
         self.db = self.client.create_database_if_not_exists(
             id=constants.COSMOS_DATABASE
         )
         self.container = self.db.create_container_if_not_exists(
             id=constants.COSMOS_CONTAINER,
-            partition_key=PartitionKey(path="/_partitionKey"),
+            partition_key=azure.cosmos.PartitionKey(path="/_partitionKey"),
             offer_throughput=400
         )
 

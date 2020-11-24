@@ -1,12 +1,11 @@
 import os
-from os.path import join, dirname, realpath
-from dotenv import load_dotenv
+import dotenv
 
 # Create .env file path.
-dotenv_path = join(dirname(dirname(realpath(__file__))), '.env')
+dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), '.env')
 
 # Load file from the above created path.
-load_dotenv(dotenv_path)
+dotenv.load_dotenv(dotenv_path)
 
 # Access env file variables.
 connection_str = os.getenv('COSMOSDB_CONNSTR')

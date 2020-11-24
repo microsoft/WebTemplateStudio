@@ -1,29 +1,27 @@
-from flask import Flask, jsonify, make_response, send_from_directory
 import os
-from os.path import exists, join
 
 //{[{
-from sql.sql_service import get, create, delete
+import sql.sql_service
 //}]}
 import constants
 
-app = Flask(__name__, static_folder='build')
+app = flask.Flask(__name__, static_folder='build')
 
 //{[{
 # List Endpoints
 @app.route(constants.ENDPOINT_LIST)
 def get_list():
-    return jsonify(get())
+    return jsonify(sql.sql_service.get())
 
 @app.route(constants.ENDPOINT_LIST, methods=['POST'])
 def add_list_item():
-    json_response = jsonify(create())
+    json_response = jsonify(sql.sql_service.create())
     return make_response(json_response, constants.HTTP_STATUS_201_CREATED)
 
 @app.route(constants.ENDPOINT_LIST + '/<id>', methods=['DELETE'])
 def delete_list_item(id):
     try:
-        removed_item = jsonify(delete(id))
+        removed_item = jsonify(sql.sql_service.delete(id))
         return removed_item
     except Exception as ex:
         err_response = jsonify({'error': str(ex)})

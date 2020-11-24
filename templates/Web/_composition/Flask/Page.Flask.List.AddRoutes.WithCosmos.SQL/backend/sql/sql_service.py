@@ -1,8 +1,8 @@
-from azure.cosmos import partition_key
-from flask import request
-from .sql_client import SQLObj
+import azure.cosmos
+import flask
+from . import sql_client
 
-sql_database_obj = SQLObj()
+sql_database_obj = sql_client.SQLObj()
 
 def get():
     query = "SELECT r.id as id, r.text FROM root r ORDER BY r._ts DESC"
@@ -13,7 +13,7 @@ def get():
     return list(results_iterable)
 
 def create():
-    data = request.get_json()
+    data = flask.request.get_json()
     list_item = {'text': data['text']}
     created = sql_database_obj.get_container().upsert_item(list_item)
     return {'id': created['id'], 'text': list_item['text']}
@@ -32,5 +32,5 @@ def delete(id):
     item = items[0]
     sql_database_obj.get_container().delete_item(
         item,
-        partition_key=partition_key.NonePartitionKeyValue)
+        partition_key=azure.cosmos.partition_key.NonePartitionKeyValue)
     return {'id': id, 'text': 'This comment was deleted'}
