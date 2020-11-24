@@ -9,7 +9,7 @@ export const getISelected = () => {
   const selected: ISelected = {
     title: "title1",
     internalName: "internamName1",
-    icon: ""
+    icon: "",
   };
   return selected;
 };
@@ -35,7 +35,7 @@ export const getInitialState = (): AppState => {
           licenses: [],
           selected: false,
           author: "",
-          icon:"",
+          icon: "",
         },
         originRoute: "",
       },
@@ -71,14 +71,14 @@ export const getInitialState = (): AppState => {
         internalName: "",
         version: "",
         author: "",
-        icon:"",
+        icon: "",
       },
       backendFramework: {
         title: "",
         internalName: "",
         version: "",
         author: "",
-        icon:"",
+        icon: "",
       },
       pages: [
         {
@@ -94,7 +94,7 @@ export const getInitialState = (): AppState => {
           ],
           title: "Blank",
           id: "0.7087795384523403",
-          icon:"",
+          icon: "",
         },
       ],
       outputPathObject: {
@@ -282,8 +282,8 @@ export const addFrontEndFrameworksOptions = (store: AppState) => {
       requirement: {
         name: "node",
         version: "12.0.x",
-        isInstalled: true
-      }
+        isInstalled: true,
+      },
     },
     {
       author: "Google",
@@ -304,8 +304,8 @@ export const addFrontEndFrameworksOptions = (store: AppState) => {
       requirement: {
         name: "node",
         version: "12.0.x",
-        isInstalled: true
-      }
+        isInstalled: true,
+      },
     },
     {
       author: "Evan You",
@@ -326,8 +326,8 @@ export const addFrontEndFrameworksOptions = (store: AppState) => {
       requirement: {
         name: "node",
         version: "12.0.x",
-        isInstalled: true
-      }
+        isInstalled: true,
+      },
     },
   ];
   return store;
@@ -356,8 +356,8 @@ export const addBackEndFrameworksOptions = (store: AppState) => {
       requirement: {
         name: "node",
         version: "12.0.x",
-        isInstalled: true
-      }
+        isInstalled: true,
+      },
     },
     {
       author: "Various",
@@ -373,8 +373,8 @@ export const addBackEndFrameworksOptions = (store: AppState) => {
       requirement: {
         name: "node",
         version: "12.0.x",
-        isInstalled: true
-      }
+        isInstalled: true,
+      },
     },
     {
       author: "Various",
@@ -393,8 +393,8 @@ export const addBackEndFrameworksOptions = (store: AppState) => {
       requirement: {
         name: "python",
         version: "3.5.x",
-        isInstalled: true
-      }
+        isInstalled: true,
+      },
     },
     {
       author: "Microsoft",
@@ -412,8 +412,8 @@ export const addBackEndFrameworksOptions = (store: AppState) => {
       requirement: {
         name: "netcore",
         version: "3.1.x",
-        isInstalled: true
-      }
+        isInstalled: true,
+      },
     },
   ];
   return store;

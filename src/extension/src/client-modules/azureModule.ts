@@ -101,20 +101,20 @@ export class AzureModule extends WizardServant {
   }
 
   public async validateCosmosName(message: any): Promise<IPayloadResponse> {
-    try{
+    try {
       const validateResult = await AzureServices.validateCosmosName(message.appName, message.subscription);
-    return {
-      payload: {
-        ...validateResult,
-      },
-    };
-    }catch(error) {
+      return {
+        payload: {
+          ...validateResult,
+        },
+      };
+    } catch (error) {
       return { payload: undefined };
     }
   }
 
   private getFormattedSubscriptions(subscriptions: SubscriptionItem[]): Subscription[] {
-    return subscriptions.map(subscription => {
+    return subscriptions.map((subscription) => {
       return {
         name: subscription.label,
         isMicrosoftLearn: AzureServices.IsMicrosoftLearnSubscription(subscription),

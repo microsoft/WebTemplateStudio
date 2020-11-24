@@ -7,5 +7,5 @@ interface IProps {
 }
 
 export default (props: IProps) => {
-  return (<Listscreenshot className={classnames(props.style)}/>);
-}
+  return <Listscreenshot className={classnames(props.style)} />;
+};

@@ -1,10 +1,10 @@
 import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
-    title: {
-      id: "CosmosDbSelection.title",
-      defaultMessage: "CosmosDB"
-    }
-  });
+  title: {
+    id: "CosmosDbSelection.title",
+    defaultMessage: "CosmosDB",
+  },
+});
 
-  export default messages;
+export default messages;

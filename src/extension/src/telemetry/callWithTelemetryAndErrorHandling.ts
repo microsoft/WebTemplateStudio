@@ -4,7 +4,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
- import * as vscode from "vscode";
+import * as vscode from "vscode";
 import { MessageItem, window } from "vscode";
 import { MESSAGES } from "../constants/messages";
 import { reportAnIssue } from "./reportAnIssue";
@@ -84,24 +84,19 @@ function initContext(): [number, IActionContext] {
       result: "Succeeded",
       stack: "",
       error: "",
-      errorMessage: ""
+      errorMessage: "",
     },
     measurements: {
-      duration: 0
+      duration: 0,
     },
     suppressTelemetry: false,
     suppressErrorDisplay: false,
-    rethrowError: false
+    rethrowError: false,
   };
   return [start, context];
 }
 
-function handleError(
-  vscodeContext: ExtensionContext,
-  context: IActionContext,
-  callbackId: string,
-  error: any
-): void {
+function handleError(vscodeContext: ExtensionContext, context: IActionContext, callbackId: string, error: any): void {
   const errorData: IParsedError = parseError(error);
   if (errorData.isUserCancelledError) {
     context.properties.result = "Canceled";
@@ -132,10 +127,10 @@ function handleError(
       .then((result: MessageItem | undefined) => {
         if (result === MESSAGES.DIALOG_RESPONSES.reportAnIssue) {
           reportAnIssue(vscodeContext, callbackId, errorData);
-        }
-        else if (result === MESSAGES.DIALOG_RESPONSES.showLog) {
-          vscode.workspace.openTextDocument(Logger.filename)
-          .then(TextDocument => vscode.window.showTextDocument(TextDocument));
+        } else if (result === MESSAGES.DIALOG_RESPONSES.showLog) {
+          vscode.workspace
+            .openTextDocument(Logger.filename)
+            .then((TextDocument) => vscode.window.showTextDocument(TextDocument));
         }
       });
   }
@@ -161,10 +156,6 @@ function handleTelemetry(
     context.measurements.duration = (end - start) / 1000;
 
     // Note: The id of the extension is automatically prepended to the given callbackId (e.g. "vscode-cosmosdb/")
-    telemetryReporter.sendTelemetryEvent(
-      callbackId,
-      context.properties,
-      context.measurements
-    );
+    telemetryReporter.sendTelemetryEvent(callbackId, context.properties, context.measurements);
   }
 }

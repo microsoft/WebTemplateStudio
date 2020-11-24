@@ -1,7 +1,5 @@
-
 import { ISelectProjectTypeAction } from "./model";
 
-type WizardSelectionActionType =
-  ISelectProjectTypeAction;
+type WizardSelectionActionType = ISelectProjectTypeAction;
 
 export default WizardSelectionActionType;

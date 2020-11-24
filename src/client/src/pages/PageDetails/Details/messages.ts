@@ -3,15 +3,15 @@ import { defineMessages } from "react-intl";
 const messages = defineMessages({
   none: {
     id: "details.none",
-    defaultMessage: "None"
+    defaultMessage: "None",
   },
   redirectLabel: {
     id: "details.redirectLinkLabel",
-    defaultMessage: "{redirectLabel}"
+    defaultMessage: "{redirectLabel}",
   },
   genericRedirect: {
     id: "redirectLabel.generic",
-    defaultMessage: "here"
-  }
+    defaultMessage: "here",
+  },
 });
 export default messages;

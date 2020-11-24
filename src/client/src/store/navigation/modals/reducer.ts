@@ -1,13 +1,10 @@
 import { SERVICES_TYPEKEYS } from "../../userSelection/services/typeKeys";
-import {
-  NAVIGATION_MODAL_TYPEKEYS,
-  ModalState
-} from "../typeKeys";
+import { NAVIGATION_MODAL_TYPEKEYS, ModalState } from "../typeKeys";
 import RootAction from "../../ActionType";
 
 const initialState: ModalState = {
   modalType: null,
-  modalData: null
+  modalData: null,
 };
 
 const openModal = (state: ModalState = initialState, action: RootAction) => {

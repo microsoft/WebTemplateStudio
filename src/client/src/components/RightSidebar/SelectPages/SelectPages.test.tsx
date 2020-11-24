@@ -2,7 +2,7 @@ import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import SelectPages from "./index";
 import messages from "./messages";
-import * as ReactRedux from 'react-redux'
+import * as ReactRedux from "react-redux";
 import { getInitialState } from "../../../mockData/mockStore";
 import { render, RenderResult, fireEvent } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
@@ -38,7 +38,7 @@ describe("About", () => {
     });
 
     xit(`check link issue`, () => {
-      fireEvent.click(wrapper.getByTestId('btnResetPages'));
+      fireEvent.click(wrapper.getByTestId("btnResetPages"));
     });
   });
 });

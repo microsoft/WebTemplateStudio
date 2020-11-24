@@ -38,7 +38,7 @@ const Dropdown = ({
   value,
   disabled,
   ariaLabel,
-  openDropdownUpwards
+  openDropdownUpwards,
 }: IDropdownProps) => {
   return (
     <Select

@@ -15,7 +15,7 @@ type Props = InjectedIntlProps;
 const ReviewAndGenerate = ({ intl }: Props) => {
   const { formatMessage } = intl;
   const dispatch = useDispatch();
-  
+
   return (
     <div className={styles.container}>
       <div className={styles.reviewContextContainer}>
@@ -26,7 +26,7 @@ const ReviewAndGenerate = ({ intl }: Props) => {
         <div className={styles.buttonContainer}>
           <button
             className={classnames(buttonStyles.buttonDark, styles.button)}
-            onClick={()=> dispatch(ModalActions.openViewLicensesModalAction())}
+            onClick={() => dispatch(ModalActions.openViewLicensesModalAction())}
           >
             {formatMessage(messages.viewLicenses)}
           </button>

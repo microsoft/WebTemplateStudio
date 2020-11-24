@@ -8,7 +8,7 @@ import styles from "./styles.module.css";
 import classnames from "classnames";
 import Notification from "../../components/Notification";
 import { IStoreProps, IIntlProps, IProps } from "./interfaces";
-import { mapStateToProps} from "./store";
+import { mapStateToProps } from "./store";
 
 type Props = IStoreProps & IIntlProps & IProps;
 
@@ -19,11 +19,11 @@ const PageAddPages = (props: Props) => {
     <div>
       <h1 className={styles.title}>{intl.formatMessage(messages.pagesTitleQuestion)}</h1>
       <div
-          className={classnames(styles.description, {
-            [styles.borderGreen]: !pageOutOfBounds,
-            [styles.borderYellow]: pageOutOfBounds
-          })}
-        >
+        className={classnames(styles.description, {
+          [styles.borderGreen]: !pageOutOfBounds,
+          [styles.borderYellow]: pageOutOfBounds,
+        })}
+      >
         <Notification
           showWarning={pageOutOfBounds}
           text={"Max 20 pages can be selected"}
@@ -31,14 +31,12 @@ const PageAddPages = (props: Props) => {
         />
       </div>
       <div className={styles.flexContainer}>
-        {options.map((option, key)=>{
-          return (<PageCard key={key} page={option} isModal={isModal}/>)
+        {options.map((option, key) => {
+          return <PageCard key={key} page={option} isModal={isModal} />;
         })}
       </div>
     </div>
   );
-}
+};
 
-export default connect(
-  mapStateToProps
-)(injectIntl(PageAddPages));
+export default connect(mapStateToProps)(injectIntl(PageAddPages));

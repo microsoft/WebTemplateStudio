@@ -50,7 +50,7 @@ const ProjectOutput = (props: Props) => {
 
   return (
     <>
-      <div className={props.isRightsidebar? styles.inputContainer: rightsidebarStyles.inputContainer}>
+      <div className={props.isRightsidebar ? styles.inputContainer : rightsidebarStyles.inputContainer}>
         <div className={styles.inputTitle}>{props.intl.formatMessage(messages.outputPathTitle)}</div>
         <div>
           <OutputPath

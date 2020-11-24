@@ -33,7 +33,7 @@ const PageAddServices = ({ intl }: Props) => {
         {!isLoggedIn && <AzureStudent />}
         <div className={styles.servicesContainer}>
           {serviceGroups.map((group, key) => {
-            return <ServiceGroup group={group} key={key} />
+            return <ServiceGroup group={group} key={key} />;
           })}
         </div>
       </div>

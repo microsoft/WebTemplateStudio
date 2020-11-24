@@ -16,22 +16,19 @@ describe("RuntimeStackInfo", () => {
     ["Node", "node"],
     ["Moleculer", "node"],
     ["Flask", "python"],
-    ["AspNet", "DOTNETCORE"]
+    ["AspNet", "DOTNETCORE"],
   ];
 
-  test.each(cases)(
-    "when selected backend framework is %p, runtime stack is %p",
-    (backendFramework, runtimeStack) => {
-      initialState = getInitialState();
-      addBackEndFrameworksOptions(initialState);
-      setBackendFramework(initialState, backendFramework);
-      store = mockStore(initialState);
-      props = {};
+  test.each(cases)("when selected backend framework is %p, runtime stack is %p", (backendFramework, runtimeStack) => {
+    initialState = getInitialState();
+    addBackEndFrameworksOptions(initialState);
+    setBackendFramework(initialState, backendFramework);
+    store = mockStore(initialState);
+    props = {};
 
-      wrapper = renderWithStore(<RuntimeStackInfo {...props} />, store);
-      expect(wrapper).toBeDefined();
-      const expectedText = intl.formatMessage(messages.runtimeStack, { runtimeStack });
-      expect(wrapper.getByText(expectedText)).toBeDefined();
-    }
-  );
+    wrapper = renderWithStore(<RuntimeStackInfo {...props} />, store);
+    expect(wrapper).toBeDefined();
+    const expectedText = intl.formatMessage(messages.runtimeStack, { runtimeStack });
+    expect(wrapper.getByText(expectedText)).toBeDefined();
+  });
 });
