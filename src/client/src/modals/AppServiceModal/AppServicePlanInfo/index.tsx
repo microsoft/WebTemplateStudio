@@ -19,7 +19,7 @@ const AppServicePlanInfo = (props: Props) => {
   const subscriptions = useSelector((state: AppState) => getSubscriptionsSelector(state));
 
   const isMicrosoftLearnSubscription = (): boolean => {
-    const s = subscriptions.find(s => s.name === subscription);
+    const s = subscriptions.find((s) => s.name === subscription);
     return s !== undefined && s.isMicrosoftLearn;
   };
 
@@ -31,12 +31,7 @@ const AppServicePlanInfo = (props: Props) => {
           ? formatMessage(messages.freeTierMessage)
           : formatMessage(messages.basicTierMessage)}
       </div>
-      <a
-        className={styles.link}
-        target={"_blank"}
-        rel="noreferrer noopener"
-        href={AZURE_LINKS.APP_SERVICE_PLAN}
-      >
+      <a className={styles.link} target={"_blank"} rel="noreferrer noopener" href={AZURE_LINKS.APP_SERVICE_PLAN}>
         {formatMessage(messages.learnMore)}
       </a>
     </div>

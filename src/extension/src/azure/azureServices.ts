@@ -2,7 +2,7 @@ import { MICROSOFT_LEARN_TENANTS } from "./../configuration.json";
 
 import { AzureAuth, SubscriptionItem, LocationItem } from "./azure-auth/azureAuth";
 import { CosmosDBDeploy, CosmosDBSelections } from "./azure-cosmosDB/cosmosDbModule";
-import { CONSTANTS, AzureResourceType} from "../constants/constants";
+import { CONSTANTS, AzureResourceType } from "../constants/constants";
 import { SubscriptionError, ValidationError } from "../errors";
 import { ResourceGroupDeploy, ResourceGroupSelection } from "./azure-resource-group/resourceGroupModule";
 import { AppServiceProvider, AppServiceSelections } from "./azure-app-service/appServiceProvider";
@@ -36,11 +36,11 @@ export class AzureServices {
   private static AzureResourceGroupProvider = new ResourceGroupDeploy();
   private static subscriptionsCache: SubscriptionItem[] = [];
 
-  public static async Login(): Promise<boolean>{
+  public static async Login(): Promise<boolean> {
     return await AzureAuth.login();
   }
 
-  public static async Logout(): Promise<boolean>{
+  public static async Logout(): Promise<boolean> {
     const success = await AzureAuth.logout();
     AzureServices.CleanSubscriptionCache();
     return success;
@@ -68,7 +68,7 @@ export class AzureServices {
   }
 
   public static getSubscription(name: string): SubscriptionItem {
-    const subscription = AzureServices.subscriptionsCache.find(item => item.label === name);
+    const subscription = AzureServices.subscriptionsCache.find((item) => item.label === name);
 
     if (!subscription) {
       throw new SubscriptionError(MESSAGES.ERRORS.SUBSCRIPTION_NOT_FOUND);
@@ -78,7 +78,7 @@ export class AzureServices {
   }
 
   public static getSubscriptions(names: string[]): SubscriptionItem[] {
-    const subscriptions = AzureServices.subscriptionsCache.filter(item => names.includes(item.label));
+    const subscriptions = AzureServices.subscriptionsCache.filter((item) => names.includes(item.label));
     if (subscriptions.length != names.length) {
       throw new SubscriptionError(MESSAGES.ERRORS.SUBSCRIPTION_NOT_FOUND);
     }
@@ -93,11 +93,14 @@ export class AzureServices {
     const subscription = AzureServices.getSubscription(subscriptionName);
     const items = await AzureAuth.getAllResourceGroupItems(subscription);
     const resources: ResourceGroup[] = [];
-    items.map(item => resources.push({ name: item.name }));
+    items.map((item) => resources.push({ name: item.name }));
     return resources;
   }
 
-  public static async getLocations(subscriptionName: string, azureServiceType: AzureResourceType): Promise<AzureLocation[]> {
+  public static async getLocations(
+    subscriptionName: string,
+    azureServiceType: AzureResourceType
+  ): Promise<AzureLocation[]> {
     const subscription = AzureServices.getSubscription(subscriptionName);
     let items: LocationItem[] = [];
     switch (azureServiceType) {
@@ -109,7 +112,7 @@ export class AzureServices {
         break;
     }
     const locations: AzureLocation[] = [];
-    items.map(item => locations.push({ name: item.locationDisplayName }));
+    items.map((item) => locations.push({ name: item.locationDisplayName }));
     return locations;
   }
 
@@ -137,7 +140,11 @@ export class AzureServices {
     for (const service of services) {
       const { subscription, resourceGroup } = service;
       const subscriptionItem = AzureServices.getSubscription(subscription);
-      const canCreateResourceGroup = await AzureServices.canCreateResourceGroup(subscriptionItem, resourceGroup, selection);
+      const canCreateResourceGroup = await AzureServices.canCreateResourceGroup(
+        subscriptionItem,
+        resourceGroup,
+        selection
+      );
       if (canCreateResourceGroup) {
         selection.push({
           subscriptionItem,
@@ -169,9 +176,9 @@ export class AzureServices {
   public static async generateValidResourceGroupName(projectName: string, services: IAzureService[]): Promise<string> {
     const subscriptions: SubscriptionItem[] = [];
 
-      const subscriptionNames = services.map(s => s.subscription);
-      const subscriptionItems = AzureServices.getSubscriptions([...new Set(subscriptionNames)]);
-      subscriptions.push(...subscriptionItems);
+    const subscriptionNames = services.map((s) => s.subscription);
+    const subscriptionItems = AzureServices.getSubscriptions([...new Set(subscriptionNames)]);
+    subscriptions.push(...subscriptionItems);
 
     const allSubscriptions: SubscriptionItem[] = [...new Set(subscriptions)];
 
@@ -246,7 +253,7 @@ export class AzureServices {
       const settingsPath = path.join(filePath, ".vscode", "settings.json");
       const settings = fse.readJSONSync(settingsPath);
       settings["appService.defaultWebAppToDeploy"] = id;
-      fse.writeJSONSync(settingsPath, settings, {spaces: 2});
+      fse.writeJSONSync(settingsPath, settings, { spaces: 2 });
     } catch (err) {
       throw new Error(err);
     }
@@ -280,8 +287,12 @@ export class AzureServices {
     return dbObject.connectionString;
   }
 
-  public static updateConnectionStringToProject(path: string, connectionString: string, backendFramework: string): void {
-    if(backendFramework === CONSTANTS.ASPNET_BACKEND_FRAMEWORK_NAME) {
+  public static updateConnectionStringToProject(
+    path: string,
+    connectionString: string,
+    backendFramework: string
+  ): void {
+    if (backendFramework === CONSTANTS.ASPNET_BACKEND_FRAMEWORK_NAME) {
       CosmosDBDeploy.updateConnectionStringInAppSettingsFile(path, connectionString);
     } else {
       CosmosDBDeploy.updateConnectionStringInEnvFile(path, connectionString);

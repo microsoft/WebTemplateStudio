@@ -27,8 +27,6 @@ const getServiceFilter = (state: AppState, internalName: string) => {
   return undefined;
 };
 
-const hasSelectedService = createSelector(
-  getServiceFilter,
-  (service) => service !== undefined);
+const hasSelectedService = createSelector(getServiceFilter, (service) => service !== undefined);
 
 export { getServices, getAppService, getCosmosDB, hasServices, hasSelectedService };

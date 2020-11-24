@@ -6,4 +6,4 @@ interface IAppContext {
   vscode: IVSCodeObject;
 }
 
-export const AppContext = React.createContext<IAppContext>({vscode:mockVsCodeApi() as IVSCodeObject});
+export const AppContext = React.createContext<IAppContext>({ vscode: mockVsCodeApi() as IVSCodeObject });

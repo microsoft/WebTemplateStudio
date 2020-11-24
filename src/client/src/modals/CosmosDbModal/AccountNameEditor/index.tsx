@@ -38,7 +38,7 @@ const AccountNameEditor = ({
 
   React.useEffect(() => {
     if (isValidSubscription() && accountName === "") {
-      GetValidCosmosAccountName(projectName, vscode).then(event => onAccountNameChange(event.data.payload.validName));
+      GetValidCosmosAccountName(projectName, vscode).then((event) => onAccountNameChange(event.data.payload.validName));
     }
   }, [subscription]);
 
@@ -46,16 +46,17 @@ const AccountNameEditor = ({
     onIsAvailableAccountNameChange(false);
     if (accountName !== "") {
       setIsValidatingName(true);
-      delayValidation(() =>{
+      delayValidation(() => {
         validationCosmosDbAccountNameScopeId++;
-        ValidateCosmosAccountName(subscription, accountName, validationCosmosDbAccountNameScopeId, vscode).then(event => {
-          if(validationCosmosDbAccountNameScopeId === event.data.payload.scope)
-          {
-            setInvalidAccountNameMessage(event.data.payload.errorMessage);
-            onIsAvailableAccountNameChange(event.data.payload.isValid);
-            setIsValidatingName(false);
+        ValidateCosmosAccountName(subscription, accountName, validationCosmosDbAccountNameScopeId, vscode).then(
+          (event) => {
+            if (validationCosmosDbAccountNameScopeId === event.data.payload.scope) {
+              setInvalidAccountNameMessage(event.data.payload.errorMessage);
+              onIsAvailableAccountNameChange(event.data.payload.isValid);
+              setIsValidatingName(false);
+            }
           }
-        });
+        );
       });
     }
   }, [accountName]);
@@ -68,7 +69,7 @@ const AccountNameEditor = ({
       timeout = undefined;
       validation();
     }, 700);
-  }
+  };
 
   const isValidSubscription = (): boolean => {
     return subscription !== "" && subscription !== "Select...";
@@ -88,7 +89,7 @@ const AccountNameEditor = ({
           placeholder={formatMessage(messages.inputPlaceholderMessage)}
           className={styles.input}
           value={accountName}
-          onChange={e => onAccountNameChange(e.currentTarget.value)}
+          onChange={(e) => onAccountNameChange(e.currentTarget.value)}
           disabled={!isValidSubscription()}
         />
         {accountName !== "" && invalidAccountNameMessage === "" && !isValidatingName && (
@@ -97,7 +98,9 @@ const AccountNameEditor = ({
         {isValidatingName && <Spinner data-testid="spinner" className={styles.spinner} />}
       </div>
       {accountName !== "" && !isValidatingName && invalidAccountNameMessage !== "" && (
-        <div data-testid="error-message" className={styles.errorMessage}>{invalidAccountNameMessage}</div>
+        <div data-testid="error-message" className={styles.errorMessage}>
+          {invalidAccountNameMessage}
+        </div>
       )}
     </div>
   );

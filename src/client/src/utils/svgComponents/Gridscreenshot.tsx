@@ -7,5 +7,5 @@ interface IProps {
 }
 
 export default (props: IProps) => {
-  return (<Gridscreenshot className={classnames(props.style)}/>);
-}
+  return <Gridscreenshot className={classnames(props.style)} />;
+};

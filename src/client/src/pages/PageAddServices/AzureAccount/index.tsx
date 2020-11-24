@@ -45,41 +45,43 @@ const AzureAccount = ({ intl }: Props) => {
           <div className={styles.loginDetails}>
             {email}
             <br />
-            <button className={classnames(buttonStyles.buttonLink, styles.signOutButton)}
+            <button
+              className={classnames(buttonStyles.buttonLink, styles.signOutButton)}
               onClick={signOutAzure}
-              aria-label={intl.formatMessage(messages.ariaSignOutLabel)}>
+              aria-label={intl.formatMessage(messages.ariaSignOutLabel)}
+            >
               {intl.formatMessage(messages.signOut)}
             </button>
           </div>
         </div>
-      )
-      }
-      {
-        !isLoggedIn && (
-          <div className={classnames(styles.azureProfile, styles.buttonContainer)}>
-            <button className={classnames(buttonStyles.buttonDark, styles.button)}
-              onClick={handleSignInClick}
-              aria-label={intl.formatMessage(messages.ariaSignInLabel)}>
-              {intl.formatMessage(messages.signIn)}
-            </button>
+      )}
+      {!isLoggedIn && (
+        <div className={classnames(styles.azureProfile, styles.buttonContainer)}>
+          <button
+            className={classnames(buttonStyles.buttonDark, styles.button)}
+            onClick={handleSignInClick}
+            aria-label={intl.formatMessage(messages.ariaSignInLabel)}
+          >
+            {intl.formatMessage(messages.signIn)}
+          </button>
 
-            <a className={classnames(styles.link, buttonStyles.buttonLink)}
-              href={AZURE_LINKS.CREATE_FREE_ACCOUNT}
-              target="_blank" rel='noreferrer'
-              onKeyUp={keyUpHandler}
-              tabIndex={-1}>
-              <button
-                className={classnames(
-                  styles.button,
-                  buttonStyles.buttonHighlighted
-                )}
-                aria-label={intl.formatMessage(messages.ariaCreateAccountLabel)}>
-                {intl.formatMessage(messages.createAccount)}
-              </button>
-            </a>
-          </div>
-        )
-      }
+          <a
+            className={classnames(styles.link, buttonStyles.buttonLink)}
+            href={AZURE_LINKS.CREATE_FREE_ACCOUNT}
+            target="_blank"
+            rel="noreferrer"
+            onKeyUp={keyUpHandler}
+            tabIndex={-1}
+          >
+            <button
+              className={classnames(styles.button, buttonStyles.buttonHighlighted)}
+              aria-label={intl.formatMessage(messages.ariaCreateAccountLabel)}
+            >
+              {intl.formatMessage(messages.createAccount)}
+            </button>
+          </a>
+        </div>
+      )}
     </>
   );
 };

@@ -31,7 +31,7 @@ const ApiSelection = (props: Props) => {
   const [selectedApi, setSelectedApi] = useState<IDropDownOptionType | undefined>(undefined);
 
   React.useEffect(() => {
-    const api = ApiValues.find(s => s.value === initialApi);
+    const api = ApiValues.find((s) => s.value === initialApi);
     if (api) {
       setSelectedApi(api);
     }
@@ -50,10 +50,10 @@ const ApiSelection = (props: Props) => {
       </div>
       <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
       <Dropdown
-        openDropdownUpwards={!isAdvancedMode}      
+        openDropdownUpwards={!isAdvancedMode}
         ariaLabel={formatMessage(messages.ariaDropdownLabel)}
-        options={ApiValues}        
-        handleChange={api => setSelectedApi(api)}
+        options={ApiValues}
+        handleChange={(api) => setSelectedApi(api)}
         value={selectedApi}
       />
     </div>

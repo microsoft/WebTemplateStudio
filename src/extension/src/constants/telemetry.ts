@@ -14,5 +14,5 @@ export enum TelemetryEventName {
   TrackPressQuickstart = "Press-Quickstart",
   OpenAppServiceModalFromServicesList = "Open-AppService-Modal-From-Services-List",
   OpenCosmosDBServiceModalFromServicesList = "Open-CosmosDBService-Modal-From-Services-List",
-  OpenAzureServiceAdvancedMode = "Open-Azure-Service-Advanced-Mode"
+  OpenAzureServiceAdvancedMode = "Open-Azure-Service-Advanced-Mode",
 }

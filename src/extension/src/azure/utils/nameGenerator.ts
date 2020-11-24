@@ -1,10 +1,7 @@
 import { AzureResourceType, CONSTANTS } from "../../constants/constants";
 
 export namespace NameGenerator {
-  export async function generateValidAzureTypeName(
-    projectName: string,
-    azureType: AzureResourceType
-  ): Promise<string> {
+  export async function generateValidAzureTypeName(projectName: string, azureType: AzureResourceType): Promise<string> {
     // valid name can only have alphanumeric characters and dashes
     // this regex replaces all non-alphanumeric characters and underscores with dashes
     projectName = projectName.replace(/[W_]+/g, "-");
@@ -32,24 +29,15 @@ export namespace NameGenerator {
     return year.concat(month, date, hour, min, sec);
   }
 
-  function trimProjectName(
-    projectName: string,
-    azureType?: AzureResourceType
-  ): string {
+  function trimProjectName(projectName: string, azureType?: AzureResourceType): string {
     const suffixLength = 15; // format of suffix is "-yyyymmddhhmmss"
     if (azureType === AzureResourceType.AppServicePlan) {
-      return projectName.substr(
-        0,
-        CONSTANTS.APP_SERVICE_PLAN_NAME.MAX_LENGTH - suffixLength
-      );
+      return projectName.substr(0, CONSTANTS.APP_SERVICE_PLAN_NAME.MAX_LENGTH - suffixLength);
     }
     return projectName;
   }
 
-  export function generateName(
-    userProjectName: string,
-    azureType?: AzureResourceType
-  ): string {
+  export function generateName(userProjectName: string, azureType?: AzureResourceType): string {
     const timestamp = unixToSuffix(Date.now());
     const suffix: string = "-" + timestamp;
     return trimProjectName(userProjectName, azureType) + suffix;

@@ -3,14 +3,10 @@ import { DatabaseAccount } from "azure-arm-cosmosdb/lib/models";
 import { ServiceClientCredentials } from "ms-rest";
 import { SubscriptionItem, ResourceGroupItem } from "../azure-auth/azureAuth";
 import * as path from "path";
-import {
-  SubscriptionError,
-  AuthorizationError,
-  DeploymentError,
-} from "../../errors";
+import { SubscriptionError, AuthorizationError, DeploymentError } from "../../errors";
 import {
   ResourceManagementClient,
-  ResourceManagementModels
+  ResourceManagementModels,
 } from "azure-arm-resource/lib/resource/resourceManagementClient";
 import { ResourceManager } from "../azure-arm/resourceManager";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
@@ -60,24 +56,24 @@ export function GetAvailableAPIs(): APIObject[] {
   return [
     {
       value: "MongoDB",
-      label: "Azure Cosmos DB for MongoDB API"
+      label: "Azure Cosmos DB for MongoDB API",
     },
     {
       value: "Graph",
-      label: "Gremlin (graph)"
+      label: "Gremlin (graph)",
     },
     {
       value: "Table",
-      label: "Azure Table"
+      label: "Azure Table",
     },
     {
       value: "SQL",
-      label: "Core (SQL)"
+      label: "Core (SQL)",
     },
     {
       value: "Cassandra",
-      label: "Cassandra"
-    }
+      label: "Cassandra",
+    },
   ];
 }
 
@@ -100,49 +96,46 @@ export class CosmosDBDeploy {
       {
         kind: "MongoDB",
         defaultExperience: "Azure Cosmos DB for MongoDB API",
-        capabilities: []
-      }
+        capabilities: [],
+      },
     ],
     [
       "Graph",
       {
         kind: "GlobalDocumentDB",
         defaultExperience: "Gremlin (graph)",
-        capabilities: [{ name: "EnableGremlin" }]
-      }
+        capabilities: [{ name: "EnableGremlin" }],
+      },
     ],
     [
       "Table",
       {
         kind: "GlobalDocumentDB",
         defaultExperience: "Azure Table",
-        capabilities: [{ name: "EnableTable" }]
-      }
+        capabilities: [{ name: "EnableTable" }],
+      },
     ],
     [
       "SQL",
       {
         kind: "GlobalDocumentDB",
         defaultExperience: "Core (SQL)",
-        capabilities: []
-      }
+        capabilities: [],
+      },
     ],
     [
       "Cassandra",
       {
         kind: "GlobalDocumentDB",
         defaultExperience: "Cassandra",
-        capabilities: [{ name: "EnableCassandra" }]
-      }
-    ]
+        capabilities: [{ name: "EnableCassandra" }],
+      },
+    ],
   ]);
 
   private SubscriptionItemCosmosClient: CosmosDBManagementClient | undefined;
 
-  public async createCosmosDB(
-    userCosmosDBSelection: CosmosDBSelections,
-    genPath: string
-  ): Promise<DatabaseObject> {
+  public async createCosmosDB(userCosmosDBSelection: CosmosDBSelections, genPath: string): Promise<DatabaseObject> {
     /*
      * Create Cosmos Client with users credentials and selected subscription *
      */
@@ -194,26 +187,23 @@ export class CosmosDBDeploy {
 
     parameters.parameters = {
       name: {
-        value: databaseName
+        value: databaseName,
       },
       location: {
-        value: location
-          .split(" ")
-          .join("")
-          .toLowerCase()
+        value: location.split(" ").join("").toLowerCase(),
       },
       locationName: {
-        value: location
+        value: location,
       },
       defaultExperience: {
-        value: definitions.defaultExperience
+        value: definitions.defaultExperience,
       },
       capabilities: {
-        value: definitions.capabilities
+        value: definitions.capabilities,
       },
       kind: {
-        value: definitions.kind
-      }
+        value: definitions.kind,
+      },
     };
 
     const deploymentParams = parameters.parameters;
@@ -222,15 +212,13 @@ export class CosmosDBDeploy {
       properties: {
         mode: "Incremental",
         parameters: deploymentParams,
-        template: template
-      }
+        template: template,
+      },
     };
 
     try {
       if (this.SubscriptionItemCosmosClient === undefined) {
-        throw new AuthorizationError(
-          MESSAGES.ERRORS.COSMOS_CLIENT_NOT_DEFINED
-        );
+        throw new AuthorizationError(MESSAGES.ERRORS.COSMOS_CLIENT_NOT_DEFINED);
       }
 
       const azureResourceClient: ResourceManagementClient = new ResourceManager().getResourceManagementClient(
@@ -238,14 +226,8 @@ export class CosmosDBDeploy {
       );
 
       ARMFileHelper.createDirIfNonExistent(path.join(genPath, "arm-templates"));
-      ARMFileHelper.writeObjectToJsonFile(
-        path.join(genPath, "arm-templates", "cosmos-template.json"),
-        template
-      );
-      ARMFileHelper.writeObjectToJsonFile(
-        path.join(genPath, "arm-templates", "cosmos-parameters.json"),
-        parameters
-      );
+      ARMFileHelper.writeObjectToJsonFile(path.join(genPath, "arm-templates", "cosmos-template.json"), template);
+      ARMFileHelper.writeObjectToJsonFile(path.join(genPath, "arm-templates", "cosmos-parameters.json"), parameters);
 
       /*
        * Cosmos Client to generate a cosmos DB resource using resource group name, database name, and options *
@@ -265,14 +247,13 @@ export class CosmosDBDeploy {
         this.SubscriptionItemCosmosClient,
         resourceGroup,
         databaseName
-      );      
+      );
 
-    /*
-     * Returning a tuple which includes databaseAccount from callback and its connection string
-     */
-    const db: DatabaseObject = { databaseAccount, connectionString };
-    return db;
-
+      /*
+       * Returning a tuple which includes databaseAccount from callback and its connection string
+       */
+      const db: DatabaseObject = { databaseAccount, connectionString };
+      return db;
     } catch (error) {
       throw new DeploymentError(error.message);
     }
@@ -284,20 +265,14 @@ export class CosmosDBDeploy {
   private setCosmosClient(userSubscriptionItem: SubscriptionItem): void {
     if (
       this.SubscriptionItemCosmosClient === undefined ||
-      this.SubscriptionItemCosmosClient.subscriptionId !==
-        userSubscriptionItem.subscriptionId
+      this.SubscriptionItemCosmosClient.subscriptionId !== userSubscriptionItem.subscriptionId
     ) {
-      this.SubscriptionItemCosmosClient = this.createCosmosClient(
-        userSubscriptionItem
-      );
+      this.SubscriptionItemCosmosClient = this.createCosmosClient(userSubscriptionItem);
     }
   }
 
-  private createCosmosClient(
-    userSubscriptionItem: SubscriptionItem
-  ): CosmosDBManagementClient {
-    const userCredentials: ServiceClientCredentials =
-      userSubscriptionItem.session.credentials;
+  private createCosmosClient(userSubscriptionItem: SubscriptionItem): CosmosDBManagementClient {
+    const userCredentials: ServiceClientCredentials = userSubscriptionItem.session.credentials;
     if (
       userSubscriptionItem === undefined ||
       userSubscriptionItem.subscription === undefined ||
@@ -328,9 +303,7 @@ export class CosmosDBDeploy {
    * Validating the given string name is unique
    * @return Return `undefined`, `null`, or the empty string when 'value' is valid and string message when 'value' is not valid.
    */
-  private async validateUniqueCosmosDBAccountName(
-    name: string
-  ): Promise<string | undefined> {
+  private async validateUniqueCosmosDBAccountName(name: string): Promise<string | undefined> {
     if (this.SubscriptionItemCosmosClient === undefined) {
       throw new AuthorizationError(MESSAGES.ERRORS.COSMOS_CLIENT_NOT_DEFINED);
     }
@@ -343,11 +316,7 @@ export class CosmosDBDeploy {
       return MESSAGES.ERRORS.NAME_MIN_MAX(min, max);
     } else if (name.match(/[^a-z0-9-]/)) {
       return MESSAGES.ERRORS.COSMOS_VALID_CHARACTERS;
-    } else if (
-      await this.SubscriptionItemCosmosClient.databaseAccounts.checkNameExists(
-        name
-      )
-    ) {
+    } else if (await this.SubscriptionItemCosmosClient.databaseAccounts.checkNameExists(name)) {
       return MESSAGES.ERRORS.COSMOS_ACCOUNT_NOT_AVAILABLE(name);
     } else {
       return undefined;
@@ -382,23 +351,15 @@ export class CosmosDBDeploy {
       try {
         cosmosClient = this.createCosmosClient(cosmosClientOrSubscriptionItem);
       } catch (error) {
-        throw new AuthorizationError(
-          MESSAGES.ERRORS.CONNECTION_STRING_FAILED + error.message
-        );
+        throw new AuthorizationError(MESSAGES.ERRORS.CONNECTION_STRING_FAILED + error.message);
       }
     }
 
-    const result = await cosmosClient.databaseAccounts.listConnectionStrings(
-      resourceGroup,
-      dataBaseName
-    );
+    const result = await cosmosClient.databaseAccounts.listConnectionStrings(resourceGroup, dataBaseName);
     return result!.connectionStrings![0].connectionString!;
   }
 
-  public static updateConnectionStringInEnvFile(
-    filePath: string,
-    connectionString: string
-    ): void {
+  public static updateConnectionStringInEnvFile(filePath: string, connectionString: string): void {
     /**
      * Updates .env file in generated project directory once the connection string is received.
      * Throws an error if the user deleted the project directory
@@ -427,10 +388,7 @@ ${CONSTANTS.COSMOSDB_MONGO.PASSWORD}=${mongoData.password}`;
     }
   }
 
-  public static updateConnectionStringInAppSettingsFile(
-    filePath: string,
-    connectionString: string
-    ): void {
+  public static updateConnectionStringInAppSettingsFile(filePath: string, connectionString: string): void {
     try {
       const appSettingsPath = path.join(filePath, "backend", "appsettings.json");
       const appsettings = fs.readJSONSync(appSettingsPath);

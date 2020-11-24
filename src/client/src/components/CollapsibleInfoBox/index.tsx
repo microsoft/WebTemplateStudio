@@ -13,14 +13,8 @@ interface IProps {
 
 type Props = IProps;
 
-const CollapsibleInfoBox = ({
-  question,
-  answer,
-  initialAnswerShownState = false
-}: Props) => {
-  const [isAnswerShown, setAnswerShown] = React.useState(
-    initialAnswerShownState
-  );
+const CollapsibleInfoBox = ({ question, answer, initialAnswerShownState = false }: Props) => {
+  const [isAnswerShown, setAnswerShown] = React.useState(initialAnswerShownState);
 
   const toggleAnswerShown = () => {
     setAnswerShown(!isAnswerShown);
@@ -39,19 +33,9 @@ const CollapsibleInfoBox = ({
       <div className={styles.questionTitle}>
         {question}
         {isAnswerShown ? (
-          <Up
-            tabIndex={0}
-            className={styles.toggleIcon}
-            onClick={toggleAnswerShown}
-            onKeyDown={keyDownHandler}
-          />
+          <Up tabIndex={0} className={styles.toggleIcon} onClick={toggleAnswerShown} onKeyDown={keyDownHandler} />
         ) : (
-          <Down
-            tabIndex={0}
-            className={styles.toggleIcon}
-            onClick={toggleAnswerShown}
-            onKeyDown={keyDownHandler}
-          />
+          <Down tabIndex={0} className={styles.toggleIcon} onClick={toggleAnswerShown} onKeyDown={keyDownHandler} />
         )}
       </div>
 

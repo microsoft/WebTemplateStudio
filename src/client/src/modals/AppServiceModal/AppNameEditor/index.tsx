@@ -23,23 +23,16 @@ interface IProps {
 
 type Props = IProps & InjectedIntlProps;
 
-const AppNameEditor = ({
-  intl,
-  subscription,
-  appName,
-  onAppNameChange,
-  onIsAvailableAppNameChange,
-}: Props) => {
-  const {formatMessage} = intl;
-  const {vscode} = React.useContext(AppContext);
+const AppNameEditor = ({ intl, subscription, appName, onAppNameChange, onIsAvailableAppNameChange }: Props) => {
+  const { formatMessage } = intl;
+  const { vscode } = React.useContext(AppContext);
   const projectName = useSelector((state: AppState) => getProjectName(state));
   const [invalidAppNameMessage, setInvalidAppNameMessage] = React.useState("");
   const [isValidatingName, setIsValidatingName] = React.useState(false);
 
   React.useEffect(() => {
     if (subscription !== "" && appName === "") {
-      GetValidAppServiceName(projectName, vscode)
-      .then(event => onAppNameChange(event.data.payload.validName));
+      GetValidAppServiceName(projectName, vscode).then((event) => onAppNameChange(event.data.payload.validName));
     }
   }, [subscription]);
 
@@ -49,15 +42,14 @@ const AppNameEditor = ({
       setIsValidatingName(true);
       delayValidation(() => {
         validationAppServiceNameScopeId++;
-        ValidateAppServiceName(subscription, appName, validationAppServiceNameScopeId, vscode).then(event => {
-         if(validationAppServiceNameScopeId === event.data.payload.scope)
-         {
-          setInvalidAppNameMessage(event.data.payload.errorMessage);
-          onIsAvailableAppNameChange(event.data.payload.isValid);
-          setIsValidatingName(false);
-         }
+        ValidateAppServiceName(subscription, appName, validationAppServiceNameScopeId, vscode).then((event) => {
+          if (validationAppServiceNameScopeId === event.data.payload.scope) {
+            setInvalidAppNameMessage(event.data.payload.errorMessage);
+            onIsAvailableAppNameChange(event.data.payload.isValid);
+            setIsValidatingName(false);
+          }
+        });
       });
-    });
     }
   }, [appName]);
 
@@ -69,7 +61,7 @@ const AppNameEditor = ({
       timeout = undefined;
       validation();
     }, 700);
-  }
+  };
 
   return (
     <div
@@ -77,29 +69,27 @@ const AppNameEditor = ({
         [styles.containerDisabled]: subscription === "",
       })}
     >
-      <div className={styles.title}>
-        {formatMessage(messages.title)}
-      </div>
-      <div className={styles.subtitle}>
-        {formatMessage(messages.subtitle)}
-      </div>
-        <div className={styles.inputContainer}>
-          <input
-            aria-label={formatMessage(messages.ariaInputLabel)}
-            placeholder={formatMessage(messages.inputPlaceholderMessage)}
-            className={styles.input}
-            value={appName}
-            onChange={e => onAppNameChange(e.currentTarget.value)}
-            disabled={subscription === ""}
-          />
-          {appName !== "" && invalidAppNameMessage === "" && !isValidatingName && (
-            <GreenCheck data-testid="green-check" className={styles.validationIcon} />
-          )}
-          {isValidatingName && <Spinner data-testid="spinner" className={styles.spinner} />}
-        </div>
-        {appName !== "" && !isValidatingName && invalidAppNameMessage !== "" && (
-          <div data-testid="error-message" className={styles.errorMessage}>{invalidAppNameMessage}</div>
+      <div className={styles.title}>{formatMessage(messages.title)}</div>
+      <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
+      <div className={styles.inputContainer}>
+        <input
+          aria-label={formatMessage(messages.ariaInputLabel)}
+          placeholder={formatMessage(messages.inputPlaceholderMessage)}
+          className={styles.input}
+          value={appName}
+          onChange={(e) => onAppNameChange(e.currentTarget.value)}
+          disabled={subscription === ""}
+        />
+        {appName !== "" && invalidAppNameMessage === "" && !isValidatingName && (
+          <GreenCheck data-testid="green-check" className={styles.validationIcon} />
         )}
+        {isValidatingName && <Spinner data-testid="spinner" className={styles.spinner} />}
+      </div>
+      {appName !== "" && !isValidatingName && invalidAppNameMessage !== "" && (
+        <div data-testid="error-message" className={styles.errorMessage}>
+          {invalidAppNameMessage}
+        </div>
+      )}
     </div>
   );
 };

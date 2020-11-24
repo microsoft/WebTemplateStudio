@@ -24,9 +24,7 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   VUE_BLANK_PAGE: "wts.Page.Vue.Blank",
   VUE_CONTENT_GRID: "wts.Page.Vue.Grid",
   VUE_MASTER_DETAIL: "wts.Page.Vue.MasterDetail",
-  VUE_LIST: "wts.Page.Vue.List"
+  VUE_LIST: "wts.Page.Vue.List",
 };
 
-export {
-  WIZARD_CONTENT_INTERNAL_NAMES,
-};
+export { WIZARD_CONTENT_INTERNAL_NAMES };

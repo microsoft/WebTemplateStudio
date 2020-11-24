@@ -31,13 +31,11 @@ const ViewLicensesModal = ({ intl }: Props) => {
   return (
     <div>
       <div className={styles.headerContainer}>
-        <div className={styles.title}>
-          {intl.formatMessage(messages.licenses)}
-        </div>
+        <div className={styles.title}>{intl.formatMessage(messages.licenses)}</div>
         <Cancel
           tabIndex={0}
           className={styles.cancelIcon}
-          onClick={()=> dispatch(closeModalAction())}
+          onClick={() => dispatch(closeModalAction())}
           onKeyDown={cancelKeyDownHandler}
         />
       </div>
@@ -47,9 +45,9 @@ const ViewLicensesModal = ({ intl }: Props) => {
 };
 
 const mapStateToProps = (state: AppState): IStateProps => ({
-  isModalOpen: isViewLicensesModalOpenSelector(state)
+  isModalOpen: isViewLicensesModalOpenSelector(state),
 });
 
-export default connect(
-  mapStateToProps
-)(asModal(injectIntl(ViewLicensesModal), NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL));
+export default connect(mapStateToProps)(
+  asModal(injectIntl(ViewLicensesModal), NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL)
+);

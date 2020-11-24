@@ -7,7 +7,6 @@ const options: IOption[] = [
     body: "A single page application with a local backend server.",
     selected: false,
     icon: "",
-
   },
   {
     title: "RESTful API",
@@ -15,7 +14,7 @@ const options: IOption[] = [
     body: "A RESTful API with no frontend user interface.",
     selected: false,
     icon: "",
-  }
+  },
 ];
 
 const getWebAppOptions = (): Promise<IOption[]> => {

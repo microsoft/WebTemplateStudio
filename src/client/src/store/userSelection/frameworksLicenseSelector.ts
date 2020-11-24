@@ -24,14 +24,8 @@ const getPageLicenses = (userSelection: UserSelectionState): ILicenseObject[] =>
   return licenses;
 };
 
-const getFrameworkLicensesSelector = createSelector(
-  getUserSelection,
-  getFrameworkLicenses
-);
+const getFrameworkLicensesSelector = createSelector(getUserSelection, getFrameworkLicenses);
 
-const getPageLicencesSelector = createSelector(
-  getUserSelection,
-  getPageLicenses
-);
+const getPageLicencesSelector = createSelector(getUserSelection, getPageLicenses);
 
 export { getFrameworkLicensesSelector, getPageLicencesSelector };

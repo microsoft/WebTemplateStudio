@@ -1,12 +1,8 @@
-
 import { projectPathValidation } from "./extensionService";
 
 import { IVSCodeObject } from "../../types/vscode";
 
-import {
-  EXTENSION_COMMANDS
-} from "../constants/commands";
-
+import { EXTENSION_COMMANDS } from "../constants/commands";
 
 xdescribe("wizardSelectionSelector", () => {
   let mockVsCode: IVSCodeObject;
@@ -16,33 +12,33 @@ xdescribe("wizardSelectionSelector", () => {
     let mockCallbackProjectPathValidation = {};
 
     describe("not exist => valid", () => {
-      beforeEach(()=>{
+      beforeEach(() => {
         window.addEventListener = jest.fn((event, cb) => {
           callbackExtension = cb;
         });
 
         mockCallbackProjectPathValidation = {
-          data:{
-            command:EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
-            payload:{
-              scope:222,
-              projectPathValidation:{
-                isValid:true
-              }
-            }
-          }
+          data: {
+            command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
+            payload: {
+              scope: 222,
+              projectPathValidation: {
+                isValid: true,
+              },
+            },
+          },
         };
 
-        const postMessage = jest.fn(() =>callbackExtension(mockCallbackProjectPathValidation));
+        const postMessage = jest.fn(() => callbackExtension(mockCallbackProjectPathValidation));
         mockVsCode = { postMessage };
-      })
+      });
 
-      it("is valid, dont exist",(resolve)=>{
-        projectPathValidation("dfss","sdfsdf", mockVsCode).then((event: any)=>{
+      it("is valid, dont exist", (resolve) => {
+        projectPathValidation("dfss", "sdfsdf", mockVsCode).then((event: any) => {
           expect(event.data.payload.projectPathValidation.isValid).toBeTruthy();
           resolve();
-        })
-      })
+        });
+      });
     });
   });
 });

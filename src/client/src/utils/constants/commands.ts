@@ -23,13 +23,13 @@ const EXTENSION_COMMANDS = {
   OPEN_PROJECT_IN_VSCODE: "open-project-vscode",
   GET_TEMPLATE_INFO: "get-template-info",
   GET_FRAMEWORKS: "get-frameworks",
-  GET_PROJECT_TYPES:"get-project-types",
+  GET_PROJECT_TYPES: "get-project-types",
   GET_ALL_LICENSES: "get-all-licenses",
-  GET_LATEST_VERSION:"get-latest-version",
+  GET_LATEST_VERSION: "get-latest-version",
   GET_PAGES: "get-pages",
   GET_FEATURES: "get-features",
   LOG: "log",
-  OPEN_LOG: "open-log"
+  OPEN_LOG: "open-log",
 };
 
 const EXTENSION_MODULES = {
@@ -44,7 +44,4 @@ const EXTENSION_MODULES = {
   LOGGER: "Logger",
 };
 
-export {
-  EXTENSION_COMMANDS,
-  EXTENSION_MODULES
-};
+export { EXTENSION_COMMANDS, EXTENSION_MODULES };

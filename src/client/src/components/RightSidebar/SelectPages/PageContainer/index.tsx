@@ -12,32 +12,19 @@ const SortableSidebarItem = SortableElement(
     page,
     idx,
     totalPageCount,
-    maxInputLength
+    maxInputLength,
   }: {
     page: any;
     idx: number;
     maxInputLength?: number;
     totalPageCount: number;
   }) => {
-    return (
-      <DraggablePage
-        page={page}
-        maxInputLength={maxInputLength}
-        idx={idx + 1}
-        totalCount={totalPageCount}
-      />
-    );
+    return <DraggablePage page={page} maxInputLength={maxInputLength} idx={idx + 1} totalCount={totalPageCount} />;
   }
 );
 
 const PageContainer = SortableContainer(
-  ({
-    pages,
-    maxInputLength
-  }: {
-    pages: ISelected[];
-    maxInputLength?: number;
-  }) => {
+  ({ pages, maxInputLength }: { pages: ISelected[]; maxInputLength?: number }) => {
     const totalPageCount = pages.length;
     return (
       <div className={styles.sidebarItem}>
@@ -52,8 +39,7 @@ const PageContainer = SortableContainer(
               totalPageCount={totalPageCount}
             />
           );
-        })
-        }
+        })}
       </div>
     );
   }

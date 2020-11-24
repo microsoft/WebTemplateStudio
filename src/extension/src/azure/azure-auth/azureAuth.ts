@@ -1,10 +1,6 @@
 import { AzureAccount, AzureSession } from "./azure-account.api"; // Other extensions need to copy this .d.ts to their repository.
 import * as vscode from "vscode";
-import {
-  SubscriptionModels,
-  SubscriptionClient as SC,
-  ResourceManagementClient as RMC
-} from "azure-arm-resource";
+import { SubscriptionModels, SubscriptionClient as SC, ResourceManagementClient as RMC } from "azure-arm-resource";
 import { AuthorizationError, ResourceGroupError } from "../../errors";
 import { CONSTANTS } from "../../constants/constants";
 import { MESSAGES } from "../../constants/messages";
@@ -47,9 +43,7 @@ export abstract class AzureAuth {
      * Will get called whenever a function that uses AzureAccount object is called
      */
     if (this.api === undefined) {
-      this.api = vscode.extensions.getExtension<AzureAccount>(
-        "ms-vscode.azure-account"
-      )!.exports;
+      this.api = vscode.extensions.getExtension<AzureAccount>("ms-vscode.azure-account")!.exports;
     }
   }
 
@@ -61,7 +55,7 @@ export abstract class AzureAuth {
       )
       .then((selection: vscode.MessageItem | undefined) => {
         const userConfirmation = {
-          signOut: false
+          signOut: false,
         };
         if (selection === MESSAGES.DIALOG_RESPONSES.yes) {
           userConfirmation.signOut = true;
@@ -109,9 +103,7 @@ export abstract class AzureAuth {
 
   public static async getSubscriptions(): Promise<SubscriptionItem[]> {
     this.initialize();
-    this.api = vscode.extensions.getExtension<AzureAccount>(
-      "ms-vscode.azure-account"
-    )!.exports;
+    this.api = vscode.extensions.getExtension<AzureAccount>("ms-vscode.azure-account")!.exports;
     const subscriptionItems = this.loadSubscriptionItems();
     return subscriptionItems;
   }
@@ -129,12 +121,12 @@ export abstract class AzureAuth {
       );
       for (const subscription of subscriptions) {
         if (subscription.subscriptionId && !subscriptionIds.has(subscription.subscriptionId)) {
-          subscriptionIds.set( subscription.subscriptionId, true );
+          subscriptionIds.set(subscription.subscriptionId, true);
           subscriptionItems.push({
             label: subscription.displayName || "",
             subscriptionId: subscription.subscriptionId || "",
             session,
-            subscription
+            subscription,
           });
         }
       }
@@ -143,27 +135,19 @@ export abstract class AzureAuth {
     return subscriptionItems;
   }
 
-  public static async getAllResourceGroupItems(
-    subscriptionItem: SubscriptionItem
-  ): Promise<ResourceGroupItem[]> {
+  public static async getAllResourceGroupItems(subscriptionItem: SubscriptionItem): Promise<ResourceGroupItem[]> {
     this.initialize();
     const { session, subscription } = subscriptionItem;
     const resourceGroupItems: ResourceGroupItem[] = [];
-    const resources = new RMC.ResourceManagementClient(
-      session.credentials,
-      subscription.subscriptionId!
-    );
-    const resourceGroups = await this.listAll(
-      resources.resourceGroups,
-      resources.resourceGroups.list()
-    );
+    const resources = new RMC.ResourceManagementClient(session.credentials, subscription.subscriptionId!);
+    const resourceGroups = await this.listAll(resources.resourceGroups, resources.resourceGroups.list());
     resourceGroups.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
     resourceGroupItems.push(
-      ...resourceGroups.map(resourceGroup => {
+      ...resourceGroups.map((resourceGroup) => {
         return {
           name: resourceGroup.name || "",
           location: resourceGroup.location,
-          resourceGroup: resourceGroup
+          resourceGroup: resourceGroup,
         };
       })
     );
@@ -173,7 +157,7 @@ export abstract class AzureAuth {
     resourceName: string,
     subscriptionItem: SubscriptionItem
   ): Promise<ResourceGroupItem> {
-    return this.getAllResourceGroupItems(subscriptionItem).then(items => {
+    return this.getAllResourceGroupItems(subscriptionItem).then((items) => {
       for (const resourceGroup of items) {
         if (resourceGroup.name === resourceName) {
           return resourceGroup;
@@ -185,27 +169,20 @@ export abstract class AzureAuth {
   /*
    * Returns Intersection of two locationItem arrays a and b
    */
-  private static locationItemIntersect(
-    a: LocationItem[],
-    b: LocationItem[]
-  ): LocationItem[] {
+  private static locationItemIntersect(a: LocationItem[], b: LocationItem[]): LocationItem[] {
     const resultLocationItem: LocationItem[] = [];
 
-    const aLocations: string[] = a.map(element => element.locationDisplayName);
-    const bLocations: string[] = b.map(element => element.locationDisplayName);
+    const aLocations: string[] = a.map((element) => element.locationDisplayName);
+    const bLocations: string[] = b.map((element) => element.locationDisplayName);
 
     aLocations
-      .filter(value => bLocations.indexOf(value) !== -1)
-      .map(location =>
-        resultLocationItem.push({ locationDisplayName: location })
-      );
+      .filter((value) => bLocations.indexOf(value) !== -1)
+      .map((location) => resultLocationItem.push({ locationDisplayName: location }));
 
     return resultLocationItem;
   }
 
-  public static async getLocationsForCosmos(
-    subscriptionItem: SubscriptionItem
-  ): Promise<LocationItem[]> {
+  public static async getLocationsForCosmos(subscriptionItem: SubscriptionItem): Promise<LocationItem[]> {
     if (subscriptionItem === null || subscriptionItem === undefined) {
       return Promise.reject(MESSAGES.ERRORS.SUBSCRIPTION_NOT_DEFINED);
     }
@@ -217,29 +194,23 @@ export abstract class AzureAuth {
     );
     const cosmosLocations: LocationItem[] = [];
 
-    const documentDBProvider = await azureResourceClient.providers.get(
-      MICROSOFT_DOCUMENT_DB_PROVIDER
-    );
+    const documentDBProvider = await azureResourceClient.providers.get(MICROSOFT_DOCUMENT_DB_PROVIDER);
 
-    const databaseAccounts = documentDBProvider!.resourceTypes!.find(element => {
+    const databaseAccounts = documentDBProvider!.resourceTypes!.find((element) => {
       return element.resourceType === DOCUMENT_DB_RESOURCE_ACCOUNTS;
     });
 
-    databaseAccounts!.locations!.forEach(element => {
+    databaseAccounts!.locations!.forEach((element) => {
       cosmosLocations.push({ locationDisplayName: element });
     });
 
-    cosmosLocations.sort((l1, l2) =>
-      l1.locationDisplayName!.localeCompare(l2.locationDisplayName!)
-    );
+    cosmosLocations.sort((l1, l2) => l1.locationDisplayName!.localeCompare(l2.locationDisplayName!));
 
     return this.locationItemIntersect(cosmosLocations, this.locationsCache!);
   }
 
   // To get locations for Web App
-  public static async getLocationsForApp(
-    subscriptionItem: SubscriptionItem
-  ): Promise<LocationItem[]> {
+  public static async getLocationsForApp(subscriptionItem: SubscriptionItem): Promise<LocationItem[]> {
     if (subscriptionItem === null || subscriptionItem === undefined) {
       return Promise.reject(MESSAGES.ERRORS.SUBSCRIPTION_NOT_DEFINED);
     }
@@ -250,28 +221,22 @@ export abstract class AzureAuth {
       subscriptionItem.subscription.subscriptionId!
     );
     const locations: LocationItem[] = [];
-    const webProvider = await azureResourceClient.providers.get(
-      MICROSOFT_WEB_PROVIDER
-    );
+    const webProvider = await azureResourceClient.providers.get(MICROSOFT_WEB_PROVIDER);
 
-    const sites = webProvider!.resourceTypes!.find(element => {
+    const sites = webProvider!.resourceTypes!.find((element) => {
       return element.resourceType === WEB_RESOURCE_SITES;
     });
 
-    sites!.locations!.forEach(element => {
+    sites!.locations!.forEach((element) => {
       locations.push({ locationDisplayName: element });
     });
 
-    locations.sort((l1, l2) =>
-      l1.locationDisplayName!.localeCompare(l2.locationDisplayName!)
-    );
+    locations.sort((l1, l2) => l1.locationDisplayName!.localeCompare(l2.locationDisplayName!));
 
     return this.locationItemIntersect(locations, this.locationsCache!);
   }
 
-  private static async initializeLocations(
-    subscriptionItem: SubscriptionItem
-  ): Promise<void> {
+  private static async initializeLocations(subscriptionItem: SubscriptionItem): Promise<void> {
     if (this.locationsCache !== undefined) {
       return;
     }
@@ -287,9 +252,9 @@ export abstract class AzureAuth {
     );
     locations.sort((l1, l2) => l1.displayName!.localeCompare(l2.displayName!));
     locationList.push(
-      ...locations.map(loc => {
+      ...locations.map((loc) => {
         return {
-          locationDisplayName: loc.displayName || ""
+          locationDisplayName: loc.displayName || "",
         };
       })
     );

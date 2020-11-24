@@ -3,10 +3,7 @@ import WizardSelectionActionType from "../selectionActionType";
 
 const initialState = "FullStackWebApp";
 
-const backendFramework = (
-  state: string = initialState,
-  action: WizardSelectionActionType
-) => {
+const backendFramework = (state: string = initialState, action: WizardSelectionActionType) => {
   switch (action.type) {
     case USERSELECTION_TYPEKEYS.SELECT_PROJECT_TYPE:
       return action.payload;

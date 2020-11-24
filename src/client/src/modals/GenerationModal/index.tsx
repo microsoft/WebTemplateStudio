@@ -9,11 +9,7 @@ import styles from "./styles.module.css";
 
 import { GenerationItemData, GENERATION_NAMES } from "../../types/generationStatus";
 import { isGenModalOpenSelector } from "../../store/navigation/modals/selector";
-import {
-  KEY_EVENTS,
-  WEB_TEMPLATE_STUDIO_LINKS,
-  TELEMETRY
-} from "../../utils/constants/constants";
+import { KEY_EVENTS, WEB_TEMPLATE_STUDIO_LINKS, TELEMETRY } from "../../utils/constants/constants";
 
 import { AppState } from "../../store/combineReducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
@@ -102,9 +98,8 @@ const GenerationModal = ({ intl }: Props) => {
         (message) => setStatusMessage(message),
         (error: string) => setErrorMessages((messages) => [...new Set([...messages, error])])
       );
-      if(item.generationPath) {
-        item.generationPath.subscribe(
-          (path) => setGenerationPath(path));
+      if (item.generationPath) {
+        item.generationPath.subscribe((path) => setGenerationPath(path));
       }
     });
 

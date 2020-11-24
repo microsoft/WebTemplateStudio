@@ -12,10 +12,7 @@ const AzureStudent = () => {
       <CloudServicesSVG className={styles.cloudServicesSvg} />
       <div className={styles.infoContainer}>
         <div className={styles.azureForStudent}>
-          <FormattedMessage
-            id="azureStudent.azureForStudent"
-            defaultMessage="Azure for Students"
-          />
+          <FormattedMessage id="azureStudent.azureForStudent" defaultMessage="Azure for Students" />
         </div>
         <div className={styles.body}>
           <FormattedMessage
@@ -29,15 +26,8 @@ const AzureStudent = () => {
             defaultMessage="Add a service to create your account."
           />
         </div>
-        <a
-          href={AZURE_LINKS.CREATE_FREE_STUDENTS_ACCOUNT}
-          className={styles.link}
-          onKeyUp={keyUpHandler}
-        >
-          <FormattedMessage
-            id="azureStudent.learnMore"
-            defaultMessage="Learn More"
-          />
+        <a href={AZURE_LINKS.CREATE_FREE_STUDENTS_ACCOUNT} className={styles.link} onKeyUp={keyUpHandler}>
+          <FormattedMessage id="azureStudent.learnMore" defaultMessage="Learn More" />
         </a>
       </div>
     </div>
