@@ -1,8 +1,7 @@
 import * as React from "react";
 import { IVSCodeObject } from "./types/vscode";
 import mockVsCodeApi from "./mockData/mockVsCodeApi";
-import { ENVIRONMENT, PLATFORM } from "./utils/constants/constants";
-import { WEB_PROJECT_TYPE, RN_PROJECT_TYPE } from "./utils/constants/internalNames";
+import { ENVIRONMENT, PLATFORM, WEB_PROJECT_TYPE, RN_PROJECT_TYPE} from "./utils/constants/constants";
 
 interface IAppContext {
   vscode: IVSCodeObject;

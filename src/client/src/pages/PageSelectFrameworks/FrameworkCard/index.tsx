@@ -3,7 +3,6 @@ import * as React from "react";
 import { connect, useDispatch } from "react-redux";
 import { ISelectProps, IStateProps } from "./interfaces";
 import { mapStateToProps } from "./store";
-import styles from "./styles.module.css";
 import DependencyInfo from "./DependencyInfo";
 import messages from "./messages";
 import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
@@ -19,6 +18,9 @@ import {
 } from "../../../store/userSelection/frameworks/action";
 import { setDetailPageAction } from "../../../store/config/detailsPage/action";
 import Icon from "../../../components/Icon";
+
+import styles from "./styles.module.css";
+import cardStyles from "../../cardStyles.module.css";
 
 type Props = ISelectProps & IStateProps & InjectedIntlProps;
 
@@ -107,8 +109,8 @@ const FrameworkCard = (props: Props) => {
       tabIndex={0}
       onClick={selectCard}
       onKeyDown={selectCardIfEnterOrSpace}
-      className={classNames(styles.container, styles.boundingBox, {
-        [styles.selected]: selected,
+      className={classNames(cardStyles.container, cardStyles.boundingBox, {
+        [cardStyles.selected]: selected,
       })}
     >
       <div>
@@ -118,11 +120,11 @@ const FrameworkCard = (props: Props) => {
         </div>
 
         <div className={styles.gridLayoutVersion}>
-          <div className={styles.version}>v{framework.version}</div>
+          <div className={cardStyles.version}>v{framework.version}</div>
           {latestVersion === framework.version && <div className={styles.latestVersion}>(Latest)</div>}
         </div>
         <div className={styles.description}>{framework.body}</div>
-        <div className={styles.DependencyInfo}>
+        <div className={cardStyles.DependencyInfo}>
           {selected && !framework.requirement?.isInstalled && (
             <DependencyInfo requirement={framework.requirement} />
           )}
@@ -133,7 +135,7 @@ const FrameworkCard = (props: Props) => {
               {intl.formatMessage(messages.learnMore)}
             </a>
           </div>
-          {selected && <Check role="figure" className={styles.iconCheckMark} />}
+          {selected && <Check role="figure" className={cardStyles.iconCheckMark} />}
         </div>
       </div>
     </div>

@@ -1,27 +1,3 @@
-//TODO: have a look at this again.
-const WEB_PROJECT_TYPE = {
-  FULL_STACK_APP: "FullStackWebApp"
-}
-
-const RN_PROJECT_TYPE = {  
-  TABBED: "Tabbed",
-  DRAWER: "Drawer",
-}
-
-const FRONTEND_FRAMEWORKS = {
-  REACT: "React",
-  ANGULAR: "Angular",
-  VUE: "Vue",
-  RN: "ReactNative",
-}
-
-const BACKEND_FRAMEWORKS = {
-  NODE: "Node",
-  MOLECULER: "Moleculer",
-  ASPNET: "AspNet",
-  FLASK: "Flask",
-}
-
 const PAGES={
   REACT_BLANK_PAGE: "wts.Page.React.Blank",
   REACT_CONTENT_GRID: "wts.Page.React.Grid",
@@ -47,9 +23,5 @@ const WIZARD_CONTENT_FEATURES = {
 
 export {
   WIZARD_CONTENT_FEATURES,
-  WEB_PROJECT_TYPE,
-  RN_PROJECT_TYPE,
-  FRONTEND_FRAMEWORKS,
-  BACKEND_FRAMEWORKS,
   PAGES
 };
