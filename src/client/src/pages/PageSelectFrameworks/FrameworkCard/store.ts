@@ -7,8 +7,8 @@ const mapStateToProps = (state: AppState): IStateProps => {
   return {
     isPreview: previewStatus,
     frontEndSelect: frontendFramework,
-    backEndSelect: backendFramework
+    backEndSelect: backendFramework,
   };
 };
 
-export {mapStateToProps};
+export { mapStateToProps };

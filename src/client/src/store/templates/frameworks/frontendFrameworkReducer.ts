@@ -2,10 +2,7 @@ import { IOption } from "../../../types/option";
 import { TEMPLATES_TYPEKEYS } from "../templateTypeKeys";
 import RootAction from "../../ActionType";
 
-const frontendFrameworkOptions = (
-  state: IOption[] = [],
-  action: RootAction
-) => {
+const frontendFrameworkOptions = (state: IOption[] = [], action: RootAction) => {
   switch (action.type) {
     case TEMPLATES_TYPEKEYS.SET_FRONTEND_FRAMEWORKS:
       const newState = [...state];
@@ -24,7 +21,9 @@ const frontendFrameworkOptions = (
     case TEMPLATES_TYPEKEYS.UPDATE_FRAMEWORK:
       const newStateUpdate = [...state];
       for (const frameworkToUpdate of action.payload) {
-        newStateUpdate.filter((framework)=> framework.internalName === frameworkToUpdate.internalName)[0] = frameworkToUpdate;
+        newStateUpdate.filter(
+          (framework) => framework.internalName === frameworkToUpdate.internalName
+        )[0] = frameworkToUpdate;
       }
       return newStateUpdate;
     default:

@@ -19,8 +19,7 @@ const createStoreWithMiddleware = applyMiddleware(sagaMiddleware)(createStore);
 
 const store = createStoreWithMiddleware(
   reducers,
-  (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__()
+  (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 const vscode = process.env.NODE_ENV === ENVIRONMENT.PRODUCTION ?
@@ -33,9 +32,9 @@ runSagaMiddelware(vscode, sagaMiddleware);
 ReactDOM.render(
   <IntlProvider textComponent={React.Fragment}>
     <Provider store={store}>
-    <AppContext.Provider value={{vscode}}>
-      <App />
-    </AppContext.Provider>
+      <AppContext.Provider value={{ vscode }}>
+        <App />
+      </AppContext.Provider>
     </Provider>
   </IntlProvider>,
   document.getElementById("root") as HTMLElement

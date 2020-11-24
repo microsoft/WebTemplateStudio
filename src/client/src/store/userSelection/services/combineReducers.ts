@@ -4,7 +4,7 @@ import appService from "./appService/reducer";
 
 const serviceReducer = combineReducers({
   cosmosDB,
-  appService
+  appService,
 });
 
 export type ServiceState = ReturnType<typeof serviceReducer>;

@@ -1,4 +1,8 @@
-import { IUpdateFrameworkActionTypeAction, IFrontendFrameworksActionTypeAction, IBackendFrameworksSuccessActionTypeAction } from "./frameworks/model";
+import {
+  IUpdateFrameworkActionTypeAction,
+  IFrontendFrameworksActionTypeAction,
+  IBackendFrameworksSuccessActionTypeAction,
+} from "./frameworks/model";
 import { IPageOptionsActionType } from "./pages/model";
 import { IFeaturesActionType } from "./features/models";
 

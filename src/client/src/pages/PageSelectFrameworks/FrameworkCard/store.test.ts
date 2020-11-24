@@ -1,9 +1,9 @@
-import { mapStateToProps } from './store';
-import { IStateProps } from './interfaces';
-import { getInitialState } from '../../../mockData/mockStore';
+import { mapStateToProps } from "./store";
+import { IStateProps } from "./interfaces";
+import { getInitialState } from "../../../mockData/mockStore";
 
 describe("Framework Card", () => {
-  it("React",()=>{
+  it("React", () => {
     const mapStateToPropsInstance: IStateProps = mapStateToProps(getInitialState());
     let counterAttributes = 0;
     for (const key in mapStateToPropsInstance) {

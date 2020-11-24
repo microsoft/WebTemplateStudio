@@ -24,7 +24,7 @@ export const getFrameworksOptions = (json: any[], type: FRAMEWORK_TYPE): IOption
     requirement: {
       name: (val.tags!.requirements as string).split("|")[0],
       version: (val.tags!.requirements as string).split("|")[1],
-      isInstalled: val.tags!.isRequirementInstalled
+      isInstalled: val.tags!.isRequirementInstalled,
     },
     isPreview: val.tags.preview,
   }));

@@ -27,7 +27,7 @@ interface IServiceGroup {
   services: IService[];
 }
 
-type IService = IOption & {  
+type IService = IOption & {
   openModalAction?: IOpenModalAction;
   expectedPrice?: FormattedMessage.MessageDescriptor;
   expectedTime?: FormattedMessage.MessageDescriptor;

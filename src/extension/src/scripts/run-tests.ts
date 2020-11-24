@@ -12,7 +12,7 @@ console.log(cyanColor, `Run test scripts from ${testFolder}`);
 
 let files: string[] = [];
 fs.readdirSync(testFolder).forEach((file: string) => {
-    files.push(file.toString());
+  files.push(file.toString());
 });
 
 asyncForEach(files, async (file: string) => {

@@ -25,8 +25,7 @@ const getCustomStyles = (MODAL_TYPE?: ModalType): Modal.Styles => {
   // depends on modal type, customize width
   if (
     MODAL_TYPE &&
-    (MODAL_TYPE === NAVIGATION_MODAL_TYPES.GEN_MODAL ||
-      MODAL_TYPE === NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL)
+    (MODAL_TYPE === NAVIGATION_MODAL_TYPES.GEN_MODAL || MODAL_TYPE === NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL)
   ) {
     CUSTOM_WIDTH = "40%";
   }
@@ -39,7 +38,7 @@ const getCustomStyles = (MODAL_TYPE?: ModalType): Modal.Styles => {
       right: 0,
       bottom: 0,
       zIndex: 2000,
-      backgroundColor: "rgba(0, 0, 0, 0.6)"
+      backgroundColor: "rgba(0, 0, 0, 0.6)",
     },
     content: {
       top: "50%",
@@ -54,8 +53,8 @@ const getCustomStyles = (MODAL_TYPE?: ModalType): Modal.Styles => {
       background: backgroundColor,
       border: "0.5px solid var(--vscode-editor-foreground)",
       maxWidth: "700px",
-      minWidth: "300px"
-    }
+      minWidth: "300px",
+    },
   };
 };
 
@@ -64,18 +63,14 @@ interface IProps {
   isModalOpen: boolean;
 }
 
-const asModal = <P extends object>(
-  WrappedComponent: React.ComponentType<P>,
-  MODAL_TYPE?: ModalType
-) => {
+const asModal = <P extends object>(WrappedComponent: React.ComponentType<P>, MODAL_TYPE?: ModalType) => {
   return class extends React.Component<P & IProps> {
     static defaultProps = {
-      closeModal: () => void(0),
-      isModalOpen: false
+      closeModal: () => void 0,
+      isModalOpen: false,
     };
     render() {
       return (
-
         <Modal
           isOpen={this.props.isModalOpen}
           onRequestClose={this.props.closeModal}
@@ -83,7 +78,7 @@ const asModal = <P extends object>(
           style={getCustomStyles(MODAL_TYPE)}
           ariaHideApp={false}
         >
-          <WrappedComponent {...this.props as P} />
+          <WrappedComponent {...(this.props as P)} />
         </Modal>
       );
     }

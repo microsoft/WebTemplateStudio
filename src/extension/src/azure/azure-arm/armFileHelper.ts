@@ -7,10 +7,7 @@ export namespace ARMFileHelper {
     }
   }
 
-  export function writeObjectToJsonFile(
-    filePath: string,
-    object: object
-  ): void {
+  export function writeObjectToJsonFile(filePath: string, object: object): void {
     fsx.writeFileSync(filePath, JSON.stringify(object, null, 2), "utf-8");
   }
 }

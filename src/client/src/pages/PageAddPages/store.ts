@@ -5,8 +5,8 @@ import { IStoreProps } from "./interfaces";
 const mapStateToProps = (state: AppState): IStoreProps => {
   return {
     options: state.templates.pageOptions,
-    pageOutOfBounds: state.userSelection.pages.length>=20
+    pageOutOfBounds: state.userSelection.pages.length >= 20,
   };
 };
 
-export { mapStateToProps};
+export { mapStateToProps };

@@ -8,10 +8,10 @@ import { renderWithStore } from "../../testUtils";
 import messages from "./messages";
 import { AZURE_LINKS } from "../../utils/constants/azure";
 import { getInitialState, setSubscriptions } from "../../mockData/mockStore";
-import * as extensionService from '../../utils/extensionService/extensionService';
+import * as extensionService from "../../utils/extensionService/extensionService";
 
-jest.mock("../Dropdown", () => require('../../testUtils').dropdownMock);
-const spyGetResourceGroups = jest.spyOn(extensionService, 'getResourceGroups');
+jest.mock("../Dropdown", () => require("../../testUtils").dropdownMock);
+const spyGetResourceGroups = jest.spyOn(extensionService, "getResourceGroups");
 
 describe("ResourceGroupSelection", () => {
   let props: any;
@@ -27,7 +27,7 @@ describe("ResourceGroupSelection", () => {
     props = {
       subscription: "subscription 1",
       resourceGroup: "",
-      onResourceGroupChange: jest.fn()
+      onResourceGroupChange: jest.fn(),
     };
   });
 
@@ -41,8 +41,8 @@ describe("ResourceGroupSelection", () => {
     wrapper = renderWithStore(<ResourceGroupSelection {...props} />, store);
     //const dropdown = wrapper.getByTestId("dropdown");
     //expect(dropdown).toBeDisabled();
-      const refreshButton = wrapper.getByTestId("refresh-button");
-      expect(refreshButton).toBeDisabled();
+    const refreshButton = wrapper.getByTestId("refresh-button");
+    expect(refreshButton).toBeDisabled();
   });
 
   it("If has subscription, dropdown and refresh button should be enabled", () => {
@@ -50,9 +50,9 @@ describe("ResourceGroupSelection", () => {
     wrapper = renderWithStore(<ResourceGroupSelection {...props} />, store);
     //const dropdown = wrapper.getByTestId("dropdown");
     //expect(dropdown).toBeEnabled();
-      const refreshButton = wrapper.getByTestId("refresh-button");
-      expect(refreshButton).toBeEnabled();
-  });  
+    const refreshButton = wrapper.getByTestId("refresh-button");
+    expect(refreshButton).toBeEnabled();
+  });
 
   it("If has subscription, , getResourceGroups should be called", async () => {
     props.subscription = "subscription 1";
@@ -80,9 +80,9 @@ describe("ResourceGroupSelection", () => {
 
   it("Has a create new resource group link", () => {
     wrapper = renderWithStore(<ResourceGroupSelection {...props} />, store);
-    const link = wrapper.getByText(intl.formatMessage(messages.newResourceGroupLink))
+    const link = wrapper.getByText(intl.formatMessage(messages.newResourceGroupLink));
     expect(link).toHaveAttribute("href", AZURE_LINKS.CREATE_NEW_RESOURCE_GROUP);
-  });  
+  });
 
   it("When click on refresh button, getResourceGroups should be called", async () => {
     wrapper = renderWithStore(<ResourceGroupSelection {...props} />, store);

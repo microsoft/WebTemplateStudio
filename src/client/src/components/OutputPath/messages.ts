@@ -1,18 +1,17 @@
-
 import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
   outputPath: {
     id: "outputPath.outputPath",
-    defaultMessage: "Output Path"
+    defaultMessage: "Output Path",
   },
   ariaOutputPathLabel: {
     id: "outputPath.ariaOutputPath",
-    defaultMessage: "Input for Output Path"
+    defaultMessage: "Input for Output Path",
   },
   browseButtonLabel: {
     id: "outputPath.browseButtonLabel",
-    defaultMessage: "Browse"
-  }
+    defaultMessage: "Browse",
+  },
 });
 export default messages;

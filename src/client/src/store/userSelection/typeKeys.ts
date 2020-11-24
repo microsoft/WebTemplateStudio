@@ -6,5 +6,5 @@ export enum USERSELECTION_TYPEKEYS {
   SELECT_PAGE = "WTS/user_selection/SELECT_PAGE",
   SELECT_WEB_APP = "WTS/user_selection/SELECT_WEB_APP",
   SET_PROJECT_NAME = "WTS/user_selection/SET_PROJECT_NAME",
-  SET_OUTPUT_PATH = "WTS/user_selection/UPDATE_PROJECT_PATH"
+  SET_OUTPUT_PATH = "WTS/user_selection/UPDATE_PROJECT_PATH",
 }

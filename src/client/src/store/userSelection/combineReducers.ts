@@ -15,7 +15,7 @@ const UserSelectionStateReducer = combineReducers({
   outputPathObject,
   projectNameObject,
   services,
-  projectType
+  projectType,
 });
 
 export default UserSelectionStateReducer;

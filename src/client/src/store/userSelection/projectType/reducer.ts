@@ -8,10 +8,7 @@ import { ENVIRONMENT } from "../../../utils/constants/constants";
 const devProjectType = WIZARD_PROJECT_TYPE.FULL_STACK_APP;
 const initialState = (process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT) ? devProjectType : WIZARD_PROJECT_TYPE.FULL_STACK_APP;
 
-const backendFramework = (
-  state: string = initialState,
-  action: WizardSelectionActionType
-) => {
+const backendFramework = (state: string = initialState, action: WizardSelectionActionType) => {
   switch (action.type) {
     case USERSELECTION_TYPEKEYS.SELECT_PROJECT_TYPE:
       return action.payload;

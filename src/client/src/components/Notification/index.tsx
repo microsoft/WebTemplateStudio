@@ -17,16 +17,12 @@ const Notification = ({ showWarning, text, altMessage }: IProps) => {
   return (
     <React.Fragment>
       <div role="img" aria-label={altMessage}>
-        {showWarning ? (
-          <Warning className={styles.iconWarning} />
-        ) : (
-          <Checkmark className={styles.iconCheck} />
-        )}
+        {showWarning ? <Warning className={styles.iconWarning} /> : <Checkmark className={styles.iconCheck} />}
       </div>
       <div
         className={classnames(styles.text, {
           [styles.bodyGreen]: !showWarning,
-          [styles.bodyYellow]: showWarning
+          [styles.bodyYellow]: showWarning,
         })}
       >
         {text}

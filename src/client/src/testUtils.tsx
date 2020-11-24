@@ -28,6 +28,6 @@ const dropdownMock = ({ options, value, handleChange }: IDropdownProps) => {
       ))}
     </select>
   );
-}
+};
 
 export { renderWithIntl, renderWithStore, dropdownMock };

@@ -1,6 +1,6 @@
 import { defineMessages } from "react-intl";
 
-const messages = defineMessages({  
+const messages = defineMessages({
   empty: {
     id: "servicesSelector.empty",
     defaultMessage: "",

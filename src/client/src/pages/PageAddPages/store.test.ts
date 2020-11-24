@@ -1,12 +1,12 @@
-import { mapStateToProps } from './store';
-import { IStoreProps } from './interfaces';
-import { getInitialState } from '../../mockData/mockStore';
+import { mapStateToProps } from "./store";
+import { IStoreProps } from "./interfaces";
+import { getInitialState } from "../../mockData/mockStore";
 
 describe("pageAddPages", () => {
-  it("react",()=>{
+  it("react", () => {
     const mapStateToPropsInstance: IStoreProps = mapStateToProps(getInitialState());
     let counterAttributes = 0;
-    for (const key in mapStateToPropsInstance) {      
+    for (const key in mapStateToPropsInstance) {
       if (key) counterAttributes++;
     }
 
@@ -14,6 +14,4 @@ describe("pageAddPages", () => {
     expect(mapStateToPropsInstance.pageOutOfBounds).toBeFalsy();
     expect(counterAttributes === 2).toBeTruthy();
   });
-
- 
 });
