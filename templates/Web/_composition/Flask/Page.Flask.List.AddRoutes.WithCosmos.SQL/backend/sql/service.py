@@ -1,8 +1,8 @@
 import azure.cosmos
 import flask
-from . import sql_client
+from . import client
 
-sql_database_obj = sql_client.SQLObj()
+sql_database_obj = client.SQLObj()
 
 def get():
     query = "SELECT r.id as id, r.text FROM root r ORDER BY r._ts DESC"

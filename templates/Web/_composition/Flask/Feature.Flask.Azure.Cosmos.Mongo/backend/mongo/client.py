@@ -1,4 +1,3 @@
-import sys
 import pymongo
 from . import settings
 import constants
