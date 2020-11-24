@@ -16,7 +16,6 @@ import { AZURE_TYPEKEYS } from "../azure/typeKeys";
 import { USERSELECTION_TYPEKEYS } from "../../userSelection/typeKeys";
 import { getNavItems } from "../../../utils/routes/routes";
 import { IRoutesNavItems } from "../../../types/route";
-import { WIZARD_PROJECT_TYPE } from "../../../utils/constants/internalNames";
 import { ISelected } from "../../../types/selected";
 
 export function* loadLogin(vscode: any) {
@@ -79,10 +78,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
       payload: projectType,
     });
 
-    //TODO: probably move and rename this 
-    const rnProjectTypeList = [WIZARD_PROJECT_TYPE.RN_TABBED_APP, WIZARD_PROJECT_TYPE.RN_DRAWER_APP];
-
-    if (projectType === WIZARD_PROJECT_TYPE.FULL_STACK_APP || rnProjectTypeList.indexOf(projectType) > -1) {
+    if (projectType !== "") {
       const event: any = yield call(getFrameworks, vscode, projectType);
       const message = event.data;
       const optionFrontEndFrameworks = getFrameworksOptions(message.payload.frameworks, FRAMEWORK_TYPE.FRONTEND);

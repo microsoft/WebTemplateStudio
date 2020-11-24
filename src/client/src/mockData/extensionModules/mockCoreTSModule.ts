@@ -1,5 +1,5 @@
+import { projectType } from "../../AppContext";
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/commands";
-import { WIZARD_PROJECT_TYPE } from "../../utils/constants/internalNames";
 
 import * as mockData from "./mockData/mockWebPlatformData";
 
@@ -26,8 +26,7 @@ const getFrameworks = (platform: string, message: any) => {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
         frameworks: mockData.frameworks(platform),
         isPreview: true,
-        //TODO: This should probably depend on a mocked shared var
-        projectType: WIZARD_PROJECT_TYPE.RN_TABBED_APP,
+        projectType: projectType,
       },
     },
     "*"

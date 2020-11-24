@@ -1,7 +1,11 @@
-const WIZARD_PROJECT_TYPE = {
-  FULL_STACK_APP: "FullStackWebApp",
-  RN_TABBED_APP: "Tabbed",
-  RN_DRAWER_APP: "Drawer",
+//TODO: have a look at this again.
+const WEB_PROJECT_TYPE = {
+  FULL_STACK_APP: "FullStackWebApp"
+}
+
+const RN_PROJECT_TYPE = {  
+  TABBED: "Tabbed",
+  DRAWER: "Drawer",
 }
 
 const FRONTEND_FRAMEWORKS = {
@@ -43,7 +47,8 @@ const WIZARD_CONTENT_FEATURES = {
 
 export {
   WIZARD_CONTENT_FEATURES,
-  WIZARD_PROJECT_TYPE,
+  WEB_PROJECT_TYPE,
+  RN_PROJECT_TYPE,
   FRONTEND_FRAMEWORKS,
   BACKEND_FRAMEWORKS,
   PAGES
