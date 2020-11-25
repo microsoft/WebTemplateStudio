@@ -1,11 +1,25 @@
 import { PLATFORM } from "../../../utils/constants/constants";
 import { backendImage, frontendImage, noImage, pageImage, serviceImage } from "./mockSvgData";
 
-const projectTypes = [
-  {
-    name: "FullStackWebApp",
-  },
-];
+const projectTypes = (platform: any) => {
+  switch (platform) {
+    case PLATFORM.WEB:
+      return [
+        {
+          name: "FullStackWebApp",
+        },
+      ];
+    case PLATFORM.RN:
+      return [
+        {
+          name: "Tabbed",
+        },
+        {
+          name: "Drawer",
+        },
+      ];
+  }
+};
 
 const frameworkList = [
   {

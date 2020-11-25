@@ -1,4 +1,4 @@
-import { projectType } from "../../AppContext";
+import { platform, projectType } from "../../AppContext";
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/commands";
 
 import * as mockData from "./mockData/mockWebPlatformData";
@@ -10,7 +10,7 @@ const getProjectTypes = (message: any) => {
       command: EXTENSION_COMMANDS.GET_PROJECT_TYPES,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        projectTypes: mockData.projectTypes,
+        projectTypes: mockData.projectTypes(platform),
       },
     },
     "*"
