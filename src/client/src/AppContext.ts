@@ -20,7 +20,7 @@ switch (platform as string) {
   case PLATFORM.WEB:
     projectType = WEB_PROJECT_TYPE.FULL_STACK_APP;
     break;
-  case PLATFORM.RN:
+  case PLATFORM.REACTNATIVE:
     projectType = RN_PROJECT_TYPE.TABBED;
     break;
 }

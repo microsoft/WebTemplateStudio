@@ -9,7 +9,7 @@ import {
 import { IVersions } from "../../../types/version";
 import { AppState } from "../../combineReducers";
 import { getFrameworksOptions, getPagesOptions } from "../../../utils/cliTemplatesParser";
-import { FRAMEWORK_TYPE } from "../../../utils/constants/constants";
+import { FRAMEWORK_TYPE, RN_PROJECT_TYPE, WEB_PROJECT_TYPE } from "../../../utils/constants/constants";
 import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 import { TEMPLATES_TYPEKEYS } from "../../templates/templateTypeKeys";
 import { AZURE_TYPEKEYS } from "../azure/typeKeys";
@@ -78,13 +78,13 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
       payload: projectType,
     });
 
-    if (projectType !== "") {
+    if (projectType !== ""){
       const event: any = yield call(getFrameworks, vscode, projectType);
       const message = event.data;
-      const optionFrontEndFrameworks = getFrameworksOptions(message.payload.frameworks, FRAMEWORK_TYPE.FRONTEND);
+      const optionFrontendFrameworks = getFrameworksOptions(message.payload.frameworks, FRAMEWORK_TYPE.FRONTEND);
 
-      if (optionFrontEndFrameworks.length > 0) {
-        const defaultOptionFront = optionFrontEndFrameworks[0];
+      if (optionFrontendFrameworks.length > 0) {
+        const defaultOptionFront = optionFrontendFrameworks[0];
         const defaultSelectedFrontEndFramework = {
           internalName: defaultOptionFront.internalName,
           title: defaultOptionFront.title as string,
@@ -96,7 +96,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
 
         yield put({
           type: TEMPLATES_TYPEKEYS.SET_FRONTEND_FRAMEWORKS,
-          payload: optionFrontEndFrameworks,
+          payload: optionFrontendFrameworks,
         });
 
         yield put({
@@ -104,9 +104,9 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
           payload: defaultSelectedFrontEndFramework,
         });
       }
-      const optionBackEndFrameworks = getFrameworksOptions(message.payload.frameworks, FRAMEWORK_TYPE.BACKEND);
-      if (optionBackEndFrameworks.length > 0) {
-        const defaultOptionBack = optionBackEndFrameworks[0];
+      const optionBackendFrameworks = getFrameworksOptions(message.payload.frameworks, FRAMEWORK_TYPE.BACKEND);
+      if (optionBackendFrameworks.length > 0) {
+        const defaultOptionBack = optionBackendFrameworks[0];
         const defaultSelectedBackEndFramework = {
           title: defaultOptionBack.title as string,
           internalName: defaultOptionBack.internalName,
@@ -118,7 +118,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
 
         yield put({
           type: TEMPLATES_TYPEKEYS.SET_BACKEND_FRAMEWORKS,
-          payload: optionBackEndFrameworks,
+          payload: optionBackendFrameworks,
         });
 
         yield put({

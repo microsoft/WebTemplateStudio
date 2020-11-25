@@ -9,7 +9,7 @@ const projectTypes = (platform: any) => {
           name: "FullStackWebApp",
         },
       ];
-    case PLATFORM.RN:
+    case PLATFORM.REACTNATIVE:
       return [
         {
           name: "Tabbed",
@@ -273,7 +273,7 @@ const frameworkList = [
         url: "https://github.com/facebook/create-react-native-app/blob/master/LICENSE",
       },
     ],
-    platforms: [PLATFORM.RN],
+    platforms: [PLATFORM.REACTNATIVE],
     languages: ["Any"],
     tags: {
       version: "*.*.*",

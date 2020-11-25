@@ -45,6 +45,6 @@ const NavItemsRN: IRoutesNavItems[] = [
 export const getNavItems = (platform: string): IRoutesNavItems[] => {
   let routes: IRoutesNavItems[] = [];
   if (platform === PLATFORM.WEB) routes = NavItemsWeb;
-  if (platform === PLATFORM.RN) routes = NavItemsRN;
+  if (platform === PLATFORM.REACTNATIVE) routes = NavItemsRN;
   return routes;
 };
