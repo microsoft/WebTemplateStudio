@@ -9,15 +9,15 @@ const messages = defineMessages({
     id: "CosmosModal.saveMessage",
     defaultMessage: "Save",
   },
-  showAdvancedMode:{
+  showAdvancedMode: {
     id: "CosmosModal.showAdvancedMode",
     defaultMessage: "Advanced mode",
   },
-  hideAdvancedMode:{
+  hideAdvancedMode: {
     id: "CosmosModal.hideAdvancedMode",
     defaultMessage: "Hide advanced mode",
   },
-  ariaCloseModalLabel:{
+  ariaCloseModalLabel: {
     id: "CosmosModal.ariaCloseModalLabel",
     defaultMessage: "Close Cosmos DB Configuration Modal",
   },

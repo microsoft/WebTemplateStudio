@@ -10,10 +10,9 @@ import { Logger } from "../utils/logger";
 export class Defaults extends WizardServant {
   clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
     [EXTENSION_COMMANDS.GET_OUTPUT_PATH_FROM_CONFIG, this.getOutputPathFromConfig],
-        [EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH, this.browseNewOutputPath],
+    [EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH, this.browseNewOutputPath],
   ]);
 
-  
   public async getOutputPathFromConfig(): Promise<IPayloadResponse> {
     const outputPath = this.getDefaultProjectPath();
     return {

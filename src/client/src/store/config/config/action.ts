@@ -2,16 +2,14 @@ import { IResetWizardAction, IPreviewStatusActionTypeAction, ILoad } from "./mod
 import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 
 export const resetWizardAction = (): IResetWizardAction => ({
-  type: CONFIG_TYPEKEYS.RESET_WIZARD
+  type: CONFIG_TYPEKEYS.RESET_WIZARD,
 });
 
-export const setPreviewStatusAction = (
-  isPreview: boolean
-): IPreviewStatusActionTypeAction => ({
+export const setPreviewStatusAction = (isPreview: boolean): IPreviewStatusActionTypeAction => ({
   payload: isPreview,
-  type: CONFIG_TYPEKEYS.SET_PREVIEW_STATUS
+  type: CONFIG_TYPEKEYS.SET_PREVIEW_STATUS,
 });
 
 export const loadAction = (): ILoad => ({
-  type: CONFIG_TYPEKEYS.LOAD
+  type: CONFIG_TYPEKEYS.LOAD,
 });

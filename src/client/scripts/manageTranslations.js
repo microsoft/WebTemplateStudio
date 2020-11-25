@@ -18,19 +18,16 @@ const glob = require("glob");
 const rimraf = require("rimraf");
 const parser = require("typescript-react-intl").default;
 const manageTranslations = require("react-intl-translations-manager").default;
-const {
-  readMessageFiles,
-  getDefaultMessages
-} = require("react-intl-translations-manager");
+const { readMessageFiles, getDefaultMessages } = require("react-intl-translations-manager");
 
 function extractTranslations(pattern, cb) {
   let results = [];
   pattern = pattern || "src/**/*.@(tsx|ts)";
-  glob(pattern, function(err, files) {
+  glob(pattern, function (err, files) {
     if (err) {
       throw new Error(err);
     }
-    files.forEach(function(f) {
+    files.forEach(function (f) {
       const contents = fs.readFileSync(f).toString();
       const res = parser(contents);
       results = results.concat(res);
@@ -46,7 +43,7 @@ if (!fs.existsSync(TEMP_DIR)) {
 
 const tempMessageFilePath = path.join(TEMP_DIR, TEMP_MESSAGE_FILENAME);
 
-extractTranslations(EXTRACT_MESSAGE_FILE_PATTERN, function(messages) {
+extractTranslations(EXTRACT_MESSAGE_FILE_PATTERN, function (messages) {
   fs.writeFileSync(tempMessageFilePath, JSON.stringify(messages, null, 2));
 
   manageTranslations({
@@ -55,7 +52,7 @@ extractTranslations(EXTRACT_MESSAGE_FILE_PATTERN, function(messages) {
     languages: [DEFAULT_LANGUAGE, ...LANGUAGES],
     // avoid reporting translation issues with default language - https://github.com/GertjanReynaert/react-intl-translations-manager/issues/76
     overrideCoreMethods: {
-      provideWhitelistFile: language => {
+      provideWhitelistFile: (language) => {
         // Avoid reporting untranslated stuff in defaultLanguage
         if (language.lang === DEFAULT_LANGUAGE) {
           const messageFiles = readMessageFiles(TEMP_DIR);
@@ -65,12 +62,10 @@ extractTranslations(EXTRACT_MESSAGE_FILE_PATTERN, function(messages) {
           if (!fs.existsSync(language.whitelistFilepath)) {
             return [];
           }
-          return JSON.parse(
-            fs.readFileSync(language.whitelistFilepath, "utf-8")
-          );
+          return JSON.parse(fs.readFileSync(language.whitelistFilepath, "utf-8"));
         }
-      }
-    }
+      },
+    },
   });
 
   rimraf.sync(TEMP_DIR);

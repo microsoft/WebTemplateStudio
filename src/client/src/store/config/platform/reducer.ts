@@ -4,10 +4,7 @@ import { platform} from "../../../AppContext";
 
 const initialState = platform;
 
-const platformReducer = (
-  state: string = initialState,
-  action: SelectionActionType
-) => {
+const platformReducer = (state: string = initialState, action: SelectionActionType) => {
   switch (action.type) {
     case CONFIG_TYPEKEYS.SELECT_WEB_APP:
       return action.payload;

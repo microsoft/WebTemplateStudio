@@ -1,34 +1,40 @@
-jest.mock('../validations',()=>{return {
-  addRequiredValidate:jest.fn(() => {
-    return {isValid:true, error:""};
-  }),
-  addExistingProjectNameValidate:jest.fn(() => {
-    return {isValid:true, error:""};
-  }),
-  addRegexValidate:jest.fn(() => {
-    return {isValid:true, error:""};
-  }),
-  addReservedNameValidate:jest.fn(() => {
-    return {isValid:true, error:""};
-  })
-}});
+jest.mock("../validations", () => {
+  return {
+    addRequiredValidate: jest.fn(() => {
+      return { isValid: true, error: "" };
+    }),
+    addExistingProjectNameValidate: jest.fn(() => {
+      return { isValid: true, error: "" };
+    }),
+    addRegexValidate: jest.fn(() => {
+      return { isValid: true, error: "" };
+    }),
+    addReservedNameValidate: jest.fn(() => {
+      return { isValid: true, error: "" };
+    }),
+  };
+});
 import { validateProjectName } from "./projectName";
 import { IprojectNameValidationConfig } from "../../../store/config/validations/model";
 import { IVSCodeObject } from "../../../types/vscode";
-import { addRequiredValidate, addExistingProjectNameValidate, addRegexValidate,
-  addReservedNameValidate } from '../validations';
+import {
+  addRequiredValidate,
+  addExistingProjectNameValidate,
+  addRegexValidate,
+  addReservedNameValidate,
+} from "../validations";
 
 describe("validate", () => {
-  it("config validate",(resolve)=>{
+  it("config validate", (resolve) => {
     const postMessage = jest.fn();
     const mockVsCode: IVSCodeObject = { postMessage };
     const validations: IprojectNameValidationConfig = {
-      regexs:[],
-      reservedNames:[],
-      validateEmptyNames:false,
-      validateExistingNames:false
-    }
-    validateProjectName("dfgfd","sdfsdf",validations,mockVsCode).then(()=>{
+      regexs: [],
+      reservedNames: [],
+      validateEmptyNames: false,
+      validateExistingNames: false,
+    };
+    validateProjectName("dfgfd", "sdfsdf", validations, mockVsCode).then(() => {
       expect(addRequiredValidate).toHaveBeenCalledTimes(0);
       expect(addExistingProjectNameValidate).toHaveBeenCalledTimes(0);
       expect(addRegexValidate).toHaveBeenCalledTimes(0);
@@ -36,19 +42,21 @@ describe("validate", () => {
       resolve();
     });
   });
-  it("config no validate",(resolve)=>{
+  it("config no validate", (resolve) => {
     const postMessage = jest.fn();
     const mockVsCode: IVSCodeObject = { postMessage };
     const validations: IprojectNameValidationConfig = {
-      regexs:[{
-        "name" : "nameStartWith$",
-        "pattern" : "^[^\\$]"
-      }],
-      reservedNames:["111"],
-      validateEmptyNames:true,
-      validateExistingNames:true
-    }
-    validateProjectName("dfgfd","sdfsdf",validations,mockVsCode).then(()=>{
+      regexs: [
+        {
+          name: "nameStartWith$",
+          pattern: "^[^\\$]",
+        },
+      ],
+      reservedNames: ["111"],
+      validateEmptyNames: true,
+      validateExistingNames: true,
+    };
+    validateProjectName("dfgfd", "sdfsdf", validations, mockVsCode).then(() => {
       expect(addRequiredValidate).toHaveBeenCalledTimes(1);
       expect(addExistingProjectNameValidate).toHaveBeenCalledTimes(1);
       expect(addRegexValidate).toHaveBeenCalledTimes(1);

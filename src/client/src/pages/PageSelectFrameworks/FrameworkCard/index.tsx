@@ -35,14 +35,12 @@ const FrameworkCard = (props: Props) => {
   React.useEffect(() => {
     selectWhenLoadWithoutSelection();
     if (!framework.latestVersionLoaded) {
-      getLatestVersion(vscode, framework.checkVersionPackage).then(
-        (latestVersionValidation: boolean) => {
-          framework.latestVersion = latestVersionValidation;
-          framework.latestVersionLoaded = true;
-          dispatch(updateFrameworksAction([framework]));
-          setLatestVersion(latestVersionValidation);
-        }
-      );
+      getLatestVersion(vscode, framework.checkVersionPackage).then((latestVersionValidation: boolean) => {
+        framework.latestVersion = latestVersionValidation;
+        framework.latestVersionLoaded = true;
+        dispatch(updateFrameworksAction([framework]));
+        setLatestVersion(latestVersionValidation);
+      });
     }
   }, []);
 
@@ -125,13 +123,11 @@ const FrameworkCard = (props: Props) => {
         </div>
         <div className={styles.description}>{framework.body}</div>
         <div className={cardStyles.DependencyInfo}>
-          {selected && !framework.requirement?.isInstalled && (
-            <DependencyInfo requirement={framework.requirement} />
-          )}
+          {selected && !framework.requirement?.isInstalled && <DependencyInfo requirement={framework.requirement} />}
         </div>
         <div className={styles.gridLayoutCardFooter}>
           <div>
-            <a onClick={detailsClickWrapper} onKeyDown={showDetailIfPressEnterKey} className={styles.link} tabIndex={0}>
+            <a onClick={detailsClickWrapper} onKeyDown={showDetailIfPressEnterKey} className={cardStyles.link} tabIndex={0}>
               {intl.formatMessage(messages.learnMore)}
             </a>
           </div>

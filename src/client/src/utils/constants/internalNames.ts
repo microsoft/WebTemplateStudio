@@ -1,4 +1,4 @@
-const PAGES={
+const PAGES = {
   REACT_BLANK_PAGE: "wts.Page.React.Blank",
   REACT_CONTENT_GRID: "wts.Page.React.Grid",
   REACT_MASTER_DETAIL: "wts.Page.React.MasterDetail",
@@ -11,7 +11,7 @@ const PAGES={
   VUE_CONTENT_GRID: "wts.Page.Vue.Grid",
   VUE_MASTER_DETAIL: "wts.Page.Vue.MasterDetail",
   VUE_LIST: "wts.Page.Vue.List",
-}
+};
 
 const WIZARD_CONTENT_FEATURES = {
   APP_SERVICE: "wts.Feature.Azure.AppService",
@@ -21,7 +21,4 @@ const WIZARD_CONTENT_FEATURES = {
   COSMOS_DB_SQL: "wts.Feature.Azure.Cosmos.SQL",
 };
 
-export {
-  WIZARD_CONTENT_FEATURES,
-  PAGES
-};
+export { WIZARD_CONTENT_FEATURES, PAGES };

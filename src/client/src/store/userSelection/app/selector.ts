@@ -25,47 +25,35 @@ const getPages = (selection: UserSelectionState): ITemplateInfo[] => {
   for (const page of pages) {
     pagesInfo.push({
       name: page.title,
-      identity: page.internalName
+      identity: page.internalName,
     });
   }
   return pagesInfo;
 };
 
-const getFrontendFrameworkSelector = createSelector(
-  getWizardSelectionsUserSelector,
-  getFrontendFramework
-);
+const getFrontendFrameworkSelector = createSelector(getWizardSelectionsUserSelector, getFrontendFramework);
 
-const getBackendFrameworkSelector = createSelector(
-  getWizardSelectionsUserSelector,
-  getBackendFramework
-);
+const getBackendFrameworkSelector = createSelector(getWizardSelectionsUserSelector, getBackendFramework);
 
-const getPagesSelector = createSelector(
-  getWizardSelectionsUserSelector,
-  getPages
-);
+const getPagesSelector = createSelector(getWizardSelectionsUserSelector, getPages);
 
 const getLinuxVersionFromBackendFrameworkSelector = (
   backendFrameworks: IOption[],
   backendFramework: string
 ): string => {
-  const selectedBackendFramework = backendFrameworks.find(b => b.internalName === backendFramework);
-  return selectedBackendFramework && selectedBackendFramework.linuxVersion
-  ? selectedBackendFramework.linuxVersion
-  : "";
+  const selectedBackendFramework = backendFrameworks.find((b) => b.internalName === backendFramework);
+  return selectedBackendFramework && selectedBackendFramework.linuxVersion ? selectedBackendFramework.linuxVersion : "";
 };
 
 const getLinuxVersionSelector = createSelector(
   getBackendOptionsSelector,
   getBackendFrameworkSelector,
   getLinuxVersionFromBackendFrameworkSelector
-)
+);
 
-const getRuntimeStackSelector = createSelector(
-  getLinuxVersionSelector,
-  (version) => version === "" ? "" : version.split("|")[0]
-)
+const getRuntimeStackSelector = createSelector(getLinuxVersionSelector, (version) =>
+  version === "" ? "" : version.split("|")[0]
+);
 
 const getGenerationData = createSelector(
   getProjectName,
@@ -94,7 +82,7 @@ const getGenerationData = createSelector(
       backendFramework,
       backendFrameworkLinuxVersion,
       pages,
-      services
+      services,
     };
   }
 );

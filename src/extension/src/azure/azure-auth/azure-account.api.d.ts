@@ -9,11 +9,7 @@ import { AzureEnvironment } from "ms-rest-azure";
 import { SubscriptionModels } from "azure-arm-resource";
 import { ReadStream } from "fs";
 
-export type AzureLoginStatus =
-  | "Initializing"
-  | "LoggingIn"
-  | "LoggedIn"
-  | "LoggedOut";
+export type AzureLoginStatus = "Initializing" | "LoggingIn" | "LoggedIn" | "LoggedOut";
 
 export interface AzureAccount {
   readonly status: AzureLoginStatus;
@@ -58,9 +54,5 @@ export interface CloudShell {
   readonly waitForConnection: () => Promise<boolean>;
   readonly terminal: Promise<Terminal>;
   readonly session: Promise<AzureSession>;
-  readonly uploadFile: (
-    filename: string,
-    stream: ReadStream,
-    options?: UploadOptions
-  ) => Promise<void>;
+  readonly uploadFile: (filename: string, stream: ReadStream, options?: UploadOptions) => Promise<void>;
 }

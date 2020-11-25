@@ -47,4 +47,4 @@ export const getNavItems = (platform: string): IRoutesNavItems[] => {
   if (platform === PLATFORM.WEB) routes = NavItemsWeb;
   if (platform === PLATFORM.RN) routes = NavItemsRN;
   return routes;
-}
+};

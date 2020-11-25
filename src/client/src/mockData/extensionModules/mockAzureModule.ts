@@ -50,37 +50,43 @@ const getUserStatus = (message: any) => {
 };
 
 const getLocations = (message: any) => {
-  setTimeout(() =>
-  window.postMessage(
-   {
-    module: EXTENSION_MODULES.AZURE,
-      command: EXTENSION_COMMANDS.GET_LOCATIONS,
-      payload: {
-        scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        locations: mockData.locations
-     },
-   },
-   "*"
- ), 500);
+  setTimeout(
+    () =>
+      window.postMessage(
+        {
+          module: EXTENSION_MODULES.AZURE,
+          command: EXTENSION_COMMANDS.GET_LOCATIONS,
+          payload: {
+            scope: message.payload && message.payload.scope ? message.payload.scope : "",
+            locations: mockData.locations,
+          },
+        },
+        "*"
+      ),
+    500
+  );
 };
 
 const getResourceGroups = (message: any) => {
-  const resourceGroups = IsMicrosoftLearnSubscription(message.subscription) 
-  ? mockData.sandboxResourceGroups 
-  : mockData.resourceGroups;
+  const resourceGroups = IsMicrosoftLearnSubscription(message.subscription)
+    ? mockData.sandboxResourceGroups
+    : mockData.resourceGroups;
 
-  setTimeout(() =>
-  window.postMessage(
-   {
-    module: EXTENSION_MODULES.AZURE,
-      command: EXTENSION_COMMANDS.GET_RESOURCE_GROUPS,
-      payload: {
-        scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        resourceGroups,
-     },
-   },
-   "*"
- ), 500);
+  setTimeout(
+    () =>
+      window.postMessage(
+        {
+          module: EXTENSION_MODULES.AZURE,
+          command: EXTENSION_COMMANDS.GET_RESOURCE_GROUPS,
+          payload: {
+            scope: message.payload && message.payload.scope ? message.payload.scope : "",
+            resourceGroups,
+          },
+        },
+        "*"
+      ),
+    500
+  );
 };
 
 const getValidAppServiceName = (message: any) => {
@@ -151,9 +157,9 @@ const validateAppServiceName = (message: any) => {
 };
 
 const IsMicrosoftLearnSubscription = (subscription: string) => {
-const selectedSubscription = mockData.subscriptions.find(s => s.name === subscription);
-return selectedSubscription !== undefined && selectedSubscription.isMicrosoftLearn;
-}
+  const selectedSubscription = mockData.subscriptions.find((s) => s.name === subscription);
+  return selectedSubscription !== undefined && selectedSubscription.isMicrosoftLearn;
+};
 
 export {
   login,

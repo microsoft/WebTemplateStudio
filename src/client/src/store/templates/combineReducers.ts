@@ -10,7 +10,7 @@ const templatesReducer = combineReducers({
   frontendOptions,
   pageOptions,
   featureOptions,
-  projectTypesOptions
+  projectTypesOptions,
 });
 
 export default templatesReducer;

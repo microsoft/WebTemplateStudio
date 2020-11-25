@@ -8,13 +8,13 @@ export interface ISelectProjectTypeAction {
 }
 
 export interface ISetProjectNameActionType {
-    type: USERSELECTION_TYPEKEYS.SET_PROJECT_NAME;
-    payload: IProjectName;
+  type: USERSELECTION_TYPEKEYS.SET_PROJECT_NAME;
+  payload: IProjectName;
 }
 
 export interface IUpdateProjectPathActionType {
-    type: USERSELECTION_TYPEKEYS.SET_OUTPUT_PATH;
-    payload: string;
+  type: USERSELECTION_TYPEKEYS.SET_OUTPUT_PATH;
+  payload: string;
 }
 
 export interface IProjectPathValidation {

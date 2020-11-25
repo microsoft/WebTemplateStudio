@@ -19,7 +19,7 @@ describe("AppServicePlanInfo", () => {
     setSubscriptions(initialState);
     store = mockStore(initialState);
     props = {};
-  });  
+  });
 
   it("renders without crashing", () => {
     wrapper = renderWithStore(<AppServicePlanInfo {...props} />, store);
@@ -42,7 +42,7 @@ describe("AppServicePlanInfo", () => {
 
   it("Has a app service plans link", () => {
     wrapper = renderWithStore(<AppServicePlanInfo {...props} />, store);
-    const link = wrapper.getByText(intl.formatMessage(messages.learnMore))
+    const link = wrapper.getByText(intl.formatMessage(messages.learnMore));
     expect(link).toHaveAttribute("href", AZURE_LINKS.APP_SERVICE_PLAN);
   });
 });

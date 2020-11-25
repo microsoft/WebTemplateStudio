@@ -37,18 +37,18 @@ const ProjectName = (props: Props) => {
 
   const [name, setName] = React.useState("");
 
-  const validate = (projectName: string) =>{
-      validateProjectName(projectName, outputPath, validations.projectNameValidationConfig, vscode).then(
-        (validationResult) => {
-          validationResult.isDirty = projectNameValidation.isDirty;
-          dispatch(setProjectNameAction(projectName, validationResult));
+  const validate = (projectName: string) => {
+    validateProjectName(projectName, outputPath, validations.projectNameValidationConfig, vscode).then(
+      (validationResult) => {
+        validationResult.isDirty = projectNameValidation.isDirty;
+        dispatch(setProjectNameAction(projectName, validationResult));
 
-          if (projectName !== "") {
-            dispatch(setProjectPathValidationAction({ isValid: validationResult.isValid }));
-          }
+        if (projectName !== "") {
+          dispatch(setProjectPathValidationAction({ isValid: validationResult.isValid }));
         }
-      );
-  }
+      }
+    );
+  };
 
   const validateAndSetProjectName = (e: React.SyntheticEvent<HTMLInputElement>) => {
     const newProjectName: string = e.currentTarget.value;

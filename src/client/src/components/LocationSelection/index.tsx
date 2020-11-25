@@ -26,7 +26,7 @@ const LocationSelection = (props: Props) => {
   const [selectedDropdownLocation, setSelectedDropdownLocation] = useState<IDropDownOptionType | undefined>(undefined);
 
   React.useEffect(() => {
-    if(subscription) {
+    if (subscription) {
       chargeLocations();
     }
   }, [subscription]);
@@ -53,7 +53,7 @@ const LocationSelection = (props: Props) => {
     }));
     setDropdownLocations(newDropDownLocations);
   };
-  
+
   const disableComponent = subscription === "" || dropdownLocations.length === 0;
 
   return (

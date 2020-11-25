@@ -5,10 +5,7 @@ import { projectType } from "../../../AppContext";
 //TODO this will vary depending on the new page
 const initialState = projectType;
 
-const backendFramework = (
-  state: string = initialState,
-  action: WizardSelectionActionType
-) => {
+const backendFramework = (state: string = initialState, action: WizardSelectionActionType) => {
   switch (action.type) {
     case USERSELECTION_TYPEKEYS.SELECT_PROJECT_TYPE:
       return action.payload;

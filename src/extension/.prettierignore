@@ -1,1 +1,7 @@
 *.json
+**/dist
+**/logs
+**/node_modules
+**/out
+**/react
+**/resources

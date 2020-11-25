@@ -3,7 +3,7 @@ import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 
 const initialState = {
   templatesVersion: "",
-  wizardVersion: ""
+  wizardVersion: "",
 };
 
 const versions = (state: IVersions = initialState, action: any) => {
