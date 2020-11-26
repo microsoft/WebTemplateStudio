@@ -7,16 +7,25 @@ const projectTypes = (platform: any) => {
       return [
         {
           name: "FullStackWebApp",
+          displayName: "FullStackWebApp",
+          icon: "",
+          order: 1,
         },
       ];
     case PLATFORM.REACTNATIVE:
       return [
         {
           name: "Tabbed",
-        },
+          displayName: "Tabbed",
+          summary: "Tabbed summary ***",
+          icon: "",
+          order: 1,},
         {
           name: "Drawer",
-        },
+          displayName: "Drawer",
+          summary: "Drawer summary ***",
+          icon: "",
+          order: 2,},
       ];
   }
 };

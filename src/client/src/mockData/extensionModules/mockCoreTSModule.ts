@@ -1,9 +1,8 @@
-import { platform, projectType } from "../../AppContext";
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/commands";
 
 import * as mockData from "./mockData/mockWebPlatformData";
 
-const getProjectTypes = (message: any) => {
+const getProjectTypes = (platform: string, message: any) => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
@@ -18,6 +17,9 @@ const getProjectTypes = (message: any) => {
 };
 
 const getFrameworks = (platform: string, message: any) => {
+  const projectTypes = mockData.projectTypes(platform) !== undefined ?
+  mockData.projectTypes(platform) :
+  [];
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
@@ -26,7 +28,7 @@ const getFrameworks = (platform: string, message: any) => {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
         frameworks: mockData.frameworks(platform),
         isPreview: true,
-        projectType: projectType,
+        projectType: projectTypes !== undefined ? projectTypes[0].name: "",
       },
     },
     "*"

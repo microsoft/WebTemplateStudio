@@ -91,7 +91,7 @@ const mockVsCodeApi = (platform: string) => ({
           mockCoreTSModule.getTemplateConfig(platform, message);
           break;
         case EXTENSION_COMMANDS.GET_PROJECT_TYPES:
-          mockCoreTSModule.getProjectTypes(message);
+          mockCoreTSModule.getProjectTypes(platform, message);
           break;
         case EXTENSION_COMMANDS.GET_ALL_LICENSES:
           mockCoreTSModule.getAllLicenses(message);
