@@ -10,7 +10,7 @@ export const getFrameworksOptions = (json: any[], type: FRAMEWORK_TYPE): IOption
     internalName: val.name,
     licenses: val.licenses,
     longDescription: val.longDescription,
-    position: val.position,
+    order: val.order,
     selected: val.selected,
     icon: val.icon,
     title: val.displayName,
@@ -30,8 +30,20 @@ export const getFrameworksOptions = (json: any[], type: FRAMEWORK_TYPE): IOption
   }));
 };
 
+export const getProjectTypesOptions = (json: any[]): IOption[] => {
+  return getOptionsTemplateInfo(json).map<IOption>((val) => ({
+    body: val.summary,
+    title: val.displayName,
+    longDescription: val.longDescription,
+    selected: val.selected,
+    icon: val.icon,
+    internalName: val.name,
+    order: val.order,
+  }));
+};
+
 export const getPagesOptions = (json: any[]): IOption[] => {
-  const items = getPagesTemplateInfo(json);
+  const items = getOptionsTemplateInfo(json);
   return items.map<IOption>((val) => ({
     body: val.summary,
     internalName: val.name,
@@ -48,7 +60,7 @@ export const getPagesOptions = (json: any[]): IOption[] => {
 };
 
 export const getFeaturesOptions = (json: any[]): IOption[] => {
-  const items = getFeaturesTemplateInfo(json);
+  const items = getOptionsTemplateInfo(json);
   const stored = items.reduce((result, val) => {
     if (!result.some((option) => option.templateGroupIdentity === val.templateGroupIdentity)) {
       const option: IOption = {
@@ -86,7 +98,7 @@ const getFrameworksTemplateInfo = (items: any[], type: FRAMEWORK_TYPE): IApiTemp
       licenses: val.licenses,
       longDescription: val.description,
       name: val.name,
-      position: val.order,
+      order: val.order,
       selected: false,
       summary: val.summary,
       icon: val.icon,
@@ -94,12 +106,8 @@ const getFrameworksTemplateInfo = (items: any[], type: FRAMEWORK_TYPE): IApiTemp
     }));
 };
 
-const getPagesTemplateInfo = (items: any[]): IApiTemplateInfo[] => {
-  return getTemplateInfo(items).sort((a: IApiTemplateInfo, b: IApiTemplateInfo) => a.position - b.position);
-};
-
-const getFeaturesTemplateInfo = (items: any[]): IApiTemplateInfo[] => {
-  return getTemplateInfo(items).sort((a: IApiTemplateInfo, b: IApiTemplateInfo) => a.position - b.position);
+const getOptionsTemplateInfo = (items: any[]): IApiTemplateInfo[] => {
+  return getTemplateInfo(items).sort((a: IApiTemplateInfo, b: IApiTemplateInfo) => a.order - b.order);
 };
 
 const getTemplateInfo = (items: any[]): IApiTemplateInfo[] => {
@@ -109,7 +117,7 @@ const getTemplateInfo = (items: any[]): IApiTemplateInfo[] => {
     longDescription: val.richDescription,
     name: val.templateId,
     templateGroupIdentity: val.templateGroupIdentity,
-    position: val.displayOrder,
+    order: val.displayOrder,
     selected: false,
     summary: val.description,
     icon: val.icon,

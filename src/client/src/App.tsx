@@ -18,6 +18,7 @@ import { getSelectedRoute } from "./store/userSelection/app/wizardSelectionSelec
 const PageSelectFrameworks = loadable(
   () => import(/* webpackChunkName: "PageSelectFrameworks" */ "./pages/PageSelectFrameworks")
 );
+const SelectProjectTypePage = loadable(() => import(/* webpackChunkName: "SelectProjectTypePage" */ "./pages/SelectProjectTypePage"));
 const PageAddPages = loadable(() => import(/* webpackChunkName: "PageAddPages" */ "./pages/PageAddPages"));
 const PageReviewAndGenerate = loadable(
   () => import(/* webpackChunkName: "PageReviewAndGenerate" */ "./pages/PageReviewAndGenerate")
@@ -79,6 +80,8 @@ const App = (props: Props) => {
           {selectedRoute === ROUTE.NEW_PROJECT ? (
             <HomeSplashSVG className={classnames(appStyles.splash, appStyles.homeSplash)} />
           ) : null}
+
+          {selectedRoute === ROUTE.SELECT_PROJECT_TYPE && <SelectProjectTypePage />}
 
           {selectedRoute === ROUTE.REVIEW_AND_GENERATE ? (
             <SummarySplashSVG className={classnames(appStyles.splash, appStyles.summarySplash)} />

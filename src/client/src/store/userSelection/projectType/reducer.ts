@@ -1,11 +1,15 @@
 import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 import WizardSelectionActionType from "../selectionActionType";
-import { projectType } from "../../../AppContext";
+import { ISelected } from "../../../types/selected";
 
-//TODO this will vary depending on the new page
-const initialState = projectType;
+const initialState = {
+  title: "",
+  internalName: "",
+  icon: "",
+  description: "",
+};
 
-const backendFramework = (state: string = initialState, action: WizardSelectionActionType) => {
+const projectType = (state: ISelected = initialState, action: WizardSelectionActionType) => {
   switch (action.type) {
     case USERSELECTION_TYPEKEYS.SELECT_PROJECT_TYPE:
       return action.payload;
@@ -14,4 +18,4 @@ const backendFramework = (state: string = initialState, action: WizardSelectionA
   }
 };
 
-export default backendFramework;
+export default projectType;

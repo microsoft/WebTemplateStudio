@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IVSCodeObject } from "./types/vscode";
 import mockVsCodeApi from "./mockData/mockVsCodeApi";
-import { ENVIRONMENT, PLATFORM, WEB_PROJECT_TYPE, RN_PROJECT_TYPE } from "./utils/constants/constants";
+import { ENVIRONMENT, PLATFORM } from "./utils/constants/constants";
 
 interface IAppContext {
   vscode: IVSCodeObject;
@@ -13,16 +13,6 @@ interface IAppContext {
 //TODO: Web Template Studio: Create Web App
 //TODO: Web Template Studio: Create React Native App
 const devPlatform = PLATFORM.WEB;
-export const platform = process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT ? devPlatform : PLATFORM.WEB;
-
-export let projectType = "";
-switch (platform as string) {
-  case PLATFORM.WEB:
-    projectType = WEB_PROJECT_TYPE.FULL_STACK_APP;
-    break;
-  case PLATFORM.REACTNATIVE:
-    projectType = RN_PROJECT_TYPE.TABBED;
-    break;
-}
+export const platform = process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT ? devPlatform : PLATFORM.REACTNATIVE;
 
 export const AppContext = React.createContext<IAppContext>({ vscode: mockVsCodeApi(platform) as IVSCodeObject });

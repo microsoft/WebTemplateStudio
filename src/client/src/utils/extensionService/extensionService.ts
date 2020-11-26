@@ -3,7 +3,6 @@ import { PAYLOAD_MESSAGES_TEXT } from "../constants/constants";
 import { ILoggingPayload } from "../../types/logger";
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../constants/commands";
 import { IVersionPackage } from "../../types/option";
-import { projectType } from "../../AppContext";
 
 const postMessageAsync = (
   command: string,
@@ -98,9 +97,9 @@ const getLatestVersion = (vscode: IVSCodeObject, checkVersionPackage: IVersionPa
 
 const getPages = (
   vscode: IVSCodeObject,
-  projectType: string,
-  frontEndInternalName: string,
-  backEndInternalName: string
+  projectTypeName: string,
+  frontendName: string,
+  backendName: string
 ) => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_PAGES,
@@ -108,25 +107,25 @@ const getPages = (
       module: EXTENSION_MODULES.CORETS,
       command: EXTENSION_COMMANDS.GET_PAGES,
       payload: {
-        projectType,
-        frontendFramework: frontEndInternalName,
-        backendFramework: backEndInternalName,
+        projectTypeName,
+        frontendFramework: frontendName,
+        backendFramework: backendName,
       },
     },
     vscode
   );
 };
 
-const getFeatures = (vscode: IVSCodeObject, frontEndInternalName: string, backEndInternalName: string) => {
+const getFeatures = (vscode: IVSCodeObject, projectTypeName: string, frontendName: string, backendName: string) => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_FEATURES,
     {
       module: EXTENSION_MODULES.CORETS,
       command: EXTENSION_COMMANDS.GET_FEATURES,
       payload: {
-        projectType: projectType,
-        frontendFramework: frontEndInternalName,
-        backendFramework: backEndInternalName,
+        projectType: projectTypeName,
+        frontendFramework: frontendName,
+        backendFramework: backendName,
       },
     },
     vscode
