@@ -1,8 +1,9 @@
 import bson
 
+
 def serialize(items):
-    listItem = {"id": "", "text": items["text"]}
+    list_item = {"id": "", "text": items["text"]}
     for index in items:
         if isinstance(items[index], bson.ObjectId):
-            listItem["id"] = str(items[index])
-    return listItem
+            list_item["id"] = str(items[index])
+    return list_item

@@ -1,23 +1,17 @@
-//^^
 //{[{
 import uuid
 //}]}
-sample_data = {}
-//{[{
-short_lorem_ipsum = 'Lorem id sint aliqua tempor tempor sit. Ad dolor dolor ut nulla mollit dolore non eiusmod Lorem tempor nisi cillum.';
-//}]}
-
 # This class holds sample data used by some generated pages to show how they can be used.
 # TODO Web Template Studio: Delete this file once your app is using real data.
+
+
+SHORT_LOREM_IPSUM = """Lorem id sint aliqua tempor tempor sit.
+ Ad dolor dolor ut nulla mollit dolore non eiusmod Lorem tempor nisi cillum."""
+
+
 //{[{
-sample_data['list_text_assets'] = [
-    {
-        'id': str(uuid.uuid4()),
-        'text': short_lorem_ipsum
-    },
-    {
-        'id': str(uuid.uuid4()),
-        'text': short_lorem_ipsum
-    }
+sample_list = [
+    {"id": str(uuid.uuid4()), "text": SHORT_LOREM_IPSUM},
+    {"id": str(uuid.uuid4()), "text": SHORT_LOREM_IPSUM},
 ]
 //}]}

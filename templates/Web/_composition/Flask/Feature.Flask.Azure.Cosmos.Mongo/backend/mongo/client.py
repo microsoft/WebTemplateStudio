@@ -1,8 +1,8 @@
 import pymongo
-from . import settings
 import constants
+from . import settings
 
-client = pymongo.MongoClient(settings.connection_str + '?ssl=true&replicaSet=globaldb')
+client = pymongo.MongoClient(settings.connection_str + "?ssl=true&replicaSet=globaldb")
 
 db = client[constants.COSMOS_COLLECTION]
 

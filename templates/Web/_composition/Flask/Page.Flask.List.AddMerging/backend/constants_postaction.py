@@ -1,8 +1,8 @@
 import os
 
-PORT = os.environ.get('PORT', 3001)
+PORT = os.environ.get("PORT", 3001)
 //{[{
-ENDPOINT_LIST = '/api/list'
+ENDPOINT_LIST = "/api/list"
 //}]}
 HTTP_STATUS_404_NOT_FOUND = 404
 //{[{
