@@ -1,12 +1,12 @@
 import azure.cosmos
 import constants
-from . import settings
+import sql.settings
 
 
 class SQLObj:
     def __init__(self):
         self.client = azure.cosmos.CosmosClient(
-            url=settings.connection_key, credential=settings.master_key
+            url=sql.settings.connection_key, credential=sql.settings.master_key
         )
         self.database = self.client.create_database_if_not_exists(
             id=constants.COSMOS_DATABASE

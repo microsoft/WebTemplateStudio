@@ -1,8 +1,8 @@
 import azure.cosmos
 import flask
-from . import client
+import sql.client
 
-sql_database_obj = client.SQLObj()
+sql_database_obj = sql.client.SQLObj()
 
 
 def get():
@@ -29,7 +29,7 @@ def delete(item_id):
     )
     items = list(result)
     if not items:
-        raise Exception("Could not find an item with given id")
+        raise ValueError("Could not find an item with given id")
     item = items[0]
     sql_database_obj.get_container().delete_item(
         item, partition_key=azure.cosmos.partition_key.NonePartitionKeyValue
