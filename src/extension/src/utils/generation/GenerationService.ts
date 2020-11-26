@@ -34,7 +34,7 @@ export default class GenerationService {
   public async generate(generationData: IGenerationData) {
     const generationPath = await this.templatesGenerator.generate(generationData);
 
-    if (generationPath && generationPath === "esto borrar") {
+    if (generationPath) {
       generationData.path = generationPath;
       await this.generateServices(generationData);
     } else {

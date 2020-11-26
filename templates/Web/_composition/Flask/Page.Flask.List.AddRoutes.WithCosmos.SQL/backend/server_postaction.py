@@ -1,8 +1,7 @@
-import constants
+import flask
 //{[{
 import sql.service
 //}]}
-
 app = flask.Flask(__name__, static_folder="build")
 
 //{[{
