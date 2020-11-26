@@ -48,29 +48,3 @@
 .cardCount:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
-
-/* below similar but not exactly same styles */
-.gridLayoutCardHeader {
-  display: grid;
-  grid-template-columns: 3rem auto 3rem;
-  max-height: 51px;
-  width: 20rem;
-}
-
-.gridLayoutCardHeader .title {
-  margin-left: 1rem;
-  margin-top: 0.2rem;
-  font-size: 1.5rem;
-  line-height: 1.5;
-}
-
-.description {
-  font-size: 1.2rem;
-  line-height: 1.5;
-}
-
-.gridLayoutCardFooter {
-  display: grid;
-  grid-template-columns: auto 3rem;
-  min-height: 30px;
-}

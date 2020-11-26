@@ -14,8 +14,8 @@ import { IOption } from "../../../types/option";
 import { mapStateToProps } from "./store";
 
 import messages from "./messages";
-import styles from "./styles.module.css";
 import cardStyles from "../../cardStyles.module.css";
+import pageStyles from "../../cardStyles.module.css";
 
 type Props = ISelectProps & IStateProps & InjectedIntlProps;
 
@@ -72,7 +72,7 @@ const ProjectTypeCard = (props: Props) => {
           <div>{projectType.internalName && <Icon name={projectType.internalName} icon={projectType.icon} />}</div>
           <div className={classNames(cardStyles.title)}>{projectType.displayName}</div>
         </div>
-        <div className={cardStyles.description}>{projectType.body}</div>
+        <div className={pageStyles.description}>{projectType.body}</div>
         <div className={cardStyles.gridLayoutCardFooter}>
           <div>
             <a className={cardStyles.link} tabIndex={0}>

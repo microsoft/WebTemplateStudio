@@ -112,20 +112,20 @@ const FrameworkCard = (props: Props) => {
       })}
     >
       <div>
-        <div className={styles.gridLayoutCardHeader}>
+        <div className={cardStyles.gridLayoutCardHeader}>
           <div>{framework.internalName && <Icon name={framework.internalName} icon={framework.icon} />}</div>
-          <div className={styles.title}>{framework.title}</div>
+          <div className={cardStyles.title}>{framework.title}</div>
         </div>
 
         <div className={styles.gridLayoutVersion}>
           <div className={cardStyles.version}>v{framework.version}</div>
           {latestVersion === framework.version && <div className={styles.latestVersion}>(Latest)</div>}
         </div>
-        <div className={styles.description}>{framework.body}</div>
+        <div className={cardStyles.description}>{framework.body}</div>
         <div className={cardStyles.DependencyInfo}>
           {selected && !framework.requirement?.isInstalled && <DependencyInfo requirement={framework.requirement} />}
         </div>
-        <div className={styles.gridLayoutCardFooter}>
+        <div className={cardStyles.gridLayoutCardFooter}>
           <div>
             <a onClick={detailsClickWrapper} onKeyDown={showDetailIfPressEnterKey} className={cardStyles.link} tabIndex={0}>
               {intl.formatMessage(messages.learnMore)}
