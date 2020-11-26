@@ -2,7 +2,8 @@ import azure.cosmos
 import constants
 from . import settings
 
-class SQLObj():
+
+class SQLObj:
     def __init__(self):
         self.client = azure.cosmos.CosmosClient(
             url=settings.connection_key, credential=settings.master_key
