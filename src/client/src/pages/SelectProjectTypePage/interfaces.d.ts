@@ -2,7 +2,6 @@ import { IOption } from "../../types/option";
 
 interface IStoreProps {
   options: IOption[];
-  pageOutOfBounds: boolean;
 }
 
 interface IIntlProps {

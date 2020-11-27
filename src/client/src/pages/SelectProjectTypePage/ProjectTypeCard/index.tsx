@@ -69,8 +69,8 @@ const ProjectTypeCard = (props: Props) => {
     >
       <div>
         <div className={cardStyles.gridLayoutCardHeader}>
-          <div>{projectType.internalName && <Icon name={projectType.internalName} icon={projectType.icon} />}</div>
-          <div className={classNames(cardStyles.title)}>{projectType.displayName}</div>
+          <div>{projectType.title && <Icon name={projectType.title} icon={projectType.icon} />}</div>
+          <div className={classNames(cardStyles.title)}>{projectType.title}</div>
         </div>
         <div className={pageStyles.description}>{projectType.body}</div>
         <div className={cardStyles.gridLayoutCardFooter}>

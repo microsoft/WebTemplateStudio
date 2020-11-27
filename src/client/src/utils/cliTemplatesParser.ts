@@ -31,19 +31,21 @@ export const getFrameworksOptions = (json: any[], type: FRAMEWORK_TYPE): IOption
 };
 
 export const getProjectTypesOptions = (json: any[]): IOption[] => {
-  return getOptionsTemplateInfo(json).map<IOption>((val) => ({
+  return getProjectTypeTemplateInfo(json)
+  .map<IOption>((val) => ({
+    title: val.name,
+    internalName: val.name,
     body: val.summary,
-    title: val.displayName,
+    order: val.order,
+    licenses: val.licenses,
     longDescription: val.longDescription,
     selected: val.selected,
     icon: val.icon,
-    internalName: val.name,
-    order: val.order,
   }));
 };
 
 export const getPagesOptions = (json: any[]): IOption[] => {
-  const items = getOptionsTemplateInfo(json);
+  const items = sortTemplateInfo(json);
   return items.map<IOption>((val) => ({
     body: val.summary,
     internalName: val.name,
@@ -60,7 +62,7 @@ export const getPagesOptions = (json: any[]): IOption[] => {
 };
 
 export const getFeaturesOptions = (json: any[]): IOption[] => {
-  const items = getOptionsTemplateInfo(json);
+  const items = sortTemplateInfo(json);
   const stored = items.reduce((result, val) => {
     if (!result.some((option) => option.templateGroupIdentity === val.templateGroupIdentity)) {
       const option: IOption = {
@@ -87,6 +89,26 @@ export const getFeaturesOptions = (json: any[]): IOption[] => {
   return stored;
 };
 
+//TODO: Review is they are not needed for projectType if we shold add another type
+//TODO: rather than using: IApiTemplateInfo
+const getProjectTypeTemplateInfo = (items: any[]): IApiTemplateInfo[] => {
+  return items
+    .map<IApiTemplateInfo>((val) => ({
+      author: val.author,
+      templateGroupIdentity: val.templateGroupIdentity,
+      defaultName: val.defaultName,
+      displayName: val.displayName,
+      licenses: val.licenses,
+      longDescription: val.description,
+      name: val.name,
+      order: val.order,
+      selected: false,
+      summary: val.summary,
+      icon: val.icon,
+      tags: val.tags,
+    }));
+};
+
 const getFrameworksTemplateInfo = (items: any[], type: FRAMEWORK_TYPE): IApiTemplateInfo[] => {
   return items
     .filter((val) => val.tags.type === type)
@@ -106,7 +128,7 @@ const getFrameworksTemplateInfo = (items: any[], type: FRAMEWORK_TYPE): IApiTemp
     }));
 };
 
-const getOptionsTemplateInfo = (items: any[]): IApiTemplateInfo[] => {
+const sortTemplateInfo = (items: any[]): IApiTemplateInfo[] => {
   return getTemplateInfo(items).sort((a: IApiTemplateInfo, b: IApiTemplateInfo) => a.order - b.order);
 };
 

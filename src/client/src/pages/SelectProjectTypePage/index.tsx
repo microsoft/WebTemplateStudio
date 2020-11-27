@@ -18,9 +18,8 @@ const SelectProjectTypePage = ({ intl }: Props) => {
       <h1 className={pageStyles.title}>{intl.formatMessage(messages.header)}</h1>
 
       <div className={pageStyles.flexContainer}>
-        {projectTypesOptions.map((projectType) => {
-          //TODO: review params
-          return <ProjectTypeCard key={projectType} projectType={projectType} />;
+        {projectTypesOptions.map((projectType, index) => {
+          return <ProjectTypeCard key={index} projectType={projectType} />;
         })}
       </div>
     </div>
