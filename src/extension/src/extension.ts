@@ -3,6 +3,8 @@ import { Controller } from "./controller";
 import { Deploy } from "./deploy";
 import { PLATFORM } from "./constants/constants";
 
+fdescribe
+debugger
 export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
     vscode.commands.registerCommand("webTemplateStudioExtension.wizardLaunch.local", async () => {
