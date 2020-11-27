@@ -3,10 +3,7 @@ import { Controller } from "./controller";
 import { Deploy } from "./deploy";
 import { PLATFORM } from "./constants/constants";
 
-fdescribefdescribefdescribe fdescribe
-debugger
 
-fdescribe
 
 export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
