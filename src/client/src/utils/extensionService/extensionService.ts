@@ -107,7 +107,7 @@ const getPages = (
       module: EXTENSION_MODULES.CORETS,
       command: EXTENSION_COMMANDS.GET_PAGES,
       payload: {
-        projectTypeName,
+        projectType: projectTypeName,
         frontendFramework: frontendName,
         backendFramework: backendName,
       },

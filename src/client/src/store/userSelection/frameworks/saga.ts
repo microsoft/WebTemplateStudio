@@ -27,7 +27,7 @@ export function* frameworkSaga(vscode: any) {
       const event: any = yield call(
         getPages,
         vscode,
-        selectedProjectType,
+        selectedProjectType.internalName,
         selectedFrontend.internalName,
         selectedBackend.internalName
       );
