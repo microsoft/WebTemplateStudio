@@ -32,19 +32,18 @@ const isEnableNextPageSelector = (state: AppState): boolean => {
       state.userSelection.outputPathObject.outputPath !== "";
   }
 
-  //TODO: Would need to add projectType validation here so we can click next 
+  //TODO: Would need to add projectType validation here so we can click next
   //TODO: change on next issue #1664
-  if(selectedRoute === ROUTE.SELECT_PROJECT_TYPE){
-    valid=true;
+  if (selectedRoute === ROUTE.SELECT_PROJECT_TYPE) {
+    valid = true;
   }
 
   if (
     selectedRoute === ROUTE.SELECT_FRAMEWORKS &&
-    (state.templates.frontendOptions &&
-    state.userSelection.frontendFramework.title !== "")
-    ||
-    (state.templates.backendOptions &&
-    state.userSelection.backendFramework.title !== "")
+    (state.templates.frontendOptions.length === 0 ||
+      (state.templates.frontendOptions.length > 0 && state.userSelection.frontendFramework.title !== "")) &&
+    (state.templates.backendOptions.length === 0 ||
+      (state.templates.backendOptions.length > 0 && state.userSelection.backendFramework.title !== ""))
   ) {
     valid = true;
   }
