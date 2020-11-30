@@ -21,7 +21,7 @@ type Props = InjectedIntlProps;
 
 const SelectFrameworks = (props: Props) => {
   const selection: UserSelectionState = useSelector((state: AppState) => state.userSelection);
-  const frontEndOptions: IOption[] = useSelector((state: AppState) => state.templates.frontendOptions);
+  const frontendOptions: IOption[] = useSelector((state: AppState) => state.templates.frontendOptions);
   const frontendDropdownItems: IDropDownOptionType[] = useSelector((state: AppState) =>
     convertOptionsToDropdownItems(state.templates.frontendOptions)
   );
@@ -71,7 +71,7 @@ const SelectFrameworks = (props: Props) => {
   };
 
   const handleFrontEndFrameworkChange = (option: IDropDownOptionType) => {
-    const optionFrontEnd = frontEndOptions.find((optionFront: IOption) => optionFront.internalName === option.value);
+    const optionFrontEnd = frontendOptions.find((optionFront: IOption) => optionFront.internalName === option.value);
     if (optionFrontEnd) {
       const { title, internalName, version, author, licenses, icon } = optionFrontEnd;
       const newFrontEndFramework = { title: title as string, internalName, version, author, licenses, icon };
@@ -81,32 +81,32 @@ const SelectFrameworks = (props: Props) => {
 
   return (
     <>
-      {(selection.frontendFramework.internalName !== "" && (
-      <div className={rightsidebarStyles.sidebarItem}>
-        <div className={rightsidebarStyles.title}>{formatMessage(messages.frontendFramework)}</div>
-        <Dropdown
-          handleChange={(dropDrownItem: IDropDownOptionType) => {
-            handleFrontEndFrameworkChange(dropDrownItem);
-          }}
-          ariaLabel={formatMessage(messages.frontendFramework)}
-          options={frontendDropdownItems}
-          value={convertOptionToDropdownItem(selection.frontendFramework)}
-        />
-      </div>
-      ))}
-      {(selection.backendFramework.internalName !== "" && (
-      <div className={rightsidebarStyles.sidebarItem}>
-        <div className={rightsidebarStyles.title}>{formatMessage(messages.backendFramework)}</div>
-        <Dropdown
-          handleChange={(dropDrownItem: IDropDownOptionType) => {
-            handleBackEndFrameworkChange(dropDrownItem);
-          }}
-          ariaLabel={formatMessage(messages.backendFramework)}
-          options={backendDropdownItems}
-          value={convertOptionToDropdownItem(selection.backendFramework)}
-        />
-      </div>
-      ))}
+      {frontendOptions.length > 1 && selection.frontendFramework.internalName !== "" && (
+        <div className={rightsidebarStyles.sidebarItem}>
+          <div className={rightsidebarStyles.title}>{formatMessage(messages.frontendFramework)}</div>
+          <Dropdown
+            handleChange={(dropDrownItem: IDropDownOptionType) => {
+              handleFrontEndFrameworkChange(dropDrownItem);
+            }}
+            ariaLabel={formatMessage(messages.frontendFramework)}
+            options={frontendDropdownItems}
+            value={convertOptionToDropdownItem(selection.frontendFramework)}
+          />
+        </div>
+      )}
+      {backendOptions.length > 1 && selection.backendFramework.internalName !== "" && (
+        <div className={rightsidebarStyles.sidebarItem}>
+          <div className={rightsidebarStyles.title}>{formatMessage(messages.backendFramework)}</div>
+          <Dropdown
+            handleChange={(dropDrownItem: IDropDownOptionType) => {
+              handleBackEndFrameworkChange(dropDrownItem);
+            }}
+            ariaLabel={formatMessage(messages.backendFramework)}
+            options={backendDropdownItems}
+            value={convertOptionToDropdownItem(selection.backendFramework)}
+          />
+        </div>
+      )}
     </>
   );
 };

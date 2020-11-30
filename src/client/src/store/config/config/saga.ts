@@ -8,7 +8,7 @@ import {
 } from "../../../utils/extensionService/extensionService";
 import { IVersions } from "../../../types/version";
 import { AppState } from "../../combineReducers";
-import { getFrameworksOptions, getPagesOptions } from "../../../utils/cliTemplatesParser";
+import { getFrameworksOptions, getPagesOptions, getProjectTypesOptions } from "../../../utils/cliTemplatesParser";
 import { FRAMEWORK_TYPE } from "../../../utils/constants/constants";
 import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 import { TEMPLATES_TYPEKEYS } from "../../templates/templateTypeKeys";
@@ -16,7 +16,6 @@ import { AZURE_TYPEKEYS } from "../azure/typeKeys";
 import { USERSELECTION_TYPEKEYS } from "../../userSelection/typeKeys";
 import { getNavItems } from "../../../utils/routes/routes";
 import { IRoutesNavItems } from "../../../types/route";
-import { WIZARD_PROJECT_TYPE } from "../../../utils/constants/internalNames";
 import { ISelected } from "../../../types/selected";
 
 export function* loadLogin(vscode: any) {
@@ -64,31 +63,28 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
   yield takeEvery(CONFIG_TYPEKEYS.LOAD, callBack);
 
   function* callBack() {
-    const event: any = yield call(getProjectTypes, vscode);
-    //TODO: need to re work this to have multiple types of projects
-    const projectTypes = event.data.payload.projectTypes.map((projectType: any) => projectType.name);
-    const projectType = projectTypes[0];
+    const event: any = yield call(getProjectTypes, vscode);    
+    const message = event.data;
+    const optionProjectTypes = getProjectTypesOptions(message.payload.projectTypes);
+    const defaultProjectType = optionProjectTypes[0];
 
     yield put({
       type: TEMPLATES_TYPEKEYS.SET_PROJECT_TYPES,
-      payload: projectTypes,
+      payload: optionProjectTypes,
     });
 
     yield put({
       type: USERSELECTION_TYPEKEYS.SELECT_PROJECT_TYPE,
-      payload: projectType,
+      payload: defaultProjectType,
     });
 
-    //TODO: probably move and rename this 
-    const rnProjectTypeList = [WIZARD_PROJECT_TYPE.RN_TABBED_APP, WIZARD_PROJECT_TYPE.RN_DRAWER_APP];
-
-    if (projectType === WIZARD_PROJECT_TYPE.FULL_STACK_APP || rnProjectTypeList.indexOf(projectType) > -1) {
-      const event: any = yield call(getFrameworks, vscode, projectType);
+    if (defaultProjectType.internalName !== ""){
+      const event: any = yield call(getFrameworks, vscode, defaultProjectType.internalName);
       const message = event.data;
-      const optionFrontEndFrameworks = getFrameworksOptions(message.payload.frameworks, FRAMEWORK_TYPE.FRONTEND);
+      const optionFrontendFrameworks = getFrameworksOptions(message.payload.frameworks, FRAMEWORK_TYPE.FRONTEND);
 
-      if (optionFrontEndFrameworks.length > 0) {
-        const defaultOptionFront = optionFrontEndFrameworks[0];
+      if (optionFrontendFrameworks.length > 0) {
+        const defaultOptionFront = optionFrontendFrameworks[0];
         const defaultSelectedFrontEndFramework = {
           internalName: defaultOptionFront.internalName,
           title: defaultOptionFront.title as string,
@@ -100,7 +96,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
 
         yield put({
           type: TEMPLATES_TYPEKEYS.SET_FRONTEND_FRAMEWORKS,
-          payload: optionFrontEndFrameworks,
+          payload: optionFrontendFrameworks,
         });
 
         yield put({
@@ -108,9 +104,10 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
           payload: defaultSelectedFrontEndFramework,
         });
       }
-      const optionBackEndFrameworks = getFrameworksOptions(message.payload.frameworks, FRAMEWORK_TYPE.BACKEND);
-      if (optionBackEndFrameworks.length > 0) {
-        const defaultOptionBack = optionBackEndFrameworks[0];
+
+      const optionBackendFrameworks = getFrameworksOptions(message.payload.frameworks, FRAMEWORK_TYPE.BACKEND);
+      if (optionBackendFrameworks.length > 0) {
+        const defaultOptionBack = optionBackendFrameworks[0];
         const defaultSelectedBackEndFramework = {
           title: defaultOptionBack.title as string,
           internalName: defaultOptionBack.internalName,
@@ -122,7 +119,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
 
         yield put({
           type: TEMPLATES_TYPEKEYS.SET_BACKEND_FRAMEWORKS,
-          payload: optionBackEndFrameworks,
+          payload: optionBackendFrameworks,
         });
 
         yield put({
@@ -131,7 +128,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
         });
       }
     } else {
-      const event: any = yield call(getPages, vscode, projectType, "", "");
+      const event: any = yield call(getPages, vscode, defaultProjectType.internalName, "", "");
       const pageOptions = getPagesOptions(event.data.payload.pages);
       const selectedPages: ISelected[] = [];
       yield put({ type: TEMPLATES_TYPEKEYS.SET_PAGES_OPTIONS_SUCCESS, payload: pageOptions });
@@ -179,6 +176,12 @@ export function* resetWizardSaga() {
     yield put({
       type: USERSELECTION_TYPEKEYS.SELECT_BACKEND_FRAMEWORK,
       payload: backendFramework,
+    });
+
+    const projectType = yield select((state: AppState) => state.userSelection.projectType);
+    yield put({
+      type: USERSELECTION_TYPEKEYS.SELECT_PROJECT_TYPE,
+      payload: projectType,
     });
   }
 }

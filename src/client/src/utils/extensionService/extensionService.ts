@@ -1,6 +1,5 @@
 import { IVSCodeObject } from "../../types/vscode";
 import { PAYLOAD_MESSAGES_TEXT } from "../constants/constants";
-import { WIZARD_PROJECT_TYPE } from "../constants/internalNames";
 import { ILoggingPayload } from "../../types/logger";
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../constants/commands";
 import { IVersionPackage } from "../../types/option";
@@ -98,9 +97,9 @@ const getLatestVersion = (vscode: IVSCodeObject, checkVersionPackage: IVersionPa
 
 const getPages = (
   vscode: IVSCodeObject,
-  projectType: string,
-  frontEndInternalName: string,
-  backEndInternalName: string
+  projectTypeName: string,
+  frontendName: string,
+  backendName: string
 ) => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_PAGES,
@@ -108,27 +107,30 @@ const getPages = (
       module: EXTENSION_MODULES.CORETS,
       command: EXTENSION_COMMANDS.GET_PAGES,
       payload: {
-        projectType,
-        frontendFramework: frontEndInternalName,
-        backendFramework: backEndInternalName,
+        projectTypeName,
+        frontendFramework: frontendName,
+        backendFramework: backendName,
       },
     },
     vscode
   );
 };
 
-const getFeatures = (vscode: IVSCodeObject, frontEndInternalName: string, backEndInternalName: string)=>{
-  return postMessageAsync( EXTENSION_COMMANDS.GET_FEATURES, {
-    module: EXTENSION_MODULES.CORETS,
-    command: EXTENSION_COMMANDS.GET_FEATURES,
-    payload: {
-      //TODO: This needs to be changed/shared
-      projectType: WIZARD_PROJECT_TYPE.FULL_STACK_APP,
-      frontendFramework: frontEndInternalName,
-      backendFramework: backEndInternalName
-    }
-  }, vscode);
-}
+const getFeatures = (vscode: IVSCodeObject, projectTypeName: string, frontendName: string, backendName: string) => {
+  return postMessageAsync(
+    EXTENSION_COMMANDS.GET_FEATURES,
+    {
+      module: EXTENSION_MODULES.CORETS,
+      command: EXTENSION_COMMANDS.GET_FEATURES,
+      payload: {
+        projectType: projectTypeName,
+        frontendFramework: frontendName,
+        backendFramework: backendName,
+      },
+    },
+    vscode
+  );
+};
 
 const getOutputPathFromConfig = (vscode: IVSCodeObject) => {
   return postMessageAsync(

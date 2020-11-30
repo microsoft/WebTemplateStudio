@@ -4,7 +4,6 @@ import { connect, useDispatch } from "react-redux";
 
 import { IProps, IStateProps } from "./interfaces";
 import { mapStateToProps } from "./store";
-import styles from "./styles.module.css";
 import messages from "./messages";
 import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
@@ -15,6 +14,10 @@ import { inferItemName } from "../../../utils/infer/itemName";
 import { setPagesAction } from "../../../store/userSelection/pages/action";
 import { setDetailPageAction } from "../../../store/config/detailsPage/action";
 import Icon from "../../../components/Icon";
+
+import styles from "./styles.module.css";
+import cardStyles from "../../cardStyles.module.css";
+import pageStyles from "../../cardStyles.module.css";
 
 type Props = IProps & IStateProps & InjectedIntlProps;
 
@@ -69,8 +72,8 @@ const PageCard = (props: Props) => {
       tabIndex={0}
       onKeyDown={addPageIfEnterOrSpace}
       onClick={addPage}
-      className={classNames(styles.container, styles.boundingBox, {
-        [styles.selected]:
+      className={classNames(cardStyles.container, cardStyles.boundingBox, {
+        [cardStyles.selected]:
           selectedPages.filter((selectedPage) => selectedPage.defaultName === page.defaultName).length > 0,
       })}
       onFocus={() => setShowPlusIcon(true)}
@@ -79,11 +82,11 @@ const PageCard = (props: Props) => {
       onMouseOver={() => setShowPlusIcon(true)}
     >
       <div>
-        <div className={styles.gridLayoutCardHeader}>
+        <div className={cardStyles.gridLayoutCardHeader}>
           <div>
             <Icon name={page.defaultName} icon={page.icon} />
           </div>
-          <div className={classNames(styles.title)}>{page.defaultName}</div>
+          <div className={classNames(pageStyles.title)}>{page.defaultName}</div>
           {showPlusIcon && (
             <div className={classNames(styles.headerIconContainer)}>
               <Plus role="figure" />
@@ -91,7 +94,7 @@ const PageCard = (props: Props) => {
           )}
         </div>
         <div className={styles.description}>{page.body}</div>
-        <div className={styles.gridLayoutCardFooter}>
+        <div className={cardStyles.gridLayoutCardFooter}>
           <div>
             {!isModal && (
               <a onClick={showMoreInfo} onKeyDown={showDetailIfPressEnterKey} className={styles.link} tabIndex={0}>

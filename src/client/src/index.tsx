@@ -8,7 +8,7 @@ import App from "./App";
 import "focus-visible";
 import "./index.css";
 import reducers from "./store/combineReducers";
-import runSagaMiddelware from "./store/rootSaga";
+import runSagaMiddleware from "./store/rootSaga";
 import { IntlProvider } from "react-intl";
 import { AppContext, platform} from "./AppContext";
 import { ENVIRONMENT } from "./utils/constants/constants";
@@ -27,7 +27,7 @@ const vscode = process.env.NODE_ENV === ENVIRONMENT.PRODUCTION ?
   // @ts-ignore because function does not exist in dev environment
   acquireVsCodeApi(): mockVsCodeApi(platform);
 
-runSagaMiddelware(vscode, sagaMiddleware);
+runSagaMiddleware(vscode, sagaMiddleware);
 
 ReactDOM.render(
   <IntlProvider textComponent={React.Fragment}>

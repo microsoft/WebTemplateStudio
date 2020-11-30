@@ -3,31 +3,33 @@ import { WIZARD_PROJECT_TYPE } from "../../utils/constants/internalNames";
 
 import * as mockData from "./mockData/mockWebPlatformData";
 
-const getProjectTypes = (message: any) => {
+const getProjectTypes = (platform: string, message: any) => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
       command: EXTENSION_COMMANDS.GET_PROJECT_TYPES,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        projectTypes: mockData.projectTypes,
+        projectTypes: mockData.projectTypes(platform),
       },
     },
     "*"
   );
 };
 
-const getFrameworks = (message: any) => {
+const getFrameworks = (platform: string, message: any) => {
+  const projectTypes = mockData.projectTypes(platform) !== undefined ?
+  mockData.projectTypes(platform) :
+  [];
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
       command: EXTENSION_COMMANDS.GET_FRAMEWORKS,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        frameworks: mockData.frameworks(message.platform),
+        frameworks: mockData.frameworks(platform),
         isPreview: true,
-        //TODO: This should probably depend on a mocked shared var
-        projectType: WIZARD_PROJECT_TYPE.RN_TABBED_APP,
+        projectType: projectTypes !== undefined ? projectTypes[0].name: "",
       },
     },
     "*"
@@ -48,7 +50,7 @@ const getAllLicenses = (message: any) => {
   );
 };
 
-const getTemplateConfig = (message: any) => {
+const getTemplateConfig = (platform: string, message: any) => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
@@ -62,7 +64,7 @@ const getTemplateConfig = (message: any) => {
   );
 };
 
-const getPages = (message: any) => {
+const getPages = (platform: string, message: any) => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,

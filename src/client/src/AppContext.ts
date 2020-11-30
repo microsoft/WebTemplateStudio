@@ -12,7 +12,7 @@ interface IAppContext {
 //TODO: USE LAUNCH COMMAND HERE. When you choose that from Command Palette:
 //TODO: Web Template Studio: Create Web App
 //TODO: Web Template Studio: Create React Native App
-const devPlatform = PLATFORM.WEB;
-export const platform = (process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT) ? devPlatform : PLATFORM.WEB;
+const devPlatform = PLATFORM.REACTNATIVE;
+export const platform = process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT ? devPlatform : PLATFORM.REACTNATIVE;
 
-export const AppContext = React.createContext<IAppContext>({vscode:mockVsCodeApi(platform) as IVSCodeObject});
+export const AppContext = React.createContext<IAppContext>({ vscode: mockVsCodeApi(platform) as IVSCodeObject });

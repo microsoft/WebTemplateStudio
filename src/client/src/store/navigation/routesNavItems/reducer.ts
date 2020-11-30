@@ -1,8 +1,9 @@
+//TODO: Used in  src/store/combineReducers.ts
 import { IRoutesActionType } from "./models";
 import { TEMPLATES_TYPEKEYS } from "../../templates/templateTypeKeys";
 import { IRoutesNavItems } from "../../../types/route";
 
-const projectTypesOptions = (state: IRoutesNavItems[] = [], action: IRoutesActionType) => {
+const routeNavItemsOptions = (state: IRoutesNavItems[] = [], action: IRoutesActionType) => {
   switch (action.type) {
     case TEMPLATES_TYPEKEYS.SET_ROUTES:
       return action.payload;
@@ -11,4 +12,4 @@ const projectTypesOptions = (state: IRoutesNavItems[] = [], action: IRoutesActio
   }
 };
 
-export default projectTypesOptions;
+export default routeNavItemsOptions;

@@ -1,0 +1,24 @@
+
+.flexContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.title{
+  font-size: 1.8em;
+  margin-right: 1%;
+  margin-bottom: 1em;
+  margin-top: 0;
+  font-weight: lighter;
+}
+
+.description {
+  border-radius: 3px;
+  padding: 3px 10px 3px 10px;
+  margin-right: 5px;
+  margin-bottom: 30px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}

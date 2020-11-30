@@ -19,7 +19,7 @@ const mockVsCodeApi = (platform: string) => ({
     if (process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT || process.env.NODE_ENV === ENVIRONMENT.TEST) {
       switch (message.command) {
         case EXTENSION_COMMANDS.GET_FRAMEWORKS:
-          mockCoreTSModule.getFrameworks(message);
+          mockCoreTSModule.getFrameworks(platform, message);
           break;
         case EXTENSION_COMMANDS.GET_LATEST_VERSION:
           const latestVersion = "v3.1.5";
@@ -35,7 +35,7 @@ const mockVsCodeApi = (platform: string) => ({
           );
           break;
         case EXTENSION_COMMANDS.GET_PAGES:
-          mockCoreTSModule.getPages(message);
+          mockCoreTSModule.getPages(platform, message);
           break;
         case EXTENSION_COMMANDS.GET_FEATURES:
           mockCoreTSModule.getFeatures(message);
@@ -89,10 +89,10 @@ const mockVsCodeApi = (platform: string) => ({
           );
           break;
         case EXTENSION_COMMANDS.GET_TEMPLATE_INFO:
-          mockCoreTSModule.getTemplateConfig(message);
+          mockCoreTSModule.getTemplateConfig(platform, message);
           break;
         case EXTENSION_COMMANDS.GET_PROJECT_TYPES:
-          mockCoreTSModule.getProjectTypes(message);
+          mockCoreTSModule.getProjectTypes(platform, message);
           break;
         case EXTENSION_COMMANDS.GET_ALL_LICENSES:
           mockCoreTSModule.getAllLicenses(message);

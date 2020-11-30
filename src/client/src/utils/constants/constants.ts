@@ -9,15 +9,24 @@ const WEB_TEMPLATE_STUDIO_LINKS = {
   ISSUES: "https://github.com/Microsoft/WebTemplateStudio/issues",
 };
 
-const ENVIRONMENT ={
-   PRODUCTION: "production",
-   DEVELOPMENT: "development",
-   TEST: "test",
-}
+const ENVIRONMENT = {
+  PRODUCTION: "production",
+  DEVELOPMENT: "development",
+  TEST: "test",
+};
 
 enum PLATFORM {
   WEB = "Web",
-  REACTNATIVE = "RN"
+  REACTNATIVE = "RN",
+}
+
+enum WEB_PROJECT_TYPE {
+  FULL_STACK_APP = "FullStackWebApp",
+}
+
+enum RN_PROJECT_TYPE {
+  TABBED = "Tabbed",
+  DRAWER = "Drawer",
 }
 
 const INTL_MESSAGES = defineMessages({
@@ -109,6 +118,8 @@ export {
   PAYLOAD_MESSAGES_TEXT,
   TELEMETRY,
   PLATFORM,
+  WEB_PROJECT_TYPE,
+  RN_PROJECT_TYPE,
   ROUTE,
-  REQUIREMENTS_DATA
+  REQUIREMENTS_DATA,
 };
