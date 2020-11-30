@@ -21,12 +21,4 @@ const WIZARD_CONTENT_FEATURES = {
   COSMOS_DB_SQL: "wts.Feature.Azure.Cosmos.SQL",
 };
 
-const WIZARD_CONTENT_FEATURES = {
-  APP_SERVICE: "wts.Feature.Azure.AppService",
-  AZURE: "wts.Feature.Azure",
-  COSMOS_DB: "wts.Feature.Azure.Cosmos",
-  COSMOS_DB_MONGO: "wts.Feature.Azure.Cosmos.Mongo",
-  COSMOS_DB_SQL: "wts.Feature.Azure.Cosmos.SQL",
-};
-
 export { WIZARD_CONTENT_FEATURES, PAGES };

@@ -1,25 +1,23 @@
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/commands";
-import { WIZARD_PROJECT_TYPE } from "../../utils/constants/internalNames";
-
 import * as mockData from "./mockData/mockWebPlatformData";
 
-const getProjectTypes = (platform: string, message: any) => {
+const getProjectTypes = (message: any) => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
       command: EXTENSION_COMMANDS.GET_PROJECT_TYPES,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        projectTypes: mockData.projectTypes(platform),
+        projectTypes: mockData.projectTypes(message.platform),
       },
     },
     "*"
   );
 };
 
-const getFrameworks = (platform: string, message: any) => {
-  const projectTypes = mockData.projectTypes(platform) !== undefined ?
-  mockData.projectTypes(platform) :
+const getFrameworks = (message: any) => {
+  const projectTypes = mockData.projectTypes(message.platform) !== undefined ?
+  mockData.projectTypes(message.platform) :
   [];
   window.postMessage(
     {
@@ -27,7 +25,7 @@ const getFrameworks = (platform: string, message: any) => {
       command: EXTENSION_COMMANDS.GET_FRAMEWORKS,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        frameworks: mockData.frameworks(platform),
+        frameworks: mockData.frameworks(message.platform),
         isPreview: true,
         projectType: projectTypes !== undefined ? projectTypes[0].name: "",
       },
@@ -50,7 +48,7 @@ const getAllLicenses = (message: any) => {
   );
 };
 
-const getTemplateConfig = (platform: string, message: any) => {
+const getTemplateConfig = (message: any) => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
@@ -64,7 +62,7 @@ const getTemplateConfig = (platform: string, message: any) => {
   );
 };
 
-const getPages = (platform: string, message: any) => {
+const getPages = (message: any) => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
