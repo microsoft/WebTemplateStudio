@@ -17,7 +17,7 @@ const ENVIRONMENT ={
 
 enum PLATFORM {
   WEB = "Web",
-  RN = "ReactNative"
+  REACTNATIVE = "RN"
 }
 
 const INTL_MESSAGES = defineMessages({

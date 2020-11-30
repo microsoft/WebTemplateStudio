@@ -17,14 +17,14 @@ const getProjectTypes = (message: any) => {
   );
 };
 
-const getFrameworks = (platform: string, message: any) => {
+const getFrameworks = (message: any) => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
       command: EXTENSION_COMMANDS.GET_FRAMEWORKS,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        frameworks: mockData.frameworks(platform),
+        frameworks: mockData.frameworks(message.platform),
         isPreview: true,
         //TODO: This should probably depend on a mocked shared var
         projectType: WIZARD_PROJECT_TYPE.RN_TABBED_APP,
@@ -48,28 +48,28 @@ const getAllLicenses = (message: any) => {
   );
 };
 
-const getTemplateConfig = (platform: string, message: any) => {
+const getTemplateConfig = (message: any) => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
       command: EXTENSION_COMMANDS.GET_TEMPLATE_INFO,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        ...mockData.templatesInfo(platform),
+        ...mockData.templatesInfo(message.platform),
       },
     },
     "*"
   );
 };
 
-const getPages = (platform: string, message: any) => {
+const getPages = (message: any) => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
       command: EXTENSION_COMMANDS.GET_PAGES,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        pages: mockData.pages(platform, message.payload.frontendFramework),
+        pages: mockData.pages(message.platform, message.payload.frontendFramework),
       },
     },
     "*"

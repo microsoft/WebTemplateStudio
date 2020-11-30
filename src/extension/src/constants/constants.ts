@@ -100,7 +100,7 @@ export const ENVIRONMENT ={
 
 export enum PLATFORM {
   WEB = "Web",
-  RN = "ReactNative"
+  REACTNATIVE = "RN"
 }
 
 export enum OS {
