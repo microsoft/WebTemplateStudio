@@ -16,6 +16,12 @@
   border: none;
 }
 
+.innerContent{
+  display: flex;
+  flex-direction: column;
+  height: inherit;
+}
+
 .boundingBox {
   width: 230px;
   height: 200px;
@@ -43,6 +49,7 @@
 .description {
   font-size: 1.2rem;
   line-height: 1.5;
+  flex: 1; /* fill remaining space */
 }
 /*
   margin-top: 1rem;
