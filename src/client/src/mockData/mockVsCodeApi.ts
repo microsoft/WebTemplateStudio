@@ -1,9 +1,9 @@
-import { ENVIRONMENT } from "../utils/constants/constants";
-
 import * as mockAzureModule from "./extensionModules/mockAzureModule";
 import * as mockCoreTSModule from "./extensionModules/mockCoreTSModule";
 import * as mockLoggerModule from "./extensionModules/mockLoggerModule";
 import * as mockGenerationModule from "./extensionModules/mockGenerationModule";
+
+import { ENVIRONMENT } from "../utils/constants/constants";
 import { EXTENSION_COMMANDS } from "../utils/constants/commands";
 
 /**
@@ -15,6 +15,7 @@ import { EXTENSION_COMMANDS } from "../utils/constants/commands";
  */
 const mockVsCodeApi = (platform: string) => ({
   postMessage: (message: any) => {
+    message.platform = platform;
     if (process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT || process.env.NODE_ENV === ENVIRONMENT.TEST) {
       switch (message.command) {
         case EXTENSION_COMMANDS.GET_FRAMEWORKS:

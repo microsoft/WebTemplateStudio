@@ -1,4 +1,5 @@
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/commands";
+import { WIZARD_PROJECT_TYPE } from "../../utils/constants/internalNames";
 
 import * as mockData from "./mockData/mockWebPlatformData";
 
@@ -56,7 +57,7 @@ const getTemplateConfig = (platform: string, message: any) => {
       command: EXTENSION_COMMANDS.GET_TEMPLATE_INFO,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        ...mockData.templatesInfo(platform),
+        ...mockData.templatesInfo(message.platform),
       },
     },
     "*"
@@ -70,7 +71,7 @@ const getPages = (platform: string, message: any) => {
       command: EXTENSION_COMMANDS.GET_PAGES,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        pages: mockData.pages(platform, message.payload.frontendFramework),
+        pages: mockData.pages(message.platform, message.payload.frontendFramework),
       },
     },
     "*"

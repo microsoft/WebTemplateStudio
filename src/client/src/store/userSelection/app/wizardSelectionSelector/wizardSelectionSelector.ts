@@ -40,11 +40,10 @@ const isEnableNextPageSelector = (state: AppState): boolean => {
 
   if (
     selectedRoute === ROUTE.SELECT_FRAMEWORKS &&
-    (state.templates.frontendOptions &&
-    state.userSelection.frontendFramework.title !== "")
-    ||
-    (state.templates.backendOptions &&
-    state.userSelection.backendFramework.title !== "")
+    (state.templates.frontendOptions.length === 0 ||
+      (state.templates.frontendOptions.length > 0 && state.userSelection.frontendFramework.title !== "")) &&
+    (state.templates.backendOptions.length === 0 ||
+      (state.templates.backendOptions.length > 0 && state.userSelection.backendFramework.title !== ""))
   ) {
     valid = true;
   }

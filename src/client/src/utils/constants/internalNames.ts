@@ -11,6 +11,14 @@ const PAGES = {
   VUE_CONTENT_GRID: "wts.Page.Vue.Grid",
   VUE_MASTER_DETAIL: "wts.Page.Vue.MasterDetail",
   VUE_LIST: "wts.Page.Vue.List",
+}
+
+const WIZARD_CONTENT_FEATURES = {
+  APP_SERVICE: "wts.Feature.Azure.AppService",
+  AZURE: "wts.Feature.Azure",
+  COSMOS_DB: "wts.Feature.Azure.Cosmos",
+  COSMOS_DB_MONGO: "wts.Feature.Azure.Cosmos.Mongo",
+  COSMOS_DB_SQL: "wts.Feature.Azure.Cosmos.SQL",
 };
 
 const WIZARD_CONTENT_FEATURES = {

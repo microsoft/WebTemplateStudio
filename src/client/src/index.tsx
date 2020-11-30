@@ -10,7 +10,7 @@ import "./index.css";
 import reducers from "./store/combineReducers";
 import runSagaMiddleware from "./store/rootSaga";
 import { IntlProvider } from "react-intl";
-import { AppContext, platform } from "./AppContext";
+import { AppContext, platform} from "./AppContext";
 import { ENVIRONMENT } from "./utils/constants/constants";
 import mockVsCodeApi from "./mockData/mockVsCodeApi";
 
@@ -22,12 +22,10 @@ const store = createStoreWithMiddleware(
   (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-const vscode =
-  process.env.NODE_ENV === ENVIRONMENT.PRODUCTION
-    ? // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore because function does not exist in dev environment
-      acquireVsCodeApi()
-    : mockVsCodeApi(platform);
+const vscode = process.env.NODE_ENV === ENVIRONMENT.PRODUCTION ?
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore because function does not exist in dev environment
+  acquireVsCodeApi(): mockVsCodeApi(platform);
 
 runSagaMiddleware(vscode, sagaMiddleware);
 

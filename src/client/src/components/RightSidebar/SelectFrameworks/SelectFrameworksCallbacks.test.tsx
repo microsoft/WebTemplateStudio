@@ -9,10 +9,10 @@ import {
   setFrontendFramework,
   setBackendFramework,
 } from "../../../mockData/mockStore";
-import { render, RenderResult } from "@testing-library/react";
-import { IntlProvider } from "react-intl";
+import { RenderResult } from "@testing-library/react";
 import { AppState } from "../../../store/combineReducers";
 import { IDropdownProps } from "../../../components/Dropdown";
+import { renderWithStore } from "../../../testUtils";
 jest.mock("../../../components/Dropdown", () => {
   return {
     __esModule: true,
@@ -41,13 +41,8 @@ describe("SelectFrameworks", () => {
       setFrontendFramework(initialState, "Node");
 
       store = mockStore(initialState);
-      wrapper = render(
-        <IntlProvider locale="en">
-          <ReactRedux.Provider store={store}>
-            <SelectFrameworks />
-          </ReactRedux.Provider>
-        </IntlProvider>
-      );
+      wrapper = renderWithStore(<SelectFrameworks />, store);
+
     });
 
     it("renders without crashing", () => {

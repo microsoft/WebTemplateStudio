@@ -1,8 +1,7 @@
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import SelectFrameworks from "./index";
-import messages from "./messages";
-import * as ReactRedux from "react-redux";
+import { RenderResult } from "@testing-library/react";
+
 import {
   getInitialState,
   addFrontEndFrameworksOptions,
@@ -10,9 +9,11 @@ import {
   setFrontendFramework,
   setBackendFramework,
 } from "../../../mockData/mockStore";
-import { render, RenderResult } from "@testing-library/react";
-import { IntlProvider } from "react-intl";
+import SelectFrameworks from "./index";
+import { renderWithStore } from "../../../testUtils";
 import { AppState } from "../../../store/combineReducers";
+
+import messages from "./messages";
 
 describe("SelectFrameworks", () => {
   let wrapper: RenderResult;
@@ -28,13 +29,7 @@ describe("SelectFrameworks", () => {
       setFrontendFramework(initialState, "Node");
 
       store = mockStore(initialState);
-      wrapper = render(
-        <IntlProvider locale="en">
-          <ReactRedux.Provider store={store}>
-            <SelectFrameworks />
-          </ReactRedux.Provider>
-        </IntlProvider>
-      );
+      wrapper = renderWithStore(<SelectFrameworks />, store);
     });
 
     it("renders without crashing", () => {
@@ -56,13 +51,7 @@ describe("SelectFrameworks", () => {
       setFrontendFramework(initialState,"Node");
 
       store = mockStore(initialState);
-      wrapper = render(
-        <IntlProvider locale="en">
-          <ReactRedux.Provider store={store}>
-            <SelectFrameworks/>
-          </ReactRedux.Provider>
-        </IntlProvider>
-      );
+      wrapper = renderWithStore(<SelectFrameworks />, store);
     });
 
     it("renders without crashing", () => {
