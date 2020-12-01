@@ -34,7 +34,7 @@ export default class GenerationService {
   public async generate(generationData: IGenerationData) {
     const generationPath = await this.templatesGenerator.generate(generationData);
 
-    if (generationPath && generationPath ==="-") {
+    if (generationPath) {
       generationData.path = generationPath;
       await this.generateServices(generationData);
     } else {

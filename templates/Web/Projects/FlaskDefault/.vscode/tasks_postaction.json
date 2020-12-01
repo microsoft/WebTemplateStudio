@@ -21,7 +21,7 @@
       //{[{
       "type": "shell",
       "command": "python",
-      "args": ["backend/server.py"]
+      "args": ["backend/src/server.py"]
       //}]}
     },
   ]

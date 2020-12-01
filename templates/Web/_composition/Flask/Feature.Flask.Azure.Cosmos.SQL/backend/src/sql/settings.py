@@ -4,7 +4,8 @@ import dotenv
 
 # Create .env file path.
 dotenv_path = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.realpath(__file__))), ".env"
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))),
+    ".env",
 )
 
 # Load file from the above created path.
