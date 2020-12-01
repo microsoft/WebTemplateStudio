@@ -3,6 +3,6 @@
   //{[{
   "proxy": "http://localhost:3001",
   //}]}
-  "browserslist": [
-  ]
+  "scripts": {
+  }
 }
