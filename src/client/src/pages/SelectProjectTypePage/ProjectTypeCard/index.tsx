@@ -1,18 +1,19 @@
-import classNames from "classnames";
 import * as React from "react";
 import { connect, useDispatch } from "react-redux";
 
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ISelectProps, IStateProps } from "./interfaces";
+
 import { setSelectedProjectTypeAction } from "../../../store/userSelection/projectType/action";
 import { setDetailPageAction } from "../../../store/config/detailsPage/action";
+import { mapStateToProps } from "./store";
+
+import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
 
 import { ReactComponent as Check } from "../../../assets/check.svg";
 import Icon from "../../../components/Icon";
-import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
-import { IOption } from "../../../types/option";
-import { mapStateToProps } from "./store";
 
+import classNames from "classnames";
 import messages from "./messages";
 import cardStyles from "../../cardStyles.module.css";
 import pageStyles from "../../cardStyles.module.css";
@@ -41,21 +42,17 @@ const ProjectTypeCard = (props: Props) => {
     }
   };
 
-  // const setDetailPage = (detailPageInfo: IOption) => {
-  //   dispatch(setDetailPageAction(detailPageInfo, false, ROUTE.SELECT_FRAMEWORKS));
-  // };
+  const showMoreInfo = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    event.stopPropagation();
+    dispatch(setDetailPageAction(projectType, false, ROUTE.ADD_PAGES));
+  };
 
-  // const showDetailIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
-  //   event.stopPropagation();
-  //   if (event.key === KEY_EVENTS.ENTER) {
-  //     setDetailPage(projectType);
-  //   }
-  // };
-
-  // const detailsClickWrapper = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-  //   event.stopPropagation();
-  //   setDetailPage(projectType);
-  // };
+  const showDetailIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
+    event.stopPropagation();
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
+      dispatch(setDetailPageAction(projectType, false, ROUTE.ADD_PAGES));
+    }
+  };
 
   return (
     <div
@@ -75,7 +72,7 @@ const ProjectTypeCard = (props: Props) => {
         <div className={pageStyles.description}>{projectType.body}</div>
         <div className={cardStyles.gridLayoutCardFooter}>
           <div>
-            <a className={cardStyles.link} tabIndex={0}>
+            <a onClick={showMoreInfo} onKeyDown={showDetailIfPressEnterKey} className={cardStyles.link} tabIndex={0}>
               {intl.formatMessage(messages.Preview)}
             </a>
           </div>

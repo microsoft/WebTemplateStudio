@@ -38,7 +38,7 @@ export const getProjectTypesOptions = (json: any[]): IOption[] => {
     body: val.summary,
     order: val.order,
     licenses: val.licenses,
-    longDescription: val.longDescription,
+    longDescription: val.summary,
     selected: val.selected,
     icon: val.icon,
   }));

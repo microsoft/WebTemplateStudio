@@ -1,24 +1,28 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { AppState } from "../../store/combineReducers";
 
-import ProjectTypeCard from "./ProjectTypeCard";
-
-import messages from "./messages";
+import { mapStateToProps } from "./store";
+import { IStoreProps } from "./interfaces";
 import pageStyles from "../pageStyles.module.css";
 
-type Props = InjectedIntlProps;
+import ProjectTypeCard from "./ProjectTypeCard";
+import messages from "./messages";
 
-const SelectProjectTypePage = ({ intl }: Props) => {
-  const projectTypesOptions = useSelector((state: AppState) => state.templates.projectTypesOptions);
+type Props = IStoreProps & InjectedIntlProps;
+
+const SelectProjectTypePage = (props: Props) => {
+  const { options, intl } = props;
+  //TOOD: THIS options VS SELECTOR
+  // const projectTypesOptions = useSelector((state: AppState) => state.templates.projectTypesOptions);
+  // {projectTypesOptions.map((projectType, index) => {
 
   return (
     <div>
       <h1 className={pageStyles.title}>{intl.formatMessage(messages.header)}</h1>
 
       <div className={pageStyles.flexContainer}>
-        {projectTypesOptions.map((projectType, index) => {
+        {options.map((projectType, index) => {
           return <ProjectTypeCard key={index} projectType={projectType} />;
         })}
       </div>
@@ -26,4 +30,4 @@ const SelectProjectTypePage = ({ intl }: Props) => {
   );
 };
 
-export default injectIntl(SelectProjectTypePage);
+export default connect(mapStateToProps)(injectIntl(SelectProjectTypePage));

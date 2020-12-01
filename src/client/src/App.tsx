@@ -81,17 +81,17 @@ const App = (props: Props) => {
             <HomeSplashSVG className={classnames(appStyles.splash, appStyles.homeSplash)} />
           ) : null}
 
-          {selectedRoute === ROUTE.SELECT_PROJECT_TYPE && <SelectProjectTypePage />}
 
           {selectedRoute === ROUTE.REVIEW_AND_GENERATE ? (
             <SummarySplashSVG className={classnames(appStyles.splash, appStyles.summarySplash)} />
-          ) : null}
+            ) : null}
 
           {isDetailPageVisible && <PageDetails />}
+          {!isDetailPageVisible && selectedRoute === ROUTE.SELECT_PROJECT_TYPE && <SelectProjectTypePage />}
+          {!isDetailPageVisible && selectedRoute === ROUTE.ADD_PAGES && <PageAddPages isModal={false} />}
+          {!isDetailPageVisible && selectedRoute === ROUTE.SELECT_FRAMEWORKS && <PageSelectFrameworks />}
           {!isDetailPageVisible && selectedRoute === ROUTE.ADD_SERVICES && <PageAddServices />}
           {!isDetailPageVisible && selectedRoute === ROUTE.REVIEW_AND_GENERATE && <PageReviewAndGenerate />}
-          {!isDetailPageVisible && selectedRoute === ROUTE.SELECT_FRAMEWORKS && <PageSelectFrameworks />}
-          {!isDetailPageVisible && selectedRoute === ROUTE.ADD_PAGES && <PageAddPages isModal={false} />}
           {!isDetailPageVisible && selectedRoute === ROUTE.NEW_PROJECT && <PageNewProject />}
         </main>
         <RightSidebar />
