@@ -21,7 +21,7 @@ def add_list_item():
     list_item = {"id": str(uuid.uuid4()), "text": data["text"]}
     sample_data.sample_list.insert(0, list_item)
     json_response = flask.jsonify(list_item)
-    return flask.make_response(json_response, HTTP_STATUS_201_CREATED)
+    return flask.make_response(json_response, http.HTTPStatus.CREATED)
 
 
 @app.route(ENDPOINT_LIST + "/<string:item_id>", methods=["DELETE"])
@@ -34,7 +34,7 @@ def delete_list_item(item_id):
         json_response = flask.jsonify(
             {"error": "Could not find an item with the given id"}
         )
-        return flask.make_response(json_response, HTTP_STATUS_404_NOT_FOUND)
+        return flask.make_response(json_response, http.HTTPStatus.NOT_FOUND)
     sample_data.sample_list.remove(item_to_remove)
     return flask.jsonify({"id": item_id, "text": "This comment was deleted"})
 

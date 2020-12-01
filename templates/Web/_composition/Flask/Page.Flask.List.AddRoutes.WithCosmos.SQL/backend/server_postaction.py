@@ -14,7 +14,7 @@ def get_list():
 @app.route(ENDPOINT_LIST, methods=["POST"])
 def add_list_item():
     json_response = flask.jsonify(sql.service.create())
-    return flask.make_response(json_response, HTTP_STATUS_201_CREATED)
+    return flask.make_response(json_response, http.HTTPStatus.CREATED)
 
 
 @app.route(ENDPOINT_LIST + "/<item_id>", methods=["DELETE"])
@@ -24,6 +24,6 @@ def delete_list_item(item_id):
         return removed_item
     except ValueError as ex:
         err_response = flask.jsonify({"error": str(ex)})
-        return flask.make_response(err_response, HTTP_STATUS_404_NOT_FOUND)
+        return flask.make_response(err_response, http.HTTPStatus.NOT_FOUND)
 
 //}]}

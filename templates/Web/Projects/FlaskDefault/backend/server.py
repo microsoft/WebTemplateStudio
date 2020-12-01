@@ -1,10 +1,9 @@
+import http
 import os
 
 import flask
 
 PORT = os.environ.get("PORT", 3001)
-
-HTTP_STATUS_404_NOT_FOUND = 404
 
 app = flask.Flask(__name__, static_folder="build")
 
@@ -20,10 +19,10 @@ def catch_all(path):
 
 
 # Error Handler
-@app.errorhandler(HTTP_STATUS_404_NOT_FOUND)
+@app.errorhandler(http.HTTPStatus.NOT_FOUND.value)
 def page_not_found():
     json_response = flask.jsonify({"error": "Page not found"})
-    return flask.make_response(json_response, HTTP_STATUS_404_NOT_FOUND)
+    return flask.make_response(json_response, http.HTTPStatus.NOT_FOUND)
 
 
 if __name__ == "__main__":
