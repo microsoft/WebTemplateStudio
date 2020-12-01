@@ -20,15 +20,6 @@ enum PLATFORM {
   REACTNATIVE = "RN",
 }
 
-enum WEB_PROJECT_TYPE {
-  FULL_STACK_APP = "FullStackWebApp",
-}
-
-enum RN_PROJECT_TYPE {
-  TABBED = "Tabbed",
-  DRAWER = "Drawer",
-}
-
 const INTL_MESSAGES = defineMessages({
   EMPTY_FIELD: {
     id: "constants.emptyField",
@@ -118,8 +109,6 @@ export {
   PAYLOAD_MESSAGES_TEXT,
   TELEMETRY,
   PLATFORM,
-  WEB_PROJECT_TYPE,
-  RN_PROJECT_TYPE,
   ROUTE,
   REQUIREMENTS_DATA,
 };

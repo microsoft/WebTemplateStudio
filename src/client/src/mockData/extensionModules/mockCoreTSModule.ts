@@ -1,6 +1,19 @@
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/commands";
 
-import * as mockData from "./mockData/mockWebPlatformData";
+// const mockData = import("./mockData/mockWebPlatformData");
+import * as mockWebData from "./mockData/mockWebPlatformData";
+import * as mockReactNativeData from "./mockData/mockReactNativePlatformData";
+
+import { PLATFORM } from "../../utils/constants/constants";
+
+const platform = PLATFORM.REACTNATIVE;
+
+let mockData = mockWebData;
+switch(platform){
+  case PLATFORM.REACTNATIVE:
+    mockData = mockReactNativeData;
+    break;
+}
 
 const getProjectTypes = (message: any) => {
   window.postMessage(
@@ -9,7 +22,8 @@ const getProjectTypes = (message: any) => {
       command: EXTENSION_COMMANDS.GET_PROJECT_TYPES,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        projectTypes: mockData.projectTypes(message.platform),
+        projectTypes: mockData.projectTypes,
+        platform: platform,
       },
     },
     "*"
@@ -17,8 +31,8 @@ const getProjectTypes = (message: any) => {
 };
 
 const getFrameworks = (message: any) => {
-  const projectTypes = mockData.projectTypes(message.platform) !== undefined ?
-  mockData.projectTypes(message.platform) :
+  const projectTypes = mockData.projectTypes !== undefined ?
+  mockData.projectTypes :
   [];
   window.postMessage(
     {
@@ -26,7 +40,7 @@ const getFrameworks = (message: any) => {
       command: EXTENSION_COMMANDS.GET_FRAMEWORKS,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        frameworks: mockData.frameworks(message.platform),
+        frameworks: mockData.frameworks,
         isPreview: true,
         projectType: projectTypes !== undefined ? projectTypes[0].name: "",
       },
@@ -56,7 +70,7 @@ const getTemplateConfig = (message: any) => {
       command: EXTENSION_COMMANDS.GET_TEMPLATE_INFO,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        ...mockData.templatesInfo(message.platform),
+        ...mockData.templatesInfo,
       },
     },
     "*"
@@ -70,7 +84,7 @@ const getPages = (message: any) => {
       command: EXTENSION_COMMANDS.GET_PAGES,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        pages: mockData.pages(message.platform, message.payload.frontendFramework),
+        pages: mockData.pages(message.payload.frontendFramework),
       },
     },
     "*"
