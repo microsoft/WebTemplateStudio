@@ -27,13 +27,14 @@ const ProjectTypeCard = (props: Props) => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    setSelected(projectTypeSelect === projectType);
+    setSelected(projectTypeSelect.internalName === projectType.internalName);
   }, [projectTypeSelect]);
 
   const selectCard = () => {
     dispatch(setSelectedProjectTypeAction(projectType));
   };
 
+  //TODO: UPDATE PAGES if they may change by project type
   const selectCardIfEnterOrSpace = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const isSelectableCard = event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE;
     if (isSelectableCard) {

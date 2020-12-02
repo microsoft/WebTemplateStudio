@@ -3,7 +3,13 @@ import { FormattedMessage } from "react-intl";
 import { AppState } from "../store/combineReducers";
 import { ModalType } from "../store/navigation/typeKeys";
 import { getNavItems } from "../utils/routes/routes";
-import { backendImage, frontendImage, pageImage, serviceImage } from "./extensionModules/mockData/mockSvgData";
+import {
+  backendImage,
+  frontendImage,
+  pageImage,
+  projectTypeImage,
+  serviceImage,
+} from "./extensionModules/mockData/mockSvgData";
 
 export const getISelected = () => {
   const selected: ISelected = {
@@ -265,6 +271,22 @@ const getSubscriptionsSelector = (): Array<Subscription> => {
   return subscriptions;
 };
 
+export const addProjectTypeOptions = (store: AppState) => {
+  store.templates.projectTypesOptions = [
+    {
+      internalName: "Tabbed",
+      title: "Tabbed",
+      body: "Tabbed",
+      longDescription: "Tabbed",
+      order: 1,
+      icon: projectTypeImage,
+      licenses: [
+        "[React](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)",
+      ],
+    },
+  ];
+};
+
 export const addFrontEndFrameworksOptions = (store: AppState) => {
   store.templates.frontendOptions = [
     {
@@ -446,6 +468,10 @@ export const setBackendFramework = (store: AppState, internalName: string) => {
 
 export const setFrontendFramework = (store: AppState, internalName: string) => {
   store.userSelection.frontendFramework.internalName = internalName;
+};
+
+export const setSelectedProjectTypeAction = (store: AppState, internalName: string) => {
+  store.userSelection.projectType.internalName = internalName;
 };
 
 export const setOpenModal = (store: AppState, modalType: ModalType) => {
