@@ -92,8 +92,15 @@ export enum AzureResourceType {
   AppServicePlan = "app-service-plan",
 }
 
-export enum Platform {
-  Web = "Web",
+export const ENVIRONMENT ={
+  PRODUCTION: "production",
+  DEVELOPMENT: "development",
+  TEST: "test",
+}
+
+export enum PLATFORM {
+  WEB = "Web",
+  REACTNATIVE = "RN"
 }
 
 export enum OS {

@@ -1,11 +1,12 @@
 import { CoreTemplateStudio } from "../coreTemplateStudio";
-import { Platform } from "../constants/constants";
+import { PLATFORM } from "../constants/constants";
 import { CLI_SETTINGS } from "../constants/cli";
 import retry from "p-retry";
 
 let instance: CoreTemplateStudio;
 let backends: string[] = [];
 let frontends: string[] = [];
+//TODO: This will need extending when React Native is complete
 const projType = "FullStackWebApp";
 let prevPromise: Promise<any> = Promise.resolve(null);
 
@@ -13,7 +14,7 @@ let syncTemplates = async () => {
   try {
     console.log(`Sync templates`);
     const path = CLI_SETTINGS.DEVELOPMENT_PATH_TO_TEMPLATES;
-    const payload = { path, platform: Platform.Web };
+    const payload = { path, platform: PLATFORM.WEB };
     const syncPayload = { payload, liveMessageHandler: (value: any) => value };
 
     await retry(() => instance.sync(syncPayload), {

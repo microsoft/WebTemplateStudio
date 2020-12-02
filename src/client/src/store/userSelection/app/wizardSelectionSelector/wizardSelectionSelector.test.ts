@@ -1,6 +1,6 @@
 import configureMockStore from "redux-mock-store";
 import { isEnableNextPageSelector } from "./wizardSelectionSelector";
-import { ROUTE } from "../../../../utils/constants/routes";
+import { ROUTE } from "../../../../utils/constants/constants";
 import { getInitialState } from "../../../../mockData/mockStore";
 import { AppState } from "../../../combineReducers";
 import { ISelected } from "../../../../types/selected";
@@ -11,6 +11,20 @@ describe("wizardSelectionSelector", () => {
     mock = getInitialState();
   });
 
+  const frameworks = [
+    {
+      internalName: "Framework 1",
+      body: "",
+      icon: "",
+      title: "Framework 1",
+    },
+    {
+      internalName: "Framework 2",
+      body: "",
+      icon: "",
+      title: "Framework 2",
+    },
+  ];
   describe("on home", () => {
     it("isEnableNextPage valid", () => {
       const mockStore = configureMockStore<AppState>();
@@ -53,43 +67,100 @@ describe("wizardSelectionSelector", () => {
   });
 
   describe("on select framework", () => {
-    it("isEnableNextPage valid", () => {
-      const mockStore = configureMockStore<AppState>();
-      //mock.navigation.routes.selected = ROUTE.SELECT_FRAMEWORKS;
-      mock.navigation.routesNavItems.forEach((route) => {
-        route.isSelected = false;
+    describe("with backend and frontend frameworks: both are mandatory", () => {
+      beforeEach(() => {
+        mock.templates.frontendOptions = frameworks;
+        mock.templates.backendOptions = frameworks;
       });
-      mock.navigation.routesNavItems.filter((route) => route.route === ROUTE.SELECT_FRAMEWORKS)[0].isSelected = true;
-      mock.userSelection.frontendFramework.title = "sfsdf";
-      mock.userSelection.backendFramework.title = "sfsdf";
-      const store = mockStore(mock);
-      expect(isEnableNextPageSelector(store.getState())).toBeTruthy();
+
+      it("isEnableNextPage valid", () => {
+        const mockStore = configureMockStore<AppState>();
+        //mock.navigation.routes.selected = ROUTE.SELECT_FRAMEWORKS;
+        mock.navigation.routesNavItems.forEach((route) => {
+          route.isSelected = false;
+        });
+        mock.navigation.routesNavItems.filter((route) => route.route === ROUTE.SELECT_FRAMEWORKS)[0].isSelected = true;
+        mock.userSelection.frontendFramework.title = "sfsdf";
+        mock.userSelection.backendFramework.title = "sfsdf";
+        const store = mockStore(mock);
+        expect(isEnableNextPageSelector(store.getState())).toBeTruthy();
+      });
+
+      it("isEnableNextPage invalid (frontendFramework unselected)", () => {
+        const mockStore = configureMockStore<AppState>();
+        //mock.navigation.routes.selected = ROUTE.SELECT_FRAMEWORKS;
+        mock.navigation.routesNavItems.forEach((route) => {
+          route.isSelected = false;
+        });
+        mock.navigation.routesNavItems.filter((route) => route.route === ROUTE.SELECT_FRAMEWORKS)[0].isSelected = true;
+        mock.userSelection.frontendFramework.title = "";
+        mock.userSelection.backendFramework.title = "sfsdf";
+        const store = mockStore(mock);
+
+        expect(isEnableNextPageSelector(store.getState())).toBeFalsy();
+      });
+
+      it("isEnableNextPage invalid (backendFramework unselected)", () => {
+        const mockStore = configureMockStore<AppState>();
+        //mock.navigation.routes.selected = ROUTE.SELECT_FRAMEWORKS;
+        mock.navigation.routesNavItems.forEach((route) => {
+          route.isSelected = false;
+        });
+        mock.navigation.routesNavItems.filter((route) => route.route === ROUTE.SELECT_FRAMEWORKS)[0].isSelected = true;
+        mock.userSelection.frontendFramework.title = "sdfsdf";
+        mock.userSelection.backendFramework.title = "";
+        const store = mockStore(mock);
+
+        expect(isEnableNextPageSelector(store.getState())).toBeFalsy();
+      });
     });
 
-    it("isEnableNextPage invalid (frontendFramework unselected)", () => {
-      const mockStore = configureMockStore<AppState>();
-      //mock.navigation.routes.selected = ROUTE.SELECT_FRAMEWORKS;
-      mock.navigation.routesNavItems.forEach((route) => {
-        route.isSelected = false;
+    describe("with only one type of framework (frontend or backend)", () => {
+      beforeEach(() => {
+        mock.templates.frontendOptions = frameworks;
+        mock.templates.backendOptions = [];
       });
-      mock.navigation.routesNavItems.filter((route) => route.route === ROUTE.SELECT_FRAMEWORKS)[0].isSelected = true;
-      mock.userSelection.frontendFramework.title = "";
-      mock.userSelection.backendFramework.title = "sfsdf";
-      const store = mockStore(mock);
-      expect(isEnableNextPageSelector(store.getState())).toBeFalsy();
-    });
 
-    it("isEnableNextPage invalid (backendFramework unselected)", () => {
-      const mockStore = configureMockStore<AppState>();
-      //mock.navigation.routes.selected = ROUTE.SELECT_FRAMEWORKS;
-      mock.navigation.routesNavItems.forEach((route) => {
-        route.isSelected = false;
+      it("isEnableNextPage valid", () => {
+        const mockStore = configureMockStore<AppState>();
+        //mock.navigation.routes.selected = ROUTE.SELECT_FRAMEWORKS;
+        mock.navigation.routesNavItems.forEach((route) => {
+          route.isSelected = false;
+        });
+        mock.navigation.routesNavItems.filter((route) => route.route === ROUTE.SELECT_FRAMEWORKS)[0].isSelected = true;
+        mock.userSelection.frontendFramework.title = "sfsdf";
+        mock.userSelection.backendFramework.title = "";
+        const store = mockStore(mock);
+        expect(isEnableNextPageSelector(store.getState())).toBeTruthy();
       });
-      mock.navigation.routesNavItems.filter((route) => route.route === ROUTE.SELECT_FRAMEWORKS)[0].isSelected = true;
-      mock.userSelection.frontendFramework.title = "sdfsdf";
-      mock.userSelection.backendFramework.title = "";
-      const store = mockStore(mock);
-      expect(isEnableNextPageSelector(store.getState())).toBeFalsy();
+
+      it("isEnableNextPage invalid (mandatory framework unselected)", () => {
+        const mockStore = configureMockStore<AppState>();
+        //mock.navigation.routes.selected = ROUTE.SELECT_FRAMEWORKS;
+        mock.navigation.routesNavItems.forEach((route) => {
+          route.isSelected = false;
+        });
+        mock.navigation.routesNavItems.filter((route) => route.route === ROUTE.SELECT_FRAMEWORKS)[0].isSelected = true;
+        mock.userSelection.frontendFramework.title = "";
+        mock.userSelection.backendFramework.title = "";
+        const store = mockStore(mock);
+
+        expect(isEnableNextPageSelector(store.getState())).toBeFalsy();
+      });
+
+      it("isEnableNextPage invalid (optional framework unselected)", () => {
+        const mockStore = configureMockStore<AppState>();
+        //mock.navigation.routes.selected = ROUTE.SELECT_FRAMEWORKS;
+        mock.navigation.routesNavItems.forEach((route) => {
+          route.isSelected = false;
+        });
+        mock.navigation.routesNavItems.filter((route) => route.route === ROUTE.SELECT_FRAMEWORKS)[0].isSelected = true;
+        mock.userSelection.frontendFramework.title = "sdfsdf";
+        mock.userSelection.backendFramework.title = "";
+        const store = mockStore(mock);
+
+        expect(isEnableNextPageSelector(store.getState())).toBeTruthy();
+      });
     });
   });
 
@@ -101,7 +172,7 @@ describe("wizardSelectionSelector", () => {
         route.isSelected = false;
       });
       mock.navigation.routesNavItems.filter((route) => route.route === ROUTE.ADD_PAGES)[0].isSelected = true;
-      const validPage: ISelected = { title: "", isValidTitle: true, internalName: "wts.mock.blank" };
+      const validPage: ISelected = { title: "", isValidTitle: true, internalName: "wts.mock.blank", icon: "" };
       mock.userSelection.pages.push(validPage);
       const store = mockStore(mock);
       expect(isEnableNextPageSelector(store.getState())).toBeTruthy();

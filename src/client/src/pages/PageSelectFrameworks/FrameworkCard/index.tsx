@@ -6,7 +6,7 @@ import { mapStateToProps } from "./store";
 import styles from "./styles.module.css";
 import DependencyInfo from "./DependencyInfo";
 import messages from "./messages";
-import { KEY_EVENTS } from "../../../utils/constants/constants";
+import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ReactComponent as Check } from "../../../assets/check.svg";
 import { getLatestVersion } from "../../../utils/extensionService/extensionService";
@@ -17,7 +17,6 @@ import {
   setSelectedBackendFrameworkAction,
   setSelectedFrontendFrameworkAction,
 } from "../../../store/userSelection/frameworks/action";
-import { ROUTE } from "../../../utils/constants/routes";
 import { setDetailPageAction } from "../../../store/config/detailsPage/action";
 import Icon from "../../../components/Icon";
 
