@@ -81,6 +81,7 @@ const SelectFrameworks = (props: Props) => {
 
   return (
     <>
+      {(selection.frontendFramework.internalName !== "" && (
       <div className={rightsidebarStyles.sidebarItem}>
         <div className={rightsidebarStyles.title}>{formatMessage(messages.frontendFramework)}</div>
         <Dropdown
@@ -92,6 +93,8 @@ const SelectFrameworks = (props: Props) => {
           value={convertOptionToDropdownItem(selection.frontendFramework)}
         />
       </div>
+      ))}
+      {(selection.backendFramework.internalName !== "" && (
       <div className={rightsidebarStyles.sidebarItem}>
         <div className={rightsidebarStyles.title}>{formatMessage(messages.backendFramework)}</div>
         <Dropdown
@@ -103,6 +106,7 @@ const SelectFrameworks = (props: Props) => {
           value={convertOptionToDropdownItem(selection.backendFramework)}
         />
       </div>
+      ))}
     </>
   );
 };

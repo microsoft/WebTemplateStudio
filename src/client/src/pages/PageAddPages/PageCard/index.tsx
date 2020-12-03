@@ -6,8 +6,7 @@ import { IProps, IStateProps } from "./interfaces";
 import { mapStateToProps } from "./store";
 import styles from "./styles.module.css";
 import messages from "./messages";
-import { KEY_EVENTS } from "../../../utils/constants/constants";
-import { ROUTE } from "../../../utils/constants/routes";
+import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import { ReactComponent as Plus } from "../../../assets/plus.svg";

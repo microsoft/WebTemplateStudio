@@ -1,0 +1,20 @@
+[
+    {
+      "name": "ReactNative",
+      "displayName": "ReactNative",
+      "summary": "JavaScript framework",
+      "author": "Facebook",
+      "order": "1",
+      "licenses": "",
+      "platform": "RN",
+      "languages": [
+        "Any"
+      ],
+      "tags": {
+        "version": "",
+        "checkVersionPackage": "",
+        "requirements":"",
+        "preview": false
+      }
+    }
+  ]

@@ -2,8 +2,7 @@ import classnames from "classnames";
 import * as React from "react";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
-import { KEY_EVENTS } from "../../utils/constants/constants";
-import { ROUTE } from "../../utils/constants/routes";
+import { KEY_EVENTS, ROUTE } from "../../utils/constants/constants";
 
 import { IVSCodeObject } from "../../types/vscode";
 

@@ -1,4 +1,5 @@
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/commands";
+import { WIZARD_PROJECT_TYPE } from "../../utils/constants/internalNames";
 
 import * as mockData from "./mockData/mockWebPlatformData";
 
@@ -23,9 +24,10 @@ const getFrameworks = (message: any) => {
       command: EXTENSION_COMMANDS.GET_FRAMEWORKS,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        frameworks: mockData.frameworks,
+        frameworks: mockData.frameworks(message.platform),
         isPreview: true,
-        projectType: "FullStackWebApp",
+        //TODO: This should probably depend on a mocked shared var
+        projectType: WIZARD_PROJECT_TYPE.RN_TABBED_APP,
       },
     },
     "*"
@@ -53,7 +55,7 @@ const getTemplateConfig = (message: any) => {
       command: EXTENSION_COMMANDS.GET_TEMPLATE_INFO,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        ...mockData.templatesInfo,
+        ...mockData.templatesInfo(message.platform),
       },
     },
     "*"
@@ -67,7 +69,7 @@ const getPages = (message: any) => {
       command: EXTENSION_COMMANDS.GET_PAGES,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        pages: mockData.pages(message.payload.frontendFramework),
+        pages: mockData.pages(message.platform, message.payload.frontendFramework),
       },
     },
     "*"

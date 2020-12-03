@@ -15,7 +15,7 @@ import messages from "./messages";
 import keyUpHandler from "../../utils/keyUpHandler";
 import { AZURE_LINKS } from "../../utils/constants/azure";
 import { KEY_EVENTS } from "../../utils/constants/constants";
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants/internalNames";
+import { WIZARD_CONTENT_FEATURES } from "../../utils/constants/internalNames";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 
 import CollapsibleInfoBox from "../../components/CollapsibleInfoBox";
@@ -46,9 +46,9 @@ const AzureServicesModal = (props: Props) => {
     // close sign in modal and opens azure service form
     if (isLoggedIn) {
       dispatch(closeModalAction());
-      if (selectedAzureServiceName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE) {
+      if (selectedAzureServiceName === WIZARD_CONTENT_FEATURES.APP_SERVICE) {
         dispatch(ModalActions.openAppServiceModalAction());
-      } else if (selectedAzureServiceName === WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB) {
+      } else if (selectedAzureServiceName === WIZARD_CONTENT_FEATURES.COSMOS_DB) {
         dispatch(ModalActions.openCosmosDbModalAction());
       }
     }

@@ -11,6 +11,7 @@ import { EventEmitter } from "events";
 import { IEngineGenerationPayloadType } from "./types/engineGenerationPayloadType";
 import { ISyncPayloadType } from "./types/syncPayloadType";
 import { IEngineGenerationTemplateType } from "./types/engineGenerationTemplateType";
+import { ENVIRONMENT, PLATFORM } from "./constants/constants";
 
 class CliEventEmitter extends EventEmitter {}
 
@@ -148,9 +149,24 @@ export class CoreTemplateStudio {
     return CoreTemplateStudio._templateConfig;
   }
 
-  public async getPages(projectType: string, frontendFramework: string, backendFramework: string): Promise<any> {
-    const getPagesCommand = `${CLI.GET_PAGES} -p ${projectType} -f ${frontendFramework} -b ${backendFramework}\n`;
-    return this.awaitCliEvent(CLI.GET_PAGES_RESULT, getPagesCommand);
+  public async getPages(
+    projectType: string,
+    frontendFramework: string,
+    backendFramework: string
+  ): Promise<any> {
+    let getPagesCommand = `${CLI.GET_PAGES} -p ${projectType} `;
+    if (frontendFramework !== "") {
+      getPagesCommand = getPagesCommand.concat(`-f ${frontendFramework} `);
+    }
+    if (backendFramework !== "") {
+      getPagesCommand = getPagesCommand.concat(`-b ${backendFramework}`);
+    }
+    getPagesCommand = getPagesCommand.concat(`\n`);
+
+    return this.awaitCliEvent(
+      CLI.GET_PAGES_RESULT,
+      getPagesCommand
+    );
   }
 
   public async getAllLicenses(generationData: IGenerationData): Promise<any> {
@@ -192,6 +208,10 @@ export class CoreTemplateStudio {
   private makeEngineGenerationPayload(payload: IGenerationData): IEngineGenerationPayloadType {
     const { projectName, path, projectType, frontendFramework, backendFramework, pages, services } = payload;
 
+    //TODO: this will need to be set from the command
+    const devPlatform = PLATFORM.WEB;
+    const platform = (process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT) ? devPlatform : PLATFORM.WEB;
+
     return {
       projectName: projectName,
       genPath: path,
@@ -199,7 +219,7 @@ export class CoreTemplateStudio {
       frontendFramework: frontendFramework,
       backendFramework: backendFramework,
       language: "Any",
-      platform: "Web",
+      platform: platform,
       homeName: "Test",
       pages: pages.map((page: any) => ({
         name: page.name,

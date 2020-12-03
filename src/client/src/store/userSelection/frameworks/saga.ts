@@ -21,8 +21,9 @@ export function* frameworkSaga(vscode: any) {
     const selectedFrontend = yield select(selectedFrontendSelector);
     const selectedBackend = yield select(selectedBackendSelector);
     const projectTypes = yield select((state: AppState) => state.templates.projectTypesOptions);
-    const projectType = projectTypes[0];
-    if (selectedFrontend.internalName !== "" && selectedBackend.internalName !== "") {
+    //TODO this won´t be valid anymore
+    const projectType = projectTypes[0]; 
+    if (selectedFrontend.internalName !== "" || selectedBackend.internalName !== "") {
       const event: any = yield call(
         getPages,
         vscode,
