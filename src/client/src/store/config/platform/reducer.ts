@@ -1,8 +1,8 @@
 import SelectionActionType from "./actionTypes";
 import { CONFIG_TYPEKEYS } from "../configTypeKeys";
-import { PLATFORM } from "../../../utils/constants/constants";
+import { platform} from "../../../AppContext";
 
-const initialState = PLATFORM.WEB;
+const initialState = platform;
 
 const platformReducer = (state: string = initialState, action: SelectionActionType) => {
   switch (action.type) {

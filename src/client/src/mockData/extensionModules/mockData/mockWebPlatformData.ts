@@ -1,3 +1,4 @@
+import { PLATFORM } from "../../../utils/constants/constants";
 import { backendImage, frontendImage, noImage, pageImage, serviceImage } from "./mockSvgData";
 
 const projectTypes = [
@@ -6,7 +7,7 @@ const projectTypes = [
   },
 ];
 
-const frameworks = [
+const frameworkList = [
   {
     name: "React",
     displayName: "React",
@@ -29,7 +30,7 @@ const frameworks = [
         url: "https://github.com/facebook/create-react-app/blob/master/LICENSE",
       },
     ],
-    platforms: ["Web"],
+    platforms: [PLATFORM.WEB],
     languages: ["Any"],
     tags: {
       version: "16.8.4",
@@ -64,7 +65,7 @@ const frameworks = [
         url: "https://github.com/angular/angular-cli/blob/master/LICENSE",
       },
     ],
-    platforms: ["Web"],
+    platforms: [PLATFORM.WEB],
     languages: ["Any"],
     tags: {
       version: "7.2.0",
@@ -99,7 +100,7 @@ const frameworks = [
         url: "https://github.com/vuejs/vue-cli/blob/dev/LICENSE",
       },
     ],
-    platforms: ["Web"],
+    platforms: [PLATFORM.WEB],
     languages: ["Any"],
     tags: {
       version: "2.6.6",
@@ -138,7 +139,7 @@ const frameworks = [
         url: "https://github.com/expressjs/generator/blob/master/LICENSE",
       },
     ],
-    platforms: ["Web"],
+    platforms: [PLATFORM.WEB],
     languages: ["Any"],
     tags: {
       version: "10.15.0",
@@ -160,7 +161,7 @@ const frameworks = [
     author: "Various",
     order: "1",
     licenses: "[Moleculer](https://github.com/moleculerjs/moleculer/blob/master/LICENSE)",
-    platforms: ["Web"],
+    platforms: [PLATFORM.WEB],
     languages: ["Any"],
     tags: {
       version: "0.14.3",
@@ -190,7 +191,7 @@ const frameworks = [
         url: "https://github.com/pallets/flask/blob/master/LICENSE",
       },
     ],
-    platforms: ["Web"],
+    platforms: [PLATFORM.WEB],
     languages: ["Any"],
     tags: {
       version: "1.0.3",
@@ -220,7 +221,7 @@ const frameworks = [
         url: "https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt",
       },
     ],
-    platforms: ["Web"],
+    platforms: [PLATFORM.WEB],
     languages: ["Any"],
     tags: {
       version: "3.1.5",
@@ -234,7 +235,48 @@ const frameworks = [
       isRequirementInstalled: false,
     },
   },
+
+  // REACT NATIVE
+  {
+    name: "React Native MOCK",
+    displayName: "React Native MOCK",
+    icon: frontendImage,
+    summary: "JavaScript framework by Facebook",
+    description:
+      "MOCKED DESCRIPTION React is a component-based open source JavaScript library for building interfaces for single page applications. It is used for handling view layer for web and mobile apps. React allows you to design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.  \r\n\r\n  \r\nMore information about React can be found [here](https://reactjs.org).\r\n",
+    author: "Facebook",
+    order: 1,
+    metadataType: "Framework",
+    licenses:
+      "[React Native](https://github.com/facebook/react-native/blob/master/LICENSE)  \n[Create React NativeApp](https://github.com/facebook/create-react-native-app/blob/master/LICENSE)",
+    licenseTerms: [
+      {
+        text: "React N",
+        url: "https://github.com/facebook/react-native/blob/master/LICENSE",
+      },
+      {
+        text: "Create React Native App",
+        url: "https://github.com/facebook/create-react-native-app/blob/master/LICENSE",
+      },
+    ],
+    platforms: [PLATFORM.REACTNATIVE],
+    languages: ["Any"],
+    tags: {
+      version: "*.*.*",
+      latestVersion: "*.*.*",
+      preview: false,
+      enabled: true,
+      type: "frontend",
+      checkVersionPackage: "",
+      requirements: "",
+      isRequirementInstalled: true,
+    },
+  },
 ];
+
+const frameworks = (platform: any) => {
+  return frameworkList.filter((framework) => framework.platforms.indexOf(platform) > -1);
+};
 
 const licenses = [
   {
@@ -247,46 +289,48 @@ const licenses = [
   },
 ];
 
-const templatesInfo = {
-  wizardVersion: "1.x",
-  templatesVersion: "1.x",
-  itemNameValidationConfig: {
-    regexs: [
-      {
-        name: "nameStartLetter",
-        pattern: "^[A-Za-z]",
-      },
-      {
-        name: "nameContainLettersNumbersDashes",
-        pattern: "^((?!\\d)[a-zA-Z0-9\\s_-]+)$",
-      },
-    ],
-    reservedNames: [],
-    validateDefaultNames: false,
-    validateEmptyNames: true,
-    validateExistingNames: true,
-  },
-  projectNameValidationConfig: {
-    regexs: [
-      {
-        name: "nameStartLetter",
-        pattern: "^[A-Za-z]",
-      },
-      {
-        name: "nameContainLettersNumbersDashes",
-        pattern: "^((?!\\d)[a-zA-Z0-9_-]+)$",
-      },
-    ],
-    reservedNames: [],
-    validateEmptyNames: true,
-    validateExistingNames: false,
-  },
-  preview: false,
-  platform: "Web",
+const templatesInfo = (platform: any) => {
+  return {
+    wizardVersion: "1.x",
+    templatesVersion: "1.x",
+    itemNameValidationConfig: {
+      regexs: [
+        {
+          name: "nameStartLetter",
+          pattern: "^[A-Za-z]",
+        },
+        {
+          name: "nameContainLettersNumbersDashes",
+          pattern: "^((?!\\d)[a-zA-Z0-9\\s_-]+)$",
+        },
+      ],
+      reservedNames: [],
+      validateDefaultNames: false,
+      validateEmptyNames: true,
+      validateExistingNames: true,
+    },
+    projectNameValidationConfig: {
+      regexs: [
+        {
+          name: "nameStartLetter",
+          pattern: "^[A-Za-z]",
+        },
+        {
+          name: "nameContainLettersNumbersDashes",
+          pattern: "^((?!\\d)[a-zA-Z0-9_-]+)$",
+        },
+      ],
+      reservedNames: [],
+      validateEmptyNames: true,
+      validateExistingNames: false,
+    },
+    preview: false,
+    platform: platform,
+  };
 };
 
-const pages = (frontendFramework: string) => {
-  return [
+const pages = (platform: string, frontendFramework: string) => {
+  let frontendFrameworks = [
     {
       templateId: `wts.Page.${frontendFramework}.Blank`,
       name: "Blank",
@@ -314,88 +358,96 @@ const pages = (frontendFramework: string) => {
       rightClickEnabled: true,
       requiredVisualStudioWorkloads: [],
     },
-    {
-      templateId: `wts.Page.${frontendFramework}.Grid`,
-      name: "Grid",
-      defaultName: "Grid",
-      description: "Simple image and text components which are organized into a grid.",
-      richDescription:
-        "A page displaying simple image and text components which are organized into a grid. Grid pages are a system for creating order among elements in a website.",
-      author: "Microsoft",
-      version: "1.0.0",
-      icon: pageImage,
-      displayOrder: 1,
-      isHidden: false,
-      isGroupExclusiveSelection: false,
-      genGroup: 0,
-      multipleInstance: false,
-      itemNameEditable: false,
-      licenses: [
-        {
-          text: "Bootstrap",
-          url: "https://github.com/twbs/bootstrap/blob/master/LICENSE",
-        },
-      ],
-      dependencies: [],
-      templateType: "Page",
-      rightClickEnabled: true,
-      requiredVisualStudioWorkloads: [],
-    },
-    {
-      templateId: `wts.Page.${frontendFramework}.List`,
-      name: "List",
-      defaultName: "List",
-      description: "Add and remove text from an adaptive list.",
-      richDescription:
-        "The list page allows you to add custom text in the form of an adaptive list. This pattern is frequently used for blog pages and messaging apps. If a database is selected from the Azure Cloud Services the list page will automatically connect to the deployed Azure database.",
-      author: "Microsoft",
-      version: "1.0.0",
-      icon: pageImage,
-      displayOrder: 1,
-      isHidden: false,
-      isGroupExclusiveSelection: false,
-      genGroup: 0,
-      multipleInstance: true,
-      itemNameEditable: true,
-      licenses: [
-        {
-          text: "Bootstrap",
-          url: "https://github.com/twbs/bootstrap/blob/master/LICENSE",
-        },
-      ],
-      dependencies: [],
-      templateType: "Page",
-      rightClickEnabled: true,
-      requiredVisualStudioWorkloads: [],
-    },
-    {
-      templateId: `wts.Page.${frontendFramework}.MasterDetail`,
-      name: "Master Detail",
-      defaultName: "Master Detail",
-      description: "A master pane and a details pane for content.",
-      richDescription:
-        "The master-detail page has a master pane and a details pane for content. When an item in the master list is selected, the details pane is updated. This pattern is frequently used for email and address books.",
-      author: "Microsoft",
-      version: "1.0.0",
-      icon: pageImage,
-      displayOrder: 1,
-      isHidden: false,
-      isGroupExclusiveSelection: false,
-      genGroup: 0,
-      multipleInstance: true,
-      itemNameEditable: true,
-      licenses: [
-        {
-          text: "Bootstrap",
-          url: "https://github.com/twbs/bootstrap/blob/master/LICENSE",
-        },
-      ],
-      dependencies: [],
-      templateType: "Page",
-      rightClickEnabled: true,
-      requiredVisualStudioWorkloads: [],
-    },
   ];
+
+  switch (platform) {
+    case PLATFORM.WEB:
+      frontendFrameworks = frontendFrameworks.concat(
+        {
+          templateId: `wts.Page.${frontendFramework}.Grid`,
+          name: "Grid",
+          defaultName: "Grid",
+          description: "Simple image and text components which are organized into a grid.",
+          richDescription:
+            "A page displaying simple image and text components which are organized into a grid. Grid pages are a system for creating order among elements in a website.",
+          author: "Microsoft",
+          version: "1.0.0",
+          icon: pageImage,
+          displayOrder: 1,
+          isHidden: false,
+          isGroupExclusiveSelection: false,
+          genGroup: 0,
+          multipleInstance: false,
+          itemNameEditable: false,
+          licenses: [
+            {
+              text: "Bootstrap",
+              url: "https://github.com/twbs/bootstrap/blob/master/LICENSE",
+            },
+          ],
+          dependencies: [],
+          templateType: "Page",
+          rightClickEnabled: true,
+          requiredVisualStudioWorkloads: [],
+        },
+        {
+          templateId: `wts.Page.${frontendFramework}.List`,
+          name: "List",
+          defaultName: "List",
+          description: "Add and remove text from an adaptive list.",
+          richDescription:
+            "The list page allows you to add custom text in the form of an adaptive list. This pattern is frequently used for blog pages and messaging apps. If a database is selected from the Azure Cloud Services the list page will automatically connect to the deployed Azure database.",
+          author: "Microsoft",
+          version: "1.0.0",
+          icon: pageImage,
+          displayOrder: 1,
+          isHidden: false,
+          isGroupExclusiveSelection: false,
+          genGroup: 0,
+          multipleInstance: true,
+          itemNameEditable: true,
+          licenses: [
+            {
+              text: "Bootstrap",
+              url: "https://github.com/twbs/bootstrap/blob/master/LICENSE",
+            },
+          ],
+          dependencies: [],
+          templateType: "Page",
+          rightClickEnabled: true,
+          requiredVisualStudioWorkloads: [],
+        },
+        {
+          templateId: `wts.Page.${frontendFramework}.MasterDetail`,
+          name: "Master Detail",
+          defaultName: "Master Detail",
+          description: "A master pane and a details pane for content.",
+          richDescription:
+            "The master-detail page has a master pane and a details pane for content. When an item in the master list is selected, the details pane is updated. This pattern is frequently used for email and address books.",
+          author: "Microsoft",
+          version: "1.0.0",
+          icon: pageImage,
+          displayOrder: 1,
+          isHidden: false,
+          isGroupExclusiveSelection: false,
+          genGroup: 0,
+          multipleInstance: true,
+          itemNameEditable: true,
+          licenses: [
+            {
+              text: "Bootstrap",
+              url: "https://github.com/twbs/bootstrap/blob/master/LICENSE",
+            },
+          ],
+          dependencies: [],
+          templateType: "Page",
+          rightClickEnabled: true,
+          requiredVisualStudioWorkloads: [],
+        }
+      );
+      break;
+  }
+  return frontendFrameworks;
 };
 
 const features = [

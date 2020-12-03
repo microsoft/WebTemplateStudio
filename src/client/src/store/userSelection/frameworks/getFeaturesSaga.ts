@@ -17,7 +17,7 @@ export function* getFeaturesSaga(vscode: any) {
     const selectedFrontend = yield select(selectedFrontendSelector);
     const selectedBackend = yield select(selectedBackendSelector);
 
-    if (selectedFrontend.internalName !== "" && selectedBackend.internalName !== "") {
+    if (selectedFrontend.internalName !== "" || selectedBackend.internalName !== "") {
       const event: any = yield call(getFeatures, vscode, selectedFrontend.internalName, selectedBackend.internalName);
       const features = getFeaturesOptions(event.data.payload.features);
       yield put(setFeaturesAction(features));

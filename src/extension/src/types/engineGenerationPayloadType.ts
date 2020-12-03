@@ -7,7 +7,7 @@ export interface IEngineGenerationPayloadType {
   genPath: string;
   projectName: string;
   language: "Any";
-  platform: "Web";
+  platform: string;
   homeName: "Test";
   projectType: string;
   features: IEngineGenerationTemplateType;

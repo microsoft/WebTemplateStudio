@@ -21,7 +21,7 @@ import ResourceGroupSelection from "../../components/ResourceGroupSelection";
 import { KEY_EVENTS } from "../../utils/constants/constants";
 import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants/internalNames";
+import { WIZARD_CONTENT_FEATURES } from "../../utils/constants/internalNames";
 import { AZURE, SERVICE_KEYS, AzureResourceType } from "../../utils/constants/azure";
 
 import AppNameEditor from "./AppNameEditor";
@@ -45,7 +45,7 @@ const AppServiceModal = ({ intl }: Props) => {
   const { vscode } = useContext(AppContext);
   const appServiceInStore = useSelector(getAppService);
   const templateAppService = useSelector((state: AppState) => state.templates.featureOptions).filter(
-    (feature) => feature.internalName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE
+    (feature) => feature.internalName === WIZARD_CONTENT_FEATURES.APP_SERVICE
   )[0];
   const initialSubscription = appServiceInStore ? appServiceInStore.subscription : "";
   const initialAppServiceName = appServiceInStore ? appServiceInStore.siteName : "";
@@ -93,7 +93,7 @@ const AppServiceModal = ({ intl }: Props) => {
       resourceGroup,
       location,
       siteName: appName,
-      internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
+      internalName: WIZARD_CONTENT_FEATURES.APP_SERVICE,
       editable: templateAppService.editable,
       icon: templateAppService.icon,
     };

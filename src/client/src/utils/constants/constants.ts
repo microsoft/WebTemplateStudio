@@ -9,9 +9,16 @@ const WEB_TEMPLATE_STUDIO_LINKS = {
   ISSUES: "https://github.com/Microsoft/WebTemplateStudio/issues",
 };
 
-const PRODUCTION = "production";
-const DEVELOPMENT = "development";
-const TEST = "test";
+const ENVIRONMENT ={
+   PRODUCTION: "production",
+   DEVELOPMENT: "development",
+   TEST: "test",
+}
+
+enum PLATFORM {
+  WEB = "Web",
+  REACTNATIVE = "RN"
+}
 
 const INTL_MESSAGES = defineMessages({
   EMPTY_FIELD: {
@@ -61,9 +68,15 @@ const TELEMETRY = {
   CREATE_NEW_PROJECT_BUTTON: "Generate Modal, create new project button",
 };
 
-enum PLATFORM {
-  WEB = "Web",
-}
+const ROUTE = {
+  PAGE_DETAILS: "/PageDetail",
+  SELECT_FRAMEWORKS: "/SelectFrameworks",
+  SELECT_PROJECT_TYPE: "/SelectProjectType",
+  ADD_PAGES: "/AddPages",
+  ADD_SERVICES: "/AddServices",
+  REVIEW_AND_GENERATE: "/ReviewAndGenerate",
+  NEW_PROJECT: "/",
+};
 
 const REQUIREMENTS_DATA = [
   {
@@ -84,12 +97,10 @@ const REQUIREMENTS_DATA = [
 ];
 
 export {
-  PRODUCTION,
   SERVICE_KEYS,
   INTL_MESSAGES,
   ARIA_LABELS_NAVIGATION,
-  DEVELOPMENT,
-  TEST,
+  ENVIRONMENT,
   PROJECT_NAME_CHARACTER_LIMIT,
   PAGE_NAME_CHARACTER_LIMIT,
   WEB_TEMPLATE_STUDIO_LINKS,
@@ -98,5 +109,6 @@ export {
   PAYLOAD_MESSAGES_TEXT,
   TELEMETRY,
   PLATFORM,
-  REQUIREMENTS_DATA,
+  ROUTE,
+  REQUIREMENTS_DATA
 };

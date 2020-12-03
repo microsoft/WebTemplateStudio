@@ -1,0 +1,31 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft",
+  "classifications": ["Universal"],
+  "name": "Blank",
+  "shortName": "Blank",
+  "groupIdentity": "wts.Page.ReactNative.Blank",
+  "identity": "wts.Page.ReactNative.Blank",
+  "description": "*** REACT NATIVE *** A blank page for you to build your web application from scratch.",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "page",
+    "wts.platform": "RN",
+    "wts.projecttype": "all",
+    "wts.frontendframework": "all",
+    "wts.version": "1.0.0",
+    "wts.displayOrder": "0",
+    "wts.casing.sourceName": "pascal"
+  },
+  "sourceName": "wts.itemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.sourceName.casing.pascal": {
+      "type": "parameter",
+      "replaces": "Param_SourceName_Pascal",
+      "fileRename": "Param_SourceName_Pascal"
+    }
+  }
+}
