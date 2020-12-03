@@ -15,6 +15,8 @@ const SelectFrameworks = ({ intl }: Props) => {
 
   return (
     <>
+    {(frontendOptions.length > 0 && (
+      <>
       <h1 className={styles.title}>{intl.formatMessage(messages.frontendTitle)}</h1>
       <div className={styles.flexContainer}>
         {frontendOptions.map((framework) => {
@@ -23,6 +25,10 @@ const SelectFrameworks = ({ intl }: Props) => {
           }
         })}
       </div>
+      </>
+    ))}
+    {(backendOptions.length > 0 && (
+      <>
       <h1 className={styles.title}>{intl.formatMessage(messages.backendTitle)}</h1>
       <div className={styles.flexContainer}>
         {backendOptions.map((framework) => {
@@ -31,6 +37,8 @@ const SelectFrameworks = ({ intl }: Props) => {
           }
         })}
       </div>
+      </>
+    ))}
     </>
   );
 };

@@ -6,8 +6,7 @@ import * as ModalActions from "../../store/navigation/modals/action";
 import { hasServices as hasServicesSelector } from "../../store/userSelection/services/servicesSelector";
 import { getSelectedRoute } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 
-import { KEY_EVENTS } from "../../utils/constants/constants";
-import { ROUTE } from "../../utils/constants/routes";
+import { KEY_EVENTS, ROUTE } from "../../utils/constants/constants";
 
 import { ReactComponent as CancelSVG } from "../../assets/cancel.svg";
 

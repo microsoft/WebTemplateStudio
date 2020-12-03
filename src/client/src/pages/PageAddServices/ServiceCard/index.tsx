@@ -8,8 +8,7 @@ import { isLoggedInSelector } from "../../../store/config/azure/selector";
 import { setDetailPageAction } from "../../../store/config/detailsPage/action";
 import { AppState } from "../../../store/combineReducers";
 
-import { KEY_EVENTS } from "../../../utils/constants/constants";
-import { ROUTE } from "../../../utils/constants/routes";
+import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
 
 import Icon from "../../../components/Icon";
 

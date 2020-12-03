@@ -3,7 +3,7 @@ import * as React from "react";
 import { connect, useDispatch } from "react-redux";
 import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
 import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
-import { DEVELOPMENT } from "./utils/constants/constants";
+import { ENVIRONMENT, ROUTE } from "./utils/constants/constants";
 import appStyles from "./appStyles.module.css";
 import { AppState } from "./store/combineReducers";
 import { IOption } from "./types/option";
@@ -12,8 +12,7 @@ import { NAVIGATION_MODAL_TYPES } from "./store/navigation/typeKeys";
 import RightSidebar from "./components/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
 import { loadAction } from "./store/config/config/action";
-import loadable from "@loadable/component";
-import { ROUTE } from "./utils/constants/routes";
+import loadable from '@loadable/component'
 import { getSelectedRoute } from "./store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 
 const PageSelectFrameworks = loadable(
@@ -34,7 +33,7 @@ const AzureServicesModal = loadable(
   () => import(/* webpackChunkName: "AzureServicesModal" */ "./modals/AzureServicesModal")
 );
 
-if (process.env.NODE_ENV === DEVELOPMENT) {
+if (process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT) {
   require("./css/mockThemes.css");
 }
 

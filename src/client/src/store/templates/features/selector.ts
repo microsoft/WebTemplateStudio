@@ -4,7 +4,7 @@ import { IOption } from "../../../types/option";
 import { openAppServiceModalAction, openCosmosDbModalAction } from "../../navigation/modals/action";
 import messages from "./messages";
 import { SERVICE_GROUPS } from "../../../utils/constants/azure";
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants/internalNames";
+import { WIZARD_CONTENT_FEATURES } from "../../../utils/constants/internalNames";
 
 const getFeatures = (state: AppState) => state.templates.featureOptions;
 
@@ -41,13 +41,13 @@ const getService = (option: IOption): IService => {
 
 const getServiceMetadata = (serviceId: string) => {
   switch (serviceId) {
-    case WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE:
+    case WIZARD_CONTENT_FEATURES.APP_SERVICE:
       return {
         openModalAction: openAppServiceModalAction(),
         expectedPrice: messages.appServiceExpectedPrice,
         expectedTime: messages.appServiceExpectedTime,
       };
-    case WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB:
+    case WIZARD_CONTENT_FEATURES.COSMOS_DB:
       return {
         openModalAction: openCosmosDbModalAction(),
         expectedPrice: messages.cosmosDbExpectedPrice,

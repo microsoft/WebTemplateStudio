@@ -1,0 +1,22 @@
+[
+    {
+      "name": "Tabbed",
+      "displayName": "Tabbed",
+      "summary": "Tabbed",
+      "author": "Microsoft",
+      "order": "1",
+      "licenses": "",
+      "platform": "RN",
+      "languages": ["Any"]
+    },
+    {
+      "name": "Drawer",
+      "displayName": "Drawer",
+      "summary": "Drawer",
+      "author": "Microsoft",
+      "order": "2",
+      "licenses": "",
+      "platform": "RN",
+      "languages": ["Any"]
+    }
+  ]

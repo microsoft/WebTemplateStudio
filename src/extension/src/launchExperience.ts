@@ -6,6 +6,7 @@ import { Logger } from "./utils/logger";
 import { MESSAGES } from "./constants/messages";
 import { CLI_SETTINGS } from "./constants/cli";
 import retry from "p-retry";
+import { ENVIRONMENT } from "./constants/constants";
 
 export class LaunchExperience {
   private static _progressObject: vscode.Progress<IVSCodeProgressType>;
@@ -39,7 +40,7 @@ export class LaunchExperience {
   private async attemptSync(platform: string): Promise<ISyncReturnType> {
     try {
       const pathToTemplates =
-        process.env.NODE_ENV === "dev" || process.env.NODE_ENV === "development"
+        process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT
           ? CLI_SETTINGS.DEVELOPMENT_PATH_TO_TEMPLATES
           : CLI_SETTINGS.PRODUCTION_PATH_TO_TEMPLATES;
 
