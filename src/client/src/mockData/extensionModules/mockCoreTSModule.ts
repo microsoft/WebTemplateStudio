@@ -1,6 +1,5 @@
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/commands";
 
-// const mockData = import("./mockData/mockWebPlatformData");
 import * as mockWebData from "./mockData/mockWebPlatformData";
 import * as mockReactNativeData from "./mockData/mockReactNativePlatformData";
 
