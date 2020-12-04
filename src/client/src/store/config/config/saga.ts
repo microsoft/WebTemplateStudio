@@ -63,7 +63,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
   yield takeEvery(CONFIG_TYPEKEYS.LOAD, callBack);
 
   function* callBack() {
-    const event: any = yield call(getProjectTypes, vscode);    
+    const event: any = yield call(getProjectTypes, vscode);
     const message = event.data;
     const optionProjectTypes = getProjectTypesOptions(message.payload.projectTypes);
     const defaultProjectType = optionProjectTypes[0];
@@ -78,7 +78,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
       payload: defaultProjectType,
     });
 
-    if (defaultProjectType.internalName !== ""){
+    if (defaultProjectType.internalName !== "") {
       const event: any = yield call(getFrameworks, vscode, defaultProjectType.internalName);
       const message = event.data;
       const optionFrontendFrameworks = getFrameworksOptions(message.payload.frameworks, FRAMEWORK_TYPE.FRONTEND);

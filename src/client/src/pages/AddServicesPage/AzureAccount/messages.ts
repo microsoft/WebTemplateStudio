@@ -2,27 +2,27 @@ import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
   signOut: {
-    id: "pageAddServices.azureAccount.signOut",
+    id: "addServicesPage.azureAccount.signOut",
     defaultMessage: "Sign Out",
   },
   ariaSignOutLabel: {
-    id: "pageAddServices.azureAccount.ariaSignOut",
+    id: "addServicesPage.azureAccount.ariaSignOut",
     defaultMessage: "Sign Out from Azure",
   },
   signIn: {
-    id: "pageAddServices.azureAccount.signIn",
+    id: "addServicesPage.azureAccount.signIn",
     defaultMessage: "Sign In",
   },
   ariaSignInLabel: {
-    id: "pageAddServices.azureAccount.ariaSignIn",
+    id: "addServicesPage.azureAccount.ariaSignIn",
     defaultMessage: "Azure Sign In",
   },
   createAccount: {
-    id: "pageAddServices.azureAccount.createAccount",
+    id: "addServicesPage.azureAccount.createAccount",
     defaultMessage: "Create Free Account",
   },
   ariaCreateAccountLabel: {
-    id: "pageAddServices.azureAccount.ariaCreateAccountLabel",
+    id: "addServicesPage.azureAccount.ariaCreateAccountLabel",
     defaultMessage: "Create Free Azure Account",
   },
 });

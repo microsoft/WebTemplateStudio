@@ -2,7 +2,7 @@ import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
   learnMore: {
-    id: "frameworkCard.details",
+    id: "selectFrameworksPage.frameworkCard.details",
     defaultMessage: "Learn more",
   },
 });

@@ -4,7 +4,7 @@ import { renderWithStore } from "../../testUtils";
 import { getInitialState, addFeaturesOptions, setAzureEmail, getServicesGroups } from "../../mockData/mockStore";
 import messages from "./messages";
 import { AppState } from "../../store/combineReducers";
-import PageAddServices from ".";
+import AddServicesPage from ".";
 
 jest.mock("./ServiceGroup", () => {
   return () => {
@@ -34,7 +34,7 @@ jest.mock("../../utils/extensionService/extensionService", () => {
   };
 });
 
-describe("PageAddServices", () => {
+describe("AddServicesPage", () => {
   let props: any;
   let store: any;
   let servicesGroups: string[];
@@ -50,24 +50,24 @@ describe("PageAddServices", () => {
   });
 
   it("renders without crashing", () => {
-    const wrapper = renderWithStore(<PageAddServices {...props} />, store);
+    const wrapper = renderWithStore(<AddServicesPage {...props} />, store);
     expect(wrapper).toBeDefined();
   });
 
   it("renders title", () => {
-    const wrapper = renderWithStore(<PageAddServices {...props} />, store);
+    const wrapper = renderWithStore(<AddServicesPage {...props} />, store);
     expect(wrapper.getByText(intl.formatMessage(messages.title))).toBeDefined();
   });
 
   it("should be the same number of service groups components as service groups in the store", () => {
-    const wrapper = renderWithStore(<PageAddServices {...props} />, store);
+    const wrapper = renderWithStore(<AddServicesPage {...props} />, store);
     const servicesGroupsComponent = wrapper.queryAllByTestId("service-group-component");
     expect(servicesGroupsComponent.length).toBe(servicesGroups.length);
   });
 
   describe("When user is not logged in", () => {
     it("AzureStudent component should be render", () => {
-      const wrapper = renderWithStore(<PageAddServices {...props} />, store);
+      const wrapper = renderWithStore(<AddServicesPage {...props} />, store);
       const AzureStudentComponent = wrapper.queryByTestId("azure-student-component");
       expect(AzureStudentComponent).toBeInTheDocument();
     });
@@ -84,7 +84,7 @@ describe("PageAddServices", () => {
     });
 
     it("AzureStudent component should not be render", () => {
-      const wrapper = renderWithStore(<PageAddServices {...props} />, store);
+      const wrapper = renderWithStore(<AddServicesPage {...props} />, store);
       const AzureStudentComponent = wrapper.queryByTestId("azure-student-component");
       expect(AzureStudentComponent).not.toBeInTheDocument();
     });

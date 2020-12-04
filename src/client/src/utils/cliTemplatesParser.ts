@@ -31,8 +31,7 @@ export const getFrameworksOptions = (json: any[], type: FRAMEWORK_TYPE): IOption
 };
 
 export const getProjectTypesOptions = (json: any[]): IOption[] => {
-  return getProjectTypeTemplateInfo(json)
-  .map<IOption>((val) => ({
+  return getProjectTypeTemplateInfo(json).map<IOption>((val) => ({
     title: val.name,
     internalName: val.name,
     body: val.summary,
@@ -92,21 +91,20 @@ export const getFeaturesOptions = (json: any[]): IOption[] => {
 //TODO: Review is they are not needed for projectType if we shold add another type
 //TODO: rather than using: IApiTemplateInfo
 const getProjectTypeTemplateInfo = (items: any[]): IApiTemplateInfo[] => {
-  return items
-    .map<IApiTemplateInfo>((val) => ({
-      author: val.author,
-      templateGroupIdentity: val.templateGroupIdentity,
-      defaultName: val.defaultName,
-      displayName: val.displayName,
-      licenses: val.licenses,
-      longDescription: val.description,
-      name: val.name,
-      order: val.order,
-      selected: false,
-      summary: val.summary,
-      icon: val.icon,
-      tags: val.tags,
-    }));
+  return items.map<IApiTemplateInfo>((val) => ({
+    author: val.author,
+    templateGroupIdentity: val.templateGroupIdentity,
+    defaultName: val.defaultName,
+    displayName: val.displayName,
+    licenses: val.licenses,
+    longDescription: val.description,
+    name: val.name,
+    order: val.order,
+    selected: false,
+    summary: val.summary,
+    icon: val.icon,
+    tags: val.tags,
+  }));
 };
 
 const getFrameworksTemplateInfo = (items: any[], type: FRAMEWORK_TYPE): IApiTemplateInfo[] => {

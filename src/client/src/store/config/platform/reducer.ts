@@ -1,6 +1,6 @@
 import SelectionActionType from "./actionTypes";
 import { CONFIG_TYPEKEYS } from "../configTypeKeys";
-import { platform} from "../../../AppContext";
+import { platform } from "../../../AppContext";
 
 const initialState = platform;
 

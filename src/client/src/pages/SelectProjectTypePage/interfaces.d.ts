@@ -4,4 +4,4 @@ interface IStoreProps {
   options: IOption[];
 }
 
-export { IStoreProps};
+export { IStoreProps };

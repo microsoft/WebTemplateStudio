@@ -127,7 +127,12 @@ const FrameworkCard = (props: Props) => {
         </div>
         <div className={cardStyles.gridLayoutCardFooter}>
           <div>
-            <a onClick={detailsClickWrapper} onKeyDown={showDetailIfPressEnterKey} className={cardStyles.link} tabIndex={0}>
+            <a
+              onClick={detailsClickWrapper}
+              onKeyDown={showDetailIfPressEnterKey}
+              className={cardStyles.link}
+              tabIndex={0}
+            >
               {intl.formatMessage(messages.learnMore)}
             </a>
           </div>
