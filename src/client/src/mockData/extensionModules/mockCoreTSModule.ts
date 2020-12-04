@@ -3,16 +3,8 @@ import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/com
 import * as mockWebData from "./mockData/mockWebPlatformData";
 import * as mockReactNativeData from "./mockData/mockReactNativePlatformData";
 
-import { PLATFORM } from "../../utils/constants/constants";
-
-const platform = PLATFORM.REACTNATIVE;
-
-let mockData = mockWebData;
-switch(platform){
-  case PLATFORM.REACTNATIVE:
-    mockData = mockReactNativeData;
-    break;
-}
+//Change mock data to change platform
+const mockData = mockReactNativeData;
 
 const getProjectTypes = (message: any) => {
   window.postMessage(
@@ -22,7 +14,6 @@ const getProjectTypes = (message: any) => {
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
         projectTypes: mockData.projectTypes,
-        platform: platform,
       },
     },
     "*"

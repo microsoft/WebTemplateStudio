@@ -1,5 +1,7 @@
-import { platform } from "../../../AppContext";
+import { PLATFORM } from "../../../utils/constants/constants";
 import { backendImage, frontendImage, noImage, pageImage, serviceImage } from "./mockSvgData";
+
+const platform = PLATFORM.WEB
 
 const projectTypes = [
   {
@@ -490,4 +492,4 @@ const features = [
   },
 ];
 
-export { projectTypes, frameworks, licenses, templatesInfo, pages, features };
+export {platform, projectTypes, frameworks, licenses, templatesInfo, pages, features };

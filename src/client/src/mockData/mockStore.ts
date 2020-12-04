@@ -10,6 +10,7 @@ import {
   projectTypeImage,
   serviceImage,
 } from "./extensionModules/mockData/mockSvgData";
+import { PLATFORM } from "../utils/constants/constants";
 
 export const getISelected = () => {
   const selected: ISelected = {
@@ -69,7 +70,7 @@ export const getInitialState = (): AppState => {
         subscriptions: [],
         email: "",
       },
-      platform: "Web",
+      platform: PLATFORM.WEB,
     },
     userSelection: {
       frontendFramework: {
@@ -131,7 +132,7 @@ export const getInitialState = (): AppState => {
           modalData: null,
         },
       },
-      routesNavItems: getNavItems("Web"),
+      routesNavItems: getNavItems(PLATFORM.WEB),
     },
   };
   return initialState;
