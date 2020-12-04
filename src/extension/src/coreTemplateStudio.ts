@@ -11,7 +11,6 @@ import { EventEmitter } from "events";
 import { IEngineGenerationPayloadType } from "./types/engineGenerationPayloadType";
 import { ISyncPayloadType } from "./types/syncPayloadType";
 import { IEngineGenerationTemplateType } from "./types/engineGenerationTemplateType";
-import { ENVIRONMENT, PLATFORM } from "./constants/constants";
 
 class CliEventEmitter extends EventEmitter {}
 
