@@ -8,10 +8,9 @@ import {
   setSelectedProjectTypeAction,
 } from "../../../store/userSelection/projectType/action";
 
-import { ISelected } from "../../../types/selected";
 import { IOption } from "../../../types/option";
 
-import Dropdown from "../../../components/Dropdown";
+import Dropdown, { convertOptionsToDropdownItems, convertOptionToDropdownItem } from "../../../components/Dropdown";
 
 import rightsidebarStyles from "../rightsidebarStyles.module.css";
 import messages from "./messages";
@@ -32,32 +31,7 @@ const SelectProjectTypes = (props: Props) => {
 
   const dispatch = useDispatch();
 
-  function convertOptionsToDropdownItems(options: any[]): IDropDownOptionType[] {
-    const dropDownItems = [];
-    for (const option of options) {
-      if (option.unselectable) {
-        continue;
-      }
-      const dropdownItem = convertOptionToDropdownItem(option);
-      dropDownItems.push(dropdownItem);
-    }
-    return dropDownItems;
-  }
-
-  function convertOptionToDropdownItem(option: ISelected): IDropDownOptionType {
-    if (option.internalName && option.title) {
-      return {
-        value: option.internalName,
-        label: option.title,
-      };
-    }
-    return {
-      value: "",
-      label: "",
-    };
-  }
-
-  const handleProjectTypeChange = (option: IDropDownOptionType) => {
+  const setSelectedProjectType = (option: IDropDownOptionType) => {
     const projectTypeOption = projectTypesOptions.find((proj: IOption) => proj.internalName === option.value);
     if (projectTypeOption) {
       const { title, internalName, version, author, licenses, icon } = projectTypeOption;
@@ -73,7 +47,7 @@ const SelectProjectTypes = (props: Props) => {
           <div className={rightsidebarStyles.title}>{formatMessage(messages.selectProjectTypes)}</div>
           <Dropdown
             handleChange={(dropDrownItem: IDropDownOptionType) => {
-              handleProjectTypeChange(dropDrownItem);
+              setSelectedProjectType(dropDrownItem);
             }}
             ariaLabel={formatMessage(messages.selectProjectTypes)}
             options={projectTypesDropdownItems}

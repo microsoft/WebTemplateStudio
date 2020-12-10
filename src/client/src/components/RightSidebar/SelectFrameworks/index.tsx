@@ -9,10 +9,9 @@ import {
   setSelectedBackendFrameworkAction,
 } from "../../../store/userSelection/frameworks/action";
 
-import { ISelected } from "../../../types/selected";
 import { IOption } from "../../../types/option";
 
-import Dropdown from "../../../components/Dropdown";
+import Dropdown, { convertOptionsToDropdownItems, convertOptionToDropdownItem } from "../../../components/Dropdown";
 
 import rightsidebarStyles from "../rightsidebarStyles.module.css";
 import messages from "./messages";
@@ -35,31 +34,6 @@ const SelectFrameworks = (props: Props) => {
   const { backendOptions } = contentOptions;
 
   const dispatch = useDispatch();
-
-  function convertOptionsToDropdownItems(options: any[]): IDropDownOptionType[] {
-    const dropDownItems = [];
-    for (const option of options) {
-      if (option.unselectable) {
-        continue;
-      }
-      const dropdownItem = convertOptionToDropdownItem(option);
-      dropDownItems.push(dropdownItem);
-    }
-    return dropDownItems;
-  }
-
-  function convertOptionToDropdownItem(option: ISelected): IDropDownOptionType {
-    if (option.internalName && option.title) {
-      return {
-        value: option.internalName,
-        label: option.title,
-      };
-    }
-    return {
-      value: "",
-      label: "",
-    };
-  }
 
   const handleBackEndFrameworkChange = (option: IDropDownOptionType) => {
     const optionBackEnd = backendOptions.find((optionBack: IOption) => optionBack.internalName === option.value);
