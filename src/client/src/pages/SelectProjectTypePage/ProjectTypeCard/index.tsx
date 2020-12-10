@@ -14,7 +14,7 @@ import { ReactComponent as Check } from "../../../assets/check.svg";
 import Icon from "../../../components/Icon";
 
 import classNames from "classnames";
-import messages from "./messages";
+import messages from "../../messages";
 import cardStyles from "../../cardStyles.module.css";
 import pageStyles from "../../cardStyles.module.css";
 
@@ -34,7 +34,6 @@ const ProjectTypeCard = (props: Props) => {
     dispatch(setSelectedProjectTypeAction(projectType));
   };
 
-  //TODO: UPDATE PAGES if they may change by project type
   const selectCardIfEnterOrSpace = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const isSelectableCard = event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE;
     if (isSelectableCard) {

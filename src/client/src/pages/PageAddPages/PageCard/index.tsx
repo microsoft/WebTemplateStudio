@@ -14,7 +14,7 @@ import { mapStateToProps } from "./store";
 import { ReactComponent as Plus } from "../../../assets/plus.svg";
 import Icon from "../../../components/Icon";
 
-import messages from "./messages";
+import messages from "../../messages";
 import classNames from "classnames";
 import styles from "./styles.module.css";
 import cardStyles from "../../cardStyles.module.css";

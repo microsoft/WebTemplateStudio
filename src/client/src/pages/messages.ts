@@ -2,7 +2,7 @@ import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
   Preview: {
-    id: "projectTypeCard.details",
+    id: "pages.preview",
     defaultMessage: "Preview",
   },
 });
