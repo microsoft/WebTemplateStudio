@@ -21,6 +21,12 @@ jest.mock("../../../components/Dropdown", () => {
       if (props.handleChange) props.handleChange(drop);
       return <div></div>;
     },
+    convertOptionToDropdownItem: () => {
+      return "";
+    },
+    convertOptionsToDropdownItems: () => {
+      return "";
+    },
   };
 });
 
@@ -42,7 +48,6 @@ describe("SelectFrameworks", () => {
 
       store = mockStore(initialState);
       wrapper = renderWithStore(<SelectFrameworks />, store);
-
     });
 
     it("renders without crashing", () => {

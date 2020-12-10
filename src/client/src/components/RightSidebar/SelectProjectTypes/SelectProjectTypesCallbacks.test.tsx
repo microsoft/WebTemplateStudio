@@ -3,11 +3,7 @@ import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import SelectProjectTypes from "./index";
 import * as ReactRedux from "react-redux";
-import {
-  addProjectTypeOptions,
-  getInitialState,
-  setSelectedProjectTypeAction,
-} from "../../../mockData/mockStore";
+import { addProjectTypeOptions, getInitialState, setSelectedProjectTypeAction } from "../../../mockData/mockStore";
 import { RenderResult } from "@testing-library/react";
 import { AppState } from "../../../store/combineReducers";
 import { IDropdownProps } from "../../../components/Dropdown";
@@ -20,11 +16,11 @@ jest.mock("../../../components/Dropdown", () => {
       if (props.handleChange) props.handleChange(drop);
       return <div></div>;
     },
-    convertOptionToDropdownItem:()=>{
-      return '';
+    convertOptionToDropdownItem: () => {
+      return "";
     },
-    convertOptionsToDropdownItems:()=>{
-      return '';
+    convertOptionsToDropdownItems: () => {
+      return "";
     },
   };
 });
@@ -45,7 +41,6 @@ describe("SelectProjectTypes", () => {
 
       store = mockStore(initialState);
       wrapper = renderWithStore(<SelectProjectTypes />, store);
-
     });
 
     it("renders without crashing", () => {
