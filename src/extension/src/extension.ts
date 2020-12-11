@@ -8,7 +8,7 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand("webTemplateStudioExtension.wizardLaunch.local", async () => {
       //TODO: Modify this to support React Native
       //TODO: PLATFORM.REACTNATIVE || PLATFORM.WEB
-      Controller.getInstance(context, PLATFORM.REACTNATIVE);
+      Controller.getInstance(context, PLATFORM.WEB);
     }),
     vscode.commands.registerCommand("webTemplateStudioExtension.deployApp.local", async () => {
       await Deploy.getInstance(context).deployProject();

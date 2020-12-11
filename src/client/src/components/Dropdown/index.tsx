@@ -32,6 +32,7 @@ const DropdownIndicator = (props: any) => {
   );
 };
 
+//TODO: send list and do conversions in this component
 export function convertOptionToDropdownItem(option: ISelected): IDropDownOptionType {
   if (option.internalName && option.title) {
     return {
