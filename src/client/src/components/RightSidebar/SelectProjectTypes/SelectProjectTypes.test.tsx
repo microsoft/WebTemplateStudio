@@ -12,8 +12,6 @@ import SelectProjectTypes from "./index";
 import { renderWithStore } from "../../../testUtils";
 import { AppState } from "../../../store/combineReducers";
 
-import messages from "./messages";
-
 describe("Select Project Types", () => {
   let wrapper: RenderResult;
   let store: any;
@@ -32,11 +30,6 @@ describe("Select Project Types", () => {
     it("renders without crashing", () => {
       expect(wrapper).toBeDefined();
     });
-
-    xit("should have messages", () => {
-      const expectedText = intl.formatMessage(messages.selectProjectTypes);
-      expect(wrapper.getByText(expectedText)).toBeDefined();
-    });
   });
 
   describe("No need to choose project type. Only one available", () => {
@@ -50,11 +43,6 @@ describe("Select Project Types", () => {
 
     it("renders without crashing", () => {
       expect(wrapper).toBeDefined();
-    });
-
-    xit("should not have message", () => {
-      const expectedText = intl.formatMessage(messages.selectProjectTypes);
-      expect(wrapper.getByText(expectedText)).not.toBeDefined();
     });
   });
 });

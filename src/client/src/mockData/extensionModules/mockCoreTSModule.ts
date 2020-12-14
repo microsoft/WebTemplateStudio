@@ -3,8 +3,8 @@ import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/com
 import * as mockWebData from "./mockData/mockWebPlatformData";
 import * as mockReactNativeData from "./mockData/mockReactNativePlatformData";
 
-//Change mock data to change platform
-const mockData = mockReactNativeData;
+//DEV:Change mock data to change platform
+const mockData = mockWebData;
 
 const getProjectTypes = (message: any) => {
   window.postMessage(

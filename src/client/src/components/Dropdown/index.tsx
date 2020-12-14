@@ -2,9 +2,8 @@ import * as React from "react";
 import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
 
 import Select, { components } from "react-select";
-import dropdownstyles from "./dropdownstyles";
-import { ISelected } from "../../types/selected";
 
+import dropdownstyles from "./dropdownstyles";
 import styles from "./styles.module.css";
 
 export interface IDropdownProps {
@@ -31,32 +30,6 @@ const DropdownIndicator = (props: any) => {
     )
   );
 };
-
-//TODO: send list and do conversions in this component
-export function convertOptionToDropdownItem(option: ISelected): IDropDownOptionType {
-  if (option.internalName && option.title) {
-    return {
-      value: option.internalName,
-      label: option.title,
-    };
-  }
-  return {
-    value: "",
-    label: "",
-  };
-}
-
-export function convertOptionsToDropdownItems(options: any[]): IDropDownOptionType[] {
-  const dropDownItems = [];
-  for (const option of options) {
-    if (option.unselectable) {
-      continue;
-    }
-    const dropdownItem = convertOptionToDropdownItem(option);
-    dropDownItems.push(dropdownItem);
-  }
-  return dropDownItems;
-}
 
 const Dropdown = ({
   options,

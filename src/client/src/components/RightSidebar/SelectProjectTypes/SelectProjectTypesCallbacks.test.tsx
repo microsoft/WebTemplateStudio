@@ -46,9 +46,5 @@ describe("SelectProjectTypes", () => {
     it("renders without crashing", () => {
       expect(wrapper).toBeDefined();
     });
-
-    xit("should change project type", () => {
-      expect(mockDispatch).toBeCalled();
-    });
   });
 });
