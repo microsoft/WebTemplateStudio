@@ -46,7 +46,7 @@ const SelectFrameworks = (props: Props) => {
   }, [storedFrontendFramework]);
 
   React.useEffect(() => {
-    const optionFrontEnd = frontendOptions.find((optionFront: IOption) => optionFront.internalName === storedFrontendFramework.internalName);
+    const optionFrontEnd = frontendOptions.find((optionFront: IOption) => optionFront.internalName === selectedFrontendFramework?.value);
     if (optionFrontEnd) {
       const { title, internalName, version, author, licenses, icon } = optionFrontEnd;
       const newFrontEndFramework = { title: title as string, internalName, version, author, licenses, icon };
@@ -62,7 +62,7 @@ const SelectFrameworks = (props: Props) => {
   }, [storedBackendFramework]);
 
   React.useEffect(() => {
-    const optionBackEnd = backendOptions.find((optionBack: IOption) => optionBack.internalName === storedBackendFramework.internalName);
+    const optionBackEnd = backendOptions.find((optionBack: IOption) => optionBack.internalName === selectedBackendFramework?.value);
     if (optionBackEnd) {
       const { title, internalName, version, author, licenses, icon } = optionBackEnd;
       const newBackEndFramework = { title: title as string, internalName, version, author, licenses, icon };
