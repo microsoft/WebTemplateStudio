@@ -12,9 +12,9 @@ export class WarningMessageComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
-  onWarningClose() {
+  onWarningClose(): void {
     this.text = '';
     this.open = false;
     this.warningMessageOpen.emit(this.open);
