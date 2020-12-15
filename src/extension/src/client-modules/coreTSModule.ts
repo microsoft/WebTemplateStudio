@@ -66,7 +66,9 @@ export class CoreTSModule extends WizardServant {
   }
 
   async getTemplateConfig(): Promise<IPayloadResponse> {
-    const payload = CoreTemplateStudio.GetExistingInstance().getTemplateConfig();
+    const templateConfig = CoreTemplateStudio.GetExistingInstance().getTemplateConfig();
+    const platformRequirements = await this.requirementsService.getPlatformsRequirements(templateConfig.platform);
+    const payload = { ...templateConfig, platformRequirements };
     return { payload };
   }
 

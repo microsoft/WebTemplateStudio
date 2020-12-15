@@ -1,9 +1,13 @@
-import { CONSTANTS } from "../../constants/constants";
+import { CONSTANTS, PLATFORM } from "../../constants/constants";
 import NodeChecker from "./validators/nodeValidator";
 import PythonChecker from "./validators/pythonValidator";
 import NetCoreChecker from "./validators/netCoreValidator";
+import path = require("path");
+import { Controller } from "../../controller";
+import util = require("util");
 
 export default class RequirementsService {
+  private exec = util.promisify(require("child_process").exec);
   private validators: Map<string, IRequirementValidator>;
 
   constructor() {
@@ -17,6 +21,43 @@ export default class RequirementsService {
   public async isInstalled(requirementName: string, minVersion: string) {
     const requirementValidator = this.validators.get(requirementName);
     const result = requirementValidator ? await requirementValidator.isInstalled(minVersion) : false;
+    return result;
+  }
+
+  public async getPlatformsRequirements(platform: PLATFORM): Promise<IPlatformRequirement[]> {
+    if(platform === PLATFORM.REACTNATIVE) {
+      return await this.getReactNativeRequirements();
+    }
+    return [];
+  }
+
+  private async getReactNativeRequirements(): Promise<IPlatformRequirement[]> {
+    try {
+      const extensionPath = Controller.vsContext.extensionPath;
+      const scriptPath = path.join(extensionPath, "src", "scripts", "rnw-dependencies.ps1");
+      const command = `powershell.exe -File ${scriptPath} -NoPrompt`;
+      const { stdout } = await this.exec(command);
+
+      const requirements = this.parsePlatformsRequirements(stdout);
+      return requirements;
+    } catch (err) {
+      return [];
+    }
+  }
+
+  private parsePlatformsRequirements(requirements: string): IPlatformRequirement[] {
+    const result:IPlatformRequirement[] = [];
+    const lines = requirements.split("\n");
+
+    for (const line of lines) {
+      const requirement = line.match(/(.*)(ok|(failed))$/i);
+      if (requirement && requirement.length > 2) {
+        result.push({
+          name: requirement[1].trim().replace("Checking ", ""),
+          isInstalled: requirement[2] === "OK",
+        });
+      }
+    }
     return result;
   }
 }
