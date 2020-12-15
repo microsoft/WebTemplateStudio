@@ -1,5 +1,6 @@
 {
-  "webTemplateStudioExtension.commands.wts": "Web Template Studio (local)",
-  "webTemplateStudioExtension.commands.wizardLaunch": "Launch",
-  "webTemplateStudioExtension.commands.deployApp": "Deploy App"
+  "webTemplateStudioExtension.commands.category": "Web Template Studio (local)",
+  "webTemplateStudioExtension.commands.web.createApp": "Create Web App",
+  "webTemplateStudioExtension.commands.web.deployApp": "Deploy Web App",
+  "webTemplateStudioExtension.commands.reactNative.createApp": "Create React Native App"
 }
