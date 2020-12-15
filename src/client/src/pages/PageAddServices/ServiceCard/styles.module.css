@@ -63,17 +63,6 @@
   color: var(--vscode-textLink-foreground);
 }
 
-.link {
-  color: var(--vscode-textLink-foreground);
-  font-size: 15px;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.link:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
 .addButton {
   margin-left: 10px;
   font-size: var(--vscode-font-size);

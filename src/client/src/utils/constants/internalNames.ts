@@ -1,24 +1,4 @@
-const WIZARD_PROJECT_TYPE = {
-  FULL_STACK_APP: "FullStackWebApp",
-  RN_TABBED_APP: "Tabbed",
-  RN_DRAWER_APP: "Drawer",
-}
-
-const FRONTEND_FRAMEWORKS = {
-  REACT: "React",
-  ANGULAR: "Angular",
-  VUE: "Vue",
-  RN: "ReactNative",
-}
-
-const BACKEND_FRAMEWORKS = {
-  NODE: "Node",
-  MOLECULER: "Moleculer",
-  ASPNET: "AspNet",
-  FLASK: "Flask",
-}
-
-const PAGES={
+const PAGES = {
   REACT_BLANK_PAGE: "wts.Page.React.Blank",
   REACT_CONTENT_GRID: "wts.Page.React.Grid",
   REACT_MASTER_DETAIL: "wts.Page.React.MasterDetail",
@@ -41,10 +21,4 @@ const WIZARD_CONTENT_FEATURES = {
   COSMOS_DB_SQL: "wts.Feature.Azure.Cosmos.SQL",
 };
 
-export {
-  WIZARD_CONTENT_FEATURES,
-  WIZARD_PROJECT_TYPE,
-  FRONTEND_FRAMEWORKS,
-  BACKEND_FRAMEWORKS,
-  PAGES
-};
+export { WIZARD_CONTENT_FEATURES, PAGES };

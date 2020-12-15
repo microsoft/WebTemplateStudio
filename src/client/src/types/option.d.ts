@@ -9,7 +9,7 @@ export interface IOption {
   defaultName?: string;
   body: string | FM.MessageDescriptor;
   longDescription?: string | FM.MessageDescriptor;
-  position?: number;
+  order?: number;
   icon: string;
   licenses?: string[];
   selected?: boolean;

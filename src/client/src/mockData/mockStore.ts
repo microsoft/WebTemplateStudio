@@ -3,7 +3,14 @@ import { FormattedMessage } from "react-intl";
 import { AppState } from "../store/combineReducers";
 import { ModalType } from "../store/navigation/typeKeys";
 import { getNavItems } from "../utils/routes/routes";
-import { backendImage, frontendImage, pageImage, serviceImage } from "./extensionModules/mockData/mockSvgData";
+import {
+  backendImage,
+  frontendImage,
+  pageImage,
+  projectTypeImage,
+  serviceImage,
+} from "./extensionModules/mockData/mockSvgData";
+import { PLATFORM } from "../utils/constants/constants";
 
 export const getISelected = () => {
   const selected: ISelected = {
@@ -31,7 +38,7 @@ export const getInitialState = (): AppState => {
           internalName: "",
           body: "",
           longDescription: "",
-          position: 0,
+          order: 0,
           licenses: [],
           selected: false,
           author: "",
@@ -63,7 +70,7 @@ export const getInitialState = (): AppState => {
         subscriptions: [],
         email: "",
       },
-      platform: "Web",
+      platform: PLATFORM.WEB,
     },
     userSelection: {
       frontendFramework: {
@@ -108,7 +115,11 @@ export const getInitialState = (): AppState => {
           isDirty: true,
         },
       },
-      projectType: "",
+      projectType: {
+        title: "",
+        internalName: "",
+        icon: "",
+      },
       services: {
         cosmosDB: null,
         appService: null,
@@ -121,7 +132,7 @@ export const getInitialState = (): AppState => {
           modalData: null,
         },
       },
-      routesNavItems: getNavItems("Web"),
+      routesNavItems: getNavItems(PLATFORM.WEB),
     },
   };
   return initialState;
@@ -261,6 +272,22 @@ const getSubscriptionsSelector = (): Array<Subscription> => {
   return subscriptions;
 };
 
+export const addProjectTypeOptions = (store: AppState) => {
+  store.templates.projectTypesOptions = [
+    {
+      internalName: "Tabbed",
+      title: "Tabbed",
+      body: "Tabbed",
+      longDescription: "Tabbed",
+      order: 1,
+      icon: projectTypeImage,
+      licenses: [
+        "[React](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)",
+      ],
+    },
+  ];
+};
+
 export const addFrontEndFrameworksOptions = (store: AppState) => {
   store.templates.frontendOptions = [
     {
@@ -272,7 +299,7 @@ export const addFrontEndFrameworksOptions = (store: AppState) => {
       ],
       longDescription:
         "React is a component-based open source JavaScript library for building interfaces for single page applications. It is used for handling view layer for web and mobile apps. React allows you to design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.  \r\n\r\n  \r\nMore information about React can be found [here](https://reactjs.org).\r\n",
-      position: 1,
+      order: 1,
       selected: false,
       icon: frontendImage,
       title: "React",
@@ -294,7 +321,7 @@ export const addFrontEndFrameworksOptions = (store: AppState) => {
       ],
       longDescription:
         "Angular is a platform that makes it easy to build applications with the web. Angular combines declarative templates, dependency injection, end to end tooling, and integrated best practices to solve development challenges. Angular empowers developers to build applications that live on the web, mobile, or the desktop.\r\n\r\nMore information about Angular can be found [here](https://angular.io).\r\n",
-      position: 1,
+      order: 1,
       selected: false,
       icon: frontendImage,
       title: "Angular",
@@ -316,7 +343,7 @@ export const addFrontEndFrameworksOptions = (store: AppState) => {
       ],
       longDescription:
         "Vue is a lightweight, progressive JavaScript framework for building user interfaces. Vue is heavily focused on the view layer, and is designed to be simple and flexible.\r\n\r\nMore information about Vue can be found [here](https://vuejs.org/).\r\n",
-      position: 1,
+      order: 1,
       selected: false,
       icon: frontendImage,
       title: "Vue.js",
@@ -346,7 +373,7 @@ export const addBackEndFrameworksOptions = (store: AppState) => {
       ],
       longDescription:
         "Node.js is an open source server environment based on JavaScript that helps you build fast and scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices. Node.js runs across various platforms like Windows, Linux, Unix, and Mac OS X.\r\n\r\nMore information about Node.js can be found [here](https://nodejs.org).\r\n",
-      position: 1,
+      order: 1,
       selected: false,
       icon: backendImage,
       title: "Node.js/Express",
@@ -383,7 +410,7 @@ export const addBackEndFrameworksOptions = (store: AppState) => {
       licenses: ["[Flask](https://github.com/pallets/flask/blob/master/LICENSE)"],
       longDescription:
         "Flask is a python microframework with a small core for building web applications. It is based on [Werkzeug](https://www.palletsprojects.com/p/werkzeug/) and [Jinja](https://www.palletsprojects.com/p/jinja/). It is licensed under [BSD](https://github.com/pallets/flask/blob/master/LICENSE) license.\r\nIt is developed and supported by Pallets organization.\r\n\r\nMore information on Flask can be found [here](http://flask.pocoo.org/)\r\n",
-      position: 1,
+      order: 1,
       selected: false,
       icon: backendImage,
       title: "Flask",
@@ -402,7 +429,7 @@ export const addBackEndFrameworksOptions = (store: AppState) => {
       internalName: "AspNet",
       licenses: ["[AspNet](https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt)"],
       longDescription: "ASP.NET long description",
-      position: 1,
+      order: 1,
       selected: false,
       icon: backendImage,
       title: "ASP.NET",
@@ -442,6 +469,10 @@ export const setBackendFramework = (store: AppState, internalName: string) => {
 
 export const setFrontendFramework = (store: AppState, internalName: string) => {
   store.userSelection.frontendFramework.internalName = internalName;
+};
+
+export const setSelectedProjectTypeAction = (store: AppState, internalName: string) => {
+  store.userSelection.projectType.internalName = internalName;
 };
 
 export const setOpenModal = (store: AppState, modalType: ModalType) => {

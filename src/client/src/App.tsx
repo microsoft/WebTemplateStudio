@@ -12,12 +12,13 @@ import { NAVIGATION_MODAL_TYPES } from "./store/navigation/typeKeys";
 import RightSidebar from "./components/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
 import { loadAction } from "./store/config/config/action";
-import loadable from '@loadable/component'
+import loadable from "@loadable/component";
 import { getSelectedRoute } from "./store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 
 const PageSelectFrameworks = loadable(
   () => import(/* webpackChunkName: "PageSelectFrameworks" */ "./pages/PageSelectFrameworks")
 );
+const SelectProjectTypePage = loadable(() => import(/* webpackChunkName: "SelectProjectTypePage" */ "./pages/SelectProjectTypePage"));
 const PageAddPages = loadable(() => import(/* webpackChunkName: "PageAddPages" */ "./pages/PageAddPages"));
 const PageReviewAndGenerate = loadable(
   () => import(/* webpackChunkName: "PageReviewAndGenerate" */ "./pages/PageReviewAndGenerate")
@@ -80,15 +81,17 @@ const App = (props: Props) => {
             <HomeSplashSVG className={classnames(appStyles.splash, appStyles.homeSplash)} />
           ) : null}
 
+
           {selectedRoute === ROUTE.REVIEW_AND_GENERATE ? (
             <SummarySplashSVG className={classnames(appStyles.splash, appStyles.summarySplash)} />
-          ) : null}
+            ) : null}
 
           {isDetailPageVisible && <PageDetails />}
+          {!isDetailPageVisible && selectedRoute === ROUTE.SELECT_PROJECT_TYPE && <SelectProjectTypePage />}
+          {!isDetailPageVisible && selectedRoute === ROUTE.ADD_PAGES && <PageAddPages isModal={false} />}
+          {!isDetailPageVisible && selectedRoute === ROUTE.SELECT_FRAMEWORKS && <PageSelectFrameworks />}
           {!isDetailPageVisible && selectedRoute === ROUTE.ADD_SERVICES && <PageAddServices />}
           {!isDetailPageVisible && selectedRoute === ROUTE.REVIEW_AND_GENERATE && <PageReviewAndGenerate />}
-          {!isDetailPageVisible && selectedRoute === ROUTE.SELECT_FRAMEWORKS && <PageSelectFrameworks />}
-          {!isDetailPageVisible && selectedRoute === ROUTE.ADD_PAGES && <PageAddPages isModal={false} />}
           {!isDetailPageVisible && selectedRoute === ROUTE.NEW_PROJECT && <PageNewProject />}
         </main>
         <RightSidebar />
