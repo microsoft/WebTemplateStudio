@@ -18,7 +18,7 @@ export class Param_SourceName_PascalComponent implements OnInit {
 
   constructor(private gridService: Param_SourceName_PascalService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.gridItems$ = this.gridService.getGridItems().pipe(catchError((error) => {
       this.warningMessageText =  `Request to get grid text failed: ${error}`;
       this.warningMessageOpen = true;
@@ -26,7 +26,7 @@ export class Param_SourceName_PascalComponent implements OnInit {
     }));
   }
 
-  handleWarningClose(open: boolean) {
+  handleWarningClose(open: boolean): void {
     this.warningMessageOpen = open;
     this.warningMessageText = '';
   }
