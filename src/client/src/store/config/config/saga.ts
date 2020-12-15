@@ -53,6 +53,10 @@ export function* loadTemplatesSaga(vscode: any) {
       },
     });
     yield put({
+      payload: messageTemplateInfo.payload.platform,
+      type: CONFIG_TYPEKEYS.SELECT_WEB_APP,
+    });
+    yield put({
       payload: messageTemplateInfo.payload.preview,
       type: CONFIG_TYPEKEYS.SET_PREVIEW_STATUS,
     });
@@ -152,7 +156,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
 }
 
 export function* loadroutesNavItemsaSaga() {
-  yield takeEvery(CONFIG_TYPEKEYS.LOAD, callBack);
+  yield takeEvery(CONFIG_TYPEKEYS.SELECT_WEB_APP, callBack);
 
   function* callBack() {
     const platform = yield select((state: AppState) => state.config.platform);
@@ -163,6 +167,7 @@ export function* loadroutesNavItemsaSaga() {
     });
   }
 }
+
 export function* resetWizardSaga() {
   yield takeEvery(CONFIG_TYPEKEYS.RESET_WIZARD, callBack);
 

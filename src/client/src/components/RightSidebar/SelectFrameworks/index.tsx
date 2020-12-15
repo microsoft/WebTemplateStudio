@@ -1,18 +1,20 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { AppState } from "../../../store/combineReducers";
-import { UserSelectionState } from "../../../store/userSelection/combineReducers";
 import { TemplateType } from "../../../store/templates/combineReducers";
 import {
   setSelectedFrontendFrameworkAction,
   setSelectedBackendFrameworkAction,
 } from "../../../store/userSelection/frameworks/action";
 
-import { ISelected } from "../../../types/selected";
 import { IOption } from "../../../types/option";
 
 import Dropdown from "../../../components/Dropdown";
+import {
+  getDropdownBackendFrameworksSelector,
+  getDropdownFrontendFrameworksSelector,
+} from "../../../store/templates/frameworks/selector";
 
 import rightsidebarStyles from "../rightsidebarStyles.module.css";
 import messages from "./messages";
@@ -20,90 +22,83 @@ import messages from "./messages";
 type Props = InjectedIntlProps;
 
 const SelectFrameworks = (props: Props) => {
-  const selection: UserSelectionState = useSelector((state: AppState) => state.userSelection);
-  const frontendOptions: IOption[] = useSelector((state: AppState) => state.templates.frontendOptions);
-  const frontendDropdownItems: IDropDownOptionType[] = useSelector((state: AppState) =>
-    convertOptionsToDropdownItems(state.templates.frontendOptions)
-  );
-  const backendDropdownItems: IDropDownOptionType[] = useSelector((state: AppState) =>
-    convertOptionsToDropdownItems(state.templates.backendOptions)
-  );
+  const storedFrontendFramework = useSelector((state: AppState) => state.userSelection.frontendFramework);
+  const storedBackendFramework = useSelector((state: AppState) => state.userSelection.backendFramework);
   const contentOptions: TemplateType = useSelector((state: AppState) => state.templates);
+  const frontendFrameworks = useSelector((state: AppState) => getDropdownFrontendFrameworksSelector(state));
+  const backendFrameworks = useSelector((state: AppState) => getDropdownBackendFrameworksSelector(state));
+
+  const [selectedFrontendFramework, setSelectedFrontendFramework] = useState<IDropDownOptionType | undefined>(
+    undefined
+  );
+  const [selectedBackendFramework, setSelectedBackendFramework] = useState<IDropDownOptionType | undefined>(undefined);
 
   const { intl } = props;
   const { formatMessage } = intl;
-  const { backendOptions } = contentOptions;
-
+  const { backendOptions, frontendOptions } = contentOptions;
   const dispatch = useDispatch();
 
-  function convertOptionsToDropdownItems(options: any[]): IDropDownOptionType[] {
-    const dropDownItems = [];
-    for (const option of options) {
-      if (option.unselectable) {
-        continue;
-      }
-      const dropdownItem = convertOptionToDropdownItem(option);
-      dropDownItems.push(dropdownItem);
+  React.useEffect(() => {
+    const frontendFramework = frontendFrameworks.find((s) => s.value === storedFrontendFramework.internalName);
+    if (frontendFramework && frontendFramework !== selectedFrontendFramework) {
+      setSelectedFrontendFramework(frontendFramework);
     }
-    return dropDownItems;
-  }
+  }, [storedFrontendFramework]);
 
-  function convertOptionToDropdownItem(option: ISelected): IDropDownOptionType {
-    if (option.internalName && option.title) {
-      return {
-        value: option.internalName,
-        label: option.title,
-      };
-    }
-    return {
-      value: "",
-      label: "",
-    };
-  }
-
-  const handleBackEndFrameworkChange = (option: IDropDownOptionType) => {
-    const optionBackEnd = backendOptions.find((optionBack: IOption) => optionBack.internalName === option.value);
-    if (optionBackEnd) {
-      const { title, internalName, version, author, licenses, icon } = optionBackEnd;
-      const newBackEndFramework = { title: title as string, internalName, version, author, licenses, icon };
-      dispatch(setSelectedBackendFrameworkAction(newBackEndFramework));
-    }
-  };
-
-  const handleFrontEndFrameworkChange = (option: IDropDownOptionType) => {
-    const optionFrontEnd = frontendOptions.find((optionFront: IOption) => optionFront.internalName === option.value);
-    if (optionFrontEnd) {
+  React.useEffect(() => {
+    const optionFrontEnd = frontendOptions.find(
+      (optionFront: IOption) => optionFront.internalName === selectedFrontendFramework?.value
+    );
+    if (optionFrontEnd && optionFrontEnd.internalName !== storedFrontendFramework.internalName) {
       const { title, internalName, version, author, licenses, icon } = optionFrontEnd;
       const newFrontEndFramework = { title: title as string, internalName, version, author, licenses, icon };
       dispatch(setSelectedFrontendFrameworkAction(newFrontEndFramework));
     }
-  };
+  }, [selectedFrontendFramework]);
+
+  React.useEffect(() => {
+    const backendFramework = backendFrameworks.find((s) => s.value === storedBackendFramework.internalName);
+    if (backendFramework && backendFramework !== selectedBackendFramework) {
+      setSelectedBackendFramework(backendFramework);
+    }
+  }, [storedBackendFramework]);
+
+  React.useEffect(() => {
+    const optionBackEnd = backendOptions.find(
+      (optionBack: IOption) => optionBack.internalName === selectedBackendFramework?.value
+    );
+    if (optionBackEnd && optionBackEnd.internalName !== storedBackendFramework.internalName) {
+      const { title, internalName, version, author, licenses, icon } = optionBackEnd;
+      const newBackEndFramework = { title: title as string, internalName, version, author, licenses, icon };
+      dispatch(setSelectedBackendFrameworkAction(newBackEndFramework));
+    }
+  }, [selectedBackendFramework]);
 
   return (
     <>
-      {frontendOptions.length > 1 && selection.frontendFramework.internalName !== "" && (
+      {frontendOptions.length > 1 && selectedFrontendFramework && selectedFrontendFramework.value !== "" && (
         <div className={rightsidebarStyles.sidebarItem}>
           <div className={rightsidebarStyles.title}>{formatMessage(messages.frontendFramework)}</div>
           <Dropdown
-            handleChange={(dropDrownItem: IDropDownOptionType) => {
-              handleFrontEndFrameworkChange(dropDrownItem);
+            handleChange={(selectedFrontendFramework) => {
+              setSelectedFrontendFramework(selectedFrontendFramework);
             }}
             ariaLabel={formatMessage(messages.frontendFramework)}
-            options={frontendDropdownItems}
-            value={convertOptionToDropdownItem(selection.frontendFramework)}
+            options={frontendFrameworks}
+            value={selectedFrontendFramework}
           />
         </div>
       )}
-      {backendOptions.length > 1 && selection.backendFramework.internalName !== "" && (
+      {backendOptions.length > 1 && selectedBackendFramework && selectedBackendFramework.value !== "" && (
         <div className={rightsidebarStyles.sidebarItem}>
           <div className={rightsidebarStyles.title}>{formatMessage(messages.backendFramework)}</div>
           <Dropdown
-            handleChange={(dropDrownItem: IDropDownOptionType) => {
-              handleBackEndFrameworkChange(dropDrownItem);
+            handleChange={(selectedBackendFramework) => {
+              setSelectedBackendFramework(selectedBackendFramework);
             }}
             ariaLabel={formatMessage(messages.backendFramework)}
-            options={backendDropdownItems}
-            value={convertOptionToDropdownItem(selection.backendFramework)}
+            options={backendFrameworks}
+            value={selectedBackendFramework}
           />
         </div>
       )}

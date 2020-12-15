@@ -1,15 +1,10 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { AppState } from "../../../store/combineReducers";
-import { UserSelectionState } from "../../../store/userSelection/combineReducers";
 import { TemplateType } from "../../../store/templates/combineReducers";
-import {
-  setSelectedProjectTypeAction,
-} from "../../../store/userSelection/projectType/action";
-
-import { ISelected } from "../../../types/selected";
-import { IOption } from "../../../types/option";
+import { setSelectedProjectTypeAction } from "../../../store/userSelection/projectType/action";
+import { getDropdownProjectTypeSelector } from "../../../store/templates/projectTypes/selector";
 
 import Dropdown from "../../../components/Dropdown";
 
@@ -19,65 +14,46 @@ import messages from "./messages";
 type Props = InjectedIntlProps;
 
 const SelectProjectTypes = (props: Props) => {
-  const selection: UserSelectionState = useSelector((state: AppState) => state.userSelection);
-  const projectTypesDropdownItems: IDropDownOptionType[] = useSelector((state: AppState) =>
-    convertOptionsToDropdownItems(state.templates.projectTypesOptions)
-  );
-
+  const storedProjectType = useSelector((state: AppState) => state.userSelection.projectType);
   const contentOptions: TemplateType = useSelector((state: AppState) => state.templates);
+  const projectTypes = useSelector(getDropdownProjectTypeSelector);
+
+  const [selectedProjectType, setSelectedProjectType] = useState<IDropDownOptionType | undefined>(undefined);
 
   const { intl } = props;
   const { formatMessage } = intl;
   const { projectTypesOptions } = contentOptions;
-
   const dispatch = useDispatch();
 
-  function convertOptionsToDropdownItems(options: any[]): IDropDownOptionType[] {
-    const dropDownItems = [];
-    for (const option of options) {
-      if (option.unselectable) {
-        continue;
+  React.useEffect(() => {
+    const projectType = projectTypes.find((s) => s.value === storedProjectType.internalName);
+    if (projectType && projectType !== selectedProjectType) {
+      setSelectedProjectType(projectType);
+    }
+  }, [storedProjectType]);
+
+  React.useEffect(() => {
+    if (selectedProjectType) {
+      const projectTypeOption = projectTypesOptions.find((proj) => proj.internalName === selectedProjectType.value);
+      if (projectTypeOption && projectTypeOption.internalName !== storedProjectType.internalName) {
+        const { title, internalName, version, author, licenses, icon } = projectTypeOption;
+        const newProjectType = { title: title as string, internalName, version, author, licenses, icon };
+
+        dispatch(setSelectedProjectTypeAction(newProjectType));
       }
-      const dropdownItem = convertOptionToDropdownItem(option);
-      dropDownItems.push(dropdownItem);
     }
-    return dropDownItems;
-  }
-
-  function convertOptionToDropdownItem(option: ISelected): IDropDownOptionType {
-    if (option.internalName && option.title) {
-      return {
-        value: option.internalName,
-        label: option.title,
-      };
-    }
-    return {
-      value: "",
-      label: "",
-    };
-  }
-
-  const handleProjectTypeChange = (option: IDropDownOptionType) => {
-    const projectTypeOption = projectTypesOptions.find((proj: IOption) => proj.internalName === option.value);
-    if (projectTypeOption) {
-      const { title, internalName, version, author, licenses, icon } = projectTypeOption;
-      const newProjectType = { title: title as string, internalName, version, author, licenses, icon };
-      dispatch(setSelectedProjectTypeAction(newProjectType));
-    }
-  };
+  }, [selectedProjectType]);
 
   return (
     <>
-      {projectTypesOptions.length > 1 && selection.projectType.internalName !== "" && (
+      {projectTypesOptions.length > 1 && storedProjectType.internalName !== "" && (
         <div className={rightsidebarStyles.sidebarItem}>
           <div className={rightsidebarStyles.title}>{formatMessage(messages.selectProjectTypes)}</div>
           <Dropdown
-            handleChange={(dropDrownItem: IDropDownOptionType) => {
-              handleProjectTypeChange(dropDrownItem);
-            }}
+            handleChange={(projectType) => setSelectedProjectType(projectType)}
             ariaLabel={formatMessage(messages.selectProjectTypes)}
-            options={projectTypesDropdownItems}
-            value={convertOptionToDropdownItem(selection.projectType)}
+            options={projectTypes}
+            value={selectedProjectType}
           />
         </div>
       )}

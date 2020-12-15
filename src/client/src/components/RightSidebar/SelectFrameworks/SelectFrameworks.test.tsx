@@ -25,8 +25,8 @@ describe("SelectFrameworks", () => {
       const initialState: AppState = getInitialState();
       addFrontEndFrameworksOptions(initialState);
       addBackEndFrameworksOptions(initialState);
-      setBackendFramework(initialState, "React");
-      setFrontendFramework(initialState, "Node");
+      setFrontendFramework(initialState, "React");
+      setBackendFramework(initialState, "Node");
 
       store = mockStore(initialState);
       wrapper = renderWithStore(<SelectFrameworks />, store);
@@ -48,7 +48,7 @@ describe("SelectFrameworks", () => {
     beforeEach(() => {
       const initialState: AppState = getInitialState();
       addFrontEndFrameworksOptions(initialState);
-      setFrontendFramework(initialState,"Node");
+      setFrontendFramework(initialState,"React");
 
       store = mockStore(initialState);
       wrapper = renderWithStore(<SelectFrameworks />, store);

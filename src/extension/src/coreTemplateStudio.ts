@@ -11,7 +11,6 @@ import { EventEmitter } from "events";
 import { IEngineGenerationPayloadType } from "./types/engineGenerationPayloadType";
 import { ISyncPayloadType } from "./types/syncPayloadType";
 import { IEngineGenerationTemplateType } from "./types/engineGenerationTemplateType";
-import { ENVIRONMENT, PLATFORM } from "./constants/constants";
 
 class CliEventEmitter extends EventEmitter {}
 
@@ -149,11 +148,7 @@ export class CoreTemplateStudio {
     return CoreTemplateStudio._templateConfig;
   }
 
-  public async getPages(
-    projectType: string,
-    frontendFramework: string,
-    backendFramework: string
-  ): Promise<any> {
+  public async getPages(projectType: string, frontendFramework: string, backendFramework: string): Promise<any> {
     let getPagesCommand = `${CLI.GET_PAGES} -p ${projectType} `;
     if (frontendFramework !== "") {
       getPagesCommand = getPagesCommand.concat(`-f ${frontendFramework} `);
@@ -163,10 +158,7 @@ export class CoreTemplateStudio {
     }
     getPagesCommand = getPagesCommand.concat(`\n`);
 
-    return this.awaitCliEvent(
-      CLI.GET_PAGES_RESULT,
-      getPagesCommand
-    );
+    return this.awaitCliEvent(CLI.GET_PAGES_RESULT, getPagesCommand);
   }
 
   public async getAllLicenses(generationData: IGenerationData): Promise<any> {
@@ -208,10 +200,6 @@ export class CoreTemplateStudio {
   private makeEngineGenerationPayload(payload: IGenerationData): IEngineGenerationPayloadType {
     const { projectName, path, projectType, frontendFramework, backendFramework, pages, services } = payload;
 
-    //TODO: this will need to be set from the command
-    const devPlatform = PLATFORM.REACTNATIVE;
-    const platform = (process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT) ? devPlatform : PLATFORM.REACTNATIVE;
-
     return {
       projectName: projectName,
       genPath: path,
@@ -219,7 +207,7 @@ export class CoreTemplateStudio {
       frontendFramework: frontendFramework,
       backendFramework: backendFramework,
       language: "Any",
-      platform: platform,
+      platform: CoreTemplateStudio._templateConfig.platform,
       homeName: "Test",
       pages: pages.map((page: any) => ({
         name: page.name,

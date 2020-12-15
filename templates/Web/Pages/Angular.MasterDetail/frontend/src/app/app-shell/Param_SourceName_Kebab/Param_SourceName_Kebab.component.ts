@@ -19,7 +19,7 @@ export class Param_SourceName_PascalComponent implements OnInit {
 
   constructor(private masterDetailService: Param_SourceName_PascalService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.sampleOrders$ = this.masterDetailService.getMasterDetailItems().pipe(catchError((error) => {
       this.warningMessageText = `Request to get master detail text failed: ${error}`;
       this.warningMessageOpen = true;
@@ -30,11 +30,11 @@ export class Param_SourceName_PascalComponent implements OnInit {
     }));
   }
 
-  selectSampleOrder(sampleOrder: ISampleOrder) {
+  selectSampleOrder(sampleOrder: ISampleOrder): void {
     this.currentSampleOrder = sampleOrder;
   }
 
-  handleWarningClose(open: boolean) {
+  handleWarningClose(open: boolean): void {
     this.warningMessageOpen = open;
     this.warningMessageText = '';
   }

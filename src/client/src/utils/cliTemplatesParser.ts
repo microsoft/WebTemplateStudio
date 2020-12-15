@@ -37,7 +37,7 @@ export const getProjectTypesOptions = (json: any[]): IOption[] => {
     body: val.summary,
     order: val.order,
     licenses: val.licenses,
-    longDescription: val.summary,
+    longDescription: val.longDescription,
     selected: val.selected,
     icon: val.icon,
   }));
@@ -88,8 +88,6 @@ export const getFeaturesOptions = (json: any[]): IOption[] => {
   return stored;
 };
 
-//TODO: Review is they are not needed for projectType if we shold add another type
-//TODO: rather than using: IApiTemplateInfo
 const getProjectTypeTemplateInfo = (items: any[]): IApiTemplateInfo[] => {
   return items.map<IApiTemplateInfo>((val) => ({
     author: val.author,

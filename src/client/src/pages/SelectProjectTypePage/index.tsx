@@ -13,9 +13,6 @@ type Props = IStoreProps & InjectedIntlProps;
 
 const SelectProjectTypePage = (props: Props) => {
   const { options, intl } = props;
-  //TOOD: THIS options VS SELECTOR
-  // const projectTypesOptions = useSelector((state: AppState) => state.templates.projectTypesOptions);
-  // {projectTypesOptions.map((projectType, index) => {
 
   return (
     <div>
