@@ -13,7 +13,7 @@ export class Param_SourceName_PascalService {
   constructor(private http: HttpClient) {}
 
   // see https://angular.io/guide/http#getting-error-details
-  private handleError(error: HttpErrorResponse) {
+  private handleError(error: HttpErrorResponse): Observable<never> {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
