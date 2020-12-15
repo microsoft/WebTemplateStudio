@@ -30,10 +30,10 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
     );
   };
   const ParagraphRenderer = (props: any) => (
-    <React.Fragment>
+    <>
       <p className={styles.longDescription}>{props.children}</p>
       <br />
-    </React.Fragment>
+    </>
   );
   const keyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
@@ -67,7 +67,7 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
   };
 
   return (
-    <React.Fragment>
+    <>
       <div className={styles.container}>
         <div className={styles.backContainer}>
           <div
@@ -142,7 +142,7 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
           </div>
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

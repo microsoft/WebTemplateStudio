@@ -63,6 +63,7 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
         },
         frontendFramework: frontendOptions[0],
         backendFramework: backendOptions[0],
+        projectType: projectTypesOptions[0],
         pages: [blankSelect],
       },
       templates: { backendOptions, frontendOptions, pageOptions, featureOptions, projectTypesOptions },

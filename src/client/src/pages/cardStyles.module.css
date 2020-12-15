@@ -1,0 +1,110 @@
+.container {
+    margin-right: 12px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    padding: 12px;
+    background-color: hsla(0, 0%, 47%, 0.2);
+  }
+
+.container:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+  border: 0.5px solid var(--vscode-contrastActiveBorder);
+}
+
+.container:focus:not([data-focus-visible-added]) {
+  outline: none;
+  border: none;
+}
+
+.innerContent{
+  display: flex;
+  flex-direction: column;
+  height: inherit;
+}
+
+.boundingBox {
+  width: 230px;
+  height: 200px;
+  margin: 0px 30px 30px 0px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.gridLayoutCardHeader {
+  display: grid;
+  grid-template-columns: 3rem auto 3rem;
+  max-height: 50px;
+  width: 17rem;
+}
+
+.gridLayoutCardHeader .title {
+  margin-left: 1rem;
+  margin-top: 0.2rem;
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+
+.description {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  flex: 1; /* fill remaining space */
+}
+/*
+  margin-top: 1rem;
+  height: 9rem;
+*/
+
+.selected {
+  border: none;
+  outline: 3px solid var(--vscode-editor-foreground);
+}
+
+.selected:focus {
+  border: none;
+  outline: 3px solid var(--vscode-contrastActiveBorder);
+}
+
+.selected:focus:not([data-focus-visible-added]) {
+  border: none;
+  outline: 3px solid var(--vscode-editor-foreground);
+}
+
+.version {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+.DependencyInfo {
+  margin-top: 1rem;
+  height: 4.5rem;
+}
+
+.iconCheckMark {
+  margin-left: 8px;
+  height: 18px;
+  width: 18px;
+  align-self: center;
+}
+
+.iconCheckMark path {
+  fill: var(--vscode-gitDecoration-untrackedResourceForeground);
+}
+
+.link {
+  color: var(--vscode-textLink-foreground);
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.gridLayoutCardFooter {
+  display: grid;
+  grid-template-columns: auto 3rem;
+  min-height: 30px;
+}

@@ -11,7 +11,7 @@
     "language": "Any",
     "type": "project",
     "wts.type": "project",
-    "wts.projecttype": "Tabbed|Drawer",
+    "wts.projecttype": "Tabbed|Drawer|Blank",
     "wts.frontendframework": "ReactNative",
     "wts.backendframework": "all",
     "wts.platform": "RN",

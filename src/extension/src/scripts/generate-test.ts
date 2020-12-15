@@ -16,6 +16,7 @@ let syncTemplates = async () => {
     const path = CLI_SETTINGS.DEVELOPMENT_PATH_TO_TEMPLATES;
     const payload = { path, platform: PLATFORM.WEB };
     const syncPayload = { payload, liveMessageHandler: (value: any) => value };
+    CoreTemplateStudio._templateConfig = {platform: PLATFORM.WEB};
 
     await retry(() => instance.sync(syncPayload), {
       retries: CLI_SETTINGS.MAX_SYNC_REQUEST_ATTEMPTS,
