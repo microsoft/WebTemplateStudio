@@ -27,7 +27,7 @@ const SelectProjectTypes = (props: Props) => {
 
   React.useEffect(() => {
     const projectType = projectTypes.find((s) => s.value === storedProjectType.internalName);
-    if (projectType) {
+    if (projectType && projectType !== selectedProjectType) {
       setSelectedProjectType(projectType);
     }
   }, [storedProjectType]);
@@ -35,7 +35,7 @@ const SelectProjectTypes = (props: Props) => {
   React.useEffect(() => {
     if (selectedProjectType) {
       const projectTypeOption = projectTypesOptions.find((proj) => proj.internalName === selectedProjectType.value);
-      if (projectTypeOption) {
+      if (projectTypeOption && projectTypeOption.internalName !== storedProjectType.internalName) {
         const { title, internalName, version, author, licenses, icon } = projectTypeOption;
         const newProjectType = { title: title as string, internalName, version, author, licenses, icon };
 

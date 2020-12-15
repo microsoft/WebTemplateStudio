@@ -40,14 +40,16 @@ const SelectFrameworks = (props: Props) => {
 
   React.useEffect(() => {
     const frontendFramework = frontendFrameworks.find((s) => s.value === storedFrontendFramework.internalName);
-    if (frontendFramework) {
+    if (frontendFramework && frontendFramework !== selectedFrontendFramework) {
       setSelectedFrontendFramework(frontendFramework);
     }
   }, [storedFrontendFramework]);
 
   React.useEffect(() => {
-    const optionFrontEnd = frontendOptions.find((optionFront: IOption) => optionFront.internalName === selectedFrontendFramework?.value);
-    if (optionFrontEnd) {
+    const optionFrontEnd = frontendOptions.find(
+      (optionFront: IOption) => optionFront.internalName === selectedFrontendFramework?.value
+    );
+    if (optionFrontEnd && optionFrontEnd.internalName !== storedFrontendFramework.internalName) {
       const { title, internalName, version, author, licenses, icon } = optionFrontEnd;
       const newFrontEndFramework = { title: title as string, internalName, version, author, licenses, icon };
       dispatch(setSelectedFrontendFrameworkAction(newFrontEndFramework));
@@ -56,14 +58,16 @@ const SelectFrameworks = (props: Props) => {
 
   React.useEffect(() => {
     const backendFramework = backendFrameworks.find((s) => s.value === storedBackendFramework.internalName);
-    if (backendFramework) {
+    if (backendFramework && backendFramework !== selectedBackendFramework) {
       setSelectedBackendFramework(backendFramework);
     }
   }, [storedBackendFramework]);
 
   React.useEffect(() => {
-    const optionBackEnd = backendOptions.find((optionBack: IOption) => optionBack.internalName === selectedBackendFramework?.value);
-    if (optionBackEnd) {
+    const optionBackEnd = backendOptions.find(
+      (optionBack: IOption) => optionBack.internalName === selectedBackendFramework?.value
+    );
+    if (optionBackEnd && optionBackEnd.internalName !== storedBackendFramework.internalName) {
       const { title, internalName, version, author, licenses, icon } = optionBackEnd;
       const newBackEndFramework = { title: title as string, internalName, version, author, licenses, icon };
       dispatch(setSelectedBackendFrameworkAction(newBackEndFramework));
