@@ -1,4 +1,4 @@
-﻿import { TestBed, async } from '@angular/core/testing';
+﻿import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { AppComponent } from './app.component';
@@ -6,12 +6,12 @@ import { NavBarComponent } from './app-shell/nav-bar/nav-bar.component';
 import { FooterComponent } from './app-shell/footer/footer.component';
 
 describe('AppComponent', () => {
-  beforeEach(async(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
       declarations: [AppComponent, NavBarComponent, FooterComponent],
       imports: [RouterTestingModule]
     }).compileComponents();
-  }));
+  });
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
