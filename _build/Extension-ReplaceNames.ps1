@@ -46,30 +46,30 @@ if ($vsixName) {
     Write-Host "Setting name,version and commands in VSIX package json"
 
     $packagejsonContent = Get-Content $vsixPackageJson | ConvertFrom-Json
-    $LocalIdentity = $packagejsonContent.name
+    $localIdentity = $packagejsonContent.name
     $localDisplayName = $packagejsonContent.displayName
     $localVersionNumber = $packagejsonContent.version
     $localAiKey = $packagejsonContent.aiKey
-    $localcreateWebAppCommand = $packagejsonContent.contributes.commands[0].command
-    $localdeployWebAppCommand = $packagejsonContent.contributes.commands[1].command
-    $localcreateReactNativeAppCommand = $packagejsonContent.contributes.commands[2].command
+    $localCreateWebAppCommand = $packagejsonContent.contributes.commands[0].command
+    $localDeployWebAppCommand = $packagejsonContent.contributes.commands[1].command
+    $localCreateReactNativeAppCommand = $packagejsonContent.contributes.commands[2].command
 
-    Write-Host "Replacing $LocalIdentity by  $vsixName"
+    Write-Host "Replacing $localIdentity by  $vsixName"
     Write-Host "Replacing $localDisplayName by  $vsixDisplayName"
     Write-Host "Replacing $localVersionNumber by  $versionNumber"
-    Write-Host "Replacing $localcreateWebAppCommand by  $createWebAppCommand"
-    Write-Host "Replacing $localdeployWebAppCommand by  $deployWebAppCommand"
-    Write-Host "Replacing $localcreateReactNativeAppCommand by  $createReactNativeAppCommand"
+    Write-Host "Replacing $localCreateWebAppCommand by  $createWebAppCommand"
+    Write-Host "Replacing $localDeployWebAppCommand by  $deployWebAppCommand"
+    Write-Host "Replacing $localCreateReactNativeAppCommand by  $createReactNativeAppCommand"
 
     $content = (Get-Content -path $vsixPackageJson -Raw)
 
-    $content = $content -replace "$LocalIdentity" , "$vsixName"
+    $content = $content -replace "$localIdentity" , "$vsixName"
     $content = $content -replace [regex]::Escape("$localDisplayName") , "$vsixDisplayName"
     $content = $content -replace "$localVersionNumber" , "$versionNumber"
     $content = $content -replace "$localAiKey" , "$aikey"
-    $content = $content -replace "$localcreateWebAppCommand" , "$createWebAppCommand"
-    $content = $content -replace "$localdeployWebAppCommand" , "$deployWebAppCommand"
-    $content = $content -replace "$localcreateReactNativeAppCommand" , "$createReactNativeAppCommand"
+    $content = $content -replace "$localCreateWebAppCommand" , "$createWebAppCommand"
+    $content = $content -replace "$localDeployWebAppCommand" , "$deployWebAppCommand"
+    $content = $content -replace "$localCreateReactNativeAppCommand" , "$createReactNativeAppCommand"
 
     [System.IO.File]::WriteAllLines($vsixPackageJson, $content, [System.Text.UTF8Encoding]($False))
 
@@ -116,22 +116,22 @@ if ($vsixName) {
   # REPLACE commands IN extension.ts
   if (Test-Path($vsixExtensionTsFile)) {
 
-    $localcreateWebAppCommand = "webTemplateStudioExtension.web.createApp.local"
-    $localdeployWebAppCommand = "webTemplateStudioExtension.web.deployApp.local"
-    $localcreateReactNativeAppCommand = "webTemplateStudioExtension.reactNative.createApp.local"
+    $localCreateWebAppCommand = "webTemplateStudioExtension.web.createApp.local"
+    $localDeployWebAppCommand = "webTemplateStudioExtension.web.deployApp.local"
+    $localCreateReactNativeAppCommand = "webTemplateStudioExtension.reactNative.createApp.local"
 
     Write-Host
-    Write-Host "Replacing $localcreateWebAppCommand by $createWebAppCommand in extension.ts"
-    Write-Host "Replacing $localdeployWebAppCommand by $deployWebAppCommand in extension.ts"
-    Write-Host "Replacing $localcreateReactNativeAppCommand by $createReactNativeAppCommand in extension.ts"
+    Write-Host "Replacing $localCreateWebAppCommand by $createWebAppCommand in extension.ts"
+    Write-Host "Replacing $localDeployWebAppCommand by $deployWebAppCommand in extension.ts"
+    Write-Host "Replacing $localCreateReactNativeAppCommand by $createReactNativeAppCommand in extension.ts"
 
     $content = (Get-Content -path $vsixExtensionTsFile -Raw)
-    $content = $content -replace [regex]::Escape("$localcreateWebAppCommand") , "$createWebAppCommand"
-    $content = $content -replace [regex]::Escape("$localdeployWebAppCommand") , "$deployWebAppCommand"
-    $content = $content -replace [regex]::Escape("$localcreateReactNativeAppCommand") , "$createReactNativeAppCommand"
+    $content = $content -replace [regex]::Escape("$localCreateWebAppCommand") , "$createWebAppCommand"
+    $content = $content -replace [regex]::Escape("$localDeployWebAppCommand") , "$deployWebAppCommand"
+    $content = $content -replace [regex]::Escape("$localCreateReactNativeAppCommand") , "$createReactNativeAppCommand"
 
     [System.IO.File]::WriteAllLines($vsixExtensionTsFile, $content, [System.Text.UTF8Encoding]($False))
-    Write-Host "$resolvedPath - Commands applied ($localcreateWebAppCommand, $localdeployWebAppCommand, $localcreateReactNativeAppCommand)"
+    Write-Host "$resolvedPath - Commands applied ($localCreateWebAppCommand, $localDeployWebAppCommand, $localCreateReactNativeAppCommand)"
   }
   else {
     throw "No VSIX extension.ts file found."
