@@ -9,15 +9,15 @@ const WEB_TEMPLATE_STUDIO_LINKS = {
   ISSUES: "https://github.com/Microsoft/WebTemplateStudio/issues",
 };
 
-const ENVIRONMENT ={
-   PRODUCTION: "production",
-   DEVELOPMENT: "development",
-   TEST: "test",
-}
+const ENVIRONMENT = {
+  PRODUCTION: "production",
+  DEVELOPMENT: "development",
+  TEST: "test",
+};
 
 enum PLATFORM {
   WEB = "Web",
-  REACTNATIVE = "RN"
+  REACTNATIVE = "RN",
 }
 
 const INTL_MESSAGES = defineMessages({
@@ -110,5 +110,5 @@ export {
   TELEMETRY,
   PLATFORM,
   ROUTE,
-  REQUIREMENTS_DATA
+  REQUIREMENTS_DATA,
 };

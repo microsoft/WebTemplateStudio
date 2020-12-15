@@ -4,11 +4,13 @@ import { injectIntl } from "react-intl";
 
 import messages from "./messages";
 import PageCard from "./PageCard";
-import styles from "./styles.module.css";
 import classnames from "classnames";
 import Notification from "../../components/Notification";
 import { IStoreProps, IIntlProps, IProps } from "./interfaces";
 import { mapStateToProps } from "./store";
+
+import pageStyles from "../pageStyles.module.css";
+import styles from "./styles.module.css";
 
 type Props = IStoreProps & IIntlProps & IProps;
 
@@ -17,7 +19,7 @@ const PageAddPages = (props: Props) => {
 
   return (
     <div>
-      <h1 className={styles.title}>{intl.formatMessage(messages.pagesTitleQuestion)}</h1>
+      <h1 className={pageStyles.title}>{intl.formatMessage(messages.pagesTitleQuestion)}</h1>
       <div
         className={classnames(styles.description, {
           [styles.borderGreen]: !pageOutOfBounds,
@@ -30,7 +32,7 @@ const PageAddPages = (props: Props) => {
           altMessage={intl.formatMessage(messages.iconAltMessage)}
         />
       </div>
-      <div className={styles.flexContainer}>
+      <div className={pageStyles.flexContainer}>
         {options.map((option, key) => {
           return <PageCard key={key} page={option} isModal={isModal} />;
         })}

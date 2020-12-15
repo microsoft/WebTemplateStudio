@@ -13,9 +13,8 @@ import { EXTENSION_COMMANDS } from "../utils/constants/commands";
  * Mimics VSCode API by using native postMessage API to mimic postMessage from
  * VSCode.
  */
-const mockVsCodeApi = (platform: string) => ({
+const mockVsCodeApi = () => ({
   postMessage: (message: any) => {
-    message.platform = platform;
     if (process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT || process.env.NODE_ENV === ENVIRONMENT.TEST) {
       switch (message.command) {
         case EXTENSION_COMMANDS.GET_FRAMEWORKS:

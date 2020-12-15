@@ -1,5 +1,5 @@
 import configureMockStore from "redux-mock-store";
-import { isEnableNextPageSelector } from "./wizardSelectionSelector";
+import { isEnableNextPageSelector} from "./wizardSelectionSelector";
 import { ROUTE } from "../../../../utils/constants/constants";
 import { getInitialState } from "../../../../mockData/mockStore";
 import { AppState } from "../../../combineReducers";
@@ -168,11 +168,9 @@ describe("wizardSelectionSelector", () => {
     it("isEnableNextPage valid", () => {
       const mockStore = configureMockStore<AppState>();
       //mock.navigation.routes.selected = ROUTE.ADD_PAGES;
-      mock.navigation.routesNavItems.forEach((route) => {
-        route.isSelected = false;
-      });
-      mock.navigation.routesNavItems.filter((route) => route.route === ROUTE.ADD_PAGES)[0].isSelected = true;
-      const validPage: ISelected = { title: "", isValidTitle: true, internalName: "wts.mock.blank", icon: "" };
+      mock.navigation.routesNavItems.forEach(route => {route.isSelected=false});
+      mock.navigation.routesNavItems.filter(route => route.route === ROUTE.ADD_PAGES)[0].isSelected=true;
+      const validPage: ISelected = {title:"", isValidTitle:true, internalName:"wts.mock.blank", icon: ""};
       mock.userSelection.pages.push(validPage);
       const store = mockStore(mock);
       expect(isEnableNextPageSelector(store.getState())).toBeTruthy();
