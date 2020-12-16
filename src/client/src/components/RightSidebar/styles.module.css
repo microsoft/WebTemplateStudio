@@ -5,16 +5,10 @@
 
 .title {
   font-size: 1.6em;
-  text-align: left;
-  margin-bottom: 20px;
 }
 
-.marginLeft {
+.summaryContainer {
   margin: 15px;
-}
-
-.endAlign{
-  text-align: end;
 }
 
 .rightViewCropped {
@@ -28,7 +22,7 @@
   overflow: scroll;
   display: block;
   transition: display 100ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
-  padding: 4vh 2vh;
+  padding: 2vh;
   border-left: 1px solid #7f7f7f;
   width: 500px;
 }
@@ -73,16 +67,11 @@
   background: var(--vscode-editor-foreground);
 }
 
-.summaryContainer {
-  width: auto;
-  flex: 1;
-}
 
 .icon {
   cursor: pointer;
   height: 15px;
   width: 15px;
-  margin-left: 15px;
 }
 
 .icon path {
@@ -101,10 +90,6 @@
   visibility: hidden;
 }
 
-.button {
-  margin-left: 1em;
-}
-
 .button:hover {
   color: var(--vscode-editor-foreground);
 }
@@ -116,4 +101,11 @@
 .buttonContainer {
   display: flex;
   align-items: center;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }

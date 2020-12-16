@@ -67,8 +67,10 @@ const RightSidebar = (props: Props) => {
       {(isSidebarOpen || isFirstOrLastPage) && (
         <div role="complementary" id="dvRightSideBar" className={classnames(styles.container, styles.rightViewCropped)}>
           <div className={styles.summaryContainer} id="dvSummaryContainer">
-            <div className={classnames(styles.endAlign, styles.marginLeft)}>
-              <CancelSVG
+            
+            <div className={styles.titleContainer}>
+            <div className={styles.title}>{formatMessage(messages.yourProjectDetails)}</div>
+            <CancelSVG
                 tabIndex={0}
                 className={classnames(styles.icon, {
                   [styles.iconHide]: selectedRoute === ROUTE.REVIEW_AND_GENERATE || selectedRoute === ROUTE.NEW_PROJECT,
@@ -79,9 +81,7 @@ const RightSidebar = (props: Props) => {
                 title={intl.formatMessage(messages.hideIcon)}
               />
             </div>
-
-            <div className={styles.marginLeft}>
-              <div className={styles.title}>{formatMessage(messages.yourProjectDetails)}</div>
+            <div>
 
               <ProjectDetails isRightsidebar={true} />
 
@@ -95,7 +95,7 @@ const RightSidebar = (props: Props) => {
               {selectedRoute !== ROUTE.REVIEW_AND_GENERATE && (
                 <div className={styles.buttonContainer}>
                   <button
-                    className={classnames(buttonStyles.buttonDark, styles.button)}
+                    className={buttonStyles.buttonDark}
                     onClick={() => dispatch(ModalActions.openViewLicensesModalAction())}
                   >
                     {formatMessage(messages.viewLicenses)}
