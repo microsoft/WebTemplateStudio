@@ -4,17 +4,17 @@ import { browser, logging } from 'protractor';
 describe('workspace-project App', () => {
   let page: AppPage;
 
-  beforeAll(() => {
+  beforeEach(() => {
     page = new AppPage();
-    page.navigateTo();
   });
 
-  it('should display navbar with app name', () => {
-    expect(page.getTitleText()).toBe('wts.AngularDefault');
+  it('should display navbar with app name', async () => {
+    await page.navigateTo();
+    expect(await page.getTitleText()).toBe('wts.AngularDefault');
   });
 
-  it('should contain at least one template page ', () => {
-    expect(page.getNavigationElements()).toBeGreaterThanOrEqual(1);
+  it('should contain at least one template page ', async () => {
+    expect(await page.getNavigationElements()).toBeGreaterThanOrEqual(1);
   });
 
   afterEach(async () => {

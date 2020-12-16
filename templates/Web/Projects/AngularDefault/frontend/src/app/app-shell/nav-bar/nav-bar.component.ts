@@ -10,7 +10,7 @@ export class NavBarComponent implements OnInit {
   skipLinkPath: string;
   constructor(private location: Location) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.skipLinkPath = `${this.location.path()}#mainContent`;
   }
 }

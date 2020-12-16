@@ -8,5 +8,5 @@
 export class Param_SourceName_PascalComponent implements OnInit {
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 }

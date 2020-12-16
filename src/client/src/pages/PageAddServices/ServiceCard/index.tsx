@@ -16,6 +16,7 @@ import { ReactComponent as PriceSVG } from "../../../assets/money.svg";
 import { ReactComponent as TimeSVG } from "../../../assets/timer.svg";
 
 import buttonStyles from "../../../css/buttonStyles.module.css";
+import cardStyles from "../../cardStyles.module.css";
 import styles from "./styles.module.css";
 import messages from "./messages";
 import classnames from "classnames";
@@ -74,7 +75,7 @@ export const ServiceCard = (props: Props) => {
           <div>{service.body}</div>
         </div>
         <div className={styles.footer}>
-          <a tabIndex={0} onClick={showDetails} onKeyDown={showDetailIfPressEnterKey} className={styles.link}>
+          <a tabIndex={0} onClick={showDetails} onKeyDown={showDetailIfPressEnterKey} className={cardStyles.link}>
             {formatMessage(messages.learnMore)}
           </a>
           <button

@@ -17,36 +17,36 @@ export class Param_SourceName_PascalComponent implements OnInit {
 
   constructor(private listService: Param_SourceName_PascalService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.listItems$ = this.dataSource.asObservable();
     this.loadItems();
   }
 
-  loadItems() {
+  loadItems(): void {
     this.listService.getListItems().subscribe(
       (listItem: IParam_SourceName_PascalItem[]) => this.dataSource.next(listItem),
       error => this.handleError(`Request to get list items failed: ${error}`)
     );
   }
 
-  addItem(inputText: string) {
+  addItem(inputText: string): void {
     this.listService.addListItem(inputText).subscribe(
       () => this.loadItems(), error => this.handleError(`Request to add item failed: ${error}`)
     );
   }
 
-  deleteItem(id: string) {
+  deleteItem(id: string): void {
     this.listService.deleteListItem(id).subscribe(
       () => this.loadItems(), error => this.handleError(`Request to delete item failed: ${error}`)
     );
   }
 
-  handleWarningClose(open: boolean) {
+  handleWarningClose(open: boolean): void {
     this.warningMessageOpen = open;
     this.warningMessageText = '';
   }
 
-  private handleError(warningMessageText: string) {
+  private handleError(warningMessageText: string): void {
     this.warningMessageOpen = true;
     this.warningMessageText = warningMessageText;
   }

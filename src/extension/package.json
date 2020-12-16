@@ -50,26 +50,32 @@
     "vscode-nls": "^4.0.0"
   },
   "activationEvents": [
-    "onCommand:webTemplateStudioExtension.wizardLaunch.local",
-    "onCommand:webTemplateStudioExtension.deployApp.local"
+    "onCommand:webTemplateStudioExtension.web.createApp.local",
+    "onCommand:webTemplateStudioExtension.web.deployApp.local",
+    "onCommand:webTemplateStudioExtension.reactNative.createApp.local"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "webTemplateStudioExtension.wizardLaunch.local",
-        "title": "%webTemplateStudioExtension.commands.wizardLaunch%",
-        "category": "%webTemplateStudioExtension.commands.wts%"
+        "command": "webTemplateStudioExtension.web.createApp.local",
+        "title": "%webTemplateStudioExtension.commands.web.createApp%",
+        "category": "%webTemplateStudioExtension.commands.category%"
       },
       {
-        "command": "webTemplateStudioExtension.deployApp.local",
-        "title": "%webTemplateStudioExtension.commands.deployApp%",
-        "category": "%webTemplateStudioExtension.commands.wts%"
+        "command": "webTemplateStudioExtension.web.deployApp.local",
+        "title": "%webTemplateStudioExtension.commands.web.deployApp%",
+        "category": "%webTemplateStudioExtension.commands.category%"
+      },
+      {
+        "command": "webTemplateStudioExtension.reactNative.createApp.local",
+        "title": "%webTemplateStudioExtension.commands.reactNative.createApp%",
+        "category": "%webTemplateStudioExtension.commands.category%"
       }
     ],
     "configuration": {
       "type": "object",
-      "title": "%webTemplateStudioExtension.commands.wts%",
+      "title": "%webTemplateStudioExtension.commands.category%",
       "properties": {
         "wts.changeSaveToLocation": {
           "type": "string",

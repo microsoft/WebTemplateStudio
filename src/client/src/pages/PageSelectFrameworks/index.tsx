@@ -1,10 +1,11 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
 import FrameworkCard from "./FrameworkCard";
-import styles from "./styles.module.css";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import messages from "./messages";
 import { AppState } from "../../store/combineReducers";
+
+import messages from "./messages";
+import pageStyles from "../pageStyles.module.css";
 
 type Props = InjectedIntlProps;
 
@@ -17,8 +18,8 @@ const SelectFrameworks = ({ intl }: Props) => {
     <>
     {(frontendOptions.length > 0 && (
       <>
-      <h1 className={styles.title}>{intl.formatMessage(messages.frontendTitle)}</h1>
-      <div className={styles.flexContainer}>
+      <h1 className={pageStyles.title}>{intl.formatMessage(messages.frontendTitle)}</h1>
+      <div className={pageStyles.flexContainer}>
         {frontendOptions.map((framework) => {
           if (isPreview || !framework.isPreview) {
             return <FrameworkCard key={framework.internalName} framework={framework} isFrontEnd={true} />;
@@ -29,8 +30,8 @@ const SelectFrameworks = ({ intl }: Props) => {
     ))}
     {(backendOptions.length > 0 && (
       <>
-      <h1 className={styles.title}>{intl.formatMessage(messages.backendTitle)}</h1>
-      <div className={styles.flexContainer}>
+      <h1 className={pageStyles.title}>{intl.formatMessage(messages.backendTitle)}</h1>
+      <div className={pageStyles.flexContainer}>
         {backendOptions.map((framework) => {
           if (isPreview || !framework.isPreview) {
             return <FrameworkCard key={framework.internalName} framework={framework} isFrontEnd={false} />;
