@@ -1,5 +1,5 @@
 import { PLATFORM } from "../../../utils/constants/constants";
-import { frontendImage, noImage, pageImage, projectTypeImage, serviceImage } from "./mockSvgData";
+import { frontendImage, noImage, pageImage, projectTypeImage } from "./mockSvgData";
 
 const platform = PLATFORM.REACTNATIVE;
 

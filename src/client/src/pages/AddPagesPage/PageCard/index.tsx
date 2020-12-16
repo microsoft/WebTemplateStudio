@@ -19,6 +19,7 @@ import classNames from "classnames";
 import styles from "./styles.module.css";
 import cardStyles from "../../cardStyles.module.css";
 import pageStyles from "../../cardStyles.module.css";
+import buttonStyles from "../../../css/buttonStyles.module.css";
 
 type Props = IProps & IStateProps & InjectedIntlProps;
 
@@ -55,16 +56,8 @@ const PageCard = (props: Props) => {
     }
   };
 
-  const showMoreInfo = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    event.stopPropagation();
+  const showMoreInfo = () => {
     dispatch(setDetailPageAction(page, false, ROUTE.ADD_PAGES));
-  };
-
-  const showDetailIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
-    event.stopPropagation();
-    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      dispatch(setDetailPageAction(page, false, ROUTE.ADD_PAGES));
-    }
   };
 
   return (
@@ -98,9 +91,13 @@ const PageCard = (props: Props) => {
         <div className={cardStyles.gridLayoutCardFooter}>
           <div>
             {!isModal && (
-              <a onClick={showMoreInfo} onKeyDown={showDetailIfPressEnterKey} className={cardStyles.link} tabIndex={0}>
+              <button
+                onClick={showMoreInfo}
+                className={buttonStyles.buttonLink}
+                tabIndex={0}
+              >
                 {intl.formatMessage(messages.Preview)}
-              </a>
+              </button>
             )}
           </div>
           <div className={styles.pageCounter}>
