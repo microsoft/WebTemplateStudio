@@ -8,6 +8,7 @@ import fs = require("fs-extra");
 import { getGenerationData } from "../utils/generation/generationUtils";
 import RequirementsService from "../utils/requirements/RequirementsService";
 import { Logger } from "../utils/logger";
+import { MESSAGES } from "../constants/messages";
 
 const previewOptionSelected = vscode.workspace.getConfiguration().get<boolean>("wts.enablePreviewMode");
 
@@ -68,6 +69,7 @@ export class CoreTSModule extends WizardServant {
   async getTemplateConfig(): Promise<IPayloadResponse> {
     const templateConfig = CoreTemplateStudio.GetExistingInstance().getTemplateConfig();
     const platformRequirements = await this.requirementsService.getPlatformsRequirements(templateConfig.platform);
+    this.processInvalidReactNativeRequirements(platformRequirements);
     const payload = { ...templateConfig, platformRequirements };
     return { payload };
   }
@@ -114,6 +116,18 @@ export class CoreTSModule extends WizardServant {
       } catch (error) {
         Logger.appendLog("EXTENSION", "error", `Error on get frameworks requirement: ${error.message} `);
       }
+    }
+  }
+
+  private processInvalidReactNativeRequirements(requirements: IPlatformRequirement[]) {
+    const message = MESSAGES.WARNINGS.REACT_NATIVE_MISSING_PRERREQUISITES;
+    const failedRequirements = requirements.filter(r => !r.isInstalled);
+    if(failedRequirements && failedRequirements.length > 0) {
+      Logger.appendLog("EXTENSION", "warn", message);
+      for(const requirement of failedRequirements) {
+        Logger.appendLog("EXTENSION", "warn", requirement.name);
+      }
+      vscode.window.showWarningMessage(message);
     }
   }
 }
