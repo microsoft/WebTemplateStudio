@@ -3,8 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator  } from "@react-navigation/stack";
 
-import { Settings } from "./views/Settings";
-import { Home } from "./views/Home";
+import { Settings } from "./screens/Settings";
+import { Home } from "./screens/Home";
 
 import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -42,6 +42,8 @@ function App() {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Settings') {
             iconName = focused ? 'settings' : 'settings-outline';
+          } else if (route.name.includes('Blank')) {
+            iconName = focused ? 'document' : 'document-outline';
           }
 
           return <Icon name={iconName} size={size} color={color} />;
@@ -52,7 +54,8 @@ function App() {
         inactiveTintColor: 'gray',
       }}>
         <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="Home2" component={Home} />
+        <Tab.Screen name="Blank" component={HomeStack} />
+        {/* Place this at the end */}
         <Tab.Screen name="Settings" component={SettingsStack} />
       </Tab.Navigator>
     </NavigationContainer>

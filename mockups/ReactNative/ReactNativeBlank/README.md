@@ -1,6 +1,15 @@
-# React Native Blank
+# WORK IN PROGRESS
+This is still work in progress.
+We will appreciate any feedback provided. 
+- Opinion about the mockups available in [repo](). 
+- Desired features for the future. 
+- Suggestions about the generated code or the wizard experience.
+- Anything else you could think of ;-).
+
+# React Native App (Blank)
 This sample demonstrates a React Native blank application:
 
+- Runs on mobile devices: iOS, android.
 - Runs on Windows and MacOS
 
 ### Initialize the sample
@@ -74,3 +83,8 @@ Make sure your Mac satisfies all the system requirements listed in the [official
     npx react-native run-macos
     ```
 
+
+### Run the sample on iOS
+[Go to React Native Documentation](https://reactnative.dev/docs/environment-setup)
+### Run the sample on Android
+[Go to React Native Documentation](https://reactnative.dev/docs/environment-setup)

@@ -1,7 +1,16 @@
-# React Native Tab
-This sample demonstrates a React Native application with Tab Menu:
+# WORK IN PROGRESS
+This is still work in progress.
+We will appreciate any feedback provided. 
+- Opinion about the mockups available in [repo](). 
+- Desired features for the future. 
+- Suggestions about the generated code or the wizard experience.
+- Anything else you could think of ;-).
 
-- Runs on Windows and MacOS
+# React Native App (Tabbed)
+This sample demonstrates a React Native application with Tab Menu and a Settings Page:
+
+- Runs on mobile devices: iOS, android.
+- Runs on desktop: Windows and MacOS.
 
 ### Initialize the sample
 
@@ -74,6 +83,11 @@ Make sure your Mac satisfies all the system requirements listed in the [official
     npx react-native run-macos
     ```
 
+
+### Run the sample on iOS
+[Go to React Native Documentation](https://reactnative.dev/docs/environment-setup)
+### Run the sample on Android
+[Go to React Native Documentation](https://reactnative.dev/docs/environment-setup)
 
 
 ### Useful links

@@ -1,27 +1,28 @@
 import React from "react";
-import { Text, View,  StyleSheet, Linking } from "react-native";
+import { Text, View, StyleSheet, Linking } from "react-native";
+import { name, version } from '../package.json';
 
 const onPressPrivacyStatementLink = () => {
   Linking.openURL('http://yourprivacystatementurlhere.com');
 };
 
 export const Settings = () => {
-    return (
-      <View style={styles.container}>
-        <View style={styles.section}>
-          <Text style={styles.title}>Personalization</Text>
-          <Text style={styles.body}>Choose Theme</Text>
-        </View>
-        <View style={styles.section}>
-          <Text style={styles.title}>About this Application</Text>
-          <Text style={styles.body}>$ProjectName$ - $ProjectVersion$</Text>
-          <Text style={styles.body}>Placeholder text: Your app description goes here</Text>
-        </View>
-        <View style={styles.section}>
-          <Text style={[styles.body, styles.link]} onPress={() => onPressPrivacyStatementLink()}>Privacy Statement</Text>
-        </View>
+  return (
+    <View style={styles.container}>
+      <View style={styles.section}>
+        <Text style={styles.title}>Personalization</Text>
+        <Text style={styles.body}>Choose Theme</Text>
       </View>
-    );
+      <View style={styles.section}>
+        <Text style={styles.title}>About this Application</Text>
+        <Text style={styles.body}>{name} - {version}</Text>
+        <Text style={styles.body}>Placeholder text: Your app description goes here</Text>
+      </View>
+      <View style={styles.section}>
+        <Text style={[styles.body, styles.link]} onPress={() => onPressPrivacyStatementLink()}>Privacy Statement</Text>
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -40,16 +41,16 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     // backgroundColor: "#ffddFF",
   },
-  title:{
+  title: {
     fontSize: 25,
     fontWeight: "bold",
     // backgroundColor: "#00ddFF",
   },
-  body:{
+  body: {
     fontSize: 15,
     // backgroundColor: "#ff00FF",
   },
-  link:{
+  link: {
     color: "blue",
     textDecorationLine: "underline",
     // backgroundColor: "#ffdd00",
