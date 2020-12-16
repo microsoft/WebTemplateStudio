@@ -67,7 +67,6 @@
   background: var(--vscode-editor-foreground);
 }
 
-
 .icon {
   cursor: pointer;
   height: 15px;
@@ -108,4 +107,15 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
+}
+
+.notificationContainer {
+  border: 1px solid var(--vscode-editorMarkerNavigationWarning-background);
+  border-radius: 3px;
+  padding: 3px 10px 3px 10px;
+  margin-bottom: 20px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
 }

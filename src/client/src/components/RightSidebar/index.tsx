@@ -15,6 +15,7 @@ import SelectPages from "./SelectPages";
 import ProjectDetails from "../ProjectDetails";
 import ServicesList from "./ServicesList";
 import SelectFrameworks from "./SelectFrameworks";
+import Notification from "../Notification";
 
 import messages from "./messages";
 import classnames from "classnames";
@@ -67,10 +68,9 @@ const RightSidebar = (props: Props) => {
       {(isSidebarOpen || isFirstOrLastPage) && (
         <div role="complementary" id="dvRightSideBar" className={classnames(styles.container, styles.rightViewCropped)}>
           <div className={styles.summaryContainer} id="dvSummaryContainer">
-            
             <div className={styles.titleContainer}>
-            <div className={styles.title}>{formatMessage(messages.yourProjectDetails)}</div>
-            <CancelSVG
+              <div className={styles.title}>{formatMessage(messages.yourProjectDetails)}</div>
+              <CancelSVG
                 tabIndex={0}
                 className={classnames(styles.icon, {
                   [styles.iconHide]: selectedRoute === ROUTE.REVIEW_AND_GENERATE || selectedRoute === ROUTE.NEW_PROJECT,
@@ -81,8 +81,16 @@ const RightSidebar = (props: Props) => {
                 title={intl.formatMessage(messages.hideIcon)}
               />
             </div>
-            <div>
 
+            <div className={styles.notificationContainer}>
+              <Notification
+                showWarning={true}
+                text={formatMessage(messages.invalidPlatformRequirements)}
+                altMessage={formatMessage(messages.invalidPlatformRequirements)}
+              />
+            </div>
+
+            <div>
               <ProjectDetails isRightsidebar={true} />
 
               <SelectProjectTypes />
