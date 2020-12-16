@@ -2,6 +2,52 @@ import { PLATFORM } from "../../../utils/constants/constants";
 import { frontendImage, noImage, pageImage, projectTypeImage, serviceImage } from "./mockSvgData";
 
 const platform = PLATFORM.REACTNATIVE;
+const platformRequirements = [
+  {
+    name: "Free space on C: > 15 GB",
+    isInstalled: true,
+  },
+  {
+    name: "Installed memory >= 16 GB",
+    isInstalled: true,
+  },
+  {
+    name: "Windows version > 10.0.16299.0",
+    isInstalled: true,
+  },
+  {
+    name: "Developer mode is on",
+    isInstalled: true,
+  },
+  {
+    name: "Long path support is enabled",
+    isInstalled: true,
+  },
+  {
+    name: "Choco",
+    isInstalled: true,
+  },
+  {
+    name: "git",
+    isInstalled: true,
+  },
+  {
+    name: "Visual Studio >= 16.5 with UWP and Desktop/C++",
+    isInstalled: false,
+  },
+  {
+    name: "NodeJS 12, 13 or 14 installed",
+    isInstalled: true,
+  },
+  {
+    name: "Chrome",
+    isInstalled: true,
+  },
+  {
+    name: "Yarn",
+    isInstalled: true,
+  },
+];
 
 const projectTypes = [
   {
@@ -10,7 +56,8 @@ const projectTypes = [
     summary: "Tabbed summary ***",
     body: "Tabbed description***",
     description: "Tabbed rich description***",
-    "licenses": "[React Native](https://github.com/facebook/react-native/blob/master/LICENSE)\n [React Navigation](https://github.com/react-navigation/react-navigation/blob/main/packages/core/LICENSE)",
+    licenses:
+      "[React Native](https://github.com/facebook/react-native/blob/master/LICENSE)\n [React Navigation](https://github.com/react-navigation/react-navigation/blob/main/packages/core/LICENSE)",
     icon: projectTypeImage,
     order: 1,
   },
@@ -20,7 +67,8 @@ const projectTypes = [
     summary: "Drawer summary ***",
     body: "Drawer description***",
     description: "Drawer rich description***",
-    "licenses": "[React Native](https://github.com/facebook/react-native/blob/master/LICENSE)\n [React Navigation](https://github.com/react-navigation/react-navigation/blob/main/packages/core/LICENSE)",
+    licenses:
+      "[React Native](https://github.com/facebook/react-native/blob/master/LICENSE)\n [React Navigation](https://github.com/react-navigation/react-navigation/blob/main/packages/core/LICENSE)",
     icon: noImage,
     order: 2,
   },
@@ -111,6 +159,7 @@ const templatesInfo = {
   },
   preview: false,
   platform: platform,
+  platformRequirements: platformRequirements,
 };
 
 const pages = (frontendFramework: string) => {
@@ -147,4 +196,4 @@ const pages = (frontendFramework: string) => {
 
 const features = [{}];
 
-export {platform, projectTypes, frameworks, licenses, templatesInfo, pages, features };
+export { platform, projectTypes, frameworks, licenses, templatesInfo, pages, features };
