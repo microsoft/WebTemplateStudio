@@ -11,7 +11,7 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand("webTemplateStudioExtension.reactNative.createApp.local", async () => {
       Controller.getInstance(context, PLATFORM.REACTNATIVE);
     }),
-    vscode.commands.registerCommand("webTemplateStudioExtension.deployApp.local", async () => {
+    vscode.commands.registerCommand("webTemplateStudioExtension.web.deployApp.local", async () => {
       await Deploy.getInstance(context).deployProject();
     })
   );
