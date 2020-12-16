@@ -106,8 +106,8 @@ export const MESSAGES = {
     DEPLOY_AZURE_APP_SERVICE: localize("error.deployAzureAppService", "Error on deploy Azure App Service:"),
   },
   WARNINGS: {
-    REACT_NATIVE_MISSING_PRERREQUISITES: localize(
-      "error.reactNativeMissingPrerrequisites",
+    MISSING_PRERREQUISITES: localize(
+      "error.missingPrerrequisites",
       "Warning: Please take into account that you are missing some prerequisites to work with react native."
     ),
   },
