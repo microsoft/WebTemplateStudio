@@ -45,6 +45,13 @@ const openAppServiceModalAction = () => {
   });
 };
 
+const openViewPlatformRequirementsAction = () => {
+  return openModalAction({
+    modalType: NAVIGATION_MODAL_TYPES.VIEW_PLATFORM_REQUIREMENTS_MODAL,
+    modalData: null,
+  });
+};
+
 export {
   closeModalAction,
   openAzureServicesModalAction,
@@ -52,4 +59,5 @@ export {
   openGenModalAction,
   openViewLicensesModalAction,
   openAppServiceModalAction,
+  openViewPlatformRequirementsAction,
 };
