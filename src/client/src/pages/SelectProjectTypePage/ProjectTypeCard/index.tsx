@@ -43,8 +43,19 @@ const ProjectTypeCard = (props: Props) => {
     }
   };
 
-  const showMoreInfo = () => {
+  const showMoreInfo = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.KeyboardEvent<HTMLButtonElement>
+  ) => {
+    event.stopPropagation();
     dispatch(setDetailPageAction(projectType, false, ROUTE.ADD_PAGES));
+  };
+
+  const showMoreInfoIfEnterOrSpace = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    const isPressed = event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE;
+    if (isPressed) {
+      event.preventDefault();
+      showMoreInfo(event);
+    }
   };
 
   return (
@@ -67,6 +78,7 @@ const ProjectTypeCard = (props: Props) => {
           <div>
             <button
               onClick={showMoreInfo}
+              onKeyDown={showMoreInfoIfEnterOrSpace}
               className={buttonStyles.buttonLink}
               tabIndex={0}
             >

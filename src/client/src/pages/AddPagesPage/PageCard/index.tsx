@@ -56,8 +56,20 @@ const PageCard = (props: Props) => {
     }
   };
 
-  const showMoreInfo = () => {
+  //TODO: Try approach: handleSaveClick
+  const showMoreInfo = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.KeyboardEvent<HTMLButtonElement>
+  ) => {
+    event.stopPropagation();
     dispatch(setDetailPageAction(page, false, ROUTE.ADD_PAGES));
+  };
+
+  const showMoreInfoIfEnterOrSpace = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    const isPressed = event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE;
+    if (isPressed) {
+      event.preventDefault();
+      showMoreInfo(event);
+    }
   };
 
   return (
@@ -93,6 +105,7 @@ const PageCard = (props: Props) => {
             {!isModal && (
               <button
                 onClick={showMoreInfo}
+                onKeyDown={showMoreInfoIfEnterOrSpace}
                 className={buttonStyles.buttonLink}
                 tabIndex={0}
               >
