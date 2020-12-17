@@ -54,7 +54,7 @@ export function* loadTemplatesSaga(vscode: any) {
     });
     yield put({
       payload: messageTemplateInfo.payload.platform,
-      type: CONFIG_TYPEKEYS.SELECT_WEB_APP,
+      type: CONFIG_TYPEKEYS.SET_PLATFORM,
     });
     yield put({
       payload: messageTemplateInfo.payload.preview,
@@ -156,7 +156,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
 }
 
 export function* loadroutesNavItemsaSaga() {
-  yield takeEvery(CONFIG_TYPEKEYS.SELECT_WEB_APP, callBack);
+  yield takeEvery(CONFIG_TYPEKEYS.SET_PLATFORM, callBack);
 
   function* callBack() {
     const platform = yield select((state: AppState) => state.config.platform);
