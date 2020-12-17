@@ -1,9 +1,8 @@
 import { createSelector } from "reselect";
-import { UserSelectionState } from "../../userSelection/combineReducers";
 import { AppState } from "../../combineReducers";
 
-const getConfigSelector = (state: AppState): UserSelectionState => state.userSelection;
+const getConfigSelector = (state: AppState) => state.config;
 
-const getProjectTypeSelector = createSelector(getConfigSelector, (select) => select.projectType.internalName);
+const getPlatformSelector = createSelector(getConfigSelector, (config) => config.platform);
 
-export { getProjectTypeSelector };
+export { getPlatformSelector };
