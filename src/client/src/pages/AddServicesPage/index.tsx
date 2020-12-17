@@ -16,7 +16,7 @@ import AzureAccount from "./AzureAccount";
 
 type Props = InjectedIntlProps;
 
-const PageAddServices = ({ intl }: Props) => {
+const AddServicesPage = ({ intl }: Props) => {
   const { formatMessage } = intl;
 
   const isLoggedIn = useSelector(isLoggedInSelector);
@@ -41,4 +41,4 @@ const PageAddServices = ({ intl }: Props) => {
   );
 };
 
-export default injectIntl(PageAddServices);
+export default injectIntl(AddServicesPage);

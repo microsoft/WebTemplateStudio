@@ -7,15 +7,15 @@ import styles from "./styles.module.css";
 import { AppState } from "../../store/combineReducers";
 import { setDetailPageAction } from "../../store/config/detailsPage/action";
 
-interface IPageDetailsProps {
+interface IDetailsPageProps {
   originRoute: string;
   detailsPageInfo: IOption;
   isIntlFormatted: boolean;
 }
 
-type Props = IPageDetailsProps;
+type Props = IDetailsPageProps;
 
-const PageDetails = (props: Props) => {
+const DetailsPage = (props: Props) => {
   const { detailsPageInfo, isIntlFormatted } = props;
   const dispatch = useDispatch();
 
@@ -34,10 +34,10 @@ const PageDetails = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: AppState): IPageDetailsProps => ({
+const mapStateToProps = (state: AppState): IDetailsPageProps => ({
   originRoute: state.config.detailsPage.originRoute,
   detailsPageInfo: state.config.detailsPage.data,
   isIntlFormatted: state.config.detailsPage.isIntlFormatted,
 });
 
-export default connect(mapStateToProps)(PageDetails);
+export default connect(mapStateToProps)(DetailsPage);

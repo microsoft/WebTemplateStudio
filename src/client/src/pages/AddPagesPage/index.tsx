@@ -14,7 +14,7 @@ import styles from "./styles.module.css";
 
 type Props = IStoreProps & IIntlProps & IProps;
 
-const PageAddPages = (props: Props) => {
+const AddPagesPage = (props: Props) => {
   const { options, intl, isModal, pageOutOfBounds } = props;
 
   return (
@@ -41,4 +41,4 @@ const PageAddPages = (props: Props) => {
   );
 };
 
-export default connect(mapStateToProps)(injectIntl(PageAddPages));
+export default connect(mapStateToProps)(injectIntl(AddPagesPage));
