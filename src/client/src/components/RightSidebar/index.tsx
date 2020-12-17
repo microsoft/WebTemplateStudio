@@ -86,11 +86,12 @@ const RightSidebar = (props: Props) => {
 
             {hasInvalidPlatformRequirements && (
               <div className={styles.notificationContainer}>
-                <Notification
-                  showWarning={true}
-                  text={formatMessage(messages.invalidPlatformRequirements)}
-                  altMessage={formatMessage(messages.invalidPlatformRequirements)}
-                />
+                <Notification showWarning={true} altMessage={formatMessage(messages.invalidPlatformRequirements)}>
+                  {formatMessage(messages.invalidPlatformRequirements)}
+                  <button onClick={() => dispatch(ModalActions.openViewPlatformRequirementsAction())}>
+                    {formatMessage(messages.viewRequirements)}
+                  </button>
+                </Notification>
               </div>
             )}
 

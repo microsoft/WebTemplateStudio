@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import classnames from "classnames";
 import { injectIntl } from "react-intl";
 
@@ -8,12 +8,12 @@ import { ReactComponent as Checkmark } from "../../assets/checkgreen.svg";
 import styles from "./styles.module.css";
 
 interface IProps {
+  children: ReactNode;
   showWarning: boolean;
-  text: string;
   altMessage: string;
 }
 
-const Notification = ({ showWarning, text, altMessage }: IProps) => {
+const Notification = ({ children, showWarning, altMessage }: IProps) => {
   return (
     <React.Fragment>
       <div role="img" aria-label={altMessage}>
@@ -25,7 +25,7 @@ const Notification = ({ showWarning, text, altMessage }: IProps) => {
           [styles.bodyYellow]: showWarning,
         })}
       >
-        {text}
+        {children}
       </div>
     </React.Fragment>
   );

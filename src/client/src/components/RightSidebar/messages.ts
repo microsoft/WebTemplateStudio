@@ -27,7 +27,11 @@ const messages = defineMessages({
   },
   invalidPlatformRequirements: {
     id: "rightSidebar.invalidPlatformRequirements",
-    defaultMessage: "Invalid platform requirements",
+    defaultMessage: "Invalid platform requirements.",
+  },
+  viewRequirements: {
+    id: "rightSidebar.viewRequirements",
+    defaultMessage: "View requirements.",
   },
 });
 
