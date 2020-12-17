@@ -5,4 +5,6 @@ const getConfigSelector = (state: AppState) => state.config;
 
 const getPlatformSelector = createSelector(getConfigSelector, (config) => config.platform);
 
-export { getPlatformSelector };
+const getPlatformRequirementsSelector = createSelector(getPlatformSelector, (platform) => platform.requirements);
+
+export { getPlatformSelector, getPlatformRequirementsSelector };

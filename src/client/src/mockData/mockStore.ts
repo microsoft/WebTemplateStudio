@@ -70,7 +70,10 @@ export const getInitialState = (): AppState => {
         subscriptions: [],
         email: "",
       },
-      platform: PLATFORM.WEB,
+      platform: {
+        name: PLATFORM.WEB,
+        requirements: [],
+      },
     },
     userSelection: {
       frontendFramework: {

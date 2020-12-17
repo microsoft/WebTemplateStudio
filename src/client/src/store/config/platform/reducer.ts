@@ -1,10 +1,14 @@
 import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 import { PLATFORM } from "../../../utils/constants/constants";
 import RootAction from "../../ActionType";
+import { IPlatform } from "./model";
 
-const initialState = PLATFORM.WEB;
+const initialState: IPlatform = {
+  name: PLATFORM.WEB,
+  requirements: [],
+};
 
-const platformReducer = (state: string = initialState, action: RootAction) => {
+const platformReducer = (state: IPlatform = initialState, action: RootAction) => {
   switch (action.type) {
     case CONFIG_TYPEKEYS.SET_PLATFORM:
       return action.payload;
