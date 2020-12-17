@@ -7,9 +7,9 @@ const getPlatformSelector = createSelector(getConfigSelector, (config) => config
 
 const getPlatformRequirementsSelector = createSelector(getPlatformSelector, (platform) => platform.requirements);
 
-const hasMissingPlatformRequirementsSelector = createSelector(getPlatformRequirementsSelector, (requirements) => {
+const hasInvalidPlatformRequirementsSelector = createSelector(getPlatformRequirementsSelector, (requirements) => {
   const invalidRequirements = requirements.filter((r) => !r.isInstalled);
   return invalidRequirements.length > 0;
 });
 
-export { hasMissingPlatformRequirementsSelector };
+export { hasInvalidPlatformRequirementsSelector };

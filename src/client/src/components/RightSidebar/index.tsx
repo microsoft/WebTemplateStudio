@@ -22,14 +22,14 @@ import classnames from "classnames";
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import SelectProjectTypes from "./SelectProjectTypes";
-import { hasMissingPlatformRequirementsSelector } from "../../store/config/platform/selector";
+import { hasInvalidPlatformRequirementsSelector } from "../../store/config/platform/selector";
 
 type Props = InjectedIntlProps;
 
 const RightSidebar = (props: Props) => {
   const [isSidebarOpen, setIsSiderbarOpen] = useState(true);
   const hasServices: boolean = useSelector(hasServicesSelector);
-  const hasMissingPlatformRequirements = useSelector(hasMissingPlatformRequirementsSelector);
+  const hasInvalidPlatformRequirements = useSelector(hasInvalidPlatformRequirementsSelector);
   const selectedRoute = useSelector(getSelectedRoute);
   const isFirstOrLastPage: boolean = useMemo<boolean>(
     () => selectedRoute === ROUTE.NEW_PROJECT || selectedRoute === ROUTE.REVIEW_AND_GENERATE,
@@ -84,7 +84,7 @@ const RightSidebar = (props: Props) => {
               />
             </div>
 
-            {hasMissingPlatformRequirementsSelector && (
+            {hasInvalidPlatformRequirements && (
               <div className={styles.notificationContainer}>
                 <Notification
                   showWarning={true}
