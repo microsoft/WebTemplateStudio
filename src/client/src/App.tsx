@@ -7,7 +7,7 @@ import { ENVIRONMENT, ROUTE } from "./utils/constants/constants";
 import appStyles from "./appStyles.module.css";
 import { AppState } from "./store/combineReducers";
 import { IOption } from "./types/option";
-import PageDetails from "./pages/PageDetails";
+import DetailsPage from "./pages/DetailsPage";
 import { NAVIGATION_MODAL_TYPES } from "./store/navigation/typeKeys";
 import RightSidebar from "./components/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
@@ -15,15 +15,17 @@ import { loadAction } from "./store/config/config/action";
 import loadable from "@loadable/component";
 import { getSelectedRoute } from "./store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 
-const PageSelectFrameworks = loadable(
-  () => import(/* webpackChunkName: "PageSelectFrameworks" */ "./pages/PageSelectFrameworks")
+const SelectFrameworksPage = loadable(
+  () => import(/* webpackChunkName: "SelectFrameworksPage" */ "./pages/SelectFrameworksPage")
 );
-const SelectProjectTypePage = loadable(() => import(/* webpackChunkName: "SelectProjectTypePage" */ "./pages/SelectProjectTypePage"));
-const PageAddPages = loadable(() => import(/* webpackChunkName: "PageAddPages" */ "./pages/PageAddPages"));
-const PageReviewAndGenerate = loadable(
-  () => import(/* webpackChunkName: "PageReviewAndGenerate" */ "./pages/PageReviewAndGenerate")
+const SelectProjectTypePage = loadable(
+  () => import(/* webpackChunkName: "SelectProjectTypePage" */ "./pages/SelectProjectTypePage")
 );
-const PageAddServices = loadable(() => import(/* webpackChunkName: "PageAddServices" */ "./pages/PageAddServices"));
+const AddPagesPage = loadable(() => import(/* webpackChunkName: "AddPagesPage" */ "./pages/AddPagesPage"));
+const ReviewAndGeneratePage = loadable(
+  () => import(/* webpackChunkName: "ReviewAndGeneratePage" */ "./pages/ReviewAndGeneratePage")
+);
+const AddServicesPage = loadable(() => import(/* webpackChunkName: "AddServicesPage" */ "./pages/AddServicesPage"));
 const GenerationModal = loadable(() => import(/* webpackChunkName: "GenerationModal" */ "./modals/GenerationModal"));
 const CosmosDbModal = loadable(() => import(/* webpackChunkName: "CosmosDbModal" */ "./modals/CosmosDbModal"));
 const AppServiceModal = loadable(() => import(/* webpackChunkName: "AppServiceModal" */ "./modals/AppServiceModal"));
@@ -53,7 +55,7 @@ const App = (props: Props) => {
 
   const Header = loadable(() => import(/* webpackChunkName: "Header" */ "./components/Header"));
   const Footer = loadable(() => import(/* webpackChunkName: "Footer" */ "./components/Footer"));
-  const PageNewProject = loadable(() => import(/* webpackChunkName: "PageNewProject" */ "./pages/PageNewProject"));
+  const NewProjectPage = loadable(() => import(/* webpackChunkName: "NewProjectPage" */ "./pages/NewProjectPage"));
 
   React.useEffect(() => {
     dispatch(loadAction());
@@ -81,18 +83,17 @@ const App = (props: Props) => {
             <HomeSplashSVG className={classnames(appStyles.splash, appStyles.homeSplash)} />
           ) : null}
 
-
           {selectedRoute === ROUTE.REVIEW_AND_GENERATE ? (
             <SummarySplashSVG className={classnames(appStyles.splash, appStyles.summarySplash)} />
-            ) : null}
+          ) : null}
 
-          {isDetailPageVisible && <PageDetails />}
+          {isDetailPageVisible && <DetailsPage />}
           {!isDetailPageVisible && selectedRoute === ROUTE.SELECT_PROJECT_TYPE && <SelectProjectTypePage />}
-          {!isDetailPageVisible && selectedRoute === ROUTE.ADD_PAGES && <PageAddPages isModal={false} />}
-          {!isDetailPageVisible && selectedRoute === ROUTE.SELECT_FRAMEWORKS && <PageSelectFrameworks />}
-          {!isDetailPageVisible && selectedRoute === ROUTE.ADD_SERVICES && <PageAddServices />}
-          {!isDetailPageVisible && selectedRoute === ROUTE.REVIEW_AND_GENERATE && <PageReviewAndGenerate />}
-          {!isDetailPageVisible && selectedRoute === ROUTE.NEW_PROJECT && <PageNewProject />}
+          {!isDetailPageVisible && selectedRoute === ROUTE.ADD_PAGES && <AddPagesPage isModal={false} />}
+          {!isDetailPageVisible && selectedRoute === ROUTE.SELECT_FRAMEWORKS && <SelectFrameworksPage />}
+          {!isDetailPageVisible && selectedRoute === ROUTE.ADD_SERVICES && <AddServicesPage />}
+          {!isDetailPageVisible && selectedRoute === ROUTE.REVIEW_AND_GENERATE && <ReviewAndGeneratePage />}
+          {!isDetailPageVisible && selectedRoute === ROUTE.NEW_PROJECT && <NewProjectPage />}
         </main>
         <RightSidebar />
       </div>

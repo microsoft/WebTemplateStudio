@@ -11,7 +11,7 @@ const PAGES = {
   VUE_CONTENT_GRID: "wts.Page.Vue.Grid",
   VUE_MASTER_DETAIL: "wts.Page.Vue.MasterDetail",
   VUE_LIST: "wts.Page.Vue.List",
-}
+};
 
 const WIZARD_CONTENT_FEATURES = {
   APP_SERVICE: "wts.Feature.Azure.AppService",

@@ -95,12 +95,7 @@ const getLatestVersion = (vscode: IVSCodeObject, checkVersionPackage: IVersionPa
   });
 };
 
-const getPages = (
-  vscode: IVSCodeObject,
-  projectTypeName: string,
-  frontendName: string,
-  backendName: string
-) => {
+const getPages = (vscode: IVSCodeObject, projectTypeName: string, frontendName: string, backendName: string) => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_PAGES,
     {

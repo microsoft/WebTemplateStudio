@@ -19,7 +19,7 @@ import { WIZARD_CONTENT_FEATURES } from "../../utils/constants/internalNames";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 
 import CollapsibleInfoBox from "../../components/CollapsibleInfoBox";
-import AzureAccount from "../../pages/PageAddServices/AzureAccount";
+import AzureAccount from "../../pages/AddServicesPage/AzureAccount";
 
 interface IStateProps {
   isModalOpen: boolean;
