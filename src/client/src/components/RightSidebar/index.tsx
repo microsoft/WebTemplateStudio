@@ -22,12 +22,14 @@ import classnames from "classnames";
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import SelectProjectTypes from "./SelectProjectTypes";
+import { hasMissingPlatformRequirementsSelector } from "../../store/config/platform/selector";
 
 type Props = InjectedIntlProps;
 
 const RightSidebar = (props: Props) => {
   const [isSidebarOpen, setIsSiderbarOpen] = useState(true);
   const hasServices: boolean = useSelector(hasServicesSelector);
+  const hasMissingPlatformRequirements = useSelector(hasMissingPlatformRequirementsSelector);
   const selectedRoute = useSelector(getSelectedRoute);
   const isFirstOrLastPage: boolean = useMemo<boolean>(
     () => selectedRoute === ROUTE.NEW_PROJECT || selectedRoute === ROUTE.REVIEW_AND_GENERATE,
@@ -82,13 +84,15 @@ const RightSidebar = (props: Props) => {
               />
             </div>
 
-            <div className={styles.notificationContainer}>
-              <Notification
-                showWarning={true}
-                text={formatMessage(messages.invalidPlatformRequirements)}
-                altMessage={formatMessage(messages.invalidPlatformRequirements)}
-              />
-            </div>
+            {hasMissingPlatformRequirementsSelector && (
+              <div className={styles.notificationContainer}>
+                <Notification
+                  showWarning={true}
+                  text={formatMessage(messages.invalidPlatformRequirements)}
+                  altMessage={formatMessage(messages.invalidPlatformRequirements)}
+                />
+              </div>
+            )}
 
             <div>
               <ProjectDetails isRightsidebar={true} />
