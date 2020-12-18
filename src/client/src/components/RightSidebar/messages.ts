@@ -25,13 +25,13 @@ const messages = defineMessages({
     id: "rightSidebar.yourProjectDetails",
     defaultMessage: "Your Project Details",
   },
-  invalidPlatformRequirements: {
-    id: "rightSidebar.invalidPlatformRequirements",
-    defaultMessage: "Invalid platform requirements.",
+  missingRequirements: {
+    id: "rightSidebar.missingRequirements",
+    defaultMessage: "Missing requirements.",
   },
-  viewRequirements: {
-    id: "rightSidebar.viewRequirements",
-    defaultMessage: "View requirements.",
+  viewDetails: {
+    id: "rightSidebar.viewDetails",
+    defaultMessage: " View details",
   },
 });
 

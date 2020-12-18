@@ -119,3 +119,9 @@
   align-items: center;
   text-decoration: none;
 }
+
+.notificationLink {
+    font-weight: 600;
+    font-size: 14px;
+    margin-left: 5px;
+}
