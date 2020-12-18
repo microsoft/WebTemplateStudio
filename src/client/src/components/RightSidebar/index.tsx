@@ -22,13 +22,17 @@ import classnames from "classnames";
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import SelectProjectTypes from "./SelectProjectTypes";
-import { hasInvalidPlatformRequirementsSelector } from "../../store/config/platform/selector";
+import {
+  hasInvalidPlatformRequirementsSelector,
+  hasPlatformRequirementsSelector,
+} from "../../store/config/platform/selector";
 
 type Props = InjectedIntlProps;
 
 const RightSidebar = (props: Props) => {
   const [isSidebarOpen, setIsSiderbarOpen] = useState(true);
   const hasServices: boolean = useSelector(hasServicesSelector);
+  const hasRequirements = useSelector(hasPlatformRequirementsSelector);
   const hasInvalidRequirements = useSelector(hasInvalidPlatformRequirementsSelector);
   const selectedRoute = useSelector(getSelectedRoute);
   const isFirstOrLastPage: boolean = useMemo<boolean>(
@@ -111,13 +115,22 @@ const RightSidebar = (props: Props) => {
               {selectedRoute !== ROUTE.REVIEW_AND_GENERATE && (
                 <div className={styles.buttonContainer}>
                   <button
-                    className={buttonStyles.buttonDark}
+                    className={buttonStyles.buttonLink}
                     onClick={() => dispatch(ModalActions.openViewLicensesModalAction())}
                   >
                     {formatMessage(messages.viewLicenses)}
                   </button>
                 </div>
               )}
+              {hasRequirements && (
+                <button
+                  className={buttonStyles.buttonLink}
+                  onClick={() => dispatch(ModalActions.openViewPlatformRequirementsAction())}
+                >
+                  {formatMessage(messages.viewRequirements)}
+                </button>
+              )}
+
               <About />
             </div>
           </div>

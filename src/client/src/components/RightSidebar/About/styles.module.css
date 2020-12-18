@@ -2,6 +2,11 @@
   margin: 15px 0px;
 }
 
+.title {
+  font-weight: 500;
+  margin-bottom: 0.7em;
+}
+
 .buttonToLink {
   text-decoration: none;
   font-size: var(--vscode-font-size);

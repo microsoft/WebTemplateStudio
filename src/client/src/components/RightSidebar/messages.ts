@@ -33,6 +33,10 @@ const messages = defineMessages({
     id: "rightSidebar.viewDetails",
     defaultMessage: " View details",
   },
+  viewRequirements: {
+    id: "rightSidebar.viewRequirements",
+    defaultMessage: " View requirements",
+  },
 });
 
 export default messages;
