@@ -24,7 +24,7 @@ export default class RequirementsService {
     return result;
   }
 
-  public async getPlatformsRequirements(platform: PLATFORM): Promise<IPlatformRequirement[]> {
+  public async getPlatformRequirements(platform: PLATFORM): Promise<IPlatformRequirement[]> {
     if(platform === PLATFORM.REACTNATIVE) {
       return await this.getReactNativeRequirements();
     }
@@ -38,14 +38,14 @@ export default class RequirementsService {
       const command = `powershell.exe -File ${scriptPath} -NoPrompt`;
       const { stdout } = await this.exec(command);
 
-      const requirements = this.parsePlatformsRequirements(stdout);
+      const requirements = this.parsePlatformRequirements(stdout);
       return requirements;
     } catch (err) {
       return [];
     }
   }
 
-  private parsePlatformsRequirements(requirements: string): IPlatformRequirement[] {
+  private parsePlatformRequirements(requirements: string): IPlatformRequirement[] {
     const result:IPlatformRequirement[] = [];
     const lines = requirements.split("\n");
 

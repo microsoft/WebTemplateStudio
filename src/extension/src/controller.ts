@@ -158,9 +158,9 @@ export class Controller {
 
     if (syncObject) {
       this.SyncCompleted = true;
+      await Controller.getTemplateInfoAndStore(context, syncObject, platform);
       Controller.reactPanelContext = ReactPanel.createOrShow(this.routingMessageReceieverDelegate);
 
-      Controller.getTemplateInfoAndStore(context, syncObject, platform);
       this.Telemetry.trackCreateNewProject({
         entryPoint: CONSTANTS.TELEMETRY.LAUNCH_WIZARD_STARTED_POINT,
       });
@@ -173,8 +173,8 @@ export class Controller {
     platform: PLATFORM
   ): Promise<void> {
     const preview = vscode.workspace.getConfiguration().get<boolean>("wts.enablePreviewMode");
-    const platformRequirements = await Controller.RequirementsService.getPlatformsRequirements(platform);
-    this.processInvalidRequirements(platformRequirements);
+    const platformRequirements = await Controller.RequirementsService.getPlatformRequirements(platform);
+    this.processMissingRequirements(platformRequirements);
     CoreTemplateStudio._templateConfig = {
       templatesVersion: syncObject.templatesVersion,
       wizardVersion: getExtensionVersionNumber(ctx),
@@ -182,19 +182,17 @@ export class Controller {
       projectNameValidationConfig: syncObject.projectNameValidationConfig,
       preview,
       platform,
-      platformRequirements
+      platformRequirements,
     };
   }
 
-  private static processInvalidRequirements(requirements: IPlatformRequirement[]) {
-    const message = MESSAGES.WARNINGS.MISSING_PRERREQUISITES;
-    const invalidRequirements = requirements.filter((r) => !r.isInstalled);
-    if (invalidRequirements && invalidRequirements.length > 0) {
-      Logger.appendLog("EXTENSION", "warn", message);
-      for (const requirement of invalidRequirements) {
+  private static processMissingRequirements(requirements: IPlatformRequirement[]) {
+    const missingRequirements = requirements.filter((r) => !r.isInstalled);
+    if (missingRequirements.length > 0) {
+      Logger.appendLog("EXTENSION", "warn", MESSAGES.WARNINGS.MISSING_PRERREQUISITES);
+      for (const requirement of missingRequirements) {
         Logger.appendLog("EXTENSION", "warn", requirement.name);
       }
-      vscode.window.showWarningMessage(message);
     }
   }
 
