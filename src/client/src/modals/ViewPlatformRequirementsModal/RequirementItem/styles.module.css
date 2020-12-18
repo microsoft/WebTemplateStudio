@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  font-size: 1em;
+}
+
+.inLine {
+  display: flex;
+}
+
+.iconCheck {
+  margin-top: 3px;
+  margin-right: 1em;
+  height: 18px;
+}
+
+.iconCheck path {
+  fill: var(--vscode-gitDecoration-untrackedResourceForeground);
+}
+
+.iconError {
+  margin-top: 3px;
+  margin-right: 1em;
+  height: 18px;
+  width: 18px;
+}
+
+.iconError path {
+  fill: var(--vscode-errorForeground);
+}
+
+.errorText {
+  color: var(--vscode-errorForeground);
+}

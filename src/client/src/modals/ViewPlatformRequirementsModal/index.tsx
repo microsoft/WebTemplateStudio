@@ -11,6 +11,7 @@ import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import { KEY_EVENTS } from "../../utils/constants/constants";
 import messages from "./messages";
 import { getPlatformRequirementsSelector } from "../../store/config/platform/selector";
+import RequirementItem from "./RequirementItem";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -33,7 +34,7 @@ const ViewPlatformRequirementsModal = ({ intl }: Props) => {
   return (
     <div>
       <div className={styles.headerContainer}>
-        <div className={styles.title}>{intl.formatMessage(messages.platformRequirements)}</div>
+        <div className={styles.title}>{intl.formatMessage(messages.developmentRequirements)}</div>
         <Cancel
           tabIndex={0}
           className={styles.cancelIcon}
@@ -41,10 +42,17 @@ const ViewPlatformRequirementsModal = ({ intl }: Props) => {
           onKeyDown={closeModalIfPressEnterOrSpaceKey}
         />
       </div>
-      <div className={styles.body}>
-        {platformRequirements && platformRequirements.map((requirement, idx) => {
-         return (<p key={idx}>{requirement.name}</p>);
-        })}
+      <div>
+        <div className={styles.subtitle}>
+          {intl.formatMessage(messages.checkAndInstallRequirements)}
+          <a target="_blank" rel="noreferrer noopener" className={styles.link} href="#">
+            {intl.formatMessage(messages.reviewTheDocs)}
+          </a>
+        </div>
+        {platformRequirements &&
+          platformRequirements.map((requirement, idx) => {
+            return <RequirementItem item={requirement} key={idx} />;
+          })}
       </div>
     </div>
   );
