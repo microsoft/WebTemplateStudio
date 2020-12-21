@@ -1,6 +1,6 @@
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import PageAddPages from "./index";
+import AddPagesPage from "./index";
 import { Provider } from "react-redux";
 import { getInitialState, loadMasters } from "../../mockData/mockStore";
 import { render } from "@testing-library/react";
@@ -8,7 +8,7 @@ import { IntlProvider } from "react-intl";
 import messages from "./messages";
 import { AppState } from "../../store/combineReducers";
 
-describe("PageAddPages", () => {
+describe("AddPagesPage", () => {
   let props: any;
   let wrapper: any;
   let store: any;
@@ -28,7 +28,7 @@ describe("PageAddPages", () => {
     wrapper = render(
       <IntlProvider locale="en">
         <Provider store={store}>
-          <PageAddPages {...props} />
+          <AddPagesPage {...props} />
         </Provider>
       </IntlProvider>
     );

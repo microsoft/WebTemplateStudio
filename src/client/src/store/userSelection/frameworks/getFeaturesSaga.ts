@@ -20,7 +20,13 @@ export function* getFeaturesSaga(vscode: any) {
     const selectedProjectType = yield select(selectedProjectTypeSelector);
 
     if (selectedProjectType !== "" && (selectedFrontend.internalName !== "" || selectedBackend.internalName !== "")) {
-      const event: any = yield call(getFeatures, vscode, selectedProjectType.internalName, selectedFrontend.internalName, selectedBackend.internalName);
+      const event: any = yield call(
+        getFeatures,
+        vscode,
+        selectedProjectType.internalName,
+        selectedFrontend.internalName,
+        selectedBackend.internalName
+      );
       const features = getFeaturesOptions(event.data.payload.features);
       yield put(setFeaturesAction(features));
     }

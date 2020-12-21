@@ -2,7 +2,7 @@ import { mapStateToProps } from "./store";
 import { IStoreProps } from "./interfaces";
 import { getInitialState } from "../../mockData/mockStore";
 
-describe("pageAddPages", () => {
+describe("AddPagesPage", () => {
   it("react", () => {
     const mapStateToPropsInstance: IStoreProps = mapStateToProps(getInitialState());
     let counterAttributes = 0;

@@ -2,11 +2,11 @@ import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
   notInstalled: {
-    id: "dependencyChecker.notInstalledMessage",
+    id: "selectFrameworksPage.frameworkCard.dependencyInfo.notInstalledMessage",
     defaultMessage: "{name} {version} not detected. Click to install.",
   },
   iconAltMessage: {
-    id: "dependencyChecker.iconAltMessage",
+    id: "selectFrameworksPage.frameworkCard.dependencyInfo.iconAltMessage",
     defaultMessage: "Notification",
   },
 });

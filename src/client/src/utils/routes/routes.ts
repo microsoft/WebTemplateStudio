@@ -2,7 +2,6 @@ import { PLATFORM, ROUTE } from "../constants/constants";
 import { IRoutesNavItems } from "../../types/route";
 import messages from "./messages";
 
-
 const NavItemsWeb: IRoutesNavItems[] = [
   { route: ROUTE.NEW_PROJECT, isSelected: true, wasVisited: true, index: 0, messageDescriptor: messages.welcome },
   {
