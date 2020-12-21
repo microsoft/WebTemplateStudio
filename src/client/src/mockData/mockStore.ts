@@ -531,4 +531,5 @@ export const setGenerationData = (store: AppState) => {
 
 export const addPlatformRequirementsOptions = (store: AppState) => {
   store.config.platform.requirements = loadPlatformRequirements();
+  return store.config.platform.requirements.length;
 };
