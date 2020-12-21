@@ -16,4 +16,9 @@ const hasInvalidPlatformRequirementsSelector = createSelector(getPlatformRequire
   return invalidRequirements.length > 0;
 });
 
-export { getPlatformRequirementsSelector, hasPlatformRequirementsSelector, hasInvalidPlatformRequirementsSelector };
+export {
+  getPlatformSelector,
+  getPlatformRequirementsSelector,
+  hasPlatformRequirementsSelector,
+  hasInvalidPlatformRequirementsSelector,
+};

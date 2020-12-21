@@ -8,9 +8,9 @@ import { closeModalAction } from "../../store/navigation/modals/action";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { isViewPlatformRequirementsModalOpenSelector } from "../../store/navigation/modals/selector";
 import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
-import { KEY_EVENTS } from "../../utils/constants/constants";
+import { KEY_EVENTS, PLATFORM, WEB_TEMPLATE_STUDIO_LINKS } from "../../utils/constants/constants";
 import messages from "./messages";
-import { getPlatformRequirementsSelector } from "../../store/config/platform/selector";
+import { getPlatformRequirementsSelector, getPlatformSelector } from "../../store/config/platform/selector";
 import RequirementItem from "./RequirementItem";
 
 interface IStateProps {
@@ -21,7 +21,10 @@ type Props = IStateProps & InjectedIntlProps;
 
 const ViewPlatformRequirementsModal = ({ intl }: Props) => {
   const dispatch = useDispatch();
+  const platform = useSelector(getPlatformSelector);
   const platformRequirements = useSelector(getPlatformRequirementsSelector);
+  const requirementsDoc =
+    platform.name === PLATFORM.REACTNATIVE ? WEB_TEMPLATE_STUDIO_LINKS.REACT_NATIVE_REQUIREMENTS_DOC : undefined;
 
   const closeModalIfPressEnterOrSpaceKey = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
@@ -45,7 +48,7 @@ const ViewPlatformRequirementsModal = ({ intl }: Props) => {
       <div>
         <div className={styles.subtitle}>
           {intl.formatMessage(messages.checkAndInstallRequirements)}
-          <a target="_blank" rel="noreferrer noopener" className={styles.link} href="#">
+          <a target="_blank" rel="noreferrer noopener" className={styles.link} href={requirementsDoc}>
             {intl.formatMessage(messages.reviewTheDocs)}
           </a>
         </div>
