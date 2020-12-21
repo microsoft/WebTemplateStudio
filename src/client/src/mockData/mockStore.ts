@@ -11,6 +11,7 @@ import {
   serviceImage,
 } from "./extensionModules/mockData/mockSvgData";
 import { PLATFORM } from "../utils/constants/constants";
+import { IPlatformRequirement } from "../store/config/platform/model";
 
 export const getISelected = () => {
   const selected: ISelected = {
@@ -257,6 +258,17 @@ const loadFeatures = (): Array<any> => {
     editable: true,
   };
   return new Array<any>(appServiceFeature, cosmosDbFeature);
+};
+
+const loadPlatformRequirements = (): IPlatformRequirement[] => {
+  const requirements = Array.from(Array(5).keys()).map((item: number) => {
+    return {
+      name: `requirement ${item}`,
+      isInstalled: true,
+    };
+  });
+
+  return requirements;
 };
 
 const getSubscriptionsSelector = (): Array<Subscription> => {
@@ -515,4 +527,8 @@ export const setGenerationData = (store: AppState) => {
     icon: "",
   };
   return 3;
+};
+
+export const addPlatformRequirementsOptions = (store: AppState) => {
+  store.config.platform.requirements = loadPlatformRequirements();
 };

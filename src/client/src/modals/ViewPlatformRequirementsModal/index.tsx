@@ -43,6 +43,7 @@ const ViewPlatformRequirementsModal = ({ intl }: Props) => {
           className={styles.cancelIcon}
           onClick={() => dispatch(closeModalAction())}
           onKeyDown={closeModalIfPressEnterOrSpaceKey}
+          aria-label={intl.formatMessage(messages.ariaCloseModalLabel)}
         />
       </div>
       <div>
