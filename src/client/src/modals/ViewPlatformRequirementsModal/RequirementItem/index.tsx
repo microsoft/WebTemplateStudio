@@ -28,17 +28,11 @@ const RequirementItem = ({ intl, item }: Props) => {
       {!item.isInstalled && (
         <div className={styles.inLine}>
           <div role="img" aria-label={formatMessage(messages.requirementNotInstalled)}>
-            <ErrorRed className={styles.iconError} data-testid="error-icon" />
+            <ErrorRed className={styles.iconError} />
           </div>
         </div>
       )}
-      <div
-        className={classnames({
-          [styles.errorText]: !item.isInstalled,
-        })}
-      >
-        {item.name}
-      </div>
+      <div className={classnames({ [styles.errorText]: !item.isInstalled })}>{item.name}</div>
     </div>
   );
 };

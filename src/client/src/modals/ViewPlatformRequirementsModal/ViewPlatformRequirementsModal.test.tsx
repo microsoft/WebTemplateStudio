@@ -53,8 +53,8 @@ describe("ViewPlatformRequirementsModal", () => {
   });
 
   it("should be the same number of requirements components as requirements in the store", () => {
-    const wrapper = renderWithStore(<ViewPlatformRequirementsModal {...props} />, store);
-    const requirementComponents = wrapper.queryAllByTestId("requirement-item-component");
+    const { queryAllByTestId } = renderWithStore(<ViewPlatformRequirementsModal {...props} />, store);
+    const requirementComponents = queryAllByTestId("requirement-item-component");
     expect(requirementComponents.length).toBe(countRequirementInStore);
   });
 });
