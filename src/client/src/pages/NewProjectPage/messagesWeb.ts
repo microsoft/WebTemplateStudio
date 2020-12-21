@@ -1,17 +1,17 @@
 import { defineMessages } from "react-intl";
 
-const messages = defineMessages({
+const messagesWeb = defineMessages({
   header: {
-    id: "newProjectPage.header",
+    id: "newProjectPage.web.header",
     defaultMessage: "Create Your Web App in Seconds",
   },
   body: {
-    id: "newProjectPage.body",
+    id: "newProjectPage.web.body",
     defaultMessage: "Give your full-stack project a name, choose where to create it, then click 'Next' to get started.",
   },
   projectNameTitle: {
-    id: "newProjectPage.projectNameTitle",
+    id: "newProjectPage.web.projectNameTitle",
     defaultMessage: "Project Name",
   },
 });
-export default messages;
+export default messagesWeb;
