@@ -7,7 +7,7 @@ const messagesReactNative = defineMessages({
   },
   body: {
     id: "newProjectPage.reactNative.body",
-    defaultMessage: "Give your react native project a name, choose where to create it, then click 'Next' to get started.",
+    defaultMessage: "Give your project a name, choose where to create it, then click 'Next' to get started.",
   },
   projectNameTitle: {
     id: "newProjectPage.reactNative.projectNameTitle",
