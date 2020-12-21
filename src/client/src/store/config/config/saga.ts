@@ -57,7 +57,7 @@ export function* loadTemplatesSaga(vscode: any) {
     yield put({
       type: CONFIG_TYPEKEYS.SET_PLATFORM,
       payload: {
-        name: messageTemplateInfo.payload.platform,
+        id: messageTemplateInfo.payload.platform,
         requirements: messageTemplateInfo.payload.platformRequirements,
       } as IPlatform,
     });
@@ -164,7 +164,7 @@ export function* loadroutesNavItemsaSaga() {
   yield takeEvery(CONFIG_TYPEKEYS.SET_PLATFORM, callBack);
 
   function* callBack() {
-    const platform = yield select((state: AppState) => state.config.platform.name);
+    const platform = yield select((state: AppState) => state.config.platform.id);
     const routes: IRoutesNavItems[] = getNavItems(platform);
     yield put({
       payload: routes,

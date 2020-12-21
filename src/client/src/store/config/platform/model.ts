@@ -7,7 +7,7 @@ export interface ISetPlatformTypeAction {
 }
 
 export interface IPlatform {
-  name: PLATFORM;
+  id: PLATFORM;
   requirements: IPlatformRequirement[];
 }
 

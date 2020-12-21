@@ -71,7 +71,7 @@ export const getInitialState = (): AppState => {
         email: "",
       },
       platform: {
-        name: PLATFORM.WEB,
+        id: PLATFORM.WEB,
         requirements: [],
       },
     },

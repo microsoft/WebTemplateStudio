@@ -14,7 +14,7 @@ type Props = InjectedIntlProps;
 
 const NewProject = (props: Props) => {
   const platform = useSelector(getPlatformSelector);
-  const messages = (platform.name === PLATFORM.WEB) ? messagesWeb : messagesReactNative;
+  const messages = (platform.id === PLATFORM.WEB) ? messagesWeb : messagesReactNative;
   return (
     <div className={styles.container}>
       <div className={styles.newProjectInfo}>

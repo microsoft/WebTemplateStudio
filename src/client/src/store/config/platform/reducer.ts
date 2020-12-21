@@ -4,7 +4,7 @@ import RootAction from "../../ActionType";
 import { IPlatform } from "./model";
 
 const initialState: IPlatform = {
-  name: PLATFORM.WEB,
+  id: PLATFORM.WEB,
   requirements: [],
 };
 

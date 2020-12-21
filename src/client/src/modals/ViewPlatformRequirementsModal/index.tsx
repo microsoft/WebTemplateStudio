@@ -24,7 +24,7 @@ const ViewPlatformRequirementsModal = ({ intl }: Props) => {
   const platform = useSelector(getPlatformSelector);
   const platformRequirements = useSelector(getPlatformRequirementsSelector);
   const requirementsDoc =
-    platform.name === PLATFORM.REACTNATIVE ? WEB_TEMPLATE_STUDIO_LINKS.REACT_NATIVE_REQUIREMENTS_DOC : undefined;
+    platform.id === PLATFORM.REACTNATIVE ? WEB_TEMPLATE_STUDIO_LINKS.REACT_NATIVE_REQUIREMENTS_DOC : undefined;
 
   const closeModalIfPressEnterOrSpaceKey = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
