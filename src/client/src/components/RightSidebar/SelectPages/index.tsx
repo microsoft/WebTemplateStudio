@@ -51,7 +51,19 @@ const SelectPages = (props: Props) => {
               setMinimized(!isMinimized);
             }}
           >
-            {isMinimized ? <ShowIconSVG className={styles.viewIcon} /> : <HideIconSVG className={styles.viewIcon} />}
+            {isMinimized ? (
+              <ShowIconSVG
+                className={styles.viewIcon}
+                aria-label={props.intl!.formatMessage(messages.showAriaLabel)}
+                title={props.intl!.formatMessage(messages.showIcon)}
+              />
+            ) : (
+              <HideIconSVG
+                className={styles.viewIcon}
+                aria-label={props.intl!.formatMessage(messages.hideAriaLabel)}
+                title={props.intl!.formatMessage(messages.hideIcon)}
+              />
+            )}
           </button>
         </div>
       </div>

@@ -39,19 +39,6 @@
   align-items: center;
 }
 
-.nextIcon {
-  margin-left: 10px;
-  height: 16px;
-}
-
-.nextIcon path {
-  fill: var(--vscode-editor-foreground);
-}
-
-.nextIconNotDisabled path {
-  fill: #ffffff;
-}
-
 .disabledOverlay {
   opacity: 0.5;
   background: var(--vscode-editor-background);

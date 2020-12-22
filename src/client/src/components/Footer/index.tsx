@@ -17,8 +17,6 @@ import {
 } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../store/combineReducers";
 
-import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
-import nextArrow from "../../assets/nextarrow.svg";
 import keyUpHandler from "../../utils/keyUpHandler";
 import messages from "./messages";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
@@ -136,13 +134,6 @@ const Footer = (props: Props) => {
               }}
             >
               {formatMessage(messages.next)}
-              {nextArrow && (
-                <NextArrow
-                  className={classnames(styles.nextIcon, {
-                    [styles.nextIconNotDisabled]: isEnableNextPage,
-                  })}
-                />
-              )}
             </a>
             <button
               disabled={!isEnableGenerateButton}

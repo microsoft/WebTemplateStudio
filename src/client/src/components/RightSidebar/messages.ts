@@ -21,7 +21,6 @@ const messages = defineMessages({
     id: "rightSidebar.hideIcon",
     defaultMessage: "Hide",
   },
-
   yourProjectDetails: {
     id: "rightSidebar.yourProjectDetails",
     defaultMessage: "Your Project Details",
