@@ -8,7 +8,7 @@ import { isLoggedInSelector } from "../../../store/config/azure/selector";
 import { setDetailPageAction } from "../../../store/config/detailsPage/action";
 import { AppState } from "../../../store/combineReducers";
 
-import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
+import { ROUTE } from "../../../utils/constants/constants";
 
 import Icon from "../../../components/Icon";
 
@@ -16,7 +16,6 @@ import { ReactComponent as PriceSVG } from "../../../assets/money.svg";
 import { ReactComponent as TimeSVG } from "../../../assets/timer.svg";
 
 import buttonStyles from "../../../css/buttonStyles.module.css";
-import cardStyles from "../../cardStyles.module.css";
 import styles from "./styles.module.css";
 import messages from "./messages";
 import classnames from "classnames";
@@ -34,16 +33,8 @@ export const ServiceCard = (props: Props) => {
   const isLoggedIn = useSelector(isLoggedInSelector);
   const hasService = useSelector((state: AppState) => hasSelectedService(state, service.internalName));
 
-  const showDetails = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    event.stopPropagation();
+  const showDetails = () => {
     dispatch(setDetailPageAction(service, false, ROUTE.ADD_SERVICES));
-  };
-
-  const showDetailIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
-    event.stopPropagation();
-    if (event.key === KEY_EVENTS.ENTER) {
-      dispatch(setDetailPageAction(service, false, ROUTE.ADD_SERVICES));
-    }
   };
 
   const openModal = () => {
@@ -75,9 +66,9 @@ export const ServiceCard = (props: Props) => {
           <div>{service.body}</div>
         </div>
         <div className={styles.footer}>
-          <a tabIndex={0} onClick={showDetails} onKeyDown={showDetailIfPressEnterKey} className={cardStyles.link}>
+          <button tabIndex={0} onClick={showDetails} className={buttonStyles.buttonLink}>
             {formatMessage(messages.learnMore)}
-          </a>
+          </button>
           <button
             onClick={openModal}
             className={classnames(styles.addButton, buttonStyles.buttonHighlighted, buttonStyles.buttonCursorPointer)}

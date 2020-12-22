@@ -1,6 +1,8 @@
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/commands";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as mockWebData from "./mockData/mockWebPlatformData";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as mockReactNativeData from "./mockData/mockReactNativePlatformData";
 
 //DEV:Change mock data to change platform
