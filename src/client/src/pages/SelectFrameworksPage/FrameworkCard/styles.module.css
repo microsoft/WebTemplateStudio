@@ -1,0 +1,50 @@
+.gridLayoutVersion {
+  display: grid;
+  grid-template-columns: min-content auto;
+}
+
+.latestVersion {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  padding-left: 0.5rem;
+}
+
+.cardCount,
+.selectedCheckMark {
+  display: flex;
+  justify-content: center;
+}
+
+.countButton {
+  background: none;
+  color: inherit;
+  border: none;
+  font: 1.2em;
+  cursor: pointer;
+  outline: inherit;
+}
+
+.pageButtons {
+  display: flex;
+  justify-content: flex-end;
+  float: right;
+  width: 100%;
+}
+
+.cardCount {
+  text-align: center;
+  border: 1.8px solid var(--vscode-editor-foreground);
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  font-size: 16px;
+}
+
+.cardCount path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.cardCount:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}

@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-form',
@@ -13,17 +13,17 @@ export class FormComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.listForm = new FormGroup({
       content: new FormControl('')
     });
   }
 
-  get content() {
+  get content(): AbstractControl {
     return this.listForm.get('content');
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.inputText.emit(this.listForm.get('content').value);
     this.listForm.reset();
   }

@@ -1,14 +1,15 @@
 import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 import WizardSelectionActionType from "../selectionActionType";
-import { WIZARD_PROJECT_TYPE } from "../../../utils/constants/internalNames";
-import { ENVIRONMENT } from "../../../utils/constants/constants";
+import { ISelected } from "../../../types/selected";
 
-//TODO: need to be changed/improved #1664 
-//TODO: decide from command Palette launch command
-const devProjectType = WIZARD_PROJECT_TYPE.FULL_STACK_APP;
-const initialState = (process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT) ? devProjectType : WIZARD_PROJECT_TYPE.FULL_STACK_APP;
+const initialState = {
+  title: "",
+  internalName: "",
+  icon: "",
+  description: "",
+};
 
-const backendFramework = (state: string = initialState, action: WizardSelectionActionType) => {
+const projectType = (state: ISelected = initialState, action: WizardSelectionActionType) => {
   switch (action.type) {
     case USERSELECTION_TYPEKEYS.SELECT_PROJECT_TYPE:
       return action.payload;
@@ -17,4 +18,4 @@ const backendFramework = (state: string = initialState, action: WizardSelectionA
   }
 };
 
-export default backendFramework;
+export default projectType;

@@ -1,0 +1,22 @@
+.headerIconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1.8px solid var(--vscode-editor-foreground);
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+}
+
+/* below similar but not exactly same styles */
+/* TODO have a look at this as this box should have 3 rows in each page card here  */
+.description {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  margin-top: 1rem;
+  height: 9rem;
+}
+
+.pageCounter {
+  font-size: 1.2rem;
+}

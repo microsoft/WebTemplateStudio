@@ -20,6 +20,7 @@ import messages from "./messages";
 import classnames from "classnames";
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
+import SelectProjectTypes from "./SelectProjectTypes";
 
 type Props = InjectedIntlProps;
 
@@ -84,6 +85,7 @@ const RightSidebar = (props: Props) => {
 
               <ProjectDetails isRightsidebar={true} />
 
+              <SelectProjectTypes />
               <SelectFrameworks />
               <SelectPages pathname={selectedRoute} />
               {hasServices && <ServicesList />}

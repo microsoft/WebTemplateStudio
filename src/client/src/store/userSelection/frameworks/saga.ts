@@ -16,18 +16,18 @@ export function* frameworkSaga(vscode: any) {
     const selectedPagesSelector = (state: AppState) => state.userSelection.pages;
     const selectedFrontendSelector = (state: AppState) => state.userSelection.frontendFramework;
     const selectedBackendSelector = (state: AppState) => state.userSelection.backendFramework;
+    const selectedProjectTypeSelector = (state: AppState) => state.userSelection.projectType;
 
     const selectedPages = yield select(selectedPagesSelector);
     const selectedFrontend = yield select(selectedFrontendSelector);
     const selectedBackend = yield select(selectedBackendSelector);
-    const projectTypes = yield select((state: AppState) => state.templates.projectTypesOptions);
-    //TODO this won´t be valid anymore
-    const projectType = projectTypes[0]; 
+    const selectedProjectType = yield select(selectedProjectTypeSelector);
+
     if (selectedFrontend.internalName !== "" || selectedBackend.internalName !== "") {
       const event: any = yield call(
         getPages,
         vscode,
-        projectType,
+        selectedProjectType.internalName,
         selectedFrontend.internalName,
         selectedBackend.internalName
       );

@@ -24,6 +24,7 @@ export class CoreTSModule extends WizardServant {
 
   async getProjectTypes(): Promise<IPayloadResponse> {
     const projectTypes = await CoreTemplateStudio.GetExistingInstance().getProjectTypes();
+    this.transformIconToBase64(projectTypes);
     return {
       payload: {
         projectTypes,

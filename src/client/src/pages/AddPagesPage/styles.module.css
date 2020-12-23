@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 24px;
+  padding-right: 24px;
+  width: 100%;
+}
+
+.icon {
+  height: 36px;
+}
+
+.description {
+  border-radius: 3px;
+  padding: 3px 10px 3px 10px;
+  margin-right: 5px;
+  margin-bottom: 30px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.description:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.borderGreen {
+  border: 1px solid var(--vscode-gitDecoration-untrackedResourceForeground);
+}
+
+.borderYellow {
+  border: 1px solid var(--vscode-editorMarkerNavigationWarning-background);
+}

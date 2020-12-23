@@ -2,8 +2,8 @@ import * as React from "react";
 import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
 
 import Select, { components } from "react-select";
-import dropdownstyles from "./dropdownstyles";
 
+import dropdownstyles from "./dropdownstyles";
 import styles from "./styles.module.css";
 
 export interface IDropdownProps {

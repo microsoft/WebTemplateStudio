@@ -2,7 +2,7 @@
 import ReactDOM from "react-dom";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-import registerServiceWorker from "./registerServiceWorker";
+import reportWebVitals from './reportWebVitals';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.render(
@@ -12,8 +12,7 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-/**  
- * Be aware that the website will only update to the latest version on the 2nd page visit if it as already cached 
- * Learn more about service workers in React: https://create-react-app.dev/docs/making-a-progressive-web-app
- */
-registerServiceWorker();
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();

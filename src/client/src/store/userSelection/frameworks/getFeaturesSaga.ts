@@ -13,12 +13,20 @@ export function* getFeaturesSaga(vscode: any) {
   function* callBack() {
     const selectedFrontendSelector = (state: AppState) => state.userSelection.frontendFramework;
     const selectedBackendSelector = (state: AppState) => state.userSelection.backendFramework;
+    const selectedProjectTypeSelector = (state: AppState) => state.userSelection.projectType;
 
     const selectedFrontend = yield select(selectedFrontendSelector);
     const selectedBackend = yield select(selectedBackendSelector);
+    const selectedProjectType = yield select(selectedProjectTypeSelector);
 
-    if (selectedFrontend.internalName !== "" || selectedBackend.internalName !== "") {
-      const event: any = yield call(getFeatures, vscode, selectedFrontend.internalName, selectedBackend.internalName);
+    if (selectedProjectType !== "" && (selectedFrontend.internalName !== "" || selectedBackend.internalName !== "")) {
+      const event: any = yield call(
+        getFeatures,
+        vscode,
+        selectedProjectType.internalName,
+        selectedFrontend.internalName,
+        selectedBackend.internalName
+      );
       const features = getFeaturesOptions(event.data.payload.features);
       yield put(setFeaturesAction(features));
     }

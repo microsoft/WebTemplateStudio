@@ -1,0 +1,74 @@
+.container {
+  width: 300px;
+  height: 300px;
+  padding: 2.5em;
+  background-color: hsla(0, 0%, 47%, 0.2);
+  margin-bottom: 10px;
+}
+
+.cardContainer {
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardContainer>*:last-child {
+  margin-top: auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.title {
+  margin-left: 10px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.icon {
+  height: 36px;
+}
+
+.body {
+  margin-bottom: 1em;
+  font-size: 15px;
+  line-height: 1.75em;
+}
+
+.expectedPrice {
+  margin-top: 5px;
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.expectedTime {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.svg {
+  margin-right: 18px;
+  margin-top: 4px;
+  fill: var(--vscode-editor-foreground);
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--vscode-textLink-foreground);
+}
+
+.addButton {
+  margin-left: 10px;
+  font-size: var(--vscode-font-size);
+  border: none;
+}
+
+.addButton:focus {
+  outline: 1.5px solid var(--vscode-contrastActiveBorder);
+}

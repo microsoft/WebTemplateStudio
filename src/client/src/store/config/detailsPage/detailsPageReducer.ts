@@ -12,7 +12,7 @@ const initialState = {
     displayName: "",
     summary: "",
     longDescription: "",
-    position: 0,
+    order: 0,
     icon: "",
     licenses: [],
     selected: false,
