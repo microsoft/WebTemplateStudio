@@ -5,7 +5,7 @@ import flask
 
 PORT = os.environ.get("PORT", 3001)
 
-app = flask.Flask(__name__, static_folder="build")
+app = flask.Flask(__name__, static_folder="../build")
 
 # Catching all routes
 # This route is used to serve all the routes in the frontend application after deployment.

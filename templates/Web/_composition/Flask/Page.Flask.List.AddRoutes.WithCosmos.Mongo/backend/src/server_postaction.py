@@ -3,7 +3,7 @@ import flask
 //{[{
 import mongo.service
 //}]}
-app = flask.Flask(__name__, static_folder="build")
+app = flask.Flask(__name__, static_folder="../build")
 
 //{[{
 # List Endpoints

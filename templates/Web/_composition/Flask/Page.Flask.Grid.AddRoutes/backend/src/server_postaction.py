@@ -1,13 +1,13 @@
 import flask
 //{[{
-import sample_data
+import src.sample_data
 //}]}
-app = flask.Flask(__name__, static_folder="build")
+app = flask.Flask(__name__, static_folder="../build")
 
 //{[{
 # Grid Page Endpoint
 @app.route(ENDPOINT_GRID)
 def get_grid():
-    return flask.jsonify(sample_data.sample_orders)
+    return flask.jsonify(src.sample_data.sample_orders)
 
 //}]}
