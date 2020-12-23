@@ -1,5 +1,5 @@
 import azure.cosmos
-import sql.settings
+import src.sql.settings
 
 COSMOS_DATABASE = "List"
 COSMOS_CONTAINER = "ListItems"
@@ -8,7 +8,7 @@ COSMOS_CONTAINER = "ListItems"
 class SQLObj:
     def __init__(self):
         self.client = azure.cosmos.CosmosClient(
-            url=sql.settings.connection_key, credential=sql.settings.master_key
+            url=src.sql.settings.connection_key, credential=src.sql.settings.master_key
         )
         self.database = self.client.create_database_if_not_exists(id=COSMOS_DATABASE)
         self.container = self.database.create_container_if_not_exists(

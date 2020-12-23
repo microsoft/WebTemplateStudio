@@ -1,14 +1,14 @@
-import mongo.settings
 import pymongo
+import src.mongo.settings
 
 COSMOS_COLLECTION = "ListItems"
 
 client = pymongo.MongoClient(
-    mongo.settings.connection_str + "?ssl=true&replicaSet=globaldb"
+    src.mongo.settings.connection_str + "?ssl=true&replicaSet=globaldb"
 )
 
 db = client[COSMOS_COLLECTION]
 
-db.authenticate(mongo.settings.cosmosDB_user, mongo.settings.cosmosDB_password)
+db.authenticate(src.mongo.settings.cosmosDB_user, src.mongo.settings.cosmosDB_password)
 
 list_items = db.test

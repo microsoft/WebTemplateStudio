@@ -1,8 +1,8 @@
 import azure.cosmos
 import flask
-import sql.client
+import src.sql.client
 
-sql_database_obj = sql.client.SQLObj()
+sql_database_obj = src.sql.client.SQLObj()
 
 
 def get():
