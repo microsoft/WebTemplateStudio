@@ -102,7 +102,7 @@ const Footer = (props: Props) => {
           <div className={styles.buttonContainer}>
             <a
               tabIndex={!isFirstStep ? 0 : -1}
-              className={classnames(buttonStyles.buttonDark, styles.button, styles.buttonBack, {
+              className={classnames(buttonStyles.buttonDark, {
                 [styles.disabledOverlay]: isFirstStep || !isEnableGenerateButton,
               })}
               onClick={() => {
@@ -119,7 +119,7 @@ const Footer = (props: Props) => {
             </a>
             <a
               tabIndex={isEnableNextPage ? 0 : -1}
-              className={classnames(styles.button, styles.buttonNext, buttonStyles.buttonHighlighted, {
+              className={classnames(buttonStyles.buttonHighlighted, {
                 [buttonStyles.buttonDark]: !isEnableNextPage,
                 [styles.disabledOverlay]: isLastStep || !isEnableNextPage || !isEnableGenerateButton,
               })}
@@ -137,7 +137,7 @@ const Footer = (props: Props) => {
             </a>
             <button
               disabled={!isEnableGenerateButton}
-              className={classnames(styles.button, {
+              className={classnames({
                 [buttonStyles.buttonDark]: !isEnableGenerateButton,
                 [buttonStyles.buttonHighlighted]: isEnableGenerateButton,
                 [styles.disabledOverlay]: !isEnableGenerateButton,

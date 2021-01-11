@@ -23,9 +23,9 @@
   margin-bottom: 16px;
 }
 
+/* TODO: use generic h1,h2,... */
 .title {
   margin-left: 10px;
-  font-size: 20px;
   font-weight: 600;
 }
 
@@ -35,7 +35,6 @@
 
 .body {
   margin-bottom: 1em;
-  font-size: 15px;
   line-height: 1.75em;
 }
 
@@ -65,6 +64,7 @@
 
 .addButton {
   margin-left: 10px;
+  /* TODO: THis one shouldn´t be needed I think : 1rem At most use that if font-size changed?*/
   font-size: var(--vscode-font-size);
   border: none;
 }

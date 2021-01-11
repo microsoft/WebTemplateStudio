@@ -1,6 +1,6 @@
 .buttonHighlighted {
-  background-color: #0067b8;
-  color: white !important;
+  background-color: var(--vscode-button-hoverBackground);
+  color: var(--vscode-editor-foreground) !important;
 }
 
 .buttonLight,
@@ -13,8 +13,20 @@
 }
 
 .buttonDark {
-  background-color: var(--vscode-editorWidget-border);
-  color: var(--vscode-editor-foreground) !important;
+  font-weight: 400;
+  /* todo review these styles. contrast */
+  background-color: var(--vscode-editor-foreground);
+  color: var(--vscode-editor-background);
+  /* background-color: var(--vscode-editorWidget-border);
+  color: var(--vscode-editor-foreground) !important; */
+  /* background-color: var(--vscode-editor-foreground);
+  color: var(--vscode-editor-background); */
+}
+
+.buttonDark:hover {
+  /* TODO INTERESTING TO ADD SOME */
+  /* background-color: var(--vscode-editor-hoverHighlightBackground);
+  color: var(--vscode-editor-foreground) !important; */
 }
 
 .buttonCursorDefault {
@@ -26,10 +38,10 @@
 }
 
 .buttonLink {
-  background:none;
-  border:none;
-  margin:0;
-  padding:0;
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
   cursor: pointer;
-  color: var(--vscode-textLink-foreground);
+  color: var(--vscode-button-foreground);
 }

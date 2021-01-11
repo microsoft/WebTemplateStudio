@@ -13,7 +13,7 @@
   margin: 15px;
 }
 
-.endAlign{
+.endAlign {
   text-align: end;
 }
 
@@ -99,18 +99,6 @@
 
 .iconHide {
   visibility: hidden;
-}
-
-.button {
-  margin-left: 1em;
-}
-
-.button:hover {
-  color: var(--vscode-editor-foreground);
-}
-
-.button:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .buttonContainer {

@@ -95,7 +95,7 @@ const RightSidebar = (props: Props) => {
               {selectedRoute !== ROUTE.REVIEW_AND_GENERATE && (
                 <div className={styles.buttonContainer}>
                   <button
-                    className={classnames(buttonStyles.buttonDark, styles.button)}
+                    className={buttonStyles.buttonDark}
                     onClick={() => dispatch(ModalActions.openViewLicensesModalAction())}
                   >
                     {formatMessage(messages.viewLicenses)}

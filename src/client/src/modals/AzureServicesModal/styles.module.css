@@ -36,9 +36,9 @@
   margin-top: 15px;
 }
 
+/* TODO: use generic link style */
 .link {
   color: var(--vscode-textLink-foreground);
-  font-size: 15px;
   line-height: 1.5;
   text-decoration: none;
   font-weight: var(--vscode-font-weight);

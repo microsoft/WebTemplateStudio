@@ -50,12 +50,11 @@
 .licenseCategory,
 .category {
   margin-left: 0px;
-  font-size: 15px;
 }
 
+/* TODO: use general h1,h2,h3,... */
 .detailsTitle {
   font-weight: 600;
-  font-size: 20px;
 }
 
 .licenses {
@@ -75,16 +74,13 @@
   display: flex;
   align-items: center;
   width: 80% !important;
-  font-size: 15px;
 }
 
 .markdown {
-  font-size: 15px !important;
 }
 
 .details {
   padding-top: 2px;
-  font-size: 20px;
   color: var(--vscode-textLink-foreground);
   cursor: pointer;
 }
@@ -105,7 +101,6 @@
 
 .longDescription {
   line-height: 1.75em;
-  font-size: 15px;
 }
 
 .colWidth {
@@ -114,7 +109,6 @@
 
 .licenseButton {
   text-decoration: none;
-  font-size: 15px;
   color: var(--vscode-textLink-foreground);
   font-weight: var(--vscode-font-weight);
   background: none;

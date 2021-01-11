@@ -12,9 +12,9 @@
   margin-bottom: 3px;
 }
 
+/* TODO: WE SHOULD USE defined h1 etc not this new style */
 .title {
   font-weight: 500;
-  font-size: 1.2em;
 }
 
 .link {

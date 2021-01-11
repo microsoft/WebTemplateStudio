@@ -20,11 +20,11 @@
   stroke: var(--vscode-editor-foreground);
 }
 
+/* TODO: use generic link style */
 .link {
   color: var(--vscode-textLink-foreground);
   font-weight: var(--vscode-font-weight);
   text-decoration: none;
-  font-size: 14px;
 }
 
 .link:focus {

@@ -86,10 +86,7 @@ const AzureServicesModal = (props: Props) => {
         />
         <div className={styles.paragraph}>
           <a className={styles.link} href={AZURE_LINKS.CREATE_FREE_ACCOUNT_FAQ} onKeyUp={keyUpHandler}>
-            <FormattedMessage
-              id="azureServicesModal.azureReadMore"
-              defaultMessage="Learn more about the Azure free account. Read the FAQ >"
-            />
+            {formatMessage(messages.azureReadMore)}
           </a>
         </div>
       </div>

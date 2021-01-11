@@ -12,6 +12,7 @@
   margin-bottom: 3px;
 }
 
+/* TODO: SAME try using h1.... */
 .title {
   font-weight: 500;
   font-size: 1.2em;
@@ -32,11 +33,11 @@
   opacity: 0.8;
 }
 
-.dropdownContainer {  
-  display:flex
+.dropdownContainer {
+  display: flex;
 }
 
-.dropdown {  
+.dropdown {
   flex: 1 1 auto;
 }
 
@@ -49,7 +50,7 @@
   padding: 0 10px;
 }
 
-.refreshButton:disabled {  
+.refreshButton:disabled {
   cursor: none;
 }
 

@@ -2,6 +2,7 @@
   margin: 15px;
 }
 
+/* TODO: move to shared area and add :hover effect */
 .buttonToLink {
   text-decoration: none;
   font-size: var(--vscode-font-size);

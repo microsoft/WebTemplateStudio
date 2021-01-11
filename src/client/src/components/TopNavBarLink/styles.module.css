@@ -64,9 +64,9 @@
 }
 
 .pageIsSelected {
-  background-color: #0067b8;
+  background-color: var(--vscode-button-hoverBackground);
   z-index: 1000;
-  border: 1px solid #0067b8;
+  border: 1px solid var(--vscode-button-hoverBackground);
   color: var(--vscode-button-foreground);
 }
 
@@ -75,7 +75,7 @@
   color: var(--vscode-editor-background);
 }
 
-.pageCursorPointer{
+.pageCursorPointer {
   cursor: pointer;
 }
 

@@ -16,6 +16,7 @@
   display: none;
 }
 
+/* TODO: Use preferred defined h1,... */
 .headerTitle,
 .headerTitleSmall {
   font-size: 1.7em;
@@ -29,19 +30,6 @@
 
 .profileName {
   margin-right: 2em;
-}
-
-.button {
-  color: var(--vscode-textLink-foreground);
-  padding: 1px;
-}
-
-.button:hover {
-  cursor: pointer;
-}
-
-.button:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 @media (min-width: 760px) {

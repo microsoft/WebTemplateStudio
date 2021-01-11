@@ -93,9 +93,9 @@
   fill: var(--vscode-gitDecoration-untrackedResourceForeground);
 }
 
+/* TODO: use generic link style */
 .link {
   color: var(--vscode-textLink-foreground);
-  font-size: 15px;
   text-decoration: none;
 }
 

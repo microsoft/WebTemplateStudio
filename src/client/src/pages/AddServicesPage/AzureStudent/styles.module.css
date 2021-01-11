@@ -13,9 +13,9 @@
   padding-left: 4em;
 }
 
+/* TODO: use generic link style */
 .link {
   color: var(--vscode-textLink-foreground);
-  font-size: 15px;
   text-decoration: none;
 }
 
@@ -23,14 +23,13 @@
   width: 200px;
 }
 
+/* use generic h1,h2,h3,... */
 .azureForStudent {
-  font-size: 20px;
   font-weight: 600;
   margin-bottom: 15px;
 
 }
 
 .body {
-  font-size: 15px;
   margin-bottom: 8px;
 }

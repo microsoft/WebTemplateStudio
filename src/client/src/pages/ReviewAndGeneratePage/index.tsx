@@ -25,7 +25,7 @@ const ReviewAndGenerate = ({ intl }: Props) => {
         </div>
         <div className={styles.buttonContainer}>
           <button
-            className={classnames(buttonStyles.buttonDark, styles.button)}
+            className={buttonStyles.buttonDark}
             onClick={() => dispatch(ModalActions.openViewLicensesModalAction())}
           >
             {formatMessage(messages.viewLicenses)}
