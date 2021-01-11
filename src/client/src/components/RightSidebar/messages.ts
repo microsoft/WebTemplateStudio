@@ -31,11 +31,11 @@ const messages = defineMessages({
   },
   viewDetails: {
     id: "rightSidebar.viewDetails",
-    defaultMessage: " View details",
+    defaultMessage: "View details",
   },
   viewRequirements: {
     id: "rightSidebar.viewRequirements",
-    defaultMessage: " View requirements",
+    defaultMessage: "View requirements",
   },
 });
 
