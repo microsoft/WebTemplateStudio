@@ -54,6 +54,9 @@
     "format": "prettier --write src/**/*.{ts,tsx}",
     "lint": "eslint ./src/**/*.{ts,tsx}"
   },
+  "jest": {
+    "resetMocks": false
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
