@@ -20,8 +20,7 @@
       "label": "Start backend",
       //{[{
       "type": "shell",
-      "command": "python",
-      "args": ["backend/server.py"]
+      "command": "cd backend && flask run -p 3001"
       //}]}
     },
   ]
