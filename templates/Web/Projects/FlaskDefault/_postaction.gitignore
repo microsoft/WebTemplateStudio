@@ -2,6 +2,10 @@
 .vscode/settings.json
 
 # production
+/publish
 //{[{
 **/build
+
+#python cache
+**/__pycache__
 //}]}
