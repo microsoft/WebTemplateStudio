@@ -34,6 +34,7 @@ export default class RequirementsService {
   private async getReactNativeRequirements(): Promise<IPlatformRequirement[]> {
     try {
       const extensionPath = Controller.vsContext.extensionPath;
+      //#WTS: When replacing rnw-dependencies.ps1 file review changes to check no throw is sent on failure
       const scriptPath = path.join(extensionPath, "src", "scripts", "rnw-dependencies.ps1");
       const command = `powershell.exe -File ${scriptPath} -NoPrompt`;
       const { stdout } = await this.exec(command);
