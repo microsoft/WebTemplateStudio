@@ -35,8 +35,8 @@ const ViewLicensesModal = loadable(
 const AzureServicesModal = loadable(
   () => import(/* webpackChunkName: "AzureServicesModal" */ "./modals/AzureServicesModal")
 );
-const ViewPlatformRequirementsModal = loadable(
-  () => import(/* webpackChunkName: "ViewPlatformRequirementsModal" */ "./modals/ViewPlatformRequirementsModal")
+const PlatformRequirementsModal = loadable(
+  () => import(/* webpackChunkName: "PlatformRequirementsModal" */ "./modals/PlatformRequirementsModal")
 );
 
 if (process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT) {
@@ -74,7 +74,9 @@ const App = (props: Props) => {
         {modalState.modalType === NAVIGATION_MODAL_TYPES.COSMOS_DB_MODAL && <CosmosDbModal />}
         {modalState.modalType === NAVIGATION_MODAL_TYPES.AZURE_LOGIN_MODAL && <AzureServicesModal />}
         {modalState.modalType === NAVIGATION_MODAL_TYPES.GEN_MODAL && <GenerationModal />}
-        {modalState.modalType === NAVIGATION_MODAL_TYPES.VIEW_PLATFORM_REQUIREMENTS_MODAL && <ViewPlatformRequirementsModal />}
+        {modalState.modalType === NAVIGATION_MODAL_TYPES.VIEW_PLATFORM_REQUIREMENTS_MODAL && (
+          <PlatformRequirementsModal />
+        )}
 
         <main
           className={classnames(appStyles.centerView, {

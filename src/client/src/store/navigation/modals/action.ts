@@ -45,7 +45,7 @@ const openAppServiceModalAction = () => {
   });
 };
 
-const openViewPlatformRequirementsAction = () => {
+const openPlatformRequirementsAction = () => {
   return openModalAction({
     modalType: NAVIGATION_MODAL_TYPES.VIEW_PLATFORM_REQUIREMENTS_MODAL,
     modalData: null,
@@ -59,5 +59,5 @@ export {
   openGenModalAction,
   openViewLicensesModalAction,
   openAppServiceModalAction,
-  openViewPlatformRequirementsAction,
+  openPlatformRequirementsAction,
 };

@@ -6,7 +6,7 @@ import styles from "./styles.module.css";
 import asModal from "../../components/Modal";
 import { closeModalAction } from "../../store/navigation/modals/action";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import { isViewPlatformRequirementsModalOpenSelector } from "../../store/navigation/modals/selector";
+import { isPlatformRequirementsModalOpenSelector } from "../../store/navigation/modals/selector";
 import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import { KEY_EVENTS, PLATFORM, WEB_TEMPLATE_STUDIO_LINKS } from "../../utils/constants/constants";
 import messages from "./messages";
@@ -19,7 +19,7 @@ interface IStateProps {
 
 type Props = IStateProps & InjectedIntlProps;
 
-const ViewPlatformRequirementsModal = ({ intl }: Props) => {
+const PlatformRequirementsModal = ({ intl }: Props) => {
   const dispatch = useDispatch();
   const platform = useSelector(getPlatformSelector);
   const platformRequirements = useSelector(getPlatformRequirementsSelector);
@@ -63,9 +63,9 @@ const ViewPlatformRequirementsModal = ({ intl }: Props) => {
 };
 
 const mapStateToProps = (state: AppState): IStateProps => ({
-  isModalOpen: isViewPlatformRequirementsModalOpenSelector(state),
+  isModalOpen: isPlatformRequirementsModalOpenSelector(state),
 });
 
 export default connect(mapStateToProps)(
-  asModal(injectIntl(ViewPlatformRequirementsModal), NAVIGATION_MODAL_TYPES.VIEW_PLATFORM_REQUIREMENTS_MODAL)
+  asModal(injectIntl(PlatformRequirementsModal), NAVIGATION_MODAL_TYPES.VIEW_PLATFORM_REQUIREMENTS_MODAL)
 );

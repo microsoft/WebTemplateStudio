@@ -2,11 +2,11 @@ import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
   requirementInstalled: {
-    id: "ViewPlatformRequirementsModal.requirementItem.requirementInstalled",
+    id: "PlatformRequirementsModal.requirementItem.requirementInstalled",
     defaultMessage: "Requirement is installed",
   },
   requirementNotInstalled: {
-    id: "ViewPlatformRequirementsModal.requirementItem.requirementNotInstalled",
+    id: "PlatformRequirementsModal.requirementItem.requirementNotInstalled",
     defaultMessage: "Requirement is not installed",
   },
 });

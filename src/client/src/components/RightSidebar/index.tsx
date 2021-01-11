@@ -94,7 +94,7 @@ const RightSidebar = (props: Props) => {
                   {formatMessage(messages.missingRequirements)}
                   <button
                     className={classnames(styles.notificationLink, buttonStyles.buttonLink)}
-                    onClick={() => dispatch(ModalActions.openViewPlatformRequirementsAction())}
+                    onClick={() => dispatch(ModalActions.openPlatformRequirementsAction())}
                   >
                     {formatMessage(messages.viewDetails)}
                   </button>
@@ -125,7 +125,7 @@ const RightSidebar = (props: Props) => {
               {hasRequirements && (
                 <button
                   className={buttonStyles.buttonLink}
-                  onClick={() => dispatch(ModalActions.openViewPlatformRequirementsAction())}
+                  onClick={() => dispatch(ModalActions.openPlatformRequirementsAction())}
                 >
                   {formatMessage(messages.viewRequirements)}
                 </button>

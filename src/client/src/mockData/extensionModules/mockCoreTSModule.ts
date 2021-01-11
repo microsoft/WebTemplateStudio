@@ -6,7 +6,7 @@ import * as mockWebData from "./mockData/mockWebPlatformData";
 import * as mockReactNativeData from "./mockData/mockReactNativePlatformData";
 
 //DEV:Change mock data to change platform
-const mockData = mockReactNativeData;
+const mockData = mockWebData;
 
 const getProjectTypes = (message: any) => {
   window.postMessage(

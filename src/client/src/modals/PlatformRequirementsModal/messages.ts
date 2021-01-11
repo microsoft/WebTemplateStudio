@@ -2,19 +2,19 @@ import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
   developmentRequirements: {
-    id: "ViewPlatformRequirementsModal.developmentRequirements",
+    id: "PlatformRequirementsModal.developmentRequirements",
     defaultMessage: "Development Requirements",
   },
   ariaCloseModalLabel: {
-    id: "ViewPlatformRequirementsModal.ariaCloseModalLabel",
+    id: "PlatformRequirementsModal.ariaCloseModalLabel",
     defaultMessage: "Close Platform Requirements Modal",
   },
   checkAndInstallRequirements: {
-    id: "ViewPlatformRequirementsModal.checkAndInstallRequirements",
+    id: "PlatformRequirementsModal.checkAndInstallRequirements",
     defaultMessage: "To check and install missing depevelopment requirements ",
   },
   reviewTheDocs: {
-    id: "ViewPlatformRequirementsModal.reviewTheDocs",
+    id: "PlatformRequirementsModal.reviewTheDocs",
     defaultMessage: "review the docs.",
   },
 });

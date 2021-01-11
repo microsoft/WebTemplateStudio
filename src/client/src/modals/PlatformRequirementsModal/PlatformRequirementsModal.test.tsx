@@ -1,6 +1,6 @@
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import ViewPlatformRequirementsModal from ".";
+import PlatformRequirementsModal from ".";
 import { getInitialState, setOpenModal, addPlatformRequirementsOptions } from "../../mockData/mockStore";
 import { renderWithStore } from "../../testUtils";
 import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
@@ -21,7 +21,7 @@ jest.mock("./RequirementItem", () => {
   };
 });
 
-describe("ViewPlatformRequirementsModal", () => {
+describe("PlatformRequirementsModal", () => {
   let props: any;
   let store: any;
   let initialState: any;
@@ -40,12 +40,12 @@ describe("ViewPlatformRequirementsModal", () => {
   });
 
   it("renders without crashing", () => {
-    const wrapper = renderWithStore(<ViewPlatformRequirementsModal {...props} />, store);
+    const wrapper = renderWithStore(<PlatformRequirementsModal {...props} />, store);
     expect(wrapper).toBeDefined();
   });
 
   it("On press close button, close modal", () => {
-    const { getByLabelText } = renderWithStore(<ViewPlatformRequirementsModal {...props} />, store);
+    const { getByLabelText } = renderWithStore(<PlatformRequirementsModal {...props} />, store);
     const buttonLabel = intl.formatMessage(messages.ariaCloseModalLabel);
     const button = getByLabelText(buttonLabel);
     fireEvent.click(button);
@@ -53,7 +53,7 @@ describe("ViewPlatformRequirementsModal", () => {
   });
 
   it("should be the same number of requirements components as requirements in the store", () => {
-    const { queryAllByTestId } = renderWithStore(<ViewPlatformRequirementsModal {...props} />, store);
+    const { queryAllByTestId } = renderWithStore(<PlatformRequirementsModal {...props} />, store);
     const requirementComponents = queryAllByTestId("requirement-item-component");
     expect(requirementComponents.length).toBe(countRequirementInStore);
   });
