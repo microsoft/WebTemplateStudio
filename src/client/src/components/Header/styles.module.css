@@ -19,8 +19,7 @@
 /* TODO: Use preferred defined h1,... */
 .headerTitle,
 .headerTitleSmall {
-  font-size: 1.7em;
-  padding-left: 24px;
+  padding-left: 1em;
 }
 
 .azureProfile {

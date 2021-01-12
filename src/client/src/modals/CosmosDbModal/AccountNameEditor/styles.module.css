@@ -37,7 +37,6 @@
   border: none;
   background: var(--vscode-editorWidget-border);
   color: var(--vscode-editor-foreground);
-  font-size: 1em;
   width: 100%;
   margin-right: 10px;
   padding: 2px 8px;
