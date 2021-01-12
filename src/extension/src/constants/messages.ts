@@ -107,8 +107,12 @@ export const MESSAGES = {
   },
   WARNINGS: {
     MISSING_PRERREQUISITES: localize(
-      "error.missingPrerrequisites",
+      "warning.missingPrerrequisites",
       "Warning: Please take into account that you are missing some prerequisites to work with react native."
+    ),
+    REACT_NATIVE_REQUIRES_WINDOWS_10: localize(
+      "warning.reactNativeRequiresWindows10",
+      "React Native for Windows requires a Windows 10 device."
     ),
   },
   INFO: {
