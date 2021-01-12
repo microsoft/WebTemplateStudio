@@ -38,14 +38,18 @@
 }
 
 .subtitle {
-  margin-bottom: 2em;
+  margin-bottom: 1.5em;
 }
 
 .link {
+  margin-top: 2em;
+}
+
+.link a{
   text-decoration: none;
   color: var(--vscode-textLink-foreground);
 }
 
-.link:focus {
+.link a:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }

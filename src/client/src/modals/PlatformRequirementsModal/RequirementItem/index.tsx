@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 import messages from "./messages";
 
 import { ReactComponent as Checkmark } from "../../../assets/checkgreen.svg";
-import { ReactComponent as ErrorRed } from "../../../assets/errorred.svg";
+import { ReactComponent as Warning } from "../../../assets/warning.svg";
 import { IPlatformRequirement } from "../../../store/config/platform/model";
 import classnames from "classnames";
 
@@ -28,11 +28,11 @@ const RequirementItem = ({ intl, item }: Props) => {
       {!item.isInstalled && (
         <div className={styles.inLine}>
           <div role="img" aria-label={formatMessage(messages.requirementNotInstalled)}>
-            <ErrorRed className={styles.iconError} />
+            <Warning className={styles.iconWarning} />
           </div>
         </div>
       )}
-      <div className={classnames({ [styles.errorText]: !item.isInstalled })}>{item.name}</div>
+      <div className={classnames({ [styles.warningText]: !item.isInstalled })}>{item.name}</div>
     </div>
   );
 };

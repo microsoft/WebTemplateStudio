@@ -9,13 +9,13 @@ const messages = defineMessages({
     id: "PlatformRequirementsModal.ariaCloseModalLabel",
     defaultMessage: "Close Platform Requirements Modal",
   },
-  checkAndInstallRequirements: {
-    id: "PlatformRequirementsModal.checkAndInstallRequirements",
-    defaultMessage: "To check and install missing development requirements {reviewDocsLink}.",
+  needToMeetFollowingRequirements: {
+    id: "PlatformRequirementsModal.needToMeetFollowingRequirements",
+    defaultMessage: "You need to meet the following requirements:",
   },
   reviewTheDocs: {
     id: "PlatformRequirementsModal.reviewTheDocs",
-    defaultMessage: "review the docs",
+    defaultMessage: "For more info review the docs.",
   },
 });
 export default messages;

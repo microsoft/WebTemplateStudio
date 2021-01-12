@@ -1,6 +1,7 @@
 .container {
   display: flex;
   font-size: 1em;
+  margin-bottom: 0.3em;
 }
 
 .inLine {
@@ -8,7 +9,6 @@
 }
 
 .iconCheck {
-  margin-top: 3px;
   margin-right: 1em;
   height: 18px;
 }
@@ -17,17 +17,15 @@
   fill: var(--vscode-gitDecoration-untrackedResourceForeground);
 }
 
-.iconError {
-  margin-top: 3px;
+.iconWarning {
   margin-right: 1em;
   height: 18px;
-  width: 18px;
 }
 
-.iconError path {
-  fill: var(--vscode-errorForeground);
+.iconWarning path {
+  fill: var(--vscode-editorMarkerNavigationWarning-background);
 }
 
-.errorText {
-  color: var(--vscode-errorForeground);
+.warningText {
+  color: var(--vscode-editorMarkerNavigationWarning-background);
 }
