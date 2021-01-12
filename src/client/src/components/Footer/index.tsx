@@ -8,6 +8,7 @@ import { AppContext } from "../../AppContext";
 import keyUpHandler from "../../utils/keyUpHandler";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
+import { ROUTE } from "../../utils/constants/constants";
 
 import { IVSCodeObject } from "../../types/vscode";
 import { IRoutesNavItems } from "../../types/route";
