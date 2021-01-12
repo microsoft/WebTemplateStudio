@@ -11,11 +11,11 @@ const messages = defineMessages({
   },
   checkAndInstallRequirements: {
     id: "PlatformRequirementsModal.checkAndInstallRequirements",
-    defaultMessage: "To check and install missing development requirements ",
+    defaultMessage: "To check and install missing development requirements {reviewDocsLink}.",
   },
   reviewTheDocs: {
     id: "PlatformRequirementsModal.reviewTheDocs",
-    defaultMessage: "review the docs.",
+    defaultMessage: "review the docs",
   },
 });
 export default messages;

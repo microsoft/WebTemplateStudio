@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { AppState } from "../../store/combineReducers";
 import styles from "./styles.module.css";
 import asModal from "../../components/Modal";
@@ -48,10 +48,16 @@ const PlatformRequirementsModal = ({ intl }: Props) => {
       </div>
       <div>
         <div className={styles.subtitle}>
-          {intl.formatMessage(messages.checkAndInstallRequirements)}
-          <a target="_blank" rel="noreferrer noopener" className={styles.link} href={requirementsDoc}>
-            {intl.formatMessage(messages.reviewTheDocs)}
-          </a>
+          <FormattedMessage
+            {...messages.checkAndInstallRequirements}
+            values={{
+              reviewDocsLink: (
+                <a target="_blank" rel="noreferrer noopener" className={styles.link} href={requirementsDoc}>
+                  {intl.formatMessage(messages.reviewTheDocs)}
+                </a>
+              ),
+            }}
+          />
         </div>
         {platformRequirements &&
           platformRequirements.map((requirement, idx) => {
