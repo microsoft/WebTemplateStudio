@@ -14,7 +14,7 @@ const ServiceGroup = ({ group, intl }: Props) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>{formatMessage(group.name)}</div>
+      <h2>{formatMessage(group.name)}</h2>
       <div className={styles.description}>{formatMessage(group.description)}</div>
       <div className={styles.cardsContainer}>
         {group.services.map((service, key) => {

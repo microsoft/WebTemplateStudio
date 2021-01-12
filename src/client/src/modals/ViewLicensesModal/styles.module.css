@@ -11,10 +11,6 @@
   border-radius: 3px;
 }
 
-.button:hover {
-  color: #ffffff;
-}
-
 .headerContainer {
   display: flex;
   justify-content: space-between;

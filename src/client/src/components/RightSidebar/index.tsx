@@ -81,7 +81,7 @@ const RightSidebar = (props: Props) => {
             </div>
 
             <div className={styles.marginLeft}>
-              <div className={styles.title}>{formatMessage(messages.yourProjectDetails)}</div>
+              <h1 className={styles.title}>{formatMessage(messages.yourProjectDetails)}</h1>
 
               <ProjectDetails isRightsidebar={true} />
 

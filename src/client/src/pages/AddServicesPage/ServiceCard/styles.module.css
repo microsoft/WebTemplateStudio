@@ -23,12 +23,6 @@
   margin-bottom: 16px;
 }
 
-/* TODO: use generic h1,h2,... */
-.title {
-  margin-left: 10px;
-  font-weight: 600;
-}
-
 .icon {
   height: 36px;
 }

@@ -67,6 +67,7 @@
 
 .pageIsVisited {
   background-color: var(--vscode-editor-foreground);
+  border: 1px solid var(--vscode-editor-foreground);
   color: var(--vscode-editor-background);
 }
 

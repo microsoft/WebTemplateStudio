@@ -9,7 +9,6 @@ import { getServiceGroups } from "../../store/templates/features/selector";
 
 import messages from "./messages";
 
-import Title from "../../components/Title";
 import ServiceGroup from "./ServiceGroup";
 import AzureStudent from "./AzureStudent";
 import AzureAccount from "./AzureAccount";
@@ -26,7 +25,7 @@ const AddServicesPage = ({ intl }: Props) => {
     <div className={styles.centerView}>
       <div className={classnames(styles.container)}>
         <div className={styles.logInInfoBar}>
-          <Title>{formatMessage(messages.title)}</Title>
+          <h1>{formatMessage(messages.title)}</h1>
 
           <AzureAccount />
         </div>

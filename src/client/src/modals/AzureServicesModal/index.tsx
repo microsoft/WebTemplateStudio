@@ -57,7 +57,7 @@ const AzureServicesModal = (props: Props) => {
   return (
     <div>
       <div className={styles.headerContainer}>
-        <div className={styles.title}>{formatMessage(messages.getStartedWithAzure)}</div>
+        <h1>{formatMessage(messages.getStartedWithAzure)}</h1>
         <Cancel
           tabIndex={0}
           className={styles.cancelIcon}

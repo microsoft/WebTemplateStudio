@@ -8,34 +8,24 @@
 .buttonDark {
   text-decoration: none;
   padding: 0.5em 1em;
+  margin: 0.5em 0;
   cursor: pointer;
   border: none;
 }
 
 .buttonDark {
-  font-weight: 400;
-  /* todo review these styles. contrast */
+  font-weight: bolder;
   background-color: var(--vscode-editor-foreground);
   color: var(--vscode-editor-background);
-  /* background-color: var(--vscode-editorWidget-border);
-  color: var(--vscode-editor-foreground) !important; */
-  /* background-color: var(--vscode-editor-foreground);
-  color: var(--vscode-editor-background); */
 }
 
 .buttonDark:hover {
   /* TODO INTERESTING TO ADD SOME */
   /* background-color: var(--vscode-editor-hoverHighlightBackground);
-  color: var(--vscode-editor-foreground) !important; */
+  color: var(--vscode-editor-hoverHighlightForeground) !important; */
 }
 
-.buttonCursorDefault {
-  cursor: default;
-}
 
-.buttonCursorPointer {
-  cursor: pointer;
-}
 
 .buttonLink {
   background: none;

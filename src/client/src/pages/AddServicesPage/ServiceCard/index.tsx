@@ -57,7 +57,7 @@ export const ServiceCard = (props: Props) => {
       <div className={styles.cardContainer}>
         <div className={styles.header}>
           <Icon name={service.title} icon={service.icon} />
-          <div className={styles.title}>{service.title}</div>
+          <h3>{service.title}</h3>
         </div>
         <div className={styles.body}>
           {service.expectedPrice && (
@@ -80,7 +80,7 @@ export const ServiceCard = (props: Props) => {
           </a>
           <button
             onClick={openModal}
-            className={classnames(styles.addButton, buttonStyles.buttonHighlighted, buttonStyles.buttonCursorPointer)}
+            className={classnames(styles.addButton, buttonStyles.buttonHighlighted)}
             tabIndex={0}
           >
             {hasService ? formatMessage(messages.editResource) : formatMessage(messages.addToProject)}

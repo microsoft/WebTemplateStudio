@@ -52,11 +52,6 @@
   margin-left: 0px;
 }
 
-/* TODO: use general h1,h2,h3,... */
-.detailsTitle {
-  font-weight: 600;
-}
-
 .licenses {
   margin-top: 0px !important;
   margin-bottom: 0px !important;

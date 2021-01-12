@@ -85,7 +85,7 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
         </div>
         <div className={styles.headerContainer}>
           {detailInfo.title && <Icon name={detailInfo.title.toString()} icon={detailInfo.icon} />}
-          <div className={styles.detailsTitle}>{renderFormattedData(detailInfo.title, false)}</div>
+          <h1>{renderFormattedData(detailInfo.title, false)}</h1>
         </div>
         <div className={styles.detailsContainer}>
           <div className={styles.spacer} />
