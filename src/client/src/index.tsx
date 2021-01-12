@@ -23,7 +23,7 @@ const store = createStoreWithMiddleware(
 );
 
 const vscode = process.env.NODE_ENV === ENVIRONMENT.PRODUCTION ?
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore because function does not exist in dev environment
   acquireVsCodeApi(): mockVsCodeApi();
 
