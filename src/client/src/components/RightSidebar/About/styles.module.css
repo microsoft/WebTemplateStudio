@@ -1,5 +1,10 @@
 .container {
-  margin: 15px;
+  margin: 15px 0px;
+}
+
+.title {
+  font-weight: 500;
+  margin-bottom: 0.7em;
 }
 
 /* TODO: move to shared area and add :hover effect */
@@ -12,7 +17,6 @@
   border: none;
   cursor: pointer;
   outline: inherit;
-  margin-left: -5px;
 }
 
 .buttonToLink:focus {
@@ -21,5 +25,4 @@
 
 .wizardInfo {
   font-size: 0.9em;
-  margin-left: -0.4em;
 }

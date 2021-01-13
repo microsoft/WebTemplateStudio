@@ -7,6 +7,7 @@ const PAGE_NAME_CHARACTER_LIMIT = 50;
 const WEB_TEMPLATE_STUDIO_LINKS = {
   REPO: "https://github.com/Microsoft/WebTemplateStudio",
   ISSUES: "https://github.com/Microsoft/WebTemplateStudio/issues",
+  REACT_NATIVE_REQUIREMENTS_DOC: "https://microsoft.github.io/react-native-windows/docs/rnw-dependencies",
 };
 
 const ENVIRONMENT = {

@@ -289,6 +289,7 @@ const templatesInfo = {
   },
   preview: false,
   platform: platform,
+  platformRequirements: [],
 };
 
 const pages = (frontendFramework: string) => {

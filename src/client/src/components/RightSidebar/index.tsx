@@ -15,19 +15,28 @@ import SelectPages from "./SelectPages";
 import ProjectDetails from "../ProjectDetails";
 import ServicesList from "./ServicesList";
 import SelectFrameworks from "./SelectFrameworks";
+import Notification from "../Notification";
 
 import messages from "./messages";
 import classnames from "classnames";
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/button.module.css";
 import SelectProjectTypes from "./SelectProjectTypes";
+
 import Title from "../Title";
+
+import {
+  hasInvalidPlatformRequirementsSelector,
+  hasPlatformRequirementsSelector,
+} from "../../store/config/platform/selector";
 
 type Props = InjectedIntlProps;
 
 const RightSidebar = (props: Props) => {
   const [isSidebarOpen, setIsSiderbarOpen] = useState(true);
   const hasServices: boolean = useSelector(hasServicesSelector);
+  const hasRequirements = useSelector(hasPlatformRequirementsSelector);
+  const hasInvalidRequirements = useSelector(hasInvalidPlatformRequirementsSelector);
   const selectedRoute = useSelector(getSelectedRoute);
   const isFirstOrLastPage: boolean = useMemo<boolean>(
     () => selectedRoute === ROUTE.NEW_PROJECT || selectedRoute === ROUTE.REVIEW_AND_GENERATE,
@@ -68,7 +77,8 @@ const RightSidebar = (props: Props) => {
       {(isSidebarOpen || isFirstOrLastPage) && (
         <div role="complementary" id="dvRightSideBar" className={classnames(styles.container, styles.rightViewCropped)}>
           <div className={styles.summaryContainer} id="dvSummaryContainer">
-            <div className={classnames(styles.endAlign, styles.marginLeft)}>
+            <div className={styles.titleContainer}>
+              <Title>{formatMessage(messages.yourProjectDetails)}</Title>
               <CancelSVG
                 tabIndex={0}
                 className={classnames(styles.icon, {
@@ -81,9 +91,21 @@ const RightSidebar = (props: Props) => {
               />
             </div>
 
-            <div className={styles.marginLeft}>
-              <Title>{formatMessage(messages.yourProjectDetails)}</Title>
+            {hasInvalidRequirements && (
+              <div className={styles.notificationContainer}>
+                <Notification showWarning={true} altMessage={formatMessage(messages.missingRequirements)}>
+                  {formatMessage(messages.missingRequirements)}
+                  <button
+                    className={classnames(styles.notificationLink, buttonStyles.buttonLink)}
+                    onClick={() => dispatch(ModalActions.openPlatformRequirementsAction())}
+                  >
+                    {formatMessage(messages.viewDetails)}
+                  </button>
+                </Notification>
+              </div>
+            )}
 
+            <div>
               <ProjectDetails isRightsidebar={true} />
 
               <SelectProjectTypes />
@@ -96,13 +118,22 @@ const RightSidebar = (props: Props) => {
               {selectedRoute !== ROUTE.REVIEW_AND_GENERATE && (
                 <div className={styles.buttonContainer}>
                   <button
-                    className={buttonStyles.buttonDark}
+                    className={buttonStyles.buttonLink}
                     onClick={() => dispatch(ModalActions.openViewLicensesModalAction())}
                   >
                     {formatMessage(messages.viewLicenses)}
                   </button>
                 </div>
               )}
+              {hasRequirements && (
+                <button
+                  className={buttonStyles.buttonLink}
+                  onClick={() => dispatch(ModalActions.openPlatformRequirementsAction())}
+                >
+                  {formatMessage(messages.viewRequirements)}
+                </button>
+              )}
+
               <About />
             </div>
           </div>
