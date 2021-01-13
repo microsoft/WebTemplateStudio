@@ -370,3 +370,4 @@ src/extension/src/corets-cli/win32/
 template_test/
 src/client/src/translations/en.json
 src/client/src/translations/whitelist_en.json
+src/client/.eslintcache

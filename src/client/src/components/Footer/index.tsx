@@ -1,33 +1,32 @@
-import classnames from "classnames";
-import * as React from "react";
-import buttonStyles from "../../css/buttonStyles.module.css";
-import styles from "./styles.module.css";
-import { KEY_EVENTS, ROUTE } from "../../utils/constants/constants";
+import React, { useMemo } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+
+import { AppState } from "../../store/combineReducers";
+import { AppContext } from "../../AppContext";
+
+import keyUpHandler from "../../utils/keyUpHandler";
+import { sendTelemetry } from "../../utils/extensionService/extensionService";
+import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
+import { ROUTE } from "../../utils/constants/constants";
 
 import { IVSCodeObject } from "../../types/vscode";
-
-import { openGenModalAction } from "../../store/navigation/modals/action";
-
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { IRoutesNavItems } from "../../types/route";
+import { IOption } from "../../types/option";
 
 import {
   isEnableNextPageSelector,
   isEnableGenerateButtonSelector,
   getSelectedRoute,
 } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
-import { AppState } from "../../store/combineReducers";
-
-import keyUpHandler from "../../utils/keyUpHandler";
-import messages from "./messages";
-import { sendTelemetry } from "../../utils/extensionService/extensionService";
-import { AppContext } from "../../AppContext";
-import { useSelector, useDispatch } from "react-redux";
-import { useMemo } from "react";
-import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
-import { IRoutesNavItems } from "../../types/route";
+import { openGenModalAction } from "../../store/navigation/modals/action";
 import { setRoutesAction } from "../../store/navigation/routesNavItems/actions";
-import { IOption } from "../../types/option";
 import { setDetailPageAction } from "../../store/config/detailsPage/action";
+
+import classnames from "classnames";
+import buttonStyles from "../../css/buttonStyles.module.css";
+import styles from "./styles.module.css";
+import messages from "./messages";
 
 type Props = InjectedIntlProps;
 
@@ -80,27 +79,13 @@ const Footer = (props: Props) => {
     dispatch(setRoutesAction(newRoutesNavItems));
   };
 
-  const navigateForwardOnKeyPress = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
-    event.stopPropagation();
-    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      navigateForward();
-    }
-  };
-
-  const navigateBackOnKeyPress = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
-    event.stopPropagation();
-    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      navigateBack();
-    }
-  };
-
   return (
     <nav aria-label={formatMessage(messages.navAriaLabel)}>
       {currentRoute !== ROUTE.PAGE_DETAILS && (
         <div className={styles.footer}>
           <div>{formatMessage(messages.license)}</div>
           <div className={styles.buttonContainer}>
-            <a
+            <button
               tabIndex={!isFirstStep ? 0 : -1}
               className={classnames(buttonStyles.buttonDark, {
                 [styles.disabledOverlay]: isFirstStep || !isEnableGenerateButton,
@@ -108,15 +93,9 @@ const Footer = (props: Props) => {
               onClick={() => {
                 if (!isFirstStep && isEnableGenerateButton) navigateBack();
               }}
-              onKeyPress={(event) => {
-                if (!isFirstStep && isEnableGenerateButton) navigateBackOnKeyPress(event);
-              }}
-              onKeyUp={(event: React.KeyboardEvent<HTMLAnchorElement>) => {
-                if (!isFirstStep && isEnableGenerateButton) keyUpHandler(event);
-              }}
             >
               {formatMessage(messages.back)}
-            </a>
+            </button>
             <a
               tabIndex={isEnableNextPage ? 0 : -1}
               className={classnames(buttonStyles.buttonHighlighted, {
@@ -125,12 +104,6 @@ const Footer = (props: Props) => {
               })}
               onClick={() => {
                 if (!isLastStep && isEnableNextPage && isEnableGenerateButton) navigateForward();
-              }}
-              onKeyPress={(event) => {
-                if (!isLastStep && isEnableNextPage && isEnableGenerateButton) navigateForwardOnKeyPress(event);
-              }}
-              onKeyUp={(event: React.KeyboardEvent<HTMLAnchorElement>) => {
-                if (!isLastStep && isEnableNextPage && isEnableGenerateButton) keyUpHandler(event);
               }}
             >
               {formatMessage(messages.next)}

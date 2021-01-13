@@ -69,7 +69,7 @@ const AzureAccount = ({ intl }: Props) => {
             className={classnames(styles.link, buttonStyles.buttonLink)}
             href={AZURE_LINKS.CREATE_FREE_ACCOUNT}
             target="_blank"
-            rel="noreferrer"
+            rel="noreferrer noopener"
             onKeyUp={keyUpHandler}
             tabIndex={-1}
           >

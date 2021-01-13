@@ -21,6 +21,7 @@ import Icon from "../../../components/Icon";
 
 import styles from "./styles.module.css";
 import cardStyles from "../../cardStyles.module.css";
+import buttonStyles from "../../../css/buttonStyles.module.css";
 
 type Props = ISelectProps & IStateProps & InjectedIntlProps;
 
@@ -89,16 +90,19 @@ const FrameworkCard = (props: Props) => {
     }
   };
 
-  const showDetailIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
-    event.stopPropagation();
-    if (event.key === KEY_EVENTS.ENTER) {
-      setDetailPage(framework);
-    }
-  };
-
-  const detailsClickWrapper = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  const showMoreInfo = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.KeyboardEvent<HTMLButtonElement>
+  ) => {
     event.stopPropagation();
     setDetailPage(framework);
+  };
+
+  const showMoreInfoIfEnterOrSpace = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    const isPressed = event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE;
+    if (isPressed) {
+      event.preventDefault();
+      showMoreInfo(event);
+    }
   };
 
   return (
@@ -127,14 +131,14 @@ const FrameworkCard = (props: Props) => {
         </div>
         <div className={cardStyles.gridLayoutCardFooter}>
           <div>
-            <a
-              onClick={detailsClickWrapper}
-              onKeyDown={showDetailIfPressEnterKey}
-              className={cardStyles.link}
+            <button
+              onClick={showMoreInfo}
+              onKeyDown={showMoreInfoIfEnterOrSpace}
+              className={buttonStyles.buttonLink}
               tabIndex={0}
             >
               {intl.formatMessage(messages.learnMore)}
-            </a>
+            </button>
           </div>
           {selected && <Check role="figure" className={cardStyles.iconCheckMark} />}
         </div>

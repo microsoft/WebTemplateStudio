@@ -17,6 +17,7 @@ import classNames from "classnames";
 import messages from "../../messages";
 import cardStyles from "../../cardStyles.module.css";
 import pageStyles from "../../cardStyles.module.css";
+import buttonStyles from "../../../css/buttonStyles.module.css";
 
 type Props = ISelectProps & IStateProps & InjectedIntlProps;
 
@@ -42,15 +43,18 @@ const ProjectTypeCard = (props: Props) => {
     }
   };
 
-  const showMoreInfo = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  const showMoreInfo = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.KeyboardEvent<HTMLButtonElement>
+  ) => {
     event.stopPropagation();
     dispatch(setDetailPageAction(projectType, false, ROUTE.ADD_PAGES));
   };
 
-  const showDetailIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
-    event.stopPropagation();
-    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      dispatch(setDetailPageAction(projectType, false, ROUTE.ADD_PAGES));
+  const showMoreInfoIfEnterOrSpace = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    const isPressed = event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE;
+    if (isPressed) {
+      event.preventDefault();
+      showMoreInfo(event);
     }
   };
 
@@ -72,9 +76,14 @@ const ProjectTypeCard = (props: Props) => {
         <div className={pageStyles.description}>{projectType.body}</div>
         <div className={cardStyles.gridLayoutCardFooter}>
           <div>
-            <a onClick={showMoreInfo} onKeyDown={showDetailIfPressEnterKey} className={cardStyles.link} tabIndex={0}>
+            <button
+              onClick={showMoreInfo}
+              onKeyDown={showMoreInfoIfEnterOrSpace}
+              className={buttonStyles.buttonLink}
+              tabIndex={0}
+            >
               {intl.formatMessage(messages.Preview)}
-            </a>
+            </button>
           </div>
           {selected && <Check role="figure" className={cardStyles.iconCheckMark} />}
         </div>

@@ -3,24 +3,27 @@ import shutil
 
 fileDir = os.path.dirname(os.path.abspath(__file__))
 backendDir = os.path.dirname(fileDir)
-publishDir =os.path.join(os.path.dirname(backendDir), 'publish')
+publishDir = os.path.join(os.path.dirname(backendDir), "publish")
 
-def copyBackendToPublish(src, dst):
+
+def copy_backend_to_publish(src, dst):
     for item in os.listdir(src):
-        s = os.path.join(src, item)
-        d = os.path.join(dst, item)
-        if os.path.isdir(s) and item != 'scripts':
-            shutil.copytree(s, d)
-        elif os.path.isfile(s):
-            shutil.copyfile(s, d)
+        source = os.path.join(src, item)
+        destination = os.path.join(dst, item)
+        if os.path.isdir(source) and item != "scripts":
+            shutil.copytree(source, destination)
+        elif os.path.isfile(source):
+            shutil.copyfile(source, destination)
 
-def cleanPublish():
+
+def clean_publish():
     for item in os.listdir(publishDir):
-        s = os.path.join(publishDir, item)
-        if os.path.isdir(s) and item != 'build':
-            shutil.rmtree(s)
-        elif os.path.isfile(s):
-            os.remove(s)
+        source = os.path.join(publishDir, item)
+        if os.path.isdir(source) and item != "build":
+            shutil.rmtree(source)
+        elif os.path.isfile(source):
+            os.remove(source)
 
-cleanPublish()
-copyBackendToPublish(backendDir, publishDir)
+
+clean_publish()
+copy_backend_to_publish(backendDir, publishDir)

@@ -7,6 +7,7 @@ Everyone should read these.
 
 - [Installing the extension](/docs/install.md)
 - [Core Concepts](/docs/concepts.md)
+- [Third party libraries](/docs/third-party-libraries.md)
 
 ## Using WebTS to build apps
 These will help if you are using WebTS to build apps.
