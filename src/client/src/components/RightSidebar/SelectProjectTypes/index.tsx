@@ -48,7 +48,7 @@ const SelectProjectTypes = (props: Props) => {
     <>
       {projectTypesOptions.length > 1 && storedProjectType.internalName !== "" && (
         <div className={rightsidebarStyles.sidebarItem}>
-          <div className={rightsidebarStyles.title}>{formatMessage(messages.selectProjectTypes)}</div>
+          <h3>{formatMessage(messages.selectProjectTypes)}</h3>
           <Dropdown
             handleChange={(projectType) => setSelectedProjectType(projectType)}
             ariaLabel={formatMessage(messages.selectProjectTypes)}

@@ -11,6 +11,7 @@ import { ILicenseObject, License } from "../../../types/license";
 import { injectIntl, InjectedIntl, FormattedMessage } from "react-intl";
 import messages from "./messages";
 import Icon from "../../../components/Icon";
+import Title from "../../../components/Title";
 
 interface IProps {
   detailInfo: IOption;
@@ -85,7 +86,7 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
         </div>
         <div className={styles.headerContainer}>
           {detailInfo.title && <Icon name={detailInfo.title.toString()} icon={detailInfo.icon} />}
-          <h1>{renderFormattedData(detailInfo.title, false)}</h1>
+          <Title>{renderFormattedData(detailInfo.title, false)}</Title>
         </div>
         <div className={styles.detailsContainer}>
           <div className={styles.spacer} />

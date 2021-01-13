@@ -10,12 +10,7 @@
   flex: 0 1 100%;
 }
 
-.header {
-  font-size: 2.5em;
-  font-weight: 600;
-  padding-bottom: 4%;
-  font-weight: lighter;
-}
+/* padding-bottom: 4%; */
 
 .body {
   font-size: 1.4em;

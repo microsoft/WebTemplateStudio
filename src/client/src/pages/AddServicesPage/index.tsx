@@ -12,6 +12,7 @@ import messages from "./messages";
 import ServiceGroup from "./ServiceGroup";
 import AzureStudent from "./AzureStudent";
 import AzureAccount from "./AzureAccount";
+import Title from "../../components/Title";
 
 type Props = InjectedIntlProps;
 
@@ -25,7 +26,7 @@ const AddServicesPage = ({ intl }: Props) => {
     <div className={styles.centerView}>
       <div className={classnames(styles.container)}>
         <div className={styles.logInInfoBar}>
-          <h1>{formatMessage(messages.title)}</h1>
+          <Title>{formatMessage(messages.title)}</Title>
 
           <AzureAccount />
         </div>

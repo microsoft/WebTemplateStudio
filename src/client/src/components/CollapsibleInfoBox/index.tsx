@@ -4,6 +4,7 @@ import { ReactComponent as Up } from "../../assets/i-collapsibleUp.svg";
 
 import styles from "./styles.module.css";
 import { KEY_EVENTS } from "../../utils/constants/constants";
+import Title from "../Title";
 
 interface IProps {
   question: string;
@@ -30,14 +31,14 @@ const CollapsibleInfoBox = ({ question, answer, initialAnswerShownState = false 
 
   return (
     <div>
-      <h1>
+      <Title>
         {question}
         {isAnswerShown ? (
           <Up tabIndex={0} className={styles.toggleIcon} onClick={toggleAnswerShown} onKeyDown={keyDownHandler} />
         ) : (
           <Down tabIndex={0} className={styles.toggleIcon} onClick={toggleAnswerShown} onKeyDown={keyDownHandler} />
         )}
-      </h1>
+      </Title>
 
       {isAnswerShown && <div className={styles.question}>{answer}</div>}
     </div>

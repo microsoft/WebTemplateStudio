@@ -25,7 +25,7 @@ function ServicesList({ services, intl }: Props) {
 
   return (
     <div className={styles.servicesSection}>
-      <div className={styles.title}>{formatMessage(messages.services)}</div>
+      <h3>{formatMessage(messages.services)}</h3>
       {hasAppService && <AppServiceSelection appServiceSelection={services.appService} />}
       {hasCosmos && <CosmosDBSelection cosmosSelection={services.cosmosDB} />}
     </div>

@@ -24,6 +24,7 @@ type Props = IProps & InjectedIntlProps;
 
 const ProjectOutput = (props: Props) => {
   const dispatch = useDispatch();
+  const { formatMessage } = props.intl;
   const { vscode } = React.useContext(AppContext);
   const outputPath = useSelector(getOutputPath);
   const projectPathValidation = useSelector(getOutputPathValidation);
@@ -51,7 +52,7 @@ const ProjectOutput = (props: Props) => {
   return (
     <>
       <div className={props.isRightsidebar ? styles.inputContainer : rightsidebarStyles.inputContainer}>
-        <div className={styles.inputTitle}>{props.intl.formatMessage(messages.outputPathTitle)}</div>
+        <h3>{formatMessage(messages.outputPathTitle)}</h3>
         <div>
           <OutputPath
             handleSaveClick={handleSaveClick}

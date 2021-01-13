@@ -31,6 +31,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 import messages from "./messages";
 import classNames from "classnames";
+import Title from "../../components/Title";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -110,7 +111,7 @@ const CosmosModal = ({ intl }: Props) => {
   return (
     <React.Fragment>
       <div className={styles.header}>
-        <div className={styles.title}>{formatMessage(messages.title)}</div>
+        <Title>{formatMessage(messages.title)}</Title>
         <Cancel
           tabIndex={0}
           aria-label={intl.formatMessage(messages.ariaCloseModalLabel)}

@@ -8,6 +8,7 @@ import pageStyles from "../pageStyles.module.css";
 
 import ProjectTypeCard from "./ProjectTypeCard";
 import messages from "./messages";
+import Title from "../../components/Title";
 
 type Props = IStoreProps & InjectedIntlProps;
 
@@ -16,7 +17,7 @@ const SelectProjectTypePage = (props: Props) => {
 
   return (
     <div>
-      <h1 className={pageStyles.title}>{intl.formatMessage(messages.header)}</h1>
+      <Title>{intl.formatMessage(messages.header)}</Title>
 
       <div className={pageStyles.flexContainer}>
         {options.map((projectType, index) => {

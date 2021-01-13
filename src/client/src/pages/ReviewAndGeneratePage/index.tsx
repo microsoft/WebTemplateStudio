@@ -9,6 +9,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import messages from "./messages";
+import Title from "../../components/Title";
 
 type Props = InjectedIntlProps;
 
@@ -20,7 +21,7 @@ const ReviewAndGenerate = ({ intl }: Props) => {
     <div className={styles.container}>
       <div className={styles.reviewContextContainer}>
         <div className={styles.selectionContainer}>
-          <h1>{formatMessage(messages.launchYourProject)}</h1>
+          <Title>{formatMessage(messages.launchYourProject)}</Title>
           <p>{formatMessage(messages.almostDone)}</p>
         </div>
         <div className={styles.buttonContainer}>

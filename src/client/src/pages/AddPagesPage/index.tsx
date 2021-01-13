@@ -11,6 +11,7 @@ import { mapStateToProps } from "./store";
 
 import pageStyles from "../pageStyles.module.css";
 import styles from "./styles.module.css";
+import Title from "../../components/Title";
 
 type Props = IStoreProps & IIntlProps & IProps;
 
@@ -19,7 +20,7 @@ const AddPagesPage = (props: Props) => {
 
   return (
     <div>
-      <h1 className={pageStyles.title}>{intl.formatMessage(messages.pagesTitleQuestion)}</h1>
+      <Title>{intl.formatMessage(messages.pagesTitleQuestion)}</Title>
       <div
         className={classnames(styles.description, {
           [styles.borderGreen]: !pageOutOfBounds,

@@ -21,6 +21,7 @@ import classnames from "classnames";
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import SelectProjectTypes from "./SelectProjectTypes";
+import Title from "../Title";
 
 type Props = InjectedIntlProps;
 
@@ -81,7 +82,7 @@ const RightSidebar = (props: Props) => {
             </div>
 
             <div className={styles.marginLeft}>
-              <h1 className={styles.title}>{formatMessage(messages.yourProjectDetails)}</h1>
+              <Title>{formatMessage(messages.yourProjectDetails)}</Title>
 
               <ProjectDetails isRightsidebar={true} />
 

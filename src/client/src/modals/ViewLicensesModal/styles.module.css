@@ -45,11 +45,3 @@
 .cancelIcon path {
   fill: var(--vscode-editor-foreground);
 }
-
-.title {
-  font-style: normal;
-  font-weight: lighter;
-  margin-bottom: 6px;
-  font-size: 2.5em;
-  color: var(--vscode-editor-foreground);
-}

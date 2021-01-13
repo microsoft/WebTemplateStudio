@@ -78,7 +78,7 @@ const SelectFrameworks = (props: Props) => {
     <>
       {frontendOptions.length > 1 && selectedFrontendFramework && selectedFrontendFramework.value !== "" && (
         <div className={rightsidebarStyles.sidebarItem}>
-          <div className={rightsidebarStyles.title}>{formatMessage(messages.frontendFramework)}</div>
+          <h3>{formatMessage(messages.frontendFramework)}</h3>
           <Dropdown
             handleChange={(selectedFrontendFramework) => {
               setSelectedFrontendFramework(selectedFrontendFramework);
@@ -91,7 +91,7 @@ const SelectFrameworks = (props: Props) => {
       )}
       {backendOptions.length > 1 && selectedBackendFramework && selectedBackendFramework.value !== "" && (
         <div className={rightsidebarStyles.sidebarItem}>
-          <div className={rightsidebarStyles.title}>{formatMessage(messages.backendFramework)}</div>
+          <h3>{formatMessage(messages.backendFramework)}</h3>
           <Dropdown
             handleChange={(selectedBackendFramework) => {
               setSelectedBackendFramework(selectedBackendFramework);

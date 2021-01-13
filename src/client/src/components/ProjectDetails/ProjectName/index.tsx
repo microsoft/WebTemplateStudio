@@ -77,9 +77,7 @@ const ProjectName = (props: Props) => {
 
   return (
     <div className={props.isRightsidebar ? rightsidebarStyles.inputContainer : styles.inputContainer}>
-      <div className={props.isRightsidebar ? rightsidebarStyles.title : styles.inputTitle}>
-        {formatMessage(messages.projectNameTitle)}
-      </div>
+      <h3>{formatMessage(messages.projectNameTitle)}</h3>
 
       <div>
         <input

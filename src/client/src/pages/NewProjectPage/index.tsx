@@ -9,6 +9,7 @@ import styles from "./styles.module.css";
 import messagesWeb from "./messagesWeb";
 import messagesReactNative from "./messagesReactNative";
 import { PLATFORM } from "../../utils/constants/constants";
+import Title from "../../components/Title";
 
 type Props = InjectedIntlProps;
 
@@ -18,7 +19,7 @@ const NewProject = (props: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.newProjectInfo}>
-        <h1 className={styles.header}>{props.intl.formatMessage(messages.header)}</h1>
+        <Title>{props.intl.formatMessage(messages.header)}</Title>
         <div className={styles.body}>{props.intl.formatMessage(messages.body)}</div>
         <div className={styles.projectDetailsContainer}>
           <ProjectDetails />

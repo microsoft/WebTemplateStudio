@@ -114,7 +114,7 @@ const FrameworkCard = (props: Props) => {
       <div>
         <div className={cardStyles.gridLayoutCardHeader}>
           <div>{framework.internalName && <Icon name={framework.internalName} icon={framework.icon} />}</div>
-          <div className={cardStyles.title}>{framework.title}</div>
+          <h2>{framework.title}</h2>
         </div>
 
         <div className={styles.gridLayoutVersion}>

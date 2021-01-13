@@ -1,5 +1,4 @@
-.header,
-.headerTitleSmall {
+.header {
   position: absolute;
   width: 100%;
   background-color: var(--vscode-input-background);
@@ -16,19 +15,9 @@
   display: none;
 }
 
-/* TODO: Use preferred defined h1,... */
 .headerTitle,
 .headerTitleSmall {
   padding-left: 1em;
-}
-
-.azureProfile {
-  display: flex;
-  justify-content: space-between;
-}
-
-.profileName {
-  margin-right: 2em;
 }
 
 @media (min-width: 760px) {

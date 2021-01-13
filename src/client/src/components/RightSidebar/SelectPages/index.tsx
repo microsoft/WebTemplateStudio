@@ -41,9 +41,9 @@ const SelectPages = (props: Props) => {
   return (
     <div className={styles.sortablePages}>
       <div className={classnames(styles.pageListContainer)}>
-        <div className={rightsidebarStyles.title}>
+        <h3>
           {`${props.intl!.formatMessage(messages.pages)} (${selectedPages.length >= 0 ? selectedPages.length : ""})`}
-        </div>
+        </h3>
         <div className={styles.iconsContainer}>
           <button
             className={styles.hideOrShow}

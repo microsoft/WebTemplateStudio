@@ -19,10 +19,6 @@
   justify-content: space-between;
 }
 
-.title {
-  font-size: 1.8em;
-}
-
 .button {
   float: right;
   padding: 0.6em 3.5em;
