@@ -17,6 +17,7 @@ import { USERSELECTION_TYPEKEYS } from "../../userSelection/typeKeys";
 import { getNavItems } from "../../../utils/routes/routes";
 import { IRoutesNavItems } from "../../../types/route";
 import { ISelected } from "../../../types/selected";
+import { IPlatform } from "../platform/model";
 
 export function* loadLogin(vscode: any) {
   yield takeEvery(CONFIG_TYPEKEYS.LOAD, callBack);
@@ -52,9 +53,13 @@ export function* loadTemplatesSaga(vscode: any) {
         projectNameValidationConfig: messageTemplateInfo.payload.projectNameValidationConfig,
       },
     });
+
     yield put({
-      payload: messageTemplateInfo.payload.platform,
-      type: CONFIG_TYPEKEYS.SELECT_WEB_APP,
+      type: CONFIG_TYPEKEYS.SET_PLATFORM,
+      payload: {
+        id: messageTemplateInfo.payload.platform,
+        requirements: messageTemplateInfo.payload.platformRequirements,
+      } as IPlatform,
     });
     yield put({
       payload: messageTemplateInfo.payload.preview,
@@ -156,10 +161,10 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
 }
 
 export function* loadroutesNavItemsaSaga() {
-  yield takeEvery(CONFIG_TYPEKEYS.SELECT_WEB_APP, callBack);
+  yield takeEvery(CONFIG_TYPEKEYS.SET_PLATFORM, callBack);
 
   function* callBack() {
-    const platform = yield select((state: AppState) => state.config.platform);
+    const platform = yield select((state: AppState) => state.config.platform.id);
     const routes: IRoutesNavItems[] = getNavItems(platform);
     yield put({
       payload: routes,

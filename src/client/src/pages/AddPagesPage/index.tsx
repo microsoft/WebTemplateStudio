@@ -27,11 +27,9 @@ const AddPagesPage = (props: Props) => {
           [styles.borderYellow]: pageOutOfBounds,
         })}
       >
-        <Notification
-          showWarning={pageOutOfBounds}
-          text={"Max 20 pages can be selected"}
-          altMessage={intl.formatMessage(messages.iconAltMessage)}
-        />
+        <Notification showWarning={pageOutOfBounds} altMessage={intl.formatMessage(messages.iconAltMessage)}>
+          {intl.formatMessage(messages.maxPagesCanBeSelected)}
+        </Notification>
       </div>
       <div className={pageStyles.flexContainer}>
         {options.map((option, key) => {

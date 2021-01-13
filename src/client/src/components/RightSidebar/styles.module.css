@@ -11,6 +11,10 @@
   text-align: end;
 }
 
+.summaryContainer {
+  margin: 15px;
+}
+
 .rightViewCropped {
   background-color: var(--vscode-editor-background);
   border-left: 0.5px solid #7f7f7f;
@@ -22,7 +26,7 @@
   overflow: scroll;
   display: block;
   transition: display 100ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
-  padding: 4vh 2vh;
+  padding: 2vh;
   border-left: 1px solid #7f7f7f;
   width: 500px;
 }
@@ -67,16 +71,10 @@
   background: var(--vscode-editor-foreground);
 }
 
-.summaryContainer {
-  width: auto;
-  flex: 1;
-}
-
 .icon {
   cursor: pointer;
   height: 15px;
   width: 15px;
-  margin-left: 15px;
 }
 
 .icon path {
@@ -98,4 +96,28 @@
 .buttonContainer {
   display: flex;
   align-items: center;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.notificationContainer {
+  border: 1px solid var(--vscode-editorMarkerNavigationWarning-background);
+  border-radius: 3px;
+  padding: 3px 10px 3px 10px;
+  margin-bottom: 20px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.notificationLink {
+    font-weight: 600;
+    font-size: 14px;
+    margin-left: 5px;
 }

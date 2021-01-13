@@ -17,6 +17,7 @@ const About = ({ intl }: Props) => {
   const { formatMessage } = intl;
   return (
     <div className={styles.container}>
+      <div className={styles.title}>{formatMessage(messages.title)}</div>
       <div>
         <a
           className={styles.buttonToLink}

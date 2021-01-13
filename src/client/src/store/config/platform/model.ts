@@ -1,6 +1,17 @@
+import { PLATFORM } from "../../../utils/constants/constants";
 import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 
-export interface ISelectProjectTypeAction {
-  type: CONFIG_TYPEKEYS.SELECT_WEB_APP;
-  payload: string;
+export interface ISetPlatformTypeAction {
+  type: CONFIG_TYPEKEYS.SET_PLATFORM;
+  payload: IPlatform;
+}
+
+export interface IPlatform {
+  id: PLATFORM;
+  requirements: IPlatformRequirement[];
+}
+
+export interface IPlatformRequirement {
+  name: string;
+  isInstalled: boolean;
 }

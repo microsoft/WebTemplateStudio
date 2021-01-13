@@ -12,7 +12,10 @@ import { Logger } from "../utils/logger";
 const previewOptionSelected = vscode.workspace.getConfiguration().get<boolean>("wts.enablePreviewMode");
 
 export class CoreTSModule extends WizardServant {
-  private requirementsService = new RequirementsService();
+  constructor(private requirementsService: RequirementsService) {
+    super();
+  }
+
   clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
     [EXTENSION_COMMANDS.GET_PROJECT_TYPES, this.getProjectTypes],
     [EXTENSION_COMMANDS.GET_FRAMEWORKS, this.getFrameworks],

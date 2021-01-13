@@ -105,6 +105,16 @@ export const MESSAGES = {
     DEPLOY_AZURE_COSMOS_DB: localize("error.deployAzureCosmosDB", "Error on deploy CosmosDB Service:"),
     DEPLOY_AZURE_APP_SERVICE: localize("error.deployAzureAppService", "Error on deploy Azure App Service:"),
   },
+  WARNINGS: {
+    MISSING_PRERREQUISITES: localize(
+      "warning.missingPrerrequisites",
+      "Warning: Please take into account that you are missing some prerequisites to work with react native."
+    ),
+    REACT_NATIVE_REQUIRES_WINDOWS_10: localize(
+      "warning.reactNativeRequiresWindows10",
+      "React Native for Windows requires a Windows 10 device."
+    ),
+  },
   INFO: {
     COSMOS_ACCOUNT_DEPLOYED: (accountName: string): string => {
       return localize("info.cosmosAccountDeployed", "{0} has been deployed!", accountName);
