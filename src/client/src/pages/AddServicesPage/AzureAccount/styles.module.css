@@ -30,11 +30,3 @@
   display: flex;
   align-items: center;
 }
-
-.link {
-  text-decoration: none;
-}
-
-.link:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}

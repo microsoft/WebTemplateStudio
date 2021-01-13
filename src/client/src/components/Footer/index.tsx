@@ -5,7 +5,6 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import { AppState } from "../../store/combineReducers";
 import { AppContext } from "../../AppContext";
 
-import keyUpHandler from "../../utils/keyUpHandler";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
 import { ROUTE } from "../../utils/constants/constants";

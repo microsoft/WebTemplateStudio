@@ -92,7 +92,7 @@ const ResourceGroupSelection = (props: Props) => {
     <div className={classNames(styles.container, { [styles.containerDisabled]: disableComponent })}>
       <div className={styles.header}>
         <div className={styles.title}>{formatMessage(messages.title)}</div>
-        <a className={styles.link} href={AZURE_LINKS.CREATE_NEW_RESOURCE_GROUP}>
+        <a href={AZURE_LINKS.CREATE_NEW_RESOURCE_GROUP}>
           {formatMessage(messages.newResourceGroupLink)}
         </a>
       </div>

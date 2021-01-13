@@ -54,13 +54,3 @@
 .footer > button:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
-
-.link {
-  color: var(--vscode-textLink-foreground);
-  font-weight: var(--vscode-font-weight);
-  text-decoration: none;
-}
-
-.link:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}

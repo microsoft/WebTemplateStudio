@@ -18,15 +18,6 @@
   font-size: 1.2em;
 }
 
-.link {
-  text-decoration: none;
-  color: var(--vscode-textLink-foreground);
-}
-
-.link:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
 .subtitle {
   margin-bottom: 1em;
   font-size: 90%;

@@ -5,29 +5,3 @@
 .containerDisabled {
   opacity: 0.5;
 }
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 3px;
-}
-
-/* TODO: WE SHOULD USE defined h1 etc not this new style */
-.title {
-  font-weight: 500;
-}
-
-.link {
-  text-decoration: none;
-  color: var(--vscode-textLink-foreground);
-}
-
-.link:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
-.subtitle {
-  margin-bottom: 1em;
-  font-size: 90%;
-  opacity: 0.8;
-}

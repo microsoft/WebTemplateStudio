@@ -66,7 +66,7 @@ const AzureAccount = ({ intl }: Props) => {
           </button>
 
           <a
-            className={classnames(styles.link, buttonStyles.buttonLink)}
+            className={buttonStyles.buttonLink}
             href={AZURE_LINKS.CREATE_FREE_ACCOUNT}
             target="_blank"
             rel="noreferrer noopener"

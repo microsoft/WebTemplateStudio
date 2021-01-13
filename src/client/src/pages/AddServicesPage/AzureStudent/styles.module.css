@@ -13,21 +13,8 @@
   padding-left: 4em;
 }
 
-/* TODO: use generic link style */
-.link {
-  color: var(--vscode-textLink-foreground);
-  text-decoration: none;
-}
-
 .cloudServicesSvg {
   width: 200px;
-}
-
-/* use generic h1,h2,h3,... */
-.azureForStudent {
-  font-weight: 600;
-  margin-bottom: 15px;
-
 }
 
 .body {

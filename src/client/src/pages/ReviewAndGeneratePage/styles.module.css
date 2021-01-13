@@ -23,14 +23,3 @@
   align-items: center;
   position: relative;
 }
-
-/* TODO should use generic a style */
-.link {
-  color: var(--vscode-editor-foreground);
-  text-decoration: none;
-}
-
-.link:focus {
-  outline: none;
-  border: 0;
-}

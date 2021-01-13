@@ -58,10 +58,9 @@ const LocationSelection = (props: Props) => {
 
   return (
     <div className={classNames(styles.container, { [styles.containerDisabled]: disableComponent })}>
-      <div className={styles.header}>
-        <div className={styles.title}>{formatMessage(messages.title)}</div>
-      </div>
-      <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
+      <h3>{formatMessage(messages.title)}</h3>
+      {formatMessage(messages.subtitle)}
+      {/* TODO HERE: check padding bottom */}
       <Dropdown
         ariaLabel={formatMessage(messages.ariaDropdownLabel)}
         options={dropdownLocations}

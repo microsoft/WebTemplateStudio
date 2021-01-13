@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import { AppState } from "../../store/combineReducers";
 
@@ -86,7 +86,7 @@ const AzureServicesModal = (props: Props) => {
           answer={formatMessage(messages.freeTrialUpgradeAnswer)}
         />
         <div className={styles.paragraph}>
-          <a className={styles.link} href={AZURE_LINKS.CREATE_FREE_ACCOUNT_FAQ} onKeyUp={keyUpHandler}>
+          <a href={AZURE_LINKS.CREATE_FREE_ACCOUNT_FAQ} onKeyUp={keyUpHandler}>
             {formatMessage(messages.azureReadMore)}
           </a>
         </div>

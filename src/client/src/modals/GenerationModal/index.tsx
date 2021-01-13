@@ -175,7 +175,7 @@ const GenerationModal = ({ intl }: Props) => {
 
       <div className={styles.footer}>
         {isGenerationFailed && (
-          <a className={styles.link} href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES} onKeyUp={keyUpHandler}>
+          <a href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES} onKeyUp={keyUpHandler}>
             {formatMessage(messages.reportAndIssue)}
           </a>
         )}

@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import classnames from "classnames";
 
 import * as ModalActions from "../../store/navigation/modals/action";
 

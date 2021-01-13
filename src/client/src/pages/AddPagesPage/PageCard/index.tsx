@@ -92,7 +92,7 @@ const PageCard = (props: Props) => {
           <div>
             <Icon name={page.defaultName} icon={page.icon} />
           </div>
-          <div className={classNames(pageStyles.title)}>{page.defaultName}</div>
+          <div className={classNames(cardStyles.title)}>{page.defaultName}</div>
           {showPlusIcon && (
             <div className={classNames(styles.headerIconContainer)}>
               <Plus role="figure" />

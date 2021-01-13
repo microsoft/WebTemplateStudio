@@ -39,9 +39,7 @@ const SubscriptionSelection = (props: Props) => {
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.title}>{formatMessage(messages.title)}</div>
-        <a className={styles.link} href={AZURE_LINKS.CREATE_NEW_SUBSCRIPTION}>
-          {formatMessage(messages.newSubscriptionLink)}
-        </a>
+        <a href={AZURE_LINKS.CREATE_NEW_SUBSCRIPTION}>{formatMessage(messages.newSubscriptionLink)}</a>
       </div>
       <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
       <Dropdown

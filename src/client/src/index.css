@@ -14,12 +14,23 @@ body {
   left: 0;
   top: 0;
   font-size: var(--vscode-font-size);
-  color: var(--vscode-editor-foreground);
   font-weight: var(--vscode-font-weight);
+  font-family: var(--vscode-font-family);
+  color: var(--vscode-editor-foreground);
 }
 
 a {
-  font-weight: var(--vscode-font-weight);
+  text-decoration: none;
+  color: var(--vscode-textLink-foreground);
+  /* TODO: this does nothing font-weight: var(--vscode-font-weight); */
+}
+
+a:hover {
+  color: var(--vscode-textLink-foreground);
+}
+
+a:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 /* ROOT FONT STYLES */
@@ -48,14 +59,13 @@ h2 {
 
 h3 {
   font-size: 1.375rem;
-  font-weight: 1.1rem;
+  font-weight: bold;
   /* TODO DO NOT COMMIT COLOURS JUST DEV PROCESS */
   color: yellow;
 }
 
 h4 {
   font-size: 1.125rem;
-  font-weight: 1.2rem;
   text-transform: uppercase;
   color: orange;
   /* TODO DO NOT COMMIT COLOURS JUST DEV PROCESS */
@@ -64,13 +74,14 @@ h4 {
 h5 {
   font-size: 1rem;
   text-transform: uppercase;
-  color:orchid;
+  color: orchid;
   /* TODO DO NOT COMMIT COLOURS JUST DEV PROCESS */
 }
 
 h6 {
   font-size: 0.875rem;
-  color:papayawhip;
+  font-weight: bold;
+  color: papayawhip;
   /* TODO DO NOT COMMIT COLOURS JUST DEV PROCESS */
 }
 
@@ -78,18 +89,6 @@ p {
   font-size: var(--vscode-font-size);
   font-weight: var(--vscode-font-weight);
   margin: 0px;
-}
-
-.fontLight {
-  font-weight: 300;
-}
-
-.fontRegular {
-  font-weight: lighter;
-}
-
-.fontHeavy {
-  font-weight: 700;
 }
 
 /* POSITIONING */

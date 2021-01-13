@@ -45,10 +45,9 @@ const ApiSelection = (props: Props) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <div className={styles.title}>{formatMessage(messages.title)}</div>
-      </div>
-      <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
+      <h3>{formatMessage(messages.title)}</h3>
+      {/* TODO HERE: padding: description */}
+      {formatMessage(messages.subtitle)}
       <Dropdown
         openDropdownUpwards={!isAdvancedMode}
         ariaLabel={formatMessage(messages.ariaDropdownLabel)}

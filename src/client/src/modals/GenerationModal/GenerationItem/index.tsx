@@ -64,7 +64,7 @@ const GenerationItem = ({ intl, item }: Props) => {
       {status === GenerationItemStatus.Success && (
         <div className={styles.inLine}>
           {item.link && (
-            <a className={styles.link} href={item.link} onKeyUp={keyUpHandler}>
+            <a href={item.link} onKeyUp={keyUpHandler}>
               {formatMessage(messages.view)}
             </a>
           )}

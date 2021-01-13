@@ -1,10 +1,10 @@
 .container {
-    margin-right: 12px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    padding: 12px;
-    background-color: hsla(0, 0%, 47%, 0.2);
-  }
+  margin-right: 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  padding: 12px;
+  background-color: hsla(0, 0%, 47%, 0.2);
+}
 
 .container:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
@@ -16,7 +16,7 @@
   border: none;
 }
 
-.innerContent{
+.innerContent {
   display: flex;
   flex-direction: column;
   height: inherit;
@@ -91,16 +91,6 @@
 
 .iconCheckMark path {
   fill: var(--vscode-gitDecoration-untrackedResourceForeground);
-}
-
-/* TODO: use generic link style */
-.link {
-  color: var(--vscode-textLink-foreground);
-  text-decoration: none;
-}
-
-.link:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .gridLayoutCardFooter {
