@@ -2,7 +2,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2em;
 }
 
 .closeIcon {
@@ -19,14 +18,6 @@
 
 .closeIcon:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
-.messages {
-  margin-top: 40px;
-}
-
-.messages > p {
-  margin-top: 15px;
 }
 
 .generationItems {

@@ -93,6 +93,6 @@
 
 .gridLayoutCardFooter {
   display: grid;
-  grid-template-columns: auto 3rem;
+  grid-template-columns: auto 2rem;
   min-height: 30px;
 }

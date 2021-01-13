@@ -95,9 +95,9 @@ const Footer = (props: Props) => {
             >
               {formatMessage(messages.back)}
             </button>
-            <a
+            <button
               tabIndex={isEnableNextPage ? 0 : -1}
-              className={classnames(buttonStyles.buttonHighlighted, {
+              className={classnames(styles.button, styles.buttonNext, buttonStyles.buttonHighlighted, {
                 [buttonStyles.buttonDark]: !isEnableNextPage,
                 [styles.disabledOverlay]: isLastStep || !isEnableNextPage || !isEnableGenerateButton,
               })}
@@ -106,7 +106,7 @@ const Footer = (props: Props) => {
               }}
             >
               {formatMessage(messages.next)}
-            </a>
+            </button>
             <button
               disabled={!isEnableGenerateButton}
               className={classnames({

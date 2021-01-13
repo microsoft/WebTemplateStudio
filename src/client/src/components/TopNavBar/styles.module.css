@@ -41,6 +41,10 @@
   font-size: 1.1em;
 }
 
+.topNavBar a:hover{
+  text-decoration: none;
+}
+
 @media (min-width: 650px) {
   .itemBorder {
     padding: 0px 25px 0px 0px;

@@ -112,7 +112,7 @@ const PageCard = (props: Props) => {
               </button>
             )}
           </div>
-          <div className={styles.pageCounter}>
+          <div>
             {selectedPages.filter((selectedPage) => selectedPage.defaultName === page.defaultName).length}
           </div>
         </div>

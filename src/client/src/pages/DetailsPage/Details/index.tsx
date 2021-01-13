@@ -78,9 +78,7 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
           className={styles.innerBackContainer}
         >
           {backArrow && <BackArrow className={styles.backIcon} />}
-          <div className={styles.details}>
-            <FormattedMessage id="details.back" defaultMessage="Back" />
-          </div>
+          <div className={styles.details}>{intl!.formatMessage(messages.back)}</div>
         </div>
       </div>
 
@@ -97,7 +95,7 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
               {detailInfo.author && (
                 <div className={classnames(styles.metaData, styles.row)}>
                   <div className={classnames(styles.category, styles.colWidth)}>
-                    <FormattedMessage id="details.author" defaultMessage="Author:" />
+                    {intl!.formatMessage(messages.author)}
                   </div>
                   {(detailInfo.author && renderFormattedData(detailInfo.author, false, true)) ||
                     intl!.formatMessage(messages.none)}
@@ -108,7 +106,7 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
               {detailInfo.licenses && detailInfo.licenses.length > 0 && (
                 <div className={classnames(styles.metaData)}>
                   <div className={classnames(styles.licenseCategory, styles.colWidth)}>
-                    <FormattedMessage id="details.licenses" defaultMessage="Licenses:" />
+                    {intl!.formatMessage(messages.licenses)}
                   </div>
                   <div className={classnames(styles.col8, styles.licenses)}>
                     {Array.isArray(detailInfo.licenses)
@@ -135,7 +133,7 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
               {detailInfo.version && (
                 <div className={classnames(styles.metaData, styles.row)}>
                   <div className={classnames(styles.category, styles.colWidth)}>
-                    <FormattedMessage id="details.version" defaultMessage="Version:" />
+                    {intl!.formatMessage(messages.version)}
                   </div>
                   {renderFormattedData(detailInfo.version, true, true)}
                 </div>

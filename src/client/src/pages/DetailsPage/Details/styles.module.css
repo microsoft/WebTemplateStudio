@@ -57,6 +57,9 @@
   margin-bottom: 0px !important;
 }
 
+.licenses p{
+  margin-block-start: 0;
+}
 .detailsDescription {
   margin-bottom: 0px;
 }

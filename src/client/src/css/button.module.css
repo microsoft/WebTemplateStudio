@@ -37,7 +37,7 @@
 }
 
 .buttonLink:hover {
-  color: var(--vscode-textLink-foreground);
+  text-decoration: underline;
 }
 
 .buttonLink:focus {
