@@ -55,7 +55,6 @@ describe("Footer", () => {
 
       const backButton = wrapper.getByText("Back");
       expect(backButton).toBeDefined();
-      expect(backButton).toHaveClass(styles.buttonBack);
 
       const createProjectButton = wrapper.getByText("Create Project");
       expect(createProjectButton).toBeDefined();
@@ -71,7 +70,6 @@ describe("Footer", () => {
 
       const backButton = wrapper.getByText("Back");
       expect(backButton).toBeDefined();
-      expect(backButton).toHaveClass(styles.buttonBack);
 
       const createProjectButton = wrapper.getByText("Create Project");
       expect(createProjectButton).toBeDefined();
@@ -87,7 +85,6 @@ describe("Footer", () => {
 
       const backButton = wrapper.getByText("Back");
       expect(backButton).toBeDefined();
-      expect(backButton).toHaveClass(styles.buttonBack);
 
       const createProjectButton = wrapper.getByText("Create Project");
       expect(createProjectButton).toBeDefined();
@@ -100,7 +97,6 @@ describe("Footer", () => {
 
       const backButton = wrapper.getByText("Back");
       expect(backButton).toBeDefined();
-      expect(backButton).toHaveClass(styles.buttonBack);
 
       const createButton = wrapper.getByText("Create Project");
       expect(createButton).toBeDefined();
