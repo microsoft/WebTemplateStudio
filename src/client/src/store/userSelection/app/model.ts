@@ -1,11 +1,5 @@
 import { USERSELECTION_TYPEKEYS } from "../typeKeys";
-import { ISelected } from "../../../types/selected";
 import { IValidation } from "../../../utils/validations/validations";
-
-export interface ISelectProjectTypeAction {
-  type: USERSELECTION_TYPEKEYS.SELECT_WEB_APP;
-  payload: ISelected;
-}
 
 export interface ISetProjectNameActionType {
   type: USERSELECTION_TYPEKEYS.SET_PROJECT_NAME;

@@ -28,11 +28,9 @@ const DependencyInfo = ({ requirement, intl }: Props) => {
           target={"_blank"}
           rel="noreferrer noopener"
         >
-          <Notification
-            showWarning={true}
-            text={formatMessage(messages.notInstalled, { name: requirementData?.displayName, version })}
-            altMessage={formatMessage(messages.iconAltMessage)}
-          />
+          <Notification showWarning={true} altMessage={formatMessage(messages.iconAltMessage)}>
+            {formatMessage(messages.notInstalled, { name: requirementData?.displayName, version })}
+          </Notification>
         </a>
       )}
     </div>

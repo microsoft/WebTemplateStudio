@@ -1,6 +1,10 @@
 import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
+  title: {
+    id: "rightsidebar.about.title",
+    defaultMessage: "About",
+  },
   visitRepo: {
     id: "rightsidebar.about.visitRepo",
     defaultMessage: "Visit our GitHub",

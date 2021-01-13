@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  font-size: 1em;
+  margin-bottom: 0.3em;
+}
+
+.inLine {
+  display: flex;
+}
+
+.iconCheck {
+  margin-right: 1em;
+  height: 18px;
+}
+
+.iconCheck path {
+  fill: var(--vscode-gitDecoration-untrackedResourceForeground);
+}
+
+.iconWarning {
+  margin-right: 1em;
+  height: 18px;
+}
+
+.iconWarning path {
+  fill: var(--vscode-editorMarkerNavigationWarning-background);
+}
+
+.warningText {
+  color: var(--vscode-editorMarkerNavigationWarning-background);
+}

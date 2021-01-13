@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 
 import { Validator } from "./client-modules/validator";
-import { CONSTANTS } from "./constants/constants";
+import { CONSTANTS, PLATFORM } from "./constants/constants";
 import { TelemetryEventName } from "./constants/telemetry";
 import { ReactPanel } from "./reactPanel";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
@@ -22,6 +22,7 @@ import { LoggerModule } from "./client-modules/loggerModule";
 import { MESSAGES } from "./constants/messages";
 import { ExtensionModule } from "./constants/commands";
 import { EXTENSION_COMMANDS } from "./constants/commands";
+import RequirementsService from "./utils/requirements/RequirementsService";
 
 export class Controller {
   /**
@@ -31,6 +32,7 @@ export class Controller {
   private static _instance: Controller | undefined;
   public static reactPanelContext: ReactPanel;
   public static TelemetryService: ITelemetryService;
+  public static RequirementsService: RequirementsService;
   public static Logger: Logger;
   private loggerModule: LoggerModule;
   private AzureModule: AzureModule;
@@ -91,7 +93,7 @@ export class Controller {
    * @param message The payload received from the wizard client. Message payload must include field 'module'
    * @returns Singleton Controller type
    */
-  public static getInstance(context: vscode.ExtensionContext, platform: string): Controller {
+  public static getInstance(context: vscode.ExtensionContext, platform: PLATFORM): Controller {
     if (this._instance) {
       this._instance.showReactPanel();
     } else {
@@ -100,10 +102,10 @@ export class Controller {
     return this._instance;
   }
 
-  private constructor(private context: vscode.ExtensionContext, private platform: string) {
+  private constructor(private context: vscode.ExtensionContext, private platform: PLATFORM) {
     Controller.vsContext = context;
     Controller.TelemetryService = new TelemetryService(this.context);
-
+    Controller.RequirementsService = new RequirementsService();
     Controller.TelemetryService.trackEvent(TelemetryEventName.ExtensionLaunch);
 
     this.Validator = new Validator();
@@ -111,7 +113,7 @@ export class Controller {
     this.Generation = new Generation(Controller.TelemetryService);
     this.loggerModule = new LoggerModule();
     this.dependencies = new DependenciesModule();
-    this.CoreTSModule = new CoreTSModule();
+    this.CoreTSModule = new CoreTSModule(Controller.RequirementsService);
     this.Telemetry = new Telemetry(Controller.TelemetryService);
     this.Defaults = new Defaults();
     Logger.load(this.context.extensionPath);
@@ -137,7 +139,7 @@ export class Controller {
   public async launchWizard(
     context: vscode.ExtensionContext,
     launchExperience: LaunchExperience,
-    platform: string
+    platform: PLATFORM
   ): Promise<void> {
     let syncObject;
     await Controller.TelemetryService.callWithTelemetryAndCatchHandleErrors(
@@ -156,22 +158,23 @@ export class Controller {
 
     if (syncObject) {
       this.SyncCompleted = true;
+      await Controller.getTemplateInfoAndStore(context, syncObject, platform);
       Controller.reactPanelContext = ReactPanel.createOrShow(this.routingMessageReceieverDelegate);
 
-      Controller.getTemplateInfoAndStore(context, syncObject, platform);
       this.Telemetry.trackCreateNewProject({
         entryPoint: CONSTANTS.TELEMETRY.LAUNCH_WIZARD_STARTED_POINT,
       });
     }
   }
 
-  private static getTemplateInfoAndStore(
+  private static async getTemplateInfoAndStore(
     ctx: vscode.ExtensionContext,
     syncObject: ISyncReturnType,
-    platform: string
-  ): void {
+    platform: PLATFORM
+  ): Promise<void> {
     const preview = vscode.workspace.getConfiguration().get<boolean>("wts.enablePreviewMode");
-
+    const platformRequirements = await Controller.RequirementsService.getPlatformRequirements(platform);
+    this.processMissingRequirements(platformRequirements);
     CoreTemplateStudio._templateConfig = {
       templatesVersion: syncObject.templatesVersion,
       wizardVersion: getExtensionVersionNumber(ctx),
@@ -179,7 +182,18 @@ export class Controller {
       projectNameValidationConfig: syncObject.projectNameValidationConfig,
       preview,
       platform,
+      platformRequirements,
     };
+  }
+
+  private static processMissingRequirements(requirements: IPlatformRequirement[]) {
+    const missingRequirements = requirements.filter((r) => !r.isInstalled);
+    if (missingRequirements.length > 0) {
+      Logger.appendLog("EXTENSION", "warn", MESSAGES.WARNINGS.MISSING_PRERREQUISITES);
+      for (const requirement of missingRequirements) {
+        Logger.appendLog("EXTENSION", "warn", requirement.name);
+      }
+    }
   }
 
   private static handleValidMessage(commandName: EXTENSION_COMMANDS, payload: any, responsePayload?: any): void {
