@@ -31,14 +31,14 @@ const CollapsibleInfoBox = ({ question, answer, initialAnswerShownState = false 
 
   return (
     <div>
-      <Title>
+      <h2>
         {question}
         {isAnswerShown ? (
           <Up tabIndex={0} className={styles.toggleIcon} onClick={toggleAnswerShown} onKeyDown={keyDownHandler} />
         ) : (
           <Down tabIndex={0} className={styles.toggleIcon} onClick={toggleAnswerShown} onKeyDown={keyDownHandler} />
         )}
-      </Title>
+      </h2>
 
       {isAnswerShown && <div className={styles.question}>{answer}</div>}
     </div>
