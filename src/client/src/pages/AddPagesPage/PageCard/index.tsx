@@ -18,7 +18,6 @@ import messages from "../../messages";
 import classNames from "classnames";
 import styles from "./styles.module.css";
 import cardStyles from "../../cardStyles.module.css";
-import pageStyles from "../../cardStyles.module.css";
 import buttonStyles from "../../../css/button.module.css";
 
 type Props = IProps & IStateProps & InjectedIntlProps;

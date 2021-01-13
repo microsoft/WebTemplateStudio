@@ -6,7 +6,7 @@
 
 .centerView {
   display: block;
-  padding: 6vh;
+  padding: 4vh 6vh;
   overflow: auto;
   width: 100%;
   box-sizing: border-box;

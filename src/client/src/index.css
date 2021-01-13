@@ -15,7 +15,6 @@ body {
   top: 0;
   font-size: var(--vscode-font-size);
   font-weight: var(--vscode-font-weight);
-  font-family: var(--vscode-font-family);
   color: var(--vscode-editor-foreground);
 }
 
@@ -26,11 +25,12 @@ a {
 }
 
 a:hover {
-  color: var(--vscode-textLink-foreground);
+  text-decoration: underline;
 }
 
 a:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
+  outline: 1px solid -webkit-focus-ring-color;
+  outline-offset: -1px;
 }
 
 /* ROOT FONT STYLES */
@@ -44,35 +44,33 @@ a:focus {
 /* TODO HERE */
 h1 {
   font-size: 2rem;
-  font-weight: bolder;
+  font-weight: normal;
   color: red;
   /* TODO DO NOT COMMIT COLOURS JUST DEV PROCESS */
+  padding-bottom: 0.3em;
+  line-height: 1.2;
 }
 
 h2 {
-  font-size: 1.7rem;
-  font-weight: bolder;
+  font-weight: normal;
   color: blue;
   /* TODO DO NOT COMMIT COLOURS JUST DEV PROCESS */
   /* color: var(--vscode-sideBarTitle-foreground); */
 }
 
 h3 {
-  font-size: 1.375rem;
-  font-weight: bold;
+  font-weight: normal;
   /* TODO DO NOT COMMIT COLOURS JUST DEV PROCESS */
   color: yellow;
 }
 
 h4 {
-  font-size: 1.125rem;
   text-transform: uppercase;
   color: orange;
   /* TODO DO NOT COMMIT COLOURS JUST DEV PROCESS */
 }
 
 h5 {
-  font-size: 1rem;
   text-transform: uppercase;
   color: orchid;
   /* TODO DO NOT COMMIT COLOURS JUST DEV PROCESS */
@@ -83,12 +81,6 @@ h6 {
   font-weight: bold;
   color: papayawhip;
   /* TODO DO NOT COMMIT COLOURS JUST DEV PROCESS */
-}
-
-p {
-  font-size: var(--vscode-font-size);
-  font-weight: var(--vscode-font-weight);
-  margin: 0px;
 }
 
 /* POSITIONING */

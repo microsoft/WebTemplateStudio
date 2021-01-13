@@ -3,11 +3,11 @@
 }
 
 .backIcon path {
-  fill: var(--vscode-editor-foreground);
+  fill: var(--vscode-textLink-foreground);
 }
 
 .backIcon {
-  height: 24px;
+  height: 1em;
   margin-right: 1em;
   margin-top: 5px;
   cursor: pointer;
@@ -20,7 +20,7 @@
 
 .backContainer {
   display: flex;
-  margin-bottom: 48px;
+  margin-bottom: 1em;
 }
 
 .innerBackContainer {

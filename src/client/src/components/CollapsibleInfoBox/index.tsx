@@ -4,7 +4,6 @@ import { ReactComponent as Up } from "../../assets/i-collapsibleUp.svg";
 
 import styles from "./styles.module.css";
 import { KEY_EVENTS } from "../../utils/constants/constants";
-import Title from "../Title";
 
 interface IProps {
   question: string;

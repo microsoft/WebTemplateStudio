@@ -11,8 +11,6 @@
 
 .detailsContainer {
   display: flex;
-  margin-top: 51px;
-  /*Height of the Title Bar */
 }
 
 @media (max-width: 850px) {

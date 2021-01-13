@@ -12,7 +12,6 @@ import PageContainer from "./PageContainer";
 
 import messages from "./messages";
 import classnames from "classnames";
-import rightsidebarStyles from "../rightsidebarStyles.module.css";
 import styles from "./styles.module.css";
 
 import { ReactComponent as ShowIconSVG } from "../../../assets/i-show.svg";
