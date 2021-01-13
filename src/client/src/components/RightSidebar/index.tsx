@@ -19,7 +19,7 @@ import SelectFrameworks from "./SelectFrameworks";
 import messages from "./messages";
 import classnames from "classnames";
 import styles from "./styles.module.css";
-import buttonStyles from "../../css/buttonStyles.module.css";
+import buttonStyles from "../../css/button.module.css";
 import SelectProjectTypes from "./SelectProjectTypes";
 import Title from "../Title";
 

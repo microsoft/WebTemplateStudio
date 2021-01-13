@@ -28,7 +28,7 @@ import AppNameEditor from "./AppNameEditor";
 import RuntimeStackInfo from "./RuntimeStackInfo";
 import AppServicePlanInfo from "./AppServicePlanInfo";
 
-import buttonStyles from "../../css/buttonStyles.module.css";
+import buttonStyles from "../../css/button.module.css";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import messages from "./messages";

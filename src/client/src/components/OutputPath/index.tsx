@@ -2,7 +2,7 @@ import * as React from "react";
 import { INTL_MESSAGES, KEY_EVENTS } from "../../utils/constants/constants";
 
 import styles from "./styles.module.css";
-import buttonStyles from "../../css/buttonStyles.module.css";
+import buttonStyles from "../../css/button.module.css";
 import { IValidation } from "../../utils/validations/validations";
 import classNames from "classnames";
 

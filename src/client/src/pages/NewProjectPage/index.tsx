@@ -16,11 +16,13 @@ type Props = InjectedIntlProps;
 const NewProject = (props: Props) => {
   const platform: string = useSelector((state: AppState) => state.config.platform);
   const messages = (platform === PLATFORM.WEB) ? messagesWeb : messagesReactNative;
+  const { formatMessage } = props.intl;
+
   return (
     <div className={styles.container}>
       <div className={styles.newProjectInfo}>
-        <Title>{props.intl.formatMessage(messages.header)}</Title>
-        <div className={styles.body}>{props.intl.formatMessage(messages.body)}</div>
+        <Title>{formatMessage(messages.header)}</Title>
+        <p>{formatMessage(messages.body)}</p>
         <div className={styles.projectDetailsContainer}>
           <ProjectDetails />
         </div>

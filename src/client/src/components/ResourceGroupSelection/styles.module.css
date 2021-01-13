@@ -12,18 +12,6 @@
   margin-bottom: 3px;
 }
 
-/* TODO: SAME try using h1.... */
-.title {
-  font-weight: 500;
-  font-size: 1.2em;
-}
-
-.subtitle {
-  margin-bottom: 1em;
-  font-size: 90%;
-  opacity: 0.8;
-}
-
 .dropdownContainer {
   display: flex;
 }

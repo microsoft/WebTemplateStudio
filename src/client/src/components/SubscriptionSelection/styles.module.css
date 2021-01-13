@@ -1,20 +1,3 @@
 .container {
   margin-bottom: 35px;
 }
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 3px;
-}
-
-.title {
-  font-weight: 500;
-  font-size: 1.2em;
-}
-
-.subtitle {
-  margin-bottom: 1em;
-  font-size: 90%;
-  opacity: 0.8;
-}

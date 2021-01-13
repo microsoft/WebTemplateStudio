@@ -10,17 +10,6 @@
   flex: 0 1 100%;
 }
 
-/* padding-bottom: 4%; */
-
-.body {
-  font-size: 1.4em;
-  line-height: 1.9em;
-  margin-bottom: 1em;
-  padding-bottom: 4%;
-  width: 85%;
-  white-space: pre-line;
-}
-
 .projectDetailsContainer {
   width: 80%;
 }
@@ -28,6 +17,13 @@
 .newProjectInfo {
   max-width: 50%;
   padding: 6vh;
+}
+
+.newProjectInfo > p {
+  margin-bottom: 1em;
+  padding-bottom: 4%;
+  width: 85%;
+  white-space: pre-line;
 }
 
 @media (min-width: 850px) and (max-width: 1120px) {

@@ -27,7 +27,7 @@ import { AZURE, SERVICE_KEYS, AzureResourceType } from "../../utils/constants/az
 
 import AccountNameEditor from "./AccountNameEditor/index";
 import ApiSelection from "./APISelection/index";
-import buttonStyles from "../../css/buttonStyles.module.css";
+import buttonStyles from "../../css/button.module.css";
 import styles from "./styles.module.css";
 import messages from "./messages";
 import classNames from "classnames";

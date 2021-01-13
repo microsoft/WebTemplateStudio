@@ -15,7 +15,7 @@ import Icon from "../../../components/Icon";
 import { ReactComponent as PriceSVG } from "../../../assets/money.svg";
 import { ReactComponent as TimeSVG } from "../../../assets/timer.svg";
 
-import buttonStyles from "../../../css/buttonStyles.module.css";
+import buttonStyles from "../../../css/button.module.css";
 import styles from "./styles.module.css";
 import messages from "./messages";
 import classnames from "classnames";

@@ -5,7 +5,7 @@ import { getInitialState, setSelectedRoute } from "../../mockData/mockStore";
 import { RenderResult } from "@testing-library/react";
 import { renderWithStore } from "../../testUtils";
 import styles from "./styles.module.css";
-import buttonStyles from "../../css/buttonStyles.module.css";
+import buttonStyles from "../../css/button.module.css";
 import { ROUTE } from "../../utils/constants/constants";
 import { AppState } from "../../store/combineReducers";
 

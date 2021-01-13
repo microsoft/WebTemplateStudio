@@ -23,7 +23,7 @@ import { setRoutesAction } from "../../store/navigation/routesNavItems/actions";
 import { setDetailPageAction } from "../../store/config/detailsPage/action";
 
 import classnames from "classnames";
-import buttonStyles from "../../css/buttonStyles.module.css";
+import buttonStyles from "../../css/button.module.css";
 import styles from "./styles.module.css";
 import messages from "./messages";
 

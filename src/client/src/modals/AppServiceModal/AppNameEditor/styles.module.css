@@ -8,18 +8,6 @@
   opacity: 0.5;
 }
 
-.title {
-  font-weight: 500;
-  font-size: 1.2em;
-  margin-bottom: 3px;
-}
-
-.subtitle {
-  margin-bottom: 1em;
-  font-size: 90%;
-  opacity: 0.8;
-}
-
 .inputContainer {
   display: flex;
   align-items: center;

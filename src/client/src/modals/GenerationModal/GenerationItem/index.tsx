@@ -2,7 +2,7 @@ import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { GenerationItemData, GenerationItemStatus } from "../../../types/generationStatus";
 import classnames from "classnames";
-import buttonStyles from "../../../css/buttonStyles.module.css";
+import buttonStyles from "../../../css/button.module.css";
 import styles from "./styles.module.css";
 import messages from "./messages";
 import keyUpHandler from "../../../utils/keyUpHandler";

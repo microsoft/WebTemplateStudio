@@ -47,7 +47,6 @@
 }
 
 .description {
-  font-size: 1.2rem;
   line-height: 1.5;
   flex: 1; /* fill remaining space */
 }
@@ -73,7 +72,6 @@
 
 .version {
   margin-top: 0.5rem;
-  font-size: 1.2rem;
   line-height: 1.5;
 }
 

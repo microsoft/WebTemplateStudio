@@ -5,7 +5,7 @@ import { AppContext } from "../../../AppContext";
 import { AppState } from "../../../store/combineReducers";
 
 import keyUpHandler from "../../../utils/keyUpHandler";
-import buttonStyles from "../../../css/buttonStyles.module.css";
+import buttonStyles from "../../../css/button.module.css";
 import classnames from "classnames";
 import styles from "./styles.module.css";
 

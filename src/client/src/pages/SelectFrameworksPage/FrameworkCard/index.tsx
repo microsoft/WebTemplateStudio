@@ -21,7 +21,7 @@ import Icon from "../../../components/Icon";
 
 import styles from "./styles.module.css";
 import cardStyles from "../../cardStyles.module.css";
-import buttonStyles from "../../../css/buttonStyles.module.css";
+import buttonStyles from "../../../css/button.module.css";
 
 type Props = ISelectProps & IStateProps & InjectedIntlProps;
 

@@ -4,7 +4,7 @@ import { connect, useSelector, useDispatch } from "react-redux";
 import { ReactComponent as Close } from "../../assets/cancel.svg";
 import asModal from "../../components/Modal";
 
-import buttonStyles from "../../css/buttonStyles.module.css";
+import buttonStyles from "../../css/button.module.css";
 import styles from "./styles.module.css";
 
 import { GenerationItemData, GENERATION_NAMES } from "../../types/generationStatus";

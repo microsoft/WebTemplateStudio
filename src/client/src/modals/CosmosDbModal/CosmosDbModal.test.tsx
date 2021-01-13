@@ -3,7 +3,7 @@ import configureMockStore from "redux-mock-store";
 import "@testing-library/jest-dom";
 import CosmosDbModal from ".";
 import { getInitialState, setOpenModal, addFeaturesOptions } from "../../mockData/mockStore";
-import buttonStyles from "../../css/buttonStyles.module.css";
+import buttonStyles from "../../css/button.module.css";
 import "@testing-library/jest-dom/extend-expect";
 import { renderWithStore } from "../../testUtils";
 import messages from "./messages";
