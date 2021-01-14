@@ -12,6 +12,7 @@ import { KEY_EVENTS, PLATFORM, WEB_TEMPLATE_STUDIO_LINKS } from "../../utils/con
 import messages from "./messages";
 import { getPlatformRequirementsSelector, getPlatformSelector } from "../../store/config/platform/selector";
 import RequirementItem from "./RequirementItem";
+import Title from "../../components/Title";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -37,7 +38,7 @@ const PlatformRequirementsModal = ({ intl }: Props) => {
   return (
     <div>
       <div className={styles.headerContainer}>
-        <div className={styles.title}>{intl.formatMessage(messages.developmentRequirements)}</div>
+        <Title>{intl.formatMessage(messages.developmentRequirements)}</Title>
         <Cancel
           tabIndex={0}
           className={styles.cancelIcon}

@@ -1,23 +1,11 @@
 .container {
   display: block;
   position: relative;
-  margin-bottom: 35px;
+  margin-bottom: 1.2em;
 }
 
 .containerDisabled {
   opacity: 0.5;
-}
-
-.title {
-  font-weight: 500;
-  font-size: 1.2em;
-  margin-bottom: 3px;
-}
-
-.subtitle {
-  margin-bottom: 1em;
-  font-size: 90%;
-  opacity: 0.8;
 }
 
 .inputContainer {
@@ -32,6 +20,11 @@
   border: none;
 }
 
+.inputContainer:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+  outline-offset: -1px;
+}
+
 .input {
   text-decoration: none;
   border: none;
@@ -43,7 +36,8 @@
 }
 
 input:focus {
-  outline: none;
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+  outline-offset: 7px;
 }
 
 input::placeholder {

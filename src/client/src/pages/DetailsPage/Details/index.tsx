@@ -94,8 +94,8 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
             <div>
               {detailInfo.author && (
                 <div className={classnames(styles.metaData, styles.row)}>
-                  <div className={classnames(styles.category, styles.colWidth)}>
-                    {intl!.formatMessage(messages.author)}
+                  <div className={styles.colWidth}>
+                    <strong>{intl!.formatMessage(messages.author)}</strong>
                   </div>
                   {(detailInfo.author && renderFormattedData(detailInfo.author, false, true)) ||
                     intl!.formatMessage(messages.none)}
@@ -106,7 +106,7 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
               {detailInfo.licenses && detailInfo.licenses.length > 0 && (
                 <div className={classnames(styles.metaData)}>
                   <div className={classnames(styles.licenseCategory, styles.colWidth)}>
-                    {intl!.formatMessage(messages.licenses)}
+                    <strong>{intl!.formatMessage(messages.licenses)}</strong>
                   </div>
                   <div className={classnames(styles.col8, styles.licenses)}>
                     {Array.isArray(detailInfo.licenses)
@@ -132,8 +132,8 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
               )}
               {detailInfo.version && (
                 <div className={classnames(styles.metaData, styles.row)}>
-                  <div className={classnames(styles.category, styles.colWidth)}>
-                    {intl!.formatMessage(messages.version)}
+                  <div className={styles.colWidth}>
+                    <strong>{intl!.formatMessage(messages.version)}</strong>
                   </div>
                   {renderFormattedData(detailInfo.version, true, true)}
                 </div>

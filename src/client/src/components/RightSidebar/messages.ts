@@ -3,7 +3,7 @@ import { defineMessages } from "react-intl";
 const messages = defineMessages({
   viewLicenses: {
     id: "rightSidebar.viewLicenses",
-    defaultMessage: "View Licenses",
+    defaultMessage: "View licenses",
   },
   showAriaLabel: {
     id: "rightSidebar.showAriaLabel",

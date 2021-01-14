@@ -13,7 +13,7 @@
   flex-direction: column;
 }
 
-.cardContainer>*:last-child {
+.cardContainer > *:last-child {
   margin-top: auto;
 }
 
@@ -54,15 +54,4 @@
   justify-content: space-between;
   align-items: center;
   color: var(--vscode-textLink-foreground);
-}
-
-.addButton {
-  margin-left: 10px;
-  /* TODO: THis one shouldn´t be needed I think : 1rem At most use that if font-size changed?*/
-  font-size: var(--vscode-font-size);
-  border: none;
-}
-
-.addButton:focus {
-  outline: 1.5px solid var(--vscode-contrastActiveBorder);
 }

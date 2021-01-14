@@ -1,7 +1,7 @@
 .container {
   display: block;
   position: relative;
-  margin-bottom: 35px;
+  margin-bottom: 1.2em;
 }
 
 .containerDisabled {
@@ -31,7 +31,8 @@
 }
 
 input:focus {
-  outline: none;
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+  outline-offset: 7px;
 }
 
 input::placeholder {

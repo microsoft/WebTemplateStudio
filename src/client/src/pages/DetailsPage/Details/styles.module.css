@@ -24,6 +24,7 @@
 }
 
 .innerBackContainer {
+  height: 2em;
   padding-left: 1px;
   padding-right: 2px;
   display: flex;
@@ -36,7 +37,7 @@
 .headerContainer,
 .detailsContainer {
   display: flex;
-  margin-bottom: 12px;
+  margin-bottom: 1em;
 }
 
 .headerContainer {
@@ -47,8 +48,7 @@
   align-self: flex-start;
 }
 
-.licenseCategory,
-.category {
+.licenseCategory {
   margin-left: 0px;
 }
 
@@ -57,7 +57,7 @@
   margin-bottom: 0px !important;
 }
 
-.licenses p{
+.licenses p {
   margin-block-start: 0;
 }
 .detailsDescription {

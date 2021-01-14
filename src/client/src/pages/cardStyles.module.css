@@ -34,7 +34,7 @@
 
 .gridLayoutCardHeader {
   display: grid;
-  grid-template-columns: 3rem auto 3rem;
+  grid-template-columns: 3rem auto 2rem;
   max-height: 50px;
   width: 17rem;
 }

@@ -26,7 +26,15 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
+a .button:hover{
+  color: var(--vscode-button-foreground);
+  text-decoration: none;
+}
+
 .buttonContainer {
   display: flex;
   align-items: center;
+}
+.buttonContainer a:hover{
+  text-decoration: none;
 }

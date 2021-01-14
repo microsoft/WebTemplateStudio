@@ -58,7 +58,7 @@ const AzureAccount = ({ intl }: Props) => {
       {!isLoggedIn && (
         <div className={classnames(styles.azureProfile, styles.buttonContainer)}>
           <button
-            className={classnames(buttonStyles.buttonDark, styles.button)}
+            className={classnames(styles.button, buttonStyles.buttonHighlighted)}
             onClick={handleSignInClick}
             aria-label={intl.formatMessage(messages.ariaSignInLabel)}
           >
@@ -66,7 +66,6 @@ const AzureAccount = ({ intl }: Props) => {
           </button>
 
           <a
-            className={buttonStyles.buttonLink}
             href={AZURE_LINKS.CREATE_FREE_ACCOUNT}
             target="_blank"
             rel="noreferrer noopener"

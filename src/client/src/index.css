@@ -29,7 +29,7 @@ a:hover {
 }
 
 a:focus {
-  outline: 1px solid -webkit-focus-ring-color;
+  outline: 1px solid var(--vscode-contrastActiveBorder);
   outline-offset: -1px;
 }
 
@@ -41,46 +41,33 @@ a:focus {
 }
 
 /* TYPOGRAPHY */
-/* TODO HERE */
 h1 {
   font-size: 2rem;
   font-weight: normal;
-  color: red;
-  /* TODO DO NOT COMMIT COLOURS JUST DEV PROCESS */
   padding-bottom: 0.3em;
   line-height: 1.2;
 }
 
 h2 {
   font-weight: normal;
-  color: blue;
-  /* TODO DO NOT COMMIT COLOURS JUST DEV PROCESS */
   /* color: var(--vscode-sideBarTitle-foreground); */
 }
 
 h3 {
   font-weight: normal;
-  /* TODO DO NOT COMMIT COLOURS JUST DEV PROCESS */
-  color: yellow;
 }
 
 h4 {
   text-transform: uppercase;
-  color: orange;
-  /* TODO DO NOT COMMIT COLOURS JUST DEV PROCESS */
 }
 
 h5 {
   text-transform: uppercase;
-  color: orchid;
-  /* TODO DO NOT COMMIT COLOURS JUST DEV PROCESS */
 }
 
 h6 {
   font-size: 0.875rem;
   font-weight: bold;
-  color: papayawhip;
-  /* TODO DO NOT COMMIT COLOURS JUST DEV PROCESS */
 }
 
 /* POSITIONING */

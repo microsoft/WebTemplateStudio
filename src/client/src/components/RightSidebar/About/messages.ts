@@ -11,7 +11,7 @@ const messages = defineMessages({
   },
   reportIssue: {
     id: "rightsidebar.about.reportIssue",
-    defaultMessage: "Report an Issue",
+    defaultMessage: "Report an issue",
   },
   templatesVersion: {
     id: "rightsidebar.about.templatesVersion",

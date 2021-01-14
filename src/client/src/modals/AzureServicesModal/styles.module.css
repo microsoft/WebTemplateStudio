@@ -2,7 +2,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2em;
 }
 
 .cancelIcon {
@@ -19,10 +18,6 @@
 
 .cancelIcon:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
-.questionaryContainer {
-  margin-top: 40px;
 }
 
 .paragraph {

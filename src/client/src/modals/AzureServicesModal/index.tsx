@@ -67,7 +67,7 @@ const AzureServicesModal = (props: Props) => {
         />
       </div>
 
-      <div className={styles.questionaryContainer}>
+      <div>
         <CollapsibleInfoBox
           question={formatMessage(messages.freeAccountQuestion)}
           answer={formatMessage(messages.freeAccountAnswer)}

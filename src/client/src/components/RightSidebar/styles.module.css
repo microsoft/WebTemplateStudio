@@ -102,14 +102,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
 }
 
 .notificationContainer {
   border: 1px solid var(--vscode-editorMarkerNavigationWarning-background);
   border-radius: 3px;
   padding: 3px 10px 3px 10px;
-  margin-bottom: 20px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -117,7 +115,6 @@
 }
 
 .notificationLink {
-    font-weight: 600;
-    font-size: 14px;
+    font-weight: bold;
     margin-left: 5px;
 }

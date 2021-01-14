@@ -71,7 +71,7 @@ export const ServiceCard = (props: Props) => {
           </button>
           <button
             onClick={openModal}
-            className={classnames(styles.addButton, buttonStyles.buttonHighlighted)}
+            className={buttonStyles.buttonHighlighted}
             tabIndex={0}
           >
             {hasService ? formatMessage(messages.editResource) : formatMessage(messages.addToProject)}

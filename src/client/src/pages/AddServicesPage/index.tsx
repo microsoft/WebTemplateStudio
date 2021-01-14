@@ -23,19 +23,17 @@ const AddServicesPage = ({ intl }: Props) => {
   const serviceGroups = useSelector(getServiceGroups);
 
   return (
-    <div className={styles.centerView}>
-      <div className={classnames(styles.container)}>
-        <div className={styles.logInInfoBar}>
-          <Title>{formatMessage(messages.title)}</Title>
+    <div className={classnames(styles.container)}>
+      <div className={styles.logInInfoBar}>
+        <Title>{formatMessage(messages.title)}</Title>
 
-          <AzureAccount />
-        </div>
-        {!isLoggedIn && <AzureStudent />}
-        <div className={styles.servicesContainer}>
-          {serviceGroups.map((group, key) => {
-            return <ServiceGroup group={group} key={key} />;
-          })}
-        </div>
+        <AzureAccount />
+      </div>
+      {!isLoggedIn && <AzureStudent />}
+      <div className={styles.servicesContainer}>
+        {serviceGroups.map((group, key) => {
+          return <ServiceGroup group={group} key={key} />;
+        })}
       </div>
     </div>
   );

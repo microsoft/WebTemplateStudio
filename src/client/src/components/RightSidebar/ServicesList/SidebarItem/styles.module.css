@@ -66,6 +66,11 @@
   border: none;
 }
 
+.input:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+  outline-offset: 7px;
+}
+
 .pagesTextContainerNoEdit {
   padding-left: 0.8rem;
   padding-top: 0.4rem;

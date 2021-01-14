@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5em;
+  margin-bottom: 1em;
 }
 
 /* scrollable part of the form */
@@ -23,7 +23,6 @@
   float: right;
   padding: 0.6em 3.5em;
   margin: 0.5em 0;
-  font-size: 1.3em;
 }
 
 .button:focus {
