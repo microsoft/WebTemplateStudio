@@ -36,7 +36,7 @@ export default class RequirementsService {
 
   private async getReactNativeRequirements(): Promise<IPlatformRequirement[]> {
     try {
-      if (os.platform() === CLI_SETTINGS.WINDOWS_PLATFORM_VERSION) {
+      if (os.platform() !== CLI_SETTINGS.WINDOWS_PLATFORM_VERSION) {
         return [
           {
             name: MESSAGES.WARNINGS.REACT_NATIVE_REQUIRES_WINDOWS_10,
