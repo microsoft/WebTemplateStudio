@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<SignConfigXML>
-  <job platform="" configuration="release" dest="" jobname="WebTemplateStudio Sign" approvers="crutkas;ralarcon">
-    <file src="__INPATHROOT__\dist\webts-0.0.0-UNTRACKEDVERSION.vsix" signType="100040160" dest="__OUTPATHROOT__\dist\webts-0.0.0-UNTRACKEDVERSION.vsix" />
-  </job>
-</SignConfigXML>
