@@ -1,4 +1,6 @@
-import { CONSTANTS, PLATFORM } from "../../constants/constants";
+import * as vscode from "vscode";
+const opn = require("opn");
+import { CONSTANTS, PLATFORM, WEB_TEMPLATE_STUDIO_LINKS } from "../../constants/constants";
 import NodeChecker from "./validators/nodeValidator";
 import PythonChecker from "./validators/pythonValidator";
 import NetCoreChecker from "./validators/netCoreValidator";
@@ -8,6 +10,7 @@ import util = require("util");
 import { CLI_SETTINGS } from "../../constants/cli";
 import * as os from "os";
 import { MESSAGES } from "../../constants/messages";
+import { Logger } from "../logger";
 
 export default class RequirementsService {
   private exec = util.promisify(require("child_process").exec);
@@ -52,7 +55,9 @@ export default class RequirementsService {
 
       const requirements = this.parsePlatformRequirements(stdout);
       return requirements;
-    } catch (err) {
+    } catch (error) {
+      Logger.appendLog("EXTENSION", "error", MESSAGES.WARNINGS.ERROR_ON_GET_REACT_NATIVE_REQUIREMENTS + error.message);
+      this.showRequirementErrorMessage();
       return [];
     }
   }
@@ -71,5 +76,23 @@ export default class RequirementsService {
       }
     }
     return result;
+  }
+
+  private showRequirementErrorMessage() {
+    const { getReactNativeRequirementsError } = MESSAGES.DIALOG_MESSAGES;
+    const { viewReactNativeDocs, showLog } = MESSAGES.DIALOG_RESPONSES;
+    const { REACT_NATIVE_REQUIREMENTS_DOC } = WEB_TEMPLATE_STUDIO_LINKS;
+
+    vscode.window
+      .showWarningMessage(getReactNativeRequirementsError, ...[viewReactNativeDocs, showLog])
+      .then((result) => {
+        if (result === viewReactNativeDocs) {
+          opn(REACT_NATIVE_REQUIREMENTS_DOC);
+        } else if (result === showLog) {
+          vscode.workspace
+            .openTextDocument(Logger.filename)
+            .then((TextDocument) => vscode.window.showTextDocument(TextDocument));
+        }
+      });
   }
 }

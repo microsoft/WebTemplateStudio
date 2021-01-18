@@ -114,6 +114,10 @@ export const MESSAGES = {
       "warning.reactNativeRequiresWindows10",
       "React Native for Windows requires a Windows 10 device."
     ),
+    ERROR_ON_GET_REACT_NATIVE_REQUIREMENTS: localize(
+      "warning.errorOnGetReactNativeRequirements",
+      "Error on get React Native requirements: "
+    ),
   },
   INFO: {
     COSMOS_ACCOUNT_DEPLOYED: (accountName: string): string => {
@@ -136,6 +140,7 @@ export const MESSAGES = {
     skipForNow: { title: localize("dialog.skipForNow", "Skip for now") },
     reportAnIssue: { title: localize("dialog.reportAnIssue", "Report an issue") },
     showLog: { title: localize("dialog.showLog", "Show log") },
+    viewReactNativeDocs: { title: localize("dialog.viewReactNativeDocs", "View docs") },
   },
   DIALOG_MESSAGES: {
     multiLineError: localize("dialog.multilineError", "An error has occured. Check output window for more details."),
@@ -145,6 +150,7 @@ export const MESSAGES = {
     ),
     resetPagesPrompt: localize("dialog.resetPagesPrompt", "Are you sure you want to reset all the selected pages?"),
     logoutPrompt: localize("dialog.logoutPrompt", "Are you sure you want to sign out of your Azure account?"),
+    getReactNativeRequirementsError: localize("dialog.getReactNativeRequirementsError", "Could not verify React Native Requirements. For more info review the docs."),
   },
   GENERATION: {
     PROJECT_GENERATION_FINISHED: localize(
