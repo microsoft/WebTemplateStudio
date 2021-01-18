@@ -182,10 +182,7 @@ const GenerationModal = ({ intl }: Props) => {
 
         {isGenerationFinished && (
           <button
-            className={classnames({
-              [buttonStyles.buttonDark]: isGenerationTemplatesSuccess,
-              [buttonStyles.buttonHighlighted]: isGenerationTemplatesFailed,
-            })}
+            className={buttonStyles.buttonHighlighted}
             onClick={() => closeModalAndCreateNewProject({ fromCreateNewProjectButton: true })}
           >
             {formatMessage(messages.createNewProject)}
@@ -194,10 +191,7 @@ const GenerationModal = ({ intl }: Props) => {
 
         {!isGenerationTemplatesFailed && (
           <button
-            className={classnames({
-              [buttonStyles.buttonDark]: !isGenerationTemplatesSuccess,
-              [buttonStyles.buttonHighlighted]: isGenerationTemplatesSuccess,
-            })}
+            className={buttonStyles.buttonHighlighted}
             onClick={() => openProjectInVSCode(generationPath, vscode)}
             disabled={!isGenerationTemplatesSuccess}
           >

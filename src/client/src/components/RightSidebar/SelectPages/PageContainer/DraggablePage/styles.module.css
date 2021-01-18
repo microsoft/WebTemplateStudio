@@ -31,7 +31,7 @@
 
 .textContainer,
 .pagesTextContainer {
-  min-height: 38px;
+  height: 2.5em;
   border: none;
   color: var(--vscode-input-foreground);
   display: flex;
@@ -96,7 +96,7 @@
 }
 
 .errorTextContainer {
-  min-height: 38px;
+  min-height: 2.5em;
   background: var(--vscode-inputValidation-errorBackground);
   border: 0.5px solid var(--vscode-inputValidation-errorBorder);
   color: var(--vscode-editor-foreground);

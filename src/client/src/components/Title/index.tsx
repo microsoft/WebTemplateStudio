@@ -1,7 +1,7 @@
 import * as React from "react";
 
 const Title = ({ children }: { children: any }) => {
-  return <h1>{children}</h1>;
+  return <h2>{children}</h2>;
 };
 
 export default Title;

@@ -41,6 +41,23 @@ a:focus {
 }
 
 /* TYPOGRAPHY */
+strong{
+  font-weight: 600;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+}
+
+h2, h3, h4, h5, h6 {
+	font-weight: normal;
+	margin-bottom: 0.2em;
+}
+
 h1 {
   font-size: 2rem;
   font-weight: normal;
@@ -49,8 +66,8 @@ h1 {
 }
 
 h2 {
-  font-weight: normal;
-  /* color: var(--vscode-sideBarTitle-foreground); */
+  font-weight: lighter;
+  color: var(--vscode-sideBarTitle-foreground);
 }
 
 h3 {

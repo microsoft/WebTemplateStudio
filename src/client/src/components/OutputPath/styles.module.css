@@ -26,7 +26,7 @@
   align-items: center;
   padding: 0px 10px;
   opacity: 0.5;
-  min-height: 38px;
+  min-height: 2.5em;
   overflow: auto;
   box-sizing: border-box;
   position: absolute;
@@ -53,7 +53,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-height: 38px;
+  max-height: 2.5em;
   box-sizing: border-box;
   padding: 0.5em;
   width: 100%;
@@ -63,7 +63,6 @@
 .browseButton {
   float: right;
   width: 15%;
-  height: 38px;
   min-width: 70px;
   outline: none !important;
 }

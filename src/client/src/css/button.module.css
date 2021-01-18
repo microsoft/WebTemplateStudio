@@ -8,7 +8,6 @@
 }
 
 .buttonDark {
-  font-weight: bolder;
   background-color: var(--vscode-editor-background);
   color: var(--vscode-button-secondaryForeground);
 }

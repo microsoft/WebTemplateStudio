@@ -32,7 +32,7 @@
 
 .textContainer,
 .pagesTextContainer {
-  min-height: 38px;
+  max-height: 2.5em;
   border: none;
   color: var(--vscode-input-foreground);
   display: flex;

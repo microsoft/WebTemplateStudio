@@ -2,7 +2,6 @@
   box-sizing: border-box;
   padding: 0.5em;
   width: 100%;
-  height: 38px;
   background-color: var(--vscode-editorWidget-border);
   border: none;
   color: var(--vscode-editor-foreground);

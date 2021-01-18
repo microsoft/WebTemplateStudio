@@ -52,7 +52,7 @@ const ProjectOutput = (props: Props) => {
   return (
     <>
       <div className={props.isRightsidebar ? styles.inputContainer : rightsidebarStyles.inputContainer}>
-        <h3>{formatMessage(messages.outputPathTitle)}</h3>
+        <div className={styles.title}>{formatMessage(messages.outputPathTitle)}</div>
         <div>
           <OutputPath
             handleSaveClick={handleSaveClick}

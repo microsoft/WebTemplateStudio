@@ -1,10 +1,6 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
-
-import * as ModalActions from "../../store/navigation/modals/action";
 
 import styles from "./styles.module.css";
-import buttonStyles from "../../css/button.module.css";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import messages from "./messages";
@@ -14,7 +10,6 @@ type Props = InjectedIntlProps;
 
 const ReviewAndGenerate = ({ intl }: Props) => {
   const { formatMessage } = intl;
-  const dispatch = useDispatch();
 
   return (
     <div className={styles.container}>
@@ -22,14 +17,6 @@ const ReviewAndGenerate = ({ intl }: Props) => {
         <div className={styles.selectionContainer}>
           <Title>{formatMessage(messages.launchYourProject)}</Title>
           <p>{formatMessage(messages.almostDone)}</p>
-        </div>
-        <div className={styles.buttonContainer}>
-          <button
-            className={buttonStyles.buttonLink}
-            onClick={() => dispatch(ModalActions.openViewLicensesModalAction())}
-          >
-            {formatMessage(messages.viewLicenses)}
-          </button>
         </div>
       </div>
     </div>

@@ -115,16 +115,14 @@ const RightSidebar = (props: Props) => {
             </div>
 
             <div className={styles.container}>
-              {selectedRoute !== ROUTE.REVIEW_AND_GENERATE && (
-                <div className={styles.buttonContainer}>
-                  <button
-                    className={buttonStyles.buttonLink}
-                    onClick={() => dispatch(ModalActions.openViewLicensesModalAction())}
-                  >
-                    {formatMessage(messages.viewLicenses)}
-                  </button>
-                </div>
-              )}
+              <div className={styles.buttonContainer}>
+                <button
+                  className={buttonStyles.buttonLink}
+                  onClick={() => dispatch(ModalActions.openViewLicensesModalAction())}
+                >
+                  {formatMessage(messages.viewLicenses)}
+                </button>
+              </div>
               {hasRequirements && (
                 <button
                   className={buttonStyles.buttonLink}

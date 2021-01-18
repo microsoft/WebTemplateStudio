@@ -61,7 +61,7 @@ input::placeholder {
 }
 
 .errorMessage {
-  height: 38px;
+  height: 2.5em;
   background: var(--vscode-inputValidation-errorBackground);
   border: 1px solid var(--vscode-inputValidation-errorBorder);
   display: flex;

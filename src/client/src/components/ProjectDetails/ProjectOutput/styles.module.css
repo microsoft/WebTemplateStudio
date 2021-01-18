@@ -1,7 +1,6 @@
-.inputTitle {
-  line-height: 2em;
+.title {
   font-weight: 600;
-  margin-bottom: 3px;
+  margin-bottom: 0.5em;
 }
 
 .inputContainer {
