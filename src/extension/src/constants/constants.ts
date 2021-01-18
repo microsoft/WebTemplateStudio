@@ -112,3 +112,7 @@ export const VSCODE_TASKS = {
   INSTALL_DEPENDENCIES: "Install dependencies",
   PUBLISH: "Publish",
 };
+
+export const WEB_TEMPLATE_STUDIO_LINKS = {
+  REACT_NATIVE_REQUIREMENTS_DOC: "https://microsoft.github.io/react-native-windows/docs/rnw-dependencies",
+};
