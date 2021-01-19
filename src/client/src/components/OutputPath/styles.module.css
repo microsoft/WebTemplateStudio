@@ -55,7 +55,6 @@
   align-items: center;
   max-height: 2.5em;
   box-sizing: border-box;
-  padding: 0.5em;
   width: 100%;
   background-color: var(--vscode-editorWidget-border);
 }
