@@ -22,7 +22,7 @@
 .iconCheck {
   margin-top: 3px;
   margin-left: 1em;
-  height: 18px;
+  height: 1em;
 }
 
 .iconCheck path {
@@ -32,8 +32,8 @@
 .iconError {
   margin-top: 3px;
   margin-left: 1em;
-  height: 18px;
-  width: 18px;
+  height: 1em;
+  width: 1em;
 }
 
 .iconError path {

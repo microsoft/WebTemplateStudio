@@ -81,9 +81,9 @@
 }
 
 .iconCheckMark {
-  margin-left: 8px;
-  height: 18px;
-  width: 18px;
+  margin-left: .5em;
+  height: 1em;
+  width: 1em;
   align-self: center;
 }
 

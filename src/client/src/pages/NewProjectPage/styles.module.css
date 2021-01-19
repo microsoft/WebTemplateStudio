@@ -12,6 +12,7 @@
 
 .projectDetailsContainer {
   width: 80%;
+  max-width: 530px;
 }
 
 .newProjectInfo {

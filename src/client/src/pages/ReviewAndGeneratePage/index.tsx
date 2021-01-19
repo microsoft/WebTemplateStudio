@@ -13,7 +13,7 @@ const ReviewAndGenerate = ({ intl }: Props) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.reviewContextContainer}>
+      <div>
         <div className={styles.selectionContainer}>
           <Title>{formatMessage(messages.launchYourProject)}</Title>
           <p>{formatMessage(messages.almostDone)}</p>

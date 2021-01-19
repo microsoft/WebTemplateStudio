@@ -33,7 +33,6 @@
 
 @media (max-width: 560px) {
   .rightViewCropped {
-    position: fixed;
     width: 100%;
   }
 }
@@ -73,8 +72,9 @@
 
 .icon {
   cursor: pointer;
-  height: 15px;
-  width: 15px;
+  height: 1em;
+  width: 1em;
+  margin-bottom: 0.4em;
 }
 
 .icon path {

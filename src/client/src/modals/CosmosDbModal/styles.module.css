@@ -21,8 +21,6 @@
 
 .button {
   float: right;
-  padding: 0.6em 3.5em;
-  margin: 0.5em 0;
 }
 
 .button:focus {

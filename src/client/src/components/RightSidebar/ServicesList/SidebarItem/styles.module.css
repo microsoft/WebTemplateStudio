@@ -7,13 +7,13 @@
 .iconContainer {
   display: flex;
   align-items: center;
-  width: 20px;
+  width: 1em;
   padding-top: 8px;
 }
 
 .reorderIcon {
-  height: 18px;
-  width: 18px;
+  height: 1em;
+  width: 1em;
   cursor: grab;
 }
 

@@ -24,6 +24,10 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
+.viewIcon {
+  width: 1em;
+}
+
 .viewIcon path {
   fill: var(--vscode-editor-foreground);
 }

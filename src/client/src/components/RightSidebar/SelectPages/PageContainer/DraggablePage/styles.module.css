@@ -7,13 +7,13 @@
 .iconContainer {
   display: flex;
   align-items: center;
-  width: 20px;
+  width: 1em;
   padding-top: 8px;
 }
 
 .reorderIcon {
-  height: 18px;
-  width: 18px;
+  height: 1em;
+  width: 1em;
   cursor: grab;
 }
 
@@ -58,8 +58,8 @@
 
 .icon {
   margin-right: 0px;
-  height: 25px;
-  width: 25px;
+  height: 2em;
+  width: 2em;
 }
 
 .input {
@@ -77,13 +77,12 @@
 }
 
 .cancelIcon {
-  height: 15px;
-  width: 15px;
-  margin-left: 8px;
-  margin-top: 13px;
-  padding-top: 2px;
+  height: 1em;
+  width: 1em;
+  margin-left: .8px;
+  margin-top: .8em;
   padding-bottom: 2px;
-  padding-left: 1px;
+  padding-left: 1em;
   padding-right: 1px;
 }
 
