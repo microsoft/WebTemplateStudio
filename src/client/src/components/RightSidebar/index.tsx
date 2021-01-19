@@ -23,7 +23,7 @@ import styles from "./styles.module.css";
 import buttonStyles from "../../css/button.module.css";
 import SelectProjectTypes from "./SelectProjectTypes";
 
-import Title from "../Title";
+import Title from "../Titles/Title";
 
 import {
   hasInvalidPlatformRequirementsSelector,

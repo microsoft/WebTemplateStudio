@@ -16,6 +16,7 @@ import styles from "./styles.module.css";
 
 import { ReactComponent as ShowIconSVG } from "../../../assets/i-show.svg";
 import { ReactComponent as HideIconSVG } from "../../../assets/i-hide.svg";
+import InputTitle from "../../Titles/TitleForInput";
 
 interface IStateProps {
   pathname: string;
@@ -40,9 +41,9 @@ const SelectPages = (props: Props) => {
   return (
     <div className={styles.sortablePages}>
       <div className={classnames(styles.pageListContainer)}>
-        <h3>
+        <InputTitle>
           {`${props.intl!.formatMessage(messages.pages)} (${selectedPages.length >= 0 ? selectedPages.length : ""})`}
-        </h3>
+        </InputTitle>
         <div className={styles.iconsContainer}>
           <button
             className={styles.hideOrShow}

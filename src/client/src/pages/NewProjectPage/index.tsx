@@ -9,7 +9,7 @@ import messagesWeb from "./messagesWeb";
 import messagesReactNative from "./messagesReactNative";
 import { PLATFORM } from "../../utils/constants/constants";
 
-import Title from "../../components/Title";
+import Title from "../../components/Titles/Title";
 
 import { getPlatformSelector } from "../../store/config/platform/selector";
 

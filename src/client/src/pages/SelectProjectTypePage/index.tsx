@@ -8,7 +8,7 @@ import pageStyles from "../pageStyles.module.css";
 
 import ProjectTypeCard from "./ProjectTypeCard";
 import messages from "./messages";
-import Title from "../../components/Title";
+import Title from "../../components/Titles/Title";
 
 type Props = IStoreProps & InjectedIntlProps;
 

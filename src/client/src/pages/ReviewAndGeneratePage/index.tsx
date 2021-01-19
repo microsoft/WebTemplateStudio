@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import messages from "./messages";
-import Title from "../../components/Title";
+import Title from "../../components/Titles/Title";
 
 type Props = InjectedIntlProps;
 

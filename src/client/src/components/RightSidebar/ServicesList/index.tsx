@@ -11,6 +11,7 @@ import AppServiceSelection from "./AppServiceSelection";
 
 import messages from "./messages";
 import styles from "./styles.module.css";
+import InputTitle from "../../Titles/TitleForInput";
 
 interface IProps {
   services: ServiceState;
@@ -25,7 +26,7 @@ function ServicesList({ services, intl }: Props) {
 
   return (
     <div className={styles.servicesSection}>
-      <h3>{formatMessage(messages.services)}</h3>
+      <InputTitle>{formatMessage(messages.services)}</InputTitle>
       {hasAppService && <AppServiceSelection appServiceSelection={services.appService} />}
       {hasCosmos && <CosmosDBSelection cosmosSelection={services.cosmosDB} />}
     </div>

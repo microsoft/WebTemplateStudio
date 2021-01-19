@@ -18,7 +18,7 @@ import { ReactComponent as TimeSVG } from "../../../assets/timer.svg";
 import buttonStyles from "../../../css/button.module.css";
 import styles from "./styles.module.css";
 import messages from "./messages";
-import classnames from "classnames";
+import InputTitle from "../../../components/Titles/TitleForInput";
 
 interface IProps {
   service: IService;
@@ -48,7 +48,7 @@ export const ServiceCard = (props: Props) => {
       <div className={styles.cardContainer}>
         <div className={styles.header}>
           <Icon name={service.title} icon={service.icon} />
-          <h3>{service.title}</h3>
+          <InputTitle>{service.title}</InputTitle>
         </div>
         <div className={styles.body}>
           {service.expectedPrice && (

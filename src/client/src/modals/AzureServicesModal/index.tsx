@@ -20,7 +20,7 @@ import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 
 import CollapsibleInfoBox from "../../components/CollapsibleInfoBox";
 import AzureAccount from "../../pages/AddServicesPage/AzureAccount";
-import Title from "../../components/Title";
+import ModalTitle from "../../components/Titles/TitleForModal";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -58,7 +58,7 @@ const AzureServicesModal = (props: Props) => {
   return (
     <div>
       <div className={styles.headerContainer}>
-        <Title>{formatMessage(messages.getStartedWithAzure)}</Title>
+        <ModalTitle>{formatMessage(messages.getStartedWithAzure)}</ModalTitle>
         <Cancel
           tabIndex={0}
           className={styles.cancelIcon}

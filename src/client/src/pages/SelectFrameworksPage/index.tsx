@@ -6,7 +6,7 @@ import { AppState } from "../../store/combineReducers";
 
 import messages from "./messages";
 import pageStyles from "../pageStyles.module.css";
-import Title from "../../components/Title";
+import Title from "../../components/Titles/Title";
 
 type Props = InjectedIntlProps;
 

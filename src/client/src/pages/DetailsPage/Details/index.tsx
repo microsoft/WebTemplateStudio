@@ -11,7 +11,7 @@ import { ILicenseObject, License } from "../../../types/license";
 import { injectIntl, InjectedIntl, FormattedMessage } from "react-intl";
 import messages from "./messages";
 import Icon from "../../../components/Icon";
-import Title from "../../../components/Title";
+import Title from "../../../components/Titles/Title";
 
 interface IProps {
   detailInfo: IOption;

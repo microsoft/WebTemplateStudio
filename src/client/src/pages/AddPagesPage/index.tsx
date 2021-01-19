@@ -11,7 +11,7 @@ import { mapStateToProps } from "./store";
 
 import pageStyles from "../pageStyles.module.css";
 import styles from "./styles.module.css";
-import Title from "../../components/Title";
+import Title from "../../components/Titles/Title";
 
 type Props = IStoreProps & IIntlProps & IProps;
 

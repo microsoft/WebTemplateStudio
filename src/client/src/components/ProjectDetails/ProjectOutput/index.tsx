@@ -15,6 +15,7 @@ import { AppContext } from "../../../AppContext";
 import styles from "./styles.module.css";
 import messages from "./messages";
 import rightsidebarStyles from "../../RightSidebar/rightsidebarStyles.module.css";
+import InputTitle from "../../Titles/TitleForInput";
 
 interface IProps {
   isRightsidebar?: boolean;
@@ -52,7 +53,7 @@ const ProjectOutput = (props: Props) => {
   return (
     <>
       <div className={props.isRightsidebar ? styles.inputContainer : rightsidebarStyles.inputContainer}>
-        <div className={styles.title}>{formatMessage(messages.outputPathTitle)}</div>
+        <InputTitle>{formatMessage(messages.outputPathTitle)}</InputTitle>
         <div>
           <OutputPath
             handleSaveClick={handleSaveClick}

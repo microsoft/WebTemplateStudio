@@ -1,5 +1,4 @@
 import * as React from "react";
-import classnames from "classnames";
 import styles from "./styles.module.css";
 
 import { useSelector } from "react-redux";
@@ -12,7 +11,7 @@ import messages from "./messages";
 import ServiceGroup from "./ServiceGroup";
 import AzureStudent from "./AzureStudent";
 import AzureAccount from "./AzureAccount";
-import Title from "../../components/Title";
+import Title from "../../components/Titles/Title";
 
 type Props = InjectedIntlProps;
 
@@ -23,7 +22,7 @@ const AddServicesPage = ({ intl }: Props) => {
   const serviceGroups = useSelector(getServiceGroups);
 
   return (
-    <div className={classnames(styles.container)}>
+    <div className={styles.container}>
       <div className={styles.logInInfoBar}>
         <Title>{formatMessage(messages.title)}</Title>
 

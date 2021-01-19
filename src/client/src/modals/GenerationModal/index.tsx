@@ -26,7 +26,7 @@ import GenerationItem from "./GenerationItem";
 import { Subject, forkJoin } from "rxjs";
 import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
 import { AZURE_LINKS } from "../../utils/constants/azure";
-import Title from "../../components/Title";
+import ModalTitle from "../../components/Titles/TitleForModal";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -146,7 +146,7 @@ const GenerationModal = ({ intl }: Props) => {
   return (
     <div>
       <div className={styles.header}>
-        <Title>{formatMessage(messages.creatingYourProject)}</Title>
+        <ModalTitle>{formatMessage(messages.creatingYourProject)}</ModalTitle>
         {isGenerationFinished && (
           <Close
             tabIndex={0}
