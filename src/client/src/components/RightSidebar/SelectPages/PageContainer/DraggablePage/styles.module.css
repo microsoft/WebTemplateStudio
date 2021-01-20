@@ -17,12 +17,6 @@
   cursor: grab;
 }
 
-.cancelIcon path,
-.icon path,
-.reorderIcon path {
-  fill: var(--vscode-editor-foreground);
-}
-
 .errorStack {
   width: 100%;
   display: block;
@@ -31,6 +25,7 @@
 
 .textContainer,
 .pagesTextContainer {
+  margin-left: 0.9em;
   height: 2.5em;
   border: none;
   color: var(--vscode-input-foreground);
@@ -40,9 +35,14 @@
   padding: 0px 0.9em;
 }
 
+.cancelIcon path,
+.icon path,
+.reorderIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
 .pagesTextContainer {
   background: var(--vscode-editorWidget-border);
-  margin-left: 0.9em;
 }
 
 .largeIndentContainer {
@@ -56,12 +56,6 @@
   width: 100%;
 }
 
-.icon {
-  margin-right: 0px;
-  height: 2em;
-  width: 2em;
-}
-
 .input {
   padding-left: 0.5em;
   width: 100%;
@@ -72,26 +66,8 @@
   border: none;
 }
 
-.marginLeft10{
+.marginLeft10 {
   margin-left: 0.7rem;
-}
-
-.cancelIcon {
-  height: 1em;
-  width: 1em;
-  margin-left: .8px;
-  margin-top: .8em;
-  padding-bottom: 2px;
-  padding-left: 1em;
-  padding-right: 1px;
-}
-
-.cancelIcon:hover {
-  cursor: pointer;
-}
-
-.cancelIcon:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .errorTextContainer {
@@ -108,4 +84,22 @@
   position: absolute;
   width: calc(100 - 8px);
   z-index: 1;
+}
+
+.cancelIcon {
+  height: 1em;
+  width: 1em;
+  margin-left: 0.8px;
+  margin-top: 0.8em;
+  padding-bottom: 2px;
+  padding-left: 1em;
+  padding-right: 1px;
+}
+
+.cancelIcon:hover {
+  cursor: pointer;
+}
+
+.cancelIcon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }

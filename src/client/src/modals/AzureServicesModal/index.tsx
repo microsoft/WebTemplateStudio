@@ -85,11 +85,11 @@ const AzureServicesModal = (props: Props) => {
           question={formatMessage(messages.freeTrialUpgradeQuestion)}
           answer={formatMessage(messages.freeTrialUpgradeAnswer)}
         />
-        <div className={styles.paragraph}>
+        <p>
           <a href={AZURE_LINKS.CREATE_FREE_ACCOUNT_FAQ} onKeyUp={keyUpHandler}>
             {formatMessage(messages.azureReadMore)}
           </a>
-        </div>
+        </p>
       </div>
       <div className={styles.footerContainer}>
         <AzureAccount />

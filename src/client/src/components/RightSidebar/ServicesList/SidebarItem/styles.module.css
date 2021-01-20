@@ -1,7 +1,7 @@
 .draggablePage {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 10px;
+  margin-bottom: 1em;
 }
 
 .iconContainer {
@@ -11,23 +11,15 @@
   padding-top: 8px;
 }
 
-.reorderIcon {
-  height: 1em;
-  width: 1em;
-  cursor: grab;
-}
-
-.editIcon,
-.cancelIcon path,
-.icon path,
-.reorderIcon path {
-  fill: var(--vscode-editor-foreground);
-}
-
 .errorStack {
   width: 100%;
   display: block;
   position: relative;
+}
+
+.pagesTextContainer {
+  background: var(--vscode-editorWidget-border);
+  margin-left: 10px;
 }
 
 .textContainer,
@@ -38,12 +30,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 10px;
-}
-
-.pagesTextContainer {
-  background: var(--vscode-editorWidget-border);
-  margin-left: 10px;
+  padding: 0px 0.9em;
 }
 
 .inputContainer {
@@ -72,13 +59,18 @@
 }
 
 .pagesTextContainerNoEdit {
-  padding-left: 0.8rem;
-  padding-top: 0.4rem;
+  padding: 0px 0.9em;
 }
 
-.editIcon, .cancelIcon {
-  height: 15px;
-  width: 15px;
+.editIcon,
+.cancelIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.editIcon,
+.cancelIcon {
+  height: 1em;
+  width: 1em;
   margin-left: 8px;
   margin-top: 0.6rem;
   padding-top: 2px;
@@ -87,10 +79,12 @@
   padding-right: 1px;
 }
 
-.editIcon:hover, .cancelIcon:hover {
+.editIcon:hover,
+.cancelIcon:hover {
   cursor: pointer;
 }
 
-.editIcon:focus, .cancelIcon:focus {
+.editIcon:focus,
+.cancelIcon:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }

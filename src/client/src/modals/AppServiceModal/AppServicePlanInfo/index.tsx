@@ -9,6 +9,7 @@ import { AZURE_LINKS } from "../../../utils/constants/azure";
 import { AppState } from "../../../store/combineReducers";
 import { useSelector } from "react-redux";
 import { getSubscriptionsSelector } from "../../../store/config/azure/selector";
+import classNames from "classnames";
 
 interface IProps {
   subscription: string;
@@ -29,12 +30,16 @@ const AppServicePlanInfo = (props: Props) => {
   return (
     <div className={styles.container}>
       <div className={modalStyles.title}>{formatMessage(messages.title)}</div>
-      <div className={modalStyles.subtitle}>
+      <div className={classNames(modalStyles.subtitle, styles.subtitle)}>
         {isMicrosoftLearnSubscription()
           ? formatMessage(messages.freeTierMessage)
           : formatMessage(messages.basicTierMessage)}
       </div>
-      <a className={modalStyles.subtitle} target={"_blank"} rel="noreferrer noopener" href={AZURE_LINKS.APP_SERVICE_PLAN}>
+      <a
+        target={"_blank"}
+        rel="noreferrer noopener"
+        href={AZURE_LINKS.APP_SERVICE_PLAN}
+      >
         {formatMessage(messages.learnMore)}
       </a>
     </div>

@@ -69,20 +69,19 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
 
   return (
     <>
-      <div className={styles.backContainer}>
-        <div
-          role="button"
-          tabIndex={0}
-          onClick={handleBackClick}
-          onKeyDown={keyDownHandler}
-          className={styles.innerBackContainer}
-        >
-          {backArrow && <BackArrow className={styles.backIcon} />}
-          <div className={styles.details}>{intl!.formatMessage(messages.back)}</div>
-        </div>
-      </div>
-
       <div className={styles.container}>
+        <div className={styles.backContainer}>
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={handleBackClick}
+            onKeyDown={keyDownHandler}
+            className={styles.innerBackContainer}
+          >
+            {backArrow && <BackArrow className={styles.backIcon} />}
+            <div className={styles.details}>{intl!.formatMessage(messages.back)}</div>
+          </div>
+        </div>
         <div className={styles.headerContainer}>
           {detailInfo.title && <Icon name={detailInfo.title.toString()} icon={detailInfo.icon} />}
           <Title>{renderFormattedData(detailInfo.title, false)}</Title>

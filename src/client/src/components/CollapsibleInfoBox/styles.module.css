@@ -1,19 +1,25 @@
+.questionTitle {
+  font-size: 1em;
+  font-weight: 600;
+  margin-top: 2em;
+  cursor: pointer;
+}
 
-  /*
-  QUESTION
-  margin-top: 35px;
-  */
+.questionTitle:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
 
 .question {
   line-height: 1.75em;
+  margin-bottom: 2em;
   padding-top: 5px;
 }
 
 .toggleIcon {
-  cursor: pointer;
-  height: 13px;
-  width: 13px;
-  margin-left: 6px;
+  height: 1em;
+  width: 1em;
+  margin-left: 0.5em;
+  vertical-align: middle;
 }
 
 .toggleIcon path {

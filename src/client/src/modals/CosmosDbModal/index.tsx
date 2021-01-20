@@ -109,7 +109,7 @@ const CosmosModal = ({ intl }: Props) => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <div className={styles.header}>
         <ModalTitle>{formatMessage(messages.title)}</ModalTitle>
         <Cancel
@@ -159,7 +159,7 @@ const CosmosModal = ({ intl }: Props) => {
           {formatMessage(messages.save)}
         </button>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

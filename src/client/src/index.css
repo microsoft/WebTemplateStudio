@@ -41,7 +41,7 @@ a:focus {
 }
 
 /* TYPOGRAPHY */
-strong{
+strong {
   font-weight: 600;
 }
 
@@ -53,9 +53,13 @@ h6 {
   margin-top: 0;
 }
 
-h2, h3, h4, h5, h6 {
-	font-weight: normal;
-	margin-bottom: 0.4em;
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+  margin-bottom: 0.6em;
 }
 
 h1 {

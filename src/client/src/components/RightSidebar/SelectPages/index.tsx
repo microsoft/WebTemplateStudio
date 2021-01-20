@@ -37,12 +37,15 @@ const SelectPages = (props: Props) => {
     dispatch(setPagesAction(arrayMove(selectedPages, oldIndex, newIndex)));
   };
   const DRAG_PIXEL_THRESHOLD = 1;
+  const MAX_PAGES_ALLOWED = 20;
 
   return (
     <div className={styles.sortablePages}>
       <div className={classnames(styles.pageListContainer)}>
         <InputTitle>
-          {`${props.intl!.formatMessage(messages.pages)} (${selectedPages.length >= 0 ? selectedPages.length : ""})`}
+          {`${props.intl!.formatMessage(messages.pages)} (${
+            selectedPages.length >= 0 ? selectedPages.length : ""
+          }/${MAX_PAGES_ALLOWED})`}
         </InputTitle>
         <div className={styles.iconsContainer}>
           <button

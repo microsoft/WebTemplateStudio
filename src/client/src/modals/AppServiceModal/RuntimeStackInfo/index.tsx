@@ -15,7 +15,7 @@ const RuntimeStackInfo = ({ intl }: InjectedIntlProps) => {
   return (
     <div className={styles.container}>
       <div className={modalStyles.title}>{formatMessage(messages.title)}</div>
-      {formatMessage(messages.runtimeStack, { runtimeStack })}
+      <div className={modalStyles.subtitle}>{formatMessage(messages.runtimeStack, { runtimeStack })}</div>
     </div>
   );
 };

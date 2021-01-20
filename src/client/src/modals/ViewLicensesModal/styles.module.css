@@ -1,14 +1,6 @@
-ul{
+ul {
   list-style-type: none;
   padding-inline-start: 0;
-}
-
-.footerContainer {
-  margin-left: 15px;
-  margin-top: 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: right;
 }
 
 .headerContainer {
@@ -17,14 +9,10 @@ ul{
   align-items: center;
 }
 
-.button:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
 .cancelIcon {
   cursor: pointer;
-  height: 15px;
-  width: 15px;
+  height: 1em;
+  width: 1em;
   padding: 1px;
   margin-right: 2px;
 }
@@ -35,12 +23,4 @@ ul{
 
 .cancelIcon:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
-.cancelIcon path {
-  fill: var(--vscode-editor-foreground);
-}
-
-.cancelIcon path {
-  fill: var(--vscode-editor-foreground);
 }

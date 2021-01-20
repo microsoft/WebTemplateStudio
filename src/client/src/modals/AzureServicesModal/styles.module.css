@@ -6,8 +6,8 @@
 
 .cancelIcon {
   cursor: pointer;
-  height: 15px;
-  width: 15px;
+  height: 1em;
+  width: 1em;
   padding: 1px;
   margin-right: 2px;
 }
@@ -20,12 +20,8 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
-.paragraph {
-  margin-top: 15px;
-}
-
 .footerContainer {
-  margin-top: 60px;
+  margin-top: 2em;
   float: right;
   align-items: center;
   display: flex;

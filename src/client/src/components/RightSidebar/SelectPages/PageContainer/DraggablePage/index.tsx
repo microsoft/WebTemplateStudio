@@ -117,7 +117,7 @@ const DraggablePage = ({
             {page && page.editable && idx && (
               <input
                 aria-label={intl.formatMessage(messages.changeItemName)}
-                className={classnames(styles.input)}
+                className={styles.input}
                 maxLength={maxInputLength}
                 value={namePage}
                 onChange={(e) => {

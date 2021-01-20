@@ -20,7 +20,7 @@ const CollapsibleInfoBox = ({ question, answer, initialAnswerShownState = false 
     setAnswerShown(!isAnswerShown);
   };
 
-  const keyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
+  const keyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       event.preventDefault();
       event.stopPropagation();
@@ -30,14 +30,16 @@ const CollapsibleInfoBox = ({ question, answer, initialAnswerShownState = false 
 
   return (
     <div>
-      <h2>
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={toggleAnswerShown}
+        onKeyDown={keyDownHandler}
+        className={styles.questionTitle}
+      >
         {question}
-        {isAnswerShown ? (
-          <Up tabIndex={0} className={styles.toggleIcon} onClick={toggleAnswerShown} onKeyDown={keyDownHandler} />
-        ) : (
-          <Down tabIndex={0} className={styles.toggleIcon} onClick={toggleAnswerShown} onKeyDown={keyDownHandler} />
-        )}
-      </h2>
+        {isAnswerShown ? <Up className={styles.toggleIcon} /> : <Down className={styles.toggleIcon} />}
+      </div>
 
       {isAnswerShown && <div className={styles.question}>{answer}</div>}
     </div>

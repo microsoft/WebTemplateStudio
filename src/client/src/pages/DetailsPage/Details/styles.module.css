@@ -14,13 +14,14 @@
 }
 
 .container {
-  margin: 48px;
+  margin-top: 3rem;
   max-width: 65%;
+  margin-left: 2.2em;
 }
 
 .backContainer {
   display: flex;
-  margin-bottom: 1em;
+  margin-bottom: 2em;
 }
 
 .innerBackContainer {
@@ -38,10 +39,7 @@
 .detailsContainer {
   display: flex;
   margin-bottom: 1em;
-}
-
-.headerContainer {
-  align-items: center;
+  margin-right: 1em;
 }
 
 .licenseCategory {
