@@ -99,7 +99,7 @@ describe("GenerationModal", () => {
       const openProjectButton = getByText(intl.formatMessage(messages.openProject));
       expect(openProjectButton).toBeInTheDocument();
       expect(openProjectButton).toBeDisabled();
-      expect(openProjectButton).toHaveClass(buttonStyles.buttonDark);
+      expect(openProjectButton).toHaveClass(buttonStyles.buttonHighlighted);
     });
 
     it("when received item message, message should be visible", async () => {
