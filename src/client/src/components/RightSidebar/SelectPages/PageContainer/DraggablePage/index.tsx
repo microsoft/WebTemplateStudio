@@ -15,7 +15,7 @@ import messages from "./messages";
 import classnames from "classnames";
 import styles from "./styles.module.css";
 
-import { ReactComponent as ReorderIcon } from "../../../../../assets/reorder.svg";
+import { ReactComponent as ReorderIconSVG } from "../../../../../assets/reorder.svg";
 import { ReactComponent as CloseSVG } from "../../../../../assets/cancel.svg";
 import Icon from "../../../../Icon";
 
@@ -49,6 +49,8 @@ const DraggablePage = ({
   const dispatch = useDispatch();
   const [validValue, setValidValue] = useState<string>(page ? page.title : "");
   const inputRef = createRef<HTMLInputElement>();
+
+  const { formatMessage } = intl;
 
   useEffect(() => {
     setNamePage(page.title);
@@ -101,7 +103,11 @@ const DraggablePage = ({
   return (
     <div className={styles.draggablePage}>
       <div className={styles.iconContainer}>
-        <ReorderIcon className={styles.reorderIcon} />
+        <ReorderIconSVG
+          className={styles.reorderIcon}
+          title={formatMessage(messages.reorderItem)}
+          aria-label={formatMessage(messages.reorderItem)}
+        />
       </div>
       <div className={styles.errorStack}>
         <div
@@ -116,7 +122,7 @@ const DraggablePage = ({
 
             {page && page.editable && idx && (
               <input
-                aria-label={intl.formatMessage(messages.changeItemName)}
+                aria-label={formatMessage(messages.changeItemName)}
                 className={styles.input}
                 maxLength={maxInputLength}
                 value={namePage}
@@ -159,7 +165,7 @@ const DraggablePage = ({
               [styles.largeIndentContainer]: false,
             })}
           >
-            {intl.formatMessage(page.error)}
+            {formatMessage(page.error)}
           </div>
         )}
       </div>
@@ -169,7 +175,8 @@ const DraggablePage = ({
           onClick={deletePage}
           onKeyDown={deletePageOnKeyDown}
           className={styles.cancelIcon}
-          aria-label={intl.formatMessage(messages.deleteItem)}
+          title={formatMessage(messages.deleteItem)}
+          aria-label={formatMessage(messages.deleteItem)}
         />
       )}
     </div>

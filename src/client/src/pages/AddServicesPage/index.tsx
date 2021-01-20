@@ -1,5 +1,4 @@
 import * as React from "react";
-import styles from "./styles.module.css";
 
 import { useSelector } from "react-redux";
 import { InjectedIntlProps, injectIntl } from "react-intl";
@@ -12,6 +11,9 @@ import ServiceGroup from "./ServiceGroup";
 import AzureStudent from "./AzureStudent";
 import AzureAccount from "./AzureAccount";
 import Title from "../../components/Titles/Title";
+
+import styles from "./styles.module.css";
+import pageStyles from "../pageStyles.module.css";
 
 type Props = InjectedIntlProps;
 
@@ -29,7 +31,7 @@ const AddServicesPage = ({ intl }: Props) => {
         <AzureAccount />
       </div>
       {!isLoggedIn && <AzureStudent />}
-      <div className={styles.servicesContainer}>
+      <div className={pageStyles.flexContainer}>
         {serviceGroups.map((group, key) => {
           return <ServiceGroup group={group} key={key} />;
         })}

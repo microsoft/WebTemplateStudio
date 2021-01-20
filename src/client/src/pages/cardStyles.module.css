@@ -47,7 +47,6 @@
 }
 
 .description {
-  line-height: 1.5;
   flex: 1; /* fill remaining space */
 }
 /*
@@ -72,7 +71,6 @@
 
 .version {
   margin-top: 0.5rem;
-  line-height: 1.5;
 }
 
 .DependencyInfo {
@@ -81,7 +79,7 @@
 }
 
 .iconCheckMark {
-  margin-left: .5em;
+  margin-left: 0.5em;
   height: 1em;
   width: 1em;
   align-self: center;

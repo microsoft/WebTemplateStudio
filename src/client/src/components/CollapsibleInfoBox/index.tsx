@@ -1,9 +1,13 @@
 import * as React from "react";
-import { ReactComponent as Down } from "../../assets/i-collapsibleDown.svg";
-import { ReactComponent as Up } from "../../assets/i-collapsibleUp.svg";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+
+import { ReactComponent as DownSVG } from "../../assets/i-collapsibleDown.svg";
+import { ReactComponent as UpSVG } from "../../assets/i-collapsibleUp.svg";
+
+import { KEY_EVENTS } from "../../utils/constants/constants";
 
 import styles from "./styles.module.css";
-import { KEY_EVENTS } from "../../utils/constants/constants";
+import messages from "./messages";
 
 interface IProps {
   question: string;
@@ -11,9 +15,11 @@ interface IProps {
   initialAnswerShownState?: boolean;
 }
 
-type Props = IProps;
+type Props = IProps & InjectedIntlProps;
 
-const CollapsibleInfoBox = ({ question, answer, initialAnswerShownState = false }: Props) => {
+const CollapsibleInfoBox = ({ question, answer, initialAnswerShownState = false, intl }: Props) => {
+  const { formatMessage } = intl;
+
   const [isAnswerShown, setAnswerShown] = React.useState(initialAnswerShownState);
 
   const toggleAnswerShown = () => {
@@ -38,7 +44,19 @@ const CollapsibleInfoBox = ({ question, answer, initialAnswerShownState = false 
         className={styles.questionTitle}
       >
         {question}
-        {isAnswerShown ? <Up className={styles.toggleIcon} /> : <Down className={styles.toggleIcon} />}
+        {isAnswerShown ? (
+          <UpSVG
+            className={styles.toggleIcon}
+            title={formatMessage(messages.up)}
+            aria-label={formatMessage(messages.up)}
+          />
+        ) : (
+          <DownSVG
+            className={styles.toggleIcon}
+            title={formatMessage(messages.down)}
+            aria-label={formatMessage(messages.down)}
+          />
+        )}
       </div>
 
       {isAnswerShown && <div className={styles.question}>{answer}</div>}
@@ -46,4 +64,4 @@ const CollapsibleInfoBox = ({ question, answer, initialAnswerShownState = false 
   );
 };
 
-export default CollapsibleInfoBox;
+export default injectIntl(CollapsibleInfoBox);

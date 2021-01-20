@@ -11,8 +11,7 @@
   align-items: center;
   width: 100%;
   outline: none;
-  padding: 9px;
-  font-size: 1.2em;
+  padding: 0.5em;
   box-sizing: border-box;
   background: var(--vscode-editorWidget-border);
   border: none;
@@ -25,7 +24,6 @@
   color: var(--vscode-editor-foreground);
   width: 100%;
   margin-right: 10px;
-  padding: 2px 8px;
 }
 
 input:focus {
