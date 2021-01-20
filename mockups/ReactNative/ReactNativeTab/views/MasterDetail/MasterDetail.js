@@ -1,12 +1,20 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import sampleData from "../../data/sampleData";
-import MasterList from "./MasterList";
+import MasterListItem from "./MasterListItem";
 
-function MasterDetail() {
+function MasterDetail({ navigation }) {
+  const handleOnPress = (item) => {
+    navigation.navigate("MasterDetailItemDetail", { item });
+  };
+
   return (
     <View style={styles.container}>
-      <MasterList data={sampleData.textAssets}></MasterList>
+      <FlatList
+        data={sampleData.textAssets}
+        renderItem={({ item }) => <MasterListItem item={item} onPress={() => handleOnPress(item)} />}
+        keyExtractor={(item) => item.id}
+      />
     </View>
   );
 }

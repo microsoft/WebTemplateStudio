@@ -1,13 +1,15 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 
-function MasterListItem({ item }) {
+function MasterListItem({ item, onPress }) {
   const { title } = item;
 
   return (
-    <View style={styles.container}>
-      <Text>{title}</Text>
-    </View>
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.container}>
+        <Text>{title}</Text>
+      </View>
+    </TouchableOpacity>
   );
 }
 

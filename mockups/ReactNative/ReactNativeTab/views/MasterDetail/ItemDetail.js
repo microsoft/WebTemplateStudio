@@ -1,14 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 
-export class ItemDetail extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Item Detail</Text>
-      </View>
-    );
-  }
+function ItemDetail(props) {
+  const { item } = props.route.params;
+  return (
+    <View style={styles.container}>
+      <Text>Item Detail: {item.title}</Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -18,3 +17,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+export default ItemDetail;
