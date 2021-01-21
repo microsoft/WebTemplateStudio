@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Blank } from "./views/Blank";
 import { Home } from "./views/Home";
 import MasterDetail from "./views/MasterDetail/MasterDetail";
-import ItemDetail from "./views/MasterDetail/ItemDetail";
+import ItemDetailScreen from "./views/MasterDetail/ItemDetailScreen";
 
 // https://reactnavigation.org/docs/params
 const Tab = createBottomTabNavigator();
@@ -16,7 +16,7 @@ const MasterDetailStackScreen = () => {
   return (
     <MasterDetailStack.Navigator>
       <MasterDetailStack.Screen name="MasterDetailMaster" component={MasterDetail} />
-      <MasterDetailStack.Screen name="MasterDetailItemDetail" component={ItemDetail} />
+      <MasterDetailStack.Screen name="ItemDetailScreen" component={ItemDetailScreen} />
     </MasterDetailStack.Navigator>
   );
 };

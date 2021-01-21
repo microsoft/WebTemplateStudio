@@ -1,11 +1,12 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
+import ItemDetailComponent from "./ItemDetailComponent";
 
-function ItemDetail(props) {
+function ItemDetailScreen(props) {
   const { item } = props.route.params;
   return (
     <View style={styles.container}>
-      <Text>Item Detail: {item.title}</Text>
+      <ItemDetailComponent item={item} />
     </View>
   );
 }
@@ -18,4 +19,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ItemDetail;
+export default ItemDetailScreen;
