@@ -6,8 +6,8 @@
   margin-bottom: 10px;
 }
 
-.boundingBox{
-  width: 260px;;
+.boundingBox {
+  width: 260px;
 }
 .cardContainer {
   height: 100%;
@@ -37,18 +37,19 @@
 }
 
 .icon {
-  height: 2em;
+  height: 1em;
+  width: 1em;
+  fill: var(--vscode-editor-foreground);
 }
 
-.body {
-  margin-bottom: 1em;
-  line-height: 1.75em;
+.description {
+  margin-top: 1rem;
+  height: 10rem;
 }
 
 .expectedPrice {
-  margin-top: 5px;
   display: flex;
-  margin-bottom: 8px;
+  margin-bottom: 1em;
 }
 
 .expectedTime {
@@ -57,14 +58,6 @@
 }
 
 .svg {
-  margin-right: 18px;
-  margin-top: 4px;
+  margin-right: 1em;
   fill: var(--vscode-editor-foreground);
-}
-
-.footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--vscode-textLink-foreground);
 }

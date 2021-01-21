@@ -13,6 +13,7 @@ import PageContainer from "./PageContainer";
 import messages from "./messages";
 import classnames from "classnames";
 import styles from "./styles.module.css";
+import rightsidebarStyles from "../rightsidebarStyles.module.css";
 
 import { ReactComponent as ShowIconSVG } from "../../../assets/i-show.svg";
 import { ReactComponent as HideIconSVG } from "../../../assets/i-hide.svg";
@@ -40,7 +41,7 @@ const SelectPages = (props: Props) => {
   const MAX_PAGES_ALLOWED = 20;
 
   return (
-    <div className={styles.sortablePages}>
+    <div className={rightsidebarStyles.sidebarItem}>
       <div className={classnames(styles.pageListContainer)}>
         <InputTitle>
           {`${props.intl!.formatMessage(messages.pages)} (${

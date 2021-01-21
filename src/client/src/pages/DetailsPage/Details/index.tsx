@@ -113,12 +113,7 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
                           const licenseObject = license as ILicenseObject;
                           return (
                             <p key={license + idx.toString()}>
-                              <a
-                                className={styles.licenseButton}
-                                href={String(licenseObject.url)}
-                                target={"_blank"}
-                                rel="noreferrer noopener"
-                              >
+                              <a href={String(licenseObject.url)} target={"_blank"} rel="noreferrer noopener">
                                 {licenseObject.text}
                               </a>
                             </p>

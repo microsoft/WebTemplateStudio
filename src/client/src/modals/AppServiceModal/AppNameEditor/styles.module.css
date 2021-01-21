@@ -17,6 +17,11 @@
   border: none;
 }
 
+.inputContainer input:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+  outline-offset: 0.5em;
+}
+
 .input {
   text-decoration: none;
   border: none;
@@ -24,11 +29,6 @@
   color: var(--vscode-editor-foreground);
   width: 100%;
   margin-right: 10px;
-}
-
-input:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-  outline-offset: 7px;
 }
 
 input::placeholder {

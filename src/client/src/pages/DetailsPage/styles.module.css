@@ -1,3 +1,7 @@
+.detailsContainer {
+  display: flex;
+}
+
 .screenshot {
   margin-top: 100px;
   width: 100%;
@@ -6,11 +10,7 @@
 
 .screenShotContainer {
   width: 65%;
-  margin-right: 48px;
-}
-
-.detailsContainer {
-  display: flex;
+  margin-right: 3em;
 }
 
 @media (max-width: 850px) {

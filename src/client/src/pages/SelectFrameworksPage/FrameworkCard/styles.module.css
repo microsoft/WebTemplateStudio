@@ -8,6 +8,11 @@
   padding-left: 0.5rem;
 }
 
+.description{
+  height: 4rem;
+  text-overflow: ellipsis;
+}
+
 .cardCount,
 .selectedCheckMark {
   display: flex;

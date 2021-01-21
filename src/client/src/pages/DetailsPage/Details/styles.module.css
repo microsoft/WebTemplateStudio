@@ -14,9 +14,7 @@
 }
 
 .container {
-  margin-top: 3rem;
   max-width: 65%;
-  margin-left: 2.2em;
 }
 
 .backContainer {
@@ -72,9 +70,6 @@
   width: 80% !important;
 }
 
-.markdown {
-}
-
 .details {
   padding-top: 2px;
   color: var(--vscode-textLink-foreground);
@@ -106,4 +101,12 @@
 
 .licenseButton:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+
+@media (max-width: 850px) {
+  .container {
+    margin-top: 3rem;
+    margin-left: 2.2em;
+  }
 }

@@ -1,7 +1,3 @@
-.sortablePages {
-  margin-bottom: 2em;
-}
-
 .pageListContainer {
   display: flex;
   justify-content: space-between;
@@ -12,7 +8,7 @@
 }
 
 .hideOrShow {
-  margin-left: 1px;
+  padding: 0;
   cursor: pointer;
   border: none;
   background-color: var(--vscode-editor-background);

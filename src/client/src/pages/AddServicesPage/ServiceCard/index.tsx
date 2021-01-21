@@ -66,7 +66,9 @@ export const ServiceCard = (props: Props) => {
       tabIndex={0}
       onClick={openModal}
       onKeyDown={openModalIfEnterOrSpace}
-      className={classNames(cardStyles.container, cardStyles.boundingBox, styles.boundingBox, { [cardStyles.selected]: hasService })}
+      className={classNames(cardStyles.container, cardStyles.boundingBox, styles.boundingBox, {
+        [cardStyles.selected]: hasService,
+      })}
       onFocus={() => setShowPlusIcon(true)}
       onBlur={() => setShowPlusIcon(false)}
       onMouseLeave={() => setShowPlusIcon(false)}
@@ -84,6 +86,7 @@ export const ServiceCard = (props: Props) => {
               {!hasService && (
                 <PlusSVG
                   role="figure"
+                  className={styles.icon}
                   title={formatMessage(messages.addToProject)}
                   aria-label={formatMessage(messages.addToProject)}
                 />
@@ -91,6 +94,7 @@ export const ServiceCard = (props: Props) => {
               {hasService && (
                 <EditSVG
                   role="figure"
+                  className={styles.icon}
                   title={formatMessage(messages.editResource)}
                   aria-label={formatMessage(messages.editResource)}
                 />
@@ -98,7 +102,7 @@ export const ServiceCard = (props: Props) => {
             </div>
           )}
         </div>
-        <div className={styles.body}>
+        <div className={styles.description}>
           {service.expectedPrice && (
             <div className={styles.expectedPrice}>
               <PriceSVG role="figure" className={styles.svg} aria-label={formatMessage(messages.price)} />
@@ -113,10 +117,12 @@ export const ServiceCard = (props: Props) => {
           )}
           <div>{service.body}</div>
         </div>
-        <div className={styles.footer}>
-          <button tabIndex={0} onClick={showDetails} className={buttonStyles.buttonLink}>
-            {formatMessage(messages.learnMore)}
-          </button>
+        <div className={cardStyles.gridLayoutCardFooter}>
+          <div>
+            <button tabIndex={0} onClick={showDetails} className={buttonStyles.buttonLink}>
+              {formatMessage(messages.learnMore)}
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -125,7 +125,7 @@ const FrameworkCard = (props: Props) => {
           <div className={cardStyles.version}>v{framework.version}</div>
           {latestVersion === framework.version && <div className={styles.latestVersion}>(Latest)</div>}
         </div>
-        <div className={cardStyles.description}>{framework.body}</div>
+        <div className={styles.description}>{framework.body}</div>
         <div className={cardStyles.DependencyInfo}>
           {selected && !framework.requirement?.isInstalled && <DependencyInfo requirement={framework.requirement} />}
         </div>
