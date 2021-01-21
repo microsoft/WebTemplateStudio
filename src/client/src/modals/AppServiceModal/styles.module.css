@@ -26,7 +26,7 @@
 .button:disabled {
   opacity: 0.5;
   background-color: var(--vscode-badge-background);
-  cursor: not-allowed;
+  cursor: default;
 }
 
 .closeIcon {
