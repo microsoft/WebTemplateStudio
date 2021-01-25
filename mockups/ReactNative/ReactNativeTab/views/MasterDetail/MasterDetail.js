@@ -1,17 +1,18 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, FlatList, useWindowDimensions, Platform } from "react-native";
+import { View, StyleSheet, FlatList, useWindowDimensions, Platform } from "react-native";
 import sampleData from "../../data/sampleData";
-import ItemDetailComponent from "./ItemDetailComponent";
-import MasterListItem from "./MasterListItem";
+import ItemDetail from "./ItemDetail";
+import ListItem from "./ListItem";
 
 function MasterDetail({ navigation }) {
   const [selectedItem, setSelectedItem] = useState(null);
-  const isWindowsPlatform = Platform.OS === "windows";
+  const { width, height } = useWindowDimensions();
+  const isWindowsPlatform = width > height;
 
   const handleOnPress = (item) => {
     setSelectedItem(item);
     if (!isWindowsPlatform) {
-      navigation.navigate("ItemDetailScreen", { item });
+      navigation.navigate("Detail", { item });
     }
   };
 
@@ -20,15 +21,22 @@ function MasterDetail({ navigation }) {
       <View style={styles.listContainer}>
         <FlatList
           data={sampleData.textAssets}
-          renderItem={({ item }) => <MasterListItem item={item} onPress={() => handleOnPress(item)} />}
-          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <ListItem
+              item={item}
+              onPress={() => handleOnPress(item)}
+              isSelected={selectedItem && selectedItem.id === item.id}
+            />
+          )}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          keyExtractor={(item) => item.id.toString()}
         />
       </View>
-      {isWindowsPlatform &&
+      {isWindowsPlatform && (
         <View style={styles.itemDetailContainer}>
-          <ItemDetailComponent item={selectedItem} />
+          <ItemDetail item={selectedItem} />
         </View>
-        }
+      )}
     </View>
   );
 }
@@ -45,6 +53,14 @@ const styles = StyleSheet.create({
 
   itemDetailContainer: {
     flex: 2.5,
+    borderLeftColor: "#cdcdcd",
+    borderLeftWidth: 1,
+  },
+
+  separator: {
+    height: 1,
+    width: "100%",
+    backgroundColor: "#cdcdcd",
   },
 });
 
