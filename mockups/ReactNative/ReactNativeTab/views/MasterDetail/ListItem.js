@@ -1,17 +1,14 @@
 import React from "react";
 import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import SvgImage from "../../components/SvgImage/SvgImage";
 
 function ListItem({ item, onPress, isSelected }) {
   const { title } = item;
+  const itemImage = item.imageSrc || "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg";
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={isSelected ? styles.selectedContainer : styles.container}>
-        <Image
-          style={styles.logo}
-          source={{
-            uri: "https://reactnative.dev/img/tiny_logo.png",
-          }}
-        />
+        <SvgImage style={styles.logo} uri={itemImage} />
         <Text style={isSelected ? styles.selectedTitle : styles.title}>{title}</Text>
       </View>
     </TouchableOpacity>
@@ -50,7 +47,6 @@ const styles = StyleSheet.create({
   logo: {
     width: 50,
     height: 50,
-    borderRadius: 30,
     margin: 10,
   },
 });

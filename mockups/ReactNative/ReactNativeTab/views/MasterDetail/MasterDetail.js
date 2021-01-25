@@ -12,7 +12,7 @@ function MasterDetail({ navigation }) {
   const handleOnPress = (item) => {
     setSelectedItem(item);
     if (!isWindowsPlatform) {
-      navigation.navigate("Detail", { item });
+      navigation.navigate("MasterDetailDetail", { item });
     }
   };
 

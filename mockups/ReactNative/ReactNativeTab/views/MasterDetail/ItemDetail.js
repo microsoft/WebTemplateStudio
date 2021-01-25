@@ -1,8 +1,5 @@
 import React from "react";
 import { Text, SafeAreaView, StyleSheet, Image, Platform } from "react-native";
-import { SvgUri } from "react-native-svg";
-
-const EMPTY_IMAGE = "https://www.svgrepo.com/download/55002/book.svg";
 
 function ItemDetail({ item }) {
   return (
