@@ -23,7 +23,8 @@
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.15.0",
     "react-native-vector-icons": "^7.1.0",
-    "react-native-windows": "^0.63.0-0"
+    "react-native-windows": "^0.63.0-0",
+    "styled-components": "^5.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -33,6 +34,7 @@
     "eslint": "^6.5.1",
     "jest": "^25.1.0",
     "metro-react-native-babel-preset": "^0.59.0",
+    "react-devtools": "^4.10.1",
     "react-test-renderer": "16.13.1"
   },
   "jest": {

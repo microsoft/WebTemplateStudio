@@ -1,0 +1,5 @@
+mockups/ReactNative/ReactNativeSettings/typings/index.d.ts
+mockups/ReactNative/ReactNativeSettings/typings/modules/react-native/index.d.ts
+mockups/ReactNative/ReactNativeSettings/typings/modules/react-native/typings.json
+*.binlog
+
