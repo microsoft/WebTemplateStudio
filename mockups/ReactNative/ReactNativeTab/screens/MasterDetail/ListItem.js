@@ -1,17 +1,17 @@
 import React from "react";
 
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native";
 
 import SvgImage from "../../components/SvgImage/SvgImage";
 import useThemeContext from "../../hooks/useThemeContext";
+import themes from "../../themes";
 
 function ListItem({ item, onPress, isSelected }) {
   const { title } = item;
   const itemImage = item.imageSrc || "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg";
 
   const { theme } = useThemeContext();
-  const selectedTheme = theme === "light" ? NavigationDefaultTheme : NavigationDarkTheme;
+  const selectedTheme = themes[theme];
 
   return (
     <TouchableOpacity onPress={onPress}>

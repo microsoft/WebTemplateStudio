@@ -5,18 +5,17 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import Icon from "react-native-vector-icons/Ionicons"
 
-import { DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native";
-
 import useThemeContext from "../hooks/useThemeContext";
 
 import Settings from "./Settings";
 import Home from "./Home";
 import MasterDetailStack from "./MasterDetailStack";
+import themes from "../themes";
 
 export const TabNavigation = () => {
   const { theme } = useThemeContext();
-  const selectedTheme = theme === "light" ? NavigationDefaultTheme : NavigationDarkTheme;
-
+  const selectedTheme = themes[theme];
+  
   // https://reactnavigation.org/docs/params
   const Stack = createStackNavigator();
   const Tab = createBottomTabNavigator();

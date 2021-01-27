@@ -1,12 +1,12 @@
 import React from "react";
 import { Text, SafeAreaView, StyleSheet, Image, Platform } from "react-native";
-import { DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native";
 
 import useThemeContext from "../../hooks/useThemeContext";
+import themes from "../../themes";
 
 function ItemDetail({ item }) {
   const { theme } = useThemeContext();
-  const selectedTheme = theme === "light" ? NavigationDefaultTheme : NavigationDarkTheme;
+  const selectedTheme = themes[theme];
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: selectedTheme.colors.card }]}>

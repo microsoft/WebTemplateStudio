@@ -7,10 +7,13 @@ We will appreciate any feedback provided.
 - Anything else you could think of ;-).
 
 # React Native App (Tabbed)
-This sample demonstrates a React Native application with Tab Menu:
+This sample demonstrates a React Native application with Tab Navigation and several types of pages:
+- A Blank Page
+- A Settings Page
+- A Master Page
 
-- Runs on mobile devices: iOS, android.
-- Runs on Windows and MacOS
+Runs on mobile devices: iOS, android.
+Runs on desktop: Windows.
 
 ### Initialize the sample
 
@@ -23,16 +26,18 @@ This sample demonstrates a React Native application with Tab Menu:
     ```
 ### Run the sample on Windows 10
 
-#### Requirements ####
+#### Requirements for React Native Windows ####
 Make sure your computer satisfies all the system requirements listed in the [official documentation](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies).
 
 **Option 1**
 
-1. Open a terminal with **administrator rights** on the project root folder
+1. You need to open a terminal or vscode with **administrator rights**.
 2. Run the following command:
 
     ```bash
     npx react-native run-windows
+    OR
+    yarn windows
     ```
 3. The tool will deploy the application on your machine, run it and launch the packager
 
@@ -96,5 +101,4 @@ REACT NATIVE WINDOWS APP WITH NAVIGATION: https://reactnavigation.org/docs/getti
 TAB NAVIGATION (https://reactnavigation.org/docs/tab-based-navigation)
 
 ICONS https://github.com/oblador/react-native-vector-icons
-
 
