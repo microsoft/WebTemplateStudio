@@ -25,14 +25,12 @@ function ListItem({ item, onPress, isSelected }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
   },
 
   selectedContainer: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
@@ -41,12 +39,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: "bold",
-    flex: 1,
   },
   selectedTitle: {
     fontSize: 16,
     fontWeight: "bold",
-    flex: 1,
   },
 
   logo: {
