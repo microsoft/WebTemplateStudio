@@ -3,3 +3,7 @@ mockups/ReactNative/ReactNativeSettings/typings/modules/react-native/index.d.ts
 mockups/ReactNative/ReactNativeSettings/typings/modules/react-native/typings.json
 *.binlog
 
+mockups/ReactNative/ReactNativeSettings/ios/ReactNativeSettings/Info.plist
+mockups/ReactNative/ReactNativeTab/android/.gradle/6.2/fileHashes/fileHashes.lock
+mockups/ReactNative/ReactNativeTab/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+mockups/ReactNative/ReactNativeTab/android/.gradle/checksums/checksums.lock

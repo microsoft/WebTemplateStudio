@@ -3,14 +3,15 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from "react-native-vector-icons/Ionicons"
 
 import { DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native";
 
 import useThemeContext from "../hooks/useThemeContext";
 
-import { Settings } from "./Settings";
-import { Home } from "./Home";
+import Settings from "./Settings";
+import Home from "./Home";
+import MasterDetailStack from "./MasterDetailStack";
 
 export const TabNavigation = () => {
   const { theme } = useThemeContext();
@@ -52,10 +53,12 @@ export const TabNavigation = () => {
         tabBarIcon: ({ focused, size, color }) => {
           let iconName;
 
-          if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Settings') {
-            iconName = focused ? 'settings' : 'settings-outline';
+          if (route.name === "Home") {
+            iconName = focused ? "home" : "home-outline";
+          } else if (route.name === "Settings") {
+            iconName = focused ? "settings" : "settings-outline";
+          } else if (route.name === "MasterDetailStack") {
+            iconName = focused ? "md-square" : "md-square-outline";
           }
 
           return <Icon name={iconName} size={size} color={color} text={selectedTheme.colors.text} />;
@@ -69,6 +72,8 @@ export const TabNavigation = () => {
       }}
     >
       <Tab.Screen name="Home" component={HomeStack} />
+      <Tab.Screen name="MasterDetailStack" component={MasterDetailStack} options={{ title: 'Master Detail' }} />
+
       {/* Place this at the end */}
       <Tab.Screen name="Settings" component={SettingsStack} />
     </Tab.Navigator>

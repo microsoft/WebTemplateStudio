@@ -15,12 +15,12 @@ const goToTermsAndConditions = () => {
   Linking.openURL('http://yourtermsandconditionsurlhere.com');
 };
 
-export const Settings = () => {
+const Settings = () => {
   const { theme } = useThemeContext();
   const selectedTheme = theme === "light" ? NavigationDefaultTheme : NavigationDarkTheme;
 
   return (
-    <View style={[styles.container, { height: "100%", backgroundColor: selectedTheme.colors.background }]}>
+    <View style={[styles.container, { backgroundColor: selectedTheme.colors.background }]}>
       <View style={[styles.section, { backgroundColor: selectedTheme.colors.background }]}>
         <Text style={[styles.title, { color: selectedTheme.colors.text }]}>Personalization</Text>
         <ToggleTheme />
@@ -37,7 +37,9 @@ export const Settings = () => {
       </View>
     </View>
   );
-}
+};
+
+export default Settings;
 
 const styles = StyleSheet.create({
   container: {

@@ -5,16 +5,18 @@ import { DarkTheme, DefaultTheme } from "@react-navigation/native";
 
 import useThemeContext from "../hooks/useThemeContext";
 
-export const Home = () => {
+const Home = () => {
   const { theme } = useThemeContext();
   const selectedTheme = theme === "light" ? DefaultTheme : DarkTheme;
 
   return (
-    <View style={[ styles.container, { backgroundColor: selectedTheme.colors.background}]}>
+    <View style={[styles.container, { backgroundColor: selectedTheme.colors.background }]}>
       <Text style={{ color: selectedTheme.colors.text }}>Home</Text>
     </View>
   );
 }
+
+export default Home;
 
 const styles = StyleSheet.create({
   container: {
