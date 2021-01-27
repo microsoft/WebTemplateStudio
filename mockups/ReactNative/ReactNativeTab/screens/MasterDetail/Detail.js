@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
+
 import ItemDetail from "./ItemDetail";
 
 function Detail(props) {

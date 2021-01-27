@@ -1,35 +1,30 @@
-import * as React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import React from "react";
+import {
+  NavigationContainer,
+  DefaultTheme as NavigationDefaultTheme,
+} from "@react-navigation/native";
 
-import { Blank } from "./views/Blank";
-import { Home } from "./views/Home";
-import MasterDetail from "./views/MasterDetail/MasterDetail";
-import Detail from "./views/MasterDetail/Detail";
+import themes from "./themes";
+import { useColorScheme } from "react-native";
 
-// https://reactnavigation.org/docs/params
-const Tab = createBottomTabNavigator();
-const MasterDetailStack = createStackNavigator();
+import { ThemeProvider } from "./context/ThemeProvider";
+import { TabNavigation } from "./screens/TabNavigation";
 
-const MasterDetailStackScreen = () => {
-  return (
-    <MasterDetailStack.Navigator>
-      <MasterDetailStack.Screen name="MasterDetailMaster" component={MasterDetail} />
-      <MasterDetailStack.Screen name="MasterDetailDetail" component={Detail} />
-    </MasterDetailStack.Navigator>
-  );
+const getDefaultColorScheme = () => {
+  //dark, light, null
+  const deviceTheme = useColorScheme();
+  return themes[deviceTheme] ?? NavigationDefaultTheme;
 };
 
 function App() {
+  const theme = getDefaultColorScheme();
+
   return (
-    <NavigationContainer>
-      <Tab.Navigator initialRouteName="Blank">
-        <Tab.Screen name="Blank" component={Blank} />
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="MasterDetail" component={MasterDetailStackScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <ThemeProvider>
+      <NavigationContainer theme={theme}>
+        <TabNavigation />
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
 

@@ -136,6 +136,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Assets\Ionicons.ttf" />
     <None Include="ReactNativeTab_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

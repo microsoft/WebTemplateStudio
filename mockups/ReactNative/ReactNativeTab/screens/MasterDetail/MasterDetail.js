@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { View, StyleSheet, FlatList, useWindowDimensions, Platform } from "react-native";
+
 import sampleData from "../../data/sampleData";
 import ItemDetail from "./ItemDetail";
 import ListItem from "./ListItem";
 
 function MasterDetail({ navigation }) {
   const [selectedItem, setSelectedItem] = useState(null);
+  // TODO HERE: Change this
+  //Add theme support for color styles here
   const { width, height } = useWindowDimensions();
   const isWindowsPlatform = width > height;
 

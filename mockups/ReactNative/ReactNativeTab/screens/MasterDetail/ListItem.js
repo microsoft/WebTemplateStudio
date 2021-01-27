@@ -1,15 +1,23 @@
 import React from "react";
-import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
+
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native";
+
 import SvgImage from "../../components/SvgImage/SvgImage";
+import useThemeContext from "../../hooks/useThemeContext";
 
 function ListItem({ item, onPress, isSelected }) {
   const { title } = item;
   const itemImage = item.imageSrc || "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg";
+
+  const { theme } = useThemeContext();
+  const selectedTheme = theme === "light" ? NavigationDefaultTheme : NavigationDarkTheme;
+
   return (
     <TouchableOpacity onPress={onPress}>
-      <View style={isSelected ? styles.selectedContainer : styles.container}>
-        <SvgImage style={styles.logo} uri={itemImage} />
-        <Text style={isSelected ? styles.selectedTitle : styles.title}>{title}</Text>
+      <View style={[isSelected ? styles.selectedContainer : styles.container, {backgroundColor: isSelected ? selectedTheme.colors.card : selectedTheme.colors.background}]}>
+        <SvgImage style={[styles.logo, { backgroundColor: selectedTheme.colors.backgroundColor}]} uri={itemImage} />
+        <Text style={[isSelected ? styles.selectedTitle : styles.title, {color: isSelected ? selectedTheme.colors.primary: selectedTheme.colors.text}]}>{title}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -28,20 +36,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    backgroundColor: "#007bff",
   },
 
   title: {
     fontSize: 16,
     fontWeight: "bold",
     flex: 1,
-    color: "#000000",
   },
   selectedTitle: {
     fontSize: 16,
     fontWeight: "bold",
     flex: 1,
-    color: "#ffffff",
   },
 
   logo: {
