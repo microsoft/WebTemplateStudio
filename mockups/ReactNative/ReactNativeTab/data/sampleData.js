@@ -25,7 +25,6 @@ sampleData.textAssets = [
     orderTotal: 2490.0,
     orderDate: new Date(2017, 5, 24).toDateString(),
     id: 1,
-    imageSrc:'https://wtsrepository.blob.core.windows.net/sampledata/CompanyA.svg'
   },
   {
     shortDescription: shortLoremIpsum,
@@ -91,28 +90,6 @@ sampleData.textAssets = [
     orderDate: new Date(2017, 6, 11).toDateString(),
     id: 7,
     imageSrc:'https://wtsrepository.blob.core.windows.net/sampledata/CompanyG.svg'
-  },
-  {
-    shortDescription: shortLoremIpsum,
-    longDescription: longLoremIpsum,
-    title: "Company H",
-    status: "Closed",
-    shipTo: "Sven Mortensen",
-    orderTotal: 736.0,
-    orderDate: new Date(2017, 6, 14).toDateString(),
-    id: 8,
-    imageSrc:'https://wtsrepository.blob.core.windows.net/sampledata/CompanyH.svg'
-  },
-  {
-    shortDescription: shortLoremIpsum,
-    longDescription: longLoremIpsum,
-    title: "Company I",
-    status: "Shipped",
-    shipTo: "Anna Bedecs",
-    orderTotal: 800.0,
-    orderDate: new Date(2017, 6, 18).toDateString(),
-    id: 9,
-    imageSrc:'https://wtsrepository.blob.core.windows.net/sampledata/CompanyI.svg'
   }
 ];
 

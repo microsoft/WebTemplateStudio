@@ -7,17 +7,20 @@ import useThemeContext from "../../hooks/useThemeContext";
 import themes from "../../themes";
 
 function ListItem({ item, onPress, isSelected }) {
-  const { title } = item;
-  const itemImage = item.imageSrc || "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg";
+  const { title, status } = item;
+  const itemImage = item.image || item.imageSrc || "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg";
 
   const { theme } = useThemeContext();
   const selectedTheme = themes[theme];
 
   return (
     <TouchableOpacity onPress={onPress}>
-      <View style={[isSelected ? styles.selectedContainer : styles.container, {backgroundColor: isSelected ? selectedTheme.colors.card : selectedTheme.colors.background}]}>
-        <SvgImage style={[styles.logo, { backgroundColor: selectedTheme.colors.backgroundColor}]} uri={itemImage} />
-        <Text style={[isSelected ? styles.selectedTitle : styles.title, {color: isSelected ? selectedTheme.colors.primary: selectedTheme.colors.text}]}>{title}</Text>
+      <View style={[isSelected ? styles.selectedContainer : styles.container, { backgroundColor: isSelected ? selectedTheme.colors.card : selectedTheme.colors.background }]}>
+        <SvgImage style={styles.logo} uri={itemImage} />
+        <View>
+          <Text style={[isSelected ? styles.selectedTitle : styles.title, { color: isSelected ? selectedTheme.colors.primary : selectedTheme.colors.text }]}>{title}</Text>
+          <Text style={{ color: isSelected ? selectedTheme.colors.primary : selectedTheme.colors.text }}>{status}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -25,14 +28,13 @@ function ListItem({ item, onPress, isSelected }) {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    justifyContent: "center",
     flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
   },
-
   selectedContainer: {
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     flexDirection: "row",
   },
 
@@ -46,9 +48,10 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     margin: 10,
+    //tintColor: "red" TODO HERE behaves weirdly. Windows image all red. SVGs just a small red dot
   },
 });
 

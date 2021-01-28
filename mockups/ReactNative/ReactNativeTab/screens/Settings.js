@@ -25,15 +25,14 @@ const Settings = () => {
         <Text style={[styles.title, { color: selectedTheme.colors.text }]}>Personalization</Text>
         <ToggleTheme />
       </View>
-      <View style={styles.separator} />
       <View style={[styles.section, { backgroundColor: selectedTheme.colors.background }]}>
         <Text style={[styles.title, { color: selectedTheme.colors.text }]}>About this Application</Text>
-        <Text style={[styles.body, { color: selectedTheme.colors.text }]}>{name} - {version}</Text>
-        <Text style={[styles.body, { color: selectedTheme.colors.text }]}>Placeholder text: Your app description goes here</Text>
+        <Text style={ { color: selectedTheme.colors.text }}>{name} - {version}</Text>
+        <Text style={ { color: selectedTheme.colors.text }}>Placeholder text: Your app description goes here</Text>
       </View>
       <View style={[styles.section, { backgroundColor: selectedTheme.colors.background }]}>
-        <Text style={[styles.body, { color: selectedTheme.colors.primary }]} onPress={() => goToPrivacyStatementLink()}>Privacy Statement</Text>
-        <Text style={[styles.body, { color: selectedTheme.colors.primary }]} onPress={() => goToTermsAndConditions()}>Terms and Conditions</Text>
+        <Text style={[styles.link, { color: selectedTheme.colors.primary }]} onPress={() => goToPrivacyStatementLink()}>Privacy Statement</Text>
+        <Text style={[styles.link, { color: selectedTheme.colors.primary }]} onPress={() => goToTermsAndConditions()}>Terms and Conditions</Text>
       </View>
     </View>
   );
@@ -45,20 +44,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "flex-start",
-    justifyContent: "space-evenly",
+    justifyContent: "flex-start",
     paddingLeft: 15,
-    paddingTop: 15,
+    fontSize: 14,
   },
   section: {
-    flex: 1,
+    paddingBottom: 20,
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
   title: {
-    fontSize: 25,
-    fontWeight: "bold",
+    fontSize: 20,
+    paddingBottom:10,
   },
-  body: {
-    fontSize: 15,
+  link: {
+    textDecorationLine:"underline",
   },
 });

@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import { View, StyleSheet, FlatList, useWindowDimensions, Platform } from "react-native";
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  useWindowDimensions,
+  Platform,
+} from "react-native";
 
 import sampleData from "../../data/sampleData";
+import useThemeContext from "../../hooks/useThemeContext";
+import themes from "../../themes";
 import ItemDetail from "./ItemDetail";
 import ListItem from "./ListItem";
 
@@ -12,6 +20,9 @@ function MasterDetail({ navigation }) {
   const { width, height } = useWindowDimensions();
   const isWindowsPlatform = width > height;
 
+  const { theme } = useThemeContext();
+  const selectedTheme = themes[theme];
+
   const handleOnPress = (item) => {
     setSelectedItem(item);
     if (!isWindowsPlatform) {
@@ -20,7 +31,8 @@ function MasterDetail({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: selectedTheme.colors.background}]}>
+      {/* MASTER DETAIL LIST */}
       <View style={styles.listContainer}>
         <FlatList
           data={sampleData.textAssets}
@@ -35,6 +47,7 @@ function MasterDetail({ navigation }) {
           keyExtractor={(item) => item.id.toString()}
         />
       </View>
+      {/* MASTER DETAIL DETAIL */}
       {isWindowsPlatform && (
         <View style={styles.itemDetailContainer}>
           <ItemDetail item={selectedItem} />
