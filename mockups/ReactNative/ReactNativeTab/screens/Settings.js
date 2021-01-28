@@ -1,11 +1,11 @@
 import React from "react";
 
 import { Text, View, StyleSheet, Linking } from "react-native";
-import { DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native";
 
 import ToggleTheme from "../components/ToggleTheme";
 import useThemeContext from "../hooks/useThemeContext";
 import { name, version } from '../package.json';
+import themes from "../themes";
 
 
 const goToPrivacyStatementLink = () => {
@@ -17,7 +17,7 @@ const goToTermsAndConditions = () => {
 
 const Settings = () => {
   const { theme } = useThemeContext();
-  const selectedTheme = theme === "light" ? NavigationDefaultTheme : NavigationDarkTheme;
+  const selectedTheme = themes[theme];
 
   return (
     <View style={[styles.container, { backgroundColor: selectedTheme.colors.background }]}>

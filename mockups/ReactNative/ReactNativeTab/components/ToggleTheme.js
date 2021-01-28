@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 
 import { Button, StatusBar } from "react-native";
-import { DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native";
 
 import useThemeContext from "../hooks/useThemeContext";
 import themes from "../themes";
 
 export default function ToggleTheme() {
     const { theme, setTheme } = useThemeContext();
-    const selectedTheme = themes[theme] ?? NavigationDefaultTheme;
+    const selectedTheme = themes[theme];
 
     //TODO: not sure if we need/can do something here
     useEffect(() => {

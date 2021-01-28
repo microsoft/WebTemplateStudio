@@ -1,7 +1,8 @@
 import * as React from "react";
 
 import { createStackNavigator } from "@react-navigation/stack";
-import { DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native";
+
+import themes from "../themes";
 
 import MasterDetail from "./MasterDetail/MasterDetail";
 import Detail from "./MasterDetail/Detail";
@@ -12,7 +13,7 @@ const Stack = createStackNavigator();
 
 const MasterDetailStack = () => {
   const { theme } = useThemeContext();
-  const selectedTheme = theme === "light" ? NavigationDefaultTheme : NavigationDarkTheme;
+  const selectedTheme = themes[theme];
 
   return (
     <Stack.Navigator screenOptions={{

@@ -59,4 +59,10 @@ buck-out/
 /ios/Pods/
 
 # Build results
+[Dd]ebugPublic/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Ll]og/
 *.binlog
