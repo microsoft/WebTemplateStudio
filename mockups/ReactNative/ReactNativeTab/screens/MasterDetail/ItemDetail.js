@@ -12,31 +12,22 @@ import {
 import useThemeContext from '../../hooks/useThemeContext';
 import themes from '../../themes';
 
-function ItemDetail({item}) {
-  const {theme} = useThemeContext();
+function ItemDetail({ item }) {
+  const { theme } = useThemeContext();
   const selectedTheme = themes[theme];
 
   return (
+    (item && 
     <SafeAreaView
       style={[
         styles.container,
-        {backgroundColor: selectedTheme.colors.background},
+        { backgroundColor: selectedTheme.colors.background },
       ]}>
-      <ScrollView contentContainerStyle={{backgroundColor: selectedTheme.colors.background}}>
-        <Text style={[styles.title, {color: selectedTheme.colors.text}]}>
-          Title:
-        </Text>
-        <Text style={[styles.description, {color: selectedTheme.colors.text}]}>
-          {item.title}
-        </Text>
-        <Text style={[styles.title, {color: selectedTheme.colors.text}]}>
-          Short Description:
-        </Text>
-        <Text style={[styles.description, {color: selectedTheme.colors.text}]}>
-          {item.shortDescription}
-        </Text>
-
-        <View style={{alignContent: 'center', width: '100%'}}>
+      <ScrollView contentContainerStyle={{ backgroundColor: selectedTheme.colors.background }}>
+        <View style={{ alignItems: 'center', width: '100%' }}>
+          <Text style={[styles.title, { color: selectedTheme.colors.text }]}>
+            {item.title}
+          </Text>
           <Image
             style={styles.logo}
             source={{
@@ -44,39 +35,40 @@ function ItemDetail({item}) {
             }}
           />
         </View>
-
-        <Text style={[styles.title, {color: selectedTheme.colors.text}]}>
-          Status:
+        <Text style={[styles.description, { color: selectedTheme.colors.text }]}>
+          {item.shortDescription}
         </Text>
-        <Text style={[styles.description, {color: selectedTheme.colors.text}]}>
+
+        <Text style={[styles.subtitle, { color: selectedTheme.colors.text }]}>
+          Status
+        </Text>
+        <Text style={[styles.description, { color: selectedTheme.colors.text }]}>
           {item.status}
         </Text>
-        <Text style={[styles.title, {color: selectedTheme.colors.text}]}>
-          Ship To:
+        <Text style={[styles.subtitle, { color: selectedTheme.colors.text }]}>
+          Ship To
         </Text>
-        <Text style={[styles.description, {color: selectedTheme.colors.text}]}>
+        <Text style={[styles.description, { color: selectedTheme.colors.text }]}>
           {item.shipTo}
         </Text>
-        <Text style={[styles.title, {color: selectedTheme.colors.text}]}>
-          Order Total:
+        <Text style={[styles.subtitle, { color: selectedTheme.colors.text }]}>
+          Order Total
         </Text>
-        <Text style={[styles.description, {color: selectedTheme.colors.text}]}>
+        <Text style={[styles.description, { color: selectedTheme.colors.text }]}>
           {item.orderTotal}
         </Text>
-        <Text style={[styles.title, {color: selectedTheme.colors.text}]}>
-          Order Date:
+        <Text style={[styles.subtitle, { color: selectedTheme.colors.text }]}>
+          Order Date
         </Text>
-        <Text style={[styles.description, {color: selectedTheme.colors.text}]}>
+        <Text style={[styles.description, { color: selectedTheme.colors.text }]}>
           {item.orderDate}
-        </Text>
-        <Text style={[styles.title, {color: selectedTheme.colors.text}]}>
-          Image Src:
-        </Text>
-        <Text style={[styles.description, {color: selectedTheme.colors.text}]}>
+        </Text>        
+        <Text style={[styles.description, { color: selectedTheme.colors.text }]}>
           {item.imageSrc}
         </Text>
       </ScrollView>
     </SafeAreaView>
+    )
   );
 }
 
@@ -98,11 +90,17 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  subtitle: {
     fontSize: 16,
     fontWeight: 'bold',
   },
   description: {
     fontSize: 16,
+    paddingBottom: 16,
+    opacity: 0.7,
   },
   logo: {
     width: 50,
