@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 
-import { Button, StatusBar } from "react-native";
+import { Platform, StyleSheet, View, Button, Text } from "react-native";
+import { TouchableRipple, Switch } from 'react-native-paper';
 
 import useThemeContext from "../hooks/useThemeContext";
 import themes from "../themes";
@@ -8,19 +9,9 @@ import themes from "../themes";
 export default function ToggleTheme() {
     const { theme, setTheme } = useThemeContext();
     const selectedTheme = themes[theme];
-
-    //TODO: not sure if we need/can do something here
-    useEffect(() => {
-        console.log("theme has changed to " + theme)
-        //needs to change the theme in the App
-        return () => {
-            // cleanup
-        }
-    }, [theme])
+    const isWindowsPlatform = (Platform.OS === 'windows');
 
     const toggleTheme = () => {
-        //TODO: investigate if need to add StatusBar and change style here. Seems to be doing ok on emulator though.
-        //StatusBar.setBarStyle("dark-content|light-content")
         if (theme == "light") {
             setTheme("dark");
 
@@ -30,11 +21,37 @@ export default function ToggleTheme() {
     };
 
     return (
-        <Button
-            onPress={toggleTheme}
-            aria-accessibilityLabel="Change Theme"
-            title={theme === "dark" ? "Set light theme" : "Set dark theme"}
-        >
-        </Button>
+        <View>
+            {!isWindowsPlatform &&
+                (<TouchableRipple onPress={toggleTheme} >
+                    <View style={styles.toggle}>
+                        <Text style={[styles.label, { color: selectedTheme.colors.text }]}>Dark Theme</Text>
+                        <View pointerEvents="none" style={styles.switch}>
+                            <Switch value={selectedTheme.dark} accessibilityLabel="Change Theme" />
+                        </View>
+                    </View>
+                </TouchableRipple>)}
+            {isWindowsPlatform &&
+                (<Button
+                    onPress={toggleTheme}
+                    aria-accessibilityLabel="Change Theme"
+                    title={theme === "dark" ? "Set light theme" : "Set dark theme"}
+                >
+                </Button>
+                )}
+        </View>
     );
 };
+const styles = StyleSheet.create({
+    toggle: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        paddingVertical: 5,
+    },
+    label: {
+        textAlignVertical: "center",
+    },
+    switch: {
+        textAlignVertical: "bottom",
+    }
+});

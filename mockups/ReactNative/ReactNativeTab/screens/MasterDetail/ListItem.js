@@ -48,10 +48,9 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     margin: 10,
-    //tintColor: "red" TODO HERE behaves weirdly. Windows image all red. SVGs just a small red dot
   },
 });
 

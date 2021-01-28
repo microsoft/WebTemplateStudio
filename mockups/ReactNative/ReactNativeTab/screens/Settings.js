@@ -7,7 +7,6 @@ import useThemeContext from "../hooks/useThemeContext";
 import { name, version } from '../package.json';
 import themes from "../themes";
 
-
 const goToPrivacyStatementLink = () => {
   Linking.openURL('http://yourprivacystatementurlhere.com');
 };
@@ -31,8 +30,8 @@ const Settings = () => {
         <Text style={ { color: selectedTheme.colors.text }}>Placeholder text: Your app description goes here</Text>
       </View>
       <View style={[styles.section, { backgroundColor: selectedTheme.colors.background }]}>
-        <Text style={[styles.link, { color: selectedTheme.colors.primary }]} onPress={() => goToPrivacyStatementLink()}>Privacy Statement</Text>
-        <Text style={[styles.link, { color: selectedTheme.colors.primary }]} onPress={() => goToTermsAndConditions()}>Terms and Conditions</Text>
+        <Text style={[styles.link, { color: selectedTheme.colors.primary }]} onPress={goToPrivacyStatementLink}>Privacy Statement</Text>
+        <Text style={[styles.link, { color: selectedTheme.colors.primary }]} onPress={goToTermsAndConditions}>Terms and Conditions</Text>
       </View>
     </View>
   );
@@ -49,7 +48,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   section: {
-    paddingBottom: 20,
+    paddingVertical: 20,
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },

@@ -15,17 +15,15 @@ import ListItem from "./ListItem";
 
 function MasterDetail({ navigation }) {
   const [selectedItem, setSelectedItem] = useState(null);
-  // TODO HERE: Change this
-  //Add theme support for color styles here
   const { width, height } = useWindowDimensions();
-  const isWindowsPlatform = width > height;
+  const isVertical = width > height;
 
   const { theme } = useThemeContext();
   const selectedTheme = themes[theme];
 
   const handleOnPress = (item) => {
     setSelectedItem(item);
-    if (!isWindowsPlatform) {
+    if (!isVertical) {
       navigation.navigate("MasterDetailDetail", { item });
     }
   };
@@ -48,7 +46,7 @@ function MasterDetail({ navigation }) {
         />
       </View>
       {/* MASTER DETAIL DETAIL */}
-      {isWindowsPlatform && (
+      {isVertical && (
         <View style={styles.itemDetailContainer}>
           <ItemDetail item={selectedItem} />
         </View>
