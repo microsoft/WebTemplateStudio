@@ -25,7 +25,10 @@ export default function ToggleTheme() {
             {!isWindowsPlatform &&
                 (<TouchableRipple onPress={toggleTheme} >
                     <View style={styles.toggle}>
-                        <Text style={[styles.label, { color: selectedTheme.colors.text }]}>Dark Theme</Text>
+                        <Text style={[styles.label, { color: selectedTheme.colors.text }]}
+                        accessibilityLabel="Dark Mode"
+                        aria-accessibilityLabel="Dark Mode"
+                        >Dark Theme</Text>
                         <View pointerEvents="none" style={styles.switch}>
                             <Switch value={selectedTheme.dark} accessibilityLabel="Change Theme" />
                         </View>
@@ -34,6 +37,7 @@ export default function ToggleTheme() {
             {isWindowsPlatform &&
                 (<Button
                     onPress={toggleTheme}
+                    accessibilityLabel="Change Theme"
                     aria-accessibilityLabel="Change Theme"
                     title={theme === "dark" ? "Set light theme" : "Set dark theme"}
                 >

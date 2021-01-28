@@ -71,7 +71,7 @@ export const TabNavigation = () => {
       }}
     >
       <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="MasterDetailStack" component={MasterDetailStack} options={{ title: 'Master Detail' }} />
+      <Tab.Screen name="MasterDetailStack" component={MasterDetailStack} options={{ title: "Master Detail" }} />
 
       {/* Place this at the end */}
       <Tab.Screen name="Settings" component={SettingsStack} />

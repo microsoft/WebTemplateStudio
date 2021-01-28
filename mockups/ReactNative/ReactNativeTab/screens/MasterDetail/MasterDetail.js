@@ -4,7 +4,6 @@ import {
   StyleSheet,
   FlatList,
   useWindowDimensions,
-  Platform,
 } from "react-native";
 
 import sampleData from "../../data/sampleData";
@@ -60,17 +59,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
   },
-
   listContainer: {
     flex: 1,
   },
-
   itemDetailContainer: {
     flex: 2.5,
-    borderLeftColor: "#cdcdcd",
+    borderLeftColor: "#cdcdcd",//this is not visible in Windows but looks ok on android
     borderLeftWidth: 1,
   },
-
   separator: {
     height: 1,
     width: "100%",

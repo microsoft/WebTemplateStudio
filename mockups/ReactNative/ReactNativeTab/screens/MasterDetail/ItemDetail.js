@@ -5,8 +5,6 @@ import {
   ScrollView,
   SafeAreaView,
   StyleSheet,
-  Image,
-  Platform,
 } from "react-native";
 import SvgImage from "../../components/SvgImage/SvgImage";
 

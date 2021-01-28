@@ -15,10 +15,11 @@ function ListItem({ item, onPress, isSelected }) {
 
   return (
     <TouchableOpacity onPress={onPress}>
-      <View style={[isSelected ? styles.selectedContainer : styles.container, { backgroundColor: isSelected ? selectedTheme.colors.card : selectedTheme.colors.background }]}>
-        <SvgImage style={styles.logo} uri={itemImage} />
+      <View style={[styles.container, { backgroundColor: isSelected ? selectedTheme.colors.card : selectedTheme.colors.background }]}>
+        {/* THIS IMAGE IS NOT VISIBLE ON ANDROID */}
+        <SvgImage style={styles.logo} uri={itemImage} /> 
         <View>
-          <Text style={[isSelected ? styles.selectedTitle : styles.title, { color: isSelected ? selectedTheme.colors.primary : selectedTheme.colors.text }]}>{title}</Text>
+          <Text style={[styles.title, { color: isSelected ? selectedTheme.colors.primary : selectedTheme.colors.text }]}>{title}</Text>
           <Text style={{ color: isSelected ? selectedTheme.colors.primary : selectedTheme.colors.text }}>{status}</Text>
         </View>
       </View>
@@ -32,24 +33,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
   },
-  selectedContainer: {
-    alignItems: "center",
-    justifyContent: "flex-start",
-    flexDirection: "row",
-  },
-
   title: {
     fontSize: 16,
     fontWeight: "bold",
   },
-  selectedTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-
   logo: {
-    width: 30,
-    height: 30,
+    width: 40,
+    height: 40,
     margin: 10,
   },
 });
