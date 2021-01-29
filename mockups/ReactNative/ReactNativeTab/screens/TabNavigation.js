@@ -1,52 +1,22 @@
 import React from 'react';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {createStackNavigator} from '@react-navigation/stack';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import useThemeContext from '../hooks/useThemeContext';
-
-import Settings from './Settings';
-import Home from './Home';
-import MasterDetailStack from './MasterDetailStack';
 import themes from '../themes';
 
-export const TabNavigation = () => {
+import MasterDetailStack from './MasterDetailStack';
+import HomeStack from './HomeStack';
+import SettingsStack from './SettingsStack';
+
+const TabNavigation = () => {
   const {theme} = useThemeContext();
   const selectedTheme = themes[theme];
 
-  // https://reactnavigation.org/docs/params
-  const Stack = createStackNavigator();
+  // For more information about react navigation visit https://reactnavigation.org/docs/hello-react-navigations
   const Tab = createBottomTabNavigator();
-
-  function HomeStack() {
-    return (
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: selectedTheme.colors.background,
-          },
-          headerTintColor: selectedTheme.colors.text,
-        }}>
-        <Stack.Screen name="Home" component={Home} />
-      </Stack.Navigator>
-    );
-  }
-
-  function SettingsStack() {
-    return (
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: selectedTheme.colors.background,
-          },
-          headerTintColor: selectedTheme.colors.text,
-        }}>
-        <Stack.Screen name="Settings" component={Settings} />
-      </Stack.Navigator>
-    );
-  }
 
   return (
     <Tab.Navigator
@@ -91,3 +61,5 @@ export const TabNavigation = () => {
     </Tab.Navigator>
   );
 };
+
+export default TabNavigation;

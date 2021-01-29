@@ -10,14 +10,14 @@ import ListItem from './ListItem';
 function MasterDetail({navigation}) {
   const [selectedItem, setSelectedItem] = useState(null);
   const {width, height} = useWindowDimensions();
-  const isVertical = width > height;
+  const isHorizontal = width > height;
 
   const {theme} = useThemeContext();
   const selectedTheme = themes[theme];
 
   const handleOnPress = (item) => {
     setSelectedItem(item);
-    if (!isVertical) {
+    if (!isHorizontal) {
       navigation.navigate('MasterDetailDetail', {item});
     }
   };
@@ -31,7 +31,7 @@ function MasterDetail({navigation}) {
       {/* MASTER DETAIL LIST */}
       <View style={styles.listContainer}>
         <FlatList
-          data={sampleData.textAssets}
+          data={sampleData.companies}
           renderItem={({item}) => (
             <ListItem
               item={item}
@@ -44,7 +44,7 @@ function MasterDetail({navigation}) {
         />
       </View>
       {/* MASTER DETAIL DETAIL */}
-      {isVertical && (
+      {isHorizontal && (
         <View style={styles.itemDetailContainer}>
           <ItemDetail item={selectedItem} />
         </View>

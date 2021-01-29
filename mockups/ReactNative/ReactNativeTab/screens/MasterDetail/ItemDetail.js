@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, ScrollView, SafeAreaView, StyleSheet} from 'react-native';
 import SvgImage from '../../components/SvgImage/SvgImage';
+import {longLoremIpsum} from '../../data/sampleData';
 
 import useThemeContext from '../../hooks/useThemeContext';
 import themes from '../../themes';
@@ -8,10 +9,6 @@ import themes from '../../themes';
 function ItemDetail({item}) {
   const {theme} = useThemeContext();
   const selectedTheme = themes[theme];
-  const itemImage =
-    (item && item.imageSrc) ||
-    (item &&
-      'https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg');
 
   return (
     item && (
@@ -26,7 +23,7 @@ function ItemDetail({item}) {
             {backgroundColor: selectedTheme.colors.background},
           ]}>
           <View style={styles.titleContainer}>
-            <SvgImage style={styles.logo} uri={itemImage} />
+            <SvgImage style={styles.logo} uri={item.imageSrc} />
             <Text style={[styles.title, {color: selectedTheme.colors.text}]}>
               {item.title}
             </Text>
@@ -64,41 +61,7 @@ function ItemDetail({item}) {
             style={[styles.description, {color: selectedTheme.colors.text}]}>
             {item.orderDate}
           </Text>
-          <Text>
-            TODO HERE ** Temp just to see a scrollable area ** Lorem ipsum dolor
-            sit amet, consectetur adipiscing elit. Aenean convallis rutrum odio
-            in dignissim. Sed a ligula metus. Fusce congue, nibh vitae elementum
-            luctus, quam lectus venenatis nulla, et aliquet risus est in justo.
-            Morbi semper dignissim velit, ut dictum lacus imperdiet aliquam.
-            Praesent iaculis mattis lacus, non pharetra ipsum volutpat vitae.
-            Sed sit amet urna aliquet, aliquam lectus at, vestibulum erat.
-            Curabitur orci ex, consequat at mauris sed, tempus faucibus nisi.
-            Aenean facilisis velit lorem, sodales malesuada felis elementum et.
-            Praesent euismod sapien sed eros maximus lacinia. Aenean sed arcu
-            augue. Vivamus ultrices ornare maximus. Proin non vulputate lectus.
-            Vivamus at dui sed dui ullamcorper feugiat. Phasellus varius aliquet
-            tortor at pharetra. Donec quis vulputate dolor. Suspendisse potenti.
-            Ut at erat ut ipsum vulputate cursus. Etiam posuere nisl lectus,
-            commodo blandit purus aliquet eu. Integer in dignissim velit, ac
-            molestie ante. Nam vestibulum quam at sapien ullamcorper suscipit.
-            Quisque elementum nisi eu finibus aliquet. Sed a dolor magna. Nam
-            rhoncus velit nibh, ut accumsan purus cursus vitae. Nam a lobortis
-            lorem, eget scelerisque lectus. Aliquam a dictum lectus.
-            Pellentesque tristique augue nec condimentum elementum. Aliquam
-            consequat, nulla ac fringilla cursus, lacus enim laoreet velit, nec
-            porttitor mi metus ac nulla. Aenean tempus lacinia tortor. Nullam
-            commodo tristique ultricies. Quisque ac elementum nisi, molestie
-            tincidunt nisi. Maecenas quis semper tellus. Etiam porttitor
-            tincidunt mi, vitae viverra tellus mollis faucibus. Donec tempor
-            vulputate quam, non eleifend erat eleifend ut. Donec lobortis
-            sodales ipsum. Aliquam in nunc et enim fermentum interdum. Integer
-            at imperdiet lorem. Quisque eget efficitur neque. Nulla imperdiet
-            ante ipsum, vel hendrerit mauris dignissim quis. Curabitur ultrices,
-            magna ut placerat viverra, lacus erat ultrices mi, mollis iaculis
-            ipsum sapien eget tellus. Morbi a massa ut turpis lobortis convallis
-            volutpat ac tortor. Morbi facilisis varius erat. Nam dignissim
-            feugiat neque ut condimentum. Mauris dapibus porttitor dignissim.
-          </Text>
+          <Text>{longLoremIpsum}</Text>
         </ScrollView>
       </SafeAreaView>
     )

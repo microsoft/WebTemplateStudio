@@ -1,9 +1,9 @@
 // This class holds sample data used by some generated pages to show how they can be used.
 // TODO Web Template Studio: Delete this file once your app is using real data.
 
-const shortLoremIpsum =
+export const shortLoremIpsum =
   'Lorem id sint aliqua tempor tempor sit. Ad dolor dolor ut nulla mollit dolore non eiusmod Lorem tempor nisi cillum.';
-const longLoremIpsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+export const longLoremIpsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
   tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus
   non enim praesent elementum facilisis leo vel. Risus at ultrices mi
   tempus imperdiet. Semper risus in hendrerit gravida rutrum quisque non
@@ -17,7 +17,7 @@ const longLoremIpsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
   Lorem donec massa sapien faucibus et molestie ac.`;
 
 const sampleData = {};
-sampleData.textAssets = [
+sampleData.companies = [
   {
     shortDescription: shortLoremIpsum,
     longDescription: longLoremIpsum,
@@ -26,6 +26,8 @@ sampleData.textAssets = [
     shipTo: 'Francisco Pérez-Olaeta',
     orderTotal: 2490.0,
     orderDate: new Date(2017, 5, 24).toDateString(),
+    imageSrc:
+    'https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg',
     id: 1,
   },
   {
@@ -36,6 +38,8 @@ sampleData.textAssets = [
     shipTo: 'Soo Jung Lee',
     orderTotal: 1760.0,
     orderDate: new Date(2017, 5, 24).toDateString(),
+    imageSrc:
+      'https://wtsrepository.blob.core.windows.net/sampledata/CompanyB.svg',
     id: 2,
   },
   {
