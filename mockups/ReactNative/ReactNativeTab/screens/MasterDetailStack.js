@@ -1,14 +1,14 @@
-import * as React from "react";
+import * as React from 'react';
 
-import {createStackNavigator} from "@react-navigation/stack";
+import {createStackNavigator} from '@react-navigation/stack';
 
-import themes from "../themes";
+import themes from '../themes';
 
-import MasterDetail from "./MasterDetail/MasterDetail";
-import Detail from "./MasterDetail/Detail";
-import useThemeContext from "../hooks/useThemeContext";
+import MasterDetail from './MasterDetail/MasterDetail';
+import Detail from './MasterDetail/Detail';
+import useThemeContext from '../hooks/useThemeContext';
 
-// https://reactnavigation.org/docs/params
+// For more information about react navigation visit https://reactnavigation.org/docs/params
 const Stack = createStackNavigator();
 
 const MasterDetailStack = () => {
@@ -26,12 +26,12 @@ const MasterDetailStack = () => {
       <Stack.Screen
         name="MasterDetail"
         component={MasterDetail}
-        options={{title: "Master Detail"}}
+        options={{title: 'Master Detail'}}
       />
       <Stack.Screen
         name="MasterDetailDetail"
         component={Detail}
-        options={{title: "Detail"}}
+        options={{title: 'Detail'}}
       />
     </Stack.Navigator>
   );

@@ -1,29 +1,23 @@
-import React from "react";
+import React from 'react';
 // import { Appearance } from 'react-native'
 
 import {
   NavigationContainer,
   DefaultTheme as NavigationDefaultTheme,
-} from "@react-navigation/native";
+} from '@react-navigation/native';
 
-import themes from "./themes";
-import { useColorScheme } from "react-native";
-import { ThemeProvider } from "./context/ThemeProvider";
-import { TabNavigation } from "./screens/TabNavigation";
-
-const getDefaultColorScheme = () => {
-  //dark, light, null
-  const deviceTheme = useColorScheme();
-  // console.log(` Appearance.getColorScheme: ${Appearance.getColorScheme()}`)
-  // console.log(` useColorScheme: ${useColorScheme()}`)
-  return themes[deviceTheme] ?? NavigationDefaultTheme;
-};
+import themes from './themes';
+import {useColorScheme, StatusBar} from 'react-native';
+import {ThemeProvider} from './context/ThemeProvider';
+import {TabNavigation} from './screens/TabNavigation';
 
 function App() {
-  const theme = getDefaultColorScheme();
+  const deviceTheme = useColorScheme();
+  const theme = themes[deviceTheme] ?? NavigationDefaultTheme;
 
   return (
     <ThemeProvider>
+      <StatusBar barStyle="dark-content" />
       <NavigationContainer theme={theme}>
         <TabNavigation />
       </NavigationContainer>

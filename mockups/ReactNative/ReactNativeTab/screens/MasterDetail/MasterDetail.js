@@ -1,39 +1,38 @@
-import React, { useState } from "react";
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  useWindowDimensions,
-} from "react-native";
+import React, {useState} from 'react';
+import {View, StyleSheet, FlatList, useWindowDimensions} from 'react-native';
 
-import sampleData from "../../data/sampleData";
-import useThemeContext from "../../hooks/useThemeContext";
-import themes from "../../themes";
-import ItemDetail from "./ItemDetail";
-import ListItem from "./ListItem";
+import sampleData from '../../data/sampleData';
+import useThemeContext from '../../hooks/useThemeContext';
+import themes from '../../themes';
+import ItemDetail from './ItemDetail';
+import ListItem from './ListItem';
 
-function MasterDetail({ navigation }) {
+function MasterDetail({navigation}) {
   const [selectedItem, setSelectedItem] = useState(null);
-  const { width, height } = useWindowDimensions();
+  const {width, height} = useWindowDimensions();
   const isVertical = width > height;
 
-  const { theme } = useThemeContext();
+  const {theme} = useThemeContext();
   const selectedTheme = themes[theme];
 
   const handleOnPress = (item) => {
     setSelectedItem(item);
     if (!isVertical) {
-      navigation.navigate("MasterDetailDetail", { item });
+      navigation.navigate('MasterDetailDetail', {item});
     }
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: selectedTheme.colors.background}]}>
+    <View
+      style={[
+        styles.container,
+        {backgroundColor: selectedTheme.colors.background},
+      ]}>
       {/* MASTER DETAIL LIST */}
       <View style={styles.listContainer}>
         <FlatList
           data={sampleData.textAssets}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <ListItem
               item={item}
               onPress={() => handleOnPress(item)}
@@ -57,20 +56,20 @@ function MasterDetail({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   listContainer: {
     flex: 1,
   },
   itemDetailContainer: {
     flex: 2.5,
-    borderLeftColor: "#cdcdcd",//this is not visible in Windows but looks ok on android
+    borderLeftColor: '#cdcdcd', //this is not visible in Windows but looks ok on android
     borderLeftWidth: 1,
   },
   separator: {
     height: 1,
-    width: "100%",
-    backgroundColor: "#cdcdcd",
+    width: '100%',
+    backgroundColor: '#cdcdcd',
   },
 });
 
