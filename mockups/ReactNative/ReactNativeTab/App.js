@@ -6,10 +6,10 @@ import {
   DefaultTheme as NavigationDefaultTheme,
 } from '@react-navigation/native';
 
-import themes from './themes';
+import themes from './src/themes';
 import {useColorScheme, StatusBar} from 'react-native';
-import {ThemeProvider} from './context/ThemeProvider';
-import TabNavigation from './screens/TabNavigation';
+import {ThemeProvider} from './src/context/ThemeProvider';
+import TabNavigation from './src/screens/TabNavigation';
 
 function App() {
   const deviceTheme = useColorScheme();

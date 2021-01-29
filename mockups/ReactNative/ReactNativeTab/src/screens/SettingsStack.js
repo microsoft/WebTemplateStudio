@@ -12,7 +12,7 @@ const Stack = createStackNavigator();
 const SettingsStack = () => {
   const {theme} = useThemeContext();
   const selectedTheme = themes[theme];
-  
+
   return (
     <Stack.Navigator
       screenOptions={{

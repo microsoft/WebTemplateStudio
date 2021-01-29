@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 
-import SvgImage from '../../components/SvgImage/SvgImage';
+import SvgImage from '../../../components/SvgImage/SvgImage';
 import useThemeContext from '../../hooks/useThemeContext';
 import themes from '../../themes';
 

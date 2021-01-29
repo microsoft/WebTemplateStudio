@@ -27,7 +27,7 @@ sampleData.companies = [
     orderTotal: 2490.0,
     orderDate: new Date(2017, 5, 24).toDateString(),
     imageSrc:
-    'https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg',
+      'https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg',
     id: 1,
   },
   {
