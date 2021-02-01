@@ -5,11 +5,12 @@ import {createStackNavigator} from '@react-navigation/stack';
 import themes from '../../themes';
 
 import useThemeContext from '../../hooks/useThemeContext';
-import Settings from '../Settings';
+import Home from '../screens/Home';
 
+// For more information about react navigation visit https://reactnavigation.org/docs/params
 const Stack = createStackNavigator();
 
-const SettingsStack = () => {
+const HomeStack = () => {
   const {theme} = useThemeContext();
   const selectedTheme = themes[theme];
 
@@ -21,9 +22,9 @@ const SettingsStack = () => {
         },
         headerTintColor: selectedTheme.colors.text,
       }}>
-      <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen name="Home" component={Home} />
     </Stack.Navigator>
   );
 };
 
-export default SettingsStack;
+export default HomeStack;

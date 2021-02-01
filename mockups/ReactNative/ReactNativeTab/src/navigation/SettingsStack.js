@@ -4,14 +4,12 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import themes from '../../themes';
 
-import MasterDetail from '../MasterDetail/MasterDetail';
-import Detail from '../MasterDetail/Detail';
 import useThemeContext from '../../hooks/useThemeContext';
+import Settings from '../screens/Settings';
 
-// For more information about react navigation visit https://reactnavigation.org/docs/params
 const Stack = createStackNavigator();
 
-const MasterDetailStack = () => {
+const SettingsStack = () => {
   const {theme} = useThemeContext();
   const selectedTheme = themes[theme];
 
@@ -23,18 +21,9 @@ const MasterDetailStack = () => {
         },
         headerTintColor: selectedTheme.colors.text,
       }}>
-      <Stack.Screen
-        name="MasterDetail"
-        component={MasterDetail}
-        options={{title: 'Master Detail'}}
-      />
-      <Stack.Screen
-        name="MasterDetailDetail"
-        component={Detail}
-        options={{title: 'Detail'}}
-      />
+      <Stack.Screen name="Settings" component={Settings} />
     </Stack.Navigator>
   );
 };
 
-export default MasterDetailStack;
+export default SettingsStack;
