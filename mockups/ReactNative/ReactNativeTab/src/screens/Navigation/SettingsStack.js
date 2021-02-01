@@ -2,10 +2,10 @@ import * as React from 'react';
 
 import {createStackNavigator} from '@react-navigation/stack';
 
-import themes from '../themes';
+import themes from '../../themes';
 
-import useThemeContext from '../hooks/useThemeContext';
-import Settings from './Settings';
+import useThemeContext from '../../hooks/useThemeContext';
+import Settings from '../Settings';
 
 const Stack = createStackNavigator();
 

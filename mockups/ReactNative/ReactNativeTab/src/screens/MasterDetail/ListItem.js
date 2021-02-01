@@ -2,19 +2,18 @@ import React from 'react';
 
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 
-import SvgImage from '../../../components/SvgImage/SvgImage';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 import useThemeContext from '../../hooks/useThemeContext';
 import themes from '../../themes';
 
 function ListItem({item, onPress, isSelected}) {
   const {title, status} = item;
-  const itemImage =
-    item.image ||
-    item.imageSrc ||
-    'https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg';
-
   const {theme} = useThemeContext();
   const selectedTheme = themes[theme];
+  const textColor = isSelected
+    ? selectedTheme.colors.primary
+    : selectedTheme.colors.text;
 
   return (
     <TouchableOpacity onPress={onPress}>
@@ -27,25 +26,20 @@ function ListItem({item, onPress, isSelected}) {
               : selectedTheme.colors.background,
           },
         ]}>
-        {/* THIS IMAGE IS NOT VISIBLE ON ANDROID */}
-        <SvgImage style={styles.logo} uri={itemImage} />
+        <Icon color={textColor} name={item.icon} style={styles.icon} />
         <View>
           <Text
             style={[
               styles.title,
               {
-                color: isSelected
-                  ? selectedTheme.colors.primary
-                  : selectedTheme.colors.text,
+                color: textColor,
               },
             ]}>
             {title}
           </Text>
           <Text
             style={{
-              color: isSelected
-                ? selectedTheme.colors.primary
-                : selectedTheme.colors.text,
+              color: textColor,
             }}>
             {status}
           </Text>
@@ -60,15 +54,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    paddingVertical: 10,
   },
   title: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
   },
-  logo: {
-    width: 40,
-    height: 40,
-    margin: 10,
+  icon: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    padding: 10,
   },
 });
 

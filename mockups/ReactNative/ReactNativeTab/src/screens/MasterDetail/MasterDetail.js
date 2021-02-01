@@ -9,15 +9,16 @@ import ListItem from './ListItem';
 
 function MasterDetail({navigation}) {
   const [selectedItem, setSelectedItem] = useState(null);
-  const {width, height} = useWindowDimensions();
-  const isHorizontal = width > height;
+  const {width} = useWindowDimensions();
+  const COMPACT_MODE_WIDTH = 700;
+  const isCompactMode = width < COMPACT_MODE_WIDTH;
 
   const {theme} = useThemeContext();
   const selectedTheme = themes[theme];
 
   const handleOnPress = (item) => {
     setSelectedItem(item);
-    if (!isHorizontal) {
+    if (isCompactMode) {
       navigation.navigate('MasterDetailDetail', {item});
     }
   };
@@ -44,7 +45,7 @@ function MasterDetail({navigation}) {
         />
       </View>
       {/* MASTER DETAIL DETAIL */}
-      {isHorizontal && (
+      {!isCompactMode && (
         <View style={styles.itemDetailContainer}>
           <ItemDetail item={selectedItem} />
         </View>

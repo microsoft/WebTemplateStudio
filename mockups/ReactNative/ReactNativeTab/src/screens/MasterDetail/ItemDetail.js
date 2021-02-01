@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, ScrollView, SafeAreaView, StyleSheet} from 'react-native';
-import SvgImage from '../../components/SvgImage/SvgImage';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 import {longLoremIpsum} from '../../data/sampleData';
 
 import useThemeContext from '../../hooks/useThemeContext';
@@ -23,7 +24,11 @@ function ItemDetail({item}) {
             {backgroundColor: selectedTheme.colors.background},
           ]}>
           <View style={styles.titleContainer}>
-            <SvgImage style={styles.logo} uri={item.imageSrc} />
+            <Icon
+              color={selectedTheme.colors.text}
+              name={item.icon}
+              style={styles.icon}
+            />
             <Text style={[styles.title, {color: selectedTheme.colors.text}]}>
               {item.title}
             </Text>
@@ -61,7 +66,9 @@ function ItemDetail({item}) {
             style={[styles.description, {color: selectedTheme.colors.text}]}>
             {item.orderDate}
           </Text>
-          <Text>{longLoremIpsum}</Text>
+          <Text style={[styles.body, {color: selectedTheme.colors.text}]}>
+            {longLoremIpsum}
+          </Text>
         </ScrollView>
       </SafeAreaView>
     )
@@ -77,6 +84,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    paddingBottom: 15,
   },
   container: {
     flex: 1,
@@ -90,9 +98,12 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },
+  icon: {
+    fontSize: 28,
+    paddingRight: 5,
+  },
   title: {
-    fontSize: 24,
-    textAlignVertical: 'center',
+    fontSize: 26,
   },
   subtitle: {
     fontSize: 18,
@@ -102,11 +113,8 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     opacity: 0.7,
   },
-  logo: {
-    width: 50,
-    height: 50,
-    borderRadius: 20,
-    margin: 10,
+  body: {
+    fontSize: 16,
   },
 });
 

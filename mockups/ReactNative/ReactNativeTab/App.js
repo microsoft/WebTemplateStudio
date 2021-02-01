@@ -9,7 +9,7 @@ import {
 import themes from './src/themes';
 import {useColorScheme, StatusBar} from 'react-native';
 import {ThemeProvider} from './src/context/ThemeProvider';
-import TabNavigation from './src/screens/TabNavigation';
+import TabNavigation from './src/screens/Navigation/TabNavigation';
 
 function App() {
   const deviceTheme = useColorScheme();

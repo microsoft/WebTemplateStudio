@@ -2,11 +2,11 @@ import * as React from 'react';
 
 import {createStackNavigator} from '@react-navigation/stack';
 
-import themes from '../themes';
+import themes from '../../themes';
 
-import MasterDetail from './MasterDetail/MasterDetail';
-import Detail from './MasterDetail/Detail';
-import useThemeContext from '../hooks/useThemeContext';
+import MasterDetail from '../MasterDetail/MasterDetail';
+import Detail from '../MasterDetail/Detail';
+import useThemeContext from '../../hooks/useThemeContext';
 
 // For more information about react navigation visit https://reactnavigation.org/docs/params
 const Stack = createStackNavigator();
