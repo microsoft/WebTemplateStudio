@@ -40,6 +40,8 @@
     "react-test-renderer": "16.13.1"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "transformIgnorePatterns": ["node_modules/(?!(jest-)?react-native|@?react-navigation)"],
+    "setupFiles": ["./node_modules/react-native-gesture-handler/jestSetup.js"]
   }
 }

@@ -2,9 +2,9 @@ import * as React from 'react';
 
 import {createStackNavigator} from '@react-navigation/stack';
 
-import themes from '../../themes';
+import themes from '../themes';
 
-import useThemeContext from '../../hooks/useThemeContext';
+import useThemeContext from '../hooks/useThemeContext';
 import Home from '../screens/Home';
 
 // For more information about react navigation visit https://reactnavigation.org/docs/params

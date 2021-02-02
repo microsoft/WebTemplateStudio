@@ -2,9 +2,9 @@ import React from 'react';
 
 import {Text, View, StyleSheet, Linking} from 'react-native';
 
-import ToggleTheme from '../../components/ToggleTheme';
+import ToggleTheme from '../components/ToggleTheme';
 import useThemeContext from '../hooks/useThemeContext';
-import {name, version} from '../package.json';
+import {name, version} from '../../package.json';
 import themes from '../themes';
 
 const goToPrivacyStatementLink = () => {
