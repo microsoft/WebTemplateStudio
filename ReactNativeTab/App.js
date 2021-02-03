@@ -16,10 +16,11 @@ function App() {
   //TODO: we should rely just on theme after this.
   const deviceTheme = useColorScheme();
   const theme = themes[deviceTheme] ?? NavigationDefaultTheme;
+  const barStyle= theme.dark === 'light' ? 'dark-content' : 'light-content';
 
   return (
     <ThemeProvider>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle={barStyle} />
       <NavigationContainer theme={theme}>
         <TabNavigation />
       </NavigationContainer>
