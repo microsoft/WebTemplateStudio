@@ -13,11 +13,12 @@ This sample demonstrates a React Native application with Tab Navigation with som
 - A Master Detail Page
 
 Runs on mobile devices: iOS, android.
+
 Runs on desktop: Windows.
 
 ### Initialize the sample
 
-1. Open Powershell or vscode with **admin rights**.
+1. Open **Powershell** or a **Terminal in vscode** with **admin rights**.
 1. Clone the repository on your machine.
 1. From the project root folder, run the following command to restore all the dependencies:
 
