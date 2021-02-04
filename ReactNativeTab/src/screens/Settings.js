@@ -5,7 +5,6 @@ import { Text, View, StyleSheet, Linking } from 'react-native';
 import ToggleTheme from '../components/ToggleTheme';
 import useThemeContext from '../hooks/useThemeContext';
 import { name, version } from '../../package.json';
-import themes from '../themes';
 
 const goToPrivacyStatementLink = () => {
   Linking.openURL('http://yourprivacystatementurlhere.com');
@@ -16,20 +15,19 @@ const goToTermsAndConditions = () => {
 
 const Settings = () => {
   const { theme } = useThemeContext();
-  const selectedTheme = themes[theme];
 
   return (
     <View
       style={[
         styles.container,
-        { backgroundColor: selectedTheme.colors.background },
+        { backgroundColor: theme.colors.background },
       ]}>
       <View
         style={[
           styles.section,
-          { backgroundColor: selectedTheme.colors.background },
+          { backgroundColor: theme.colors.background },
         ]}>
-        <Text style={[styles.title, { color: selectedTheme.colors.text }]}>
+        <Text style={[styles.title, { color: theme.colors.text }]}>
           Personalization
         </Text>
         <ToggleTheme />
@@ -37,30 +35,30 @@ const Settings = () => {
       <View
         style={[
           styles.section,
-          { backgroundColor: selectedTheme.colors.background },
+          { backgroundColor: theme.colors.background },
         ]}>
-        <Text style={[styles.title, { color: selectedTheme.colors.text }]}>
+        <Text style={[styles.title, { color: theme.colors.text }]}>
           About this Application
         </Text>
-        <Text style={{ color: selectedTheme.colors.text }}>
+        <Text style={{ color: theme.colors.text }}>
           {name} - {version}
         </Text>
-        <Text style={{ color: selectedTheme.colors.text }}>
+        <Text style={{ color: theme.colors.text }}>
           Placeholder text: Your app description goes here
         </Text>
       </View>
       <View
         style={[
           styles.section,
-          { backgroundColor: selectedTheme.colors.background },
+          { backgroundColor: theme.colors.background },
         ]}>
         <Text
-          style={[styles.link, { color: selectedTheme.colors.primary }]}
+          style={[styles.link, { color: theme.colors.primary }]}
           onPress={goToPrivacyStatementLink}>
           Privacy Statement
         </Text>
         <Text
-          style={[styles.link, { color: selectedTheme.colors.primary }]}
+          style={[styles.link, { color: theme.colors.primary }]}
           onPress={goToTermsAndConditions}>
           Terms and Conditions
         </Text>

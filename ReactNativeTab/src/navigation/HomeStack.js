@@ -11,15 +11,15 @@ const Stack = createStackNavigator();
 
 const HomeStack = () => {
   const { theme } = useThemeContext();
-  const selectedTheme = themes[theme];
+  // const theme = themes[theme];
 
   return (
     <Stack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: selectedTheme.colors.background,
+          backgroundColor: theme.colors.background,
         },
-        headerTintColor: selectedTheme.colors.text,
+        headerTintColor: theme.colors.text,
       }}>
       <Stack.Screen name="Home" component={Home} />
     </Stack.Navigator>

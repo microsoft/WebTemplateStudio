@@ -9,14 +9,13 @@ import themes from '../themes';
 
 const ToggleTheme = () => {
   const { theme, setTheme } = useThemeContext();
-  const selectedTheme = themes[theme];
   const isWindowsPlatform = Platform.OS === 'windows';
-
+  
   const toggleTheme = () => {
-    if (theme === 'light') {
-      setTheme('dark');
+    if (!theme.dark) {
+      setTheme(themes['dark']);
     } else {
-      setTheme('light');
+      setTheme(themes['light']);
     }
   };
 
@@ -26,14 +25,14 @@ const ToggleTheme = () => {
         <TouchableRipple onPress={toggleTheme}>
           <View style={styles.toggle}>
             <Text
-              style={[styles.label, { color: selectedTheme.colors.text }]}
+              style={[styles.label, { color: theme.colors.text }]}
               accessibilityLabel="Dark Mode"
               aria-accessibilityLabel="Dark Mode">
               Dark Theme
             </Text>
             <View pointerEvents="none" style={styles.switch}>
               <Switch
-                value={selectedTheme.dark}
+                value={theme.dark}
                 accessibilityLabel="Change Theme"
               />
             </View>
@@ -45,7 +44,7 @@ const ToggleTheme = () => {
           onPress={toggleTheme}
           accessibilityLabel="Change Theme"
           aria-accessibilityLabel="Change Theme"
-          title={theme === 'dark' ? 'Set light theme' : 'Set dark theme'}
+          title={theme.dark ? 'Set light theme' : 'Set dark theme'}
         />
       )}
     </View>

@@ -13,7 +13,6 @@ import SettingsStack from './SettingsStack';
 
 const TabNavigation = () => {
   const { theme } = useThemeContext();
-  const selectedTheme = themes[theme];
   // const {colors} = useTheme();
 
   // For more information about react navigation visit: https://reactnavigation.org/docs/getting-started
@@ -40,20 +39,20 @@ const TabNavigation = () => {
               name={iconName}
               size={size}
               color={color}
-              text={selectedTheme.colors.text}
+              text={theme.colors.text}
             />
           );
         },
       })}
       tabBarOptions={{
-        activeTintColor: selectedTheme.colors.primary,
-        inactiveTintColor: selectedTheme.colors.text,
-        activeBackgroundColor: selectedTheme.colors.background,
-        inactiveBackgroundColor: selectedTheme.colors.background,
+        activeTintColor: theme.colors.primary,
+        inactiveTintColor: theme.colors.text,
+        activeBackgroundColor: theme.colors.background,
+        inactiveBackgroundColor: theme.colors.background,
         style: {
-          backgroundColor: selectedTheme.colors.text,
+          backgroundColor: theme.colors.border,
           borderTopWidth: 1,
-          borderTopColor: selectedTheme.colors.text,
+          borderTopColor: theme.colors.border,
         },
       }}>
       <Tab.Screen name="Home" component={HomeStack} />

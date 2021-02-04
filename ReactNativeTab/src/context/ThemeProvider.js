@@ -1,11 +1,14 @@
 import React, { createContext, useState } from 'react';
 import { useColorScheme } from 'react-native';
+import themes from '../themes';
 
 export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const deviceTheme = useColorScheme();
-  const [theme, setTheme] = useState(deviceTheme);
+  const selectedTheme = themes[deviceTheme] ?? NavigationDefaultTheme;
+
+  const [theme, setTheme] = useState(selectedTheme);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>

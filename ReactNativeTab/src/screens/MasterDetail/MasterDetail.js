@@ -3,7 +3,6 @@ import { View, StyleSheet, FlatList, useWindowDimensions } from 'react-native';
 
 import sampleData from '../../data/sampleData';
 import useThemeContext from '../../hooks/useThemeContext';
-import themes from '../../themes';
 import ItemDetail from './ItemDetail';
 import ListItem from './ListItem';
 
@@ -12,9 +11,7 @@ function MasterDetail({ navigation }) {
   const { width } = useWindowDimensions();
   const COMPACT_MODE_WIDTH = 700;
   const isCompactMode = width < COMPACT_MODE_WIDTH;
-
   const { theme } = useThemeContext();
-  const selectedTheme = themes[theme];
 
   const handleOnPress = (item) => {
     setSelectedItem(item);
@@ -27,7 +24,7 @@ function MasterDetail({ navigation }) {
     <View
       style={[
         styles.container,
-        { backgroundColor: selectedTheme.colors.background },
+        { backgroundColor: theme.colors.background },
       ]}>
       {/* MASTER DETAIL LIST */}
       <View style={styles.listContainer}>
@@ -64,8 +61,9 @@ const styles = StyleSheet.create({
   },
   itemDetailContainer: {
     flex: 2.5,
-    borderLeftColor: '#cdcdcd', //this is not visible in Windows but looks ok on android
     borderLeftWidth: 1,
+    borderLeftColor: '#cdcdcd', //TODO remove hardcoded color and use theme instead
+    backgroundColor: '#cdcdcd',
   },
   separator: {
     height: 1,

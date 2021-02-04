@@ -5,15 +5,13 @@ import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import useThemeContext from '../../hooks/useThemeContext';
-import themes from '../../themes';
 
 function ListItem({ item, onPress, isSelected }) {
   const { title, status } = item;
   const { theme } = useThemeContext();
-  const selectedTheme = themes[theme];
   const textColor = isSelected
-    ? selectedTheme.colors.primary
-    : selectedTheme.colors.text;
+    ? theme.colors.primary
+    : theme.colors.text;
 
   return (
     <TouchableOpacity onPress={onPress}>
@@ -22,8 +20,8 @@ function ListItem({ item, onPress, isSelected }) {
           styles.container,
           {
             backgroundColor: isSelected
-              ? selectedTheme.colors.card
-              : selectedTheme.colors.background,
+              ? theme.colors.border
+              : theme.colors.background,
           },
         ]}>
         <Icon color={textColor} name={item.icon} style={styles.icon} />
