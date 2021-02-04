@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import useThemeContext from '../hooks/useThemeContext';
-import themes from '../themes';
 
 import MasterDetailStack from './MasterDetailStack';
 import HomeStack from './HomeStack';

@@ -18,25 +18,16 @@ const Settings = () => {
 
   return (
     <View
-      style={[
-        styles.container,
-        { backgroundColor: theme.colors.background },
-      ]}>
+      style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View
-        style={[
-          styles.section,
-          { backgroundColor: theme.colors.background },
-        ]}>
+        style={[styles.section, { backgroundColor: theme.colors.background }]}>
         <Text style={[styles.title, { color: theme.colors.text }]}>
           Personalization
         </Text>
         <ToggleTheme />
       </View>
       <View
-        style={[
-          styles.section,
-          { backgroundColor: theme.colors.background },
-        ]}>
+        style={[styles.section, { backgroundColor: theme.colors.background }]}>
         <Text style={[styles.title, { color: theme.colors.text }]}>
           About this Application
         </Text>
@@ -48,10 +39,7 @@ const Settings = () => {
         </Text>
       </View>
       <View
-        style={[
-          styles.section,
-          { backgroundColor: theme.colors.background },
-        ]}>
+        style={[styles.section, { backgroundColor: theme.colors.background }]}>
         <Text
           style={[styles.link, { color: theme.colors.primary }]}
           onPress={goToPrivacyStatementLink}>

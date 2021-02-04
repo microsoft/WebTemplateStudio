@@ -10,12 +10,12 @@ import themes from '../themes';
 const ToggleTheme = () => {
   const { theme, setTheme } = useThemeContext();
   const isWindowsPlatform = Platform.OS === 'windows';
-  
+
   const toggleTheme = () => {
     if (!theme.dark) {
-      setTheme(themes['dark']);
+      setTheme(themes.dark);
     } else {
-      setTheme(themes['light']);
+      setTheme(themes.light);
     }
   };
 
@@ -31,10 +31,7 @@ const ToggleTheme = () => {
               Dark Theme
             </Text>
             <View pointerEvents="none" style={styles.switch}>
-              <Switch
-                value={theme.dark}
-                accessibilityLabel="Change Theme"
-              />
+              <Switch value={theme.dark} accessibilityLabel="Change Theme" />
             </View>
           </View>
         </TouchableRipple>

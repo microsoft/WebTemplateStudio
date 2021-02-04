@@ -29,37 +29,32 @@ function ItemDetail({ item }) {
               {item.title}
             </Text>
           </View>
-          <Text
-            style={[styles.description, { color: theme.colors.text }]}>
+          <Text style={[styles.description, { color: theme.colors.text }]}>
             {item.shortDescription}
           </Text>
 
           <Text style={[styles.subtitle, { color: theme.colors.text }]}>
             Status
           </Text>
-          <Text
-            style={[styles.description, { color: theme.colors.text }]}>
+          <Text style={[styles.description, { color: theme.colors.text }]}>
             {item.status}
           </Text>
           <Text style={[styles.subtitle, { color: theme.colors.text }]}>
             Ship To
           </Text>
-          <Text
-            style={[styles.description, { color: theme.colors.text }]}>
+          <Text style={[styles.description, { color: theme.colors.text }]}>
             {item.shipTo}
           </Text>
           <Text style={[styles.subtitle, { color: theme.colors.text }]}>
             Order Total
           </Text>
-          <Text
-            style={[styles.description, { color: theme.colors.text }]}>
+          <Text style={[styles.description, { color: theme.colors.text }]}>
             {item.orderTotal}
           </Text>
           <Text style={[styles.subtitle, { color: theme.colors.text }]}>
             Order Date
           </Text>
-          <Text
-            style={[styles.description, { color: theme.colors.text }]}>
+          <Text style={[styles.description, { color: theme.colors.text }]}>
             {item.orderDate}
           </Text>
           <Text style={[styles.body, { color: theme.colors.text }]}>

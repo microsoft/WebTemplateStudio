@@ -2,8 +2,6 @@ import * as React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-import themes from '../themes';
-
 import MasterDetail from '../screens/MasterDetail/MasterDetail';
 import Detail from '../screens/MasterDetail/Detail';
 import useThemeContext from '../hooks/useThemeContext';

@@ -1,5 +1,7 @@
 import React, { createContext, useState } from 'react';
 import { useColorScheme } from 'react-native';
+import { DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
+
 import themes from '../themes';
 
 export const ThemeContext = createContext();

@@ -22,10 +22,7 @@ function MasterDetail({ navigation }) {
 
   return (
     <View
-      style={[
-        styles.container,
-        { backgroundColor: theme.colors.background },
-      ]}>
+      style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {/* MASTER DETAIL LIST */}
       <View style={styles.listContainer}>
         <FlatList

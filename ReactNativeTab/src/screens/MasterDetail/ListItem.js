@@ -9,9 +9,7 @@ import useThemeContext from '../../hooks/useThemeContext';
 function ListItem({ item, onPress, isSelected }) {
   const { title, status } = item;
   const { theme } = useThemeContext();
-  const textColor = isSelected
-    ? theme.colors.primary
-    : theme.colors.text;
+  const textColor = isSelected ? theme.colors.primary : theme.colors.text;
 
   return (
     <TouchableOpacity onPress={onPress}>

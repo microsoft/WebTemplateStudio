@@ -11,13 +11,8 @@ const Home = () => {
 
   return (
     <View
-      style={[
-        styles.container,
-        { backgroundColor: theme.colors.background },
-      ]}>
-      <Text
-        style={{ color: theme.colors.text }}
-        accessibilityLabel="Home">
+      style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={{ color: theme.colors.text }} accessibilityLabel="Home">
         Home {deviceTheme}
       </Text>
     </View>
