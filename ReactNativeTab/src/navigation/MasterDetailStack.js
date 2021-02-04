@@ -30,7 +30,7 @@ const MasterDetailStack = () => {
       <Stack.Screen
         name="MasterDetailDetail"
         component={Detail}
-        options={{title: 'Detail'}}
+        options={{title: ''}}
       />
     </Stack.Navigator>
   );

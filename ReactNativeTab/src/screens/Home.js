@@ -4,12 +4,12 @@ import {Text, View, StyleSheet} from 'react-native';
 
 import useThemeContext from '../hooks/useThemeContext';
 import themes from '../themes';
-import { useColorScheme } from 'react-native';
+import {useColorScheme} from 'react-native';
 
 const Home = () => {
   const {theme} = useThemeContext();
   const selectedTheme = themes[theme];
-  const deviceTheme = useColorScheme();//TODO HERE: TO be removed. Just to check theme works as expected
+  const deviceTheme = useColorScheme(); //TODO HERE: TO be removed. Just to check theme works as expected
 
   return (
     <View

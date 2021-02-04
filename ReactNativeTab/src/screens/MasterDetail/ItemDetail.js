@@ -2,8 +2,6 @@ import React from 'react';
 import {View, Text, ScrollView, SafeAreaView, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import {longLoremIpsum} from '../../data/sampleData';
-
 import useThemeContext from '../../hooks/useThemeContext';
 import themes from '../../themes';
 
@@ -67,7 +65,7 @@ function ItemDetail({item}) {
             {item.orderDate}
           </Text>
           <Text style={[styles.body, {color: selectedTheme.colors.text}]}>
-            {longLoremIpsum}
+            {item.longDescription}
           </Text>
         </ScrollView>
       </SafeAreaView>

@@ -50,7 +50,7 @@ const ToggleTheme = () => {
       )}
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   toggle: {
     flexDirection: 'row',

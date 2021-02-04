@@ -1,9 +1,9 @@
 // This class holds sample data used by some generated pages to show how they can be used.
 // TODO Web Template Studio: Delete this file once your app is using real data.
 
-export const shortLoremIpsum =
+const shortLoremIpsum =
   'Lorem id sint aliqua tempor tempor sit. Ad dolor dolor ut nulla mollit dolore non eiusmod Lorem tempor nisi cillum.';
-export const longLoremIpsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+const longLoremIpsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus
 non enim praesent elementum facilisis leo vel. Risus at ultrices mi
 tempus imperdiet. Semper risus in hendrerit gravida rutrum quisque non
