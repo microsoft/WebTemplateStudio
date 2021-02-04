@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import themes from '../themes';
 
@@ -10,7 +10,7 @@ import Settings from '../screens/Settings';
 const Stack = createStackNavigator();
 
 const SettingsStack = () => {
-  const {theme} = useThemeContext();
+  const { theme } = useThemeContext();
   const selectedTheme = themes[theme];
 
   return (

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import themes from '../themes';
 
@@ -11,7 +11,7 @@ import useThemeContext from '../hooks/useThemeContext';
 const Stack = createStackNavigator();
 
 const MasterDetailStack = () => {
-  const {theme} = useThemeContext();
+  const { theme } = useThemeContext();
   const selectedTheme = themes[theme];
 
   return (
@@ -25,12 +25,12 @@ const MasterDetailStack = () => {
       <Stack.Screen
         name="MasterDetail"
         component={MasterDetail}
-        options={{title: 'Master Detail'}}
+        options={{ title: 'Master Detail' }}
       />
       <Stack.Screen
         name="MasterDetailDetail"
         component={Detail}
-        options={{title: ''}}
+        options={{ title: '' }}
       />
     </Stack.Navigator>
   );

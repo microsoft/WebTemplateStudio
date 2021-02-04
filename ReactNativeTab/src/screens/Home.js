@@ -1,13 +1,13 @@
 import React from 'react';
 
-import {Text, View, StyleSheet} from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 
 import useThemeContext from '../hooks/useThemeContext';
 import themes from '../themes';
-import {useColorScheme} from 'react-native';
+import { useColorScheme } from 'react-native';
 
 const Home = () => {
-  const {theme} = useThemeContext();
+  const { theme } = useThemeContext();
   const selectedTheme = themes[theme];
   const deviceTheme = useColorScheme(); //TODO HERE: TO be removed. Just to check theme works as expected
 
@@ -15,10 +15,10 @@ const Home = () => {
     <View
       style={[
         styles.container,
-        {backgroundColor: selectedTheme.colors.background},
+        { backgroundColor: selectedTheme.colors.background },
       ]}>
       <Text
-        style={{color: selectedTheme.colors.text}}
+        style={{ color: selectedTheme.colors.text }}
         accessibilityLabel="Home">
         Home {deviceTheme}
       </Text>

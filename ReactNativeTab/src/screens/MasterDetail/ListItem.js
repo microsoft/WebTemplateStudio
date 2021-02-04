@@ -1,15 +1,15 @@
 import React from 'react';
 
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import useThemeContext from '../../hooks/useThemeContext';
 import themes from '../../themes';
 
-function ListItem({item, onPress, isSelected}) {
-  const {title, status} = item;
-  const {theme} = useThemeContext();
+function ListItem({ item, onPress, isSelected }) {
+  const { title, status } = item;
+  const { theme } = useThemeContext();
   const selectedTheme = themes[theme];
   const textColor = isSelected
     ? selectedTheme.colors.primary

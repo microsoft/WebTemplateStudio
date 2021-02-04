@@ -1,14 +1,14 @@
 import React from 'react';
 
-import {Platform, StyleSheet, View, Button, Text} from 'react-native';
+import { Platform, StyleSheet, View, Button, Text } from 'react-native';
 // For more information about react native paper visit: https://callstack.github.io/react-native-paper/
-import {TouchableRipple, Switch} from 'react-native-paper';
+import { TouchableRipple, Switch } from 'react-native-paper';
 
 import useThemeContext from '../hooks/useThemeContext';
 import themes from '../themes';
 
 const ToggleTheme = () => {
-  const {theme, setTheme} = useThemeContext();
+  const { theme, setTheme } = useThemeContext();
   const selectedTheme = themes[theme];
   const isWindowsPlatform = Platform.OS === 'windows';
 
@@ -26,7 +26,7 @@ const ToggleTheme = () => {
         <TouchableRipple onPress={toggleTheme}>
           <View style={styles.toggle}>
             <Text
-              style={[styles.label, {color: selectedTheme.colors.text}]}
+              style={[styles.label, { color: selectedTheme.colors.text }]}
               accessibilityLabel="Dark Mode"
               aria-accessibilityLabel="Dark Mode">
               Dark Theme

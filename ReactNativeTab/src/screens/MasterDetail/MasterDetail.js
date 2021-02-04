@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, FlatList, useWindowDimensions} from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, FlatList, useWindowDimensions } from 'react-native';
 
 import sampleData from '../../data/sampleData';
 import useThemeContext from '../../hooks/useThemeContext';
@@ -7,19 +7,19 @@ import themes from '../../themes';
 import ItemDetail from './ItemDetail';
 import ListItem from './ListItem';
 
-function MasterDetail({navigation}) {
+function MasterDetail({ navigation }) {
   const [selectedItem, setSelectedItem] = useState(null);
-  const {width} = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const COMPACT_MODE_WIDTH = 700;
   const isCompactMode = width < COMPACT_MODE_WIDTH;
 
-  const {theme} = useThemeContext();
+  const { theme } = useThemeContext();
   const selectedTheme = themes[theme];
 
   const handleOnPress = (item) => {
     setSelectedItem(item);
     if (isCompactMode) {
-      navigation.navigate('MasterDetailDetail', {item});
+      navigation.navigate('MasterDetailDetail', { item });
     }
   };
 
@@ -27,13 +27,13 @@ function MasterDetail({navigation}) {
     <View
       style={[
         styles.container,
-        {backgroundColor: selectedTheme.colors.background},
+        { backgroundColor: selectedTheme.colors.background },
       ]}>
       {/* MASTER DETAIL LIST */}
       <View style={styles.listContainer}>
         <FlatList
           data={sampleData.companies}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <ListItem
               item={item}
               onPress={() => handleOnPress(item)}

@@ -6,8 +6,8 @@ import {
 } from '@react-navigation/native';
 
 import themes from './src/themes';
-import {useColorScheme} from 'react-native';
-import {ThemeProvider} from './src/context/ThemeProvider';
+import { useColorScheme } from 'react-native';
+import { ThemeProvider } from './src/context/ThemeProvider';
 import TabNavigation from './src/navigation/TabNavigation';
 
 function App() {

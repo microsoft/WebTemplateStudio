@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -12,7 +12,7 @@ import HomeStack from './HomeStack';
 import SettingsStack from './SettingsStack';
 
 const TabNavigation = () => {
-  const {theme} = useThemeContext();
+  const { theme } = useThemeContext();
   const selectedTheme = themes[theme];
   // const {colors} = useTheme();
 
@@ -22,8 +22,8 @@ const TabNavigation = () => {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, size, color}) => {
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, size, color }) => {
           let iconName;
 
           if (route.name === 'Home') {
@@ -60,7 +60,7 @@ const TabNavigation = () => {
       <Tab.Screen
         name="MasterDetailStack"
         component={MasterDetailStack}
-        options={{title: 'Master Detail'}}
+        options={{ title: 'Master Detail' }}
       />
 
       {/* Place this at the end */}
