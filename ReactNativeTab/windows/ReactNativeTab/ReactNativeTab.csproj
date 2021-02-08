@@ -27,9 +27,8 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <PackageCertificateKeyFile>
-    </PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>A7039F22F20771BDE60C430C844A1F0BE982925A</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>ReactNativeTab_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>07482C98731A08BF894E60B15DF425D08AC78E4F</PackageCertificateThumbprint>
     <PackageCertificatePassword>password</PackageCertificatePassword>
     <AppxGeneratePrisForPortableLibrariesEnabled>false</AppxGeneratePrisForPortableLibrariesEnabled>
     <LangVersion>7.3</LangVersion>
@@ -147,7 +146,6 @@
     <Content Include="..\..\node_modules\react-native-vector-icons\Fonts\Ionicons.ttf">
       <Link>Assets\Ionicons.ttf</Link>
     </Content>
-    <None Include="ReactNativeTab_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />
@@ -173,6 +171,9 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReactNativeTab_TemporaryKey.pfx" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '16.0' ">
     <VisualStudioVersion>16.0</VisualStudioVersion>
