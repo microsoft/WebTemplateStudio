@@ -8,14 +8,14 @@
 
   <Identity
     Name="91412019-c200-4330-9f40-45c252307f4e"
-    Publisher="CN=jfuente"
+    Publisher="CN=test"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="91412019-c200-4330-9f40-45c252307f4e" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>ReactNativeTab</DisplayName>
-    <PublisherDisplayName>jfuente</PublisherDisplayName>
+    <PublisherDisplayName>test</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
