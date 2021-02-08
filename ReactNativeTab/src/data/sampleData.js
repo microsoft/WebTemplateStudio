@@ -26,8 +26,6 @@ sampleData.companies = [
     shipTo: 'Francisco Pérez-Olaeta',
     orderTotal: 2490.0,
     orderDate: new Date(2017, 5, 24).toDateString(),
-    imageSrc:
-      'https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg',
     icon: 'md-person-outline',
     id: 1,
   },
@@ -39,8 +37,6 @@ sampleData.companies = [
     shipTo: 'Soo Jung Lee',
     orderTotal: 1760.0,
     orderDate: new Date(2017, 5, 24).toDateString(),
-    imageSrc:
-      'https://wtsrepository.blob.core.windows.net/sampledata/CompanyB.svg',
     icon: 'md-medal-outline',
     id: 2,
   },
@@ -54,8 +50,6 @@ sampleData.companies = [
     orderDate: new Date(2017, 6, 3).toDateString(),
     icon: 'md-moon-outline',
     id: 3,
-    imageSrc:
-      'https://wtsrepository.blob.core.windows.net/sampledata/CompanyC.svg',
   },
   {
     shortDescription: shortLoremIpsum,
@@ -67,8 +61,6 @@ sampleData.companies = [
     orderDate: new Date(2017, 6, 5).toDateString(),
     icon: 'md-musical-notes-outline',
     id: 4,
-    imageSrc:
-      'https://wtsrepository.blob.core.windows.net/sampledata/CompanyD.svg',
   },
   {
     shortDescription: shortLoremIpsum,
@@ -80,8 +72,6 @@ sampleData.companies = [
     orderDate: new Date(2017, 6, 7).toDateString(),
     icon: 'md-paper-plane-outline',
     id: 5,
-    imageSrc:
-      'https://wtsrepository.blob.core.windows.net/sampledata/CompanyE.svg',
   },
   {
     shortDescription: shortLoremIpsum,
@@ -93,8 +83,6 @@ sampleData.companies = [
     orderDate: new Date(2017, 6, 7).toDateString(),
     icon: 'md-star-outline',
     id: 6,
-    imageSrc:
-      'https://wtsrepository.blob.core.windows.net/sampledata/CompanyF.svg',
   },
   {
     shortDescription: shortLoremIpsum,
@@ -106,8 +94,6 @@ sampleData.companies = [
     orderDate: new Date(2017, 6, 11).toDateString(),
     icon: 'md-camera-outline',
     id: 7,
-    imageSrc:
-      'https://wtsrepository.blob.core.windows.net/sampledata/CompanyG.svg',
   },
 ];
 

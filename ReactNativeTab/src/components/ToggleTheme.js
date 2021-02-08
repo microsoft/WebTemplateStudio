@@ -12,11 +12,8 @@ const ToggleTheme = () => {
   const isWindowsPlatform = Platform.OS === 'windows';
 
   const toggleTheme = () => {
-    if (!theme.dark) {
-      setTheme(themes.dark);
-    } else {
-      setTheme(themes.light);
-    }
+    const newTheme = theme.dark ? themes.light : themes.dark;
+    setTheme(newTheme);
   };
 
   return (

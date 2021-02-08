@@ -10,33 +10,18 @@ function ListItem({ item, onPress, isSelected }) {
   const { title, status } = item;
   const { theme } = useThemeContext();
   const textColor = isSelected ? theme.colors.primary : theme.colors.text;
+  const backgroundColor = isSelected ? theme.colors.border : theme.colors.background;
 
   return (
     <TouchableOpacity onPress={onPress}>
       <View
-        style={[
-          styles.container,
-          {
-            backgroundColor: isSelected
-              ? theme.colors.border
-              : theme.colors.background,
-          },
-        ]}>
+        style={[styles.container, { backgroundColor: backgroundColor, },]}>
         <Icon color={textColor} name={item.icon} style={styles.icon} />
         <View>
-          <Text
-            style={[
-              styles.title,
-              {
-                color: textColor,
-              },
-            ]}>
+          <Text style={[styles.title, { color: textColor, },]}>
             {title}
           </Text>
-          <Text
-            style={{
-              color: textColor,
-            }}>
+          <Text style={{ color: textColor, }}>
             {status}
           </Text>
         </View>
