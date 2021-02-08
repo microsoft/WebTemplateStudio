@@ -34,13 +34,13 @@ function MasterDetail({ navigation }) {
               isSelected={selectedItem && selectedItem.id === item.id}
             />
           )}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          ItemSeparatorComponent={() => <View style={[styles.separator, { backgroundColor: theme.colors.border }]} />}
           keyExtractor={(item) => item.id.toString()}
         />
       </View>
       {/* MASTER DETAIL DETAIL */}
       {!isCompactMode && (
-        <View style={styles.itemDetailContainer}>
+        <View style={[styles.itemDetailContainer, { borderLeftColor: theme.colors.border, backgroundColor: theme.colors.border }]}>
           <ItemDetail item={selectedItem} />
         </View>
       )}
@@ -59,13 +59,10 @@ const styles = StyleSheet.create({
   itemDetailContainer: {
     flex: 2.5,
     borderLeftWidth: 1,
-    borderLeftColor: '#cdcdcd', //TODO remove hardcoded color and use theme instead
-    backgroundColor: '#cdcdcd',
   },
   separator: {
     height: 1,
     width: '100%',
-    backgroundColor: '#cdcdcd',
   },
 });
 
