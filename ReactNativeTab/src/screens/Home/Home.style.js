@@ -1,11 +1,10 @@
 import { StyleSheet } from 'react-native';
+import appStyles from '../../app.styles';
 
 export const getHomeStyles = (theme) => StyleSheet.create({
   container:
   {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    ...appStyles.container,
     backgroundColor: theme.colors.background
   },
   text: {
