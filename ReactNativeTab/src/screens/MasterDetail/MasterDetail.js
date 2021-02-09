@@ -43,7 +43,7 @@ function MasterDetail({ navigation }) {
       </View>
       {/* MASTER DETAIL DETAIL */}
       {!isCompactMode && (
-        <View style={styles.itemDetailContainer }>
+        <View style={styles.itemDetailContainer}>
           <ItemDetail item={selectedItem} />
         </View>
       )}
