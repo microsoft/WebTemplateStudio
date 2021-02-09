@@ -15,7 +15,7 @@ function ListItem({ item, onPress, isSelected }) {
   return (
     <TouchableOpacity onPress={onPress}>
       <View
-        style={[styles.container, { backgroundColor: backgroundColor, },]}>
+        style={[styles.container, { backgroundColor: backgroundColor }]}>
         <Icon color={textColor} name={item.icon} style={styles.icon} />
         <View>
           <Text style={[styles.title, { color: textColor, },]}>
