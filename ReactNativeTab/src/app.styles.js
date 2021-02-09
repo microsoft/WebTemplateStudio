@@ -29,6 +29,9 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         paddingBottom: 10,
     },
+    subtitle: {
+        fontSize: 18,
+    },
     icon: {
         fontSize: 20,
         fontWeight: 'bold',

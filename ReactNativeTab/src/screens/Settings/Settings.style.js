@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 import appStyles from '../../app.styles';
 
-export const getSettingStyles = (theme) => StyleSheet.create({
+export const getStyles = (theme) => StyleSheet.create({
     ...appStyles,
     contentLeft: {
         ...appStyles.contentLeft,
@@ -21,6 +21,7 @@ export const getSettingStyles = (theme) => StyleSheet.create({
         color: theme.colors.text,
     },
     link:{
+        ...appStyles.link,
         color: theme.colors.primary,
     }
 });

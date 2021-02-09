@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, FlatList, useWindowDimensions } from 'react-native';
+import { View, FlatList, useWindowDimensions } from 'react-native';
 
 import sampleData from '../../data/sampleData';
 import useThemeContext from '../../hooks/useThemeContext';
-import ItemDetail from './ItemDetail';
-import ListItem from './ListItem';
+import ItemDetail from './ItemDetail/ItemDetail';
+import ListItem from './ListItem/ListItem';
+
+import { getStyles } from './MasterDetail.style';
 
 function MasterDetail({ navigation }) {
   const [selectedItem, setSelectedItem] = useState(null);
   const { width } = useWindowDimensions();
   const COMPACT_MODE_WIDTH = 700;
   const isCompactMode = width < COMPACT_MODE_WIDTH;
+
   const { theme } = useThemeContext();
+  const styles = getStyles(theme);
 
   const handleOnPress = (item) => {
     setSelectedItem(item);
@@ -21,8 +25,7 @@ function MasterDetail({ navigation }) {
   };
 
   return (
-    <View
-      style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <View style={styles.masterDetailContainer}>
       {/* MASTER DETAIL LIST */}
       <View style={styles.listContainer}>
         <FlatList
@@ -34,36 +37,18 @@ function MasterDetail({ navigation }) {
               isSelected={selectedItem && selectedItem.id === item.id}
             />
           )}
-          ItemSeparatorComponent={() => <View style={[styles.separator, { backgroundColor: theme.colors.border }]} />}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
           keyExtractor={(item) => item.id.toString()}
         />
       </View>
       {/* MASTER DETAIL DETAIL */}
       {!isCompactMode && (
-        <View style={[styles.itemDetailContainer, { borderLeftColor: theme.colors.border, backgroundColor: theme.colors.border }]}>
+        <View style={styles.itemDetailContainer }>
           <ItemDetail item={selectedItem} />
         </View>
       )}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  listContainer: {
-    flex: 1,
-  },
-  itemDetailContainer: {
-    flex: 2.5,
-    borderLeftWidth: 1,
-  },
-  separator: {
-    height: 1,
-    width: '100%',
-  },
-});
 
 export default MasterDetail;

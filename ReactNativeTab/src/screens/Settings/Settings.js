@@ -5,7 +5,7 @@ import { Text, View, Linking } from 'react-native';
 import ToggleTheme from '../../components/ToggleTheme';
 import useThemeContext from '../../hooks/useThemeContext';
 import { name, version } from '../../package.json';
-import { getSettingStyles } from './Settings.style';
+import { getStyles } from './Settings.style';
 
 
 const goToPrivacyStatementLink = () => {
@@ -17,7 +17,7 @@ const goToTermsAndConditions = () => {
 
 const Settings = () => {
   const { theme } = useThemeContext();
-  const styles = getSettingStyles(theme);
+  const styles = getStyles(theme);
 
   return (
     <View style={styles.contentLeft}>
