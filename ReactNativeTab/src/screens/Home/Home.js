@@ -10,7 +10,7 @@ const Home = () => {
   const styles = getHomeStyles(theme);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.contentCenter}>
       <Text style={styles.text} accessibilityLabel="Home">
         Home
       </Text>

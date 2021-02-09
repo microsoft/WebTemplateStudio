@@ -1,13 +1,16 @@
 import { StyleSheet } from 'react-native';
+
 import appStyles from '../../app.styles';
 
 export const getHomeStyles = (theme) => StyleSheet.create({
-  container:
+  ...appStyles,
+  contentCenter:
   {
-    ...appStyles.container,
+    ...appStyles.contentCenter,
     backgroundColor: theme.colors.background
   },
   text: {
+    ...appStyles.text,
     color: theme.colors.text,
   }
 });
