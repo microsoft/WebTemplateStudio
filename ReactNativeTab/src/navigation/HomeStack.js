@@ -3,7 +3,7 @@ import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import useThemeContext from '../hooks/useThemeContext';
-import Home from '../screens/Home';
+import Home from '../screens/Home/Home';
 
 const Stack = createStackNavigator();
 
