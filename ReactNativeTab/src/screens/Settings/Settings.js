@@ -4,7 +4,7 @@ import { Text, View, Linking } from 'react-native';
 
 import ToggleTheme from '../../components/ToggleTheme';
 import useThemeContext from '../../hooks/useThemeContext';
-import { name, version } from '../../package.json';
+import { name, version } from '../../../package.json';
 import { getStyles } from './Settings.style';
 
 const goToPrivacyStatementLink = () => {
