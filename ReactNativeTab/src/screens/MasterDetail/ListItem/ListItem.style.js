@@ -15,10 +15,12 @@ export const getStyles = (theme) => StyleSheet.create({
     },
     title: {
         ...appStyles.title,
+        paddingBottom: 5,
         color: theme.colors.text,
     },
     titleSelected: {
         ...appStyles.title,
+        paddingBottom: 5,
         color: theme.colors.primary,
     },
     icon: {

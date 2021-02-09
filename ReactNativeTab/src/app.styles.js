@@ -25,12 +25,12 @@ export default StyleSheet.create({
         fontSize: 14,
     },
     title: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 'bold',
         paddingBottom: 10,
     },
     subtitle: {
-        fontSize: 18,
+        fontSize: 16,
     },
     icon: {
         fontSize: 20,

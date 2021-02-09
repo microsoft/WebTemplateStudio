@@ -52,7 +52,7 @@ function ItemDetail({ item }) {
           <Text style={styles.description}>
             {item.orderDate}
           </Text>
-          <Text style={styles.body}>
+          <Text style={styles.text}>
             {item.longDescription}
           </Text>
         </ScrollView>

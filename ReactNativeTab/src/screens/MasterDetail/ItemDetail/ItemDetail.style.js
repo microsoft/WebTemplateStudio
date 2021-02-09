@@ -14,7 +14,6 @@ export const getStyles = (theme) => StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        paddingBottom: 15,
     },
     container: {
         flex: 1,
@@ -45,13 +44,13 @@ export const getStyles = (theme) => StyleSheet.create({
         color: theme.colors.text,
     },
     description: {
-        fontSize: 16,
+        ...appStyles.text,
         paddingBottom: 16,
         opacity: 0.7,
         color: theme.colors.text,
     },
-    body: {
-        fontSize: 16,
+    text: {
+        ...appStyles.text,
         color: theme.colors.text,
     },
 });
