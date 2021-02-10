@@ -1,39 +1,35 @@
 import { StyleSheet } from 'react-native';
 
-export default StyleSheet.create({
-  contentCenter: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  contentLeft: {
-    flex: 1,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    paddingLeft: 15,
-  },
-  sectionLeft: {
-    paddingVertical: 20,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-  },
+const FONTSIZE = {
+  XXLARGE: 26,
+  XLARGE: 22,
+  LARGE: 18,
+  MEDIUM: 16,
+  SMALL: 14
+}
 
+export default StyleSheet.create({
+  title_xxlarge:{
+    fontSize: FONTSIZE.XXLARGE,
+    fontWeight: 'bold',
+    paddingBottom: 10,
+  },
   title: {
-    fontSize: 18,
+    fontSize: FONTSIZE.LARGE,
     fontWeight: 'bold',
     paddingBottom: 10,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: FONTSIZE.MEDIUM,
   },
   text: {
-    fontSize: 14,
+    fontSize: FONTSIZE.SMALL,
   },
   link: {
     textDecorationLine: 'underline',
   },
   icon: {
-    fontSize: 20,
+    fontSize: FONTSIZE.XLARGE,
     fontWeight: 'bold',
     padding: 10,
   },
