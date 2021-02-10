@@ -5,11 +5,11 @@ export const FONTSIZE = {
   XLARGE: 22,
   LARGE: 18,
   MEDIUM: 16,
-  SMALL: 14
-}
+  SMALL: 14,
+};
 
 export default StyleSheet.create({
-  title_xxlarge:{
+  title_xxlarge: {
     fontSize: FONTSIZE.XXLARGE,
     fontWeight: 'bold',
     paddingBottom: 10,

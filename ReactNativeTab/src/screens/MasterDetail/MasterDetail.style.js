@@ -1,7 +1,5 @@
 import { StyleSheet } from 'react-native';
 
-import appStyles from '../../app.styles';
-
 export const getStyles = (theme) =>
   StyleSheet.create({
     masterDetailContainer: {
@@ -12,7 +10,6 @@ export const getStyles = (theme) =>
     listContainer: {
       flex: 1,
     },
-
     itemDetailContainer: {
       flex: 2.5,
       borderLeftWidth: 1,

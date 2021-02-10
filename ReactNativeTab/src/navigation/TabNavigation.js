@@ -20,7 +20,7 @@ const TabNavigation = () => {
   const Tab = createBottomTabNavigator();
 
   const getIcon = (routeName, isFocused) => {
-    // For more information about vector icons visit: https://github.com/oblador/react-native-vector-icons 
+    // For more information about vector icons visit: https://github.com/oblador/react-native-vector-icons
     let icon;
     switch (routeName) {
       case 'Home':

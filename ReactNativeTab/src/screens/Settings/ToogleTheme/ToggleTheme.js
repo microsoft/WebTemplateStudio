@@ -23,11 +23,7 @@ const ToggleTheme = () => {
         aria-accessibilityLabel="Dark theme">
         Dark theme
       </Text>
-      <Switch
-        style={styles.switch}
-        onValueChange={changeTheme}
-        value={theme.dark}
-      />
+      <Switch onValueChange={changeTheme} value={theme.dark} />
     </View>
   );
 };
