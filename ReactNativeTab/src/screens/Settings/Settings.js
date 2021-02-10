@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Text, View, Linking } from 'react-native';
 
-import ToggleTheme from '../../components/ToggleTheme';
+import ToggleTheme from './ToogleTheme/ToggleTheme';
 import useThemeContext from '../../hooks/useThemeContext';
 import { name, version } from '../../../package.json';
 import { getStyles } from './Settings.style';
