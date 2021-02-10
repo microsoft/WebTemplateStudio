@@ -6,6 +6,13 @@ export const getStyles = (theme) =>
   StyleSheet.create({
     ...appStyles,
 
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'space-evenly',
+      paddingLeft: 15,
+      backgroundColor: theme.colors.background,
+    },
     scrollView: {
       marginHorizontal: 10,
       paddingBottom: 10,
@@ -15,13 +22,6 @@ export const getStyles = (theme) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'flex-start',
-    },
-    container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'space-evenly',
-      paddingLeft: 15,
-      backgroundColor: theme.colors.background,
     },
     section: {
       flex: 1,

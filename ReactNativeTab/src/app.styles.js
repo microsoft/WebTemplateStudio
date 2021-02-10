@@ -1,7 +1,5 @@
 import { StyleSheet } from 'react-native';
 
-//TODO Review names
-//TODO see if we prefer several css per type
 export default StyleSheet.create({
   contentCenter: {
     flex: 1,
@@ -20,9 +18,6 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
   },
 
-  text: {
-    fontSize: 14,
-  },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -31,12 +26,15 @@ export default StyleSheet.create({
   subtitle: {
     fontSize: 16,
   },
+  text: {
+    fontSize: 14,
+  },
+  link: {
+    textDecorationLine: 'underline',
+  },
   icon: {
     fontSize: 20,
     fontWeight: 'bold',
     padding: 10,
-  },
-  link: {
-    textDecorationLine: 'underline',
   },
 });

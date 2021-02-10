@@ -14,7 +14,7 @@ function ItemDetail({ item }) {
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollView}>
           <View style={styles.titleContainer}>
-            <Icon name={item.icon} style={styles.icon} />
+            <Icon style={styles.icon} name={item.icon} />
             <Text style={styles.title}>{item.title}</Text>
           </View>
           <Text style={styles.description}>{item.shortDescription}</Text>

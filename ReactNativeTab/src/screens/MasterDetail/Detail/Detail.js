@@ -12,7 +12,7 @@ function Detail(props) {
   const styles = getStyles(theme);
 
   return (
-    <View style={styles.containerFlex}>
+    <View style={styles.container}>
       <ItemDetail item={item} />
     </View>
   );
