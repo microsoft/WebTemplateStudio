@@ -2,8 +2,8 @@ import React from 'react';
 
 import { View, Text, Switch } from 'react-native';
 
-import useThemeContext from '../hooks/useThemeContext';
-import themes from '../themes';
+import useThemeContext from '../../../hooks/useThemeContext';
+import themes from '../../../themes';
 import { getStyles } from './ToggleTheme.style';
 
 const ToggleTheme = () => {
