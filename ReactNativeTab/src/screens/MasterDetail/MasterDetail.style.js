@@ -4,8 +4,6 @@ import appStyles from '../../app.styles';
 
 export const getStyles = (theme) =>
   StyleSheet.create({
-    ...appStyles,
-
     masterDetailContainer: {
       flex: 1,
       flexDirection: 'row',

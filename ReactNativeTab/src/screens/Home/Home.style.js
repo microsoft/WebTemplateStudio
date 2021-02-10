@@ -4,9 +4,10 @@ import appStyles from '../../app.styles';
 
 export const getStyles = (theme) =>
   StyleSheet.create({
-    ...appStyles,
-    contentCenter: {
-      ...appStyles.contentCenter,
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
       backgroundColor: theme.colors.background,
     },
     text: {

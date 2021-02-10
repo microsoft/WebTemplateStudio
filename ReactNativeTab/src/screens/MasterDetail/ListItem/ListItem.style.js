@@ -4,8 +4,6 @@ import appStyles from '../../../app.styles';
 
 export const getStyles = (theme) =>
   StyleSheet.create({
-    ...appStyles,
-
     text: {
       ...appStyles.text,
       color: theme.colors.text,

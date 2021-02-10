@@ -4,13 +4,17 @@ import appStyles from '../../app.styles';
 
 export const getStyles = (theme) =>
   StyleSheet.create({
-    ...appStyles,
-    contentLeft: {
-      ...appStyles.contentLeft,
+    container: {
+      flex: 1,
+      alignItems: 'flex-start',
+      justifyContent: 'flex-start',
+      paddingLeft: 15,
       backgroundColor: theme.colors.background,
     },
-    sectionLeft: {
-      ...appStyles.sectionLeft,
+    section: {
+      paddingVertical: 20,
+      alignItems: 'flex-start',
+      justifyContent: 'flex-start',
       backgroundColor: theme.colors.background,
     },
     title: {

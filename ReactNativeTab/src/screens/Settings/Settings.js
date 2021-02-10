@@ -19,12 +19,12 @@ const Settings = () => {
   const styles = getStyles(theme);
 
   return (
-    <View style={styles.contentLeft}>
-      <View style={styles.sectionLeft}>
+    <View style={styles.container}>
+      <View style={styles.section}>
         <Text style={styles.title}>Personalization</Text>
         <ToggleTheme />
       </View>
-      <View style={styles.sectionLeft}>
+      <View style={styles.section}>
         <Text style={styles.title}>About this Application</Text>
         <Text style={styles.text}>
           {name} - {version}
@@ -33,7 +33,7 @@ const Settings = () => {
           Placeholder text: Your app description goes here
         </Text>
       </View>
-      <View style={styles.sectionLeft}>
+      <View style={styles.section}>
         <Text style={styles.link} onPress={goToPrivacyStatementLink}>
           Privacy Statement
         </Text>
