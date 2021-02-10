@@ -1,3 +1,3 @@
 *.pbxproj -text
 
-text eol=lf
+* text eol=lf
