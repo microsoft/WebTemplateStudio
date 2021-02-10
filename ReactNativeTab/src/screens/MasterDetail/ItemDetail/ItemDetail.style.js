@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import appStyles from '../../../app.styles';
+import appStyles, { FONTSIZE } from '../../../app.styles';
 
 export const getStyles = (theme) =>
   StyleSheet.create({
@@ -29,13 +29,13 @@ export const getStyles = (theme) =>
     },
     icon: {
       ...appStyles.icon,
-      fontSize: 28,
+      fontSize: FONTSIZE.XXLARGE,
       paddingRight: 5,
       color: theme.colors.text,
     },
     title: {
       ...appStyles.title,
-      fontSize: 26,
+      fontSize: FONTSIZE.XXLARGE,
       color: theme.colors.text,
     },
     subtitle: {
