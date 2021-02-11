@@ -1,0 +1,43 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft",
+  "classifications": ["Universal"],
+  "name": "AngularDefault",
+  "shortName": "AngularDefault",
+  "groupIdentity": "wts.Proj.AngularDefault",
+  "identity": "wts.Proj.AngularDefault",
+  "description": "",
+  "tags": {
+    "language": "Any",
+    "type": "project",
+    "wts.type": "project",
+    "wts.projecttype": "FullStackWebApp",
+    "wts.frontendframework": "Angular",
+    "wts.backendframework": "all",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.compositionOrder": "1",
+    "wts.licenses": "[Angular](https://github.com/angular/angular/blob/master/LICENSE)|[Angular CLI](https://github.com/angular/angular-cli/blob/master/LICENSE)|[Bootstrap](https://github.com/twbs/bootstrap/blob/master/LICENSE)"
+  },
+  "sourceName": "wts.AngularDefault",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.projectName": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_ProjectName"
+    },
+    "wts.ProjectNameToLower":
+    {
+      "type": "generated",
+      "generator": "casing",
+      "parameters": {
+        "source":"wts.projectName",
+        "toLower": true
+      },
+      "replaces": "Param_ProjectNameToLower"
+    }
+  },
+  "postActions": []
+}

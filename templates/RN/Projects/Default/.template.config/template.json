@@ -2,30 +2,40 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
-  "name": "AddInitialProjectStructure",
-  "shortName": "AddInitialProjectStructure",
-  "groupIdentity": "wts.Web.Proj.AddInitialProjectStructure",
-  "identity": "wts.Web.Proj.AddInitialProjectStructure",
+  "name": "ReactNativeDefault",
+  "shortName": "ReactNativeDefault",
+  "groupIdentity": "wts.RN.Proj.Default",
+  "identity": "wts.RN.Proj.Default",
   "description": "",
   "tags": {
     "language": "Any",
     "type": "project",
     "wts.type": "project",
-    "wts.projecttype": "FullStackWebApp",
-    "wts.frontendframework": "all",
+    "wts.projecttype": "Tabbed|Drawer|Blank",
+    "wts.frontendframework": "ReactNative",
     "wts.backendframework": "all",
-    "wts.platform": "Web",
+    "wts.platform": "RN",
     "wts.version": "1.0.0",
     "wts.compositionOrder": "0"
   },
-  "sourceName": "wts.PackageJsonDefault",
-  "preferNameDirectory": true,
+  "sourceName": "wts.itemName",
+  "preferNameDirectory": false,
   "PrimaryOutputs": [],
   "symbols": {
     "wts.projectName": {
       "type": "parameter",
       "dataType": "string",
       "replaces": "Param_ProjectName"
+    },
+    "wts.ProjectNameToLower":
+    {
+      "type": "generated",
+      "generator": "casing",
+      "parameters": {
+        "source":"wts.projectName",
+        "toLower": true
+      },
+      "replaces": "Param_ProjectNameToLower"
     },
     "wts.wizardVersion": {
       "type": "parameter",
