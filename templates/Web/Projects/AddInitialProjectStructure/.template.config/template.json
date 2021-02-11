@@ -12,8 +12,8 @@
     "type": "project",
     "wts.type": "project",
     "wts.projecttype": "FullStackWebApp",
-    "wts.frontendframework": "all",
-    "wts.backendframework": "all",
+    "wts.frontendframework": "Angular|React|Vue",
+    "wts.backendframework": "Node|AspNet|Flask|Moleculer",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
     "wts.compositionOrder": "0"
