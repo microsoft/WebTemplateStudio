@@ -2,9 +2,9 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
-  "name": "Proj.Angular",
-  "shortName": "Proj.Angular",
-  "groupIdentity": "wts.Proj.Default",
+  "name": "Project.Angular",
+  "shortName": "Project.Angular",
+  "groupIdentity": "wts.Project.Default",
   "identity": "wts.Project.AngularDefault",
   "tags": {
     "language": "Any",
