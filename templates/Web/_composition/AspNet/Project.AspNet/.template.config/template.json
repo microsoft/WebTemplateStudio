@@ -1,0 +1,49 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft",
+  "classifications": ["Universal"],
+  "name": "AspNetDefault",
+  "shortName": "AspNetDefault",
+  "groupIdentity": "wts.Proj.AspNetDefault",
+  "identity": "wts.Proj.AspNetDefault",
+  "description": "",
+  "tags": {
+    "language": "Any",
+    "type": "project",
+    "wts.type": "project",
+    "wts.projecttype": "FullStackWebApp",
+    "wts.frontendframework": "all",
+    "wts.backendframework": "AspNet",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.compositionOrder": "2",
+    "wts.licenses": "[ASP.NET Core](https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt)|[Json.NET](https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md)",
+    "wts.casing.sourceName": "pascal",
+    "wts.casing.rootNamespace": "pascal"
+  },
+  "sourceName": "wts.AspNetDefault",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.projectName": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_ProjectName"
+    },
+    "wts.rootNamespace": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_RootNamespace"
+    },
+    "wts.sourceName.casing.pascal": {
+      "type": "parameter",
+      "fileRename": "Param_SourceName_Pascal",
+      "replaces": "Param_SourceName_Pascal"
+    },
+    "wts.rootNamespace.casing.pascal": {
+      "type": "parameter",
+      "replaces": "Param_RootNamespace_Pascal"
+    }
+  },
+  "postActions": []
+}
