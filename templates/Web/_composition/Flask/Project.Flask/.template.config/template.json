@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft",
+  "classifications": ["Universal"],
+  "name": "FlaskDefault",
+  "shortName": "FlaskDefault",
+  "groupIdentity": "wts.Proj.FlaskDefault",
+  "identity": "wts.Proj.FlaskDefault",
+  "description": "",
+  "tags": {
+    "language": "Any",
+    "type": "project",
+    "wts.type": "project",
+    "wts.projecttype": "FullStackWebApp",
+    "wts.frontendframework": "all",
+    "wts.backendframework": "Flask",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.compositionOrder": "2",
+    "wts.licenses": "[Flask](https://github.com/pallets/flask/blob/master/LICENSE)"
+  },
+  "sourceName": "wts.FlaskDefault",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+  },
+  "postActions": []
+}
