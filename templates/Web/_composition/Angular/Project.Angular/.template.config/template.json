@@ -5,7 +5,7 @@
   "name": "Proj.Angular",
   "shortName": "Proj.Angular",
   "groupIdentity": "wts.Proj.Default",
-  "identity": "wts.Proj.AngularDefault",
+  "identity": "wts.Project.AngularDefault",
   "tags": {
     "language": "Any",
     "type": "item",
