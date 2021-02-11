@@ -11,7 +11,7 @@
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "identity == wts.Proj.NodeDefault|wts.Proj.FlaskDefault|wts.Proj.MoleculerDefault"
+    "wts.compositionFilter": "identity == wts.Proj.NodeDefault|wts.Project.Flask|wts.Proj.MoleculerDefault"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,
