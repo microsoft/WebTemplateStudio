@@ -2,9 +2,9 @@
 
 ├── backend/ - Backend App
 //{[{
+│ ├── Param_SourceName_Snake - app folder
 │ ├── scripts/ - scripts to publish
-│ ├── constants.py - Defines the constants for the endpoints and port
-│ └── server.py - Configures Port and HTTP Server and provides API routes
+│ └── app.py - Start flask app
 //}]}
 └── README.md
 
