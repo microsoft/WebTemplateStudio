@@ -4,7 +4,7 @@ import Param_ProjectName_Snake.mongo.settings
 COSMOS_COLLECTION = "ListItems"
 
 client = pymongo.MongoClient(
-    Param_ProjectName_Snake.mongo.settings.connection_str + "?ssl=true&replicaSet=globaldb"
+    Param_ProjectName_Snake.mongo.settings.connection_str + "?ssl=true&replicaSet=globaldb&retryWrites=false"
 )
 
 db = client[COSMOS_COLLECTION]
