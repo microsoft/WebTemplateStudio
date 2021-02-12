@@ -1,0 +1,21 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft Community",
+  "classifications": ["Universal"],
+  "name": "Page.Node.MasterDetail.AddRoutes",
+  "shortName": "Page.Node.MasterDetail.AddRoutes",
+  "identity": "Page.Node.MasterDetail.AddRoutes",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "composition",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.compositionFilter": "$backendframework == Node & groupIdentity == wts.Page.MasterDetail"
+  },
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+  }
+}
