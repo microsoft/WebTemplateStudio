@@ -2,9 +2,9 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
-  "name": "Project.AddBackendProxy",
-  "shortName": "Project.AddBackendProxy",
-  "identity": "wts.Project.AddBackendProxy",
+  "name": "Project.Flask.AddBackendProxy",
+  "shortName": "Project.Flask.AddBackendProxy",
+  "identity": "wts.Project.Flask.AddBackendProxy",
   "tags": {
     "language": "Any",
     "type": "item",
