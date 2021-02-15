@@ -2,17 +2,16 @@
   margin-left: 6px;
   font-style: normal;
   font-weight: 600;
-  font-size: 14px;
 }
 
 .iconCheck {
   margin-top: 3px;
-  height: 14px;
+  height: 1em;
 }
 
 .iconWarning {
   margin-top: 3px;
-  height: 16px;
+  height: 1em;
 }
 
 .iconCheck path {

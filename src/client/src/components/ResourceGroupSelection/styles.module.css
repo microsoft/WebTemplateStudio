@@ -1,5 +1,5 @@
 .container {
-  margin-bottom: 35px;
+  margin-bottom: 2em;
 }
 
 .containerDisabled {
@@ -12,31 +12,11 @@
   margin-bottom: 3px;
 }
 
-.title {
-  font-weight: 500;
-  font-size: 1.2em;
+.dropdownContainer {
+  display: flex;
 }
 
-.link {
-  text-decoration: none;
-  color: var(--vscode-textLink-foreground);
-}
-
-.link:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
-.subtitle {
-  margin-bottom: 1em;
-  font-size: 90%;
-  opacity: 0.8;
-}
-
-.dropdownContainer {  
-  display:flex
-}
-
-.dropdown {  
+.dropdown {
   flex: 1 1 auto;
 }
 
@@ -49,12 +29,16 @@
   padding: 0 10px;
 }
 
-.refreshButton:disabled {  
+.refreshButton:disabled {
   cursor: none;
 }
 
 .refreshButton:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.viewIcon {
+  width: 1em;
 }
 
 .viewIcon path {

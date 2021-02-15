@@ -10,7 +10,8 @@ import CosmosDBSelection from "./CosmosDBSelection";
 import AppServiceSelection from "./AppServiceSelection";
 
 import messages from "./messages";
-import styles from "./styles.module.css";
+import rightsidebarStyles from "../rightsidebarStyles.module.css";
+import InputTitle from "../../Titles/TitleForInput";
 
 interface IProps {
   services: ServiceState;
@@ -24,8 +25,8 @@ function ServicesList({ services, intl }: Props) {
   const hasCosmos = services.cosmosDB !== null;
 
   return (
-    <div className={styles.servicesSection}>
-      <div className={styles.title}>{formatMessage(messages.services)}</div>
+    <div className={rightsidebarStyles.sidebarItem}>
+      <InputTitle>{formatMessage(messages.services)}</InputTitle>
       {hasAppService && <AppServiceSelection appServiceSelection={services.appService} />}
       {hasCosmos && <CosmosDBSelection cosmosSelection={services.cosmosDB} />}
     </div>

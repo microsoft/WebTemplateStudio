@@ -21,7 +21,7 @@ import Icon from "../../../components/Icon";
 
 import styles from "./styles.module.css";
 import cardStyles from "../../cardStyles.module.css";
-import buttonStyles from "../../../css/buttonStyles.module.css";
+import buttonStyles from "../../../css/button.module.css";
 
 type Props = ISelectProps & IStateProps & InjectedIntlProps;
 
@@ -118,14 +118,14 @@ const FrameworkCard = (props: Props) => {
       <div>
         <div className={cardStyles.gridLayoutCardHeader}>
           <div>{framework.internalName && <Icon name={framework.internalName} icon={framework.icon} />}</div>
-          <div className={cardStyles.title}>{framework.title}</div>
+          <div className={classNames(cardStyles.title)}>{framework.title}</div>
         </div>
 
         <div className={styles.gridLayoutVersion}>
           <div className={cardStyles.version}>v{framework.version}</div>
           {latestVersion === framework.version && <div className={styles.latestVersion}>(Latest)</div>}
         </div>
-        <div className={cardStyles.description}>{framework.body}</div>
+        <div className={styles.description}>{framework.body}</div>
         <div className={cardStyles.DependencyInfo}>
           {selected && !framework.requirement?.isInstalled && <DependencyInfo requirement={framework.requirement} />}
         </div>

@@ -2,7 +2,7 @@ import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { GenerationItemData, GenerationItemStatus } from "../../../types/generationStatus";
 import classnames from "classnames";
-import buttonStyles from "../../../css/buttonStyles.module.css";
+import buttonStyles from "../../../css/button.module.css";
 import styles from "./styles.module.css";
 import messages from "./messages";
 import keyUpHandler from "../../../utils/keyUpHandler";
@@ -64,7 +64,7 @@ const GenerationItem = ({ intl, item }: Props) => {
       {status === GenerationItemStatus.Success && (
         <div className={styles.inLine}>
           {item.link && (
-            <a className={styles.link} href={item.link} onKeyUp={keyUpHandler}>
+            <a href={item.link} onKeyUp={keyUpHandler}>
               {formatMessage(messages.view)}
             </a>
           )}

@@ -77,9 +77,7 @@ const SidebarItem = ({
         {editable && (
           <div className={styles.errorStack}>
             <div
-              className={classnames(customInputStyle, {
-                [styles.pagesTextContainer]: true,
-              })}
+              className={classnames(customInputStyle, styles.pagesTextContainer)}
             >
               <div className={styles.inputContainer}>
                 {idx && (
@@ -96,9 +94,7 @@ const SidebarItem = ({
         {!editable && (
           <div className={styles.errorStack}>
             <div
-              className={classnames({
-                [styles.pagesTextContainerNoEdit]: true,
-              })}
+              className={styles.pagesTextContainerNoEdit}
             >
               {text}
             </div>

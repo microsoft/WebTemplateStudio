@@ -12,11 +12,12 @@ import PageContainer from "./PageContainer";
 
 import messages from "./messages";
 import classnames from "classnames";
-import rightsidebarStyles from "../rightsidebarStyles.module.css";
 import styles from "./styles.module.css";
+import rightsidebarStyles from "../rightsidebarStyles.module.css";
 
 import { ReactComponent as ShowIconSVG } from "../../../assets/i-show.svg";
 import { ReactComponent as HideIconSVG } from "../../../assets/i-hide.svg";
+import InputTitle from "../../Titles/TitleForInput";
 
 interface IStateProps {
   pathname: string;
@@ -37,13 +38,16 @@ const SelectPages = (props: Props) => {
     dispatch(setPagesAction(arrayMove(selectedPages, oldIndex, newIndex)));
   };
   const DRAG_PIXEL_THRESHOLD = 1;
+  const MAX_PAGES_ALLOWED = 20;
 
   return (
-    <div className={styles.sortablePages}>
+    <div className={rightsidebarStyles.sidebarItem}>
       <div className={classnames(styles.pageListContainer)}>
-        <div className={rightsidebarStyles.title}>
-          {`${props.intl!.formatMessage(messages.pages)} (${selectedPages.length >= 0 ? selectedPages.length : ""})`}
-        </div>
+        <InputTitle>
+          {`${props.intl!.formatMessage(messages.pages)} (${
+            selectedPages.length >= 0 ? selectedPages.length : ""
+          }/${MAX_PAGES_ALLOWED})`}
+        </InputTitle>
         <div className={styles.iconsContainer}>
           <button
             className={styles.hideOrShow}
@@ -51,7 +55,19 @@ const SelectPages = (props: Props) => {
               setMinimized(!isMinimized);
             }}
           >
-            {isMinimized ? <ShowIconSVG className={styles.viewIcon} /> : <HideIconSVG className={styles.viewIcon} />}
+            {isMinimized ? (
+              <ShowIconSVG
+                className={styles.viewIcon}
+                aria-label={props.intl!.formatMessage(messages.showAriaLabel)}
+                title={props.intl!.formatMessage(messages.showIcon)}
+              />
+            ) : (
+              <HideIconSVG
+                className={styles.viewIcon}
+                aria-label={props.intl!.formatMessage(messages.hideAriaLabel)}
+                title={props.intl!.formatMessage(messages.hideIcon)}
+              />
+            )}
           </button>
         </div>
       </div>

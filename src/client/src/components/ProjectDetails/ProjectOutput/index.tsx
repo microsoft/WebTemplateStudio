@@ -15,6 +15,7 @@ import { AppContext } from "../../../AppContext";
 import styles from "./styles.module.css";
 import messages from "./messages";
 import rightsidebarStyles from "../../RightSidebar/rightsidebarStyles.module.css";
+import InputTitle from "../../Titles/TitleForInput";
 
 interface IProps {
   isRightsidebar?: boolean;
@@ -24,6 +25,7 @@ type Props = IProps & InjectedIntlProps;
 
 const ProjectOutput = (props: Props) => {
   const dispatch = useDispatch();
+  const { formatMessage } = props.intl;
   const { vscode } = React.useContext(AppContext);
   const outputPath = useSelector(getOutputPath);
   const projectPathValidation = useSelector(getOutputPathValidation);
@@ -51,7 +53,7 @@ const ProjectOutput = (props: Props) => {
   return (
     <>
       <div className={props.isRightsidebar ? styles.inputContainer : rightsidebarStyles.inputContainer}>
-        <div className={styles.inputTitle}>{props.intl.formatMessage(messages.outputPathTitle)}</div>
+        <InputTitle>{formatMessage(messages.outputPathTitle)}</InputTitle>
         <div>
           <OutputPath
             handleSaveClick={handleSaveClick}

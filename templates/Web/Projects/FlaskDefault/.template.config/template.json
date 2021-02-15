@@ -17,12 +17,18 @@
     "wts.platform": "Web",
     "wts.version": "1.0.0",
     "wts.compositionOrder": "2",
-    "wts.licenses": "[Flask](https://github.com/pallets/flask/blob/master/LICENSE)"
+    "wts.licenses": "[Flask](https://github.com/pallets/flask/blob/master/LICENSE)",
+    "wts.casing.sourceName": "snake"
   },
   "sourceName": "wts.FlaskDefault",
   "preferNameDirectory": true,
   "PrimaryOutputs": [],
   "symbols": {
+    "wts.sourceName.casing.snake": {
+      "type": "parameter",
+      "replaces": "Param_SourceName_Snake",
+      "fileRename": "Param_SourceName_Snake"
+    }
   },
   "postActions": []
 }

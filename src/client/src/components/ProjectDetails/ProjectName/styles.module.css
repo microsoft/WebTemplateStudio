@@ -1,20 +1,13 @@
 .inputContainer {
-  margin-bottom: 30px;
+  margin-bottom: 1em;
 }
 
-.inputTitle {
-  line-height: 2em;
-  font-size: 1em;
-  font-weight: 600;
-  margin-bottom: 3px;
-}
-
-.error{
+.error {
   border: 0.5px solid var(--vscode-inputValidation-errorBorder);
 }
 
 .errorMessage {
-  min-height: 38px;
+  min-height: 2.5em;
   background: var(--vscode-inputValidation-errorBackground);
   border: 0.5px solid var(--vscode-inputValidation-errorBorder);
   color: var(--vscode-editor-foreground);

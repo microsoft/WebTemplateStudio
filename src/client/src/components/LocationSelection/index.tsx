@@ -1,6 +1,8 @@
 import * as React from "react";
 import { useState } from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
+
+import modalStyles from "../../css/modal.module.css";
 import styles from "./styles.module.css";
 import messages from "./messages";
 import Dropdown from "../Dropdown";
@@ -58,10 +60,10 @@ const LocationSelection = (props: Props) => {
 
   return (
     <div className={classNames(styles.container, { [styles.containerDisabled]: disableComponent })}>
-      <div className={styles.header}>
-        <div className={styles.title}>{formatMessage(messages.title)}</div>
+      <div className={modalStyles.header}>
+        <div className={modalStyles.title}>{formatMessage(messages.title)}</div>
       </div>
-      <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
+      <div className={modalStyles.subtitle}>{formatMessage(messages.subtitle)}</div>
       <Dropdown
         ariaLabel={formatMessage(messages.ariaDropdownLabel)}
         options={dropdownLocations}

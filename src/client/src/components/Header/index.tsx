@@ -4,8 +4,8 @@ import styles from "./styles.module.css";
 const Header = () => {
   return (
     <div className={styles.header}>
-      <div className={styles.headerTitle}>Web Template Studio</div>
-      <div className={styles.headerTitleSmall}>WebTS</div>
+      <h1 className={styles.headerTitle}>Web Template Studio</h1>
+      <h1 className={styles.headerTitleSmall}>WebTS</h1>
     </div>
   );
 };

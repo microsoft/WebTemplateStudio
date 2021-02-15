@@ -5,9 +5,12 @@
 
 .latestVersion {
   margin-top: 0.5rem;
-  font-size: 1.2rem;
-  line-height: 1.5;
   padding-left: 0.5rem;
+}
+
+.description{
+  height: 4rem;
+  text-overflow: ellipsis;
 }
 
 .cardCount,
@@ -38,7 +41,6 @@
   height: 30px;
   width: 30px;
   border-radius: 50%;
-  font-size: 16px;
 }
 
 .cardCount path {

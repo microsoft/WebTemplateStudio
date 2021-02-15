@@ -1,36 +1,18 @@
-
-.footerContainer {
-  margin-left: 15px;
-  margin-top: 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: right;
-}
-
-.button {
-  font-size: 1em;
-  border-radius: 3px;
-}
-
-.button:hover {
-  color: #ffffff;
+ul {
+  list-style-type: none;
+  padding-inline-start: 0;
 }
 
 .headerContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2em;
-}
-
-.button:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .cancelIcon {
   cursor: pointer;
-  height: 15px;
-  width: 15px;
+  height: 1em;
+  width: 1em;
   padding: 1px;
   margin-right: 2px;
 }
@@ -41,20 +23,4 @@
 
 .cancelIcon:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
-.cancelIcon path {
-  fill: var(--vscode-editor-foreground);
-}
-
-.cancelIcon path {
-  fill: var(--vscode-editor-foreground);
-}
-
-.title {
-  font-style: normal;
-  font-weight: lighter;
-  margin-bottom: 6px;
-  font-size: 2.5em;
-  color: var(--vscode-editor-foreground);
 }

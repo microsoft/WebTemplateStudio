@@ -5,11 +5,9 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import { AppState } from "../../store/combineReducers";
 import { AppContext } from "../../AppContext";
 
-import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
-import nextArrow from "../../assets/nextarrow.svg";
-import { ROUTE } from "../../utils/constants/constants";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
+import { ROUTE } from "../../utils/constants/constants";
 
 import { IVSCodeObject } from "../../types/vscode";
 import { IRoutesNavItems } from "../../types/route";
@@ -25,7 +23,7 @@ import { setRoutesAction } from "../../store/navigation/routesNavItems/actions";
 import { setDetailPageAction } from "../../store/config/detailsPage/action";
 
 import classnames from "classnames";
-import buttonStyles from "../../css/buttonStyles.module.css";
+import buttonStyles from "../../css/button.module.css";
 import styles from "./styles.module.css";
 import messages from "./messages";
 
@@ -88,7 +86,7 @@ const Footer = (props: Props) => {
           <div className={styles.buttonContainer}>
             <button
               tabIndex={!isFirstStep ? 0 : -1}
-              className={classnames(buttonStyles.buttonDark, styles.button, styles.buttonBack, {
+              className={classnames(buttonStyles.buttonDark, {
                 [styles.disabledOverlay]: isFirstStep || !isEnableGenerateButton,
               })}
               onClick={() => {
@@ -108,17 +106,10 @@ const Footer = (props: Props) => {
               }}
             >
               {formatMessage(messages.next)}
-              {nextArrow && (
-                <NextArrow
-                  className={classnames(styles.nextIcon, {
-                    [styles.nextIconNotDisabled]: isEnableNextPage,
-                  })}
-                />
-              )}
             </button>
             <button
               disabled={!isEnableGenerateButton}
-              className={classnames(styles.button, {
+              className={classnames({
                 [buttonStyles.buttonDark]: !isEnableGenerateButton,
                 [buttonStyles.buttonHighlighted]: isEnableGenerateButton,
                 [styles.disabledOverlay]: !isEnableGenerateButton,

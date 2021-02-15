@@ -6,6 +6,7 @@ import { AppState } from "../../store/combineReducers";
 
 import messages from "./messages";
 import pageStyles from "../pageStyles.module.css";
+import Title from "../../components/Titles/Title";
 
 type Props = InjectedIntlProps;
 
@@ -18,7 +19,7 @@ const SelectFrameworks = ({ intl }: Props) => {
     <>
       {frontendOptions.length > 0 && (
         <>
-          <h1 className={pageStyles.title}>{intl.formatMessage(messages.frontendTitle)}</h1>
+          <Title>{intl.formatMessage(messages.frontendTitle)}</Title>
           <div className={pageStyles.flexContainer}>
             {frontendOptions
             .filter(frontend => isPreview || !frontend.isPreview)
@@ -30,7 +31,7 @@ const SelectFrameworks = ({ intl }: Props) => {
       )}
       {backendOptions.length > 0 && (
         <>
-          <h1 className={pageStyles.title}>{intl.formatMessage(messages.backendTitle)}</h1>
+          <Title>{intl.formatMessage(messages.backendTitle)}</Title>
           <div className={pageStyles.flexContainer}>
             {backendOptions
             .filter(backend => isPreview || !backend.isPreview)

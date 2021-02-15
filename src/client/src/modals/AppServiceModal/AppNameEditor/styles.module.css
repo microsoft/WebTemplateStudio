@@ -1,23 +1,9 @@
 .container {
-  display: block;
-  position: relative;
-  margin-bottom: 35px;
+  margin-bottom: 2em;
 }
 
 .containerDisabled {
   opacity: 0.5;
-}
-
-.title {
-  font-weight: 500;
-  font-size: 1.2em;
-  margin-bottom: 3px;
-}
-
-.subtitle {
-  margin-bottom: 1em;
-  font-size: 90%;
-  opacity: 0.8;
 }
 
 .inputContainer {
@@ -25,11 +11,15 @@
   align-items: center;
   width: 100%;
   outline: none;
-  padding: 9px;
-  font-size: 1.2em;
+  padding: 0.5em;
   box-sizing: border-box;
   background: var(--vscode-editorWidget-border);
   border: none;
+}
+
+.inputContainer input:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+  outline-offset: 0.5em;
 }
 
 .input {
@@ -37,14 +27,8 @@
   border: none;
   background: var(--vscode-editorWidget-border);
   color: var(--vscode-editor-foreground);
-  font-size: 1em;
   width: 100%;
   margin-right: 10px;
-  padding: 2px 8px;
-}
-
-input:focus {
-  outline: none;
 }
 
 input::placeholder {
@@ -52,7 +36,7 @@ input::placeholder {
 }
 
 .validationIcon {
-  height: 15px;
+  height: 1em;
   margin-right: 0.2em;
 }
 
@@ -73,7 +57,7 @@ input::placeholder {
 }
 
 .errorMessage {
-  height: 38px;
+  height: 2.5em;
   background: var(--vscode-inputValidation-errorBackground);
   border: 1px solid var(--vscode-inputValidation-errorBorder);
   display: flex;

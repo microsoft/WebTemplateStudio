@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import { AppState } from "../../store/combineReducers";
 
@@ -20,6 +20,7 @@ import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 
 import CollapsibleInfoBox from "../../components/CollapsibleInfoBox";
 import AzureAccount from "../../pages/AddServicesPage/AzureAccount";
+import ModalTitle from "../../components/Titles/TitleForModal";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -57,7 +58,7 @@ const AzureServicesModal = (props: Props) => {
   return (
     <div>
       <div className={styles.headerContainer}>
-        <div className={styles.title}>{formatMessage(messages.getStartedWithAzure)}</div>
+        <ModalTitle>{formatMessage(messages.getStartedWithAzure)}</ModalTitle>
         <Cancel
           tabIndex={0}
           className={styles.cancelIcon}
@@ -66,7 +67,7 @@ const AzureServicesModal = (props: Props) => {
         />
       </div>
 
-      <div className={styles.questionaryContainer}>
+      <div>
         <CollapsibleInfoBox
           question={formatMessage(messages.freeAccountQuestion)}
           answer={formatMessage(messages.freeAccountAnswer)}
@@ -84,14 +85,11 @@ const AzureServicesModal = (props: Props) => {
           question={formatMessage(messages.freeTrialUpgradeQuestion)}
           answer={formatMessage(messages.freeTrialUpgradeAnswer)}
         />
-        <div className={styles.paragraph}>
-          <a className={styles.link} href={AZURE_LINKS.CREATE_FREE_ACCOUNT_FAQ} onKeyUp={keyUpHandler}>
-            <FormattedMessage
-              id="azureServicesModal.azureReadMore"
-              defaultMessage="Learn more about the Azure free account. Read the FAQ >"
-            />
+        <p>
+          <a href={AZURE_LINKS.CREATE_FREE_ACCOUNT_FAQ} onKeyUp={keyUpHandler}>
+            {formatMessage(messages.azureReadMore)}
           </a>
-        </div>
+        </p>
       </div>
       <div className={styles.footerContainer}>
         <AzureAccount />

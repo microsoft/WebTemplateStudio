@@ -3,14 +3,6 @@
   padding-top: 1vh;
 }
 
-.title {
-  font-size: 1.6em;
-}
-
-.summaryContainer {
-  margin: 15px;
-}
-
 .rightViewCropped {
   background-color: var(--vscode-editor-background);
   border-left: 0.5px solid #7f7f7f;
@@ -27,11 +19,17 @@
   width: 500px;
 }
 
-@media (max-width: 560px) {
-  .rightViewCropped {
-    position: fixed;
-    width: 100%;
-  }
+.hamburgerButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background: transparent;
+  height: 2em;
+  width: 2em;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .rightViewCroppedHamburguer {
@@ -48,29 +46,27 @@
   width: 56px;
 }
 
-.hamburgerButton {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  height: 26px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  box-sizing: border-box;
-  width: 25px;
-}
-
 .hamburgerLine {
-  width: 25px;
+  width: 2em;
   height: 1px;
   background: var(--vscode-editor-foreground);
 }
 
+.summaryContainer {
+  margin: 1.2em;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .icon {
   cursor: pointer;
-  height: 15px;
-  width: 15px;
+  height: 1em;
+  width: 1em;
+  margin-bottom: 0.4em;
 }
 
 .icon path {
@@ -89,31 +85,15 @@
   visibility: hidden;
 }
 
-.button:hover {
-  color: var(--vscode-editor-foreground);
-}
-
-.button:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
 .buttonContainer {
   display: flex;
   align-items: center;
-}
-
-.titleContainer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
 }
 
 .notificationContainer {
   border: 1px solid var(--vscode-editorMarkerNavigationWarning-background);
   border-radius: 3px;
   padding: 3px 10px 3px 10px;
-  margin-bottom: 20px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -121,7 +101,12 @@
 }
 
 .notificationLink {
-    font-weight: 600;
-    font-size: 14px;
-    margin-left: 5px;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+@media (max-width: 560px) {
+  .rightViewCropped {
+    width: 100%;
+  }
 }

@@ -11,6 +11,7 @@ import { ILicenseObject, License } from "../../../types/license";
 import { injectIntl, InjectedIntl, FormattedMessage } from "react-intl";
 import messages from "./messages";
 import Icon from "../../../components/Icon";
+import Title from "../../../components/Titles/Title";
 
 interface IProps {
   detailInfo: IOption;
@@ -78,14 +79,12 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
             className={styles.innerBackContainer}
           >
             {backArrow && <BackArrow className={styles.backIcon} />}
-            <div className={styles.details}>
-              <FormattedMessage id="details.back" defaultMessage="Back" />
-            </div>
+            <div className={styles.details}>{intl!.formatMessage(messages.back)}</div>
           </div>
         </div>
         <div className={styles.headerContainer}>
           {detailInfo.title && <Icon name={detailInfo.title.toString()} icon={detailInfo.icon} />}
-          <div className={styles.detailsTitle}>{renderFormattedData(detailInfo.title, false)}</div>
+          <Title>{renderFormattedData(detailInfo.title, false)}</Title>
         </div>
         <div className={styles.detailsContainer}>
           <div className={styles.spacer} />
@@ -94,8 +93,8 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
             <div>
               {detailInfo.author && (
                 <div className={classnames(styles.metaData, styles.row)}>
-                  <div className={classnames(styles.category, styles.colWidth)}>
-                    <FormattedMessage id="details.author" defaultMessage="Author:" />
+                  <div className={styles.colWidth}>
+                    <strong>{intl!.formatMessage(messages.author)}</strong>
                   </div>
                   {(detailInfo.author && renderFormattedData(detailInfo.author, false, true)) ||
                     intl!.formatMessage(messages.none)}
@@ -106,7 +105,7 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
               {detailInfo.licenses && detailInfo.licenses.length > 0 && (
                 <div className={classnames(styles.metaData)}>
                   <div className={classnames(styles.licenseCategory, styles.colWidth)}>
-                    <FormattedMessage id="details.licenses" defaultMessage="Licenses:" />
+                    <strong>{intl!.formatMessage(messages.licenses)}</strong>
                   </div>
                   <div className={classnames(styles.col8, styles.licenses)}>
                     {Array.isArray(detailInfo.licenses)
@@ -114,12 +113,7 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
                           const licenseObject = license as ILicenseObject;
                           return (
                             <p key={license + idx.toString()}>
-                              <a
-                                className={styles.licenseButton}
-                                href={String(licenseObject.url)}
-                                target={"_blank"}
-                                rel="noreferrer noopener"
-                              >
+                              <a href={String(licenseObject.url)} target={"_blank"} rel="noreferrer noopener">
                                 {licenseObject.text}
                               </a>
                             </p>
@@ -132,8 +126,8 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
               )}
               {detailInfo.version && (
                 <div className={classnames(styles.metaData, styles.row)}>
-                  <div className={classnames(styles.category, styles.colWidth)}>
-                    <FormattedMessage id="details.version" defaultMessage="Version:" />
+                  <div className={styles.colWidth}>
+                    <strong>{intl!.formatMessage(messages.version)}</strong>
                   </div>
                   {renderFormattedData(detailInfo.version, true, true)}
                 </div>

@@ -8,17 +8,21 @@ import { isLoggedInSelector } from "../../../store/config/azure/selector";
 import { setDetailPageAction } from "../../../store/config/detailsPage/action";
 import { AppState } from "../../../store/combineReducers";
 
-import { ROUTE } from "../../../utils/constants/constants";
+import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
 
 import Icon from "../../../components/Icon";
 
+import { ReactComponent as PlusSVG } from "../../../assets/plus.svg";
+import { ReactComponent as EditSVG } from "../../../assets/edit.svg";
 import { ReactComponent as PriceSVG } from "../../../assets/money.svg";
 import { ReactComponent as TimeSVG } from "../../../assets/timer.svg";
 
-import buttonStyles from "../../../css/buttonStyles.module.css";
+import cardStyles from "../../cardStyles.module.css";
+import buttonStyles from "../../../css/button.module.css";
 import styles from "./styles.module.css";
 import messages from "./messages";
-import classnames from "classnames";
+import classNames from "classnames";
+import { format } from "url";
 
 interface IProps {
   service: IService;
@@ -28,12 +32,17 @@ type Props = IProps & InjectedIntlProps;
 
 export const ServiceCard = (props: Props) => {
   const { intl, service } = props;
+  const [showPlusIcon, setShowPlusIcon] = React.useState(false);
+
   const { formatMessage } = intl;
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(isLoggedInSelector);
   const hasService = useSelector((state: AppState) => hasSelectedService(state, service.internalName));
 
-  const showDetails = () => {
+  const showDetails = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.KeyboardEvent<HTMLButtonElement>
+  ) => {
+    event.stopPropagation();
     dispatch(setDetailPageAction(service, false, ROUTE.ADD_SERVICES));
   };
 
@@ -43,39 +52,77 @@ export const ServiceCard = (props: Props) => {
       : dispatch(openAzureServicesModalAction(service.internalName));
   };
 
+  const openModalIfEnterOrSpace = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const isSelectableCard = event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE;
+    if (isSelectableCard) {
+      event.preventDefault();
+      openModal();
+    }
+  };
+
   return (
-    <div className={styles.container}>
-      <div className={styles.cardContainer}>
-        <div className={styles.header}>
-          <Icon name={service.title} icon={service.icon} />
-          <div className={styles.title}>{service.title}</div>
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={openModal}
+      onKeyDown={openModalIfEnterOrSpace}
+      className={classNames(cardStyles.container, cardStyles.boundingBox, styles.boundingBox, {
+        [cardStyles.selected]: hasService,
+      })}
+      onFocus={() => setShowPlusIcon(true)}
+      onBlur={() => setShowPlusIcon(false)}
+      onMouseLeave={() => setShowPlusIcon(false)}
+      onMouseOver={() => setShowPlusIcon(true)}
+    >
+      <div>
+        <div className={cardStyles.gridLayoutCardHeader}>
+          <div>
+            <Icon name={service.title} icon={service.icon} />
+          </div>
+          <div className={cardStyles.title}>{service.title}</div>
+
+          {showPlusIcon && (
+            <div className={classNames(styles.headerIconContainer)}>
+              {!hasService && (
+                <PlusSVG
+                  role="figure"
+                  className={styles.icon}
+                  title={formatMessage(messages.addToProject)}
+                  aria-label={formatMessage(messages.addToProject)}
+                />
+              )}
+              {hasService && (
+                <EditSVG
+                  role="figure"
+                  className={styles.icon}
+                  title={formatMessage(messages.editResource)}
+                  aria-label={formatMessage(messages.editResource)}
+                />
+              )}
+            </div>
+          )}
         </div>
-        <div className={styles.body}>
+        <div className={styles.description}>
           {service.expectedPrice && (
             <div className={styles.expectedPrice}>
-              <PriceSVG className={styles.svg} />
+              <PriceSVG role="figure" className={styles.svg} aria-label={formatMessage(messages.price)} />
               <div>{formatMessage(service.expectedPrice)}</div>
             </div>
           )}
           {service.expectedTime && (
             <div className={styles.expectedTime}>
-              <TimeSVG className={styles.svg} />
+              <TimeSVG role="figure" className={styles.svg} aria-label={formatMessage(messages.setUpTime)} />
               <div>{formatMessage(service.expectedTime)}</div>
             </div>
           )}
           <div>{service.body}</div>
         </div>
-        <div className={styles.footer}>
-          <button tabIndex={0} onClick={showDetails} className={buttonStyles.buttonLink}>
-            {formatMessage(messages.learnMore)}
-          </button>
-          <button
-            onClick={openModal}
-            className={classnames(styles.addButton, buttonStyles.buttonHighlighted, buttonStyles.buttonCursorPointer)}
-            tabIndex={0}
-          >
-            {hasService ? formatMessage(messages.editResource) : formatMessage(messages.addToProject)}
-          </button>
+        <div className={cardStyles.gridLayoutCardFooter}>
+          <div>
+            <button tabIndex={0} onClick={showDetails} className={buttonStyles.buttonLink}>
+              {formatMessage(messages.learnMore)}
+            </button>
+          </div>
         </div>
       </div>
     </div>

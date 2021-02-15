@@ -2,7 +2,7 @@ import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import { getInitialState, setOpenModal, setGenerationData } from "../../mockData/mockStore";
 import { waitFor, fireEvent } from "@testing-library/react";
-import buttonStyles from "../../css/buttonStyles.module.css";
+import buttonStyles from "../../css/button.module.css";
 import "@testing-library/jest-dom";
 import "@testing-library/jest-dom/extend-expect";
 import { renderWithStore } from "../../testUtils";
@@ -99,7 +99,7 @@ describe("GenerationModal", () => {
       const openProjectButton = getByText(intl.formatMessage(messages.openProject));
       expect(openProjectButton).toBeInTheDocument();
       expect(openProjectButton).toBeDisabled();
-      expect(openProjectButton).toHaveClass(buttonStyles.buttonDark);
+      expect(openProjectButton).toHaveClass(buttonStyles.buttonHighlighted);
     });
 
     it("when received item message, message should be visible", async () => {
