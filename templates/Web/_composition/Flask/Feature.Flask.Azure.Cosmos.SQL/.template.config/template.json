@@ -12,12 +12,18 @@
       "wts.platform": "Web",
       "wts.version": "1.0.0",
       "wts.compositionFilter": "$backendframework == Flask & identity == wts.Feature.Azure.Cosmos.SQL",
-      "wts.licenses":"[AzureCosmos](https://github.com/Azure/azure-sdk-for-python/blob/master/LICENSE.txt)|[PythonDev](https://github.com/theskumar/python-dotenv/blob/master/LICENSE)"
+      "wts.licenses":"[AzureCosmos](https://github.com/Azure/azure-sdk-for-python/blob/master/LICENSE.txt)|[PythonDev](https://github.com/theskumar/python-dotenv/blob/master/LICENSE)",
+      "wts.casing.projectName": "snake"
     },
     "sourceName": "wts.ItemName",
     "preferNameDirectory": true,
     "PrimaryOutputs": [],
     "symbols": {
+      "wts.projectName.casing.snake": {
+        "type": "parameter",
+        "fileRename": "Param_ProjectName_Snake",
+        "replaces": "Param_ProjectName_Snake"
+      }
     },
     "postActions": [
     ]
