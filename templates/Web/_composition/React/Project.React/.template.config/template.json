@@ -1,0 +1,41 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft",
+  "classifications": ["Universal"],
+  "name": "Project.React",
+  "shortName": "Project.React",
+  "groupIdentity": "wts.Project.Default",
+  "identity": "wts.Project.React",
+  "description": "",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "composition",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.compositionOrder": "1",
+    "wts.compositionFilter": "identity == wts.Web.Proj.AddInitialProjectStructure & $frontendframework == React & $projectType == FullStackWebApp",
+    "wts.licenses": "[React](https://github.com/facebook/react/blob/master/LICENSE)|[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)|[Bootstrap](https://github.com/twbs/bootstrap/blob/master/LICENSE)"
+  },
+  "sourceName": "wts.ReactDefault",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.projectName": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_ProjectName"
+    },
+    "wts.ProjectNameToLower":
+    {
+      "type": "generated",
+      "generator": "casing",
+      "parameters": {
+        "source":"wts.projectName",
+        "toLower": true
+      },
+      "replaces": "Param_ProjectNameToLower"
+    }
+  },
+  "postActions": []
+}
