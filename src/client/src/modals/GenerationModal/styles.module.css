@@ -2,14 +2,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2em;
-}
-
-.title {
-  font-size: 2.5em;
-  font-weight: lighter;
-  line-height: 25px;
-  color: var(--vscode-editor-foreground);
 }
 
 .closeIcon {
@@ -28,15 +20,6 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
-.messages {
-  margin-top: 40px;
-}
-
-.messages > p {
-  margin-top: 15px;
-  font-size: 1.2em;
-}
-
 .generationItems {
   margin-top: 40px;
   padding-top: 0.6em;
@@ -53,7 +36,6 @@
 
 .footer > button {
   align-items: center;
-  font-size: 1.2em;
   margin-left: 1em;
   display: flex;
   justify-content: space-between;
@@ -61,16 +43,5 @@
 }
 
 .footer > button:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
-.link {
-  color: var(--vscode-textLink-foreground);
-  font-weight: var(--vscode-font-weight);
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.link:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }

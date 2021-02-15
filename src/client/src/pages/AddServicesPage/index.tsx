@@ -1,6 +1,4 @@
 import * as React from "react";
-import classnames from "classnames";
-import styles from "./styles.module.css";
 
 import { useSelector } from "react-redux";
 import { InjectedIntlProps, injectIntl } from "react-intl";
@@ -9,10 +7,13 @@ import { getServiceGroups } from "../../store/templates/features/selector";
 
 import messages from "./messages";
 
-import Title from "../../components/Title";
 import ServiceGroup from "./ServiceGroup";
 import AzureStudent from "./AzureStudent";
 import AzureAccount from "./AzureAccount";
+import Title from "../../components/Titles/Title";
+
+import styles from "./styles.module.css";
+import pageStyles from "../pageStyles.module.css";
 
 type Props = InjectedIntlProps;
 
@@ -23,19 +24,17 @@ const AddServicesPage = ({ intl }: Props) => {
   const serviceGroups = useSelector(getServiceGroups);
 
   return (
-    <div className={styles.centerView}>
-      <div className={classnames(styles.container)}>
-        <div className={styles.logInInfoBar}>
-          <Title>{formatMessage(messages.title)}</Title>
+    <div className={styles.container}>
+      <div className={styles.logInInfoBar}>
+        <Title>{formatMessage(messages.title)}</Title>
 
-          <AzureAccount />
-        </div>
-        {!isLoggedIn && <AzureStudent />}
-        <div className={styles.servicesContainer}>
-          {serviceGroups.map((group, key) => {
-            return <ServiceGroup group={group} key={key} />;
-          })}
-        </div>
+        <AzureAccount />
+      </div>
+      {!isLoggedIn && <AzureStudent />}
+      <div className={pageStyles.flexContainer}>
+        {serviceGroups.map((group, key) => {
+          return <ServiceGroup group={group} key={key} />;
+        })}
       </div>
     </div>
   );

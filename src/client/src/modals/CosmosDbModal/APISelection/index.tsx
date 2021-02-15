@@ -1,10 +1,13 @@
 import * as React from "react";
 import { useState } from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
+
+import modalStyles from "../../../css/modal.module.css";
 import styles from "./styles.module.css";
+import messages from "./messages";
+
 import Dropdown from "../../../components/Dropdown";
 import { AZURE } from "../../../utils/constants/azure";
-import messages from "./messages";
 
 const ApiValues: IDropDownOptionType[] = [
   {
@@ -45,10 +48,8 @@ const ApiSelection = (props: Props) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <div className={styles.title}>{formatMessage(messages.title)}</div>
-      </div>
-      <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
+      <div className={modalStyles.title}>{formatMessage(messages.title)}</div>
+      <div className={modalStyles.subtitle}>{formatMessage(messages.subtitle)}</div>
       <Dropdown
         openDropdownUpwards={!isAdvancedMode}
         ariaLabel={formatMessage(messages.ariaDropdownLabel)}

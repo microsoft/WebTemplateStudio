@@ -10,30 +10,21 @@
   flex: 0 1 100%;
 }
 
-.header {
-  font-size: 2.5em;
-  font-weight: 600;
-  padding-bottom: 4%;
-  font-weight: lighter;
-}
-
-.body {
-  font-size: 1.4em;
-  line-height: 1.9em;
-  margin-bottom: 1em;
-  padding-bottom: 4%;
-  width: 85%;
-  white-space: pre-line;
-}
-
 .projectDetailsContainer {
   width: 80%;
-  font-size: 1em;
+  max-width: 530px;
 }
 
 .newProjectInfo {
   max-width: 50%;
-  padding: 6vh;
+  padding: 4vh 6vh;
+}
+
+.newProjectInfo > p {
+  margin-bottom: 1em;
+  padding-bottom: 4%;
+  width: 85%;
+  white-space: pre-line;
 }
 
 @media (min-width: 850px) and (max-width: 1120px) {

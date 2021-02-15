@@ -1,10 +1,10 @@
 .container {
-    margin-right: 12px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    padding: 12px;
-    background-color: hsla(0, 0%, 47%, 0.2);
-  }
+  margin-right: 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  padding: 12px;
+  background-color: hsla(0, 0%, 47%, 0.2);
+}
 
 .container:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
@@ -16,7 +16,7 @@
   border: none;
 }
 
-.innerContent{
+.innerContent {
   display: flex;
   flex-direction: column;
   height: inherit;
@@ -34,27 +34,16 @@
 
 .gridLayoutCardHeader {
   display: grid;
-  grid-template-columns: 3rem auto 3rem;
+  grid-template-columns: 3rem auto 2rem;
   max-height: 50px;
-  width: 17rem;
 }
 
 .gridLayoutCardHeader .title {
   margin-left: 1rem;
   margin-top: 0.2rem;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   line-height: 1.5;
 }
-
-.description {
-  font-size: 1.2rem;
-  line-height: 1.5;
-  flex: 1; /* fill remaining space */
-}
-/*
-  margin-top: 1rem;
-  height: 9rem;
-*/
 
 .selected {
   border: none;
@@ -73,8 +62,6 @@
 
 .version {
   margin-top: 0.5rem;
-  font-size: 1.2rem;
-  line-height: 1.5;
 }
 
 .DependencyInfo {
@@ -83,9 +70,9 @@
 }
 
 .iconCheckMark {
-  margin-left: 8px;
-  height: 18px;
-  width: 18px;
+  margin-left: 0.5em;
+  height: 1em;
+  width: 1em;
   align-self: center;
 }
 
@@ -93,18 +80,8 @@
   fill: var(--vscode-gitDecoration-untrackedResourceForeground);
 }
 
-.link {
-  color: var(--vscode-textLink-foreground);
-  font-size: 15px;
-  text-decoration: none;
-}
-
-.link:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
 .gridLayoutCardFooter {
   display: grid;
-  grid-template-columns: auto 3rem;
-  min-height: 30px;
+  grid-template-columns: auto 2rem;
+  min-height: 2em;
 }

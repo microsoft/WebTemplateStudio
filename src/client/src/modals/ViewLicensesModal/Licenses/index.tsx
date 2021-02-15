@@ -21,19 +21,21 @@ const Licenses = () => {
 
   return (
     <div className={styles.container}>
-      {licenses.map((license: ILicenseObject) => (
-        <p key={license.url}>
-          <a
-            className={styles.licenseButton}
-            href={String(license.url)}
-            key={license.text}
-            target={"_blank"}
-            rel="noreferrer noopener"
-          >
-            {license.text}
-          </a>
-        </p>
-      ))}
+      <ul>
+        {licenses.map((license: ILicenseObject) => (
+          <li key={license.url}>
+            <a
+              className={styles.licenseButton}
+              href={String(license.url)}
+              key={license.text}
+              target={"_blank"}
+              rel="noreferrer noopener"
+            >
+              {license.text}
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

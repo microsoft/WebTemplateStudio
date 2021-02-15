@@ -3,7 +3,7 @@ import configureMockStore from "redux-mock-store";
 import "@testing-library/jest-dom";
 import AppServiceModal from ".";
 import { getInitialState, setOpenModal, addFeaturesOptions } from "../../mockData/mockStore";
-import buttonStyles from "../../css/buttonStyles.module.css";
+import button from "../../css/button.module.css";
 import "@testing-library/jest-dom/extend-expect";
 import { renderWithStore } from "../../testUtils";
 import messages from "./messages";
@@ -86,7 +86,7 @@ describe("AppServiceModal", () => {
     const { getByText } = renderWithStore(<AppServiceModal {...props} />, store);
     const saveButton = getByText(intl.formatMessage(messages.save));
     expect(saveButton).toBeDisabled();
-    expect(saveButton).toHaveClass(buttonStyles.buttonDark);
+    expect(saveButton).toHaveClass(button.buttonDark);
   });
 
   it("If has valid app name, save button shold be enabled", async () => {
@@ -98,7 +98,7 @@ describe("AppServiceModal", () => {
     await waitFor(() => {
       const saveButton = getByText(intl.formatMessage(messages.save));
       expect(saveButton).toBeEnabled();
-      expect(saveButton).toHaveClass(buttonStyles.buttonHighlighted);
+      expect(saveButton).toHaveClass(button.buttonHighlighted);
     });
   });
 
@@ -111,7 +111,7 @@ describe("AppServiceModal", () => {
     await waitFor(() => {
       const saveButton = getByText(intl.formatMessage(messages.save));
       expect(saveButton).toBeDisabled();
-      expect(saveButton).toHaveClass(buttonStyles.buttonDark);
+      expect(saveButton).toHaveClass(button.buttonDark);
     });
   });
 

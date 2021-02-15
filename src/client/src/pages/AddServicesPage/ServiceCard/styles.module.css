@@ -6,6 +6,9 @@
   margin-bottom: 10px;
 }
 
+.boundingBox {
+  width: 260px;
+}
 .cardContainer {
   height: 100%;
   box-sizing: border-box;
@@ -13,7 +16,7 @@
   flex-direction: column;
 }
 
-.cardContainer>*:last-child {
+.cardContainer > *:last-child {
   margin-top: auto;
 }
 
@@ -23,26 +26,30 @@
   margin-bottom: 16px;
 }
 
-.title {
-  margin-left: 10px;
-  font-size: 20px;
-  font-weight: 600;
+.headerIconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1.8px solid var(--vscode-editor-foreground);
+  height: 2em;
+  width: 2em;
+  border-radius: 50%;
 }
 
 .icon {
-  height: 36px;
+  height: 1em;
+  width: 1em;
+  fill: var(--vscode-editor-foreground);
 }
 
-.body {
-  margin-bottom: 1em;
-  font-size: 15px;
-  line-height: 1.75em;
+.description {
+  margin-top: 1rem;
+  height: 10rem;
 }
 
 .expectedPrice {
-  margin-top: 5px;
   display: flex;
-  margin-bottom: 8px;
+  margin-bottom: 1em;
 }
 
 .expectedTime {
@@ -51,24 +58,6 @@
 }
 
 .svg {
-  margin-right: 18px;
-  margin-top: 4px;
+  margin-right: 1em;
   fill: var(--vscode-editor-foreground);
-}
-
-.footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--vscode-textLink-foreground);
-}
-
-.addButton {
-  margin-left: 10px;
-  font-size: var(--vscode-font-size);
-  border: none;
-}
-
-.addButton:focus {
-  outline: 1.5px solid var(--vscode-contrastActiveBorder);
 }

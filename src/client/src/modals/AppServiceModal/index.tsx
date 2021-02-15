@@ -28,10 +28,11 @@ import AppNameEditor from "./AppNameEditor";
 import RuntimeStackInfo from "./RuntimeStackInfo";
 import AppServicePlanInfo from "./AppServicePlanInfo";
 
-import buttonStyles from "../../css/buttonStyles.module.css";
+import buttonStyles from "../../css/button.module.css";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import messages from "./messages";
+import ModalTitle from "../../components/Titles/TitleForModal";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -103,7 +104,7 @@ const AppServiceModal = ({ intl }: Props) => {
   return (
     <React.Fragment>
       <div className={styles.header}>
-        <div className={styles.title}>{formatMessage(messages.title)}</div>
+        <ModalTitle>{formatMessage(messages.title)}</ModalTitle>
         <Cancel
           tabIndex={0}
           aria-label={intl.formatMessage(messages.ariaCloseModalLabel)}

@@ -18,6 +18,7 @@ import {
 
 import rightsidebarStyles from "../rightsidebarStyles.module.css";
 import messages from "./messages";
+import InputTitle from "../../Titles/TitleForInput";
 
 type Props = InjectedIntlProps;
 
@@ -75,10 +76,10 @@ const SelectFrameworks = (props: Props) => {
   }, [selectedBackendFramework]);
 
   return (
-    <>
+    <div className={rightsidebarStyles.sidebarItem}>
       {frontendOptions.length > 1 && selectedFrontendFramework && selectedFrontendFramework.value !== "" && (
-        <div className={rightsidebarStyles.sidebarItem}>
-          <div className={rightsidebarStyles.title}>{formatMessage(messages.frontendFramework)}</div>
+        <div className={rightsidebarStyles.inputContainer}>
+          <InputTitle>{formatMessage(messages.frontendFramework)}</InputTitle>
           <Dropdown
             handleChange={(selectedFrontendFramework) => {
               setSelectedFrontendFramework(selectedFrontendFramework);
@@ -90,8 +91,8 @@ const SelectFrameworks = (props: Props) => {
         </div>
       )}
       {backendOptions.length > 1 && selectedBackendFramework && selectedBackendFramework.value !== "" && (
-        <div className={rightsidebarStyles.sidebarItem}>
-          <div className={rightsidebarStyles.title}>{formatMessage(messages.backendFramework)}</div>
+        <div className={rightsidebarStyles.inputContainer}>
+          <InputTitle>{formatMessage(messages.backendFramework)}</InputTitle>
           <Dropdown
             handleChange={(selectedBackendFramework) => {
               setSelectedBackendFramework(selectedBackendFramework);
@@ -102,7 +103,7 @@ const SelectFrameworks = (props: Props) => {
           />
         </div>
       )}
-    </>
+    </div>
   );
 };
 

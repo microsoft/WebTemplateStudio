@@ -11,6 +11,7 @@ import { isViewLicensesModalOpenSelector } from "../../store/navigation/modals/s
 import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import { KEY_EVENTS } from "../../utils/constants/constants";
 import messages from "./messages";
+import ModalTitle from "../../components/Titles/TitleForModal";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -31,7 +32,7 @@ const ViewLicensesModal = ({ intl }: Props) => {
   return (
     <div>
       <div className={styles.headerContainer}>
-        <div className={styles.title}>{intl.formatMessage(messages.licenses)}</div>
+        <ModalTitle>{intl.formatMessage(messages.licenses)}</ModalTitle>
         <Cancel
           tabIndex={0}
           className={styles.cancelIcon}

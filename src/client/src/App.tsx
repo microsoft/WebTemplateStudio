@@ -82,7 +82,6 @@ const App = (props: Props) => {
           className={classnames(appStyles.centerView, {
             [appStyles.centerViewNewProjectPage]: selectedRoute === ROUTE.NEW_PROJECT,
             [appStyles.centerViewMaxHeight]: selectedRoute === ROUTE.PAGE_DETAILS,
-            [appStyles.centerViewAzurePage]: selectedRoute === ROUTE.ADD_SERVICES,
           })}
         >
           {selectedRoute === ROUTE.NEW_PROJECT ? (

@@ -1,9 +1,12 @@
 import * as React from "react";
 import { useState } from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
+
+import modalStyles from "../../css/modal.module.css";
 import styles from "./styles.module.css";
-import { ReactComponent as Refresh } from "../../assets/i-refresh.svg";
 import messages from "./messages";
+
+import { ReactComponent as Refresh } from "../../assets/i-refresh.svg";
 import Dropdown from "../Dropdown";
 import classNames from "classnames";
 import { AZURE_LINKS } from "../../utils/constants/azure";
@@ -90,14 +93,14 @@ const ResourceGroupSelection = (props: Props) => {
 
   return (
     <div className={classNames(styles.container, { [styles.containerDisabled]: disableComponent })}>
-      <div className={styles.header}>
-        <div className={styles.title}>{formatMessage(messages.title)}</div>
-        <a className={styles.link} href={AZURE_LINKS.CREATE_NEW_RESOURCE_GROUP}>
+      <div className={modalStyles.header}>
+        <div className={modalStyles.title}>{formatMessage(messages.title)}</div>
+        <a href={AZURE_LINKS.CREATE_NEW_RESOURCE_GROUP}>
           {formatMessage(messages.newResourceGroupLink)}
         </a>
       </div>
 
-      <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
+      <div className={modalStyles.subtitle}>{formatMessage(messages.subtitle)}</div>
       <div className={styles.dropdownContainer}>
         <div className={styles.dropdown}>
           <Dropdown

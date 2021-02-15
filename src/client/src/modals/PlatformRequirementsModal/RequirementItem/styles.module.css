@@ -1,6 +1,5 @@
 .container {
   display: flex;
-  font-size: 1em;
   margin-bottom: 0.3em;
 }
 
@@ -10,7 +9,7 @@
 
 .iconCheck {
   margin-right: 1em;
-  height: 18px;
+  height: 1em;
 }
 
 .iconCheck path {
@@ -19,7 +18,7 @@
 
 .iconWarning {
   margin-right: 1em;
-  height: 18px;
+  height: 1em;
 }
 
 .iconWarning path {

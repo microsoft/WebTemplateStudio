@@ -1,8 +1,11 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
+
+import modalStyles from "../../../css/modal.module.css";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import messages from "./messages";
+
 import { getProjectName } from "../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
 import { ReactComponent as GreenCheck } from "../../../assets/checkgreen.svg";
@@ -69,8 +72,8 @@ const AppNameEditor = ({ intl, subscription, appName, onAppNameChange, onIsAvail
         [styles.containerDisabled]: subscription === "",
       })}
     >
-      <div className={styles.title}>{formatMessage(messages.title)}</div>
-      <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
+      <div className={modalStyles.title}>{formatMessage(messages.title)}</div>
+      <div className={modalStyles.subtitle}>{formatMessage(messages.subtitle)}</div>
       <div className={styles.inputContainer}>
         <input
           aria-label={formatMessage(messages.ariaInputLabel)}

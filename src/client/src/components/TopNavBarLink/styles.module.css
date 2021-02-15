@@ -1,8 +1,3 @@
-.textSelected,
-.text {
-  font-size: 1em;
-}
-
 .textSelected {
   text-shadow: 0.75px 0 0 currentColor;
 }
@@ -64,18 +59,19 @@
 }
 
 .pageIsSelected {
-  background-color: #0067b8;
+  background-color: var(--vscode-button-hoverBackground);
   z-index: 1000;
-  border: 1px solid #0067b8;
+  border: 1px solid var(--vscode-button-hoverBackground);
   color: var(--vscode-button-foreground);
 }
 
 .pageIsVisited {
   background-color: var(--vscode-editor-foreground);
+  border: 1px solid var(--vscode-editor-foreground);
   color: var(--vscode-editor-background);
 }
 
-.pageCursorPointer{
+.pageCursorPointer {
   cursor: pointer;
 }
 

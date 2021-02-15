@@ -27,7 +27,6 @@
   text-decoration: none;
   margin-bottom: 19px;
   margin-top: 19px;
-  font-size: 14px;
 }
 
 .feedback:focus {
@@ -40,6 +39,10 @@
   float: right;
   padding-right: 20px;
   font-size: 1.1em;
+}
+
+.topNavBar a:hover{
+  text-decoration: none;
 }
 
 @media (min-width: 650px) {

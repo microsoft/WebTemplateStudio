@@ -17,9 +17,18 @@ export default {
     ...base,
     color: "var(--vscode-menu-foreground)",
   }),
+  valueContainer: (base:any)=>({
+    ...base,
+    padding: "0 0.2em",
+  }),
+  indicatorContainer: (base:any)=>({
+    ...base,
+    padding: "0",
+  }),
   control: (base: any, state: any): any => ({
     ...base,
-    color: "white",
+    minHeight:"2.5em",
+    maxHeight:"2.5em",
     border: state.isFocused ? "1px solid var(--vscode-contrastActiveBorder)" : "none",
     borderRadius: 0,
     boxShadow: "none",
@@ -27,7 +36,7 @@ export default {
     "&:hover": {
       outline: "0.5px solid rgba(0,0,0,0.5)",
     },
-    padding: "5px",
+    padding: "0 0.2em",
     cursor: "pointer",
   }),
   option: (provided: any, state: any) => ({

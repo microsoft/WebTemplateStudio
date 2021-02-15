@@ -17,6 +17,7 @@ import stylesInput from "../../../css/input.module.css";
 import styles from "./styles.module.css";
 import messages from "./messages";
 import rightsidebarStyles from "../../RightSidebar/rightsidebarStyles.module.css";
+import InputTitle from "../../Titles/TitleForInput";
 
 interface IProps {
   isRightsidebar?: boolean;
@@ -77,9 +78,7 @@ const ProjectName = (props: Props) => {
 
   return (
     <div className={props.isRightsidebar ? rightsidebarStyles.inputContainer : styles.inputContainer}>
-      <div className={props.isRightsidebar ? rightsidebarStyles.title : styles.inputTitle}>
-        {formatMessage(messages.projectNameTitle)}
-      </div>
+      <InputTitle>{formatMessage(messages.projectNameTitle)}</InputTitle>
 
       <div>
         <input
