@@ -11,6 +11,7 @@
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
+    "wts.compositionOrder": "3",
     "wts.compositionFilter": "$backendframework == AspNet & wts.type == project"
   },
   "sourceName": "wts.ItemName",

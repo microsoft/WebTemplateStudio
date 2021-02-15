@@ -13,7 +13,7 @@
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionOrder": "2",
+    "wts.compositionOrder": "1",
     "wts.compositionFilter": "identity == wts.Web.Proj.AddInitialProjectStructure & $backendframework == Node & $projectType == FullStackWebApp",
     "wts.licenses": "[Node](https://github.com/nodejs/node/blob/master/LICENSE)|[Express](https://github.com/expressjs/express/blob/master/LICENSE)|[Express Generator](https://github.com/expressjs/generator/blob/master/LICENSE)"
   },
