@@ -1,0 +1,16 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3px;
+  vertical-align: baseline;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 1.2em;
+}
+
+.subtitle {
+  margin-bottom: 1em;
+  opacity: 0.8;
+}

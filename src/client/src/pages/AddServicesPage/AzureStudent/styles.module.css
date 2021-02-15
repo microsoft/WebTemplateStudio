@@ -13,24 +13,10 @@
   padding-left: 4em;
 }
 
-.link {
-  color: var(--vscode-textLink-foreground);
-  font-size: 15px;
-  text-decoration: none;
-}
-
 .cloudServicesSvg {
   width: 200px;
 }
 
-.azureForStudent {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 15px;
-
-}
-
 .body {
-  font-size: 15px;
   margin-bottom: 8px;
 }

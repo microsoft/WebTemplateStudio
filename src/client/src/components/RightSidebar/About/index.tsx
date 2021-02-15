@@ -20,7 +20,6 @@ const About = ({ intl }: Props) => {
       <div className={styles.title}>{formatMessage(messages.title)}</div>
       <div>
         <a
-          className={styles.buttonToLink}
           href={WEB_TEMPLATE_STUDIO_LINKS.REPO}
           target={"_blank"}
           rel="noreferrer noopener"
@@ -32,7 +31,6 @@ const About = ({ intl }: Props) => {
         <a
           target={"_blank"}
           rel="noreferrer noopener"
-          className={styles.buttonToLink}
           href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES}
         >
           {formatMessage(messages.reportIssue)}
@@ -40,8 +38,8 @@ const About = ({ intl }: Props) => {
       </div>
       <br />
 
-      <div className={styles.wizardInfo}>{formatMessage(messages.templatesVersion) + ` ${templatesVersion}`}</div>
-      <div className={styles.wizardInfo}>{formatMessage(messages.wizardVersion) + ` ${wizardVersion}`}</div>
+      <div>{formatMessage(messages.templatesVersion) + ` ${templatesVersion}`}</div>
+      <div>{formatMessage(messages.wizardVersion) + ` ${wizardVersion}`}</div>
     </div>
   );
 };

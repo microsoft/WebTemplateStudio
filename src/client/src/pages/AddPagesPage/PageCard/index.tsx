@@ -18,8 +18,7 @@ import messages from "../../messages";
 import classNames from "classnames";
 import styles from "./styles.module.css";
 import cardStyles from "../../cardStyles.module.css";
-import pageStyles from "../../cardStyles.module.css";
-import buttonStyles from "../../../css/buttonStyles.module.css";
+import buttonStyles from "../../../css/button.module.css";
 
 type Props = IProps & IStateProps & InjectedIntlProps;
 
@@ -92,7 +91,7 @@ const PageCard = (props: Props) => {
           <div>
             <Icon name={page.defaultName} icon={page.icon} />
           </div>
-          <div className={classNames(pageStyles.title)}>{page.defaultName}</div>
+          <div className={classNames(cardStyles.title)}>{page.defaultName}</div>
           {showPlusIcon && (
             <div className={classNames(styles.headerIconContainer)}>
               <Plus role="figure" />
@@ -113,7 +112,7 @@ const PageCard = (props: Props) => {
               </button>
             )}
           </div>
-          <div className={styles.pageCounter}>
+          <div>
             {selectedPages.filter((selectedPage) => selectedPage.defaultName === page.defaultName).length}
           </div>
         </div>

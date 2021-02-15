@@ -2,15 +2,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1em;
-}
-
-.title {
-  font-style: normal;
-  font-weight: lighter;
-  margin-bottom: 6px;
-  font-size: 2.5em;
-  color: var(--vscode-editor-foreground);
 }
 
 .cancelIcon {
@@ -43,13 +34,4 @@
 
 .link {
   margin-top: 2em;
-}
-
-.link a{
-  text-decoration: none;
-  color: var(--vscode-textLink-foreground);
-}
-
-.link a:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
 }

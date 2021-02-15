@@ -5,19 +5,17 @@
 
 .container {
   position: relative;
-  padding: 4vh 6vh;
 }
 
 .logInInfoBar {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   flex-flow: row wrap;
 }
 
 .servicesContainer {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
-  padding: 3em;
 }

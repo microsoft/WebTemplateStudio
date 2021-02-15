@@ -20,8 +20,11 @@ import Notification from "../Notification";
 import messages from "./messages";
 import classnames from "classnames";
 import styles from "./styles.module.css";
-import buttonStyles from "../../css/buttonStyles.module.css";
+import buttonStyles from "../../css/button.module.css";
 import SelectProjectTypes from "./SelectProjectTypes";
+
+import Title from "../Titles/Title";
+
 import {
   hasInvalidPlatformRequirementsSelector,
   hasPlatformRequirementsSelector,
@@ -75,7 +78,7 @@ const RightSidebar = (props: Props) => {
         <div role="complementary" id="dvRightSideBar" className={classnames(styles.container, styles.rightViewCropped)}>
           <div className={styles.summaryContainer} id="dvSummaryContainer">
             <div className={styles.titleContainer}>
-              <div className={styles.title}>{formatMessage(messages.yourProjectDetails)}</div>
+              <Title>{formatMessage(messages.yourProjectDetails)}</Title>
               <CancelSVG
                 tabIndex={0}
                 className={classnames(styles.icon, {
@@ -112,16 +115,14 @@ const RightSidebar = (props: Props) => {
             </div>
 
             <div className={styles.container}>
-              {selectedRoute !== ROUTE.REVIEW_AND_GENERATE && (
-                <div className={styles.buttonContainer}>
-                  <button
-                    className={buttonStyles.buttonLink}
-                    onClick={() => dispatch(ModalActions.openViewLicensesModalAction())}
-                  >
-                    {formatMessage(messages.viewLicenses)}
-                  </button>
-                </div>
-              )}
+              <div className={styles.buttonContainer}>
+                <button
+                  className={buttonStyles.buttonLink}
+                  onClick={() => dispatch(ModalActions.openViewLicensesModalAction())}
+                >
+                  {formatMessage(messages.viewLicenses)}
+                </button>
+              </div>
               {hasRequirements && (
                 <button
                   className={buttonStyles.buttonLink}

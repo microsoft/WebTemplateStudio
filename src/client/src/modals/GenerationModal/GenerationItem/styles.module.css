@@ -2,7 +2,6 @@
   display: flex;
   justify-content: space-between;
   padding: 0.6em 1.5em;
-  font-size: 1.2em;
 }
 
 .inLine {
@@ -20,21 +19,10 @@
   stroke: var(--vscode-editor-foreground);
 }
 
-.link {
-  color: var(--vscode-textLink-foreground);
-  font-weight: var(--vscode-font-weight);
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.link:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
 .iconCheck {
   margin-top: 3px;
   margin-left: 1em;
-  height: 18px;
+  height: 1em;
 }
 
 .iconCheck path {
@@ -44,8 +32,8 @@
 .iconError {
   margin-top: 3px;
   margin-left: 1em;
-  height: 18px;
-  width: 18px;
+  height: 1em;
+  width: 1em;
 }
 
 .iconError path {

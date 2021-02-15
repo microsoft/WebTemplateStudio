@@ -1,10 +1,6 @@
 import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
-  viewLicenses: {
-    id: "reviewAndGeneratePage.viewLicenses",
-    defaultMessage: "View Licenses",
-  },
   launchYourProject: {
     id: "reviewAndGeneratePage.launchYourProject",
     defaultMessage: "Launch Your Project",

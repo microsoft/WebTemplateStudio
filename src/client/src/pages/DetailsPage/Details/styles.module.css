@@ -3,27 +3,27 @@
 }
 
 .backIcon path {
-  fill: var(--vscode-editor-foreground);
+  fill: var(--vscode-textLink-foreground);
 }
 
 .backIcon {
-  height: 24px;
+  height: 1em;
   margin-right: 1em;
   margin-top: 5px;
   cursor: pointer;
 }
 
 .container {
-  margin: 48px;
   max-width: 65%;
 }
 
 .backContainer {
   display: flex;
-  margin-bottom: 48px;
+  margin-bottom: 2em;
 }
 
 .innerBackContainer {
+  height: 2em;
   padding-left: 1px;
   padding-right: 2px;
   display: flex;
@@ -36,26 +36,16 @@
 .headerContainer,
 .detailsContainer {
   display: flex;
-  margin-bottom: 12px;
-}
-
-.headerContainer {
-  align-items: center;
+  margin-bottom: 1em;
+  margin-right: 1em;
 }
 
 .licenseCategory {
   align-self: flex-start;
 }
 
-.licenseCategory,
-.category {
+.licenseCategory {
   margin-left: 0px;
-  font-size: 15px;
-}
-
-.detailsTitle {
-  font-weight: 600;
-  font-size: 20px;
 }
 
 .licenses {
@@ -63,6 +53,9 @@
   margin-bottom: 0px !important;
 }
 
+.licenses p {
+  margin-block-start: 0;
+}
 .detailsDescription {
   margin-bottom: 0px;
 }
@@ -75,16 +68,10 @@
   display: flex;
   align-items: center;
   width: 80% !important;
-  font-size: 15px;
-}
-
-.markdown {
-  font-size: 15px !important;
 }
 
 .details {
   padding-top: 2px;
-  font-size: 20px;
   color: var(--vscode-textLink-foreground);
   cursor: pointer;
 }
@@ -93,19 +80,8 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
-.link {
-  color: var(--vscode-textLink-foreground);
-  font-weight: var(--vscode-font-weight);
-  text-decoration: none;
-}
-
-.link:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
 .longDescription {
   line-height: 1.75em;
-  font-size: 15px;
 }
 
 .colWidth {
@@ -114,7 +90,6 @@
 
 .licenseButton {
   text-decoration: none;
-  font-size: 15px;
   color: var(--vscode-textLink-foreground);
   font-weight: var(--vscode-font-weight);
   background: none;
@@ -126,4 +101,12 @@
 
 .licenseButton:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+
+@media (max-width: 850px) {
+  .container {
+    margin-top: 3rem;
+    margin-left: 2.2em;
+  }
 }

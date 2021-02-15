@@ -4,7 +4,7 @@ import { connect, useSelector, useDispatch } from "react-redux";
 import { ReactComponent as Close } from "../../assets/cancel.svg";
 import asModal from "../../components/Modal";
 
-import buttonStyles from "../../css/buttonStyles.module.css";
+import buttonStyles from "../../css/button.module.css";
 import styles from "./styles.module.css";
 
 import { GenerationItemData, GENERATION_NAMES } from "../../types/generationStatus";
@@ -26,6 +26,7 @@ import GenerationItem from "./GenerationItem";
 import { Subject, forkJoin } from "rxjs";
 import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
 import { AZURE_LINKS } from "../../utils/constants/azure";
+import ModalTitle from "../../components/Titles/TitleForModal";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -145,7 +146,7 @@ const GenerationModal = ({ intl }: Props) => {
   return (
     <div>
       <div className={styles.header}>
-        <div className={styles.title}>{formatMessage(messages.creatingYourProject)}</div>
+        <ModalTitle>{formatMessage(messages.creatingYourProject)}</ModalTitle>
         {isGenerationFinished && (
           <Close
             tabIndex={0}
@@ -174,17 +175,14 @@ const GenerationModal = ({ intl }: Props) => {
 
       <div className={styles.footer}>
         {isGenerationFailed && (
-          <a className={styles.link} href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES} onKeyUp={keyUpHandler}>
+          <a href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES} onKeyUp={keyUpHandler}>
             {formatMessage(messages.reportAndIssue)}
           </a>
         )}
 
         {isGenerationFinished && (
           <button
-            className={classnames({
-              [buttonStyles.buttonDark]: isGenerationTemplatesSuccess,
-              [buttonStyles.buttonHighlighted]: isGenerationTemplatesFailed,
-            })}
+            className={buttonStyles.buttonHighlighted}
             onClick={() => closeModalAndCreateNewProject({ fromCreateNewProjectButton: true })}
           >
             {formatMessage(messages.createNewProject)}
@@ -193,10 +191,7 @@ const GenerationModal = ({ intl }: Props) => {
 
         {!isGenerationTemplatesFailed && (
           <button
-            className={classnames({
-              [buttonStyles.buttonDark]: !isGenerationTemplatesSuccess,
-              [buttonStyles.buttonHighlighted]: isGenerationTemplatesSuccess,
-            })}
+            className={buttonStyles.buttonHighlighted}
             onClick={() => openProjectInVSCode(generationPath, vscode)}
             disabled={!isGenerationTemplatesSuccess}
           >

@@ -10,6 +10,7 @@ import Dropdown from "../../../components/Dropdown";
 
 import rightsidebarStyles from "../rightsidebarStyles.module.css";
 import messages from "./messages";
+import InputTitle from "../../Titles/TitleForInput";
 
 type Props = InjectedIntlProps;
 
@@ -48,7 +49,7 @@ const SelectProjectTypes = (props: Props) => {
     <>
       {projectTypesOptions.length > 1 && storedProjectType.internalName !== "" && (
         <div className={rightsidebarStyles.sidebarItem}>
-          <div className={rightsidebarStyles.title}>{formatMessage(messages.selectProjectTypes)}</div>
+          <InputTitle>{formatMessage(messages.selectProjectTypes)}</InputTitle>
           <Dropdown
             handleChange={(projectType) => setSelectedProjectType(projectType)}
             ariaLabel={formatMessage(messages.selectProjectTypes)}

@@ -12,7 +12,6 @@
 
 .signOutButton {
   margin-left: 2em;
-  font-size: 1em;
 }
 
 .button {
@@ -27,15 +26,15 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
+a .button:hover{
+  color: var(--vscode-button-foreground);
+  text-decoration: none;
+}
+
 .buttonContainer {
   display: flex;
   align-items: center;
 }
-
-.link {
+.buttonContainer a:hover{
   text-decoration: none;
-}
-
-.link:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
