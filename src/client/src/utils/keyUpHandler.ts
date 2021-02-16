@@ -1,7 +1,7 @@
 import * as React from "react";
 import { KEY_EVENTS } from "./constants/constants";
 
-const keyUpHandler = (e: React.KeyboardEvent<HTMLAnchorElement>) => {
+const keyUpHandler = (e: React.KeyboardEvent<HTMLAnchorElement>) : void => {
   const anchor = e.target as HTMLAnchorElement;
 
   //if pressing space on an anchor, prevent page scroll.

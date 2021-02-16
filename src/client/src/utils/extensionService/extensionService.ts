@@ -95,7 +95,7 @@ const getLatestVersion = (vscode: IVSCodeObject, checkVersionPackage: IVersionPa
   });
 };
 
-const getPages = (vscode: IVSCodeObject, projectTypeName: string, frontendName: string, backendName: string) => {
+const getPages = (vscode: IVSCodeObject, projectTypeName: string, frontendName: string, backendName: string) : Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_PAGES,
     {
@@ -111,7 +111,7 @@ const getPages = (vscode: IVSCodeObject, projectTypeName: string, frontendName: 
   );
 };
 
-const getFeatures = (vscode: IVSCodeObject, projectTypeName: string, frontendName: string, backendName: string) => {
+const getFeatures = (vscode: IVSCodeObject, projectTypeName: string, frontendName: string, backendName: string) : Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_FEATURES,
     {
@@ -127,7 +127,7 @@ const getFeatures = (vscode: IVSCodeObject, projectTypeName: string, frontendNam
   );
 };
 
-const getOutputPathFromConfig = (vscode: IVSCodeObject) => {
+const getOutputPathFromConfig = (vscode: IVSCodeObject) : Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_OUTPUT_PATH_FROM_CONFIG,
     {
@@ -138,7 +138,7 @@ const getOutputPathFromConfig = (vscode: IVSCodeObject) => {
   );
 };
 
-const browseNewOutputPath = (vscode: IVSCodeObject) => {
+const browseNewOutputPath = (vscode: IVSCodeObject) : Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH,
     {
@@ -149,7 +149,7 @@ const browseNewOutputPath = (vscode: IVSCodeObject) => {
   );
 };
 
-const azureLogout = (vscode: IVSCodeObject) => {
+const azureLogout = (vscode: IVSCodeObject) : Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.AZURE_LOGOUT,
     {
@@ -161,7 +161,7 @@ const azureLogout = (vscode: IVSCodeObject) => {
   );
 };
 
-const azureLogin = (vscode: IVSCodeObject) => {
+const azureLogin = (vscode: IVSCodeObject) : Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.AZURE_LOGIN,
     {
@@ -173,7 +173,7 @@ const azureLogin = (vscode: IVSCodeObject) => {
   );
 };
 
-const getUserStatus = (vscode: IVSCodeObject) => {
+const getUserStatus = (vscode: IVSCodeObject) : Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_USER_STATUS,
     {
@@ -236,7 +236,7 @@ const ValidateAppServiceName = (
   );
 };
 
-const ValidateCosmosAccountName = (subscription: string, appName: string, scopeId: number, vscode: IVSCodeObject) => {
+const ValidateCosmosAccountName = (subscription: string, appName: string, scopeId: number, vscode: IVSCodeObject) : Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.VALIDATE_COSMOS_NAME,
     {
@@ -251,7 +251,7 @@ const ValidateCosmosAccountName = (subscription: string, appName: string, scopeI
   );
 };
 
-const generateProject = (genrationData: any, vscode: IVSCodeObject) => {
+const generateProject = (genrationData: any, vscode: IVSCodeObject) : Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GENERATE,
     {
@@ -265,7 +265,7 @@ const generateProject = (genrationData: any, vscode: IVSCodeObject) => {
   );
 };
 
-const getAllLicenses = (licenseData: any, vscode: IVSCodeObject) => {
+const getAllLicenses = (licenseData: any, vscode: IVSCodeObject) : Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_ALL_LICENSES,
     {
@@ -279,7 +279,7 @@ const getAllLicenses = (licenseData: any, vscode: IVSCodeObject) => {
   );
 };
 
-const getLocations = (vscode: IVSCodeObject, subscription: string, azureServiceType: string) => {
+const getLocations = (vscode: IVSCodeObject, subscription: string, azureServiceType: string) : Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_LOCATIONS,
     {
@@ -293,7 +293,7 @@ const getLocations = (vscode: IVSCodeObject, subscription: string, azureServiceT
   );
 };
 
-const getResourceGroups = (vscode: IVSCodeObject, subscription: string) => {
+const getResourceGroups = (vscode: IVSCodeObject, subscription: string) : Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_RESOURCE_GROUPS,
     {
@@ -306,7 +306,7 @@ const getResourceGroups = (vscode: IVSCodeObject, subscription: string) => {
   );
 };
 
-const sendLog = (logData: ILoggingPayload, vscode: IVSCodeObject) => {
+const sendLog = (logData: ILoggingPayload, vscode: IVSCodeObject) : Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.LOG,
     {
@@ -318,7 +318,7 @@ const sendLog = (logData: ILoggingPayload, vscode: IVSCodeObject) => {
   );
 };
 
-const openLogFile = (vscode: IVSCodeObject) => {
+const openLogFile = (vscode: IVSCodeObject) : Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.OPEN_LOG,
     {
@@ -329,7 +329,7 @@ const openLogFile = (vscode: IVSCodeObject) => {
   );
 };
 
-const openProjectInVSCode = (outputPath: string, vscode: IVSCodeObject) => {
+const openProjectInVSCode = (outputPath: string, vscode: IVSCodeObject) : void => {
   return vscode.postMessage({
     module: EXTENSION_MODULES.GENERATE,
     command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
@@ -340,11 +340,11 @@ const openProjectInVSCode = (outputPath: string, vscode: IVSCodeObject) => {
   });
 };
 
-const subscribeToExtensionEvents = (listener: any) => {
+const subscribeToExtensionEvents = (listener: any) : void => {
   window.addEventListener("message", listener);
 };
 
-const unsubscribeToExtensionEvents = (listener: any) => {
+const unsubscribeToExtensionEvents = (listener: any) : void => {
   window.removeEventListener("message", listener);
 };
 

@@ -6,7 +6,7 @@ const initialState = {
   wizardVersion: "",
 };
 
-const versions = (state: IVersions = initialState, action: any) => {
+const versions = (state: IVersions = initialState, action: any) : any => {
   switch (action.type) {
     case CONFIG_TYPEKEYS.GET_TEMPLATE_INFO:
       return action.payload;

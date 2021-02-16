@@ -22,7 +22,6 @@ import buttonStyles from "../../../css/button.module.css";
 import styles from "./styles.module.css";
 import messages from "./messages";
 import classNames from "classnames";
-import { format } from "url";
 
 interface IProps {
   service: IService;
@@ -30,7 +29,7 @@ interface IProps {
 
 type Props = IProps & InjectedIntlProps;
 
-export const ServiceCard = (props: Props) => {
+export const ServiceCard = (props: Props) : JSX.Element => {
   const { intl, service } = props;
   const [showPlusIcon, setShowPlusIcon] = React.useState(false);
 

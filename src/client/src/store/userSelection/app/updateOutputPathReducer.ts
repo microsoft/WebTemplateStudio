@@ -8,7 +8,7 @@ const initialState = {
   validation: undefined,
 };
 
-const outputPathReducer = (state: IOutputPath = initialState, action: RootAction) => {
+const outputPathReducer = (state: IOutputPath = initialState, action: RootAction) : any => {
   switch (action.type) {
     case USERSELECTION_TYPEKEYS.SET_OUTPUT_PATH:
       return {

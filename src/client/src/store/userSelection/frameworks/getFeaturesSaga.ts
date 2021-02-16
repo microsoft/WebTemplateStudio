@@ -6,7 +6,7 @@ import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 import { getFeaturesOptions } from "../../../utils/cliTemplatesParser";
 import { setFeaturesAction } from "../../templates/features/actions";
 
-export function* getFeaturesSaga(vscode: any) {
+export function* getFeaturesSaga(vscode: any) : any {
   yield takeEvery(USERSELECTION_TYPEKEYS.SELECT_BACKEND_FRAMEWORK, callBack);
   yield takeEvery(USERSELECTION_TYPEKEYS.SELECT_FRONTEND_FRAMEWORK, callBack);
 

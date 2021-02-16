@@ -6,6 +6,6 @@ interface IProps {
   style: string;
 }
 
-export default (props: IProps) => {
+export default (props: IProps) : JSX.Element => {
   return <Masterdetailscreenshot className={classnames(props.style)} />;
 };

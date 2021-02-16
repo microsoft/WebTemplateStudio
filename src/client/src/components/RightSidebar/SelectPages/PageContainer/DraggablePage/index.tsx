@@ -129,10 +129,10 @@ const DraggablePage = ({
                 onChange={(e) => {
                   validateNameAndSetStore(e.target.value);
                 }}
-                onFocus={(e) => {
+                onFocus={() => {
                   setValidValue(page.title);
                 }}
-                onBlur={(e) => {
+                onBlur={() => {
                   if (!page.isValidTitle)
                     setTimeout(() => {
                       validateNameAndSetStore(validValue);

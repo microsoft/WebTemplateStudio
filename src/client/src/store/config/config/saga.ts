@@ -19,7 +19,7 @@ import { IRoutesNavItems } from "../../../types/route";
 import { ISelected } from "../../../types/selected";
 import { IPlatform } from "../platform/model";
 
-export function* loadLogin(vscode: any) {
+export function* loadLogin(vscode: any) : any {
   yield takeEvery(CONFIG_TYPEKEYS.LOAD, callBack);
 
   function* callBack() {
@@ -35,7 +35,7 @@ export function* loadLogin(vscode: any) {
   }
 }
 
-export function* loadTemplatesSaga(vscode: any) {
+export function* loadTemplatesSaga(vscode: any) : any {
   yield takeEvery(CONFIG_TYPEKEYS.LOAD, callBack);
 
   function* callBack() {
@@ -68,7 +68,7 @@ export function* loadTemplatesSaga(vscode: any) {
   }
 }
 
-export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
+export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) : any {
   yield takeEvery(CONFIG_TYPEKEYS.LOAD, callBack);
 
   function* callBack() {
@@ -160,7 +160,7 @@ export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) {
   }
 }
 
-export function* loadroutesNavItemsaSaga() {
+export function* loadroutesNavItemsaSaga() : any {
   yield takeEvery(CONFIG_TYPEKEYS.SET_PLATFORM, callBack);
 
   function* callBack() {
@@ -173,7 +173,7 @@ export function* loadroutesNavItemsaSaga() {
   }
 }
 
-export function* resetWizardSaga() {
+export function* resetWizardSaga() : any {
   yield takeEvery(CONFIG_TYPEKEYS.RESET_WIZARD, callBack);
 
   function* callBack() {

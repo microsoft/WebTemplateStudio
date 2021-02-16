@@ -6,6 +6,6 @@ interface IProps {
   style: string;
 }
 
-export default (props: IProps) => {
+export default (props: IProps) : JSX.Element => {
   return <Gridscreenshot className={classnames(props.style)} />;
 };

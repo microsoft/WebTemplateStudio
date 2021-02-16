@@ -4,15 +4,15 @@ import { IntlProvider } from "react-intl";
 import { render } from "@testing-library/react";
 import { IDropdownProps } from "./components/Dropdown";
 
-const renderWithIntl = (component: any) => {
+const renderWithIntl = (component: any) : any => {
   return render(<IntlProvider locale="en">{component}</IntlProvider>);
 };
 
-const renderWithStore = (component: any, store: any) => {
+const renderWithStore = (component: any, store: any) : any => {
   return renderWithIntl(<Provider store={store}>{component}</Provider>);
 };
 
-const dropdownMock = ({ options, value, handleChange }: IDropdownProps) => {
+const dropdownMock = ({ options, value, handleChange }: IDropdownProps) : JSX.Element => {
   const handleInputChange = (event: any) => {
     if (handleChange) {
       handleChange(event.currentTarget);

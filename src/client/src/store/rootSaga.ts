@@ -22,7 +22,7 @@ function* rootSaga() {
   ]);
 }
 
-function runSagaMiddleware(vscode: any, sagaMiddleware: any) {
+function runSagaMiddleware(vscode: any, sagaMiddleware: any) : void {
   rootSagaVscode = vscode;
   sagaMiddleware.run(rootSaga);
 }
