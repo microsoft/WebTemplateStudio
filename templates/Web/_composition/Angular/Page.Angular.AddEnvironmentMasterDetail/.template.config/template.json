@@ -11,7 +11,7 @@
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionOrder": 4,
+    "wts.compositionOrder": "4",
     "wts.compositionFilter": "$frontendframework == Angular & identity == wts.Page.Angular.MasterDetail"
   },
   "sourceName": "wts.ItemName",
