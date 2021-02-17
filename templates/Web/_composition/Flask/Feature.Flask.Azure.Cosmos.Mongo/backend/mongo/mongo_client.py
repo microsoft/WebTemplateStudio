@@ -7,7 +7,7 @@ from .settings import connection_str, cosmosDB_user, cosmosDB_password
 
 
 
-client = MongoClient(connection_str + '?ssl=true&replicaSet=globaldb')
+client = MongoClient(connection_str + '?ssl=true&replicaSet=globaldb&retryWrites=false')
 
 db = client[CONSTANTS['COSMOS']['COLLECTION']]
 
