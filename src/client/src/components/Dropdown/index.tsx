@@ -39,7 +39,7 @@ const Dropdown = ({
   disabled,
   ariaLabel,
   openDropdownUpwards,
-}: IDropdownProps) : any => {
+}: IDropdownProps) : JSX.Element => {
   return (
     <Select
       aria-label={ariaLabel}
