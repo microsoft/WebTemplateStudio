@@ -19,7 +19,8 @@ module.exports = opt => {
           password: process.env.COSMOSDB_PASSWORD
         },
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        retryWrites: false
       }
     ),
     // Set DB collection name
