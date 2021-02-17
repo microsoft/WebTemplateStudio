@@ -251,7 +251,7 @@ const ValidateCosmosAccountName = (subscription: string, appName: string, scopeI
   );
 };
 
-const generateProject = (genrationData: any, vscode: IVSCodeObject) : Promise<any> => {
+const generateProject = (generationData: any, vscode: IVSCodeObject) : Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GENERATE,
     {
@@ -259,7 +259,7 @@ const generateProject = (genrationData: any, vscode: IVSCodeObject) : Promise<an
       command: EXTENSION_COMMANDS.GENERATE,
       track: false,
       text: PAYLOAD_MESSAGES_TEXT.SENT_GENERATION_INFO_TEXT,
-      payload: genrationData,
+      payload: generationData,
     },
     vscode
   );

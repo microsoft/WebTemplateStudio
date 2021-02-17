@@ -9,6 +9,7 @@ import {
   resetWizardSaga,
 } from "./config/config/saga";
 import { IVSCodeObject } from "../types/vscode";
+import { SagaMiddleware } from "redux-saga";
 
 let rootSagaVscode: any;
 function* rootSaga() {
@@ -23,7 +24,7 @@ function* rootSaga() {
   ]);
 }
 
-function runSagaMiddleware(vscode: IVSCodeObject, sagaMiddleware: any) : void {
+function runSagaMiddleware(vscode: IVSCodeObject, sagaMiddleware: SagaMiddleware<any>) : void {
   rootSagaVscode = vscode;
   sagaMiddleware.run(rootSaga);
 }
