@@ -3,6 +3,7 @@ import { GenerationItemStatus, GENERATION_NAMES } from "../../types/generationSt
 
 const wait = (m: number) => new Promise((r) => setTimeout(r, m));
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const generate = async (message: any) : Promise<void> => {
   const { pages, services } = message.payload;
   const servicesQueue: Promise<void>[] = [];
@@ -19,6 +20,7 @@ const generate = async (message: any) : Promise<void> => {
   await Promise.all(servicesQueue);
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const openProjectVSCode = (message: any) : void => {
   console.log(`Call to open project in vscode: ${JSON.stringify(message)} `);
 };

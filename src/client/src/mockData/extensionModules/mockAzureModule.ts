@@ -5,6 +5,7 @@ import * as mockData from "./mockData/mockAzureModuleData";
 const DEV_NO_ERROR_MSG = "in development, no error message";
 const DEV_NO_ERROR_TYPE = "in development, no error type";
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const login = (message: any) : void => {
   window.postMessage(
     {
@@ -20,6 +21,7 @@ const login = (message: any) : void => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const logout = (message: any) : void => {
   window.postMessage(
     {
@@ -34,6 +36,7 @@ const logout = (message: any) : void => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const getUserStatus = (message: any) : void => {
   window.postMessage(
     {
@@ -49,6 +52,7 @@ const getUserStatus = (message: any) : void => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const getLocations = (message: any) : void => {
   setTimeout(
     () =>
@@ -67,6 +71,7 @@ const getLocations = (message: any) : void => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const getResourceGroups = (message: any) : void => {
   const resourceGroups = IsMicrosoftLearnSubscription(message.subscription)
     ? mockData.sandboxResourceGroups
@@ -89,6 +94,7 @@ const getResourceGroups = (message: any) : void => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const getValidAppServiceName = (message: any) : void => {
   window.postMessage(
     {
@@ -103,6 +109,7 @@ const getValidAppServiceName = (message: any) : void => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const getValidCosmosName = (message: any) : void => {
   window.postMessage(
     {
@@ -117,6 +124,7 @@ const getValidCosmosName = (message: any) : void => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const validateCosmosName = (message: any) : void => {
   const isValid = message.appName.length > 3 && !message.appName.includes(" ");
   const errorMessage = isValid ? "" : "Invalid name";
@@ -137,6 +145,7 @@ const validateCosmosName = (message: any) : void => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const validateAppServiceName = (message: any) : void => {
   const isValid = message.appName.length > 3 && !message.appName.includes(" ");
   const errorMessage = isValid ? "" : "Invalid name";

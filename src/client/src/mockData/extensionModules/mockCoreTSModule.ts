@@ -8,6 +8,7 @@ import * as mockReactNativeData from "./mockData/mockReactNativePlatformData";
 //DEV:Change mock data to change platform
 const mockData = mockWebData;
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const getProjectTypes = (message: any) : void => {
   window.postMessage(
     {
@@ -22,6 +23,7 @@ const getProjectTypes = (message: any) : void => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const getFrameworks = (message: any) : void => {
   const projectTypes = mockData.projectTypes !== undefined ?
   mockData.projectTypes :
@@ -41,6 +43,7 @@ const getFrameworks = (message: any) : void => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const getAllLicenses = (message: any) : void => {
   window.postMessage(
     {
@@ -55,6 +58,7 @@ const getAllLicenses = (message: any) : void => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const getTemplateConfig = (message: any) : void => {
   window.postMessage(
     {
@@ -69,6 +73,7 @@ const getTemplateConfig = (message: any) : void => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const getPages = (message: any) : void => {
   window.postMessage(
     {
@@ -83,6 +88,7 @@ const getPages = (message: any) : void => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const getFeatures = (message: any) : void => {
   window.postMessage(
     {

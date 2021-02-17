@@ -185,6 +185,7 @@ const getUserStatus = (vscode: IVSCodeObject) : Promise<any> => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const sendTelemetry = (vscode: IVSCodeObject, command: string, payload?: any): void => {
   vscode.postMessage({
     module: EXTENSION_MODULES.TELEMETRY,
@@ -251,6 +252,7 @@ const ValidateCosmosAccountName = (subscription: string, appName: string, scopeI
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const generateProject = (generationData: any, vscode: IVSCodeObject) : Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GENERATE,
@@ -265,6 +267,7 @@ const generateProject = (generationData: any, vscode: IVSCodeObject) : Promise<a
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const getAllLicenses = (licenseData: any, vscode: IVSCodeObject) : Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_ALL_LICENSES,
@@ -340,10 +343,12 @@ const openProjectInVSCode = (outputPath: string, vscode: IVSCodeObject) : void =
   });
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const subscribeToExtensionEvents = (listener: any) : void => {
   window.addEventListener("message", listener);
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const unsubscribeToExtensionEvents = (listener: any) : void => {
   window.removeEventListener("message", listener);
 };
