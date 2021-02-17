@@ -5,8 +5,9 @@ import { getFeatures } from "../../../utils/extensionService/extensionService";
 import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 import { getFeaturesOptions } from "../../../utils/cliTemplatesParser";
 import { setFeaturesAction } from "../../templates/features/actions";
+import { IVSCodeObject } from "../../../types/vscode";
 
-export function* getFeaturesSaga(vscode: any) : any {
+export function* getFeaturesSaga(vscode: IVSCodeObject) : any {
   yield takeEvery(USERSELECTION_TYPEKEYS.SELECT_BACKEND_FRAMEWORK, callBack);
   yield takeEvery(USERSELECTION_TYPEKEYS.SELECT_FRONTEND_FRAMEWORK, callBack);
 

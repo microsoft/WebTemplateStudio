@@ -14,7 +14,7 @@ import { EXTENSION_COMMANDS } from "../utils/constants/commands";
  * VSCode.
  */
 const mockVsCodeApi = () => ({
-  postMessage: (message: any) => {
+  postMessage: (message: any) : void => {
     if (process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT || process.env.NODE_ENV === ENVIRONMENT.TEST) {
       switch (message.command) {
         case EXTENSION_COMMANDS.GET_FRAMEWORKS:

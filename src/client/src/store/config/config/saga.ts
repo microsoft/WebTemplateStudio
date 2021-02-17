@@ -18,8 +18,9 @@ import { getNavItems } from "../../../utils/routes/routes";
 import { IRoutesNavItems } from "../../../types/route";
 import { ISelected } from "../../../types/selected";
 import { IPlatform } from "../platform/model";
+import { IVSCodeObject } from "../../../types/vscode";
 
-export function* loadLogin(vscode: any) : any {
+export function* loadLogin(vscode: IVSCodeObject) : any {
   yield takeEvery(CONFIG_TYPEKEYS.LOAD, callBack);
 
   function* callBack() {
@@ -35,7 +36,7 @@ export function* loadLogin(vscode: any) : any {
   }
 }
 
-export function* loadTemplatesSaga(vscode: any) : any {
+export function* loadTemplatesSaga(vscode: IVSCodeObject) : any {
   yield takeEvery(CONFIG_TYPEKEYS.LOAD, callBack);
 
   function* callBack() {
@@ -68,7 +69,7 @@ export function* loadTemplatesSaga(vscode: any) : any {
   }
 }
 
-export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: any) : any {
+export function* loadProjectTypesListSagaAndOptionalFrameworkList(vscode: IVSCodeObject) : any {
   yield takeEvery(CONFIG_TYPEKEYS.LOAD, callBack);
 
   function* callBack() {

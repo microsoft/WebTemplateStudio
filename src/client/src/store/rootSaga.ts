@@ -8,6 +8,7 @@ import {
   loadroutesNavItemsaSaga,
   resetWizardSaga,
 } from "./config/config/saga";
+import { IVSCodeObject } from "../types/vscode";
 
 let rootSagaVscode: any;
 function* rootSaga() {
@@ -22,7 +23,7 @@ function* rootSaga() {
   ]);
 }
 
-function runSagaMiddleware(vscode: any, sagaMiddleware: any) : void {
+function runSagaMiddleware(vscode: IVSCodeObject, sagaMiddleware: any) : void {
   rootSagaVscode = vscode;
   sagaMiddleware.run(rootSaga);
 }

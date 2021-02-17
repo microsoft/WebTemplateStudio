@@ -8,7 +8,7 @@ import { IRegex } from "../../store/config/validations/model";
 
 export interface IValidation {
   isValid: boolean;
-  error: FormattedMessage.MessageDescriptor;
+  error?: FormattedMessage.MessageDescriptor;
   isDirty?: boolean;
 }
 

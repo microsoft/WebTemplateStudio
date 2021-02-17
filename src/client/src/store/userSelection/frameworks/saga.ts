@@ -6,8 +6,9 @@ import { ISelected } from "../../../types/selected";
 import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 import { getPagesOptions } from "../../../utils/cliTemplatesParser";
 import { TEMPLATES_TYPEKEYS } from "../../templates/templateTypeKeys";
+import { IVSCodeObject } from "../../../types/vscode";
 
-export function* frameworkSaga(vscode: any) : any {
+export function* frameworkSaga(vscode: IVSCodeObject) : any {
   yield takeEvery(USERSELECTION_TYPEKEYS.SELECT_BACKEND_FRAMEWORK, callBack);
 
   yield takeEvery(USERSELECTION_TYPEKEYS.SELECT_FRONTEND_FRAMEWORK, callBack);

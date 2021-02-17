@@ -3,12 +3,13 @@ import { Provider } from "react-redux";
 import { IntlProvider } from "react-intl";
 import { render } from "@testing-library/react";
 import { IDropdownProps } from "./components/Dropdown";
+import { AnyAction, Store } from "redux";
 
-const renderWithIntl = (component: any) : any => {
+const renderWithIntl = (component: React.ReactNode | React.ReactPortal) : any => {
   return render(<IntlProvider locale="en">{component}</IntlProvider>);
 };
 
-const renderWithStore = (component: any, store: any) : any => {
+const renderWithStore = (component: React.ReactNode | React.ReactPortal, store: Store<any, AnyAction>) : any => {
   return renderWithIntl(<Provider store={store}>{component}</Provider>);
 };
 
