@@ -2,10 +2,10 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "André Mazayev",
   "classifications": ["Universal"],
-  "name": "Project.Moleculer",
-  "shortName": "Project.Moleculer",
-  "groupIdentity": "wts.Project.Default",
+  "name": "wts.Project.Moleculer",
+  "shortName": "wts.Project.Moleculer",
   "identity": "wts.Project.Moleculer",
+
   "description": "",
   "tags": {
     "language": "Any",
