@@ -2,10 +2,10 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
-  "name": "Project.Node",
-  "shortName": "Project.Node",
-  "groupIdentity": "wts.Project.Default",
+  "name": "wts.Project.Node",
+  "shortName": "wts.Project.Node",
   "identity": "wts.Project.Node",
+
   "description": "",
   "tags": {
     "language": "Any",
