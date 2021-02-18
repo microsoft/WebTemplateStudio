@@ -3,19 +3,25 @@
     "name": "Blank",
     "displayName": "Blank",
     "summary": "Basic project upon which to build your app.",
-    "order": "0",
+    "order": "1",
     "licenses": "[React Native](https://github.com/facebook/react-native/blob/master/LICENSE)\n [React Navigation](https://github.com/react-navigation/react-navigation/blob/main/packages/core/LICENSE)",
     "platform": "RN",
-    "languages": ["Any"]
+    "languages": ["Any"],
+    "tags": {      
+      "preview": true
+    }
   },
   {
     "name": "Tabbed",
     "displayName": "Tabbed",
     "summary": "The most common style of navigation in mobile apps.",
-    "order": "1",
+    "order": "0",
     "licenses": "[React Native](https://github.com/facebook/react-native/blob/master/LICENSE)\n [React Navigation](https://github.com/react-navigation/react-navigation/blob/main/packages/core/LICENSE)",
     "platform": "RN",
-    "languages": ["Any"]
+    "languages": ["Any"],
+    "tags": {      
+      "preview": false
+    }
   },
   {
     "name": "Drawer",
@@ -24,6 +30,9 @@
     "order": "2",
     "licenses": "[React Native](https://github.com/facebook/react-native/blob/master/LICENSE)\n [React Navigation](https://github.com/react-navigation/react-navigation/blob/main/packages/core/LICENSE)",
     "platform": "RN",
-    "languages": ["Any"]
+    "languages": ["Any"],
+    "tags": {      
+      "preview": true
+    }
   }
 ]
