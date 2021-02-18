@@ -2,10 +2,10 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
-  "name": "Project.Angular",
-  "shortName": "Project.Angular",
-  "groupIdentity": "wts.Project.Default",
+  "name": "wts.Project.Angular",
+  "shortName": "wts.Project.Angular",
   "identity": "wts.Project.Angular",
+
   "tags": {
     "language": "Any",
     "type": "item",
