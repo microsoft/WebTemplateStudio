@@ -13,7 +13,7 @@
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionOrder": "1",
+    "wts.compositionOrder": "2",
     "wts.compositionFilter": "identity == wts.Web.Proj.AddInitialProjectStructure & $backendframework == Flask & $projectType == FullStackWebApp",
     "wts.licenses": "[Flask](https://github.com/pallets/flask/blob/master/LICENSE)",
     "wts.casing.sourceName": "snake"
