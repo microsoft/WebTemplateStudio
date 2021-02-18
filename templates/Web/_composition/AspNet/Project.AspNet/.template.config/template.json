@@ -2,10 +2,10 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
-  "name": "Project.AspNet",
-  "shortName": "Project.AspNet",
-  "groupIdentity": "wts.Project.Default",
+  "name": "wts.Project.AspNet",
+  "shortName": "wts.Project.AspNet",
   "identity": "wts.Project.AspNet",
+
   "description": "",
   "tags": {
     "language": "Any",
