@@ -1,1 +1,1 @@
-﻿*** REACT NATIVE *** Descripcion para react native
+﻿Description for React Native
