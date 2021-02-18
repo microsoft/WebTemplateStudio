@@ -34,6 +34,7 @@ using MongoDB.Driver;
 
             settings.UseTls = true;
             settings.SslSettings = new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
+            settings.RetryWrites = false;
 
             return new MongoClient(settings);
         }
