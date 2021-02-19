@@ -6,7 +6,7 @@ import * as ModalActions from "../../store/navigation/modals/action";
 import { hasServices as hasServicesSelector } from "../../store/userSelection/services/servicesSelector";
 import { getSelectedRoute } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 
-import { KEY_EVENTS, ROUTE } from "../../utils/constants/constants";
+import { KEY_EVENTS, PLATFORM, ROUTE } from "../../utils/constants/constants";
 
 import { ReactComponent as CancelSVG } from "../../assets/cancel.svg";
 
@@ -18,6 +18,8 @@ import SelectFrameworks from "./SelectFrameworks";
 import Notification from "../Notification";
 
 import messages from "./messages";
+import messagesWeb from "./messagesWeb";
+import messagesReactNative from "./messagesReactNative";
 import classnames from "classnames";
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/button.module.css";
@@ -26,6 +28,7 @@ import SelectProjectTypes from "./SelectProjectTypes";
 import Title from "../Titles/Title";
 
 import {
+  getPlatformSelector,
   hasInvalidPlatformRequirementsSelector,
   hasPlatformRequirementsSelector,
 } from "../../store/config/platform/selector";
@@ -42,6 +45,8 @@ const RightSidebar = (props: Props) => {
     () => selectedRoute === ROUTE.NEW_PROJECT || selectedRoute === ROUTE.REVIEW_AND_GENERATE,
     [selectedRoute]
   );
+  const platform = useSelector(getPlatformSelector);
+  const platformMessages = (platform.id === PLATFORM.WEB) ? messagesWeb : messagesReactNative;
 
   const { intl } = props;
   const { formatMessage } = intl;
@@ -78,7 +83,7 @@ const RightSidebar = (props: Props) => {
         <div role="complementary" id="dvRightSideBar" className={classnames(styles.container, styles.rightViewCropped)}>
           <div className={styles.summaryContainer} id="dvSummaryContainer">
             <div className={styles.titleContainer}>
-              <Title>{formatMessage(messages.yourProjectDetails)}</Title>
+              <Title>{formatMessage(platformMessages.yourProjectDetails)}</Title>
               <CancelSVG
                 tabIndex={0}
                 className={classnames(styles.icon, {
