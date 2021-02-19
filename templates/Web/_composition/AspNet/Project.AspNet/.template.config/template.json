@@ -14,7 +14,6 @@
     "wts.platform": "Web",
     "wts.version": "1.0.0",
     "wts.compositionOrder": "2",
-
     "wts.compositionFilter": "identity == wts.Web.Proj.AddInitialProjectStructure & $backendframework == AspNet & $projectType == FullStackWebApp",
     "wts.licenses": "[ASP.NET Core](https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt)|[Json.NET](https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md)",
     "wts.casing.sourceName": "pascal",

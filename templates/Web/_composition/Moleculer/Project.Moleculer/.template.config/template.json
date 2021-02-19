@@ -14,7 +14,6 @@
     "wts.platform": "Web",
     "wts.version": "1.0.0",
     "wts.compositionOrder": "2",
-
     "wts.compositionFilter": "identity == wts.Web.Proj.AddInitialProjectStructure & $backendframework == Moleculer & $projectType == FullStackWebApp",
     "wts.licenses": "[Moleculer](https://github.com/moleculerjs/moleculer/blob/master/LICENSE)"
   },
