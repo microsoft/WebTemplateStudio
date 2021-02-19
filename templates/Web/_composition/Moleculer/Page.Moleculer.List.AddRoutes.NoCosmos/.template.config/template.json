@@ -1,0 +1,35 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft Community",
+  "classifications": ["Universal"],
+  "name": "Page.Moleculer.List.AddRoutes.NoCosmos",
+  "shortName": "Page.Moleculer.List.AddRoutes.NoCosmos",
+  "identity": "Page.Moleculer.List.AddRoutes.NoCosmos",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "composition",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.compositionFilter": "$backendframework == Moleculer & groupIdentity == wts.Page.List & $feature != wts.Feature.Azure.Cosmos.Mongo & $feature != wts.Feature.Azure.Cosmos.SQL",
+    "wts.compositionOrder": "1"
+  },
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+  },
+  "postActions": [
+    {
+      "description": "Add uuid package",
+      "manualInstructions": [],
+      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
+      "args": {
+        "dict": "{'uuid': '8.2.0'}",
+        "key": "dependencies",
+        "jsonPath": "backend/package.json"
+      },
+      "continueOnError": false
+    }
+  ]
+}

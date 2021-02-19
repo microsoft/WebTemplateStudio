@@ -11,7 +11,8 @@
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "identity == wts.Proj.VueDefault & $backendframework == Node|Flask|Moleculer"
+    "wts.compositionOrder": "3",
+    "wts.compositionFilter": "$frontendframework == Vue & $backendframework == Node|Flask|Moleculer & wts.type == project"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,

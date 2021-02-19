@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft Community",
+  "classifications": ["Universal"],
+  "name": "Page.Moleculer.List.RequireSampleData.NoCosmos",
+  "shortName": "Page.Moleculer.List.RequireSampleData.NoCosmos",
+  "identity": "Page.Moleculer.List.RequireSampleData.NoCosmos",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "composition",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.compositionFilter": "$backendframework == Moleculer & groupIdentity == wts.Page.List & $feature != wts.Feature.Azure.Cosmos.Mongo & $feature != wts.Feature.Azure.Cosmos.SQL",
+    "wts.compositionOrder": "0"
+  },
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+  }
+}

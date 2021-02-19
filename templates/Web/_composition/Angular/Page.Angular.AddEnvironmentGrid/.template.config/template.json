@@ -13,7 +13,7 @@
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionOrder": 2,
+    "wts.compositionOrder": "2",
     "wts.compositionFilter": "$frontendframework == Angular & identity == wts.Page.Angular.Grid"
   },
     "sourceName": "wts.ItemName",
