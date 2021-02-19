@@ -1,0 +1,41 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "André Mazayev",
+  "classifications": ["Universal"],
+  "name": "wts.Project.Moleculer",
+  "shortName": "wts.Project.Moleculer",
+  "identity": "wts.Project.Moleculer",
+
+  "description": "",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "composition",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.compositionOrder": "2",
+    "wts.compositionFilter": "identity == wts.Web.Proj.AddInitialProjectStructure & $backendframework == Moleculer & $projectType == FullStackWebApp",
+    "wts.licenses": "[Moleculer](https://github.com/moleculerjs/moleculer/blob/master/LICENSE)"
+  },
+  "sourceName": "wts.MoleculerDefault",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.projectName": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_ProjectName"
+    },
+    "wts.ProjectNameToLower":
+    {
+      "type": "generated",
+      "generator": "casing",
+      "parameters": {
+        "source":"wts.projectName",
+        "toLower": true
+      },
+      "replaces": "Param_ProjectNameToLower"
+    }
+  },
+  "postActions": []
+}

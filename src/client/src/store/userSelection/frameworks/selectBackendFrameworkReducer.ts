@@ -10,7 +10,7 @@ const initialState = {
   author: "",
 };
 
-const backendFramework = (state: ISelected = initialState, action: WizardSelectionActionType) => {
+const backendFramework = (state: ISelected = initialState, action: WizardSelectionActionType) : ISelected => {
   switch (action.type) {
     case USERSELECTION_TYPEKEYS.SELECT_BACKEND_FRAMEWORK:
       return action.payload;

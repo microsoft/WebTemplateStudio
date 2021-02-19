@@ -3,7 +3,8 @@ import { GenerationItemStatus, GENERATION_NAMES } from "../../types/generationSt
 
 const wait = (m: number) => new Promise((r) => setTimeout(r, m));
 
-const generate = async (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const generate = async (message: any) : Promise<void> => {
   const { pages, services } = message.payload;
   const servicesQueue: Promise<void>[] = [];
 
@@ -19,11 +20,12 @@ const generate = async (message: any) => {
   await Promise.all(servicesQueue);
 };
 
-const openProjectVSCode = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const openProjectVSCode = (message: any) : void => {
   console.log(`Call to open project in vscode: ${JSON.stringify(message)} `);
 };
 
-const generateProject = async (pages: any[]) => {
+const generateProject = async (pages: any[]) : Promise<void> => {
   sendGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Generating);
 
   for (const page of pages) {
@@ -40,7 +42,7 @@ const generateProject = async (pages: any[]) => {
   );
 };
 
-const generateAppService = async () => {
+const generateAppService = async () : Promise<void> => {
   sendGenerationStatus(
     GENERATION_NAMES.APP_SERVICE,
     GenerationItemStatus.Generating,
@@ -50,7 +52,7 @@ const generateAppService = async () => {
   sendGenerationStatus(GENERATION_NAMES.APP_SERVICE, GenerationItemStatus.Success);
 };
 
-const generateCosmosDB = async () => {
+const generateCosmosDB = async () : Promise<void> => {
   sendGenerationStatus(
     GENERATION_NAMES.COSMOS_DB,
     GenerationItemStatus.Generating,
@@ -60,7 +62,7 @@ const generateCosmosDB = async () => {
   sendGenerationStatus(GENERATION_NAMES.COSMOS_DB, GenerationItemStatus.Failed, "ERROR: CosmosDB failed to deploy");
 };
 
-const sendGenerationStatus = (name: string, status: GenerationItemStatus, message?: string, data?: any) => {
+const sendGenerationStatus = (name: string, status: GenerationItemStatus, message?: string, data?: any) : void => {
   window.postMessage(
     {
       command: EXTENSION_COMMANDS.GEN_STATUS,

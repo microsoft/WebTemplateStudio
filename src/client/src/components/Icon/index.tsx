@@ -9,7 +9,7 @@ export interface IIconProps {
   small?: boolean;
 }
 
-const Icon = ({ name, icon, small = false }: IIconProps) => {
+const Icon = ({ name, icon, small = false }: IIconProps) : JSX.Element => {
   return (
     <>
       {icon !== null && (

@@ -22,7 +22,7 @@ const initialState = {
   originRoute: "",
 };
 
-const detailPage = (state: IDetail = initialState, action: RootAction) => {
+const detailPage = (state: IDetail = initialState, action: RootAction) : IDetail => {
   switch (action.type) {
     case NAVIGATION_ROUTES_TYPEKEYS.SET_DETAILS_PAGE_INFO:
       return action.payload;

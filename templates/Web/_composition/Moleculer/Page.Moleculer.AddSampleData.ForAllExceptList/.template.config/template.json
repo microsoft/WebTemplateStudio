@@ -1,0 +1,21 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft Community",
+  "classifications": ["Universal"],
+  "name": "Page.Moleculer.AddSampleData.ForAllExceptList",
+  "shortName": "Page.Moleculer.AddSampleData.ForAllExceptList",
+  "identity": "Page.Moleculer.AddSampleData.ForAllExceptList",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "composition",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.compositionFilter": "$backendframework == Moleculer & groupIdentity == wts.Page.Grid|wts.Page.MasterDetail"
+  },
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+  }
+}

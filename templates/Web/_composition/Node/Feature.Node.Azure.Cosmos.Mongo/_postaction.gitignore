@@ -1,0 +1,7 @@
+# vscode configuration
+.vscode/settings.json
+
+//{[{
+# Hide API Keys
+**/.env
+//}]}

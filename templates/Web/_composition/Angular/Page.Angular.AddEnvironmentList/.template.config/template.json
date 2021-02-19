@@ -12,7 +12,7 @@
     "wts.platform": "Web",
 
     "wts.version": "1.0.0",
-    "wts.compositionOrder": 3,
+    "wts.compositionOrder": "3",
     "wts.compositionFilter": "$frontendframework == Angular & identity == wts.Page.Angular.List"
   },
   "sourceName": "wts.ItemName",
