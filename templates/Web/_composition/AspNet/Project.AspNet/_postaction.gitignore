@@ -1,0 +1,12 @@
+# vscode configuration
+.vscode/settings.json
+
+# production
+/publish
+//{[{
+/backend/bin
+/backend/obj
+
+# App Settings
+/backend/appsettings.json
+//}]}

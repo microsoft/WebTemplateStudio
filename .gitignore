@@ -338,7 +338,7 @@ ASALocalRun/
 **/out/
 !src/extension/locales/**/out/
 src/extension/package.nls.*.json
-**/react/
+**/extension/react/
 **/dist/
 **/distVsix/
 **/node_modules/
