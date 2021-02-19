@@ -1,4 +1,3 @@
-import classnames from "classnames";
 import * as React from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { ReactComponent as Close } from "../../assets/cancel.svg";

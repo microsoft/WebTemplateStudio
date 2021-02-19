@@ -8,7 +8,8 @@ import * as mockReactNativeData from "./mockData/mockReactNativePlatformData";
 //DEV:Change mock data to change platform
 const mockData = mockWebData;
 
-const getProjectTypes = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const getProjectTypes = (message: any) : void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
@@ -22,7 +23,8 @@ const getProjectTypes = (message: any) => {
   );
 };
 
-const getFrameworks = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const getFrameworks = (message: any) : void => {
   const projectTypes = mockData.projectTypes !== undefined ?
   mockData.projectTypes :
   [];
@@ -41,7 +43,8 @@ const getFrameworks = (message: any) => {
   );
 };
 
-const getAllLicenses = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const getAllLicenses = (message: any) : void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
@@ -55,7 +58,8 @@ const getAllLicenses = (message: any) => {
   );
 };
 
-const getTemplateConfig = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const getTemplateConfig = (message: any) : void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
@@ -69,7 +73,8 @@ const getTemplateConfig = (message: any) => {
   );
 };
 
-const getPages = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const getPages = (message: any) : void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
@@ -83,7 +88,8 @@ const getPages = (message: any) => {
   );
 };
 
-const getFeatures = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const getFeatures = (message: any) : void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,

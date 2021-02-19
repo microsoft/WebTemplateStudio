@@ -5,7 +5,8 @@ import * as mockData from "./mockData/mockAzureModuleData";
 const DEV_NO_ERROR_MSG = "in development, no error message";
 const DEV_NO_ERROR_TYPE = "in development, no error type";
 
-const login = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const login = (message: any) : void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.AZURE,
@@ -20,7 +21,8 @@ const login = (message: any) => {
   );
 };
 
-const logout = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const logout = (message: any) : void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.AZURE,
@@ -34,7 +36,8 @@ const logout = (message: any) => {
   );
 };
 
-const getUserStatus = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const getUserStatus = (message: any) : void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.AZURE,
@@ -49,7 +52,8 @@ const getUserStatus = (message: any) => {
   );
 };
 
-const getLocations = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const getLocations = (message: any) : void => {
   setTimeout(
     () =>
       window.postMessage(
@@ -67,7 +71,8 @@ const getLocations = (message: any) => {
   );
 };
 
-const getResourceGroups = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const getResourceGroups = (message: any) : void => {
   const resourceGroups = IsMicrosoftLearnSubscription(message.subscription)
     ? mockData.sandboxResourceGroups
     : mockData.resourceGroups;
@@ -89,7 +94,8 @@ const getResourceGroups = (message: any) => {
   );
 };
 
-const getValidAppServiceName = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const getValidAppServiceName = (message: any) : void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.AZURE,
@@ -103,7 +109,8 @@ const getValidAppServiceName = (message: any) => {
   );
 };
 
-const getValidCosmosName = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const getValidCosmosName = (message: any) : void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.AZURE,
@@ -117,7 +124,8 @@ const getValidCosmosName = (message: any) => {
   );
 };
 
-const validateCosmosName = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const validateCosmosName = (message: any) : void => {
   const isValid = message.appName.length > 3 && !message.appName.includes(" ");
   const errorMessage = isValid ? "" : "Invalid name";
 
@@ -137,7 +145,8 @@ const validateCosmosName = (message: any) => {
   );
 };
 
-const validateAppServiceName = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const validateAppServiceName = (message: any) : void => {
   const isValid = message.appName.length > 3 && !message.appName.includes(" ");
   const errorMessage = isValid ? "" : "Invalid name";
   window.postMessage(
@@ -156,7 +165,7 @@ const validateAppServiceName = (message: any) => {
   );
 };
 
-const IsMicrosoftLearnSubscription = (subscription: string) => {
+const IsMicrosoftLearnSubscription = (subscription: string) : boolean => {
   const selectedSubscription = mockData.subscriptions.find((s) => s.name === subscription);
   return selectedSubscription !== undefined && selectedSubscription.isMicrosoftLearn;
 };

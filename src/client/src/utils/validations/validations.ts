@@ -8,18 +8,18 @@ import { IRegex } from "../../store/config/validations/model";
 
 export interface IValidation {
   isValid: boolean;
-  error: FormattedMessage.MessageDescriptor;
+  error?: FormattedMessage.MessageDescriptor;
   isDirty?: boolean;
 }
 
-export const addRequiredValidate = (name: string) => {
+export const addRequiredValidate = (name: string) : IValidation => {
   let validate: IValidation = { isValid: true, error: validationMessages.default };
   const isEmpty = name === "";
   if (isEmpty) validate = { isValid: false, error: validationMessages.emptyName };
   return validate;
 };
 
-export const addExistingItemNameValidate = (pageTitle: string, selectedPages: Array<ISelected>) => {
+export const addExistingItemNameValidate = (pageTitle: string, selectedPages: Array<ISelected>) : IValidation => {
   let validate: IValidation = { isValid: true, error: validationMessages.default };
   const existPage = selectedPages.filter((page) => page.title.toLowerCase() === pageTitle.toLowerCase()).length > 1;
   if (existPage) validate = { isValid: false, error: validationMessages.duplicateItemName };
@@ -30,7 +30,7 @@ export const addExistingProjectNameValidate = async (
   projectName: string,
   outputPath: string,
   vscode: IVSCodeObject
-) => {
+) : Promise<IValidation> => {
   let validate: IValidation = { isValid: true, error: validationMessages.default };
   const isExistingName = projectName !== "" && outputPath !== "";
 
@@ -42,7 +42,7 @@ export const addExistingProjectNameValidate = async (
   return validate;
 };
 
-export const addReservedNameValidate = (name: string, reservedNames: Array<string>) => {
+export const addReservedNameValidate = (name: string, reservedNames: Array<string>) : IValidation => {
   let validate: IValidation = { isValid: true, error: validationMessages.default };
   const isReservedName =
     reservedNames.filter((nameReserve) => nameReserve.toLowerCase() === name.toLowerCase()).length > 0;

@@ -2,7 +2,7 @@ import { IFeaturesActionType } from "./models";
 import { TEMPLATES_TYPEKEYS } from "../templateTypeKeys";
 import { IOption } from "../../../types/option";
 
-const featureOptions = (state: IOption[] = [], action: IFeaturesActionType) => {
+const featureOptions = (state: IOption[] = [], action: IFeaturesActionType) : IOption[] => {
   switch (action.type) {
     case TEMPLATES_TYPEKEYS.SET_FEATURES:
       return action.payload;

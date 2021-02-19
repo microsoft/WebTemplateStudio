@@ -60,7 +60,7 @@ const ProjectName = (props: Props) => {
   React.useEffect(() => {
     if (projectName === "" && outputPath !== "" && projectNameValidation.isDirty === false) {
       inferProjectName(outputPath, vscode).then((suggestedProjectName) => {
-        dispatch(setProjectNameAction(suggestedProjectName, { isValid: true, error: "", isDirty: true }));
+        dispatch(setProjectNameAction(suggestedProjectName, { isValid: true, isDirty: true }));
         setName(suggestedProjectName);
       });
     } else {
@@ -90,7 +90,7 @@ const ProjectName = (props: Props) => {
         />
 
         {!projectNameValidation.isValid && projectNameValidation.isDirty && (
-          <div className={styles.errorMessage}>{formatMessage(projectNameValidation.error)}</div>
+          <div className={styles.errorMessage}>{projectNameValidation.error ? formatMessage(projectNameValidation.error): ""}</div>
         )}
       </div>
     </div>

@@ -13,7 +13,7 @@ export const validateItemName = async (
   itemName: string,
   validations: IitemNameValidationConfig,
   selectedPages: Array<ISelected>
-) => {
+) : Promise<IValidation> => {
   const listValidations: Array<IValidation> = [];
   let validate: IValidation = { isValid: true, error: validationMessages.default };
 

@@ -63,7 +63,7 @@ interface IProps {
   isModalOpen: boolean;
 }
 
-const asModal = <P extends Record<string, unknown>>(WrappedComponent: React.ComponentType<P>, MODAL_TYPE?: ModalType) => {
+const asModal = <P extends Record<string, unknown>>(WrappedComponent: React.ComponentType<P>, MODAL_TYPE?: ModalType) : any => {
   return class extends React.Component<P & IProps> {
     static defaultProps = {
       closeModal: () => void 0,

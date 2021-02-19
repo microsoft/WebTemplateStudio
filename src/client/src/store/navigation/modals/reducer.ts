@@ -7,7 +7,7 @@ const initialState: ModalState = {
   modalData: null,
 };
 
-const openModal = (state: ModalState = initialState, action: RootAction) => {
+const openModal = (state: ModalState = initialState, action: RootAction) : ModalState => {
   switch (action.type) {
     case NAVIGATION_MODAL_TYPEKEYS.OPEN_MODAL:
       return action.payload;

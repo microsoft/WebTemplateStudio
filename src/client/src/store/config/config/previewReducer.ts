@@ -1,7 +1,7 @@
 import RootAction from "../../ActionType";
 import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 
-const previewStatus = (state = false, action: RootAction) => {
+const previewStatus = (state = false, action: RootAction) : boolean => {
   switch (action.type) {
     case CONFIG_TYPEKEYS.SET_PREVIEW_STATUS:
       return action.payload;
