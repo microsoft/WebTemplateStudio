@@ -16,12 +16,6 @@
   border: none;
 }
 
-.innerContent {
-  display: flex;
-  flex-direction: column;
-  height: inherit;
-}
-
 .boundingBox {
   width: 230px;
   height: 200px;

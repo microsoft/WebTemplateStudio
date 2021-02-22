@@ -68,12 +68,12 @@ const ProjectTypeCard = (props: Props) => {
         [cardStyles.selected]: selected,
       })}
     >
-      <div className={cardStyles.innerContent}>
+      <div>
         <div className={cardStyles.gridLayoutCardHeader}>
           <div>{projectType.title && <Icon name={projectType.title} icon={projectType.icon} />}</div>
           <div className={cardStyles.title}>{projectType.title}</div>
         </div>
-        <div className={classNames(pageStyles.description, pageStyles.fixedHeight)}>{projectType.body}</div>
+        <div className={pageStyles.fixedDescription}>{projectType.body}</div>
         <div className={cardStyles.gridLayoutCardFooter}>
           <div>
             <button

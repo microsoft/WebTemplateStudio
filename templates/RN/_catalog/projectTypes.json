@@ -4,10 +4,10 @@
     "displayName": "Blank",
     "summary": "Basic project upon which to build your app.",
     "order": "1",
-    "licenses": "[React Native](https://github.com/facebook/react-native/blob/master/LICENSE)\n [React Navigation](https://github.com/react-navigation/react-navigation/blob/main/packages/core/LICENSE)",
+    "licenses": "[React Native](https://github.com/facebook/react-native/blob/master/LICENSE)\n",
     "platform": "RN",
     "languages": ["Any"],
-    "tags": {      
+    "tags": {
       "preview": true
     }
   },
@@ -16,10 +16,10 @@
     "displayName": "Tabbed",
     "summary": "The most common style of navigation in mobile apps.",
     "order": "0",
-    "licenses": "[React Native](https://github.com/facebook/react-native/blob/master/LICENSE)\n [React Navigation](https://github.com/react-navigation/react-navigation/blob/main/packages/core/LICENSE)",
+    "licenses": "[React Navigation](https://github.com/react-navigation/react-navigation/blob/main/packages/core/LICENSE)",
     "platform": "RN",
     "languages": ["Any"],
-    "tags": {      
+    "tags": {
       "preview": false
     }
   },
@@ -28,10 +28,10 @@
     "displayName": "Drawer",
     "summary": "Common pattern in navigation is to use drawer for navigating between screens.",
     "order": "2",
-    "licenses": "[React Native](https://github.com/facebook/react-native/blob/master/LICENSE)\n [React Navigation](https://github.com/react-navigation/react-navigation/blob/main/packages/core/LICENSE)",
+    "licenses": "[React Navigation](https://github.com/react-navigation/react-navigation/blob/main/packages/core/LICENSE)",
     "platform": "RN",
     "languages": ["Any"],
-    "tags": {      
+    "tags": {
       "preview": true
     }
   }

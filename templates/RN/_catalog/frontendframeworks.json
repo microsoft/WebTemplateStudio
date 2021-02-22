@@ -5,7 +5,7 @@
       "summary": "JavaScript framework",
       "author": "Facebook",
       "order": "1",
-      "licenses": "",
+      "licenses": "[React Native](https://github.com/facebook/react-native/blob/master/LICENSE)",
       "platform": "RN",
       "languages": [
         "Any"
