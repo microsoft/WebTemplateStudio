@@ -11,7 +11,14 @@ module.exports = {
       jsx: true, // Allows for the parsing of JSX
     },
   },
-  ignorePatterns: [".vscode/", ".vscode-test/", "logs/", "node_modules/", "src/assets/", "src/translations/"],
+  ignorePatterns: [
+    ".vscode/",
+    ".vscode-test/",
+    "logs/",
+    "node_modules/",
+    "src/assets/",
+    "src/translations/"
+  ],
   plugins: ["react-hooks"],
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
