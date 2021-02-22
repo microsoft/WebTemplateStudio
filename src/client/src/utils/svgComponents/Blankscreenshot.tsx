@@ -1,6 +1,7 @@
-import * as React from "react";
-import { ReactComponent as Blankscreenshot } from "../../assets/blankscreenshot.svg";
 import classnames from "classnames";
+import * as React from "react";
+
+import { ReactComponent as Blankscreenshot } from "../../assets/blankscreenshot.svg";
 
 interface IProps {
   style: string;

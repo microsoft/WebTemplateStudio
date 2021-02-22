@@ -1,5 +1,5 @@
-import { AZURE_TYPEKEYS } from "./typeKeys";
 import AzureActionType from "./azureActionType";
+import { AZURE_TYPEKEYS } from "./typeKeys";
 
 const initialState: AzureProfile = {
   email: "",

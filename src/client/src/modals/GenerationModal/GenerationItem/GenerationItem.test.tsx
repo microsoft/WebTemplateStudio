@@ -1,13 +1,15 @@
-import * as React from "react";
-import { waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import "@testing-library/jest-dom/extend-expect";
-import { renderWithIntl } from "../../../testUtils";
-import GenerationItem from ".";
+
+import { waitFor } from "@testing-library/react";
+import * as React from "react";
 import { Subject } from "rxjs/internal/Subject";
+
+import { renderWithIntl } from "../../../testUtils";
 import { GenerationItemData, GenerationItemStatus } from "../../../types/generationStatus";
-import messages from "./messages";
 import { EXTENSION_COMMANDS } from "../../../utils/constants/commands";
+import GenerationItem from ".";
+import messages from "./messages";
 
 describe("GenerationItem", () => {
   let props: any;

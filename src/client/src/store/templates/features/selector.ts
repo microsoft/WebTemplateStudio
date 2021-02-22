@@ -1,10 +1,11 @@
 import { createSelector } from "reselect";
-import { AppState } from "../../combineReducers";
+
 import { IOption } from "../../../types/option";
-import { openAppServiceModalAction, openCosmosDbModalAction } from "../../navigation/modals/action";
-import messages from "./messages";
 import { SERVICE_GROUPS } from "../../../utils/constants/azure";
 import { WIZARD_CONTENT_FEATURES } from "../../../utils/constants/internalNames";
+import { AppState } from "../../combineReducers";
+import { openAppServiceModalAction, openCosmosDbModalAction } from "../../navigation/modals/action";
+import messages from "./messages";
 
 const getFeatures = (state: AppState): IOption[] => state.templates.featureOptions;
 

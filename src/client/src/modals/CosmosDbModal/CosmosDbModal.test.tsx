@@ -1,17 +1,19 @@
+import "@testing-library/jest-dom";
+import "@testing-library/jest-dom/extend-expect";
+
+import { act, fireEvent, waitFor } from "@testing-library/react";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import "@testing-library/jest-dom";
-import CosmosDbModal from ".";
-import { getInitialState, setOpenModal, addFeaturesOptions } from "../../mockData/mockStore";
+
 import buttonStyles from "../../css/button.module.css";
-import "@testing-library/jest-dom/extend-expect";
-import { renderWithStore } from "../../testUtils";
-import messages from "./messages";
-import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
-import { waitFor, fireEvent, act } from "@testing-library/react";
+import { addFeaturesOptions, getInitialState, setOpenModal } from "../../mockData/mockStore";
 import { closeModalAction } from "../../store/navigation/modals/action";
+import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import { saveCosmosDbAction } from "../../store/userSelection/services/cosmosDb/action";
 import { ICosmosDB } from "../../store/userSelection/services/cosmosDb/model";
+import { renderWithStore } from "../../testUtils";
+import CosmosDbModal from ".";
+import messages from "./messages";
 
 jest.mock("../../components/SubscriptionSelection", () => {
   return (props: any) => {

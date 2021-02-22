@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import styles from "./styles.module.css";
 import { ReactComponent as DefaultIconSVG } from "../../assets/defaultIcon.svg";
+import styles from "./styles.module.css";
 
 export interface IIconProps {
   name: string;

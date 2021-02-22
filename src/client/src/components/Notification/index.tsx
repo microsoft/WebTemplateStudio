@@ -1,10 +1,9 @@
-import React, { ReactNode } from "react";
 import classnames from "classnames";
+import React, { ReactNode } from "react";
 import { injectIntl } from "react-intl";
 
-import { ReactComponent as Warning } from "../../assets/warning.svg";
 import { ReactComponent as Checkmark } from "../../assets/checkgreen.svg";
-
+import { ReactComponent as Warning } from "../../assets/warning.svg";
 import styles from "./styles.module.css";
 
 interface IProps {

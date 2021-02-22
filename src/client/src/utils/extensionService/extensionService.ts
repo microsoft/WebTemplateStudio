@@ -1,8 +1,8 @@
-import { IVSCodeObject } from "../../types/vscode";
-import { PAYLOAD_MESSAGES_TEXT } from "../constants/constants";
 import { ILoggingPayload } from "../../types/logger";
-import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../constants/commands";
 import { IVersionPackage } from "../../types/option";
+import { IVSCodeObject } from "../../types/vscode";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../constants/commands";
+import { PAYLOAD_MESSAGES_TEXT } from "../constants/constants";
 
 const postMessageAsync = (
   command: string,
@@ -369,30 +369,30 @@ const unsubscribeToExtensionEvents = (listener: any): void => {
 };
 
 export {
-  projectPathValidation,
-  getFrameworks,
-  getProjectTypes,
-  getAllLicenses,
-  getLatestVersion,
-  getPages,
-  getFeatures,
-  getOutputPathFromConfig,
+  azureLogin,
+  azureLogout,
   browseNewOutputPath,
-  sendTelemetry,
+  generateProject,
+  getAllLicenses,
+  getFeatures,
+  getFrameworks,
+  getLatestVersion,
+  getLocations,
+  getOutputPathFromConfig,
+  getPages,
+  getProjectTypes,
   getResourceGroups,
+  getTemplateInfo,
+  getUserStatus,
   GetValidAppServiceName,
   GetValidCosmosAccountName,
-  ValidateAppServiceName,
-  azureLogout,
-  getLocations,
-  ValidateCosmosAccountName,
-  azureLogin,
-  getUserStatus,
-  getTemplateInfo,
-  generateProject,
-  sendLog,
   openLogFile,
   openProjectInVSCode,
+  projectPathValidation,
+  sendLog,
+  sendTelemetry,
   subscribeToExtensionEvents,
   unsubscribeToExtensionEvents,
+  ValidateAppServiceName,
+  ValidateCosmosAccountName,
 };

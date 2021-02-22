@@ -1,6 +1,6 @@
-import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 import { ISelected } from "../../../types/selected";
 import WizardSelectionActionType from "../selectionActionType";
+import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 
 const initialState = {
   title: "",

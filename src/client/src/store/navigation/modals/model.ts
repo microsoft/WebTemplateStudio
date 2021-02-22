@@ -1,4 +1,4 @@
-import { NAVIGATION_MODAL_TYPEKEYS, ModalState } from "../typeKeys";
+import { ModalState, NAVIGATION_MODAL_TYPEKEYS } from "../typeKeys";
 
 export interface IOpenModalAction {
   type: NAVIGATION_MODAL_TYPEKEYS.OPEN_MODAL;

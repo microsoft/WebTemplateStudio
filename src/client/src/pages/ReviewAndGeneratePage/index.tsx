@@ -1,10 +1,9 @@
 import * as React from "react";
-
-import styles from "./styles.module.css";
-
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import messages from "./messages";
+
 import Title from "../../components/Titles/Title";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 type Props = InjectedIntlProps;
 

@@ -1,21 +1,19 @@
 import * as React from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 
+import { AppContext } from "../../../AppContext";
+import { setOutputPathAction } from "../../../store/userSelection/app/action";
 import {
   getOutputPath,
   getOutputPathValidation,
 } from "../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
-import { setOutputPathAction } from "../../../store/userSelection/app/action";
-import { getOutputPathFromConfig, browseNewOutputPath } from "../../../utils/extensionService/extensionService";
-
+import { browseNewOutputPath, getOutputPathFromConfig } from "../../../utils/extensionService/extensionService";
 import OutputPath from "../../OutputPath";
-import { AppContext } from "../../../AppContext";
-
-import styles from "./styles.module.css";
-import messages from "./messages";
 import rightsidebarStyles from "../../RightSidebar/rightsidebarStyles.module.css";
 import InputTitle from "../../Titles/TitleForInput";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 interface IProps {
   isRightsidebar?: boolean;

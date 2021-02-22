@@ -1,9 +1,10 @@
-import * as React from "react";
-import { Provider } from "react-redux";
-import { IntlProvider } from "react-intl";
 import { render } from "@testing-library/react";
-import { IDropdownProps } from "./components/Dropdown";
+import * as React from "react";
+import { IntlProvider } from "react-intl";
+import { Provider } from "react-redux";
 import { AnyAction, Store } from "redux";
+
+import { IDropdownProps } from "./components/Dropdown";
 
 const renderWithIntl = (component: React.ReactNode | React.ReactPortal): any => {
   return render(<IntlProvider locale="en">{component}</IntlProvider>);
@@ -31,4 +32,4 @@ const dropdownMock = ({ options, value, handleChange }: IDropdownProps): JSX.Ele
   );
 };
 
-export { renderWithIntl, renderWithStore, dropdownMock };
+export { dropdownMock, renderWithIntl, renderWithStore };

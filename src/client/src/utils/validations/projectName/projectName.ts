@@ -1,7 +1,7 @@
-import { IVSCodeObject } from "../../../types/vscode";
-import * as validations from "../validations";
-import { validationMessages } from "../messages";
 import { IprojectNameValidationConfig } from "../../../store/config/validations/model";
+import { IVSCodeObject } from "../../../types/vscode";
+import { validationMessages } from "../messages";
+import * as validations from "../validations";
 
 export const validateProjectName = async (
   projectName: string,

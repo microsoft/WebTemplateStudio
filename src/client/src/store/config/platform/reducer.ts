@@ -1,6 +1,6 @@
-import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 import { PLATFORM } from "../../../utils/constants/constants";
 import RootAction from "../../ActionType";
+import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 import { IPlatform } from "./model";
 
 const initialState: IPlatform = {

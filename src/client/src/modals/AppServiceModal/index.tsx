@@ -1,38 +1,33 @@
-import React, { useState, useContext, useEffect } from "react";
+import classNames from "classnames";
+import React, { useContext, useEffect, useState } from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { connect, useSelector, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
+
 import { AppContext } from "../../AppContext";
-
-import { isAppServiceModalOpenSelector } from "../../store/navigation/modals/selector";
-import { AppState } from "../../store/combineReducers";
-import { IAppService } from "../../store/userSelection/services/appService/model";
-import { getAppService } from "../../store/userSelection/services/servicesSelector";
-import { saveAppServiceAction } from "../../store/userSelection/services/appService/action";
-import { closeModalAction } from "../../store/navigation/modals/action";
-
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
-
-import SubscriptionSelection from "../../components/SubscriptionSelection";
-import asModal from "../../components/Modal";
 import LocationSelection from "../../components/LocationSelection";
+import asModal from "../../components/Modal";
 import ResourceGroupSelection from "../../components/ResourceGroupSelection";
-
-import { KEY_EVENTS } from "../../utils/constants/constants";
-import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
-import { sendTelemetry } from "../../utils/extensionService/extensionService";
-import { WIZARD_CONTENT_FEATURES } from "../../utils/constants/internalNames";
-import { AZURE, SERVICE_KEYS, AzureResourceType } from "../../utils/constants/azure";
-
-import AppNameEditor from "./AppNameEditor";
-import RuntimeStackInfo from "./RuntimeStackInfo";
-import AppServicePlanInfo from "./AppServicePlanInfo";
-
-import buttonStyles from "../../css/button.module.css";
-import styles from "./styles.module.css";
-import classNames from "classnames";
-import messages from "./messages";
+import SubscriptionSelection from "../../components/SubscriptionSelection";
 import ModalTitle from "../../components/Titles/TitleForModal";
+import buttonStyles from "../../css/button.module.css";
+import { AppState } from "../../store/combineReducers";
+import { closeModalAction } from "../../store/navigation/modals/action";
+import { isAppServiceModalOpenSelector } from "../../store/navigation/modals/selector";
+import { saveAppServiceAction } from "../../store/userSelection/services/appService/action";
+import { IAppService } from "../../store/userSelection/services/appService/model";
+import { getAppService } from "../../store/userSelection/services/servicesSelector";
+import { AZURE, AzureResourceType, SERVICE_KEYS } from "../../utils/constants/azure";
+import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
+import { KEY_EVENTS } from "../../utils/constants/constants";
+import { WIZARD_CONTENT_FEATURES } from "../../utils/constants/internalNames";
+import { sendTelemetry } from "../../utils/extensionService/extensionService";
+import AppNameEditor from "./AppNameEditor";
+import AppServicePlanInfo from "./AppServicePlanInfo";
+import messages from "./messages";
+import RuntimeStackInfo from "./RuntimeStackInfo";
+import styles from "./styles.module.css";
 
 interface IStateProps {
   isModalOpen: boolean;

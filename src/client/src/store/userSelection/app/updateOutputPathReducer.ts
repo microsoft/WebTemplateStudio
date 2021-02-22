@@ -1,7 +1,7 @@
-import { USERSELECTION_TYPEKEYS } from "../typeKeys";
-import { IOutputPath } from "./model";
 import RootAction from "../../ActionType";
 import { CONFIG_TYPEKEYS } from "../../config/configTypeKeys";
+import { USERSELECTION_TYPEKEYS } from "../typeKeys";
+import { IOutputPath } from "./model";
 
 const initialState = {
   outputPath: "",

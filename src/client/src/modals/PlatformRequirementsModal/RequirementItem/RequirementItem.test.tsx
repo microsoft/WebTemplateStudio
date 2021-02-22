@@ -1,8 +1,9 @@
 import * as React from "react";
-import RequirementItem from ".";
-import { renderWithIntl } from "../../../testUtils";
-import messages from "./messages";
+
 import { IPlatformRequirement } from "../../../store/config/platform/model";
+import { renderWithIntl } from "../../../testUtils";
+import RequirementItem from ".";
+import messages from "./messages";
 
 describe("RequirementItem", () => {
   let props: { item: IPlatformRequirement };

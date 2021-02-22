@@ -1,10 +1,11 @@
 import * as React from "react";
-import configureMockStore from "redux-mock-store";
-import ServicesList from "./index";
 import { Provider } from "react-redux";
+import configureMockStore from "redux-mock-store";
+
+import { getInitialState } from "../../../mockData/mockStore";
 import AppServiceSelection from "./AppServiceSelection";
 import CosmosDBSelection from "./CosmosDBSelection";
-import { getInitialState } from "../../../mockData/mockStore";
+import ServicesList from "./index";
 
 const mockStore = configureMockStore();
 

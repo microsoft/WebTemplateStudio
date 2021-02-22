@@ -1,12 +1,13 @@
-import { takeEvery, call, put } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import { select } from "redux-saga/effects";
-import { AppState } from "../../combineReducers";
-import { getPages } from "../../../utils/extensionService/extensionService";
+
 import { ISelected } from "../../../types/selected";
-import { USERSELECTION_TYPEKEYS } from "../typeKeys";
-import { getPagesOptions } from "../../../utils/cliTemplatesParser";
-import { TEMPLATES_TYPEKEYS } from "../../templates/templateTypeKeys";
 import { IVSCodeObject } from "../../../types/vscode";
+import { getPagesOptions } from "../../../utils/cliTemplatesParser";
+import { getPages } from "../../../utils/extensionService/extensionService";
+import { AppState } from "../../combineReducers";
+import { TEMPLATES_TYPEKEYS } from "../../templates/templateTypeKeys";
+import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 
 export function* frameworkSaga(vscode: IVSCodeObject): any {
   yield takeEvery(USERSELECTION_TYPEKEYS.SELECT_BACKEND_FRAMEWORK, callBack);

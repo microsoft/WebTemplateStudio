@@ -1,8 +1,8 @@
+import RootAction from "../../../ActionType";
 import { AZURE_TYPEKEYS } from "../../../config/azure/typeKeys";
+import { CONFIG_TYPEKEYS } from "../../../config/configTypeKeys";
 import { SERVICES_TYPEKEYS } from "../typeKeys";
 import { IAppService } from "./model";
-import RootAction from "../../../ActionType";
-import { CONFIG_TYPEKEYS } from "../../../config/configTypeKeys";
 
 const initialState: IAppService | null = null;
 

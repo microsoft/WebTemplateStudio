@@ -1,11 +1,12 @@
+import { fireEvent } from "@testing-library/react";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import PlatformRequirementsModal from ".";
-import { getInitialState, setOpenModal, addPlatformRequirementsOptions } from "../../mockData/mockStore";
-import { renderWithStore } from "../../testUtils";
-import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
-import { fireEvent } from "@testing-library/react";
+
+import { addPlatformRequirementsOptions, getInitialState, setOpenModal } from "../../mockData/mockStore";
 import { closeModalAction } from "../../store/navigation/modals/action";
+import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
+import { renderWithStore } from "../../testUtils";
+import PlatformRequirementsModal from ".";
 import messages from "./messages";
 
 jest.mock("../../store/navigation/modals/action", () => {

@@ -1,10 +1,9 @@
+import classNames from "classnames";
 import * as React from "react";
 
-import ProjectOutput from "./ProjectOutput";
-import ProjectName from "./ProjectName";
-
 import rightsidebarStyles from "../RightSidebar/rightsidebarStyles.module.css";
-import classNames from "classnames";
+import ProjectName from "./ProjectName";
+import ProjectOutput from "./ProjectOutput";
 
 interface IProps {
   isRightsidebar?: boolean;

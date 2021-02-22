@@ -1,10 +1,10 @@
 import { IOption } from "../../../types/option";
-import {
-  IUpdateFrameworkActionTypeAction,
-  IFrontendFrameworksActionTypeAction,
-  IBackendFrameworksSuccessActionTypeAction,
-} from "./model";
 import { TEMPLATES_TYPEKEYS } from "../templateTypeKeys";
+import {
+  IBackendFrameworksSuccessActionTypeAction,
+  IFrontendFrameworksActionTypeAction,
+  IUpdateFrameworkActionTypeAction,
+} from "./model";
 
 export const updateFrameworksAction = (frameworks: IOption[]): IUpdateFrameworkActionTypeAction => ({
   type: TEMPLATES_TYPEKEYS.UPDATE_FRAMEWORK,

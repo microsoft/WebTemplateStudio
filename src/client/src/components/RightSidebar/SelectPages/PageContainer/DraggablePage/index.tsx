@@ -1,23 +1,20 @@
-import React, { useEffect, useState, createRef } from "react";
+import classnames from "classnames";
+import React, { createRef, useEffect, useState } from "react";
+import { InjectedIntl, InjectedIntlProps, injectIntl } from "react-intl";
 import { connect, useDispatch } from "react-redux";
-import { injectIntl, InjectedIntl, InjectedIntlProps } from "react-intl";
 
+import { ReactComponent as CloseSVG } from "../../../../../assets/cancel.svg";
+import { ReactComponent as ReorderIconSVG } from "../../../../../assets/reorder.svg";
+import { AppState } from "../../../../../store/combineReducers";
+import { IValidations } from "../../../../../store/config/validations/model";
 import { getValidations } from "../../../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { setPageAction, setPagesAction } from "../../../../../store/userSelection/pages/action";
-import { IValidations } from "../../../../../store/config/validations/model";
-import { AppState } from "../../../../../store/combineReducers";
-
 import { ISelected } from "../../../../../types/selected";
 import { KEY_EVENTS } from "../../../../../utils/constants/constants";
 import { validateItemName } from "../../../../../utils/validations/itemName/itemName";
-
-import messages from "./messages";
-import classnames from "classnames";
-import styles from "./styles.module.css";
-
-import { ReactComponent as ReorderIconSVG } from "../../../../../assets/reorder.svg";
-import { ReactComponent as CloseSVG } from "../../../../../assets/cancel.svg";
 import Icon from "../../../../Icon";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 interface IStateProps {
   page: ISelected;

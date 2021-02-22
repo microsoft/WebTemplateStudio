@@ -1,5 +1,5 @@
-import { NAVIGATION_MODAL_TYPEKEYS, NAVIGATION_MODAL_TYPES, ModalState } from "../typeKeys";
-import { IOpenModalAction, ICloseModalAction } from "./model";
+import { ModalState, NAVIGATION_MODAL_TYPEKEYS, NAVIGATION_MODAL_TYPES } from "../typeKeys";
+import { ICloseModalAction, IOpenModalAction } from "./model";
 
 const openModalAction = (modal: ModalState): IOpenModalAction => ({
   type: NAVIGATION_MODAL_TYPEKEYS.OPEN_MODAL,
@@ -54,10 +54,10 @@ const openPlatformRequirementsAction = (): IOpenModalAction => {
 
 export {
   closeModalAction,
+  openAppServiceModalAction,
   openAzureServicesModalAction,
   openCosmosDbModalAction,
   openGenModalAction,
-  openViewLicensesModalAction,
-  openAppServiceModalAction,
   openPlatformRequirementsAction,
+  openViewLicensesModalAction,
 };

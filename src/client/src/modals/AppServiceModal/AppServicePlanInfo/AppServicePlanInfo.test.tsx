@@ -1,11 +1,12 @@
+import { RenderResult } from "@testing-library/react";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import AppServicePlanInfo from ".";
+
 import { getInitialState, setSubscriptions } from "../../../mockData/mockStore";
-import { RenderResult } from "@testing-library/react";
 import { renderWithStore } from "../../../testUtils";
-import messages from "./messages";
 import { AZURE_LINKS } from "../../../utils/constants/azure";
+import AppServicePlanInfo from ".";
+import messages from "./messages";
 
 describe("AppServicePlanInfo", () => {
   let props: any;

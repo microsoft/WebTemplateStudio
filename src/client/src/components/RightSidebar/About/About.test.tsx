@@ -1,11 +1,12 @@
+import { render, RenderResult } from "@testing-library/react";
 import * as React from "react";
+import { IntlProvider } from "react-intl";
+import * as ReactRedux from "react-redux";
 import configureMockStore from "redux-mock-store";
+
+import { getInitialState } from "../../../mockData/mockStore";
 import About from "./index";
 import messages from "./messages";
-import * as ReactRedux from "react-redux";
-import { getInitialState } from "../../../mockData/mockStore";
-import { render, RenderResult } from "@testing-library/react";
-import { IntlProvider } from "react-intl";
 
 describe("About", () => {
   let wrapper: RenderResult;

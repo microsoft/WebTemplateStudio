@@ -493,4 +493,4 @@ const features = [
   },
 ];
 
-export { platform, projectTypes, frameworks, licenses, templatesInfo, pages, features };
+export { features, frameworks, licenses, pages, platform, projectTypes, templatesInfo };

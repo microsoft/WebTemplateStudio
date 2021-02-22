@@ -1,6 +1,6 @@
 import { IOption } from "../../../types/option";
-import { TEMPLATES_TYPEKEYS } from "../templateTypeKeys";
 import RootAction from "../../ActionType";
+import { TEMPLATES_TYPEKEYS } from "../templateTypeKeys";
 
 const frontendFrameworkOptions = (state: IOption[] = [], action: RootAction): IOption[] => {
   switch (action.type) {

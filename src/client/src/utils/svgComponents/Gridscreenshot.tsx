@@ -1,6 +1,7 @@
-import * as React from "react";
-import { ReactComponent as Gridscreenshot } from "../../assets/gridscreenshot.svg";
 import classnames from "classnames";
+import * as React from "react";
+
+import { ReactComponent as Gridscreenshot } from "../../assets/gridscreenshot.svg";
 
 interface IProps {
   style: string;

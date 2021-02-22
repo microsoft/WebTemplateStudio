@@ -1,15 +1,15 @@
+import classNames from "classnames";
 import * as React from "react";
 import { useState } from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 
+import { AppContext } from "../../AppContext";
 import modalStyles from "../../css/modal.module.css";
-import styles from "./styles.module.css";
-import messages from "./messages";
-import Dropdown from "../Dropdown";
-import classNames from "classnames";
 import { AzureResourceType } from "../../utils/constants/azure";
 import { getLocations } from "../../utils/extensionService/extensionService";
-import { AppContext } from "../../AppContext";
+import Dropdown from "../Dropdown";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 interface IProps {
   location: string;

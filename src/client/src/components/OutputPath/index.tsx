@@ -1,16 +1,14 @@
-import * as React from "react";
-import { INTL_MESSAGES, KEY_EVENTS } from "../../utils/constants/constants";
-
-import styles from "./styles.module.css";
-import buttonStyles from "../../css/button.module.css";
-import { IValidation } from "../../utils/validations/validations";
 import classNames from "classnames";
-
-import { injectIntl, InjectedIntlProps } from "react-intl";
-
-import messages from "./messages";
-import stylesInput from "../../css/input.module.css";
 import classnames from "classnames";
+import * as React from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+
+import buttonStyles from "../../css/button.module.css";
+import stylesInput from "../../css/input.module.css";
+import { INTL_MESSAGES, KEY_EVENTS } from "../../utils/constants/constants";
+import { IValidation } from "../../utils/validations/validations";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 interface IProps {
   handleSaveClick: () => any;

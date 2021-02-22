@@ -1,18 +1,20 @@
-import * as React from "react";
-import configureMockStore from "redux-mock-store";
-import { getInitialState, setOpenModal, setGenerationData } from "../../mockData/mockStore";
-import { waitFor, fireEvent } from "@testing-library/react";
-import buttonStyles from "../../css/button.module.css";
 import "@testing-library/jest-dom";
 import "@testing-library/jest-dom/extend-expect";
-import { renderWithStore } from "../../testUtils";
-import GenerationModal from ".";
+
+import { fireEvent, waitFor } from "@testing-library/react";
+import * as React from "react";
+import configureMockStore from "redux-mock-store";
 import { Subject } from "rxjs/internal/Subject";
-import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
-import * as extensionService from "../../utils/extensionService/extensionService";
-import { WEB_TEMPLATE_STUDIO_LINKS } from "../../utils/constants/constants";
-import { messages } from "./messages";
+
+import buttonStyles from "../../css/button.module.css";
+import { getInitialState, setGenerationData, setOpenModal } from "../../mockData/mockStore";
 import { resetWizardAction } from "../../store/config/config/action";
+import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
+import { renderWithStore } from "../../testUtils";
+import { WEB_TEMPLATE_STUDIO_LINKS } from "../../utils/constants/constants";
+import * as extensionService from "../../utils/extensionService/extensionService";
+import GenerationModal from ".";
+import { messages } from "./messages";
 
 const spyGenerateProject = jest.spyOn(extensionService, "generateProject");
 const spySendTelemetry = jest.spyOn(extensionService, "sendTelemetry");

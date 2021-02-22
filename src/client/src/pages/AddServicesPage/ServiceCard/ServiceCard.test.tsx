@@ -1,14 +1,15 @@
+import { fireEvent } from "@testing-library/react";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import { ServiceCard } from "./index";
-import { renderWithStore } from "../../../testUtils";
+
 import { getInitialState, setAzureEmail } from "../../../mockData/mockStore";
-import messages from "./messages";
-import { fireEvent } from "@testing-library/react";
+import { AppState } from "../../../store/combineReducers";
 import { setDetailPageAction } from "../../../store/config/detailsPage/action";
 import { openAzureServicesModalAction } from "../../../store/navigation/modals/action";
+import { renderWithStore } from "../../../testUtils";
 import { IOption } from "../../../types/option";
-import { AppState } from "../../../store/combineReducers";
+import { ServiceCard } from "./index";
+import messages from "./messages";
 
 jest.mock("../../../store/config/detailsPage/action", () => {
   jest.fn((detailPageInfo: IOption, isIntlFormatted = false, originRoute: string) => ({

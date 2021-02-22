@@ -1,24 +1,25 @@
-import { takeEvery, call, put, select } from "redux-saga/effects";
-import {
-  getTemplateInfo,
-  getFrameworks,
-  getUserStatus,
-  getProjectTypes,
-  getPages,
-} from "../../../utils/extensionService/extensionService";
-import { IVersions } from "../../../types/version";
-import { AppState } from "../../combineReducers";
-import { getFrameworksOptions, getPagesOptions, getProjectTypesOptions } from "../../../utils/cliTemplatesParser";
-import { FRAMEWORK_TYPE } from "../../../utils/constants/constants";
-import { CONFIG_TYPEKEYS } from "../configTypeKeys";
-import { TEMPLATES_TYPEKEYS } from "../../templates/templateTypeKeys";
-import { AZURE_TYPEKEYS } from "../azure/typeKeys";
-import { USERSELECTION_TYPEKEYS } from "../../userSelection/typeKeys";
-import { getNavItems } from "../../../utils/routes/routes";
+import { call, put, select, takeEvery } from "redux-saga/effects";
+
 import { IRoutesNavItems } from "../../../types/route";
 import { ISelected } from "../../../types/selected";
-import { IPlatform } from "../platform/model";
+import { IVersions } from "../../../types/version";
 import { IVSCodeObject } from "../../../types/vscode";
+import { getFrameworksOptions, getPagesOptions, getProjectTypesOptions } from "../../../utils/cliTemplatesParser";
+import { FRAMEWORK_TYPE } from "../../../utils/constants/constants";
+import {
+  getFrameworks,
+  getPages,
+  getProjectTypes,
+  getTemplateInfo,
+  getUserStatus,
+} from "../../../utils/extensionService/extensionService";
+import { getNavItems } from "../../../utils/routes/routes";
+import { AppState } from "../../combineReducers";
+import { TEMPLATES_TYPEKEYS } from "../../templates/templateTypeKeys";
+import { USERSELECTION_TYPEKEYS } from "../../userSelection/typeKeys";
+import { AZURE_TYPEKEYS } from "../azure/typeKeys";
+import { CONFIG_TYPEKEYS } from "../configTypeKeys";
+import { IPlatform } from "../platform/model";
 
 export function* loadLogin(vscode: IVSCodeObject): any {
   yield takeEvery(CONFIG_TYPEKEYS.LOAD, callBack);

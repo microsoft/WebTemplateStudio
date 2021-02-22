@@ -1,9 +1,10 @@
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
+
+import { getInitialState } from "../../../mockData/mockStore";
+import { AppState } from "../../../store/combineReducers";
 import { renderWithStore } from "../../../testUtils";
 import ServiceGroup from ".";
-import { AppState } from "../../../store/combineReducers";
-import { getInitialState } from "../../../mockData/mockStore";
 
 jest.mock("../ServiceCard", () => {
   return () => {

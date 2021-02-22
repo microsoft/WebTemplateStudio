@@ -1,5 +1,5 @@
-import { AZURE_TYPEKEYS } from "../../../config/azure/typeKeys";
 import RootAction from "../../../ActionType";
+import { AZURE_TYPEKEYS } from "../../../config/azure/typeKeys";
 import { SERVICES_TYPEKEYS } from "../typeKeys";
 import { ICosmosDB } from "./model";
 

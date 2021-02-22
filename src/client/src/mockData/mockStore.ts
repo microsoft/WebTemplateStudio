@@ -1,7 +1,10 @@
-import { ISelected } from "../types/selected";
 import { FormattedMessage } from "react-intl";
+
 import { AppState } from "../store/combineReducers";
+import { IPlatformRequirement } from "../store/config/platform/model";
 import { ModalType } from "../store/navigation/typeKeys";
+import { ISelected } from "../types/selected";
+import { PLATFORM } from "../utils/constants/constants";
 import { getNavItems } from "../utils/routes/routes";
 import {
   backendImage,
@@ -10,8 +13,6 @@ import {
   projectTypeImage,
   serviceImage,
 } from "./extensionModules/mockData/mockSvgData";
-import { PLATFORM } from "../utils/constants/constants";
-import { IPlatformRequirement } from "../store/config/platform/model";
 
 export const getISelected = (): ISelected => {
   const selected: ISelected = {

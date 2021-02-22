@@ -1,17 +1,14 @@
 import * as React from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-
-import ProjectDetails from "../../components/ProjectDetails";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { useSelector } from "react-redux";
 
-import styles from "./styles.module.css";
-import messagesWeb from "./messagesWeb";
-import messagesReactNative from "./messagesReactNative";
-import { PLATFORM } from "../../utils/constants/constants";
-
+import ProjectDetails from "../../components/ProjectDetails";
 import Title from "../../components/Titles/Title";
-
 import { getPlatformSelector } from "../../store/config/platform/selector";
+import { PLATFORM } from "../../utils/constants/constants";
+import messagesReactNative from "./messagesReactNative";
+import messagesWeb from "./messagesWeb";
+import styles from "./styles.module.css";
 
 type Props = InjectedIntlProps;
 

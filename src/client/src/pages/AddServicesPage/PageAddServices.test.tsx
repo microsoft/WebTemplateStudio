@@ -1,10 +1,11 @@
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import { renderWithStore } from "../../testUtils";
-import { getInitialState, addFeaturesOptions, setAzureEmail, getServicesGroups } from "../../mockData/mockStore";
-import messages from "./messages";
+
+import { addFeaturesOptions, getInitialState, getServicesGroups, setAzureEmail } from "../../mockData/mockStore";
 import { AppState } from "../../store/combineReducers";
+import { renderWithStore } from "../../testUtils";
 import AddServicesPage from ".";
+import messages from "./messages";
 
 jest.mock("./ServiceGroup", () => {
   return () => {

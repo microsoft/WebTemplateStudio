@@ -1,5 +1,5 @@
-import WizardContentActionType from "../templatesActionType";
 import { IOption } from "../../../types/option";
+import WizardContentActionType from "../templatesActionType";
 import { TEMPLATES_TYPEKEYS } from "../templateTypeKeys";
 
 const pageOptions = (state: IOption[] = [], action: WizardContentActionType): IOption[] => {

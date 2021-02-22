@@ -1,11 +1,10 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { IVersions } from "../../../types/version";
+import { useSelector } from "react-redux";
 
 import { AppState } from "../../../store/combineReducers";
+import { IVersions } from "../../../types/version";
 import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants/constants";
-
 import messages from "./messages";
 import styles from "./styles.module.css";
 

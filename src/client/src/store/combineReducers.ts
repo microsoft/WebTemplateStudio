@@ -1,12 +1,13 @@
 import { combineReducers } from "redux";
-import navigation from "./navigation/combineReducers";
-import templates from "./templates/combineReducers";
-import config from "./config/combineReducers";
-import userSelection from "./userSelection/combineReducers";
-import RootAction from "./ActionType";
-import { CONFIG_TYPEKEYS } from "./config/configTypeKeys";
+
 import { IRoutesNavItems } from "../types/route";
 import { ISelected } from "../types/selected";
+import RootAction from "./ActionType";
+import config from "./config/combineReducers";
+import { CONFIG_TYPEKEYS } from "./config/configTypeKeys";
+import navigation from "./navigation/combineReducers";
+import templates from "./templates/combineReducers";
+import userSelection from "./userSelection/combineReducers";
 
 const appReducer = combineReducers({
   templates,

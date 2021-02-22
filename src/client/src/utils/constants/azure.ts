@@ -35,4 +35,4 @@ enum SERVICE_GROUPS {
   DATABASE = "CloudDatabase",
 }
 
-export { SERVICE_KEYS, AZURE, AZURE_LINKS, AzureResourceType, SERVICE_GROUPS };
+export { AZURE, AZURE_LINKS, AzureResourceType, SERVICE_GROUPS, SERVICE_KEYS };

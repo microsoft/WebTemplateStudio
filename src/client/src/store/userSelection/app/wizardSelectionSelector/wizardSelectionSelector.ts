@@ -1,11 +1,12 @@
 import { createSelector } from "reselect";
+
 import { RowType } from "../../../../types/rowType";
 import { ISelected } from "../../../../types/selected";
+import { ROUTE } from "../../../../utils/constants/constants";
 import { IValidation } from "../../../../utils/validations/validations";
 import { AppState } from "../../../combineReducers";
-import { UserSelectionState } from "../../combineReducers";
-import { ROUTE } from "../../../../utils/constants/constants";
 import { IValidations } from "../../../config/validations/model";
+import { UserSelectionState } from "../../combineReducers";
 
 const getWizardSelectionsSelector = (state: AppState): UserSelectionState => state.userSelection;
 const getProjectName = (state: AppState): string => state.userSelection.projectNameObject.projectName;
@@ -129,15 +130,15 @@ const frameworksRowItems = (selection: UserSelectionState): RowType[] => {
 const getFrameworksRowItemSelector = createSelector(getWizardSelectionsSelector, frameworksRowItems);
 
 export {
-  getWizardSelectionsSelector,
   getFrameworksRowItemSelector,
   getOutputPath,
   getOutputPathValidation,
   getProjectName,
-  getValidations,
   getProjectNameValidation,
   getSelectedRoute,
-  isValidNameAndProjectPathSelector,
-  isEnableNextPageSelector,
+  getValidations,
+  getWizardSelectionsSelector,
   isEnableGenerateButtonSelector,
+  isEnableNextPageSelector,
+  isValidNameAndProjectPathSelector,
 };

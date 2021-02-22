@@ -1,5 +1,5 @@
-import { ISaveAppServiceAction, IRemoveAppServiceAction } from "./appService/model";
-import { ISaveCosmosDbAction, IRemoveCosmosDbAction } from "./cosmosDb/model";
+import { IRemoveAppServiceAction, ISaveAppServiceAction } from "./appService/model";
+import { IRemoveCosmosDbAction, ISaveCosmosDbAction } from "./cosmosDb/model";
 
 type ServicesActionType = ISaveAppServiceAction | IRemoveAppServiceAction | ISaveCosmosDbAction | IRemoveCosmosDbAction;
 

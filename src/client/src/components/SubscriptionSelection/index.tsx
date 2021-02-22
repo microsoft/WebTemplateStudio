@@ -1,16 +1,15 @@
 import * as React from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { useState } from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+import { useSelector } from "react-redux";
 
 import modalStyles from "../../css/modal.module.css";
-import styles from "./styles.module.css";
-import messages from "./messages";
-
-import Dropdown from "../Dropdown";
-import { useSelector } from "react-redux";
-import { getDropdownSubscriptionsSelector } from "../../store/config/azure/selector";
-import { useState } from "react";
 import { AppState } from "../../store/combineReducers";
+import { getDropdownSubscriptionsSelector } from "../../store/config/azure/selector";
 import { AZURE_LINKS } from "../../utils/constants/azure";
+import Dropdown from "../Dropdown";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 interface IProps {
   initialSubscription: string;

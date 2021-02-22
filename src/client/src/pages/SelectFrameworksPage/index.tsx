@@ -1,12 +1,12 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
-import FrameworkCard from "./FrameworkCard";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { AppState } from "../../store/combineReducers";
+import { useSelector } from "react-redux";
 
-import messages from "./messages";
-import pageStyles from "../pageStyles.module.css";
 import Title from "../../components/Titles/Title";
+import { AppState } from "../../store/combineReducers";
+import pageStyles from "../pageStyles.module.css";
+import FrameworkCard from "./FrameworkCard";
+import messages from "./messages";
 
 type Props = InjectedIntlProps;
 

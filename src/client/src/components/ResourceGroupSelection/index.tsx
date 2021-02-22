@@ -1,20 +1,19 @@
+import classNames from "classnames";
 import * as React from "react";
 import { useState } from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-
-import modalStyles from "../../css/modal.module.css";
-import styles from "./styles.module.css";
-import messages from "./messages";
-
-import { ReactComponent as Refresh } from "../../assets/i-refresh.svg";
-import Dropdown from "../Dropdown";
-import classNames from "classnames";
-import { AZURE_LINKS } from "../../utils/constants/azure";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { useSelector } from "react-redux";
+
+import { AppContext } from "../../AppContext";
+import { ReactComponent as Refresh } from "../../assets/i-refresh.svg";
+import modalStyles from "../../css/modal.module.css";
 import { AppState } from "../../store/combineReducers";
 import { getSubscriptionsSelector } from "../../store/config/azure/selector";
+import { AZURE_LINKS } from "../../utils/constants/azure";
 import { getResourceGroups } from "../../utils/extensionService/extensionService";
-import { AppContext } from "../../AppContext";
+import Dropdown from "../Dropdown";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 interface IProps {
   subscription: string;

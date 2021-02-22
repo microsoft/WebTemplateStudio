@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
-import cosmosDB from "./cosmosDb/reducer";
+
 import appService from "./appService/reducer";
+import cosmosDB from "./cosmosDb/reducer";
 
 const serviceReducer = combineReducers({
   cosmosDB,

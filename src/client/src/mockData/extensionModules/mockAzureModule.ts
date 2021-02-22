@@ -1,5 +1,4 @@
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/commands";
-
 import * as mockData from "./mockData/mockAzureModuleData";
 
 const DEV_NO_ERROR_MSG = "in development, no error message";
@@ -171,13 +170,13 @@ const IsMicrosoftLearnSubscription = (subscription: string): boolean => {
 };
 
 export {
-  login,
-  logout,
-  getUserStatus,
   getLocations,
   getResourceGroups,
+  getUserStatus,
   getValidAppServiceName,
   getValidCosmosName,
-  validateCosmosName,
+  login,
+  logout,
   validateAppServiceName,
+  validateCosmosName,
 };

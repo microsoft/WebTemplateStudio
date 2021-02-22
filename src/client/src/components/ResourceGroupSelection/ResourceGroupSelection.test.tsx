@@ -1,14 +1,16 @@
-import * as React from "react";
 import "@testing-library/jest-dom";
-import configureMockStore from "redux-mock-store";
-import ResourceGroupSelection from ".";
-import { RenderResult, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-import { renderWithStore } from "../../testUtils";
-import messages from "./messages";
-import { AZURE_LINKS } from "../../utils/constants/azure";
+
+import { fireEvent, RenderResult, waitFor } from "@testing-library/react";
+import * as React from "react";
+import configureMockStore from "redux-mock-store";
+
 import { getInitialState, setSubscriptions } from "../../mockData/mockStore";
+import { renderWithStore } from "../../testUtils";
+import { AZURE_LINKS } from "../../utils/constants/azure";
 import * as extensionService from "../../utils/extensionService/extensionService";
+import ResourceGroupSelection from ".";
+import messages from "./messages";
 
 jest.mock("../Dropdown", () => require("../../testUtils").dropdownMock);
 const spyGetResourceGroups = jest.spyOn(extensionService, "getResourceGroups");

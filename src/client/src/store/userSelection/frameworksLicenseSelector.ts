@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+
 import { ILicenseObject } from "../../types/license";
 import { AppState } from "../combineReducers";
 import { UserSelectionState } from "./combineReducers";

@@ -1,5 +1,6 @@
-import * as React from "react";
 import loadable from "@loadable/component";
+import * as React from "react";
+
 import { PAGES } from "./constants/internalNames";
 
 const Masterdetailscreenshot = loadable(

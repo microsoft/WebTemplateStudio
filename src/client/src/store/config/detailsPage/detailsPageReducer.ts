@@ -1,6 +1,6 @@
-import { IDetail } from "./model";
-import { NAVIGATION_ROUTES_TYPEKEYS } from "../../navigation/typeKeys";
 import RootAction from "../../ActionType";
+import { NAVIGATION_ROUTES_TYPEKEYS } from "../../navigation/typeKeys";
+import { IDetail } from "./model";
 
 const initialState = {
   isIntlFormatted: false,

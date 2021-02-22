@@ -1,17 +1,17 @@
 import classnames from "classnames";
 import * as React from "react";
+import { FormattedMessage, InjectedIntl, injectIntl } from "react-intl";
 import ReactMarkdown from "react-markdown";
-import { ReactComponent as BackArrow } from "../../../assets/backarrow.svg";
-import styles from "./styles.module.css";
-import backArrow from "../../../assets/backarrow.svg";
-import { KEY_EVENTS } from "../../../utils/constants/constants";
-import { IOption } from "../../../types/option";
-import { ILicenseObject, License } from "../../../types/license";
 
-import { injectIntl, InjectedIntl, FormattedMessage } from "react-intl";
-import messages from "./messages";
+import { ReactComponent as BackArrow } from "../../../assets/backarrow.svg";
+import backArrow from "../../../assets/backarrow.svg";
 import Icon from "../../../components/Icon";
 import Title from "../../../components/Titles/Title";
+import { ILicenseObject, License } from "../../../types/license";
+import { IOption } from "../../../types/option";
+import { KEY_EVENTS } from "../../../utils/constants/constants";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 interface IProps {
   detailInfo: IOption;
