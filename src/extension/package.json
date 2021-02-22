@@ -119,6 +119,7 @@
     "eslint": "^7.20.0",
     "eslint-config-prettier": "^8.0.0",
     "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
     "event-stream": "^4.0.1",
     "husky": "^5.1.0",
     "kind-of": "^6.0.3",
@@ -171,7 +172,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-	     "pre-push": "yarn test"
+      "pre-push": "yarn test"
     }
   },
   "lint-staged": {

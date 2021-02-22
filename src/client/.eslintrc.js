@@ -19,7 +19,7 @@ module.exports = {
     node: true, // Enables Node.js global variables and Node.js scoping.
   },
   ignorePatterns: [".vscode/", ".vscode-test/", "logs/", "node_modules/", "src/assets/", "src/translations/"],
-  plugins: ["react-hooks"],
+  plugins: ["simple-import-sort", "react-hooks"],
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
@@ -39,6 +39,12 @@ module.exports = {
     //React Hooks
     "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
     //"react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
+
+    //Sort imports
+    "sort-imports": "off",
+    "import/order": "off",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
   },
   settings: {
     react: {
