@@ -5,7 +5,7 @@ import * as mockWebData from "./mockData/mockWebPlatformData";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as mockReactNativeData from "./mockData/mockReactNativePlatformData";
 
-//DEV:Change mock data to change platform
+// WTS DEV: Change mock data to change platform
 const mockData = mockWebData;
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
