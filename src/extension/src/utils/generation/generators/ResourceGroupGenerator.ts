@@ -34,10 +34,11 @@ export default class ResourceGroupGenerator {
   }
 
   private deployWithTelemetry<T>(telemetryEvent: string, callback: Promise<T>): Promise<any> {
-    return this.Telemetry.callWithTelemetryAndCatchHandleErrors(telemetryEvent, async function (
-      this: IActionContext
-    ): Promise<T> {
-      return await callback;
-    });
+    return this.Telemetry.callWithTelemetryAndCatchHandleErrors(
+      telemetryEvent,
+      async function (this: IActionContext): Promise<T> {
+        return await callback;
+      }
+    );
   }
 }

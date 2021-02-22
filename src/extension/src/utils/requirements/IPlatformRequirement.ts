@@ -1,4 +1,4 @@
 interface IPlatformRequirement {
-    name: string;
-    isInstalled: boolean;
+  name: string;
+  isInstalled: boolean;
 }
