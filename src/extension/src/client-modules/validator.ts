@@ -1,8 +1,8 @@
 import { EXTENSION_COMMANDS } from "../constants/commands";
 import fs = require("fs");
 import path = require("path");
-import { WizardServant, IPayloadResponse } from "../wizardServant";
 import { MESSAGES } from "../constants/messages";
+import { IPayloadResponse, WizardServant } from "../wizardServant";
 
 export class Validator extends WizardServant {
   clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([

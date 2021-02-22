@@ -1,7 +1,7 @@
-import { IPayloadResponse, WizardServant } from "../wizardServant";
-import { TelemetryEventName } from "../constants/telemetry";
 import { EXTENSION_COMMANDS } from "../constants/commands";
+import { TelemetryEventName } from "../constants/telemetry";
 import { ITelemetryService } from "../telemetry/telemetryService";
+import { IPayloadResponse, WizardServant } from "../wizardServant";
 
 export class Telemetry extends WizardServant {
   clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([

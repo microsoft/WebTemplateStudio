@@ -1,7 +1,8 @@
 import * as vscode from "vscode";
+
+import { PLATFORM } from "./constants/constants";
 import { Controller } from "./controller";
 import { Deploy } from "./deploy";
-import { PLATFORM } from "./constants/constants";
 
 export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(

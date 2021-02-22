@@ -1,5 +1,5 @@
-import * as vscode from "vscode";
 import * as fse from "fs-extra";
+import * as vscode from "vscode";
 
 export interface IPackageJson {
   version?: string;

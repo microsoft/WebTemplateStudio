@@ -1,16 +1,16 @@
-import { MICROSOFT_LEARN_TENANTS } from "./../configuration.json";
-
-import { AzureAuth, SubscriptionItem, LocationItem } from "./azure-auth/azureAuth";
-import { CosmosDBDeploy, CosmosDBSelections } from "./azure-cosmosDB/cosmosDbModule";
-import { CONSTANTS, AzureResourceType } from "../constants/constants";
-import { SubscriptionError, ValidationError } from "../errors";
-import { ResourceGroupDeploy, ResourceGroupSelection } from "./azure-resource-group/resourceGroupModule";
-import { AppServiceProvider, AppServiceSelections } from "./azure-app-service/appServiceProvider";
-import { ConnectionString } from "./utils/connectionString";
 import * as fse from "fs-extra";
 import * as path from "path";
+
+import { AzureResourceType, CONSTANTS } from "../constants/constants";
 import { MESSAGES } from "../constants/messages";
+import { SubscriptionError, ValidationError } from "../errors";
 import { IAppService, IAzureService, ICosmosDB } from "../types/generationTypes";
+import { MICROSOFT_LEARN_TENANTS } from "./../configuration.json";
+import { AppServiceProvider, AppServiceSelections } from "./azure-app-service/appServiceProvider";
+import { AzureAuth, LocationItem, SubscriptionItem } from "./azure-auth/azureAuth";
+import { CosmosDBDeploy, CosmosDBSelections } from "./azure-cosmosDB/cosmosDbModule";
+import { ResourceGroupDeploy, ResourceGroupSelection } from "./azure-resource-group/resourceGroupModule";
+import { ConnectionString } from "./utils/connectionString";
 
 interface UserStatus {
   email: string;

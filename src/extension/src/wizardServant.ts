@@ -1,6 +1,6 @@
 import { EXTENSION_COMMANDS } from "./constants/commands";
-import { IActionContext, ITelemetryService } from "./telemetry/telemetryService";
 import { MESSAGES } from "./constants/messages";
+import { IActionContext, ITelemetryService } from "./telemetry/telemetryService";
 
 export abstract class WizardServant {
   abstract clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>>;

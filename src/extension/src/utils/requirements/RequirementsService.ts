@@ -1,14 +1,15 @@
 import * as vscode from "vscode";
 const opn = require("opn");
 import { CONSTANTS, PLATFORM, WEB_TEMPLATE_STUDIO_LINKS } from "../../constants/constants";
+import NetCoreChecker from "./validators/netCoreValidator";
 import NodeChecker from "./validators/nodeValidator";
 import PythonChecker from "./validators/pythonValidator";
-import NetCoreChecker from "./validators/netCoreValidator";
 import path = require("path");
 import { Controller } from "../../controller";
 import util = require("util");
-import { CLI_SETTINGS } from "../../constants/cli";
 import * as os from "os";
+
+import { CLI_SETTINGS } from "../../constants/cli";
 import { MESSAGES } from "../../constants/messages";
 import { Logger } from "../logger";
 
