@@ -1,0 +1,5 @@
+*.ts eol=lf
+*.tsx eol=lf
+*.js eol=lf
+*.css eol=lf
+*.md eol=lf
