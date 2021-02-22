@@ -2,7 +2,7 @@ import { IOption } from "../../../types/option";
 import { TEMPLATES_TYPEKEYS } from "../templateTypeKeys";
 import RootAction from "../../ActionType";
 
-const frontendFrameworkOptions = (state: IOption[] = [], action: RootAction) : IOption[] => {
+const frontendFrameworkOptions = (state: IOption[] = [], action: RootAction): IOption[] => {
   switch (action.type) {
     case TEMPLATES_TYPEKEYS.SET_FRONTEND_FRAMEWORKS:
       const newState = [...state];

@@ -162,7 +162,7 @@ const templatesInfo = {
   platformRequirements: platformRequirements,
 };
 
-const pages = (frontendFramework: string) : any => {
+const pages = (frontendFramework: string): any => {
   return [
     {
       templateId: `wts.Page.${frontendFramework}.Blank`,

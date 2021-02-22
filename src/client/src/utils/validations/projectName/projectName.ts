@@ -8,7 +8,7 @@ export const validateProjectName = async (
   outputPath: string,
   validationConfig: IprojectNameValidationConfig,
   vscode: IVSCodeObject
-) : Promise<validations.IValidation> => {
+): Promise<validations.IValidation> => {
   const listValidations: Array<validations.IValidation> = [];
   let validate: validations.IValidation = { isValid: true, error: validationMessages.default };
   if (validationConfig.validateEmptyNames) listValidations.push(validations.addRequiredValidate(projectName));

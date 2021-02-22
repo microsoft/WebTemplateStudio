@@ -12,7 +12,7 @@ const initialState = {
   },
 };
 
-const projectNameReducer = (state: IProjectName = initialState, action: WizardSelectionActionType) : IProjectName => {
+const projectNameReducer = (state: IProjectName = initialState, action: WizardSelectionActionType): IProjectName => {
   switch (action.type) {
     case USERSELECTION_TYPEKEYS.SET_PROJECT_NAME:
       return action.payload;

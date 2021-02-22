@@ -5,7 +5,7 @@ export interface IStateValidationItemName {
   errorMessage: string;
 }
 
-export const inferItemName = (basePageName: string, selectedPages: Array<ISelected>) : string => {
+export const inferItemName = (basePageName: string, selectedPages: Array<ISelected>): string => {
   let suggestedName = "";
   let index = 1;
   if (selectedPages.filter((page) => page.title === basePageName).length === 0) {

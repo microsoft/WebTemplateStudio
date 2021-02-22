@@ -24,7 +24,7 @@ function* rootSaga() {
   ]);
 }
 
-function runSagaMiddleware(vscode: IVSCodeObject, sagaMiddleware: SagaMiddleware<any>) : void {
+function runSagaMiddleware(vscode: IVSCodeObject, sagaMiddleware: SagaMiddleware<any>): void {
   rootSagaVscode = vscode;
   sagaMiddleware.run(rootSaga);
 }

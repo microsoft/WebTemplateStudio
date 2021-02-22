@@ -30,7 +30,7 @@ const SVG_SCREENSHOT_MAPPINGS = {
   [PAGES.VUE_BLANK_PAGE]: (style: string) => <Blankscreenshot style={style} />,
 };
 
-export const getScreenShot = (internalName: string, style?: string) : (JSX.Element|undefined) => {
+export const getScreenShot = (internalName: string, style?: string): JSX.Element | undefined => {
   if (SVG_SCREENSHOT_MAPPINGS[internalName] !== undefined) {
     return SVG_SCREENSHOT_MAPPINGS[internalName](style || "");
   }

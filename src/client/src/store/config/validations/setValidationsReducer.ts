@@ -18,7 +18,7 @@ const initialState = {
   },
 };
 
-const validationsReducer = (state: IValidations = initialState, action: RootAction) : any => {
+const validationsReducer = (state: IValidations = initialState, action: RootAction): any => {
   switch (action.type) {
     case CONFIG_TYPEKEYS.SET_VALIDATIONS:
       return action.payload;

@@ -6,7 +6,7 @@ import messages from "./messages";
 import { SERVICE_GROUPS } from "../../../utils/constants/azure";
 import { WIZARD_CONTENT_FEATURES } from "../../../utils/constants/internalNames";
 
-const getFeatures = (state: AppState) : IOption[] => state.templates.featureOptions;
+const getFeatures = (state: AppState): IOption[] => state.templates.featureOptions;
 
 const getServiceGroups = createSelector(getFeatures, (features) => {
   const result = features.reduce((result, feature) => {
@@ -58,7 +58,7 @@ const getServiceMetadata = (serviceId: string) => {
   }
 };
 
-export const getServiceGroupMetadata = (groupName: string | undefined) : any => {
+export const getServiceGroupMetadata = (groupName: string | undefined): any => {
   switch (groupName) {
     case SERVICE_GROUPS.HOSTING:
       return {

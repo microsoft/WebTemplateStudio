@@ -17,7 +17,7 @@ const appReducer = combineReducers({
 
 export type AppState = ReturnType<typeof appReducer>;
 
-const rootReducer = (state: AppState | undefined, action: RootAction) : any => {
+const rootReducer = (state: AppState | undefined, action: RootAction): any => {
   let passedState: any;
 
   if (action.type === CONFIG_TYPEKEYS.RESET_WIZARD) {

@@ -6,7 +6,7 @@ import { CONFIG_TYPEKEYS } from "../../../config/configTypeKeys";
 
 const initialState: IAppService | null = null;
 
-const appServiceReducer = (state: IAppService | null = initialState, action: RootAction) : (IAppService | null) => {
+const appServiceReducer = (state: IAppService | null = initialState, action: RootAction): IAppService | null => {
   switch (action.type) {
     case CONFIG_TYPEKEYS.RESET_WIZARD:
     case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:

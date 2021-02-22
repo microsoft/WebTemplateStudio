@@ -8,7 +8,7 @@ const initialState: IPlatform = {
   requirements: [],
 };
 
-const platformReducer = (state: IPlatform = initialState, action: RootAction) : IPlatform => {
+const platformReducer = (state: IPlatform = initialState, action: RootAction): IPlatform => {
   switch (action.type) {
     case CONFIG_TYPEKEYS.SET_PLATFORM:
       return action.payload;

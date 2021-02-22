@@ -57,7 +57,8 @@ const PlatformRequirementsModal = ({ intl }: Props) => {
       <div className={styles.link}>
         <a target="_blank" rel="noreferrer noopener" href={requirementsDoc}>
           {intl.formatMessage(messages.reviewTheDocs)}
-        </a></div>
+        </a>
+      </div>
     </div>
   );
 };

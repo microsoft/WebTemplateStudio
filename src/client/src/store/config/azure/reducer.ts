@@ -6,7 +6,7 @@ const initialState: AzureProfile = {
   subscriptions: [],
 };
 
-export const azureProfileData = (state = initialState, action: AzureActionType) : AzureProfile => {
+export const azureProfileData = (state = initialState, action: AzureActionType): AzureProfile => {
   switch (action.type) {
     case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:
       return initialState;

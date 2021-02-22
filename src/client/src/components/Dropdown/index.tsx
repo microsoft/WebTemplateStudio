@@ -21,7 +21,7 @@ const DEFAULT_VALUE = {
   label: "Select...",
 };
 
-const DropdownIndicator = (props: any) : JSX.Element => {
+const DropdownIndicator = (props: any): JSX.Element => {
   return (
     components.DropdownIndicator && (
       <components.DropdownIndicator {...props}>
@@ -39,7 +39,7 @@ const Dropdown = ({
   disabled,
   ariaLabel,
   openDropdownUpwards,
-}: IDropdownProps) : JSX.Element => {
+}: IDropdownProps): JSX.Element => {
   return (
     <Select
       aria-label={ariaLabel}

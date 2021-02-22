@@ -12,9 +12,9 @@ interface IProps {
 
 type Props = IProps;
 
-const ProjectDetails = (props: Props) : JSX.Element => {
+const ProjectDetails = (props: Props): JSX.Element => {
   return (
-    <div className={classNames({[rightsidebarStyles.sidebarItem]: props.isRightsidebar})}>
+    <div className={classNames({ [rightsidebarStyles.sidebarItem]: props.isRightsidebar })}>
       <ProjectName isRightsidebar={props.isRightsidebar} />
       <ProjectOutput isRightsidebar={props.isRightsidebar} />
     </div>

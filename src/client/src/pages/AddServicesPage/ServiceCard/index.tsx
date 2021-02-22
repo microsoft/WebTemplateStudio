@@ -29,7 +29,7 @@ interface IProps {
 
 type Props = IProps & InjectedIntlProps;
 
-export const ServiceCard = (props: Props) : JSX.Element => {
+export const ServiceCard = (props: Props): JSX.Element => {
   const { intl, service } = props;
   const [showPlusIcon, setShowPlusIcon] = React.useState(false);
 

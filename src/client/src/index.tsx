@@ -22,10 +22,12 @@ const store = createStoreWithMiddleware(
   (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-const vscode = process.env.NODE_ENV === ENVIRONMENT.PRODUCTION ?
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore because function does not exist in dev environment
-  acquireVsCodeApi(): mockVsCodeApi();
+const vscode =
+  process.env.NODE_ENV === ENVIRONMENT.PRODUCTION
+    ? // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore because function does not exist in dev environment
+      acquireVsCodeApi()
+    : mockVsCodeApi();
 
 runSagaMiddleware(vscode, sagaMiddleware);
 

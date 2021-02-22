@@ -10,42 +10,42 @@ const closeModalAction = (): ICloseModalAction => ({
   type: NAVIGATION_MODAL_TYPEKEYS.CLOSE_MODALS,
 });
 
-const openAzureServicesModalAction = (serviceInternalName: string) : IOpenModalAction => {
+const openAzureServicesModalAction = (serviceInternalName: string): IOpenModalAction => {
   return openModalAction({
     modalType: NAVIGATION_MODAL_TYPES.AZURE_LOGIN_MODAL,
     modalData: serviceInternalName,
   });
 };
 
-const openCosmosDbModalAction = () : IOpenModalAction => {
+const openCosmosDbModalAction = (): IOpenModalAction => {
   return openModalAction({
     modalType: NAVIGATION_MODAL_TYPES.COSMOS_DB_MODAL,
     modalData: null,
   });
 };
 
-const openGenModalAction = () : IOpenModalAction => {
+const openGenModalAction = (): IOpenModalAction => {
   return openModalAction({
     modalType: NAVIGATION_MODAL_TYPES.GEN_MODAL,
     modalData: null,
   });
 };
 
-const openViewLicensesModalAction = () : IOpenModalAction => {
+const openViewLicensesModalAction = (): IOpenModalAction => {
   return openModalAction({
     modalType: NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL,
     modalData: null,
   });
 };
 
-const openAppServiceModalAction = () : IOpenModalAction => {
+const openAppServiceModalAction = (): IOpenModalAction => {
   return openModalAction({
     modalType: NAVIGATION_MODAL_TYPES.APP_SERVICE_MODAL,
     modalData: null,
   });
 };
 
-const openPlatformRequirementsAction = () : IOpenModalAction => {
+const openPlatformRequirementsAction = (): IOpenModalAction => {
   return openModalAction({
     modalType: NAVIGATION_MODAL_TYPES.VIEW_PLATFORM_REQUIREMENTS_MODAL,
     modalData: null,

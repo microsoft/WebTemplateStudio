@@ -95,9 +95,7 @@ const ResourceGroupSelection = (props: Props) => {
     <div className={classNames(styles.container, { [styles.containerDisabled]: disableComponent })}>
       <div className={modalStyles.header}>
         <div className={modalStyles.title}>{formatMessage(messages.title)}</div>
-        <a href={AZURE_LINKS.CREATE_NEW_RESOURCE_GROUP}>
-          {formatMessage(messages.newResourceGroupLink)}
-        </a>
+        <a href={AZURE_LINKS.CREATE_NEW_RESOURCE_GROUP}>{formatMessage(messages.newResourceGroupLink)}</a>
       </div>
 
       <div className={modalStyles.subtitle}>{formatMessage(messages.subtitle)}</div>

@@ -3,11 +3,7 @@ import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import { RenderResult } from "@testing-library/react";
 
-import {
-  getInitialState,
-  addProjectTypeOptions,
-  setSelectedProjectTypeAction,
-} from "../../../mockData/mockStore";
+import { getInitialState, addProjectTypeOptions, setSelectedProjectTypeAction } from "../../../mockData/mockStore";
 import SelectProjectTypes from "./index";
 import { renderWithStore } from "../../../testUtils";
 import { AppState } from "../../../store/combineReducers";

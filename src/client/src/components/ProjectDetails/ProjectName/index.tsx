@@ -90,7 +90,9 @@ const ProjectName = (props: Props) => {
         />
 
         {!projectNameValidation.isValid && projectNameValidation.isDirty && (
-          <div className={styles.errorMessage}>{projectNameValidation.error ? formatMessage(projectNameValidation.error): ""}</div>
+          <div className={styles.errorMessage}>
+            {projectNameValidation.error ? formatMessage(projectNameValidation.error) : ""}
+          </div>
         )}
       </div>
     </div>

@@ -5,15 +5,15 @@ import { render } from "@testing-library/react";
 import { IDropdownProps } from "./components/Dropdown";
 import { AnyAction, Store } from "redux";
 
-const renderWithIntl = (component: React.ReactNode | React.ReactPortal) : any => {
+const renderWithIntl = (component: React.ReactNode | React.ReactPortal): any => {
   return render(<IntlProvider locale="en">{component}</IntlProvider>);
 };
 
-const renderWithStore = (component: React.ReactNode | React.ReactPortal, store: Store<any, AnyAction>) : any => {
+const renderWithStore = (component: React.ReactNode | React.ReactPortal, store: Store<any, AnyAction>): any => {
   return renderWithIntl(<Provider store={store}>{component}</Provider>);
 };
 
-const dropdownMock = ({ options, value, handleChange }: IDropdownProps) : JSX.Element => {
+const dropdownMock = ({ options, value, handleChange }: IDropdownProps): JSX.Element => {
   const handleInputChange = (event: any) => {
     if (handleChange) {
       handleChange(event.currentTarget);

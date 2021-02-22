@@ -112,9 +112,7 @@ const PageCard = (props: Props) => {
               </button>
             )}
           </div>
-          <div>
-            {selectedPages.filter((selectedPage) => selectedPage.defaultName === page.defaultName).length}
-          </div>
+          <div>{selectedPages.filter((selectedPage) => selectedPage.defaultName === page.defaultName).length}</div>
         </div>
       </div>
     </div>

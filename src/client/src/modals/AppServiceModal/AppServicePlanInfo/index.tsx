@@ -35,11 +35,7 @@ const AppServicePlanInfo = (props: Props) => {
           ? formatMessage(messages.freeTierMessage)
           : formatMessage(messages.basicTierMessage)}
       </div>
-      <a
-        target={"_blank"}
-        rel="noreferrer noopener"
-        href={AZURE_LINKS.APP_SERVICE_PLAN}
-      >
+      <a target={"_blank"} rel="noreferrer noopener" href={AZURE_LINKS.APP_SERVICE_PLAN}>
         {formatMessage(messages.learnMore)}
       </a>
     </div>

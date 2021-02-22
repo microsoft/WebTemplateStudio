@@ -48,7 +48,7 @@ describe("SelectFrameworks", () => {
     beforeEach(() => {
       const initialState: AppState = getInitialState();
       addFrontEndFrameworksOptions(initialState);
-      setFrontendFramework(initialState,"React");
+      setFrontendFramework(initialState, "React");
 
       store = mockStore(initialState);
       wrapper = renderWithStore(<SelectFrameworks />, store);

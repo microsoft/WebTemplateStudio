@@ -13,7 +13,7 @@ import Title from "../../components/Titles/Title";
 type Props = IStoreProps & IIntlProps & IProps;
 
 const AddPagesPage = (props: Props) => {
-  const { options, intl, isModal} = props;
+  const { options, intl, isModal } = props;
 
   return (
     <div>

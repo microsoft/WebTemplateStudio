@@ -22,10 +22,10 @@ const SelectFrameworks = ({ intl }: Props) => {
           <Title>{intl.formatMessage(messages.frontendTitle)}</Title>
           <div className={pageStyles.flexContainer}>
             {frontendOptions
-            .filter(frontend => isPreview || !frontend.isPreview)
-            .map((frontend) => {
+              .filter((frontend) => isPreview || !frontend.isPreview)
+              .map((frontend) => {
                 return <FrameworkCard key={frontend.internalName} framework={frontend} isFrontEnd={true} />;
-            })}
+              })}
           </div>
         </>
       )}
@@ -34,10 +34,10 @@ const SelectFrameworks = ({ intl }: Props) => {
           <Title>{intl.formatMessage(messages.backendTitle)}</Title>
           <div className={pageStyles.flexContainer}>
             {backendOptions
-            .filter(backend => isPreview || !backend.isPreview)
-            .map((backend) => {
+              .filter((backend) => isPreview || !backend.isPreview)
+              .map((backend) => {
                 return <FrameworkCard key={backend.internalName} framework={backend} isFrontEnd={false} />;
-            })}
+              })}
           </div>
         </>
       )}
