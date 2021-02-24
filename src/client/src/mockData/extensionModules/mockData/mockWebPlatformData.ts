@@ -1,7 +1,8 @@
 import { PLATFORM } from "../../../utils/constants/constants";
 import { backendImage, frontendImage, noImage, pageImage, serviceImage } from "./mockSvgData";
 
-const platform = PLATFORM.WEB
+// WTS DEV: Change mock data to change platform
+const platform = PLATFORM.WEB;
 
 const projectTypes = [
   {
