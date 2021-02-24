@@ -84,25 +84,11 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "husky": "^5.1.0",
     "jest-environment-jsdom-sixteen": "^1.0.3",
-    "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
     "react-intl-translations-manager": "^5.0.3",
     "redux-mock-store": "^1.5.4",
     "webpack-filter-warnings-plugin": "^1.2.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn test"
-    }
-  },
-  "lint-staged": {
-    "src/**/*.{ts,tsx,css}": [
-      "yarn lint",
-      "yarn prettier:check"
-    ]
   },
   "proxy": "http://localhost:9052"
 }

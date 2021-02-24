@@ -121,9 +121,7 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "event-stream": "^4.0.1",
-    "husky": "^5.1.0",
     "kind-of": "^6.0.3",
-    "lint-staged": "^10.5.4",
     "mocha": "^7.2.0",
     "prettier": "^2.2.1",
     "run-sequence": "^2.2.1",
@@ -168,17 +166,5 @@
     "vscode-extension-telemetry": "^0.1.6",
     "vscode-nls": "^4.1.2",
     "webpack-filter-warnings-plugin": "^1.2.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn test"
-    }
-  },
-  "lint-staged": {
-    "src/**/*.{ts,tsx,css}": [
-      "yarn lint",
-      "yarn prettier:check"
-    ]
   }
 }
