@@ -1,0 +1,10 @@
+#!/bin/sh
+
+PREFIX="pre-commit:"
+
+cd ./src/client/
+echo "$PREFIX Execute client Lint"
+yarn lint
+cd ../extension/
+echo "$PREFIX Execute extension Lint"
+yarn lint
