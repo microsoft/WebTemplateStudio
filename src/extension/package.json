@@ -101,10 +101,10 @@
     "build": "tsc -p tsconfig.json",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "lint": "eslint ./src/**/*.{ts,tsx}",
-    "lint:fix": "eslint --fix ./src/**/*.{ts,tsx}",
+    "lint": "eslint ./src/**/*.ts",
+    "lint:fix": "eslint --fix ./src/**/*.ts",
+    "prettier": "prettier --check src/**/*.ts",
     "prettier:format": "prettier --write src/**/*.ts",
-    "prettier:check": "prettier --check src/**/*.ts",
     "test": "npm run compile && node ./out/test/runTest.js",
     "template-tests": "node ./out/scripts/generate-test && node ./out/scripts/run-tests",
     "createVsixPackage": "vsce package --yarn -o \"./../../dist/webts-0.0.0-UNTRACKEDVERSION.vsix\""
