@@ -1,22 +1,23 @@
-import { CoreTemplateStudio } from "../coreTemplateStudio";
-import { PLATFORM } from "../constants/constants";
-import { CLI_SETTINGS } from "../constants/cli";
 import retry from "p-retry";
 
+import { CLI_SETTINGS } from "../constants/cli";
+import { PLATFORM } from "../constants/constants";
+import { CoreTemplateStudio } from "../coreTemplateStudio";
+
 let instance: CoreTemplateStudio;
-let backends: string[] = [];
-let frontends: string[] = [];
+const backends: string[] = [];
+const frontends: string[] = [];
 //TODO: This will need extending when React Native is complete
 const projType = "FullStackWebApp";
 let prevPromise: Promise<any> = Promise.resolve(null);
 
-let syncTemplates = async () => {
+const syncTemplates = async () => {
   try {
     console.log(`Sync templates`);
     const path = CLI_SETTINGS.DEVELOPMENT_PATH_TO_TEMPLATES;
     const payload = { path, platform: PLATFORM.WEB };
     const syncPayload = { payload, liveMessageHandler: (value: any) => value };
-    CoreTemplateStudio._templateConfig = {platform: PLATFORM.WEB};
+    CoreTemplateStudio._templateConfig = { platform: PLATFORM.WEB };
 
     await retry(() => instance.sync(syncPayload), {
       retries: CLI_SETTINGS.MAX_SYNC_REQUEST_ATTEMPTS,
@@ -27,7 +28,7 @@ let syncTemplates = async () => {
   }
 };
 
-let getFrameworks = async () => {
+const getFrameworks = async () => {
   try {
     const frameworks = await instance.getFrameworks(projType);
     frameworks.forEach((obj: { tags: { type: string }; name: string }) => {
@@ -42,7 +43,7 @@ let getFrameworks = async () => {
   }
 };
 
-let getPages = async (frontend: string, backend: string) => {
+const getPages = async (frontend: string, backend: string) => {
   try {
     const pages = await instance.getPages(projType, frontend, backend);
     return pages.map((page: { name: string; templateId: string }) => {
@@ -53,7 +54,7 @@ let getPages = async (frontend: string, backend: string) => {
   }
 };
 
-let generateProject = async (frontend: string, backend: string) => {
+const generateProject = async (frontend: string, backend: string) => {
   console.log(`Generating ${frontend}-${backend}`);
   const pagesObj = await getPages(frontend, backend);
   return instance.generate({

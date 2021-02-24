@@ -18,7 +18,6 @@ module.exports = {
     "react/",
     "corets-cli/",
     "src/corets-cli/",
-    "src/scripts/",
   ],
   plugins: ["simple-import-sort"],
   rules: {
