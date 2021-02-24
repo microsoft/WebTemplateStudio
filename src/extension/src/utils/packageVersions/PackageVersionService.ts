@@ -1,4 +1,5 @@
 import { CONSTANTS } from "../../constants/constants";
+import { IPackageSource } from "./IPackageSource";
 import githubPackageSource from "./packageSources/githubPackageSource";
 import npmPackageSource from "./packageSources/npmPackageSource";
 

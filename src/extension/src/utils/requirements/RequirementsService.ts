@@ -12,6 +12,8 @@ import * as os from "os";
 import { CLI_SETTINGS } from "../../constants/cli";
 import { MESSAGES } from "../../constants/messages";
 import { Logger } from "../logger";
+import { IPlatformRequirement } from "./IPlatformRequirement";
+import { IRequirementValidator } from "./IRequirementValidator";
 
 export default class RequirementsService {
   private exec = util.promisify(require("child_process").exec);

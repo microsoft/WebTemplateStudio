@@ -21,6 +21,7 @@ import { ISyncReturnType } from "./types/syncReturnType";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { Logger } from "./utils/logger";
 import { getExtensionName, getExtensionVersionNumber } from "./utils/packageInfo";
+import { IPlatformRequirement } from "./utils/requirements/IPlatformRequirement";
 import RequirementsService from "./utils/requirements/RequirementsService";
 import { WizardServant } from "./wizardServant";
 
