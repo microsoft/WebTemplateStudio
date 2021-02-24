@@ -191,6 +191,37 @@ const pages = (frontendFramework: string): any => {
       rightClickEnabled: true,
       requiredVisualStudioWorkloads: [],
     },
+    {
+      templateId: `wts.Page.${frontendFramework}.PageType2`,
+      name: "PageType2",
+      defaultName: "PageType2",
+      description: "A page type 2 for you to build your web application from scratch.",
+      richDescription:
+        "This is the basic page type 2. A page where to mold into whatever you wish. The blank page leaves pretty much everything up to you.",
+      author: "Microsoft",
+      version: "1.0.0",
+      icon: pageImage,
+      displayOrder: 0,
+      isHidden: false,
+      isGroupExclusiveSelection: false,
+      genGroup: 0,
+      multipleInstance: true,
+      itemNameEditable: true,
+      licenses: [
+        {
+          text: "React Native",
+          url: "https://github.com/facebook/react-native/blob/master/LICENSE",
+        },
+        {
+          text: "React Native",
+          url: "https://github.com/facebook/react-native/blob/master/LICENSE",
+        },
+      ],
+      dependencies: [],
+      templateType: "Page",
+      rightClickEnabled: true,
+      requiredVisualStudioWorkloads: [],
+    },
   ];
 };
 

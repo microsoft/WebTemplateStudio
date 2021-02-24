@@ -6,18 +6,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as CancelSVG } from "../../assets/cancel.svg";
 import buttonStyles from "../../css/button.module.css";
 import {
+  getPlatformSelector,
   hasInvalidPlatformRequirementsSelector,
   hasPlatformRequirementsSelector,
 } from "../../store/config/platform/selector";
 import * as ModalActions from "../../store/navigation/modals/action";
 import { getSelectedRoute } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { hasServices as hasServicesSelector } from "../../store/userSelection/services/servicesSelector";
-import { KEY_EVENTS, ROUTE } from "../../utils/constants/constants";
+import { KEY_EVENTS, PLATFORM, ROUTE } from "../../utils/constants/constants";
 import Notification from "../Notification";
 import ProjectDetails from "../ProjectDetails";
 import Title from "../Titles/Title";
 import About from "./About";
 import messages from "./messages";
+import messagesReactNative from "./messagesReactNative";
+import messagesWeb from "./messagesWeb";
 import SelectFrameworks from "./SelectFrameworks";
 import SelectPages from "./SelectPages";
 import SelectProjectTypes from "./SelectProjectTypes";
@@ -36,6 +39,8 @@ const RightSidebar = (props: Props) => {
     () => selectedRoute === ROUTE.NEW_PROJECT || selectedRoute === ROUTE.REVIEW_AND_GENERATE,
     [selectedRoute]
   );
+  const platform = useSelector(getPlatformSelector);
+  const platformMessages = platform.id === PLATFORM.WEB ? messagesWeb : messagesReactNative;
 
   const { intl } = props;
   const { formatMessage } = intl;
@@ -72,7 +77,7 @@ const RightSidebar = (props: Props) => {
         <div role="complementary" id="dvRightSideBar" className={classnames(styles.container, styles.rightViewCropped)}>
           <div className={styles.summaryContainer} id="dvSummaryContainer">
             <div className={styles.titleContainer}>
-              <Title>{formatMessage(messages.yourProjectDetails)}</Title>
+              <Title>{formatMessage(platformMessages.yourProjectDetails)}</Title>
               <CancelSVG
                 tabIndex={0}
                 className={classnames(styles.icon, {
