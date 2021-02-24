@@ -4,7 +4,12 @@ PREFIX="pre-commit:"
 
 cd ./src/client/
 echo "$PREFIX Execute client Lint"
-yarn lint
+if ! yarn lint; then
+    exit 1
+fi
+
 cd ../extension/
 echo "$PREFIX Execute extension Lint"
-yarn lint
+if ! yarn lint; then
+    exit 1
+fi
