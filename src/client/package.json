@@ -51,8 +51,8 @@
     "manage:translations": "node scripts/manageTranslations.js",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
     "eject": "react-scripts eject",
-    "lint": "eslint ./src/**/*.{ts,tsx,css}",
-    "lint:fix": "eslint --fix ./src/**/*.{ts,tsx,css}",
+    "lint": "eslint ./src/**/*.{ts,tsx}",
+    "lint:fix": "eslint --fix ./src/**/*.{ts,tsx}",
     "prettier": "prettier --check src/**/*.{ts,tsx,css}",
     "prettier:format": "prettier --write src/**/*.{ts,tsx,css}"
   },
