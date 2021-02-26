@@ -1,23 +1,3 @@
-.pathInput {
-  outline: none;
-  text-decoration: none;
-  background-color: var(--vscode-editorWidget-border);
-  width: 100%;
-  border: none;
-  margin-right: 0.25em;
-  padding-left: 0px;
-  cursor: pointer;
-}
-
-.input:focus {
-  outline: none;
-}
-
-.input::placeholder,
-.pathInput::placeholder {
-  color: var(--vscode-input-placeholderForeground);
-}
-
 .errorMessage {
   background: var(--vscode-inputValidation-errorBackground);
   border: 1px solid var(--vscode-inputValidation-errorBorder);
@@ -47,16 +27,6 @@
   width: 85%;
   display: block;
   position: relative;
-}
-
-.outputPath {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-height: 2.5em;
-  box-sizing: border-box;
-  width: 100%;
-  background-color: var(--vscode-editorWidget-border);
 }
 
 .container > button {
