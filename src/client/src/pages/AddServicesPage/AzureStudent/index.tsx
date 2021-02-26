@@ -1,11 +1,11 @@
 import * as React from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import messages from "./messages";
 
-import keyUpHandler from "../../../utils/keyUpHandler";
-import styles from "./styles.module.css";
 import { ReactComponent as CloudServicesSVG } from "../../../assets/cloudservices.svg";
 import { AZURE_LINKS } from "../../../utils/constants/azure";
+import keyUpHandler from "../../../utils/keyUpHandler";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 type Props = InjectedIntlProps;
 

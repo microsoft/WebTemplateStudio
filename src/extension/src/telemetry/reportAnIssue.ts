@@ -5,6 +5,7 @@
 
 const opn = require("opn");
 import * as vscode from "vscode";
+
 import { getPackageInfo } from "../utils/packageInfo";
 import { IParsedError } from "./parseError";
 

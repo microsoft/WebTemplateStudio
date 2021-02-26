@@ -1,4 +1,4 @@
-import { ILogoutAction, ILoginToAzureAction } from "./model";
+import { ILoginToAzureAction, ILogoutAction } from "./model";
 import { AZURE_TYPEKEYS } from "./typeKeys";
 
 export const logOutAzureAction = (): ILogoutAction => ({

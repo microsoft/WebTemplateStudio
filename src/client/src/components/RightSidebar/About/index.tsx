@@ -1,11 +1,10 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { IVersions } from "../../../types/version";
+import { useSelector } from "react-redux";
 
 import { AppState } from "../../../store/combineReducers";
+import { IVersions } from "../../../types/version";
 import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants/constants";
-
 import messages from "./messages";
 import styles from "./styles.module.css";
 
@@ -19,20 +18,12 @@ const About = ({ intl }: Props) => {
     <div className={styles.container}>
       <div className={styles.title}>{formatMessage(messages.title)}</div>
       <div>
-        <a
-          href={WEB_TEMPLATE_STUDIO_LINKS.REPO}
-          target={"_blank"}
-          rel="noreferrer noopener"
-        >
+        <a href={WEB_TEMPLATE_STUDIO_LINKS.REPO} target={"_blank"} rel="noreferrer noopener">
           {formatMessage(messages.visitRepo)}
         </a>
       </div>
       <div>
-        <a
-          target={"_blank"}
-          rel="noreferrer noopener"
-          href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES}
-        >
+        <a target={"_blank"} rel="noreferrer noopener" href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES}>
           {formatMessage(messages.reportIssue)}
         </a>
       </div>

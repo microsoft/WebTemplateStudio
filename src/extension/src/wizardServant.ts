@@ -1,6 +1,6 @@
 import { EXTENSION_COMMANDS } from "./constants/commands";
-import { IActionContext, ITelemetryService } from "./telemetry/telemetryService";
 import { MESSAGES } from "./constants/messages";
+import { IActionContext, ITelemetryService } from "./telemetry/telemetryService";
 
 export abstract class WizardServant {
   abstract clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>>;
@@ -22,29 +22,32 @@ export abstract class WizardServant {
     classModule._commandBidding = classModule.clientCommandMap.get(messagePayload.command)!;
     if (classModule._commandBidding) {
       if (messagePayload.track) {
-        return Telemetry.callWithTelemetryAndCatchHandleErrors(messagePayload.command, async function (
-          this: IActionContext
-        ) {
-          return classModule._commandBidding(messagePayload);
-        });
+        return Telemetry.callWithTelemetryAndCatchHandleErrors(
+          messagePayload.command,
+          async function (this: IActionContext) {
+            return classModule._commandBidding(messagePayload);
+          }
+        );
       } else {
         try {
           return classModule._commandBidding(messagePayload);
         } catch (error) {
           // To ensure error gets logged and report an issue experience launches
-          return Telemetry.callWithTelemetryAndCatchHandleErrors(messagePayload.command, async function (
-            this: IActionContext
-          ) {
-            throw error;
-          });
+          return Telemetry.callWithTelemetryAndCatchHandleErrors(
+            messagePayload.command,
+            async function (this: IActionContext) {
+              throw error;
+            }
+          );
         }
       }
     } else {
-      return Telemetry.callWithTelemetryAndCatchHandleErrors(messagePayload.command, async function (
-        this: IActionContext
-      ) {
-        throw Error(MESSAGES.ERRORS.INVALID_COMMAND + ":" + messagePayload.command);
-      });
+      return Telemetry.callWithTelemetryAndCatchHandleErrors(
+        messagePayload.command,
+        async function (this: IActionContext) {
+          throw Error(MESSAGES.ERRORS.INVALID_COMMAND + ":" + messagePayload.command);
+        }
+      );
     }
   }
 }

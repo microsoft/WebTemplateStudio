@@ -103,7 +103,6 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
-
 @media (max-width: 850px) {
   .container {
     margin-top: 3rem;

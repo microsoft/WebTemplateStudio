@@ -1,12 +1,14 @@
+import "@testing-library/jest-dom";
+import "@testing-library/jest-dom/extend-expect";
+
+import { fireEvent, RenderResult } from "@testing-library/react";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import "@testing-library/jest-dom";
-import SubscriptionSelection from ".";
+
 import { getInitialState, setSubscriptions } from "../../mockData/mockStore";
-import { RenderResult, fireEvent } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
 import { renderWithStore } from "../../testUtils";
 import { AZURE_LINKS } from "../../utils/constants/azure";
+import SubscriptionSelection from ".";
 import messages from "./messages";
 
 jest.mock("../Dropdown", () => require("../../testUtils").dropdownMock);

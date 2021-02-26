@@ -1,10 +1,11 @@
 import * as vscode from "vscode";
 import TelemetryReporter from "vscode-extension-telemetry";
+
 import { getPackageInfo } from "../utils/packageInfo";
 import {
+  callWithTelemetryAndCatchErrors,
   IActionContext as dd,
   ITelemetryReporter,
-  callWithTelemetryAndCatchErrors,
 } from "./callWithTelemetryAndErrorHandling";
 
 export type IActionContext = dd;

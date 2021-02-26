@@ -1,5 +1,5 @@
-import { inferItemName } from "./itemName";
 import { ISelected } from "../../types/selected";
+import { inferItemName } from "./itemName";
 
 describe("validate infer name", () => {
   it("is not same", () => {

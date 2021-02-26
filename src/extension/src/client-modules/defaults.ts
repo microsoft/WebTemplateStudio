@@ -1,11 +1,12 @@
-import { WizardServant, IPayloadResponse } from "../wizardServant";
-import * as vscode from "vscode";
-import * as os from "os";
 import * as fs from "fs";
+import * as os from "os";
 import * as path from "path";
-import { EXTENSION_COMMANDS } from "../constants/commands";
+import * as vscode from "vscode";
+
 import { CLI_SETTINGS } from "../constants/cli";
+import { EXTENSION_COMMANDS } from "../constants/commands";
 import { Logger } from "../utils/logger";
+import { IPayloadResponse, WizardServant } from "../wizardServant";
 
 export class Defaults extends WizardServant {
   clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([

@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+
 import { AppState } from "../../combineReducers";
 
 const getConfigSelector = (state: AppState) => state.config;
@@ -17,8 +18,8 @@ const hasInvalidPlatformRequirementsSelector = createSelector(getPlatformRequire
 });
 
 export {
-  getPlatformSelector,
   getPlatformRequirementsSelector,
-  hasPlatformRequirementsSelector,
+  getPlatformSelector,
   hasInvalidPlatformRequirementsSelector,
+  hasPlatformRequirementsSelector,
 };

@@ -1,3 +1,3 @@
-interface IRequirementValidator {
+export interface IRequirementValidator {
   isInstalled: (minVersion: string) => Promise<boolean>;
 }

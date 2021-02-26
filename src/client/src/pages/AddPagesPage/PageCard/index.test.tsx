@@ -9,16 +9,17 @@ jest.mock("../../../store/userSelection/pages/action", () => {
   };
 });
 
+import { fireEvent, render } from "@testing-library/react";
 import * as React from "react";
-import configureMockStore from "redux-mock-store";
-import PageCard from "./index";
-import { Provider } from "react-redux";
-import { getInitialState, loadMasters } from "../../../mockData/mockStore";
-import { render, fireEvent } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
-import { ISelected } from "../../../types/selected";
-import { setPagesAction } from "../../../store/userSelection/pages/action";
+import { Provider } from "react-redux";
+import configureMockStore from "redux-mock-store";
+
+import { getInitialState, loadMasters } from "../../../mockData/mockStore";
 import { AppState } from "../../../store/combineReducers";
+import { setPagesAction } from "../../../store/userSelection/pages/action";
+import { ISelected } from "../../../types/selected";
+import PageCard from "./index";
 
 describe("PageCard", () => {
   let props: any;

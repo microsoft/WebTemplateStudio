@@ -1,14 +1,12 @@
 import { SubscriptionItem } from "../azure/azure-auth/azureAuth";
-
-import { AzureResourceType } from "../constants/constants";
-import { EXTENSION_COMMANDS } from "../constants/commands";
-
-import { AuthorizationError } from "../errors";
-import { WizardServant, IPayloadResponse } from "../wizardServant";
-import { Logger } from "../utils/logger";
 import { AzureServices } from "../azure/azureServices";
 import { NameGenerator } from "../azure/utils/nameGenerator";
+import { EXTENSION_COMMANDS } from "../constants/commands";
+import { AzureResourceType } from "../constants/constants";
 import { MESSAGES } from "../constants/messages";
+import { AuthorizationError } from "../errors";
+import { Logger } from "../utils/logger";
+import { IPayloadResponse, WizardServant } from "../wizardServant";
 
 interface Subscription {
   name: string;

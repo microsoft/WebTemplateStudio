@@ -1,17 +1,15 @@
 import React from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { connect } from "react-redux";
-import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import { AppState } from "../../../store/combineReducers";
-import { getServices } from "../../../store/userSelection/services/servicesSelector";
 import { ServiceState } from "../../../store/userSelection/services/combineReducers";
-
-import CosmosDBSelection from "./CosmosDBSelection";
-import AppServiceSelection from "./AppServiceSelection";
-
-import messages from "./messages";
-import rightsidebarStyles from "../rightsidebarStyles.module.css";
+import { getServices } from "../../../store/userSelection/services/servicesSelector";
 import InputTitle from "../../Titles/TitleForInput";
+import rightsidebarStyles from "../rightsidebarStyles.module.css";
+import AppServiceSelection from "./AppServiceSelection";
+import CosmosDBSelection from "./CosmosDBSelection";
+import messages from "./messages";
 
 interface IProps {
   services: ServiceState;

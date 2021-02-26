@@ -1,18 +1,19 @@
 import * as React from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { AppState } from "../../store/combineReducers";
-import styles from "./styles.module.css";
-import asModal from "../../components/Modal";
-import { closeModalAction } from "../../store/navigation/modals/action";
+import { connect, useDispatch, useSelector } from "react-redux";
+
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
+import asModal from "../../components/Modal";
+import ModalTitle from "../../components/Titles/TitleForModal";
+import { AppState } from "../../store/combineReducers";
+import { getPlatformRequirementsSelector, getPlatformSelector } from "../../store/config/platform/selector";
+import { closeModalAction } from "../../store/navigation/modals/action";
 import { isPlatformRequirementsModalOpenSelector } from "../../store/navigation/modals/selector";
 import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import { KEY_EVENTS, PLATFORM, WEB_TEMPLATE_STUDIO_LINKS } from "../../utils/constants/constants";
 import messages from "./messages";
-import { getPlatformRequirementsSelector, getPlatformSelector } from "../../store/config/platform/selector";
 import RequirementItem from "./RequirementItem";
-import ModalTitle from "../../components/Titles/TitleForModal";
+import styles from "./styles.module.css";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -57,7 +58,8 @@ const PlatformRequirementsModal = ({ intl }: Props) => {
       <div className={styles.link}>
         <a target="_blank" rel="noreferrer noopener" href={requirementsDoc}>
           {intl.formatMessage(messages.reviewTheDocs)}
-        </a></div>
+        </a>
+      </div>
     </div>
   );
 };

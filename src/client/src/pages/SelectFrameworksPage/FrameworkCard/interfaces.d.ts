@@ -1,5 +1,5 @@
-import { IOption } from "../../types/option";
 import { ISelected } from "../../../types/selected";
+import { IOption } from "../../types/option";
 
 interface ISelectProps {
   framework: IOption;
@@ -12,4 +12,4 @@ interface IStateProps {
   backEndSelect: ISelected;
 }
 
-export { IStateProps, ISelectProps };
+export { ISelectProps, IStateProps };

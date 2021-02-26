@@ -1,28 +1,29 @@
 import * as vscode from "vscode";
 
-import { Validator } from "./client-modules/validator";
-import { CONSTANTS, PLATFORM } from "./constants/constants";
-import { TelemetryEventName } from "./constants/telemetry";
-import { ReactPanel } from "./reactPanel";
-import { CoreTemplateStudio } from "./coreTemplateStudio";
-import { TelemetryService, IActionContext, ITelemetryService } from "./telemetry/telemetryService";
-import { Logger } from "./utils/logger";
-import { WizardServant } from "./wizardServant";
-import { Generation } from "./client-modules/generation";
-import { IVSCodeProgressType } from "./types/vscodeProgressType";
-import { LaunchExperience } from "./launchExperience";
-import { DependenciesModule } from "./client-modules/dependenciesModule";
+import { AzureModule } from "./client-modules/azureModule";
 import { CoreTSModule } from "./client-modules/coreTSModule";
 import { Defaults } from "./client-modules/defaults";
-import { Telemetry } from "./client-modules/telemetry";
-import { AzureModule } from "./client-modules/azureModule";
-import { getExtensionName, getExtensionVersionNumber } from "./utils/packageInfo";
-import { ISyncReturnType } from "./types/syncReturnType";
+import { DependenciesModule } from "./client-modules/dependenciesModule";
+import { Generation } from "./client-modules/generation";
 import { LoggerModule } from "./client-modules/loggerModule";
-import { MESSAGES } from "./constants/messages";
+import { Telemetry } from "./client-modules/telemetry";
+import { Validator } from "./client-modules/validator";
 import { ExtensionModule } from "./constants/commands";
 import { EXTENSION_COMMANDS } from "./constants/commands";
+import { CONSTANTS, PLATFORM } from "./constants/constants";
+import { MESSAGES } from "./constants/messages";
+import { TelemetryEventName } from "./constants/telemetry";
+import { CoreTemplateStudio } from "./coreTemplateStudio";
+import { LaunchExperience } from "./launchExperience";
+import { ReactPanel } from "./reactPanel";
+import { IActionContext, ITelemetryService, TelemetryService } from "./telemetry/telemetryService";
+import { ISyncReturnType } from "./types/syncReturnType";
+import { IVSCodeProgressType } from "./types/vscodeProgressType";
+import { Logger } from "./utils/logger";
+import { getExtensionName, getExtensionVersionNumber } from "./utils/packageInfo";
+import { IPlatformRequirement } from "./utils/requirements/IPlatformRequirement";
 import RequirementsService from "./utils/requirements/RequirementsService";
+import { WizardServant } from "./wizardServant";
 
 export class Controller {
   /**

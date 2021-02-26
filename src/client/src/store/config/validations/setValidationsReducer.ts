@@ -1,6 +1,6 @@
-import { IValidations } from "./model";
 import RootAction from "../../ActionType";
 import { CONFIG_TYPEKEYS } from "../configTypeKeys";
+import { IValidations } from "./model";
 
 const initialState = {
   itemNameValidationConfig: {
@@ -18,7 +18,7 @@ const initialState = {
   },
 };
 
-const validationsReducer = (state: IValidations = initialState, action: RootAction) : any => {
+const validationsReducer = (state: IValidations = initialState, action: RootAction): any => {
   switch (action.type) {
     case CONFIG_TYPEKEYS.SET_VALIDATIONS:
       return action.payload;

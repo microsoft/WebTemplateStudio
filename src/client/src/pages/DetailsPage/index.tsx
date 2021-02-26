@@ -1,11 +1,12 @@
 import * as React from "react";
 import { connect, useDispatch } from "react-redux";
-import Details from "./Details";
-import { IOption } from "../../types/option";
-import { getScreenShot } from "../../utils/getSvgUrl";
-import styles from "./styles.module.css";
+
 import { AppState } from "../../store/combineReducers";
 import { setDetailPageAction } from "../../store/config/detailsPage/action";
+import { IOption } from "../../types/option";
+import { getScreenShot } from "../../utils/getSvgUrl";
+import Details from "./Details";
+import styles from "./styles.module.css";
 
 interface IDetailsPageProps {
   originRoute: string;

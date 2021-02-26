@@ -1,13 +1,13 @@
-import {
-  addRequiredValidate,
-  IValidation,
-  addExistingItemNameValidate,
-  addExistingProjectNameValidate,
-  addReservedNameValidate,
-  addRegexValidate,
-} from "./validations";
 import { ISelected } from "../../types/selected";
 import { IVSCodeObject } from "../../types/vscode";
+import {
+  addExistingItemNameValidate,
+  addExistingProjectNameValidate,
+  addRegexValidate,
+  addRequiredValidate,
+  addReservedNameValidate,
+  IValidation,
+} from "./validations";
 
 describe("validations", () => {
   describe("require", () => {

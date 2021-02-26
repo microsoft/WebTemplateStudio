@@ -1,31 +1,28 @@
 import * as React from "react";
-import { connect, useSelector, useDispatch } from "react-redux";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { forkJoin, Subject } from "rxjs";
+
+import { AppContext } from "../../AppContext";
 import { ReactComponent as Close } from "../../assets/cancel.svg";
 import asModal from "../../components/Modal";
-
-import buttonStyles from "../../css/button.module.css";
-import styles from "./styles.module.css";
-
-import { GenerationItemData, GENERATION_NAMES } from "../../types/generationStatus";
-import { isGenModalOpenSelector } from "../../store/navigation/modals/selector";
-import { KEY_EVENTS, WEB_TEMPLATE_STUDIO_LINKS, TELEMETRY } from "../../utils/constants/constants";
-
-import { AppState } from "../../store/combineReducers";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-import { messages } from "./messages";
-import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
-import keyUpHandler from "../../utils/keyUpHandler";
-
-import { sendTelemetry, generateProject, openProjectInVSCode } from "../../utils/extensionService/extensionService";
-import { resetWizardAction } from "../../store/config/config/action";
-import { AppContext } from "../../AppContext";
-import { getGenerationData } from "../../store/userSelection/app/selector";
-import { getCosmosDB, getAppService } from "../../store/userSelection/services/servicesSelector";
-import GenerationItem from "./GenerationItem";
-import { Subject, forkJoin } from "rxjs";
-import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
-import { AZURE_LINKS } from "../../utils/constants/azure";
 import ModalTitle from "../../components/Titles/TitleForModal";
+import buttonStyles from "../../css/button.module.css";
+import { AppState } from "../../store/combineReducers";
+import { resetWizardAction } from "../../store/config/config/action";
+import { isGenModalOpenSelector } from "../../store/navigation/modals/selector";
+import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
+import { getGenerationData } from "../../store/userSelection/app/selector";
+import { getAppService, getCosmosDB } from "../../store/userSelection/services/servicesSelector";
+import { GENERATION_NAMES, GenerationItemData } from "../../types/generationStatus";
+import { AZURE_LINKS } from "../../utils/constants/azure";
+import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
+import { KEY_EVENTS, TELEMETRY, WEB_TEMPLATE_STUDIO_LINKS } from "../../utils/constants/constants";
+import { generateProject, openProjectInVSCode, sendTelemetry } from "../../utils/extensionService/extensionService";
+import keyUpHandler from "../../utils/keyUpHandler";
+import GenerationItem from "./GenerationItem";
+import { messages } from "./messages";
+import styles from "./styles.module.css";
 
 interface IStateProps {
   isModalOpen: boolean;

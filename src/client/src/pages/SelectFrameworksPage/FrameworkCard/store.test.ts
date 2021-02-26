@@ -1,6 +1,6 @@
-import { mapStateToProps } from "./store";
-import { IStateProps } from "./interfaces";
 import { getInitialState } from "../../../mockData/mockStore";
+import { IStateProps } from "./interfaces";
+import { mapStateToProps } from "./store";
 
 describe("Framework Card", () => {
   it("React", () => {

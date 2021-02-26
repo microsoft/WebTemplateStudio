@@ -1,15 +1,14 @@
+import classNames from "classnames";
 import * as React from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+import { useSelector } from "react-redux";
 
 import modalStyles from "../../../css/modal.module.css";
-import styles from "./styles.module.css";
-import messages from "./messages";
-
-import { AZURE_LINKS } from "../../../utils/constants/azure";
 import { AppState } from "../../../store/combineReducers";
-import { useSelector } from "react-redux";
 import { getSubscriptionsSelector } from "../../../store/config/azure/selector";
-import classNames from "classnames";
+import { AZURE_LINKS } from "../../../utils/constants/azure";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 interface IProps {
   subscription: string;
@@ -35,11 +34,7 @@ const AppServicePlanInfo = (props: Props) => {
           ? formatMessage(messages.freeTierMessage)
           : formatMessage(messages.basicTierMessage)}
       </div>
-      <a
-        target={"_blank"}
-        rel="noreferrer noopener"
-        href={AZURE_LINKS.APP_SERVICE_PLAN}
-      >
+      <a target={"_blank"} rel="noreferrer noopener" href={AZURE_LINKS.APP_SERVICE_PLAN}>
         {formatMessage(messages.learnMore)}
       </a>
     </div>

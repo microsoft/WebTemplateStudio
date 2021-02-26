@@ -1,22 +1,21 @@
-import * as fs from "fs";
-import * as path from "path";
-import { ServiceClientCredentials } from "ms-rest";
-import { WebSiteManagementClient } from "azure-arm-website";
-import { AppServicePlanCollection, StringDictionary } from "azure-arm-website/lib/models";
 import ResourceManagementClient, {
   ResourceManagementModels,
 } from "azure-arm-resource/lib/resource/resourceManagementClient";
+import { WebSiteManagementClient } from "azure-arm-website";
+import { AppServicePlanCollection, StringDictionary } from "azure-arm-website/lib/models";
+import * as fs from "fs";
+import { ServiceClientCredentials } from "ms-rest";
+import * as path from "path";
 
-import { CONSTANTS, AzureResourceType } from "../../constants/constants";
-import { SubscriptionError, AuthorizationError, DeploymentError, AppServiceError } from "../../errors";
-
-import { SubscriptionItem, ResourceGroupItem } from "../azure-auth/azureAuth";
+import { AzureResourceType, CONSTANTS } from "../../constants/constants";
+import { MESSAGES } from "../../constants/messages";
+import { Controller } from "../../controller";
+import { AppServiceError, AuthorizationError, DeploymentError, SubscriptionError } from "../../errors";
+import { ARMFileHelper } from "../azure-arm/armFileHelper";
+import { ResourceManager } from "../azure-arm/resourceManager";
+import { ResourceGroupItem, SubscriptionItem } from "../azure-auth/azureAuth";
 import { NameGenerator } from "../utils/nameGenerator";
 import { AppNameValidationResult, NameValidator } from "../utils/nameValidator";
-import { ResourceManager } from "../azure-arm/resourceManager";
-import { ARMFileHelper } from "../azure-arm/armFileHelper";
-import { Controller } from "../../controller";
-import { MESSAGES } from "../../constants/messages";
 
 export interface AppServiceSelections {
   siteName: string;

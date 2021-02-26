@@ -1,8 +1,8 @@
-import WizardSelectionActionType from "../selectionActionType";
 import { ISelected } from "../../../types/selected";
+import WizardSelectionActionType from "../selectionActionType";
 import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 
-const pagesReducer = (state: ISelected[] = [], action: WizardSelectionActionType) : ISelected[] => {
+const pagesReducer = (state: ISelected[] = [], action: WizardSelectionActionType): ISelected[] => {
   switch (action.type) {
     case USERSELECTION_TYPEKEYS.SELECT_PAGES:
       const newPages: ISelected[] = [...action.payload];

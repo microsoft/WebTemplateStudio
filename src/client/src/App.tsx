@@ -1,19 +1,20 @@
+import loadable from "@loadable/component";
 import classnames from "classnames";
 import * as React from "react";
 import { connect, useDispatch } from "react-redux";
-import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
-import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
-import { ENVIRONMENT, ROUTE } from "./utils/constants/constants";
+
 import appStyles from "./appStyles.module.css";
-import { AppState } from "./store/combineReducers";
-import { IOption } from "./types/option";
-import DetailsPage from "./pages/DetailsPage";
-import { NAVIGATION_MODAL_TYPES } from "./store/navigation/typeKeys";
+import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
+import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
 import RightSidebar from "./components/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
+import DetailsPage from "./pages/DetailsPage";
+import { AppState } from "./store/combineReducers";
 import { loadAction } from "./store/config/config/action";
-import loadable from "@loadable/component";
+import { NAVIGATION_MODAL_TYPES } from "./store/navigation/typeKeys";
 import { getSelectedRoute } from "./store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { IOption } from "./types/option";
+import { ENVIRONMENT, ROUTE } from "./utils/constants/constants";
 
 const SelectFrameworksPage = loadable(
   () => import(/* webpackChunkName: "SelectFrameworksPage" */ "./pages/SelectFrameworksPage")

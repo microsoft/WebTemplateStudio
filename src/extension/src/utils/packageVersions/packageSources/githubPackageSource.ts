@@ -2,6 +2,8 @@ import { Logger } from "../../logger";
 import semver = require("semver");
 import axios from "axios";
 
+import { IPackageSource } from "../IPackageSource";
+
 export default class githubPackageSource implements IPackageSource {
   public async getLatestVersion(packageName: string) {
     let latestVersion = "0.0.0";

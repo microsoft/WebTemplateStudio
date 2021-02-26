@@ -14,15 +14,15 @@ jest.mock("../validations", () => {
     }),
   };
 });
-import { validateProjectName } from "./projectName";
 import { IprojectNameValidationConfig } from "../../../store/config/validations/model";
 import { IVSCodeObject } from "../../../types/vscode";
 import {
-  addRequiredValidate,
   addExistingProjectNameValidate,
   addRegexValidate,
+  addRequiredValidate,
   addReservedNameValidate,
 } from "../validations";
+import { validateProjectName } from "./projectName";
 
 describe("validate", () => {
   it("config validate", (resolve) => {

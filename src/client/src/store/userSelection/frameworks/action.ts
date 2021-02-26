@@ -1,6 +1,6 @@
 import { ISelected } from "../../../types/selected";
 import { USERSELECTION_TYPEKEYS } from "../typeKeys";
-import { ISelectFrontendAction, ISelectBackendAction } from "./model";
+import { ISelectBackendAction, ISelectFrontendAction } from "./model";
 
 export const setSelectedFrontendFrameworkAction = (frontendFramework: ISelected): ISelectFrontendAction => ({
   type: USERSELECTION_TYPEKEYS.SELECT_FRONTEND_FRAMEWORK,

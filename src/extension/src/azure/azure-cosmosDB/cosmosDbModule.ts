@@ -1,20 +1,21 @@
 import { CosmosDBManagementClient } from "azure-arm-cosmosdb";
 import { DatabaseAccount } from "azure-arm-cosmosdb/lib/models";
-import { ServiceClientCredentials } from "ms-rest";
-import { SubscriptionItem, ResourceGroupItem } from "../azure-auth/azureAuth";
-import * as path from "path";
-import { SubscriptionError, AuthorizationError, DeploymentError } from "../../errors";
 import {
   ResourceManagementClient,
   ResourceManagementModels,
 } from "azure-arm-resource/lib/resource/resourceManagementClient";
-import { ResourceManager } from "../azure-arm/resourceManager";
-import { ARMFileHelper } from "../azure-arm/armFileHelper";
+import { ServiceClientCredentials } from "ms-rest";
+import * as path from "path";
+
 import { CONSTANTS } from "../../constants/constants";
+import { AuthorizationError, DeploymentError, SubscriptionError } from "../../errors";
+import { ARMFileHelper } from "../azure-arm/armFileHelper";
+import { ResourceManager } from "../azure-arm/resourceManager";
+import { ResourceGroupItem, SubscriptionItem } from "../azure-auth/azureAuth";
 import fs = require("fs-extra");
-import { ConnectionString } from "../utils/connectionString";
-import { Controller } from "../../controller";
 import { MESSAGES } from "../../constants/messages";
+import { Controller } from "../../controller";
+import { ConnectionString } from "../utils/connectionString";
 
 export interface CosmosDBSelections {
   cosmosDBResourceName: string;

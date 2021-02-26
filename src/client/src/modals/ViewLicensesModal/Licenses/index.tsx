@@ -1,13 +1,12 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
-import { ILicenseObject } from "../../../types/license";
-
-import styles from "./styles.module.css";
 import { injectIntl } from "react-intl";
+import { useSelector } from "react-redux";
 
-import { getGenerationData } from "../../../store/userSelection/app/selector";
-import { getAllLicenses } from "../../../utils/extensionService/extensionService";
 import { AppContext } from "../../../AppContext";
+import { getGenerationData } from "../../../store/userSelection/app/selector";
+import { ILicenseObject } from "../../../types/license";
+import { getAllLicenses } from "../../../utils/extensionService/extensionService";
+import styles from "./styles.module.css";
 
 const Licenses = () => {
   const { vscode } = React.useContext(AppContext);

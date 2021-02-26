@@ -150,7 +150,10 @@ export const MESSAGES = {
     ),
     resetPagesPrompt: localize("dialog.resetPagesPrompt", "Are you sure you want to reset all the selected pages?"),
     logoutPrompt: localize("dialog.logoutPrompt", "Are you sure you want to sign out of your Azure account?"),
-    getReactNativeRequirementsError: localize("dialog.getReactNativeRequirementsError", "Could not verify React Native Requirements. For more info review the docs."),
+    getReactNativeRequirementsError: localize(
+      "dialog.getReactNativeRequirementsError",
+      "Could not verify React Native Requirements. For more info review the docs."
+    ),
   },
   GENERATION: {
     PROJECT_GENERATION_FINISHED: localize(

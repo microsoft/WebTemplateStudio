@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+
 import { AppState } from "../../combineReducers";
 import { ModalType, NAVIGATION_MODAL_TYPES } from "../typeKeys";
 
@@ -24,10 +25,10 @@ const isAppServiceModalOpenSelector = createSelector(getOpenModal, isAppServiceM
 const isPlatformRequirementsModalOpenSelector = createSelector(getOpenModal, isPlatformRequirementsModalOpen);
 
 export {
+  isAppServiceModalOpenSelector,
   isAzureServicesModalOpenSelector,
   isCosmosDbModalOpenSelector,
   isGenModalOpenSelector,
-  isViewLicensesModalOpenSelector,
-  isAppServiceModalOpenSelector,
   isPlatformRequirementsModalOpenSelector,
+  isViewLicensesModalOpenSelector,
 };

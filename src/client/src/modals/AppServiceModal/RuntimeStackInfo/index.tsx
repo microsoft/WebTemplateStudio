@@ -1,13 +1,12 @@
 import * as React from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { useSelector } from "react-redux";
-import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import modalStyles from "../../../css/modal.module.css";
-import styles from "./styles.module.css";
-import messages from "./messages";
-
 import { AppState } from "../../../store/combineReducers";
 import { getRuntimeStackSelector } from "../../../store/userSelection/app/selector";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 const RuntimeStackInfo = ({ intl }: InjectedIntlProps) => {
   const { formatMessage } = intl;

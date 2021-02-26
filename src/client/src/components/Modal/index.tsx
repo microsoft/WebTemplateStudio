@@ -1,7 +1,7 @@
 import * as React from "react";
-
 import Modal from "react-modal";
-import { NAVIGATION_MODAL_TYPES, ModalType } from "../../store/navigation/typeKeys";
+
+import { ModalType, NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 
 /**
  * A Higher-Order Component that creates a modal from a normal React component
@@ -63,7 +63,10 @@ interface IProps {
   isModalOpen: boolean;
 }
 
-const asModal = <P extends Record<string, unknown>>(WrappedComponent: React.ComponentType<P>, MODAL_TYPE?: ModalType) : any => {
+const asModal = <P extends Record<string, unknown>>(
+  WrappedComponent: React.ComponentType<P>,
+  MODAL_TYPE?: ModalType
+): any => {
   return class extends React.Component<P & IProps> {
     static defaultProps = {
       closeModal: () => void 0,

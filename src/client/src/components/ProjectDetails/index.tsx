@@ -1,10 +1,9 @@
+import classNames from "classnames";
 import * as React from "react";
 
-import ProjectOutput from "./ProjectOutput";
-import ProjectName from "./ProjectName";
-
 import rightsidebarStyles from "../RightSidebar/rightsidebarStyles.module.css";
-import classNames from "classnames";
+import ProjectName from "./ProjectName";
+import ProjectOutput from "./ProjectOutput";
 
 interface IProps {
   isRightsidebar?: boolean;
@@ -12,9 +11,9 @@ interface IProps {
 
 type Props = IProps;
 
-const ProjectDetails = (props: Props) : JSX.Element => {
+const ProjectDetails = (props: Props): JSX.Element => {
   return (
-    <div className={classNames({[rightsidebarStyles.sidebarItem]: props.isRightsidebar})}>
+    <div className={classNames({ [rightsidebarStyles.sidebarItem]: props.isRightsidebar })}>
       <ProjectName isRightsidebar={props.isRightsidebar} />
       <ProjectOutput isRightsidebar={props.isRightsidebar} />
     </div>

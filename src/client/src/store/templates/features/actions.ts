@@ -1,6 +1,6 @@
+import { IOption } from "../../../types/option";
 import { TEMPLATES_TYPEKEYS } from "../templateTypeKeys";
 import { IFeaturesActionType } from "./models";
-import { IOption } from "../../../types/option";
 
 const setFeaturesAction = (features: IOption[]): IFeaturesActionType => ({
   payload: features,

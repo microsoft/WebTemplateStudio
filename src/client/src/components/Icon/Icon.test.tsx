@@ -1,8 +1,8 @@
-import * as React from "react";
 import { render, RenderResult } from "@testing-library/react";
+import * as React from "react";
 
-import styles from "./styles.module.css";
 import Icon from ".";
+import styles from "./styles.module.css";
 
 describe("Icon", () => {
   let props: any;
