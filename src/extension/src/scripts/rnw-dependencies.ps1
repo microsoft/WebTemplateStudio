@@ -405,7 +405,7 @@ if ($NeedsRerun -ne 0) {
     #WTS: When replacing this file review changes to check no throw is sent on failure
     #Write-Error "Some dependencies are not met. Re-run with -Install to install them.";
     #throw;
-    Write-Error "Some dependencies are not met. Re-run with -Install to install them.";
+    Write-Error "Some dependencies are not met.";
     return;
 } else {
     Write-Output "All mandatory requirements met";
