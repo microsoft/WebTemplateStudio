@@ -19,16 +19,6 @@
   justify-content: space-between;
 }
 
-.button {
-  margin-right: 0;
-}
-
-.button:disabled {
-  opacity: 0.5;
-  background-color: var(--vscode-badge-background);
-  cursor: default;
-}
-
 .closeIcon {
   cursor: pointer;
   height: 1em;

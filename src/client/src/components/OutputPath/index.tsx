@@ -45,11 +45,7 @@ const OutputPath = ({ handleSaveClick, value, isEmpty, intl, placeholder }: IPro
             </div>
           )}
         </div>
-        <button
-          className={classNames(buttonStyles.buttonHighlighted, styles.browseButton)}
-          onClick={handleSaveClick}
-          tabIndex={-1}
-        >
+        <button className={buttonStyles.buttonHighlighted} onClick={handleSaveClick} tabIndex={-1}>
           {intl.formatMessage(messages.browseButtonLabel)}
         </button>
       </div>

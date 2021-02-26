@@ -74,8 +74,7 @@ const CosmosModal = ({ intl }: Props) => {
   };
 
   const getButtonClassNames = () => {
-    const buttonClass = isEnableSaveButton() ? buttonStyles.buttonHighlighted : buttonStyles.buttonDark;
-    return classNames(buttonClass, styles.button);
+    return isEnableSaveButton() ? buttonStyles.buttonHighlighted : buttonStyles.buttonDark;
   };
 
   const closeModalIfPressEnterOrSpaceKey = (event: React.KeyboardEvent<SVGSVGElement>) => {

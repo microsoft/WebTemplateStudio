@@ -59,9 +59,6 @@
   background-color: var(--vscode-editorWidget-border);
 }
 
-.browseButton {
-  float: right;
-  width: 15%;
-  min-width: 70px;
-  outline: none !important;
+.container > button {
+  margin-left: 0.5em;
 }
