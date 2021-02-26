@@ -251,7 +251,11 @@ export class AzureServices {
   private static updateAppServiceDeployInSettingsFile(filePath: string, id: string): void {
     try {
       const settingsPath = path.join(filePath, ".vscode", "settings.json");
+      if (!fse.pathExistsSync(settingsPath)) {
+        fse.writeJSONSync(settingsPath, {});
+      }
       const settings = fse.readJSONSync(settingsPath);
+      settings["appService.deploySubpath"] = "publish";
       settings["appService.defaultWebAppToDeploy"] = id;
       fse.writeJSONSync(settingsPath, settings, { spaces: 2 });
     } catch (err) {

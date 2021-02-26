@@ -122,13 +122,13 @@ describe("Footer", () => {
       wrapper = renderWithStore(<Footer />, store);
 
       const backButton = wrapper.getByText("Back");
-      expect(backButton).toHaveClass(styles.disabledOverlay);
+      expect(backButton).toBeDisabled();
 
       const nextButton = wrapper.getByText("Next");
-      expect(nextButton).toHaveClass(styles.disabledOverlay);
+      expect(nextButton).toBeDisabled();
 
       const createButton = wrapper.getByText("Create Project");
-      expect(createButton).toHaveClass(styles.disabledOverlay);
+      expect(createButton).toBeDisabled();
     });
   });
 
@@ -148,7 +148,7 @@ describe("Footer", () => {
     it("generate button should be disabled", () => {
       wrapper = renderWithStore(<Footer />, store);
       const createButton = wrapper.getByText("Create Project");
-      expect(createButton).toHaveClass(styles.disabledOverlay);
+      expect(createButton).toBeDisabled();
     });
   });
 });

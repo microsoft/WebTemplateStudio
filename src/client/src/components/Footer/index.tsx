@@ -1,4 +1,3 @@
-import classnames from "classnames";
 import React, { useMemo } from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
@@ -81,38 +80,23 @@ const Footer = (props: Props) => {
           <div>{formatMessage(messages.license)}</div>
           <div className={styles.buttonContainer}>
             <button
-              tabIndex={!isFirstStep ? 0 : -1}
-              className={classnames(buttonStyles.buttonDark, {
-                [styles.disabledOverlay]: isFirstStep || !isEnableGenerateButton,
-              })}
-              onClick={() => {
-                if (!isFirstStep && isEnableGenerateButton) navigateBack();
-              }}
+              disabled={isFirstStep || !isEnableGenerateButton}
+              className={buttonStyles.buttonHighlighted}
+              onClick={() => navigateBack()}
             >
               {formatMessage(messages.back)}
             </button>
             <button
-              tabIndex={isEnableNextPage ? 0 : -1}
-              className={classnames(styles.button, styles.buttonNext, buttonStyles.buttonHighlighted, {
-                [buttonStyles.buttonDark]: !isEnableNextPage,
-                [styles.disabledOverlay]: isLastStep || !isEnableNextPage || !isEnableGenerateButton,
-              })}
-              onClick={() => {
-                if (!isLastStep && isEnableNextPage && isEnableGenerateButton) navigateForward();
-              }}
+              disabled={isLastStep || !isEnableNextPage || !isEnableGenerateButton}
+              className={buttonStyles.buttonHighlighted}
+              onClick={() => navigateForward()}
             >
               {formatMessage(messages.next)}
             </button>
             <button
               disabled={!isEnableGenerateButton}
-              className={classnames({
-                [buttonStyles.buttonDark]: !isEnableGenerateButton,
-                [buttonStyles.buttonHighlighted]: isEnableGenerateButton,
-                [styles.disabledOverlay]: !isEnableGenerateButton,
-              })}
-              onClick={(e) => {
-                if (isEnableGenerateButton) generateProject(e);
-              }}
+              className={buttonStyles.buttonHighlighted}
+              onClick={(e) => generateProject(e)}
             >
               {formatMessage(messages.generate)}
             </button>
