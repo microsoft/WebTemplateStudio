@@ -1,6 +1,7 @@
 import util = require("util");
 import semver = require("semver");
 import { CONSTANTS } from "../../../constants/constants";
+import { IRequirementValidator } from "../IRequirementValidator";
 
 export default class NodeValidator implements IRequirementValidator {
   private exec = util.promisify(require("child_process").exec);

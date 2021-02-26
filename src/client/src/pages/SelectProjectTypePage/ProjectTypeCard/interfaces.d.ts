@@ -6,4 +6,4 @@ interface IStateProps {
   projectTypeSelect: ISelected;
 }
 
-export { IStateProps, ISelectProps };
+export { ISelectProps, IStateProps };

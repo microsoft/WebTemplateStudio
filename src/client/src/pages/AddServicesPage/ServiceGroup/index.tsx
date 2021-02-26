@@ -1,7 +1,8 @@
 import * as React from "react";
-import styles from "./styles.module.css";
 import { InjectedIntlProps, injectIntl } from "react-intl";
+
 import ServiceCard from "../ServiceCard";
+import styles from "./styles.module.css";
 
 interface IStateProps {
   group: IServiceGroup;

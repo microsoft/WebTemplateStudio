@@ -1,12 +1,11 @@
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/commands";
-
 import * as mockData from "./mockData/mockAzureModuleData";
 
 const DEV_NO_ERROR_MSG = "in development, no error message";
 const DEV_NO_ERROR_TYPE = "in development, no error type";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const login = (message: any) : void => {
+const login = (message: any): void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.AZURE,
@@ -22,7 +21,7 @@ const login = (message: any) : void => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const logout = (message: any) : void => {
+const logout = (message: any): void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.AZURE,
@@ -37,7 +36,7 @@ const logout = (message: any) : void => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const getUserStatus = (message: any) : void => {
+const getUserStatus = (message: any): void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.AZURE,
@@ -53,7 +52,7 @@ const getUserStatus = (message: any) : void => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const getLocations = (message: any) : void => {
+const getLocations = (message: any): void => {
   setTimeout(
     () =>
       window.postMessage(
@@ -72,7 +71,7 @@ const getLocations = (message: any) : void => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const getResourceGroups = (message: any) : void => {
+const getResourceGroups = (message: any): void => {
   const resourceGroups = IsMicrosoftLearnSubscription(message.subscription)
     ? mockData.sandboxResourceGroups
     : mockData.resourceGroups;
@@ -95,7 +94,7 @@ const getResourceGroups = (message: any) : void => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const getValidAppServiceName = (message: any) : void => {
+const getValidAppServiceName = (message: any): void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.AZURE,
@@ -110,7 +109,7 @@ const getValidAppServiceName = (message: any) : void => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const getValidCosmosName = (message: any) : void => {
+const getValidCosmosName = (message: any): void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.AZURE,
@@ -125,7 +124,7 @@ const getValidCosmosName = (message: any) : void => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const validateCosmosName = (message: any) : void => {
+const validateCosmosName = (message: any): void => {
   const isValid = message.appName.length > 3 && !message.appName.includes(" ");
   const errorMessage = isValid ? "" : "Invalid name";
 
@@ -146,7 +145,7 @@ const validateCosmosName = (message: any) : void => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const validateAppServiceName = (message: any) : void => {
+const validateAppServiceName = (message: any): void => {
   const isValid = message.appName.length > 3 && !message.appName.includes(" ");
   const errorMessage = isValid ? "" : "Invalid name";
   window.postMessage(
@@ -165,19 +164,19 @@ const validateAppServiceName = (message: any) : void => {
   );
 };
 
-const IsMicrosoftLearnSubscription = (subscription: string) : boolean => {
+const IsMicrosoftLearnSubscription = (subscription: string): boolean => {
   const selectedSubscription = mockData.subscriptions.find((s) => s.name === subscription);
   return selectedSubscription !== undefined && selectedSubscription.isMicrosoftLearn;
 };
 
 export {
-  login,
-  logout,
-  getUserStatus,
   getLocations,
   getResourceGroups,
+  getUserStatus,
   getValidAppServiceName,
   getValidCosmosName,
-  validateCosmosName,
+  login,
+  logout,
   validateAppServiceName,
+  validateCosmosName,
 };

@@ -1,8 +1,8 @@
-import { IVSCodeObject } from "../../types/vscode";
-import { PAYLOAD_MESSAGES_TEXT } from "../constants/constants";
 import { ILoggingPayload } from "../../types/logger";
-import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../constants/commands";
 import { IVersionPackage } from "../../types/option";
+import { IVSCodeObject } from "../../types/vscode";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../constants/commands";
+import { PAYLOAD_MESSAGES_TEXT } from "../constants/constants";
 
 const postMessageAsync = (
   command: string,
@@ -95,7 +95,12 @@ const getLatestVersion = (vscode: IVSCodeObject, checkVersionPackage: IVersionPa
   });
 };
 
-const getPages = (vscode: IVSCodeObject, projectTypeName: string, frontendName: string, backendName: string) : Promise<any> => {
+const getPages = (
+  vscode: IVSCodeObject,
+  projectTypeName: string,
+  frontendName: string,
+  backendName: string
+): Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_PAGES,
     {
@@ -111,7 +116,12 @@ const getPages = (vscode: IVSCodeObject, projectTypeName: string, frontendName: 
   );
 };
 
-const getFeatures = (vscode: IVSCodeObject, projectTypeName: string, frontendName: string, backendName: string) : Promise<any> => {
+const getFeatures = (
+  vscode: IVSCodeObject,
+  projectTypeName: string,
+  frontendName: string,
+  backendName: string
+): Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_FEATURES,
     {
@@ -127,7 +137,7 @@ const getFeatures = (vscode: IVSCodeObject, projectTypeName: string, frontendNam
   );
 };
 
-const getOutputPathFromConfig = (vscode: IVSCodeObject) : Promise<any> => {
+const getOutputPathFromConfig = (vscode: IVSCodeObject): Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_OUTPUT_PATH_FROM_CONFIG,
     {
@@ -138,7 +148,7 @@ const getOutputPathFromConfig = (vscode: IVSCodeObject) : Promise<any> => {
   );
 };
 
-const browseNewOutputPath = (vscode: IVSCodeObject) : Promise<any> => {
+const browseNewOutputPath = (vscode: IVSCodeObject): Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH,
     {
@@ -149,7 +159,7 @@ const browseNewOutputPath = (vscode: IVSCodeObject) : Promise<any> => {
   );
 };
 
-const azureLogout = (vscode: IVSCodeObject) : Promise<any> => {
+const azureLogout = (vscode: IVSCodeObject): Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.AZURE_LOGOUT,
     {
@@ -161,7 +171,7 @@ const azureLogout = (vscode: IVSCodeObject) : Promise<any> => {
   );
 };
 
-const azureLogin = (vscode: IVSCodeObject) : Promise<any> => {
+const azureLogin = (vscode: IVSCodeObject): Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.AZURE_LOGIN,
     {
@@ -173,7 +183,7 @@ const azureLogin = (vscode: IVSCodeObject) : Promise<any> => {
   );
 };
 
-const getUserStatus = (vscode: IVSCodeObject) : Promise<any> => {
+const getUserStatus = (vscode: IVSCodeObject): Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_USER_STATUS,
     {
@@ -237,7 +247,12 @@ const ValidateAppServiceName = (
   );
 };
 
-const ValidateCosmosAccountName = (subscription: string, appName: string, scopeId: number, vscode: IVSCodeObject) : Promise<any> => {
+const ValidateCosmosAccountName = (
+  subscription: string,
+  appName: string,
+  scopeId: number,
+  vscode: IVSCodeObject
+): Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.VALIDATE_COSMOS_NAME,
     {
@@ -253,7 +268,7 @@ const ValidateCosmosAccountName = (subscription: string, appName: string, scopeI
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const generateProject = (generationData: any, vscode: IVSCodeObject) : Promise<any> => {
+const generateProject = (generationData: any, vscode: IVSCodeObject): Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GENERATE,
     {
@@ -268,7 +283,7 @@ const generateProject = (generationData: any, vscode: IVSCodeObject) : Promise<a
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const getAllLicenses = (licenseData: any, vscode: IVSCodeObject) : Promise<any> => {
+const getAllLicenses = (licenseData: any, vscode: IVSCodeObject): Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_ALL_LICENSES,
     {
@@ -282,7 +297,7 @@ const getAllLicenses = (licenseData: any, vscode: IVSCodeObject) : Promise<any> 
   );
 };
 
-const getLocations = (vscode: IVSCodeObject, subscription: string, azureServiceType: string) : Promise<any> => {
+const getLocations = (vscode: IVSCodeObject, subscription: string, azureServiceType: string): Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_LOCATIONS,
     {
@@ -296,7 +311,7 @@ const getLocations = (vscode: IVSCodeObject, subscription: string, azureServiceT
   );
 };
 
-const getResourceGroups = (vscode: IVSCodeObject, subscription: string) : Promise<any> => {
+const getResourceGroups = (vscode: IVSCodeObject, subscription: string): Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_RESOURCE_GROUPS,
     {
@@ -309,7 +324,7 @@ const getResourceGroups = (vscode: IVSCodeObject, subscription: string) : Promis
   );
 };
 
-const sendLog = (logData: ILoggingPayload, vscode: IVSCodeObject) : Promise<any> => {
+const sendLog = (logData: ILoggingPayload, vscode: IVSCodeObject): Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.LOG,
     {
@@ -321,7 +336,7 @@ const sendLog = (logData: ILoggingPayload, vscode: IVSCodeObject) : Promise<any>
   );
 };
 
-const openLogFile = (vscode: IVSCodeObject) : Promise<any> => {
+const openLogFile = (vscode: IVSCodeObject): Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.OPEN_LOG,
     {
@@ -332,7 +347,7 @@ const openLogFile = (vscode: IVSCodeObject) : Promise<any> => {
   );
 };
 
-const openProjectInVSCode = (outputPath: string, vscode: IVSCodeObject) : void => {
+const openProjectInVSCode = (outputPath: string, vscode: IVSCodeObject): void => {
   return vscode.postMessage({
     module: EXTENSION_MODULES.GENERATE,
     command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
@@ -344,40 +359,40 @@ const openProjectInVSCode = (outputPath: string, vscode: IVSCodeObject) : void =
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const subscribeToExtensionEvents = (listener: any) : void => {
+const subscribeToExtensionEvents = (listener: any): void => {
   window.addEventListener("message", listener);
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const unsubscribeToExtensionEvents = (listener: any) : void => {
+const unsubscribeToExtensionEvents = (listener: any): void => {
   window.removeEventListener("message", listener);
 };
 
 export {
-  projectPathValidation,
-  getFrameworks,
-  getProjectTypes,
-  getAllLicenses,
-  getLatestVersion,
-  getPages,
-  getFeatures,
-  getOutputPathFromConfig,
+  azureLogin,
+  azureLogout,
   browseNewOutputPath,
-  sendTelemetry,
+  generateProject,
+  getAllLicenses,
+  getFeatures,
+  getFrameworks,
+  getLatestVersion,
+  getLocations,
+  getOutputPathFromConfig,
+  getPages,
+  getProjectTypes,
   getResourceGroups,
+  getTemplateInfo,
+  getUserStatus,
   GetValidAppServiceName,
   GetValidCosmosAccountName,
-  ValidateAppServiceName,
-  azureLogout,
-  getLocations,
-  ValidateCosmosAccountName,
-  azureLogin,
-  getUserStatus,
-  getTemplateInfo,
-  generateProject,
-  sendLog,
   openLogFile,
   openProjectInVSCode,
+  projectPathValidation,
+  sendLog,
+  sendTelemetry,
   subscribeToExtensionEvents,
   unsubscribeToExtensionEvents,
+  ValidateAppServiceName,
+  ValidateCosmosAccountName,
 };

@@ -1,9 +1,10 @@
 import configureMockStore from "redux-mock-store";
-import { isEnableNextPageSelector } from "./wizardSelectionSelector";
-import { ROUTE } from "../../../../utils/constants/constants";
+
 import { getInitialState } from "../../../../mockData/mockStore";
-import { AppState } from "../../../combineReducers";
 import { ISelected } from "../../../../types/selected";
+import { ROUTE } from "../../../../utils/constants/constants";
+import { AppState } from "../../../combineReducers";
+import { isEnableNextPageSelector } from "./wizardSelectionSelector";
 
 describe("wizardSelectionSelector", () => {
   let mock: AppState;

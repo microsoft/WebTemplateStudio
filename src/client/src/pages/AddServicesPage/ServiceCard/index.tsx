@@ -1,27 +1,23 @@
+import classNames from "classnames";
 import * as React from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
-import { injectIntl, InjectedIntlProps } from "react-intl";
 
-import { openAzureServicesModalAction } from "../../../store/navigation/modals/action";
-import { hasSelectedService } from "../../../store/userSelection/services/servicesSelector";
-import { isLoggedInSelector } from "../../../store/config/azure/selector";
-import { setDetailPageAction } from "../../../store/config/detailsPage/action";
-import { AppState } from "../../../store/combineReducers";
-
-import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
-
-import Icon from "../../../components/Icon";
-
-import { ReactComponent as PlusSVG } from "../../../assets/plus.svg";
 import { ReactComponent as EditSVG } from "../../../assets/edit.svg";
 import { ReactComponent as PriceSVG } from "../../../assets/money.svg";
+import { ReactComponent as PlusSVG } from "../../../assets/plus.svg";
 import { ReactComponent as TimeSVG } from "../../../assets/timer.svg";
-
-import cardStyles from "../../cardStyles.module.css";
+import Icon from "../../../components/Icon";
 import buttonStyles from "../../../css/button.module.css";
-import styles from "./styles.module.css";
+import { AppState } from "../../../store/combineReducers";
+import { isLoggedInSelector } from "../../../store/config/azure/selector";
+import { setDetailPageAction } from "../../../store/config/detailsPage/action";
+import { openAzureServicesModalAction } from "../../../store/navigation/modals/action";
+import { hasSelectedService } from "../../../store/userSelection/services/servicesSelector";
+import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
+import cardStyles from "../../cardStyles.module.css";
 import messages from "./messages";
-import classNames from "classnames";
+import styles from "./styles.module.css";
 
 interface IProps {
   service: IService;
@@ -29,7 +25,7 @@ interface IProps {
 
 type Props = IProps & InjectedIntlProps;
 
-export const ServiceCard = (props: Props) : JSX.Element => {
+export const ServiceCard = (props: Props): JSX.Element => {
   const { intl, service } = props;
   const [showPlusIcon, setShowPlusIcon] = React.useState(false);
 

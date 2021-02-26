@@ -1,11 +1,12 @@
 import { createSelector } from "reselect";
+
+import { IOption } from "../../../types/option";
 import { ITemplateInfo } from "../../../types/templateInfo";
-import { getOutputPath, getProjectName } from "./wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../combineReducers";
 import { UserSelectionState } from "../combineReducers";
-import { IOption } from "../../../types/option";
 import { getProjectTypeSelector } from "../projectType/selector";
 import { getServices } from "../services/servicesSelector";
+import { getOutputPath, getProjectName } from "./wizardSelectionSelector/wizardSelectionSelector";
 
 const getWizardSelectionsUserSelector = (state: AppState): UserSelectionState => state.userSelection;
 const getBackendOptionsSelector = (state: AppState): IOption[] => state.templates.backendOptions;

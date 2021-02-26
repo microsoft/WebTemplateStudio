@@ -1,10 +1,11 @@
-import * as vscode from "vscode";
 import * as path from "path";
+import * as vscode from "vscode";
+
 import { CONSTANTS } from "./constants/constants";
-import { CoreTemplateStudio } from "./coreTemplateStudio";
-import { Logger } from "./utils/logger";
-import { deactivate } from "./extension";
 import { Controller } from "./controller";
+import { CoreTemplateStudio } from "./coreTemplateStudio";
+import { deactivate } from "./extension";
+import { Logger } from "./utils/logger";
 
 /**
  * Manages react webview panels

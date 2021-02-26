@@ -1,17 +1,18 @@
 import * as React from "react";
-import { connect, useDispatch } from "react-redux";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { AppState } from "../../store/combineReducers";
-import styles from "./styles.module.css";
-import asModal from "../../components/Modal";
-import { closeModalAction } from "../../store/navigation/modals/action";
-import Licenses from "./Licenses";
+import { connect, useDispatch } from "react-redux";
+
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
+import asModal from "../../components/Modal";
+import ModalTitle from "../../components/Titles/TitleForModal";
+import { AppState } from "../../store/combineReducers";
+import { closeModalAction } from "../../store/navigation/modals/action";
 import { isViewLicensesModalOpenSelector } from "../../store/navigation/modals/selector";
 import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import { KEY_EVENTS } from "../../utils/constants/constants";
+import Licenses from "./Licenses";
 import messages from "./messages";
-import ModalTitle from "../../components/Titles/TitleForModal";
+import styles from "./styles.module.css";
 
 interface IStateProps {
   isModalOpen: boolean;

@@ -1,15 +1,15 @@
-import * as React from "react";
-import configureMockStore from "redux-mock-store";
 import "@testing-library/jest-dom";
 import "@testing-library/jest-dom/extend-expect";
-import { RenderResult, act } from "@testing-library/react";
+
+import { act, RenderResult } from "@testing-library/react";
+import * as React from "react";
+import configureMockStore from "redux-mock-store";
 
 import { getInitialState } from "../../../mockData/mockStore";
-import { renderWithStore } from "../../../testUtils";
-
-import messages from "./messages";
-import ProjectName from ".";
 import { AppState } from "../../../store/combineReducers";
+import { renderWithStore } from "../../../testUtils";
+import ProjectName from ".";
+import messages from "./messages";
 
 describe("Project Name component", () => {
   let store: any;

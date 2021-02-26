@@ -14,14 +14,14 @@ jest.mock("../validations", () => {
     }),
   };
 });
-import { validateItemName } from "./itemName";
+import { IitemNameValidationConfig } from "../../../store/config/validations/model";
 import {
-  addRequiredValidate,
   addExistingItemNameValidate,
   addRegexValidate,
+  addRequiredValidate,
   addReservedNameValidate,
 } from "../validations";
-import { IitemNameValidationConfig } from "../../../store/config/validations/model";
+import { validateItemName } from "./itemName";
 
 describe("validate", () => {
   it("config validate", (resolve) => {

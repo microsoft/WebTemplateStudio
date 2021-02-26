@@ -1,10 +1,10 @@
-import { IVSCodeObject } from "../../types/vscode";
-import { ISelected } from "../../types/selected";
 import { FormattedMessage } from "react-intl";
-import { validationMessages } from "./messages";
 
-import { projectPathValidation } from "../extensionService/extensionService";
 import { IRegex } from "../../store/config/validations/model";
+import { ISelected } from "../../types/selected";
+import { IVSCodeObject } from "../../types/vscode";
+import { projectPathValidation } from "../extensionService/extensionService";
+import { validationMessages } from "./messages";
 
 export interface IValidation {
   isValid: boolean;
@@ -12,14 +12,14 @@ export interface IValidation {
   isDirty?: boolean;
 }
 
-export const addRequiredValidate = (name: string) : IValidation => {
+export const addRequiredValidate = (name: string): IValidation => {
   let validate: IValidation = { isValid: true, error: validationMessages.default };
   const isEmpty = name === "";
   if (isEmpty) validate = { isValid: false, error: validationMessages.emptyName };
   return validate;
 };
 
-export const addExistingItemNameValidate = (pageTitle: string, selectedPages: Array<ISelected>) : IValidation => {
+export const addExistingItemNameValidate = (pageTitle: string, selectedPages: Array<ISelected>): IValidation => {
   let validate: IValidation = { isValid: true, error: validationMessages.default };
   const existPage = selectedPages.filter((page) => page.title.toLowerCase() === pageTitle.toLowerCase()).length > 1;
   if (existPage) validate = { isValid: false, error: validationMessages.duplicateItemName };
@@ -30,7 +30,7 @@ export const addExistingProjectNameValidate = async (
   projectName: string,
   outputPath: string,
   vscode: IVSCodeObject
-) : Promise<IValidation> => {
+): Promise<IValidation> => {
   let validate: IValidation = { isValid: true, error: validationMessages.default };
   const isExistingName = projectName !== "" && outputPath !== "";
 
@@ -42,7 +42,7 @@ export const addExistingProjectNameValidate = async (
   return validate;
 };
 
-export const addReservedNameValidate = (name: string, reservedNames: Array<string>) : IValidation => {
+export const addReservedNameValidate = (name: string, reservedNames: Array<string>): IValidation => {
   let validate: IValidation = { isValid: true, error: validationMessages.default };
   const isReservedName =
     reservedNames.filter((nameReserve) => nameReserve.toLowerCase() === name.toLowerCase()).length > 0;

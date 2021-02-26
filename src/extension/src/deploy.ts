@@ -1,9 +1,10 @@
 import * as vscode from "vscode";
+
+import { VSCODE_TASKS } from "./constants/constants";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { Logger } from "./utils/logger";
 import { getExtensionName } from "./utils/packageInfo";
-import { getTask, executeTask, existTask } from "./utils/vscodeTaskService";
-import { VSCODE_TASKS } from "./constants/constants";
+import { executeTask, existTask, getTask } from "./utils/vscodeTaskService";
 
 export class Deploy {
   private progressObject!: vscode.Progress<IVSCodeProgressType>;

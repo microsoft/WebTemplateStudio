@@ -1,24 +1,22 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-import { AppState } from "../../../store/combineReducers";
-import { TemplateType } from "../../../store/templates/combineReducers";
-import {
-  setSelectedFrontendFrameworkAction,
-  setSelectedBackendFrameworkAction,
-} from "../../../store/userSelection/frameworks/action";
-
-import { IOption } from "../../../types/option";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+import { useDispatch, useSelector } from "react-redux";
 
 import Dropdown from "../../../components/Dropdown";
+import { AppState } from "../../../store/combineReducers";
+import { TemplateType } from "../../../store/templates/combineReducers";
 import {
   getDropdownBackendFrameworksSelector,
   getDropdownFrontendFrameworksSelector,
 } from "../../../store/templates/frameworks/selector";
-
+import {
+  setSelectedBackendFrameworkAction,
+  setSelectedFrontendFrameworkAction,
+} from "../../../store/userSelection/frameworks/action";
+import { IOption } from "../../../types/option";
+import InputTitle from "../../Titles/TitleForInput";
 import rightsidebarStyles from "../rightsidebarStyles.module.css";
 import messages from "./messages";
-import InputTitle from "../../Titles/TitleForInput";
 
 type Props = InjectedIntlProps;
 

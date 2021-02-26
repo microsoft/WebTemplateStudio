@@ -15,12 +15,4 @@
 
 .buttonContainer {
   display: flex;
-  align-items: center;
-}
-
-.disabledOverlay {
-  opacity: 0.5;
-  background: var(--vscode-editor-background);
-  color: var(--vscode-editor-foreground);
-  cursor: default;
 }

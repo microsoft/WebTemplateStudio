@@ -1,23 +1,19 @@
+import classnames from "classnames";
 import React, { useState } from "react";
+import { InjectedIntl, injectIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 import { arrayMove } from "react-sortable-hoc";
-import { injectIntl, InjectedIntl } from "react-intl";
 
-import { PAGE_NAME_CHARACTER_LIMIT } from "../../../utils/constants/constants";
-
+import { ReactComponent as HideIconSVG } from "../../../assets/i-hide.svg";
+import { ReactComponent as ShowIconSVG } from "../../../assets/i-show.svg";
 import { AppState } from "../../../store/combineReducers";
 import { setPagesAction } from "../../../store/userSelection/pages/action";
-
-import PageContainer from "./PageContainer";
-
-import messages from "./messages";
-import classnames from "classnames";
-import styles from "./styles.module.css";
-import rightsidebarStyles from "../rightsidebarStyles.module.css";
-
-import { ReactComponent as ShowIconSVG } from "../../../assets/i-show.svg";
-import { ReactComponent as HideIconSVG } from "../../../assets/i-hide.svg";
+import { PAGE_NAME_CHARACTER_LIMIT } from "../../../utils/constants/constants";
 import InputTitle from "../../Titles/TitleForInput";
+import rightsidebarStyles from "../rightsidebarStyles.module.css";
+import messages from "./messages";
+import PageContainer from "./PageContainer";
+import styles from "./styles.module.css";
 
 interface IStateProps {
   pathname: string;

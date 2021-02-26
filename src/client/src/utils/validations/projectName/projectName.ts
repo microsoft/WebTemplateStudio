@@ -1,14 +1,14 @@
-import { IVSCodeObject } from "../../../types/vscode";
-import * as validations from "../validations";
-import { validationMessages } from "../messages";
 import { IprojectNameValidationConfig } from "../../../store/config/validations/model";
+import { IVSCodeObject } from "../../../types/vscode";
+import { validationMessages } from "../messages";
+import * as validations from "../validations";
 
 export const validateProjectName = async (
   projectName: string,
   outputPath: string,
   validationConfig: IprojectNameValidationConfig,
   vscode: IVSCodeObject
-) : Promise<validations.IValidation> => {
+): Promise<validations.IValidation> => {
   const listValidations: Array<validations.IValidation> = [];
   let validate: validations.IValidation = { isValid: true, error: validationMessages.default };
   if (validationConfig.validateEmptyNames) listValidations.push(validations.addRequiredValidate(projectName));

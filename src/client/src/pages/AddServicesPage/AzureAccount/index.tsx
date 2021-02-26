@@ -1,19 +1,18 @@
-import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { InjectedIntlProps, injectIntl } from "react-intl";
-import { AppContext } from "../../../AppContext";
-import { AppState } from "../../../store/combineReducers";
-
-import keyUpHandler from "../../../utils/keyUpHandler";
-import buttonStyles from "../../../css/button.module.css";
 import classnames from "classnames";
-import styles from "./styles.module.css";
+import * as React from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+import { useDispatch, useSelector } from "react-redux";
 
-import { AZURE_LINKS } from "../../../utils/constants/azure";
-import { azureLogin, azureLogout } from "../../../utils/extensionService/extensionService";
+import { AppContext } from "../../../AppContext";
+import buttonStyles from "../../../css/button.module.css";
+import { AppState } from "../../../store/combineReducers";
 import { logIntoAzureActionAction, logOutAzureAction } from "../../../store/config/azure/action";
 import { isLoggedInSelector } from "../../../store/config/azure/selector";
+import { AZURE_LINKS } from "../../../utils/constants/azure";
+import { azureLogin, azureLogout } from "../../../utils/extensionService/extensionService";
+import keyUpHandler from "../../../utils/keyUpHandler";
 import messages from "./messages";
+import styles from "./styles.module.css";
 
 type Props = InjectedIntlProps;
 

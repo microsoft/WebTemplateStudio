@@ -1,12 +1,12 @@
+import classnames from "classnames";
 import * as React from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-import styles from "./styles.module.css";
-import messages from "./messages";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 
 import { ReactComponent as Checkmark } from "../../../assets/checkgreen.svg";
 import { ReactComponent as Warning } from "../../../assets/warning.svg";
 import { IPlatformRequirement } from "../../../store/config/platform/model";
-import classnames from "classnames";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 interface IProps {
   item: IPlatformRequirement;

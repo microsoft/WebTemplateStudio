@@ -1,6 +1,6 @@
-import { mapStateToProps } from "./store";
-import { IStoreProps } from "./interfaces";
 import { getInitialState } from "../../mockData/mockStore";
+import { IStoreProps } from "./interfaces";
+import { mapStateToProps } from "./store";
 
 describe("AddPagesPage", () => {
   it("react", () => {

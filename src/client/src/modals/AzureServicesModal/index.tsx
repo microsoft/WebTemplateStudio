@@ -1,26 +1,23 @@
 import * as React from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { injectIntl, InjectedIntlProps } from "react-intl";
 
-import { AppState } from "../../store/combineReducers";
-
+import { ReactComponent as Cancel } from "../../assets/cancel.svg";
+import CollapsibleInfoBox from "../../components/CollapsibleInfoBox";
 import asModal from "../../components/Modal";
-
-import { closeModalAction } from "../../store/navigation/modals/action";
-import { isAzureServicesModalOpenSelector } from "../../store/navigation/modals/selector";
-import * as ModalActions from "../../store/navigation/modals/action";
+import ModalTitle from "../../components/Titles/TitleForModal";
+import AzureAccount from "../../pages/AddServicesPage/AzureAccount";
+import { AppState } from "../../store/combineReducers";
 import { isLoggedInSelector } from "../../store/config/azure/selector";
-import styles from "./styles.module.css";
-import messages from "./messages";
-import keyUpHandler from "../../utils/keyUpHandler";
+import { closeModalAction } from "../../store/navigation/modals/action";
+import * as ModalActions from "../../store/navigation/modals/action";
+import { isAzureServicesModalOpenSelector } from "../../store/navigation/modals/selector";
 import { AZURE_LINKS } from "../../utils/constants/azure";
 import { KEY_EVENTS } from "../../utils/constants/constants";
 import { WIZARD_CONTENT_FEATURES } from "../../utils/constants/internalNames";
-import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-
-import CollapsibleInfoBox from "../../components/CollapsibleInfoBox";
-import AzureAccount from "../../pages/AddServicesPage/AzureAccount";
-import ModalTitle from "../../components/Titles/TitleForModal";
+import keyUpHandler from "../../utils/keyUpHandler";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 interface IStateProps {
   isModalOpen: boolean;

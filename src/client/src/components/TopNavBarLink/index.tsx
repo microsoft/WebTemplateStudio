@@ -1,10 +1,10 @@
 import classnames from "classnames";
 import * as React from "react";
-import { injectIntl, FormattedMessage, InjectedIntl } from "react-intl";
+import { FormattedMessage, InjectedIntl, injectIntl } from "react-intl";
 
-import styles from "./styles.module.css";
-import keyUpHandler from "../../utils/keyUpHandler";
 import { ARIA_LABELS_NAVIGATION } from "../../utils/constants/constants";
+import keyUpHandler from "../../utils/keyUpHandler";
+import styles from "./styles.module.css";
 
 const TopNavBarLink = ({
   pageNumber,

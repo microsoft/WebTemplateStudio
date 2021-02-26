@@ -13,4 +13,4 @@ interface IProps {
   isModal: boolean;
 }
 
-export { IIntlProps, IStoreProps, IProps };
+export { IIntlProps, IProps, IStoreProps };

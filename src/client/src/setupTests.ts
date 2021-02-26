@@ -1,8 +1,9 @@
-import { configure, shallow, mount } from "enzyme";
 import "@testing-library/jest-dom";
+
+import { configure, mount, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import { IntlProvider, intlShape } from "react-intl";
 import React from "react";
+import { IntlProvider, intlShape } from "react-intl";
 
 /**
  * This setup file configures the Enzyme Adapter and is executed before running the tests

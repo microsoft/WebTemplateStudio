@@ -1,19 +1,16 @@
 import * as React from "react";
-
-import { useSelector } from "react-redux";
 import { InjectedIntlProps, injectIntl } from "react-intl";
+import { useSelector } from "react-redux";
+
+import Title from "../../components/Titles/Title";
 import { isLoggedInSelector } from "../../store/config/azure/selector";
 import { getServiceGroups } from "../../store/templates/features/selector";
-
-import messages from "./messages";
-
-import ServiceGroup from "./ServiceGroup";
-import AzureStudent from "./AzureStudent";
-import AzureAccount from "./AzureAccount";
-import Title from "../../components/Titles/Title";
-
-import styles from "./styles.module.css";
 import pageStyles from "../pageStyles.module.css";
+import AzureAccount from "./AzureAccount";
+import AzureStudent from "./AzureStudent";
+import messages from "./messages";
+import ServiceGroup from "./ServiceGroup";
+import styles from "./styles.module.css";
 
 type Props = InjectedIntlProps;
 

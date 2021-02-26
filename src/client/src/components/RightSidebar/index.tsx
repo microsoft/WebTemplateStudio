@@ -1,37 +1,31 @@
-import React, { useState, useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-
-import * as ModalActions from "../../store/navigation/modals/action";
-import { hasServices as hasServicesSelector } from "../../store/userSelection/services/servicesSelector";
-import { getSelectedRoute } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
-
-import { KEY_EVENTS, PLATFORM, ROUTE } from "../../utils/constants/constants";
+import classnames from "classnames";
+import React, { useMemo, useState } from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+import { useDispatch, useSelector } from "react-redux";
 
 import { ReactComponent as CancelSVG } from "../../assets/cancel.svg";
-
-import About from "./About";
-import SelectPages from "./SelectPages";
-import ProjectDetails from "../ProjectDetails";
-import ServicesList from "./ServicesList";
-import SelectFrameworks from "./SelectFrameworks";
-import Notification from "../Notification";
-
-import messages from "./messages";
-import messagesWeb from "./messagesWeb";
-import messagesReactNative from "./messagesReactNative";
-import classnames from "classnames";
-import styles from "./styles.module.css";
 import buttonStyles from "../../css/button.module.css";
-import SelectProjectTypes from "./SelectProjectTypes";
-
-import Title from "../Titles/Title";
-
 import {
   getPlatformSelector,
   hasInvalidPlatformRequirementsSelector,
   hasPlatformRequirementsSelector,
 } from "../../store/config/platform/selector";
+import * as ModalActions from "../../store/navigation/modals/action";
+import { getSelectedRoute } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { hasServices as hasServicesSelector } from "../../store/userSelection/services/servicesSelector";
+import { KEY_EVENTS, PLATFORM, ROUTE } from "../../utils/constants/constants";
+import Notification from "../Notification";
+import ProjectDetails from "../ProjectDetails";
+import Title from "../Titles/Title";
+import About from "./About";
+import messages from "./messages";
+import messagesReactNative from "./messagesReactNative";
+import messagesWeb from "./messagesWeb";
+import SelectFrameworks from "./SelectFrameworks";
+import SelectPages from "./SelectPages";
+import SelectProjectTypes from "./SelectProjectTypes";
+import ServicesList from "./ServicesList";
+import styles from "./styles.module.css";
 
 type Props = InjectedIntlProps;
 
@@ -46,7 +40,7 @@ const RightSidebar = (props: Props) => {
     [selectedRoute]
   );
   const platform = useSelector(getPlatformSelector);
-  const platformMessages = (platform.id === PLATFORM.WEB) ? messagesWeb : messagesReactNative;
+  const platformMessages = platform.id === PLATFORM.WEB ? messagesWeb : messagesReactNative;
 
   const { intl } = props;
   const { formatMessage } = intl;

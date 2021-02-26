@@ -1,15 +1,17 @@
+import "@testing-library/jest-dom";
+import "@testing-library/jest-dom/extend-expect";
+
+import { fireEvent, RenderResult } from "@testing-library/react";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import "@testing-library/jest-dom";
-import TopNavBar from ".";
+
 import { getInitialState } from "../../mockData/mockStore";
-import { RenderResult, fireEvent } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
+import { AppState } from "../../store/combineReducers";
+import * as routesNavsAction from "../../store/navigation/routesNavItems/actions";
 import { renderWithStore } from "../../testUtils";
 import messages from "../../utils/routes/messages";
 import stylesTopNavBarLink from "../TopNavBarLink/styles.module.css";
-import { AppState } from "../../store/combineReducers";
-import * as routesNavsAction from "../../store/navigation/routesNavItems/actions";
+import TopNavBar from ".";
 const spySetRoutesAction = jest.spyOn(routesNavsAction, "setRoutesAction");
 
 describe("TopNavBar", () => {

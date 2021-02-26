@@ -2,33 +2,33 @@
 // custom styling for dropdown component using the Style API provided by react-select
 
 export default {
-  input: () : any => ({
+  input: (): any => ({
     color: "var(--vscode-editor-foreground)",
   }),
-  indicatorSeparator: (base: any) : any => ({
+  indicatorSeparator: (base: any): any => ({
     ...base,
     display: "none",
   }),
-  singleValue: (base: any) : any => ({
+  singleValue: (base: any): any => ({
     ...base,
     color: "var(--vscode-editor-foreground)",
   }),
-  placeholder: (base: any) : any => ({
+  placeholder: (base: any): any => ({
     ...base,
     color: "var(--vscode-menu-foreground)",
   }),
-  valueContainer: (base:any) : any => ({
+  valueContainer: (base: any): any => ({
     ...base,
     padding: "0 0.2em",
   }),
-  indicatorContainer: (base:any) : any => ({
+  indicatorContainer: (base: any): any => ({
     ...base,
     padding: "0",
   }),
   control: (base: any, state: any): any => ({
     ...base,
-    minHeight:"2.5em",
-    maxHeight:"2.5em",
+    minHeight: "2.5em",
+    maxHeight: "2.5em",
     border: state.isFocused ? "1px solid var(--vscode-contrastActiveBorder)" : "none",
     borderRadius: 0,
     boxShadow: "none",
@@ -39,7 +39,7 @@ export default {
     padding: "0 0.2em",
     cursor: "pointer",
   }),
-  option: (provided: any, state: any) : any => ({
+  option: (provided: any, state: any): any => ({
     ...provided,
     backgroundColor: state.isFocused && "var(--vscode-menu-foreground)",
     color: state.isFocused && "var(--vscode-editor-background)",
@@ -50,7 +50,7 @@ export default {
     },
     cursor: "pointer",
   }),
-  menu: (base: any) : any => ({
+  menu: (base: any): any => ({
     ...base,
     // override border radius to match the box
     borderRadius: 0,
@@ -63,7 +63,7 @@ export default {
     // prevent menu to scroll y
     wordWrap: "break-word",
   }),
-  menuList: (base: any) : any => ({
+  menuList: (base: any): any => ({
     ...base,
     // kill the white space on first and last option
     padding: 0,

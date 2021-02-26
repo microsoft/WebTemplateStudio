@@ -1,18 +1,17 @@
-import * as React from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-
-import modalStyles from "../../../css/modal.module.css";
-import styles from "./styles.module.css";
 import classNames from "classnames";
-import messages from "./messages";
-
-import { getProjectName } from "../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
-import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
-import { ReactComponent as GreenCheck } from "../../../assets/checkgreen.svg";
-import { ValidateCosmosAccountName, GetValidCosmosAccountName } from "../../../utils/extensionService/extensionService";
+import * as React from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { useSelector } from "react-redux";
-import { AppState } from "../../../store/combineReducers";
+
 import { AppContext } from "../../../AppContext";
+import { ReactComponent as GreenCheck } from "../../../assets/checkgreen.svg";
+import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
+import modalStyles from "../../../css/modal.module.css";
+import { AppState } from "../../../store/combineReducers";
+import { getProjectName } from "../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { GetValidCosmosAccountName, ValidateCosmosAccountName } from "../../../utils/extensionService/extensionService";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 let timeout: NodeJS.Timeout | undefined;
 let validationCosmosDbAccountNameScopeId = 0;

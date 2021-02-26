@@ -1,10 +1,10 @@
+import { GENERATION_NAMES, GenerationItemStatus } from "../../types/generationStatus";
 import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
-import { GenerationItemStatus, GENERATION_NAMES } from "../../types/generationStatus";
 
 const wait = (m: number) => new Promise((r) => setTimeout(r, m));
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const generate = async (message: any) : Promise<void> => {
+const generate = async (message: any): Promise<void> => {
   const { pages, services } = message.payload;
   const servicesQueue: Promise<void>[] = [];
 
@@ -21,11 +21,11 @@ const generate = async (message: any) : Promise<void> => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const openProjectVSCode = (message: any) : void => {
+const openProjectVSCode = (message: any): void => {
   console.log(`Call to open project in vscode: ${JSON.stringify(message)} `);
 };
 
-const generateProject = async (pages: any[]) : Promise<void> => {
+const generateProject = async (pages: any[]): Promise<void> => {
   sendGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Generating);
 
   for (const page of pages) {
@@ -42,7 +42,7 @@ const generateProject = async (pages: any[]) : Promise<void> => {
   );
 };
 
-const generateAppService = async () : Promise<void> => {
+const generateAppService = async (): Promise<void> => {
   sendGenerationStatus(
     GENERATION_NAMES.APP_SERVICE,
     GenerationItemStatus.Generating,
@@ -52,7 +52,7 @@ const generateAppService = async () : Promise<void> => {
   sendGenerationStatus(GENERATION_NAMES.APP_SERVICE, GenerationItemStatus.Success);
 };
 
-const generateCosmosDB = async () : Promise<void> => {
+const generateCosmosDB = async (): Promise<void> => {
   sendGenerationStatus(
     GENERATION_NAMES.COSMOS_DB,
     GenerationItemStatus.Generating,
@@ -62,7 +62,7 @@ const generateCosmosDB = async () : Promise<void> => {
   sendGenerationStatus(GENERATION_NAMES.COSMOS_DB, GenerationItemStatus.Failed, "ERROR: CosmosDB failed to deploy");
 };
 
-const sendGenerationStatus = (name: string, status: GenerationItemStatus, message?: string, data?: any) : void => {
+const sendGenerationStatus = (name: string, status: GenerationItemStatus, message?: string, data?: any): void => {
   window.postMessage(
     {
       command: EXTENSION_COMMANDS.GEN_STATUS,

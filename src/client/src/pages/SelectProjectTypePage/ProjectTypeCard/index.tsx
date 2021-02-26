@@ -1,23 +1,19 @@
+import classNames from "classnames";
 import * as React from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { connect, useDispatch } from "react-redux";
-
-import { injectIntl, InjectedIntlProps } from "react-intl";
-import { ISelectProps, IStateProps } from "./interfaces";
-
-import { setSelectedProjectTypeAction } from "../../../store/userSelection/projectType/action";
-import { setDetailPageAction } from "../../../store/config/detailsPage/action";
-import { mapStateToProps } from "./store";
-
-import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
 
 import { ReactComponent as Check } from "../../../assets/check.svg";
 import Icon from "../../../components/Icon";
-
-import classNames from "classnames";
-import messages from "../../messages";
-import cardStyles from "../../cardStyles.module.css";
-import pageStyles from "../../pageStyles.module.css";
 import buttonStyles from "../../../css/button.module.css";
+import { setDetailPageAction } from "../../../store/config/detailsPage/action";
+import { setSelectedProjectTypeAction } from "../../../store/userSelection/projectType/action";
+import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
+import cardStyles from "../../cardStyles.module.css";
+import messages from "../../messages";
+import pageStyles from "../../pageStyles.module.css";
+import { ISelectProps, IStateProps } from "./interfaces";
+import { mapStateToProps } from "./store";
 
 type Props = ISelectProps & IStateProps & InjectedIntlProps;
 

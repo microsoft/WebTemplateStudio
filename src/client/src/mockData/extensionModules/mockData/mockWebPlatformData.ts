@@ -293,7 +293,7 @@ const templatesInfo = {
   platformRequirements: [],
 };
 
-const pages = (frontendFramework: string) : any => {
+const pages = (frontendFramework: string): any => {
   return [
     {
       templateId: `wts.Page.${frontendFramework}.Blank`,
@@ -494,4 +494,4 @@ const features = [
   },
 ];
 
-export {platform, projectTypes, frameworks, licenses, templatesInfo, pages, features };
+export { features, frameworks, licenses, pages, platform, projectTypes, templatesInfo };

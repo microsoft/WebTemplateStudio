@@ -1,24 +1,21 @@
+import classNames from "classnames";
 import * as React from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { connect, useDispatch } from "react-redux";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-
-import { IProps, IStateProps } from "./interfaces";
-import { ISelected } from "../../../types/selected";
-import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
-import { inferItemName } from "../../../utils/infer/itemName";
-
-import { setPagesAction } from "../../../store/userSelection/pages/action";
-import { setDetailPageAction } from "../../../store/config/detailsPage/action";
-import { mapStateToProps } from "./store";
 
 import { ReactComponent as Plus } from "../../../assets/plus.svg";
 import Icon from "../../../components/Icon";
-
-import messages from "../../messages";
-import classNames from "classnames";
-import styles from "./styles.module.css";
-import cardStyles from "../../cardStyles.module.css";
 import buttonStyles from "../../../css/button.module.css";
+import { setDetailPageAction } from "../../../store/config/detailsPage/action";
+import { setPagesAction } from "../../../store/userSelection/pages/action";
+import { ISelected } from "../../../types/selected";
+import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
+import { inferItemName } from "../../../utils/infer/itemName";
+import cardStyles from "../../cardStyles.module.css";
+import messages from "../../messages";
+import { IProps, IStateProps } from "./interfaces";
+import { mapStateToProps } from "./store";
+import styles from "./styles.module.css";
 
 type Props = IProps & IStateProps & InjectedIntlProps;
 
@@ -112,9 +109,7 @@ const PageCard = (props: Props) => {
               </button>
             )}
           </div>
-          <div>
-            {selectedPages.filter((selectedPage) => selectedPage.defaultName === page.defaultName).length}
-          </div>
+          <div>{selectedPages.filter((selectedPage) => selectedPage.defaultName === page.defaultName).length}</div>
         </div>
       </div>
     </div>

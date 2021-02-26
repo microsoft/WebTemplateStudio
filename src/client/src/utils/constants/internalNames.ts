@@ -21,4 +21,4 @@ const WIZARD_CONTENT_FEATURES = {
   COSMOS_DB_SQL: "wts.Feature.Azure.Cosmos.SQL",
 };
 
-export { WIZARD_CONTENT_FEATURES, PAGES };
+export { PAGES, WIZARD_CONTENT_FEATURES };
