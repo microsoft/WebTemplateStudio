@@ -26,6 +26,14 @@
   border: none;
 }
 
+.buttonHighlighted:disabled,
+.buttonDark:disabled {
+  pointer-events: none;
+  opacity: 0.4;
+  background: var(--vscode-editor-background);
+  color: var(--vscode-editor-foreground);
+}
+
 /* This style should match a style in index.css */
 .buttonLink {
   text-decoration: none;
