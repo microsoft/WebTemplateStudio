@@ -136,6 +136,9 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="..\..\node_modules\react-native-vector-icons\Fonts\Ionicons.ttf">
+      <Link>Assets\Ionicons.ttf</Link>
+    </Content>
     <None Include="TabbedTSApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
