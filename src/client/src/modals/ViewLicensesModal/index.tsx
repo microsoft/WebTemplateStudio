@@ -4,7 +4,7 @@ import { connect, useDispatch } from "react-redux";
 
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import asModal from "../../components/Modal";
-import ModalTitle from "../../components/Titles/TitleForModal";
+import Title from "../../components/Titles/Title";
 import { AppState } from "../../store/combineReducers";
 import { closeModalAction } from "../../store/navigation/modals/action";
 import { isViewLicensesModalOpenSelector } from "../../store/navigation/modals/selector";
@@ -33,7 +33,7 @@ const ViewLicensesModal = ({ intl }: Props) => {
   return (
     <div>
       <div className={styles.headerContainer}>
-        <ModalTitle>{intl.formatMessage(messages.licenses)}</ModalTitle>
+        <Title>{intl.formatMessage(messages.licenses)}</Title>
         <Cancel
           tabIndex={0}
           className={styles.cancelIcon}

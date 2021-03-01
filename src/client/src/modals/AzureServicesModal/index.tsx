@@ -5,7 +5,7 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import CollapsibleInfoBox from "../../components/CollapsibleInfoBox";
 import asModal from "../../components/Modal";
-import ModalTitle from "../../components/Titles/TitleForModal";
+import Title from "../../components/Titles/Title";
 import AzureAccount from "../../pages/AddServicesPage/AzureAccount";
 import { AppState } from "../../store/combineReducers";
 import { isLoggedInSelector } from "../../store/config/azure/selector";
@@ -55,7 +55,7 @@ const AzureServicesModal = (props: Props) => {
   return (
     <div>
       <div className={styles.headerContainer}>
-        <ModalTitle>{formatMessage(messages.getStartedWithAzure)}</ModalTitle>
+        <Title>{formatMessage(messages.getStartedWithAzure)}</Title>
         <Cancel
           tabIndex={0}
           className={styles.cancelIcon}

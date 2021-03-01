@@ -4,7 +4,7 @@ import { connect, useDispatch, useSelector } from "react-redux";
 
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import asModal from "../../components/Modal";
-import ModalTitle from "../../components/Titles/TitleForModal";
+import Title from "../../components/Titles/Title";
 import { AppState } from "../../store/combineReducers";
 import { getPlatformRequirementsSelector, getPlatformSelector } from "../../store/config/platform/selector";
 import { closeModalAction } from "../../store/navigation/modals/action";
@@ -39,7 +39,7 @@ const PlatformRequirementsModal = ({ intl }: Props) => {
   return (
     <div>
       <div className={styles.headerContainer}>
-        <ModalTitle>{intl.formatMessage(messages.developmentRequirements)}</ModalTitle>
+        <Title>{intl.formatMessage(messages.developmentRequirements)}</Title>
         <Cancel
           tabIndex={0}
           className={styles.cancelIcon}

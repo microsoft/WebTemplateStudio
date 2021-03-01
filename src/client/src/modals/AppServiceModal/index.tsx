@@ -10,7 +10,7 @@ import LocationSelection from "../../components/LocationSelection";
 import asModal from "../../components/Modal";
 import ResourceGroupSelection from "../../components/ResourceGroupSelection";
 import SubscriptionSelection from "../../components/SubscriptionSelection";
-import ModalTitle from "../../components/Titles/TitleForModal";
+import Title from "../../components/Titles/Title";
 import buttonStyles from "../../css/button.module.css";
 import { AppState } from "../../store/combineReducers";
 import { closeModalAction } from "../../store/navigation/modals/action";
@@ -98,7 +98,7 @@ const AppServiceModal = ({ intl }: Props) => {
   return (
     <React.Fragment>
       <div className={styles.header}>
-        <ModalTitle>{formatMessage(messages.title)}</ModalTitle>
+        <Title>{formatMessage(messages.title)}</Title>
         <Cancel
           tabIndex={0}
           aria-label={intl.formatMessage(messages.ariaCloseModalLabel)}

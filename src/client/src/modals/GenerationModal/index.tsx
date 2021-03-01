@@ -6,7 +6,7 @@ import { forkJoin, Subject } from "rxjs";
 import { AppContext } from "../../AppContext";
 import { ReactComponent as Close } from "../../assets/cancel.svg";
 import asModal from "../../components/Modal";
-import ModalTitle from "../../components/Titles/TitleForModal";
+import Title from "../../components/Titles/Title";
 import buttonStyles from "../../css/button.module.css";
 import { AppState } from "../../store/combineReducers";
 import { resetWizardAction } from "../../store/config/config/action";
@@ -142,7 +142,7 @@ const GenerationModal = ({ intl }: Props) => {
   return (
     <div>
       <div className={styles.header}>
-        <ModalTitle>{formatMessage(messages.creatingYourProject)}</ModalTitle>
+        <Title>{formatMessage(messages.creatingYourProject)}</Title>
         {isGenerationFinished && (
           <Close
             tabIndex={0}
