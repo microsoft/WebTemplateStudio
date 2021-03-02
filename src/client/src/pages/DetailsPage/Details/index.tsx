@@ -3,26 +3,20 @@ import * as React from "react";
 import { FormattedMessage, InjectedIntl, injectIntl } from "react-intl";
 import ReactMarkdown from "react-markdown";
 
-import { ReactComponent as BackArrow } from "../../../assets/backarrow.svg";
-import backArrow from "../../../assets/backarrow.svg";
-import Icon from "../../../components/Icon";
-import Title from "../../../components/Titles/Title";
 import { ILicenseObject, License } from "../../../types/license";
 import { IOption } from "../../../types/option";
-import { KEY_EVENTS } from "../../../utils/constants/constants";
 import messages from "./messages";
 import styles from "./styles.module.css";
 
 interface IProps {
   detailInfo: IOption;
   formatteDetailInfo?: IOption;
-  handleBackClick: () => void;
   intl: InjectedIntl;
 }
 
 type Props = IProps;
 
-const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Props) => {
+const Details = ({ detailInfo, formatteDetailInfo, intl }: Props) => {
   const LinkRenderer = (props: any) => {
     return (
       <a className={styles.licenseButton} href={String(props.href)} target={"_blank"} rel="noreferrer noopener">
@@ -30,17 +24,7 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
       </a>
     );
   };
-  const ParagraphRenderer = (props: any) => (
-    <>
-      <p className={styles.longDescription}>{props.children}</p>
-      <br />
-    </>
-  );
-  const keyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      handleBackClick();
-    }
-  };
+  const ParagraphRenderer = (props: any) => <p className={styles.longDescription}>{props.children}</p>;
   const renderFormattedData = (
     info: string | FormattedMessage.MessageDescriptor | undefined,
     isMarkdown: boolean,
@@ -70,71 +54,45 @@ const Details = ({ detailInfo, formatteDetailInfo, handleBackClick, intl }: Prop
   return (
     <>
       <div className={styles.container}>
-        <div className={styles.backContainer}>
-          <div
-            role="button"
-            tabIndex={0}
-            onClick={handleBackClick}
-            onKeyDown={keyDownHandler}
-            className={styles.innerBackContainer}
-          >
-            {backArrow && <BackArrow className={styles.backIcon} />}
-            <div className={styles.details}>{intl!.formatMessage(messages.back)}</div>
-          </div>
-        </div>
-        <div className={styles.headerContainer}>
-          {detailInfo.title && <Icon name={detailInfo.title.toString()} icon={detailInfo.icon} />}
-          <Title>{renderFormattedData(detailInfo.title, false)}</Title>
-        </div>
-        <div className={styles.detailsContainer}>
-          <div className={styles.spacer} />
-          <div>
-            <div className={styles.detailsDescription}>{renderFormattedData(detailInfo.longDescription, true)}</div>
-            <div>
-              {detailInfo.author && (
-                <div className={classnames(styles.metaData, styles.row)}>
-                  <div className={styles.colWidth}>
-                    <strong>{intl!.formatMessage(messages.author)}</strong>
-                  </div>
-                  {(detailInfo.author && renderFormattedData(detailInfo.author, false, true)) ||
-                    intl!.formatMessage(messages.none)}
-                </div>
-              )}
+        <div>{renderFormattedData(detailInfo.longDescription, true)}</div>
+        {detailInfo.author && (
+          <div className={styles.metaData}>
+            <div className={styles.detailSectionLabel}>
+              <strong>{intl!.formatMessage(messages.author)}</strong>
             </div>
-            <div>
-              {detailInfo.licenses && detailInfo.licenses.length > 0 && (
-                <div className={classnames(styles.metaData)}>
-                  <div className={classnames(styles.licenseCategory, styles.colWidth)}>
-                    <strong>{intl!.formatMessage(messages.licenses)}</strong>
-                  </div>
-                  <div className={classnames(styles.col8, styles.licenses)}>
-                    {Array.isArray(detailInfo.licenses)
-                      ? detailInfo.licenses.map((license: License, idx: number) => {
-                          const licenseObject = license as ILicenseObject;
-                          return (
-                            <p key={license + idx.toString()}>
-                              <a href={String(licenseObject.url)} target={"_blank"} rel="noreferrer noopener">
-                                {licenseObject.text}
-                              </a>
-                            </p>
-                          );
-                        })
-                      : <ReactMarkdown source={detailInfo.licenses} renderers={{ link: LinkRenderer }} /> ||
-                        intl!.formatMessage(messages.none)}
-                  </div>
-                </div>
-              )}
-              {detailInfo.version && (
-                <div className={classnames(styles.metaData, styles.row)}>
-                  <div className={styles.colWidth}>
-                    <strong>{intl!.formatMessage(messages.version)}</strong>
-                  </div>
-                  {renderFormattedData(detailInfo.version, true, true)}
-                </div>
-              )}
+            {renderFormattedData(detailInfo.author, false, true) || intl!.formatMessage(messages.none)}
+          </div>
+        )}
+        {detailInfo.licenses && detailInfo.licenses.length > 0 && (
+          <div className={classnames(styles.metaData)}>
+            <div className={styles.detailSectionLabel}>
+              <strong>{intl!.formatMessage(messages.licenses)}</strong>
+            </div>
+            <div className={styles.licenses}>
+              {Array.isArray(detailInfo.licenses)
+                ? detailInfo.licenses.map((license: License, idx: number) => {
+                    const licenseObject = license as ILicenseObject;
+                    return (
+                      <p key={license + idx.toString()}>
+                        <a href={String(licenseObject.url)} target={"_blank"} rel="noreferrer noopener">
+                          {licenseObject.text}
+                        </a>
+                      </p>
+                    );
+                  })
+                : <ReactMarkdown source={detailInfo.licenses} renderers={{ link: LinkRenderer }} /> ||
+                  intl!.formatMessage(messages.none)}
             </div>
           </div>
-        </div>
+        )}
+        {detailInfo.version && (
+          <div className={styles.metaData}>
+            <div className={styles.detailSectionLabel}>
+              <strong>{intl!.formatMessage(messages.version)}</strong>
+            </div>
+            {renderFormattedData(detailInfo.version, true, true)}
+          </div>
+        )}
       </div>
     </>
   );
