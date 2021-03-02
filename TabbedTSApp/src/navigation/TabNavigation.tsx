@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 // import MasterDetailStack from './MasterDetailStack';
 import HomeStack from './HomeStack';
-// import SettingsStack from './SettingsStack';
+import SettingsStack from './SettingsStack';
 
 const TabNavigation = (): JSX.Element => {
   // For more information about react navigation visit: https://reactnavigation.org/docs/getting-started
@@ -38,16 +38,9 @@ const TabNavigation = (): JSX.Element => {
         tabBarIcon: ({focused, size, color}) => {
           let iconName = getIcon(route.name, focused);
 
-          return (
-            <Icon
-              name={iconName}
-              size={size}
-              color={color}
-            />
-          );
+          return <Icon name={iconName} size={size} color={color} />;
         },
-      })}
-    >
+      })}>
       <Tab.Screen name="Home" component={HomeStack} />
       {/* <Tab.Screen
         name="MasterDetailStack"
@@ -56,7 +49,7 @@ const TabNavigation = (): JSX.Element => {
       />*/}
 
       {/* Place this at the end */}
-      {/* <Tab.Screen name="Settings" component={SettingsStack} /> } */}
+      <Tab.Screen name="Settings" component={SettingsStack} />
     </Tab.Navigator>
   );
 };

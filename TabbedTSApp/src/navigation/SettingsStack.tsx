@@ -2,16 +2,16 @@ import * as React from 'react';
 
 import {createStackNavigator} from '@react-navigation/stack';
 
-import Home from '../screens/Home/HomeScreen';
+import Settings from '../screens/Settings/SettingsScreen';
 
 const Stack = createStackNavigator();
 
-const HomeStack = (): JSX.Element => {
+const SettingsStack = (): JSX.Element => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Settings" component={Settings} />
     </Stack.Navigator>
   );
 };
 
-export default HomeStack;
+export default SettingsStack;

@@ -4,11 +4,11 @@ import {NavigationContainer} from '@react-navigation/native';
 
 import TabNavigation from './navigation/TabNavigation';
 
-function App() {
+function App() : JSX.Element {
   return (
-      <NavigationContainer>
-        <TabNavigation />
-      </NavigationContainer>
+    <NavigationContainer>
+      <TabNavigation />
+    </NavigationContainer>
   );
 }
 

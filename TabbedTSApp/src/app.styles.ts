@@ -27,6 +27,7 @@ export default StyleSheet.create({
   },
   link: {
     textDecorationLine: 'underline',
+    color: 'blue',
   },
   icon: {
     fontSize: FONTSIZE.XLARGE,
