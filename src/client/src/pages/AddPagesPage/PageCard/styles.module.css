@@ -1,4 +1,4 @@
-.headerIconContainer {
+.plusIcon {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,6 +9,5 @@
 }
 
 .description {
-  margin-top: 1rem;
-  height: 9rem;
+  max-height: 9rem;
 }
