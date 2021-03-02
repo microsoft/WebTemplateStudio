@@ -1,6 +1,4 @@
 .container {
-  margin-right: 12px;
-  margin-bottom: 12px;
   cursor: pointer;
   padding: 12px;
   background-color: hsla(0, 0%, 47%, 0.2);
@@ -19,7 +17,6 @@
 .boundingBox {
   width: 230px;
   height: 200px;
-  margin: 0px 30px 30px 0px;
   padding: 20px;
   display: flex;
   flex-direction: column;
