@@ -25,15 +25,14 @@
 
 .gridLayoutCardHeader {
   display: grid;
-  grid-template-columns: 3rem auto 2rem;
+  grid-template-columns: min-content 1fr min-content;
   max-height: 50px;
+  grid-gap: 0.75em;
 }
 
 .gridLayoutCardHeader .title {
-  margin-left: 1rem;
-  margin-top: 0.2rem;
+  margin-top: 0.1rem;
   font-size: 1.3rem;
-  line-height: 1.5;
 }
 
 .selected {
