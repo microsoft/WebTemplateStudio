@@ -4,6 +4,14 @@
   padding: 0em;
 }
 
+.container > h4 {
+  margin: 0;
+  margin-bottom: 0.2em;
+}
+.container > h3 {
+  font-size: 1em;
+}
+
 .cardsContainer {
   display: flex;
   flex-wrap: wrap;
