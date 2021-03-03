@@ -12,7 +12,7 @@ export interface IProps {
 }
 
 const MasterDetailScreen = ({navigation}: IProps): JSX.Element => {
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState({id: null});
   const {width} = useWindowDimensions();
   const COMPACT_MODE_WIDTH = 700;
   const isCompactMode = width < COMPACT_MODE_WIDTH;
@@ -27,7 +27,7 @@ const MasterDetailScreen = ({navigation}: IProps): JSX.Element => {
   };
 
   const isSelected = (item: any): boolean => {
-    return selectedItem && selectedItem.id === item.id;
+    return selectedItem.id === item.id;
   };
 
   return (
