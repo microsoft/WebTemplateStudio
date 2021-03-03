@@ -8,6 +8,10 @@
   border-radius: 50%;
 }
 
+.plusIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
 .description {
   max-height: 9rem;
 }
