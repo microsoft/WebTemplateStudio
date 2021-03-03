@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { useDispatch } from "react-redux";
 
-import { ReactComponent as Cancel } from "../../assets/cancel.svg";
+import { ReactComponent as CloseButton } from "../../assets/cancel.svg";
 import { closeModalAction } from "../../store/navigation/modals/action";
 import { KEY_EVENTS } from "../../utils/constants/constants";
 import Title from "../Titles/Title";
@@ -39,7 +39,7 @@ const ModalContent = ({ title, onClose, canClose = true, children, intl }: Props
       <div className={styles.headerContainer}>
         {title && <Title>{title}</Title>}
         {canClose && (
-          <Cancel
+          <CloseButton
             tabIndex={0}
             className={styles.cancelIcon}
             onClick={handleOnClose}
