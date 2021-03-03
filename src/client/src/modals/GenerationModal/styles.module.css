@@ -1,25 +1,15 @@
 .generationItems {
-  margin-top: 40px;
-  padding-top: 0.6em;
-  padding-bottom: 0.6em;
+  margin-top: 2em;
+  margin-bottom: 3em;
   background-color: var(--vscode-editorWidget-border);
 }
 
 .footer {
-  margin-top: 60px;
-  float: right;
-  align-items: center;
   display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .footer > button {
-  align-items: center;
   margin-left: 1em;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 33px;
-}
-
-.footer > button:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
