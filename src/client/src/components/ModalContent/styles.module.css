@@ -1,0 +1,24 @@
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.headerContainer > h2 {
+  line-height: 1;
+  margin-bottom: 0;
+}
+
+.cancelIcon {
+  cursor: pointer;
+  height: 1em;
+  width: 1em;
+}
+
+.cancelIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.cancelIcon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
