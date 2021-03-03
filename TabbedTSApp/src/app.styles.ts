@@ -18,12 +18,15 @@ export default StyleSheet.create({
     fontSize: FONTSIZE.LARGE,
     fontWeight: 'bold',
     paddingBottom: 10,
+    color: 'black',
   },
   subtitle: {
     fontSize: FONTSIZE.MEDIUM,
+    color: 'black',
   },
   text: {
     fontSize: FONTSIZE.SMALL,
+    color: 'black',
   },
   link: {
     textDecorationLine: 'underline',

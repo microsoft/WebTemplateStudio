@@ -3,7 +3,7 @@ import {Text, View} from 'react-native';
 
 import {getStyles} from './HomeScreen.style';
 
-const Home = () : JSX.Element => {
+const Home = (): JSX.Element => {
   const styles = getStyles();
 
   return (

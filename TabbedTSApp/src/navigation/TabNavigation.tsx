@@ -4,7 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-// import MasterDetailStack from './MasterDetailStack';
+import MasterDetailStack from './MasterDetailStack';
 import HomeStack from './HomeStack';
 import SettingsStack from './SettingsStack';
 
@@ -42,11 +42,11 @@ const TabNavigation = (): JSX.Element => {
         },
       })}>
       <Tab.Screen name="Home" component={HomeStack} />
-      {/* <Tab.Screen
+      <Tab.Screen
         name="MasterDetailStack"
         component={MasterDetailStack}
-        options={{ title: 'Master Detail' }}
-      />*/}
+        options={{title: 'Master Detail'}}
+      />
 
       {/* Place this at the end */}
       <Tab.Screen name="Settings" component={SettingsStack} />
