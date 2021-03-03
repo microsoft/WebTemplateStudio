@@ -11,10 +11,11 @@ import styles from "./styles.module.css";
 interface IProps {
   children: ReactNode;
   title?: string;
+  canClose?: boolean;
   onClose?: () => void;
 }
 
-const ModalContent = ({ title, onClose, children }: IProps): JSX.Element => {
+const ModalContent = ({ title, onClose, canClose = true, children }: IProps): JSX.Element => {
   const dispatch = useDispatch();
 
   const handleOnClose = () => {
@@ -33,7 +34,15 @@ const ModalContent = ({ title, onClose, children }: IProps): JSX.Element => {
     <div>
       <div className={styles.headerContainer}>
         {title && <Title>{title}</Title>}
-        <Cancel tabIndex={0} className={styles.cancelIcon} onClick={handleOnClose} onKeyDown={cancelKeyDownHandler} />
+        {canClose && (
+          <Cancel
+            tabIndex={0}
+            className={styles.cancelIcon}
+            onClick={handleOnClose}
+            onKeyDown={cancelKeyDownHandler}
+            data-testid="close-button"
+          />
+        )}
       </div>
       {children}
     </div>
