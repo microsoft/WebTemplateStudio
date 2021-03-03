@@ -1,18 +1,14 @@
 import * as React from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 
-import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import asModal from "../../components/Modal";
-import Title from "../../components/Titles/Title";
+import ModalContent from "../../components/ModalContent";
 import { AppState } from "../../store/combineReducers";
-import { closeModalAction } from "../../store/navigation/modals/action";
 import { isViewLicensesModalOpenSelector } from "../../store/navigation/modals/selector";
 import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
-import { KEY_EVENTS } from "../../utils/constants/constants";
 import Licenses from "./Licenses";
 import messages from "./messages";
-import styles from "./styles.module.css";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -21,28 +17,10 @@ interface IStateProps {
 type Props = IStateProps & InjectedIntlProps;
 
 const ViewLicensesModal = ({ intl }: Props) => {
-  const dispatch = useDispatch();
-  const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
-    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      event.preventDefault();
-      event.stopPropagation();
-      dispatch(closeModalAction());
-    }
-  };
-
   return (
-    <div>
-      <div className={styles.headerContainer}>
-        <Title>{intl.formatMessage(messages.licenses)}</Title>
-        <Cancel
-          tabIndex={0}
-          className={styles.cancelIcon}
-          onClick={() => dispatch(closeModalAction())}
-          onKeyDown={cancelKeyDownHandler}
-        />
-      </div>
+    <ModalContent title={intl.formatMessage(messages.licenses)}>
       <Licenses />
-    </div>
+    </ModalContent>
   );
 };
 
