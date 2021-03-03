@@ -1,11 +1,13 @@
 import * as React from "react";
 import { ReactNode } from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { useDispatch } from "react-redux";
 
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { closeModalAction } from "../../store/navigation/modals/action";
 import { KEY_EVENTS } from "../../utils/constants/constants";
 import Title from "../Titles/Title";
+import messages from "./messages";
 import styles from "./styles.module.css";
 
 interface IProps {
@@ -15,7 +17,9 @@ interface IProps {
   onClose?: () => void;
 }
 
-const ModalContent = ({ title, onClose, canClose = true, children }: IProps): JSX.Element => {
+type Props = IProps & InjectedIntlProps;
+
+const ModalContent = ({ title, onClose, canClose = true, children, intl }: Props): JSX.Element => {
   const dispatch = useDispatch();
 
   const handleOnClose = () => {
@@ -41,6 +45,7 @@ const ModalContent = ({ title, onClose, canClose = true, children }: IProps): JS
             onClick={handleOnClose}
             onKeyDown={cancelKeyDownHandler}
             data-testid="close-button"
+            aria-label={intl.formatMessage(messages.ariaCloseModalLabel)}
           />
         )}
       </div>
@@ -49,4 +54,4 @@ const ModalContent = ({ title, onClose, canClose = true, children }: IProps): JS
   );
 };
 
-export default ModalContent;
+export default injectIntl(ModalContent);
