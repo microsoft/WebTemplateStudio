@@ -49,7 +49,7 @@ const getCustomStyles = (MODAL_TYPE?: ModalType): Modal.Styles => {
       transform: "translate(-50%, -50%)",
       borderRadius: "3px",
       width: CUSTOM_WIDTH,
-      padding: "1.5rem",
+      padding: "2rem",
       background: backgroundColor,
       border: "0.5px solid var(--vscode-editor-foreground)",
       maxWidth: "700px",
