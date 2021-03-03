@@ -1,33 +1,3 @@
-.headerContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-
-.cancelIcon {
-  cursor: pointer;
-  height: 15px;
-  width: 15px;
-  padding: 1px;
-  margin-right: 2px;
-}
-
-.cancelIcon path {
-  fill: var(--vscode-editor-foreground);
-}
-
-.cancelIcon:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
-.cancelIcon path {
-  fill: var(--vscode-editor-foreground);
-}
-
-.cancelIcon path {
-  fill: var(--vscode-editor-foreground);
-}
-
 .subtitle {
   margin-bottom: 1.5em;
 }
