@@ -121,7 +121,7 @@ const FrameworkCard = (props: Props) => {
       </div>
       <div>
         v{framework.version}
-        {latestVersion !== framework.version && ` ${intl.formatMessage(messages.latest)}`}
+        {latestVersion === framework.version && ` ${intl.formatMessage(messages.latest)}`}
         <div className={styles.description}>{framework.body}</div>
       </div>
       {selected && !framework.requirement?.isInstalled && <DependencyInfo requirement={framework.requirement} />}
