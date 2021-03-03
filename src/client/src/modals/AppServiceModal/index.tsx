@@ -4,23 +4,20 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import { connect, useDispatch, useSelector } from "react-redux";
 
 import { AppContext } from "../../AppContext";
-import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
 import LocationSelection from "../../components/LocationSelection";
 import asModal from "../../components/Modal";
+import ModalContent from "../../components/ModalContent";
 import ResourceGroupSelection from "../../components/ResourceGroupSelection";
 import SubscriptionSelection from "../../components/SubscriptionSelection";
-import Title from "../../components/Titles/Title";
 import buttonStyles from "../../css/button.module.css";
 import { AppState } from "../../store/combineReducers";
-import { closeModalAction } from "../../store/navigation/modals/action";
 import { isAppServiceModalOpenSelector } from "../../store/navigation/modals/selector";
 import { saveAppServiceAction } from "../../store/userSelection/services/appService/action";
 import { IAppService } from "../../store/userSelection/services/appService/model";
 import { getAppService } from "../../store/userSelection/services/servicesSelector";
 import { AZURE, AzureResourceType, SERVICE_KEYS } from "../../utils/constants/azure";
 import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
-import { KEY_EVENTS } from "../../utils/constants/constants";
 import { WIZARD_CONTENT_FEATURES } from "../../utils/constants/internalNames";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import AppNameEditor from "./AppNameEditor";
@@ -74,14 +71,6 @@ const AppServiceModal = ({ intl }: Props) => {
     return isEnableSaveButton() ? buttonStyles.buttonHighlighted : buttonStyles.buttonDark;
   };
 
-  const closeModalIfPressEnterOrSpaceKey = (event: React.KeyboardEvent<SVGSVGElement>) => {
-    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      event.preventDefault();
-      event.stopPropagation();
-      dispatch(closeModalAction());
-    }
-  };
-
   const saveAppServiceSelection = (): void => {
     const appServiceSelection: IAppService = {
       subscription,
@@ -96,18 +85,7 @@ const AppServiceModal = ({ intl }: Props) => {
   };
 
   return (
-    <React.Fragment>
-      <div className={styles.header}>
-        <Title>{formatMessage(messages.title)}</Title>
-        <Cancel
-          tabIndex={0}
-          aria-label={intl.formatMessage(messages.ariaCloseModalLabel)}
-          data-testid="close-button"
-          className={styles.closeIcon}
-          onClick={() => dispatch(closeModalAction())}
-          onKeyDown={closeModalIfPressEnterOrSpaceKey}
-        />
-      </div>
+    <ModalContent title={formatMessage(messages.title)}>
       <div className={styles.body}>
         <SubscriptionSelection initialSubscription={subscription} onSubscriptionChange={setSubscription} />
 
@@ -148,7 +126,7 @@ const AppServiceModal = ({ intl }: Props) => {
           {formatMessage(messages.save)}
         </button>
       </div>
-    </React.Fragment>
+    </ModalContent>
   );
 };
 
