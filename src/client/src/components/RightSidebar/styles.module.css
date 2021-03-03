@@ -24,8 +24,8 @@
   flex-direction: column;
   justify-content: space-around;
   background: transparent;
-  height: 2em;
-  width: 2em;
+  height: 1.5em;
+  width: 1.5em;
   border: none;
   cursor: pointer;
   padding: 0;
@@ -41,13 +41,13 @@
   overflow: scroll;
   display: block;
   transition: display 100ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
-  padding: 40px 15px;
+  padding: 30px 15px;
   border-left: 1px solid #7f7f7f;
   width: 56px;
 }
 
 .hamburgerLine {
-  width: 2em;
+  width: 1.5em;
   height: 1px;
   background: var(--vscode-editor-foreground);
 }
