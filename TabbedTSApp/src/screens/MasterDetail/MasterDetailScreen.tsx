@@ -12,7 +12,7 @@ export interface IProps {
 }
 
 const MasterDetailScreen = ({navigation}: IProps): JSX.Element => {
-  const [selectedItem, setSelectedItem] = useState({id: -1});
+  const [selectedItem, setSelectedItem] = useState(null);
   const {width} = useWindowDimensions();
   const COMPACT_MODE_WIDTH = 700;
   const isCompactMode = width < COMPACT_MODE_WIDTH;
@@ -26,6 +26,10 @@ const MasterDetailScreen = ({navigation}: IProps): JSX.Element => {
     }
   };
 
+  const isSelected = (item: any): boolean => {
+    return selectedItem && selectedItem.id === item.id;
+  };
+
   return (
     <View style={styles.masterDetailContainer}>
       {/* MASTER DETAIL LIST */}
@@ -36,7 +40,7 @@ const MasterDetailScreen = ({navigation}: IProps): JSX.Element => {
             <ListItemScreen
               item={item}
               onPress={() => handleOnPress(item)}
-              isSelected={selectedItem && selectedItem.id === item.id}
+              isSelected={isSelected(item)}
             />
           )}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
