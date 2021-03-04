@@ -4,6 +4,7 @@ import {View, FlatList, useWindowDimensions} from 'react-native';
 import sampleData from '../../data/sampleData';
 import ItemDetailScreen from './ItemDetail/ItemDetailScreen';
 import ListItemScreen from './ListItem/ListItemScreen';
+import {useTheme} from '../../context/Theme.context';
 
 import {getStyles} from './MasterDetailScreen.style';
 
@@ -17,7 +18,8 @@ const MasterDetailScreen = ({navigation}: IProps): JSX.Element => {
   const COMPACT_MODE_WIDTH = 700;
   const isCompactMode = width < COMPACT_MODE_WIDTH;
 
-  const styles = getStyles();
+  const {theme} = useTheme();
+  const styles = React.useMemo(() => getStyles(theme), [theme]);
 
   const handleOnPress = (item: any) => {
     setSelectedItem(item);

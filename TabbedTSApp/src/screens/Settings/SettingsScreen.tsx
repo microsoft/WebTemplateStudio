@@ -1,9 +1,13 @@
 import React from 'react';
 
-import {Text, View, Linking} from 'react-native';
+import {Text, View, Linking, Button} from 'react-native';
 
 import {name, version} from '../../../package.json';
+//import PickTheme from './PickTheme/PickTheme';
 import {getStyles} from './SettingsScreen.style';
+import {useTheme} from '../../context/Theme.context';
+import {DEFAULT_DARK_THEME} from '../../themes/DefaultDark.theme';
+import {DEFAULT_LIGHT_THEME} from '../../themes/DefaultLight.theme';
 
 const goToPrivacyStatementLink = () => {
   Linking.openURL('http://yourprivacystatementurlhere.com');
@@ -13,7 +17,8 @@ const goToTermsAndConditions = () => {
 };
 
 const Settings = (): JSX.Element => {
-  const styles = getStyles();
+  const {theme, setTheme} = useTheme();
+  const styles = React.useMemo(() => getStyles(theme), [theme]);
 
   return (
     <View style={styles.container}>
@@ -21,6 +26,17 @@ const Settings = (): JSX.Element => {
         <Text style={styles.title}>Personalization</Text>
         <PickTheme />
       </View> */}
+      <View style={styles.section}>
+        <Text style={styles.title}>Select theme</Text>
+        <Button
+          onPress={() => setTheme(DEFAULT_LIGHT_THEME)}
+          title="Set light theme"
+        />
+        <Button
+          onPress={() => setTheme(DEFAULT_DARK_THEME)}
+          title="Set dark theme"
+        />
+      </View>
       <View style={styles.section}>
         <Text style={styles.title}>About this Application</Text>
         <Text style={styles.text}>

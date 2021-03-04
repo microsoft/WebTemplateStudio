@@ -1,20 +1,21 @@
 import {StyleSheet} from 'react-native';
 
 import appStyles, {FONTSIZE} from '../../../app.styles';
+import {Theme} from '../../../themes/Theme.interface';
 
-export const getStyles = () =>
+export const getStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'space-evenly',
       paddingLeft: 15,
-      backgroundColor: 'lightgrey',
+      backgroundColor: theme.color.background,
     },
     scrollView: {
       marginHorizontal: 10,
       paddingBottom: 10,
-      backgroundColor: 'lightgrey',
+      backgroundColor: theme.color.background,
     },
     titleContainer: {
       flexDirection: 'row',
@@ -31,25 +32,25 @@ export const getStyles = () =>
       ...appStyles.icon,
       fontSize: FONTSIZE.XXLARGE,
       paddingRight: 5,
-      color: 'black',
+      color: theme.color.text,
     },
     title: {
       ...appStyles.title,
       fontSize: FONTSIZE.XXLARGE,
-      color: 'black',
+      color: theme.color.text,
     },
     subtitle: {
       ...appStyles.subtitle,
-      color: 'black',
+      color: theme.color.text,
     },
     description: {
       ...appStyles.text,
       paddingBottom: 16,
       opacity: 0.7,
-      color: 'black',
+      color: theme.color.text,
     },
     text: {
       ...appStyles.text,
-      color: 'black',
+      color: theme.color.text,
     },
   });

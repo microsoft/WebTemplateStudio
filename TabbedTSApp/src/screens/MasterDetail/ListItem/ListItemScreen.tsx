@@ -4,6 +4,7 @@ import {Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {getStyles} from './ListItemScreen.style';
+import {useTheme} from '../../../context/Theme.context';
 
 export interface IProps {
   item: any;
@@ -13,7 +14,8 @@ export interface IProps {
 
 const ListItemScreen = ({item, onPress, isSelected}: IProps) => {
   const {title, status} = item;
-  const styles = getStyles();
+  const {theme} = useTheme();
+  const styles = React.useMemo(() => getStyles(theme), [theme]);
 
   return (
     <TouchableOpacity onPress={onPress}>

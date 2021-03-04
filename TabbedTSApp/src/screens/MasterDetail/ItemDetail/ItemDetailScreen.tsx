@@ -3,13 +3,15 @@ import {View, Text, ScrollView, SafeAreaView} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {getStyles} from './ItemDetailScreen.style';
+import {useTheme} from '../../../context/Theme.context';
 
 export interface IProps {
   item: any;
 }
 
 const ItemDetailScreen = ({item}: IProps): JSX.Element => {
-  const styles = getStyles();
+  const {theme} = useTheme();
+  const styles = React.useMemo(() => getStyles(theme), [theme]);
 
   return (
     item && item.id && (
