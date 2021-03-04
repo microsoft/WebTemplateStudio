@@ -10,19 +10,12 @@
   width: 260px;
 }
 
-.plusIcon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1.8px solid var(--vscode-editor-foreground);
-  height: 2em;
-  width: 2em;
-  border-radius: 50%;
-}
-
 .icon {
   height: 1em;
   width: 1em;
+}
+
+.icon path{
   fill: var(--vscode-editor-foreground);
 }
 
@@ -39,5 +32,8 @@
 
 .svg {
   margin-right: 1em;
+}
+
+.svg path{
   fill: var(--vscode-editor-foreground);
 }

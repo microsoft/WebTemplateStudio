@@ -77,10 +77,6 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
-.icon path {
-  fill: var(--vscode-editor-foreground);
-}
-
 .iconHide {
   visibility: hidden;
 }
