@@ -12,5 +12,3 @@ export interface Theme {
   color: ColorTheme;
   navigationTheme: NavigationTheme;
 }
-
-export type ThemeName = 'light' | 'dark';

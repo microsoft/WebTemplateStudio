@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Text, View, Linking, Button} from 'react-native';
+import {Text, View, Linking, Button, useColorScheme} from 'react-native';
 
 import {name, version} from '../../../package.json';
 //import PickTheme from './PickTheme/PickTheme';
@@ -17,6 +17,7 @@ const goToTermsAndConditions = () => {
 };
 
 const Settings = (): JSX.Element => {
+  const deviceTheme = useColorScheme();
   const {theme, setTheme} = useTheme();
   const styles = React.useMemo(() => getStyles(theme), [theme]);
 
@@ -28,6 +29,10 @@ const Settings = (): JSX.Element => {
       </View> */}
       <View style={styles.section}>
         <Text style={styles.title}>Select theme</Text>
+        <Button
+          onPress={() => setTheme(deviceTheme)}
+          title="Set default theme"
+        />
         <Button
           onPress={() => setTheme(LIGHT_THEME_NAME)}
           title="Set light theme"

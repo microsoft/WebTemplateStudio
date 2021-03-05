@@ -1,7 +1,7 @@
 import React from 'react';
 import {ColorSchemeName} from 'react-native';
 import themes from '../themes';
-import {DARK_THEME_NAME} from '../themes/DefaultDark.theme';
+import {LIGHT_THEME_NAME} from '../themes/DefaultLight.theme';
 import {Theme} from '../themes/Theme.interface';
 
 interface ProvidedValue {
@@ -22,15 +22,9 @@ interface Props {
 export const ThemeProvider = React.memo<Props>((props) => {
   const [theme, setTheme] = React.useState<Theme>(props.initial);
 
-  const SetThemeCallback = React.useCallback((themeName: ColorSchemeName) => {
-    const newTheme = themeName === DARK_THEME_NAME ? themes.dark : themes.light;
+  const SetThemeCallback = React.useCallback((name: ColorSchemeName) => {
+    const newTheme = themes[name ?? LIGHT_THEME_NAME];
     setTheme(newTheme);
-    /*setTheme((currentTheme: Theme) => {
-        if (currentTheme.id === newTheme.id) {
-          return currentTheme;
-        }
-        return newTheme;
-      });*/
   }, []);
 
   const MemoizedValue = React.useMemo(() => {
