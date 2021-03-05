@@ -6,8 +6,8 @@ import {name, version} from '../../../package.json';
 //import PickTheme from './PickTheme/PickTheme';
 import {getStyles} from './SettingsScreen.style';
 import {useTheme} from '../../context/Theme.context';
-import {DEFAULT_DARK_THEME} from '../../themes/DefaultDark.theme';
-import {DEFAULT_LIGHT_THEME} from '../../themes/DefaultLight.theme';
+import {DEFAULT_DARK_THEME_ID} from '../../themes/DefaultDark.theme';
+import {DEFAULT_LIGHT_THEME_ID} from '../../themes/DefaultLight.theme';
 
 const goToPrivacyStatementLink = () => {
   Linking.openURL('http://yourprivacystatementurlhere.com');
@@ -29,11 +29,11 @@ const Settings = (): JSX.Element => {
       <View style={styles.section}>
         <Text style={styles.title}>Select theme</Text>
         <Button
-          onPress={() => setTheme(DEFAULT_LIGHT_THEME)}
+          onPress={() => setTheme(DEFAULT_LIGHT_THEME_ID)}
           title="Set light theme"
         />
         <Button
-          onPress={() => setTheme(DEFAULT_DARK_THEME)}
+          onPress={() => setTheme(DEFAULT_DARK_THEME_ID)}
           title="Set dark theme"
         />
       </View>
