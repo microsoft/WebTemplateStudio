@@ -11,18 +11,10 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
-    "@react-native-community/masked-view": "^0.1.10",
     "@react-native-picker/picker": "^1.9.11",
-    "@react-navigation/bottom-tabs": "^5.11.8",
-    "@react-navigation/native": "^5.9.3",
-    "@react-navigation/stack": "^5.14.3",
     "@types/react-native-vector-icons": "^6.4.6",
     "react": "16.13.1",
     "react-native": "0.63.4",
-    "react-native-gesture-handler": "^1.10.2",
-    "react-native-reanimated": "^1.13.2",
-    "react-native-safe-area-context": "^3.1.9",
-    "react-native-screens": "^2.18.0",
     "react-native-vector-icons": "^8.1.0",
     "react-native-windows": "^0.63.0-0"
   },

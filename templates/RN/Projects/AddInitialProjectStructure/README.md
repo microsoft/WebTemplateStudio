@@ -6,4 +6,6 @@ We will appreciate any feedback provided.
 - Suggestions about the generated code or the wizard experience.
 - Anything else you could think of ;-).
 
+# PROJECT TYPE
+
 *** REACT NATIVE *** project wts.projectName created

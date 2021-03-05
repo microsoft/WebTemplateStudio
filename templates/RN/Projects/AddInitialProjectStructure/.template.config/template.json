@@ -25,7 +25,8 @@
     "wts.projectName": {
       "type": "parameter",
       "dataType": "string",
-      "replaces": "Param_ProjectName"
+      "replaces": "Param_ProjectName",
+      "fileRename": "Param_ProjectName"
     },
     "wts.ProjectNameToLower":
     {
@@ -35,29 +36,8 @@
         "source":"wts.projectName",
         "toLower": true
       },
-      "replaces": "Param_ProjectNameToLower"
-    },
-    "wts.wizardVersion": {
-      "type": "parameter",
-      "dataType": "string",
-      "replaces": "Param_Wizard.Version"
-    },
-    "wts.templatesVersion": {
-      "type": "parameter",
-      "dataType": "string",
-      "replaces": "Param_Templates.Version"
-    },
-    "wts.generationProjectType": {
-      "type": "parameter",
-      "replaces": "Param_ProjectType"
-    },
-    "wts.generationFramework": {
-      "type": "parameter",
-      "replaces": "Param_Framework"
-    },
-    "wts.generationPlatform": {
-      "type": "parameter",
-      "replaces": "Param_Platform"
+      "replaces": "Param_ProjectToLower",
+      "fileRename": "Param_ProjectToLower"
     }
   },
   "postActions": []
