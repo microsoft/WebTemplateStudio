@@ -1,4 +1,4 @@
-export const getTabBarOptions = () => ({
+export const getTabBarOptions = (): any => ({
   activeTintColor: 'blue',
   inactiveTintColor: 'black',
   activeBackgroundColor: 'lightgrey',
@@ -10,7 +10,7 @@ export const getTabBarOptions = () => ({
   },
 });
 
-export const getScreenOptions = (theme) => ({
+export const getScreenOptions = (): any => ({
   headerStyle: {
     backgroundColor: 'lightgrey',
   },

@@ -12,7 +12,8 @@ const ItemDetailScreen = ({item}: IProps): JSX.Element => {
   const styles = getStyles();
 
   return (
-    item && item.id && (
+    item &&
+    item.id && (
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollView}>
           <View style={styles.titleContainer}>
