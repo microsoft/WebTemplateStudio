@@ -1,0 +1,37 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft",
+  "classifications": ["Universal"],
+  "name": "wts.Project.Tabbed",
+  "shortName": "wts.Project.Tabbed",
+  "identity": "wts.Project.Tabbed",
+
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "composition",
+    "wts.platform": "RN",
+    "wts.version": "1.0.0",
+    "wts.compositionOrder": "1",
+    "wts.compositionFilter": "identity == wts.Project.RN.AddInitialProjectStructure & $projectType == Tabbed",
+    "wts.licenses": "[React Navigation](https://github.com/react-navigation/react-navigation/blob/main/packages/core/LICENSE)"
+  },
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+  },
+  "postActions": [
+    {
+      "description": "Add Tabbed Dependencies",
+      "manualInstructions": [],
+      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
+      "args": {
+        "dict": "{'@react-native-community/masked-view': '^0.1.10', '@react-navigation/bottom-tabs': '^5.11.8', '@react-navigation/native': '^5.9.3', '@react-navigation/stack': '^5.14.3', 'react-native-gesture-handler': '^1.10.2', 'react-native-reanimated': '^1.13.2', 'react-native-safe-area-context': '^3.1.9', 'react-native-screens': '^2.18.0'}",
+        "key": "dependencies",
+        "jsonPath": "package.json"
+      },
+      "continueOnError": false
+    }
+  ]
+}
