@@ -9,7 +9,8 @@ export interface ColorTheme {
   notification: string;
 }
 export interface Theme {
-  id: string;
   color: ColorTheme;
   navigationTheme: NavigationTheme;
 }
+
+export type ThemeName = 'light' | 'dark';
