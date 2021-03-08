@@ -5,6 +5,6 @@ export const getStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme.color.background,
+      backgroundColor: theme.colors.background,
     },
   });

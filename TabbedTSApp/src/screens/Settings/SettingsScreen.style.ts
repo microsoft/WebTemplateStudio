@@ -10,24 +10,24 @@ export const getStyles = (theme: Theme) =>
       alignItems: 'flex-start',
       justifyContent: 'flex-start',
       paddingLeft: 15,
-      backgroundColor: theme.color.background,
+      backgroundColor: theme.colors.background,
     },
     section: {
       paddingVertical: 20,
       alignItems: 'flex-start',
       justifyContent: 'flex-start',
-      backgroundColor: theme.color.background,
+      backgroundColor: theme.colors.background,
     },
     title: {
       ...appStyles.title,
-      color: theme.color.text,
+      color: theme.colors.text,
     },
     text: {
       ...appStyles.text,
-      color: theme.color.text,
+      color: theme.colors.text,
     },
     link: {
       ...appStyles.link,
-      color: theme.color.primary,
+      color: theme.colors.primary,
     },
   });

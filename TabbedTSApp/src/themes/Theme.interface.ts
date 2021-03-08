@@ -1,14 +1,11 @@
 import {Theme as NavigationTheme} from '@react-navigation/native';
 
-export interface ColorTheme {
-  primary: string;
-  background: string;
-  card: string;
-  text: string;
-  border: string;
-  notification: string;
+export interface Theme extends NavigationTheme {
+  name: ThemeName;
 }
-export interface Theme {
-  color: ColorTheme;
-  navigationTheme: NavigationTheme;
+
+export enum ThemeName {
+  LIGHT = 'light',
+  DARK = 'dark',
+  DEFAULT = 'default',
 }

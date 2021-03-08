@@ -7,29 +7,29 @@ export const getStyles = (theme: Theme) =>
   StyleSheet.create({
     text: {
       ...appStyles.text,
-      color: theme.color.text,
+      color: theme.colors.text,
     },
     textSelected: {
       ...appStyles.text,
-      color: theme.color.primary,
+      color: theme.colors.primary,
     },
     title: {
       ...appStyles.title,
       paddingBottom: 5,
-      color: theme.color.text,
+      color: theme.colors.text,
     },
     titleSelected: {
       ...appStyles.title,
       paddingBottom: 5,
-      color: theme.color.primary,
+      color: theme.colors.primary,
     },
     icon: {
       ...appStyles.icon,
-      color: theme.color.text,
+      color: theme.colors.text,
     },
     iconSelected: {
       ...appStyles.icon,
-      color: theme.color.primary,
+      color: theme.colors.primary,
     },
 
     listItemContainer: {
@@ -39,9 +39,9 @@ export const getStyles = (theme: Theme) =>
       paddingVertical: 10,
     },
     listItemContainerNotSelected: {
-      backgroundColor: theme.color.background,
+      backgroundColor: theme.colors.background,
     },
     listItemContainerSelected: {
-      backgroundColor: theme.color.border,
+      backgroundColor: theme.colors.border,
     },
   });

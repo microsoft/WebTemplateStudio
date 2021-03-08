@@ -9,10 +9,10 @@ export const getStyles = (theme: Theme) =>
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: theme.color.background,
+      backgroundColor: theme.colors.background,
     },
     text: {
       ...appStyles.text,
-      color: theme.color.text,
+      color: theme.colors.text,
     },
   });

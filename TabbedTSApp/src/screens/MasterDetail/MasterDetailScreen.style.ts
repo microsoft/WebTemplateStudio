@@ -6,7 +6,7 @@ export const getStyles = (theme: Theme) =>
     masterDetailContainer: {
       flex: 1,
       flexDirection: 'row',
-      backgroundColor: theme.color.background,
+      backgroundColor: theme.colors.background,
     },
     listContainer: {
       flex: 1,
@@ -14,12 +14,12 @@ export const getStyles = (theme: Theme) =>
     itemDetailContainer: {
       flex: 2.5,
       borderLeftWidth: 1,
-      borderLeftColor: theme.color.border,
-      backgroundColor: theme.color.border,
+      borderLeftColor: theme.colors.border,
+      backgroundColor: theme.colors.border,
     },
     separator: {
       height: 1,
       width: '100%',
-      backgroundColor: theme.color.border,
+      backgroundColor: theme.colors.border,
     },
   });

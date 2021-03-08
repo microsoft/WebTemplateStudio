@@ -1,18 +1,12 @@
-import React from 'react';
-import {ColorSchemeName} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {Appearance} from 'react-native';
 import themes from '../themes';
-import {LIGHT_THEME_NAME} from '../themes/DefaultLight.theme';
-import {Theme} from '../themes/Theme.interface';
+import {Theme, ThemeName} from '../themes/Theme.interface';
 
 interface ProvidedValue {
   theme: Theme;
-  setTheme: (themeName: ColorSchemeName) => void;
+  setTheme: (themeName: ThemeName) => void;
 }
-
-const Context = React.createContext<ProvidedValue>({
-  theme: themes.light,
-  setTheme: () => undefined,
-});
 
 interface Props {
   initial: Theme;
@@ -20,11 +14,17 @@ interface Props {
 }
 
 export const ThemeProvider = React.memo<Props>((props) => {
-  const [theme, setTheme] = React.useState<Theme>(props.initial);
+  const [theme, setTheme] = useState<Theme>(props.initial);
 
-  const SetThemeCallback = React.useCallback((name: ColorSchemeName) => {
-    const newTheme = themes[name ?? LIGHT_THEME_NAME];
-    setTheme(newTheme);
+  const SetThemeCallback = useCallback((name: ThemeName) => {
+    if (name === ThemeName.DEFAULT) {
+      const deviceTheme = Appearance.getColorScheme();
+      const newTheme = deviceTheme ? themes[deviceTheme] : themes.light;
+      setTheme(newTheme);
+    } else {
+      const newTheme = themes[name];
+      setTheme(newTheme);
+    }
   }, []);
 
   const MemoizedValue = React.useMemo(() => {
@@ -38,6 +38,11 @@ export const ThemeProvider = React.memo<Props>((props) => {
   return (
     <Context.Provider value={MemoizedValue}>{props.children}</Context.Provider>
   );
+});
+
+const Context = React.createContext<ProvidedValue>({
+  theme: themes.light,
+  setTheme: () => undefined,
 });
 
 export const useTheme = () => React.useContext(Context);

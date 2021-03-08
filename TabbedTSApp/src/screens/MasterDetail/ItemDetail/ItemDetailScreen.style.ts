@@ -10,12 +10,12 @@ export const getStyles = (theme: Theme) =>
       alignItems: 'center',
       justifyContent: 'space-evenly',
       paddingLeft: 15,
-      backgroundColor: theme.color.background,
+      backgroundColor: theme.colors.background,
     },
     scrollView: {
       marginHorizontal: 10,
       paddingBottom: 10,
-      backgroundColor: theme.color.background,
+      backgroundColor: theme.colors.background,
     },
     titleContainer: {
       flexDirection: 'row',
@@ -32,25 +32,25 @@ export const getStyles = (theme: Theme) =>
       ...appStyles.icon,
       fontSize: FONTSIZE.XXLARGE,
       paddingRight: 5,
-      color: theme.color.text,
+      color: theme.colors.text,
     },
     title: {
       ...appStyles.title,
       fontSize: FONTSIZE.XXLARGE,
-      color: theme.color.text,
+      color: theme.colors.text,
     },
     subtitle: {
       ...appStyles.subtitle,
-      color: theme.color.text,
+      color: theme.colors.text,
     },
     description: {
       ...appStyles.text,
       paddingBottom: 16,
       opacity: 0.7,
-      color: theme.color.text,
+      color: theme.colors.text,
     },
     text: {
       ...appStyles.text,
-      color: theme.color.text,
+      color: theme.colors.text,
     },
   });
