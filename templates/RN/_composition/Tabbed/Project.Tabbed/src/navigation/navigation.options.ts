@@ -1,4 +1,4 @@
-export const getTabBarOptions = () : any => ({
+﻿export const getTabBarOptions = () : any => ({
   activeTintColor: 'blue',
   inactiveTintColor: 'black',
   activeBackgroundColor: 'lightgrey',

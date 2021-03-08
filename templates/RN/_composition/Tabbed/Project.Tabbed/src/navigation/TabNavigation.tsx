@@ -1,8 +1,18 @@
-import React from 'react';
+﻿import React from 'react';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+
+interface IScreenOpts{
+  route: any;
+}
+
+interface ITabBarIconProps{
+  focused: boolean;
+  size: number;
+  color: string;
+}
 
 const TabNavigation = (): JSX.Element => {
   // For more information about react navigation visit: https://reactnavigation.org/docs/getting-started
@@ -25,8 +35,8 @@ const TabNavigation = (): JSX.Element => {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, size, color}) => {
+      screenOptions={({route}: IScreenOpts) => ({
+        tabBarIcon: ({focused, size, color}: ITabBarIconProps) => {
           let iconName = getIcon(route.name, focused);
 
           return <Icon name={iconName} size={size} color={color} />;
