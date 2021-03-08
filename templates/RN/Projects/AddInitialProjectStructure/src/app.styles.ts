@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+﻿import {StyleSheet} from 'react-native';
 
 export const FONTSIZE = {
   XXLARGE: 26,
