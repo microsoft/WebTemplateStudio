@@ -1,4 +1,4 @@
-package com.Param_ProjectNameToLower;
+package com.Param_ProjectToLower;
 
 import com.facebook.react.ReactActivity;
 

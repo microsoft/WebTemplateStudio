@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.Param_ProjectNameToLower"
+        applicationId "com.Param_ProjectToLower"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
