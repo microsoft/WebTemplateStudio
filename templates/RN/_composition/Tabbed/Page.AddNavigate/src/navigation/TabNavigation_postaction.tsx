@@ -1,5 +1,4 @@
 ﻿import Icon from 'react-native-vector-icons/Ionicons';
-
 //{[{
 import wts.ItemNameStack from './wts.ItemNameStack';
 //}]}
