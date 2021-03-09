@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { AppState } from "../../../store/combineReducers";
 import { ServiceState } from "../../../store/userSelection/services/combineReducers";
 import { getServices } from "../../../store/userSelection/services/servicesSelector";
-import InputTitle from "../../Titles/TitleForInput";
+import SectionTitle from "../../Titles/SectionTitle";
 import rightsidebarStyles from "../rightsidebarStyles.module.css";
 import AppServiceSelection from "./AppServiceSelection";
 import CosmosDBSelection from "./CosmosDBSelection";
@@ -24,7 +24,7 @@ function ServicesList({ services, intl }: Props) {
 
   return (
     <div className={rightsidebarStyles.sidebarItem}>
-      <InputTitle>{formatMessage(messages.services)}</InputTitle>
+      <SectionTitle>{formatMessage(messages.services)}</SectionTitle>
       {hasAppService && <AppServiceSelection appServiceSelection={services.appService} />}
       {hasCosmos && <CosmosDBSelection cosmosSelection={services.cosmosDB} />}
     </div>

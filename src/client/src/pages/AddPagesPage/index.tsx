@@ -17,7 +17,7 @@ const AddPagesPage = (props: Props) => {
   return (
     <div>
       <Title>{intl.formatMessage(messages.pagesTitleQuestion)}</Title>
-      <div className={pageStyles.flexContainer}>
+      <div className={pageStyles.flexCardsContainer}>
         {options.map((option, key) => {
           return <PageCard key={key} page={option} isModal={isModal} />;
         })}

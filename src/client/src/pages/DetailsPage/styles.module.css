@@ -1,9 +1,41 @@
+.backContainer {
+  display: flex;
+  margin-bottom: 2em;
+  color: var(--vscode-textLink-foreground);
+}
+
+.innerBackContainer {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.25em 0.25em 0.25em 0;
+}
+
+.innerBackContainer:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.backIcon path {
+  fill: var(--vscode-textLink-foreground);
+}
+
+.backIcon {
+  height: 1em;
+  margin-right: 0.5em;
+}
+
+.headerContainer {
+  display: flex;
+  grid-gap: 0.75em;
+}
+
 .detailsContainer {
   display: flex;
+  margin-left: 2.75em;
+
 }
 
 .screenshot {
-  margin-top: 100px;
   width: 100%;
   border: 1px solid var(--vscode-editor-foreground);
 }

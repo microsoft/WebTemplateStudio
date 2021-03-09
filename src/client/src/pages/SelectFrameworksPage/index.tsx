@@ -20,7 +20,7 @@ const SelectFrameworks = ({ intl }: Props) => {
       {frontendOptions.length > 0 && (
         <>
           <Title>{intl.formatMessage(messages.frontendTitle)}</Title>
-          <div className={pageStyles.flexContainer}>
+          <div className={pageStyles.flexCardsContainer}>
             {frontendOptions
               .filter((frontend) => isPreview || !frontend.isPreview)
               .map((frontend) => {
@@ -32,7 +32,7 @@ const SelectFrameworks = ({ intl }: Props) => {
       {backendOptions.length > 0 && (
         <>
           <Title>{intl.formatMessage(messages.backendTitle)}</Title>
-          <div className={pageStyles.flexContainer}>
+          <div className={pageStyles.flexCardsContainer}>
             {backendOptions
               .filter((backend) => isPreview || !backend.isPreview)
               .map((backend) => {

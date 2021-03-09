@@ -69,56 +69,51 @@ export const ServiceCard = (props: Props): JSX.Element => {
       onMouseLeave={() => setShowPlusIcon(false)}
       onMouseOver={() => setShowPlusIcon(true)}
     >
-      <div>
-        <div className={cardStyles.gridLayoutCardHeader}>
-          <div>
-            <Icon name={service.title} icon={service.icon} />
+      <div className={cardStyles.gridLayoutCardHeader}>
+        <div>
+          <Icon name={service.title} icon={service.icon} />
+        </div>
+        <div className={cardStyles.title}>{service.title}</div>
+        {showPlusIcon && (
+          <div className={cardStyles.plusIcon}>
+            {!hasService && (
+              <PlusSVG
+                role="figure"
+                className={styles.icon}
+                title={formatMessage(messages.addToProject)}
+                aria-label={formatMessage(messages.addToProject)}
+              />
+            )}
+            {hasService && (
+              <EditSVG
+                role="figure"
+                className={styles.icon}
+                title={formatMessage(messages.editResource)}
+                aria-label={formatMessage(messages.editResource)}
+              />
+            )}
           </div>
-          <div className={cardStyles.title}>{service.title}</div>
-
-          {showPlusIcon && (
-            <div className={classNames(styles.headerIconContainer)}>
-              {!hasService && (
-                <PlusSVG
-                  role="figure"
-                  className={styles.icon}
-                  title={formatMessage(messages.addToProject)}
-                  aria-label={formatMessage(messages.addToProject)}
-                />
-              )}
-              {hasService && (
-                <EditSVG
-                  role="figure"
-                  className={styles.icon}
-                  title={formatMessage(messages.editResource)}
-                  aria-label={formatMessage(messages.editResource)}
-                />
-              )}
-            </div>
-          )}
-        </div>
-        <div className={styles.description}>
-          {service.expectedPrice && (
-            <div className={styles.expectedPrice}>
-              <PriceSVG role="figure" className={styles.svg} aria-label={formatMessage(messages.price)} />
-              <div>{formatMessage(service.expectedPrice)}</div>
-            </div>
-          )}
-          {service.expectedTime && (
-            <div className={styles.expectedTime}>
-              <TimeSVG role="figure" className={styles.svg} aria-label={formatMessage(messages.setUpTime)} />
-              <div>{formatMessage(service.expectedTime)}</div>
-            </div>
-          )}
-          <div>{service.body}</div>
-        </div>
-        <div className={cardStyles.gridLayoutCardFooter}>
-          <div>
-            <button tabIndex={0} onClick={showDetails} className={buttonStyles.buttonLink}>
-              {formatMessage(messages.learnMore)}
-            </button>
+        )}
+      </div>
+      <div className={styles.serviceFeaturesContainer}>
+        {service.expectedPrice && (
+          <div className={styles.serviceFeatureInfo}>
+            <PriceSVG role="figure" className={styles.svg} aria-label={formatMessage(messages.price)} />
+            <div>{formatMessage(service.expectedPrice)}</div>
           </div>
-        </div>
+        )}
+        {service.expectedTime && (
+          <div className={styles.serviceFeatureInfo}>
+            <TimeSVG role="figure" className={styles.svg} aria-label={formatMessage(messages.setUpTime)} />
+            <div>{formatMessage(service.expectedTime)}</div>
+          </div>
+        )}
+      </div>
+      <div>{service.body}</div>
+      <div className={cardStyles.gridLayoutCardFooter}>
+        <button tabIndex={0} onClick={showDetails} className={buttonStyles.buttonLink}>
+          {formatMessage(messages.learnMore)}
+        </button>
       </div>
     </div>
   );

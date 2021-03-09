@@ -7,7 +7,7 @@ import { AppState } from "../../../store/combineReducers";
 import { TemplateType } from "../../../store/templates/combineReducers";
 import { getDropdownProjectTypeSelector } from "../../../store/templates/projectTypes/selector";
 import { setSelectedProjectTypeAction } from "../../../store/userSelection/projectType/action";
-import InputTitle from "../../Titles/TitleForInput";
+import SectionTitle from "../../Titles/SectionTitle";
 import rightsidebarStyles from "../rightsidebarStyles.module.css";
 import messages from "./messages";
 
@@ -48,7 +48,7 @@ const SelectProjectTypes = (props: Props) => {
     <>
       {projectTypesOptions.length > 1 && storedProjectType.internalName !== "" && (
         <div className={rightsidebarStyles.sidebarItem}>
-          <InputTitle>{formatMessage(messages.selectProjectTypes)}</InputTitle>
+          <SectionTitle>{formatMessage(messages.selectProjectTypes)}</SectionTitle>
           <Dropdown
             handleChange={(projectType) => setSelectedProjectType(projectType)}
             ariaLabel={formatMessage(messages.selectProjectTypes)}

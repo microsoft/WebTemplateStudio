@@ -9,7 +9,7 @@ import { ReactComponent as ShowIconSVG } from "../../../assets/i-show.svg";
 import { AppState } from "../../../store/combineReducers";
 import { setPagesAction } from "../../../store/userSelection/pages/action";
 import { PAGE_NAME_CHARACTER_LIMIT } from "../../../utils/constants/constants";
-import InputTitle from "../../Titles/TitleForInput";
+import SectionTitle from "../../Titles/SectionTitle";
 import rightsidebarStyles from "../rightsidebarStyles.module.css";
 import messages from "./messages";
 import PageContainer from "./PageContainer";
@@ -39,11 +39,11 @@ const SelectPages = (props: Props) => {
   return (
     <div className={rightsidebarStyles.sidebarItem}>
       <div className={classnames(styles.pageListContainer)}>
-        <InputTitle>
+        <SectionTitle>
           {`${props.intl!.formatMessage(messages.pages)} (${
             selectedPages.length >= 0 ? selectedPages.length : ""
           }/${MAX_PAGES_ALLOWED})`}
-        </InputTitle>
+        </SectionTitle>
         <div className={styles.iconsContainer}>
           <button
             className={styles.hideOrShow}

@@ -1,9 +1,10 @@
 .container {
-  margin-right: 12px;
-  margin-bottom: 12px;
   cursor: pointer;
-  padding: 12px;
   background-color: hsla(0, 0%, 47%, 0.2);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 1em;
 }
 
 .container:focus {
@@ -19,24 +20,18 @@
 .boundingBox {
   width: 230px;
   height: 200px;
-  margin: 0px 30px 30px 0px;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 .gridLayoutCardHeader {
   display: grid;
-  grid-template-columns: 3rem auto 2rem;
+  grid-template-columns: auto 1fr min-content;
   max-height: 50px;
+  grid-gap: 0.75em;
 }
 
 .gridLayoutCardHeader .title {
-  margin-left: 1rem;
-  margin-top: 0.2rem;
   font-size: 1.3rem;
-  line-height: 1.5;
 }
 
 .selected {
@@ -52,10 +47,6 @@
 .selected:focus:not([data-focus-visible-added]) {
   border: none;
   outline: 3px solid var(--vscode-editor-foreground);
-}
-
-.version {
-  margin-top: 0.5rem;
 }
 
 .DependencyInfo {
@@ -74,8 +65,22 @@
   fill: var(--vscode-gitDecoration-untrackedResourceForeground);
 }
 
+.plusIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1.8px solid var(--vscode-editor-foreground);
+  height: 2em;
+  width: 2em;
+  border-radius: 50%;
+}
+
+.plusIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
 .gridLayoutCardFooter {
-  display: grid;
-  grid-template-columns: auto 2rem;
-  min-height: 2em;
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
 }

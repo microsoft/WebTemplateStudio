@@ -28,7 +28,7 @@ const AddServicesPage = ({ intl }: Props) => {
         <AzureAccount />
       </div>
       {!isLoggedIn && <AzureStudent />}
-      <div className={pageStyles.flexContainer}>
+      <div className={pageStyles.flexCardsContainer}>
         {serviceGroups.map((group, key) => {
           return <ServiceGroup group={group} key={key} />;
         })}
