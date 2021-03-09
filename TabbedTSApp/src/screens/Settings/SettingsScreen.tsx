@@ -3,7 +3,7 @@ import React from 'react';
 import {Text, View, Linking, Button} from 'react-native';
 
 import {name, version} from '../../../package.json';
-//import PickTheme from './PickTheme/PickTheme';
+import {Picker} from '@react-native-picker/picker';
 import {getStyles} from './SettingsScreen.style';
 import {useTheme} from '../../context/Theme.context';
 import {ThemeName} from '../../themes/Theme.interface';
@@ -21,12 +21,17 @@ const Settings = (): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      {/* <View style={styles.section}>
-        <Text style={styles.title}>Personalization</Text>
-        <PickTheme />
-      </View> */}
       <View style={styles.section}>
-        <Text style={styles.title}>Select theme</Text>
+        <Text style={styles.title}>Personalization</Text>
+        <Text style={styles.text}>Select theme</Text>
+        <Picker
+          style={styles.picker}
+          selectedValue={themeName}
+          onValueChange={(itemValue) => setTheme(itemValue)}>
+          <Picker.Item label="Default" value={ThemeName.default} />
+          <Picker.Item label="Light" value={ThemeName.light} />
+          <Picker.Item label="Dark" value={ThemeName.dark} />
+        </Picker>
         <Button
           onPress={() => setTheme(ThemeName.default)}
           title="Set default theme"
@@ -40,8 +45,6 @@ const Settings = (): JSX.Element => {
           title="Set dark theme"
         />
       </View>
-      <Text style={styles.text}>Selected Theme: {themeName}</Text>
-
       <View style={styles.section}>
         <Text style={styles.title}>About this Application</Text>
         <Text style={styles.text}>

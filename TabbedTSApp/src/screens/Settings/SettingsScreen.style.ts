@@ -30,4 +30,8 @@ export const getStyles = (theme: Theme) =>
       ...appStyles.link,
       color: theme.colors.primary,
     },
+    picker: {
+      height: 50,
+      width: 100,
+    },
   });
