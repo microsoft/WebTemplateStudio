@@ -23,7 +23,6 @@ const Settings = (): JSX.Element => {
     <View style={styles.container}>
       <View style={styles.section}>
         <Text style={styles.title}>Personalization</Text>
-        <Text style={styles.text}>Select theme</Text>
         <Picker
           style={styles.picker}
           selectedValue={themeName}
@@ -32,18 +31,6 @@ const Settings = (): JSX.Element => {
           <Picker.Item label="Light" value={ThemeName.light} />
           <Picker.Item label="Dark" value={ThemeName.dark} />
         </Picker>
-        <Button
-          onPress={() => setTheme(ThemeName.default)}
-          title="Set default theme"
-        />
-        <Button
-          onPress={() => setTheme(ThemeName.light)}
-          title="Set light theme"
-        />
-        <Button
-          onPress={() => setTheme(ThemeName.dark)}
-          title="Set dark theme"
-        />
       </View>
       <View style={styles.section}>
         <Text style={styles.title}>About this Application</Text>

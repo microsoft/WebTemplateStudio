@@ -31,7 +31,8 @@ export const getStyles = (theme: Theme) =>
       color: theme.colors.primary,
     },
     picker: {
-      height: 50,
-      width: 100,
+      height: 30,
+      width: 200,
+      color: theme.colors.text,
     },
   });
