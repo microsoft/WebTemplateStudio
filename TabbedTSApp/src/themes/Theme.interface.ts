@@ -5,7 +5,7 @@ export interface Theme extends NavigationTheme {
 }
 
 export enum ThemeName {
-  LIGHT = 'light',
-  DARK = 'dark',
-  DEFAULT = 'default',
+  light = 'light',
+  dark = 'dark',
+  default = 'default',
 }

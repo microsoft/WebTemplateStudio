@@ -16,7 +16,7 @@ const goToTermsAndConditions = () => {
 };
 
 const Settings = (): JSX.Element => {
-  const {theme, setTheme} = useTheme();
+  const {theme, themeName, setTheme} = useTheme();
   const styles = React.useMemo(() => getStyles(theme), [theme]);
 
   return (
@@ -28,18 +28,20 @@ const Settings = (): JSX.Element => {
       <View style={styles.section}>
         <Text style={styles.title}>Select theme</Text>
         <Button
-          onPress={() => setTheme(ThemeName.DEFAULT)}
+          onPress={() => setTheme(ThemeName.default)}
           title="Set default theme"
         />
         <Button
-          onPress={() => setTheme(ThemeName.LIGHT)}
+          onPress={() => setTheme(ThemeName.light)}
           title="Set light theme"
         />
         <Button
-          onPress={() => setTheme(ThemeName.DARK)}
+          onPress={() => setTheme(ThemeName.dark)}
           title="Set dark theme"
         />
       </View>
+      <Text style={styles.text}>Selected Theme: {themeName}</Text>
+
       <View style={styles.section}>
         <Text style={styles.title}>About this Application</Text>
         <Text style={styles.text}>
