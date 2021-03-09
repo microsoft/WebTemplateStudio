@@ -22,11 +22,9 @@ export const ThemeProvider = React.memo<Props>((props) => {
   useEffect(() => {
     if (themeName === ThemeName.default) {
       const newTheme = deviceTheme ? themes[deviceTheme] : themes.light;
-      console.log('Change default Theme: ' + newTheme.name);
       setTheme(newTheme);
     } else {
       const newTheme = themes[themeName];
-      console.log('Change Theme: ' + newTheme.name);
       setTheme(newTheme);
     }
   }, [themeName, deviceTheme]);
