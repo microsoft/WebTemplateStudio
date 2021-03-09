@@ -83,34 +83,32 @@ const PageCard = (props: Props) => {
       onMouseLeave={() => setShowPlusIcon(false)}
       onMouseOver={() => setShowPlusIcon(true)}
     >
-      <div>
-        <div className={cardStyles.gridLayoutCardHeader}>
-          <div>
-            <Icon name={page.defaultName} icon={page.icon} />
+      <div className={cardStyles.gridLayoutCardHeader}>
+        <div>
+          <Icon name={page.defaultName} icon={page.icon} />
+        </div>
+        <div className={cardStyles.title}>{page.defaultName}</div>
+        {showPlusIcon && (
+          <div className={cardStyles.plusIcon}>
+            <Plus role="figure" />
           </div>
-          <div className={classNames(cardStyles.title)}>{page.defaultName}</div>
-          {showPlusIcon && (
-            <div className={classNames(styles.headerIconContainer)}>
-              <Plus role="figure" />
-            </div>
+        )}
+      </div>
+      <div className={styles.description}>{page.body}</div>
+      <div className={cardStyles.gridLayoutCardFooter}>
+        <div>
+          {!isModal && (
+            <button
+              onClick={showMoreInfo}
+              onKeyDown={showMoreInfoIfEnterOrSpace}
+              className={buttonStyles.buttonLink}
+              tabIndex={0}
+            >
+              {intl.formatMessage(messages.Preview)}
+            </button>
           )}
         </div>
-        <div className={styles.description}>{page.body}</div>
-        <div className={cardStyles.gridLayoutCardFooter}>
-          <div>
-            {!isModal && (
-              <button
-                onClick={showMoreInfo}
-                onKeyDown={showMoreInfoIfEnterOrSpace}
-                className={buttonStyles.buttonLink}
-                tabIndex={0}
-              >
-                {intl.formatMessage(messages.Preview)}
-              </button>
-            )}
-          </div>
-          <div>{selectedPages.filter((selectedPage) => selectedPage.defaultName === page.defaultName).length}</div>
-        </div>
+        <div>{selectedPages.filter((selectedPage) => selectedPage.defaultName === page.defaultName).length}</div>
       </div>
     </div>
   );

@@ -25,9 +25,5 @@ const messages = defineMessages({
     id: "detailsPage.details.version",
     defaultMessage: "Version:",
   },
-  back: {
-    id: "detailsPage.details.back",
-    defaultMessage: "Back",
-  },
 });
 export default messages;
