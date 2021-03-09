@@ -7,6 +7,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MasterDetailStack from './MasterDetailStack';
 import HomeStack from './HomeStack';
 import SettingsStack from './SettingsStack';
+import {useTheme} from '../context/Theme.context';
+import {getTabBarOptions} from './navigation.options';
 
 interface IScreenOpts{
   route: any;
@@ -21,6 +23,8 @@ interface ITabBarIconProps{
 const TabNavigation = (): JSX.Element => {
   // For more information about react navigation visit: https://reactnavigation.org/docs/getting-started
   const Tab = createBottomTabNavigator();
+  const {theme} = useTheme();
+  const tabBarOptions = getTabBarOptions(theme);
 
   const getIcon = (routeName: string, isFocused: boolean) => {
     // For more information about vector icons visit: https://github.com/oblador/react-native-vector-icons
@@ -47,10 +51,10 @@ const TabNavigation = (): JSX.Element => {
       screenOptions={({route}: IScreenOpts) => ({
         tabBarIcon: ({focused, size, color}: ITabBarIconProps) => {
           const iconName = getIcon(route.name, focused);
-
           return <Icon name={iconName} size={size} color={color} />;
         },
-      })}>
+      })}
+      tabBarOptions={tabBarOptions}>
       <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen
         name="MasterDetailStack"

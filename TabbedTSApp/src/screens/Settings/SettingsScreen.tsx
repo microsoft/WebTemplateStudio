@@ -1,9 +1,12 @@
 import React from 'react';
 
-import {Text, View, Linking} from 'react-native';
+import {Text, View, Linking, Button} from 'react-native';
 
 import {name, version} from '../../../package.json';
+import {Picker} from '@react-native-picker/picker';
 import {getStyles} from './SettingsScreen.style';
+import {useTheme} from '../../context/Theme.context';
+import {ThemeName} from '../../themes/Theme.interface';
 
 const goToPrivacyStatementLink = () => {
   Linking.openURL('http://yourprivacystatementurlhere.com');
@@ -13,14 +16,22 @@ const goToTermsAndConditions = () => {
 };
 
 const Settings = (): JSX.Element => {
-  const styles = getStyles();
+  const {theme, themeName, setTheme} = useTheme();
+  const styles = React.useMemo(() => getStyles(theme), [theme]);
 
   return (
     <View style={styles.container}>
-      {/* <View style={styles.section}>
+      <View style={styles.section}>
         <Text style={styles.title}>Personalization</Text>
-        <PickTheme />
-      </View> */}
+        <Picker
+          style={styles.picker}
+          selectedValue={themeName}
+          onValueChange={(itemValue) => setTheme(itemValue)}>
+          <Picker.Item label="Default" value={ThemeName.default} />
+          <Picker.Item label="Light" value={ThemeName.light} />
+          <Picker.Item label="Dark" value={ThemeName.dark} />
+        </Picker>
+      </View>
       <View style={styles.section}>
         <Text style={styles.title}>About this Application</Text>
         <Text style={styles.text}>

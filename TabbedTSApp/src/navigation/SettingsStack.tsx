@@ -4,11 +4,13 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import Settings from '../screens/Settings/SettingsScreen';
 import {getScreenOptions} from './navigation.options';
+import {useTheme} from '../context/Theme.context';
 
 const Stack = createStackNavigator();
 
 const SettingsStack = (): JSX.Element => {
-  const screenOptions = getScreenOptions();
+  const {theme} = useTheme();
+  const screenOptions = getScreenOptions(theme);
 
   return (
     <Stack.Navigator screenOptions={screenOptions}>

@@ -1,34 +1,35 @@
 import {StyleSheet} from 'react-native';
 
 import appStyles from '../../../app.styles';
+import {Theme} from '../../../themes/Theme.interface';
 
-export const getStyles = () =>
+export const getStyles = (theme: Theme) =>
   StyleSheet.create({
     text: {
       ...appStyles.text,
-      color: 'black',
+      color: theme.colors.text,
     },
     textSelected: {
       ...appStyles.text,
-      color: 'blue',
+      color: theme.colors.primary,
     },
     title: {
       ...appStyles.title,
       paddingBottom: 5,
-      color: 'black',
+      color: theme.colors.text,
     },
     titleSelected: {
       ...appStyles.title,
       paddingBottom: 5,
-      color: 'blue',
+      color: theme.colors.primary,
     },
     icon: {
       ...appStyles.icon,
-      color: 'black',
+      color: theme.colors.text,
     },
     iconSelected: {
       ...appStyles.icon,
-      color: 'blue',
+      color: theme.colors.primary,
     },
 
     listItemContainer: {
@@ -38,9 +39,9 @@ export const getStyles = () =>
       paddingVertical: 10,
     },
     listItemContainerNotSelected: {
-      backgroundColor: 'lightgrey',
+      backgroundColor: theme.colors.background,
     },
     listItemContainerSelected: {
-      backgroundColor: 'grey',
+      backgroundColor: theme.colors.border,
     },
   });
