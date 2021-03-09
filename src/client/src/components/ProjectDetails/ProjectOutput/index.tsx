@@ -11,7 +11,7 @@ import {
 import { browseNewOutputPath, getOutputPathFromConfig } from "../../../utils/extensionService/extensionService";
 import OutputPath from "../../OutputPath";
 import rightsidebarStyles from "../../RightSidebar/rightsidebarStyles.module.css";
-import InputTitle from "../../Titles/TitleForInput";
+import SectionTitle from "../../Titles/SectionTitle";
 import messages from "./messages";
 import styles from "./styles.module.css";
 
@@ -51,7 +51,7 @@ const ProjectOutput = (props: Props) => {
   return (
     <>
       <div className={props.isRightsidebar ? styles.inputContainer : rightsidebarStyles.inputContainer}>
-        <InputTitle>{formatMessage(messages.outputPathTitle)}</InputTitle>
+        <SectionTitle>{formatMessage(messages.outputPathTitle)}</SectionTitle>
         <div>
           <OutputPath
             handleSaveClick={handleSaveClick}

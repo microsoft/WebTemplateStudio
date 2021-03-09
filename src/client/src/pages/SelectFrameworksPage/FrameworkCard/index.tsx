@@ -115,33 +115,28 @@ const FrameworkCard = (props: Props) => {
         [cardStyles.selected]: selected,
       })}
     >
+      <div className={cardStyles.gridLayoutCardHeader}>
+        <div>{framework.internalName && <Icon name={framework.internalName} icon={framework.icon} />}</div>
+        <div className={cardStyles.title}>{framework.title}</div>
+      </div>
       <div>
-        <div className={cardStyles.gridLayoutCardHeader}>
-          <div>{framework.internalName && <Icon name={framework.internalName} icon={framework.icon} />}</div>
-          <div className={classNames(cardStyles.title)}>{framework.title}</div>
-        </div>
-
-        <div className={styles.gridLayoutVersion}>
-          <div className={cardStyles.version}>v{framework.version}</div>
-          {latestVersion === framework.version && <div className={styles.latestVersion}>(Latest)</div>}
-        </div>
+        v{framework.version}
+        {latestVersion === framework.version && ` ${intl.formatMessage(messages.latest)}`}
         <div className={styles.description}>{framework.body}</div>
-        <div className={cardStyles.DependencyInfo}>
-          {selected && !framework.requirement?.isInstalled && <DependencyInfo requirement={framework.requirement} />}
+      </div>
+      {selected && !framework.requirement?.isInstalled && <DependencyInfo requirement={framework.requirement} />}
+      <div className={cardStyles.gridLayoutCardFooter}>
+        <div>
+          <button
+            onClick={showMoreInfo}
+            onKeyDown={showMoreInfoIfEnterOrSpace}
+            className={buttonStyles.buttonLink}
+            tabIndex={0}
+          >
+            {intl.formatMessage(messages.learnMore)}
+          </button>
         </div>
-        <div className={cardStyles.gridLayoutCardFooter}>
-          <div>
-            <button
-              onClick={showMoreInfo}
-              onKeyDown={showMoreInfoIfEnterOrSpace}
-              className={buttonStyles.buttonLink}
-              tabIndex={0}
-            >
-              {intl.formatMessage(messages.learnMore)}
-            </button>
-          </div>
-          {selected && <Check role="figure" className={cardStyles.iconCheckMark} />}
-        </div>
+        {selected && <Check role="figure" className={cardStyles.iconCheckMark} />}
       </div>
     </div>
   );

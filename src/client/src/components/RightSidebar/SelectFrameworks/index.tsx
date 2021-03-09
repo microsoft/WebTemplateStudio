@@ -14,7 +14,7 @@ import {
   setSelectedFrontendFrameworkAction,
 } from "../../../store/userSelection/frameworks/action";
 import { IOption } from "../../../types/option";
-import InputTitle from "../../Titles/TitleForInput";
+import SectionTitle from "../../Titles/SectionTitle";
 import rightsidebarStyles from "../rightsidebarStyles.module.css";
 import messages from "./messages";
 
@@ -77,7 +77,7 @@ const SelectFrameworks = (props: Props) => {
     <div className={rightsidebarStyles.sidebarItem}>
       {frontendOptions.length > 1 && selectedFrontendFramework && selectedFrontendFramework.value !== "" && (
         <div className={rightsidebarStyles.inputContainer}>
-          <InputTitle>{formatMessage(messages.frontendFramework)}</InputTitle>
+          <SectionTitle>{formatMessage(messages.frontendFramework)}</SectionTitle>
           <Dropdown
             handleChange={(selectedFrontendFramework) => {
               setSelectedFrontendFramework(selectedFrontendFramework);
@@ -90,7 +90,7 @@ const SelectFrameworks = (props: Props) => {
       )}
       {backendOptions.length > 1 && selectedBackendFramework && selectedBackendFramework.value !== "" && (
         <div className={rightsidebarStyles.inputContainer}>
-          <InputTitle>{formatMessage(messages.backendFramework)}</InputTitle>
+          <SectionTitle>{formatMessage(messages.backendFramework)}</SectionTitle>
           <Dropdown
             handleChange={(selectedBackendFramework) => {
               setSelectedBackendFramework(selectedBackendFramework);

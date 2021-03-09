@@ -18,7 +18,7 @@ const SelectProjectTypePage = (props: Props) => {
     <div>
       <Title>{intl.formatMessage(messages.header)}</Title>
 
-      <div className={pageStyles.flexContainer}>
+      <div className={pageStyles.flexCardsContainer}>
         {options.map((projectType, index) => {
           return <ProjectTypeCard key={index} projectType={projectType} />;
         })}
