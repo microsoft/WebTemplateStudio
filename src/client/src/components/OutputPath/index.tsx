@@ -1,5 +1,3 @@
-import classNames from "classnames";
-import classnames from "classnames";
 import * as React from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
@@ -25,35 +23,29 @@ const OutputPath = ({ handleSaveClick, value, isEmpty, intl, placeholder }: IPro
   };
 
   return (
-    <>
-      <div className={styles.container} tabIndex={0} onKeyDown={handleKeyDown}>
-        <div className={styles.errorStack}>
-          <div className={styles.outputPath} onClick={handleSaveClick}>
-            <input
-              aria-label={intl.formatMessage(messages.ariaOutputPathLabel)}
-              value={value}
-              placeholder={placeholder}
-              disabled={true}
-              className={classnames(stylesInput.input, styles.pathInput)}
-            />
-          </div>
-          {isEmpty && (
-            <div className={styles.errorMessage}>
-              {intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
-                fieldId: intl.formatMessage(messages.outputPath),
-              })}
-            </div>
-          )}
+    <div className={styles.container} tabIndex={0} onKeyDown={handleKeyDown}>
+      <div className={styles.errorStack}>
+        <div onClick={handleSaveClick}>
+          <input
+            aria-label={intl.formatMessage(messages.ariaOutputPathLabel)}
+            value={value}
+            placeholder={placeholder}
+            disabled={true}
+            className={stylesInput.input}
+          />
         </div>
-        <button
-          className={classNames(buttonStyles.buttonHighlighted, styles.browseButton)}
-          onClick={handleSaveClick}
-          tabIndex={-1}
-        >
-          {intl.formatMessage(messages.browseButtonLabel)}
-        </button>
+        {isEmpty && (
+          <div className={styles.errorMessage}>
+            {intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
+              fieldId: intl.formatMessage(messages.outputPath),
+            })}
+          </div>
+        )}
       </div>
-    </>
+      <button className={buttonStyles.buttonHighlighted} onClick={handleSaveClick} tabIndex={-1}>
+        {intl.formatMessage(messages.browseButtonLabel)}
+      </button>
+    </div>
   );
 };
 

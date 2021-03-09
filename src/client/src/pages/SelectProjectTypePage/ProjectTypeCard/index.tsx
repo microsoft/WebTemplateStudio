@@ -11,7 +11,6 @@ import { setSelectedProjectTypeAction } from "../../../store/userSelection/proje
 import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
 import cardStyles from "../../cardStyles.module.css";
 import messages from "../../messages";
-import pageStyles from "../../pageStyles.module.css";
 import { ISelectProps, IStateProps } from "./interfaces";
 import { mapStateToProps } from "./store";
 
@@ -64,25 +63,23 @@ const ProjectTypeCard = (props: Props) => {
         [cardStyles.selected]: selected,
       })}
     >
-      <div>
-        <div className={cardStyles.gridLayoutCardHeader}>
-          <div>{projectType.title && <Icon name={projectType.title} icon={projectType.icon} />}</div>
-          <div className={cardStyles.title}>{projectType.title}</div>
+      <div className={cardStyles.gridLayoutCardHeader}>
+        <div>{projectType.title && <Icon name={projectType.title} icon={projectType.icon} />}</div>
+        <div className={cardStyles.title}>{projectType.title}</div>
+      </div>
+      <div>{projectType.body}</div>
+      <div className={cardStyles.gridLayoutCardFooter}>
+        <div>
+          <button
+            onClick={showMoreInfo}
+            onKeyDown={showMoreInfoIfEnterOrSpace}
+            className={buttonStyles.buttonLink}
+            tabIndex={0}
+          >
+            {intl.formatMessage(messages.Preview)}
+          </button>
         </div>
-        <div className={pageStyles.fixedDescription}>{projectType.body}</div>
-        <div className={cardStyles.gridLayoutCardFooter}>
-          <div>
-            <button
-              onClick={showMoreInfo}
-              onKeyDown={showMoreInfoIfEnterOrSpace}
-              className={buttonStyles.buttonLink}
-              tabIndex={0}
-            >
-              {intl.formatMessage(messages.Preview)}
-            </button>
-          </div>
-          {selected && <Check role="figure" className={cardStyles.iconCheckMark} />}
-        </div>
+        {selected && <Check role="figure" className={cardStyles.iconCheckMark} />}
       </div>
     </div>
   );

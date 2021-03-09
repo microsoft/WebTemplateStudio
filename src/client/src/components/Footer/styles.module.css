@@ -16,3 +16,7 @@
 .buttonContainer {
   display: flex;
 }
+
+.buttonContainer > button {
+  margin: 0 0.5em;
+}

@@ -46,11 +46,6 @@ describe("PageCard", () => {
     );
   });
 
-  it("test instance", () => {
-    const pageCard = wrapper.getByRole("button");
-    expect(pageCard.children.length).toBe(1);
-  });
-
   it("dont show button add page", () => {
     expect(wrapper.queryByRole("figure")).toBe(null);
   });

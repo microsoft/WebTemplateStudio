@@ -12,7 +12,7 @@ import { PROJECT_NAME_CHARACTER_LIMIT } from "../../../utils/constants/constants
 import { inferProjectName } from "../../../utils/infer/projectName";
 import { validateProjectName } from "../../../utils/validations/projectName/projectName";
 import rightsidebarStyles from "../../RightSidebar/rightsidebarStyles.module.css";
-import InputTitle from "../../Titles/TitleForInput";
+import SectionTitle from "../../Titles/SectionTitle";
 import messages from "./messages";
 import styles from "./styles.module.css";
 
@@ -75,7 +75,7 @@ const ProjectName = (props: Props) => {
 
   return (
     <div className={props.isRightsidebar ? rightsidebarStyles.inputContainer : styles.inputContainer}>
-      <InputTitle>{formatMessage(messages.projectNameTitle)}</InputTitle>
+      <SectionTitle>{formatMessage(messages.projectNameTitle)}</SectionTitle>
 
       <div>
         <input

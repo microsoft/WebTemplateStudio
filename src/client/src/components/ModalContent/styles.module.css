@@ -1,20 +1,18 @@
-ul {
-  list-style-type: none;
-  padding-inline-start: 0;
-}
-
 .headerContainer {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.headerContainer > h2 {
+  line-height: 1;
+  margin-bottom: 0;
 }
 
 .cancelIcon {
   cursor: pointer;
   height: 1em;
   width: 1em;
-  padding: 1px;
-  margin-right: 2px;
 }
 
 .cancelIcon path {

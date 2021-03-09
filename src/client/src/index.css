@@ -70,7 +70,7 @@ h1 {
 }
 
 h2 {
-  font-weight: lighter;
+  font-weight: normal;
   color: var(--vscode-sideBarTitle-foreground);
 }
 
