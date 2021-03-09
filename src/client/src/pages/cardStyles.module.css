@@ -65,6 +65,20 @@
   fill: var(--vscode-gitDecoration-untrackedResourceForeground);
 }
 
+.plusIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1.8px solid var(--vscode-editor-foreground);
+  height: 2em;
+  width: 2em;
+  border-radius: 50%;
+}
+
+.plusIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
 .gridLayoutCardFooter {
   margin-top: auto;
   display: flex;

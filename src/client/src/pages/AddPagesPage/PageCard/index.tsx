@@ -89,7 +89,7 @@ const PageCard = (props: Props) => {
         </div>
         <div className={cardStyles.title}>{page.defaultName}</div>
         {showPlusIcon && (
-          <div className={styles.plusIcon}>
+          <div className={cardStyles.plusIcon}>
             <Plus role="figure" />
           </div>
         )}

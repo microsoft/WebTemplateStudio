@@ -75,7 +75,7 @@ export const ServiceCard = (props: Props): JSX.Element => {
         </div>
         <div className={cardStyles.title}>{service.title}</div>
         {showPlusIcon && (
-          <div className={styles.plusIcon}>
+          <div className={cardStyles.plusIcon}>
             {!hasService && (
               <PlusSVG
                 role="figure"
