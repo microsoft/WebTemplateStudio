@@ -10,6 +10,16 @@ import SettingsStack from './SettingsStack';
 import {useTheme} from '../context/Theme.context';
 import {getTabBarOptions} from './navigation.options';
 
+interface IScreenOpts{
+  route: any;
+}
+
+interface ITabBarIconProps{
+  focused: boolean;
+  size: number;
+  color: string;
+}
+
 const TabNavigation = (): JSX.Element => {
   // For more information about react navigation visit: https://reactnavigation.org/docs/getting-started
   const Tab = createBottomTabNavigator();
@@ -38,9 +48,9 @@ const TabNavigation = (): JSX.Element => {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, size, color}) => {
-          let iconName = getIcon(route.name, focused);
+      screenOptions={({route}: IScreenOpts) => ({
+        tabBarIcon: ({focused, size, color}: ITabBarIconProps) => {
+          const iconName = getIcon(route.name, focused);
           return <Icon name={iconName} size={size} color={color} />;
         },
       })}
