@@ -11,6 +11,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.14.1",
     "@react-native-picker/picker": "^1.9.11",
     "@types/react-native-vector-icons": "^6.4.6",
     "react": "16.13.1",
