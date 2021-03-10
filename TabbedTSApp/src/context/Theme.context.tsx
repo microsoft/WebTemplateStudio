@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {useColorScheme} from 'react-native';
-import themes from '../themes';
+import themes, {
+  getThemeNameFromStorage,
+  setThemeNameToStorage,
+} from '../themes';
 import {Theme, ThemeName} from '../themes/Theme.interface';
 
 interface ProvidedValue {
@@ -20,6 +23,14 @@ export const ThemeProvider = React.memo<Props>((props) => {
   const deviceTheme = useColorScheme();
 
   useEffect(() => {
+    const checkStoredTheme = async () => {
+      const storedThemeName = await getThemeNameFromStorage();
+      setThemeName(storedThemeName);
+    };
+    checkStoredTheme();
+  }, []);
+
+  useEffect(() => {
     if (themeName === ThemeName.default) {
       const newTheme = deviceTheme ? themes[deviceTheme] : themes.light;
       setTheme(newTheme);
@@ -27,6 +38,7 @@ export const ThemeProvider = React.memo<Props>((props) => {
       const newTheme = themes[themeName];
       setTheme(newTheme);
     }
+    setThemeNameToStorage(themeName);
   }, [themeName, deviceTheme]);
 
   const MemoizedValue = React.useMemo(() => {
