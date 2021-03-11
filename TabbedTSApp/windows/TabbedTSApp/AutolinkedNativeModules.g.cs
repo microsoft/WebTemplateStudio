@@ -2,17 +2,12 @@
 
 using System.Collections.Generic;
 
-// Namespaces from @react-native-async-storage/async-storage
-using ReactNativeAsyncStorage;
-
 namespace Microsoft.ReactNative.Managed
 {
     internal static class AutolinkedNativeModules
     {
         internal static void RegisterAutolinkedNativeModulePackages(IList<IReactPackageProvider> packageProviders)
-        { 
-            // IReactPackageProviders from @react-native-async-storage/async-storage
-            packageProviders.Add(new ReactNativeAsyncStorage.ReactPackageProvider());
+        {
         }
     }
 }
