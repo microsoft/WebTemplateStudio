@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 
 import {Theme} from '../../themes/Theme.interface';
 import appStyles from '../../app.styles';
@@ -33,6 +33,11 @@ export const getStyles = (theme: Theme) =>
     picker: {
       height: 30,
       width: 200,
-      color: theme.colors.text,
+      ...Platform.select({
+        android: {
+          backgroundColor: theme.colors.border,
+          color: theme.colors.text,
+        },
+      }),
     },
   });
