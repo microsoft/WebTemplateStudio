@@ -4,13 +4,11 @@ import {NavigationContainer} from '@react-navigation/native';
 
 import TabNavigation from './navigation/TabNavigation';
 
-import {ThemeProvider} from './context/Theme.context';
-import {useColorScheme} from 'react-native';
-import themes from './themes';
+import {ThemeProvider, useTheme} from './context/Theme.context';
 
 function App(): JSX.Element {
-  const deviceTheme = useColorScheme();
-  const theme = deviceTheme ? themes[deviceTheme] : themes.light;
+  const {theme} = useTheme();
+
   return (
     <ThemeProvider initial={theme}>
       <NavigationContainer theme={theme}>

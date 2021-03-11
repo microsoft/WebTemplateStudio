@@ -1,7 +1,7 @@
 import {Theme, ThemeName} from './Theme.interface';
 import {DefaultTheme} from '@react-navigation/native';
 
-export const LIGHT_THEME: Theme = {
+export const LightTheme: Theme = {
   name: ThemeName.light,
   ...DefaultTheme,
 };

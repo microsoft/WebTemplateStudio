@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useColorScheme} from 'react-native';
-import themes, {
+import {
+  themes,
   getThemeNameFromStorage,
   setThemeNameToStorage,
 } from '../themes';
@@ -38,8 +39,11 @@ export const ThemeProvider = React.memo<Props>((props) => {
       const newTheme = themes[themeName];
       setTheme(newTheme);
     }
-    setThemeNameToStorage(themeName);
   }, [themeName, deviceTheme]);
+
+  useEffect(() => {
+    setThemeNameToStorage(themeName);
+  }, [themeName]);
 
   const MemoizedValue = React.useMemo(() => {
     const value: ProvidedValue = {
