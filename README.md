@@ -2,12 +2,12 @@
 
 <img src="https://img.shields.io/badge/platform-linux--64%20%7C%20win--64%20%7C%20osx--64%20-lightgrey.svg" alt="Platforms Supported: MacOSX, Linux, Windows"/> <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed." /></a> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: We are using the MIT License"></a> <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-Welcome-brightgreen.svg" alt="We are welcoming PRS!"></a>
 
-Microsoft *Web Template Studio* (aka *WebTS*) is a Visual Studio Code Extension that accelerates the creation of new web applications using a
-wizard-based experience. WebTS enables developers to generate boilerplate code for a web application
-by choosing between different frontend frameworks, backend frameworks, pages and cloud services.
+Microsoft *Web Template Studio* (aka *WebTS*) is a Visual Studio Code Extension that accelerates the creation of a new **Web or React Native** applications using a wizard-based experience.
+
+*WebTS* enables developers to generate boilerplate code for a **Web or React Native** application by choosing between different project types, frontend and backend frameworks, pages and cloud services.
 The resulting web app is well-formed, readable code that incorporates cloud services on
 Azure while implementing proven patterns and best practices. Sprinkled throughout the generated code we have links to
-Docs to provide useful insights. WebTS was created using TypeScript and React. Different combinations of generated code
+Docs to provide useful insights. *WebTS* was created using TypeScript and React. Different combinations of generated code
 are merged together by [Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio), which was made using .NET Core.
 
 ## Build Status
@@ -28,14 +28,19 @@ Everyone should read these.
 - [Core Concepts](/docs/concepts.md)
 
 ### Using WebTS to build apps
-These will help if using WebTS to build apps.
+Depending of the type of application you want to create you will have slightly different options. No matter what application you generate you will always have the possibility to add different type of pages.
+- [Pages](docs/generated-apps/pages/readme.md)
 
+#### Full-stack applications
+When developing a full-stack application you will also be interested on the following sections:
 - [Frontend frameworks](docs/generated-apps/frontend-frameworks/readme.md)
 - [Backend frameworks](docs/generated-apps/backend-frameworks/readme.md)
-- [Pages](docs/generated-apps/pages/readme.md)
 - [Services](docs/generated-apps/services/readme.md)
 - [Deployment of the generated apps](docs/generated-apps/deployment.md)
 
+#### React Native applications
+Currently, your generated React Native applications will use React Native with Typescript and C# for the Windows code.
+- [Project Type](docs/generated-apps/project-type/readme.md)
 
 ### Working on WebTS
 These will help if you want to know more about WebTS or contribute to the project.
@@ -123,6 +128,8 @@ The extension does [log basic telemetry](docs/telemetry.md) for what is being se
 - [Flask](http://flask.pocoo.org/)
 - [Moleculer](https://moleculer.services)
 - [ASP.NET](https://dotnet.microsoft.com/apps/aspnet)
+- [React Native](https://reactnative.dev/)
+- [React Native for Windows](https://microsoft.github.io/react-native-windows/)
 
 ## Acknowledgments
 
