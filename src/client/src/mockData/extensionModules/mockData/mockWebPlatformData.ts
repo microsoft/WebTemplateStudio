@@ -1,7 +1,7 @@
-import { mockedPlatform } from "../../mockConfig";
+import { PLATFORM } from "../../../utils/constants/constants";
 import { backendImage, frontendImage, noImage, pageImage, serviceImage } from "./mockSvgData";
 
-const platform = mockedPlatform;
+const platform = PLATFORM.WEB;
 
 const projectTypes = [
   {

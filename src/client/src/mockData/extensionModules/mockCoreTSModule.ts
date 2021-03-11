@@ -4,6 +4,8 @@ import { mockedPlatform } from "../mockConfig";
 import * as mockReactNativeData from "./mockData/mockReactNativePlatformData";
 import * as mockWebData from "./mockData/mockWebPlatformData";
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 const mockData = mockedPlatform === PLATFORM.REACTNATIVE ? mockReactNativeData : mockWebData;
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
