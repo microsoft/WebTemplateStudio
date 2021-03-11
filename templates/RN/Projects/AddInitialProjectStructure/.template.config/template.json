@@ -16,7 +16,8 @@
     "wts.backendframework": "all",
     "wts.platform": "RN",
     "wts.version": "1.0.0",
-    "wts.compositionOrder": "0"
+    "wts.compositionOrder": "0",
+    "wts.casing.sourceName": "lower"
   },
   "sourceName": "wts.projectName",
   "preferNameDirectory": true,
@@ -28,14 +29,9 @@
       "replaces": "Param_ProjectName",
       "fileRename": "Param_ProjectName"
     },
-    "wts.ProjectNameToLower":
+    "wts.sourceName.casing.lower":
     {
-      "type": "generated",
-      "generator": "casing",
-      "parameters": {
-        "source":"wts.projectName",
-        "toLower": true
-      },
+      "type": "parameter",
       "replaces": "Param_ProjectToLower",
       "fileRename": "Param_ProjectToLower"
     }
