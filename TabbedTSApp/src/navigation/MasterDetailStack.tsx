@@ -5,7 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import MasterDetailScreen from '../screens/MasterDetail/MasterDetailScreen';
 import DetailScreen from '../screens/MasterDetail/Detail/DetailScreen';
 import {getScreenOptions} from './navigation.options';
-import {useTheme} from '../context/Theme.context';
+import {useTheme} from '../context/ThemeContext';
 
 const Stack = createStackNavigator();
 

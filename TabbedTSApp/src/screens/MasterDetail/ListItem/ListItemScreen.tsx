@@ -4,7 +4,7 @@ import {Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {getStyles} from './ListItemScreen.style';
-import {useTheme} from '../../../context/Theme.context';
+import {useTheme} from '../../../context/ThemeContext';
 
 export interface IProps {
   item: any;

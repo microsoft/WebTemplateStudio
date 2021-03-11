@@ -3,7 +3,7 @@ import {View} from 'react-native';
 
 import ItemDetailScreen from '../ItemDetail/ItemDetailScreen';
 import {getStyles} from './DetailScreen.style';
-import {useTheme} from '../../../context/Theme.context';
+import {useTheme} from '../../../context/ThemeContext';
 
 const DetailScreen = (props: any): JSX.Element => {
   const {item} = props.route.params;

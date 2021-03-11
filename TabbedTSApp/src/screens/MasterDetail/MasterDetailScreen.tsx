@@ -4,7 +4,7 @@ import {View, FlatList, useWindowDimensions} from 'react-native';
 import sampleData from '../../data/sampleData';
 import ItemDetailScreen from './ItemDetail/ItemDetailScreen';
 import ListItemScreen from './ListItem/ListItemScreen';
-import {useTheme} from '../../context/Theme.context';
+import {useTheme} from '../../context/ThemeContext';
 
 import {getStyles} from './MasterDetailScreen.style';
 

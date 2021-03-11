@@ -4,7 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 
 import TabNavigation from './navigation/TabNavigation';
 
-import {ThemeProvider, useTheme} from './context/Theme.context';
+import {ThemeProvider, useTheme} from './context/ThemeContext';
 
 function App(): JSX.Element {
   const {theme} = useTheme();

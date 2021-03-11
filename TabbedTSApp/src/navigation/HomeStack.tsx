@@ -4,7 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import Home from '../screens/Home/HomeScreen';
 import {getScreenOptions} from './navigation.options';
-import {useTheme} from '../context/Theme.context';
+import {useTheme} from '../context/ThemeContext';
 
 const Stack = createStackNavigator();
 

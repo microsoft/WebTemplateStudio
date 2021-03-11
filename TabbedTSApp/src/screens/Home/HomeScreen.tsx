@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import {useTheme} from '../../context/Theme.context';
+import {useTheme} from '../../context/ThemeContext';
 
 import {getStyles} from './HomeScreen.style';
 

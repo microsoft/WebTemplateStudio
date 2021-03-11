@@ -5,7 +5,7 @@ import {Text, View, Linking, Button} from 'react-native';
 import {name, version} from '../../../package.json';
 import {Picker} from '@react-native-picker/picker';
 import {getStyles} from './SettingsScreen.style';
-import {useTheme} from '../../context/Theme.context';
+import {useTheme} from '../../context/ThemeContext';
 import {ThemeName} from '../../themes/Theme.interface';
 
 const goToPrivacyStatementLink = () => {

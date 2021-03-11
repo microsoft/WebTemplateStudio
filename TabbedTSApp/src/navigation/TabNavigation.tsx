@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MasterDetailStack from './MasterDetailStack';
 import HomeStack from './HomeStack';
 import SettingsStack from './SettingsStack';
-import {useTheme} from '../context/Theme.context';
+import {useTheme} from '../context/ThemeContext';
 import {getTabBarOptions} from './navigation.options';
 
 interface IScreenOpts{
