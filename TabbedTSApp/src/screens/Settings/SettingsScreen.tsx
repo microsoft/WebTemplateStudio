@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Text, View, Linking, Button} from 'react-native';
+import {Text, View, Linking} from 'react-native';
 
 import {name, version} from '../../../package.json';
 import {Picker} from '@react-native-picker/picker';
@@ -16,7 +16,7 @@ const goToTermsAndConditions = () => {
 };
 
 const Settings = (): JSX.Element => {
-  const {theme, themeName, setTheme} = useTheme();
+  const {theme, setTheme} = useTheme();
   const styles = React.useMemo(() => getStyles(theme), [theme]);
 
   return (
@@ -25,7 +25,7 @@ const Settings = (): JSX.Element => {
         <Text style={styles.title}>Personalization</Text>
         <Picker
           style={styles.picker}
-          selectedValue={themeName}
+          selectedValue={theme.name}
           onValueChange={(itemValue) => setTheme(itemValue)}>
           <Picker.Item label="Default" value={ThemeName.default} />
           <Picker.Item label="Light" value={ThemeName.light} />

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useColorScheme} from 'react-native';
 import {
   themes,
@@ -9,50 +9,56 @@ import {Theme, ThemeName} from '../themes/Theme.interface';
 
 interface ProvidedValue {
   theme: Theme;
-  themeName: ThemeName;
-  setTheme: (themeName: ThemeName) => void;
+  setTheme: (name: ThemeName) => void;
 }
 
 interface Props {
-  initial: Theme;
   children?: React.ReactNode;
 }
 
+const initlDefaultTheme = {...themes.light, name: ThemeName.default};
+
 export const ThemeProvider = React.memo<Props>((props) => {
-  const [theme, setTheme] = useState<Theme>(props.initial);
-  const [themeName, setThemeName] = useState<ThemeName>(ThemeName.default);
   const deviceTheme = useColorScheme();
+  const [defaultTheme, setdefaultTheme] = useState<Theme>(initlDefaultTheme);
+  const [selectedTheme, setSelectedTheme] = useState<Theme>(initlDefaultTheme);
+
+  useEffect(() => {
+    if (deviceTheme) {
+      var newDefaultTheme = {...themes[deviceTheme], name: ThemeName.default};
+      setdefaultTheme((oldDefaultTheme: Theme) =>
+        oldDefaultTheme.colors === newDefaultTheme.colors
+          ? oldDefaultTheme
+          : newDefaultTheme,
+      );
+    }
+  }, [deviceTheme]);
 
   useEffect(() => {
     const checkStoredTheme = async () => {
-      const storedThemeName = await getThemeNameFromStorage();
-      setThemeName(storedThemeName);
+      const name = await getThemeNameFromStorage();
+      const newTheme = name === ThemeName.default ? defaultTheme : themes[name];
+      setSelectedTheme(newTheme);
     };
     checkStoredTheme();
-  }, []);
+  }, [defaultTheme]);
 
-  useEffect(() => {
-    if (themeName === ThemeName.default) {
-      const newTheme = deviceTheme ? themes[deviceTheme] : themes.light;
-      setTheme(newTheme);
-    } else {
-      const newTheme = themes[themeName];
-      setTheme(newTheme);
-    }
-  }, [themeName, deviceTheme]);
-
-  useEffect(() => {
-    setThemeNameToStorage(themeName);
-  }, [themeName]);
+  const setThemeByName = useCallback(
+    (name: ThemeName) => {
+      const theme = name === ThemeName.default ? defaultTheme : themes[name];
+      setSelectedTheme(theme);
+      setThemeNameToStorage(theme.name);
+    },
+    [defaultTheme],
+  );
 
   const MemoizedValue = React.useMemo(() => {
     const value: ProvidedValue = {
-      theme,
-      themeName,
-      setTheme: setThemeName,
+      theme: selectedTheme,
+      setTheme: setThemeByName,
     };
     return value;
-  }, [theme, themeName, setThemeName]);
+  }, [selectedTheme, setThemeByName]);
 
   return (
     <Context.Provider value={MemoizedValue}>{props.children}</Context.Provider>
@@ -61,7 +67,6 @@ export const ThemeProvider = React.memo<Props>((props) => {
 
 const Context = React.createContext<ProvidedValue>({
   theme: themes.light,
-  themeName: ThemeName.default,
   setTheme: () => undefined,
 });
 

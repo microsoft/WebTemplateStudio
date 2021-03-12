@@ -10,7 +10,7 @@ function App(): JSX.Element {
   const {theme} = useTheme();
 
   return (
-    <ThemeProvider initial={theme}>
+    <ThemeProvider>
       <NavigationContainer theme={theme}>
         <TabNavigation />
       </NavigationContainer>
