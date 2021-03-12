@@ -6,7 +6,7 @@ import {name, version} from '../../../package.json';
 import {Picker} from '@react-native-picker/picker';
 import {getStyles} from './SettingsScreen.style';
 import {useTheme} from '../../context/ThemeContext';
-import {ThemeName} from '../../themes/Theme.interface';
+import {ThemeName} from '../../themes/types';
 
 const goToPrivacyStatementLink = () => {
   Linking.openURL('http://yourprivacystatementurlhere.com');

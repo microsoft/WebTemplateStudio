@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {DarkTheme} from './DarkTheme';
 import {LightTheme} from './LightTheme';
-import {Theme, ThemeName} from './Theme.interface';
+import {Theme, ThemeName} from './types';
 
 const themes: Record<ThemeName.light | ThemeName.dark, Theme> = {
   light: LightTheme,
@@ -15,11 +15,7 @@ const setThemeNameToStorage = async (themeName: ThemeName) => {
 };
 
 const getThemeNameFromStorage = async () => {
-  const themeName = await AsyncStorage.getItem(STORAGE_THEME_KEY);
-  return getThemeName(themeName);
-};
-
-const getThemeName = (name: string | null): ThemeName => {
+  const name = await AsyncStorage.getItem(STORAGE_THEME_KEY);
   const themeName = Object.values(ThemeName).find((t) => t === name);
   return themeName ?? ThemeName.default;
 };

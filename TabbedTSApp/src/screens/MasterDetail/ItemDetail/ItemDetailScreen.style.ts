@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 
 import appStyles, {FONTSIZE} from '../../../app.styles';
-import {Theme} from '../../../themes/Theme.interface';
+import {Theme} from '../../../themes/types';
 
 export const getStyles = (theme: Theme) =>
   StyleSheet.create({

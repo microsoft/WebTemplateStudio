@@ -1,4 +1,4 @@
-import {ThemeName, Theme} from './Theme.interface';
+import {ThemeName, Theme} from './types';
 import {DarkTheme as NavigationDarkTheme} from '@react-navigation/native';
 
 export const DarkTheme: Theme = {

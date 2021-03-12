@@ -1,6 +1,6 @@
 import {Platform, StyleSheet} from 'react-native';
 
-import {Theme} from '../../themes/Theme.interface';
+import {Theme} from '../../themes/types';
 import appStyles from '../../app.styles';
 
 export const getStyles = (theme: Theme) =>

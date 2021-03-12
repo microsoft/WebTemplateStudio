@@ -1,4 +1,4 @@
-import {Theme} from '../themes/Theme.interface';
+import {Theme} from '../themes/types';
 
 export const getTabBarOptions = (theme: Theme) => ({
   activeTintColor: theme.colors.primary,

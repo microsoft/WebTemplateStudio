@@ -5,7 +5,7 @@ import {
   getThemeNameFromStorage,
   setThemeNameToStorage,
 } from '../themes';
-import {Theme, ThemeName} from '../themes/Theme.interface';
+import {Theme, ThemeName} from '../themes/types';
 
 interface ProvidedValue {
   theme: Theme;

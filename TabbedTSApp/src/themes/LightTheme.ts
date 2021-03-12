@@ -1,4 +1,4 @@
-import {Theme, ThemeName} from './Theme.interface';
+import {Theme, ThemeName} from './types';
 import {DefaultTheme} from '@react-navigation/native';
 
 export const LightTheme: Theme = {
