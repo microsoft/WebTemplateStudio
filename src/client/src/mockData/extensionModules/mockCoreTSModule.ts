@@ -1,11 +1,12 @@
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/commands";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { PLATFORM } from "../../utils/constants/constants";
+import { mockedPlatform } from "../mockConfig";
 import * as mockReactNativeData from "./mockData/mockReactNativePlatformData";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as mockWebData from "./mockData/mockWebPlatformData";
 
-// WTS DEV: Change mock data to change platform
-const mockData = mockWebData;
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+const mockData = mockedPlatform === PLATFORM.REACTNATIVE ? mockReactNativeData : mockWebData;
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const getProjectTypes = (message: any): void => {
