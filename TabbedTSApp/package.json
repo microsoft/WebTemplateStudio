@@ -58,7 +58,8 @@
       "node_modules/(?!(jest-)?react-native|@?react-navigation|@?react-native-picker)"
     ],
     "setupFiles": [
-      "./node_modules/react-native-gesture-handler/jestSetup.js"
+      "./node_modules/react-native-gesture-handler/jestSetup.js",
+      "./jestSetupFile.js"
     ]
   }
 }
