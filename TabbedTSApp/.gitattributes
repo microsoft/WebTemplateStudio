@@ -1,0 +1,4 @@
+*.pbxproj -text
+
+*.ts text eol=lf
+*.tsx text eol=lf
