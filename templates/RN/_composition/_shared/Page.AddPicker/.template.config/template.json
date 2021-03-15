@@ -1,0 +1,28 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft",
+  "classifications": ["Universal"],
+  "name": "Project.AddPicker",
+  "shortName": "Project.AddPicker",
+  "identity": "wts.Project.AddPicker",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "composition",
+    "wts.platform": "RN",
+    "wts.version": "1.0.0",
+    "wts.compositionOrder": "3",
+    "wts.compositionFilter": "$page == wts.Page.ReactNative.Settings"
+  },
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.projectName": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_ProjectName",
+      "fileRename": "Param_ProjectName"
+    }
+  }
+}
