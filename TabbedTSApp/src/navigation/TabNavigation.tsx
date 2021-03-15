@@ -10,11 +10,11 @@ import SettingsStack from './SettingsStack';
 import {useTheme} from '../context/ThemeContext';
 import {getTabBarOptions} from './navigation.options';
 
-interface IScreenOpts{
+interface IScreenOpts {
   route: any;
 }
 
-interface ITabBarIconProps{
+interface ITabBarIconProps {
   focused: boolean;
   size: number;
   color: string;
