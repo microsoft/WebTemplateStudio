@@ -8,10 +8,10 @@ export const getStyles = () =>
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: 'lightgrey',
+      backgroundColor: '#f2f2f2',
     },
     text: {
       ...appStyles.text,
-      color: 'black',
+      color: '#1c1c1e',
     },
   });
