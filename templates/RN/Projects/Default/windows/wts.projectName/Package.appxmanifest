@@ -8,14 +8,14 @@
 
   <Identity
     Name="92e4e989-a684-4c29-95c0-50df3c3e74b0"
-    Publisher="CN=jfuente"
+    Publisher="CN=Param_UserName"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="92e4e989-a684-4c29-95c0-50df3c3e74b0" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Param_ProjectName</DisplayName>
-    <PublisherDisplayName>jfuente</PublisherDisplayName>
+    <PublisherDisplayName>Param_UserName</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
