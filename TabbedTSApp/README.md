@@ -59,14 +59,20 @@ Make sure your computer satisfies all the system requirements listed in the [off
 
 ### Run the sample on iOS
 [Go to React Native Documentation](https://reactnative.dev/docs/environment-setup)
+Once you have the repo and the environment setup, you will just need to run:
+```bash
+    yarn react-native link
+    yarn ios
+```
 
 ### Run the sample on Android
 [Go to React Native Documentation](https://reactnative.dev/docs/environment-setup)
 As a summary it should just work if after configuring your PC you just run:
 ```bash
-yarn react-native link
-yarn android
+    yarn react-native link
+    yarn android
 ```
+
 *Note*: ```yarn android``` it´s the same as running: ```npx react-native run-android```
 
 
