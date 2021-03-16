@@ -21,6 +21,7 @@
   },
   "sourceName": "wts.projectName",
   "preferNameDirectory": true,
+  "guids": [ "F85E6DD1-F8CB-4177-83CC-DA2361C43C91", "92e4e989-a684-4c29-95c0-50df3c3e74b0" ],
   "PrimaryOutputs": [],
   "symbols": {
     "wts.projectName": {
