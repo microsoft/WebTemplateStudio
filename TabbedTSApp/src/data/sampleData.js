@@ -16,8 +16,19 @@ tincidunt lobortis feugiat vivamus at augue. At augue eget arcu dictum
 varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt.
 Lorem donec massa sapien faucibus et molestie ac.`;
 
-const sampleData = {};
-sampleData.companies = [
+interface Company {
+  shortDescription: string,
+  longDescription: string,
+  title: string,
+  status: string,
+  shipTo: string,
+  orderTotal: number,
+  orderDate: string,
+  icon: string,
+  id: number,
+};
+
+const companies: Company[] = [
   {
     shortDescription: shortLoremIpsum,
     longDescription: longLoremIpsum,
@@ -96,5 +107,7 @@ sampleData.companies = [
     id: 7,
   },
 ];
+
+const sampleData = {companies: companies};
 
 export default sampleData;
