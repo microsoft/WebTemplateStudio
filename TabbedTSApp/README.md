@@ -65,6 +65,8 @@ Once you have the repo and the environment setup, you will just need to run:
     yarn ios
 ```
 
+*Note*: If navigation icons doesn´t display correctly you may need to go to ```ios``` folder and run ```pod install```
+
 ### Run the sample on Android
 [Go to React Native Documentation](https://reactnative.dev/docs/environment-setup)
 As a summary it should just work if after configuring your PC you just run:
