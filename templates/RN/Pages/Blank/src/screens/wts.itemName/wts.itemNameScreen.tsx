@@ -1,6 +1,5 @@
 ﻿import React from 'react';
 import {Text, View} from 'react-native';
-
 import {getStyles} from './wts.itemNameScreen.style';
 
 const wts.itemNameScreen = (): JSX.Element => {
