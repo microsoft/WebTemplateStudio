@@ -1,6 +1,6 @@
 ﻿import {StyleSheet} from 'react-native';
 
-import appStyles from '../../app.styles';
+import {appStyles, theme} from '../../app.styles';
 
 export const getStyles = () =>
   StyleSheet.create({
@@ -8,10 +8,10 @@ export const getStyles = () =>
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: 'lightgrey',
+      backgroundColor: theme.colors.background,
     },
     text: {
       ...appStyles.text,
-      color: 'black',
+      color: theme.colors.text,
     },
   });
