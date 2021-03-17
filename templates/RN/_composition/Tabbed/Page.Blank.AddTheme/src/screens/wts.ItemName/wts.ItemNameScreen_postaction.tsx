@@ -8,6 +8,6 @@ const wts.ItemNameScreen = (): JSX.Element => {
   //}--}
   //{[{
   const {theme} = useTheme();
-  const styles = React.useMemo(() => getStyles([theme]), [[theme]]);
+  const styles = React.useMemo(() => getStyles(theme), [[theme]]);
   //}]}
 };
