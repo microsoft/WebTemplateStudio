@@ -9,8 +9,7 @@ export interface IProps {
 }
 
 const ItemDetailScreen = ({item}: IProps): JSX.Element => {
-  const {theme} = useTheme();
-  const styles = React.useMemo(() => getStyles(), [theme]);
+  const styles = getStyles();
 
   return (
     item &&
