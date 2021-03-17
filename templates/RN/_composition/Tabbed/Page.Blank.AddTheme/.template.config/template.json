@@ -2,9 +2,9 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
-  "name": "wts.Project.RN.Tabbed.AddThemeToPage",
-  "shortName": "wts.Project.RN.Tabbed.AddThemeToPage",
-  "identity": "wts.Project.RN.Tabbed.AddThemeToPage",
+  "name": "wts.Page.RN.Blank.AddTheme",
+  "shortName": "wts.Page.RN.Blank.AddTheme",
+  "identity": "wts.Page.RN.Blank.AddTheme",
   "tags": {
     "language": "Any",
     "type": "item",
