@@ -22,17 +22,5 @@
     "tags": {
       "preview": false
     }
-  },
-  {
-    "name": "Drawer",
-    "displayName": "Drawer",
-    "summary": "Common pattern in navigation is to use drawer for navigating between screens.",
-    "order": "2",
-    "licenses": "[React Navigation](https://github.com/react-navigation/react-navigation/blob/main/packages/core/LICENSE)",
-    "platform": "RN",
-    "languages": ["Any"],
-    "tags": {
-      "preview": true
-    }
   }
 ]

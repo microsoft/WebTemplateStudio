@@ -9,21 +9,21 @@ export const getStyles = (theme: Theme) =>
       alignItems: 'flex-start',
       justifyContent: 'flex-start',
       paddingLeft: 15,
-      backgroundColor: '#f2f2f2',
+      backgroundColor: theme.colors.background,
     },
     section: {
       paddingVertical: 20,
       alignItems: 'flex-start',
       justifyContent: 'flex-start',
-      backgroundColor: '#f2f2f2',
+      backgroundColor: theme.colors.background,
     },
     title: {
       ...appStyles.title,
-      color: '#1c1c1e',
+      color: theme.colors.text,
     },
     text: {
       ...appStyles.text,
-      color: '#1c1c1e',
+      color: theme.colors.text,
     },
     link: {
       ...appStyles.link,
@@ -34,8 +34,8 @@ export const getStyles = (theme: Theme) =>
       width: 200,
       ...Platform.select({
         android: {
-          backgroundColor: '#d8d8d8',
-          color: '#1c1c1e',
+          backgroundColor: theme.colors.border,
+          color: theme.colors.text,
         },
       }),
     },

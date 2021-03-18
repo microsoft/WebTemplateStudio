@@ -46,7 +46,7 @@
       "node"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|@?react-navigation|@?react-native-picker)"
+      "node_modules/(?!(jest-)?react-native|@?react-navigation)"
     ],
     "setupFiles": [
       "./node_modules/react-native-gesture-handler/jestSetup.js",
