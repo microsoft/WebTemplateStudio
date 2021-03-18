@@ -3,8 +3,8 @@
 export const getTabBarOptions = () : any => ({
   activeTintColor: '#007aff',
   inactiveTintColor: theme.colors.text,
-  activeBackgroundColor: theme.background,
-  inactiveBackgroundColor: theme.background,
+  activeBackgroundColor: theme.colors.background,
+  inactiveBackgroundColor: theme.colors.background,
   style: {
     backgroundColor: theme.colors.border,
     borderTopWidth: 1,
@@ -14,7 +14,7 @@ export const getTabBarOptions = () : any => ({
 
 export const getScreenOptions = () : any => ({
   headerStyle: {
-    backgroundColor: theme.background,
+    backgroundColor: theme.colors.background,
   },
   headerTintColor: theme.colors.text,
 });

@@ -38,7 +38,7 @@ export const getStyles = () =>
       paddingVertical: 10,
     },
     listItemContainerNotSelected: {
-      backgroundColor: theme.background,
+      backgroundColor: theme.colors.background,
     },
     listItemContainerSelected: {
       backgroundColor: theme.colors.border,

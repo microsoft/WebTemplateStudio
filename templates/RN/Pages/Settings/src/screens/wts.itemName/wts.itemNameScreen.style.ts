@@ -9,13 +9,13 @@ export const getStyles = () =>
       alignItems: 'flex-start',
       justifyContent: 'flex-start',
       paddingLeft: 15,
-      backgroundColor: theme.background,
+      backgroundColor: theme.colors.background,
     },
     section: {
       paddingVertical: 20,
       alignItems: 'flex-start',
       justifyContent: 'flex-start',
-      backgroundColor: theme.background,
+      backgroundColor: theme.colors.background,
     },
     title: {
       ...appStyles.title,

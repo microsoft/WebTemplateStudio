@@ -7,7 +7,7 @@ export const getStyles = () =>
     masterDetailContainer: {
       flex: 1,
       flexDirection: 'row',
-      backgroundColor: theme.background,
+      backgroundColor: theme.colors.background,
     },
     listContainer: {
       flex: 1,

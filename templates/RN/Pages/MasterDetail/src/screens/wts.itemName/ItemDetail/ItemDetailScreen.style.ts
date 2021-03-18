@@ -9,12 +9,12 @@ export const getStyles = () =>
       alignItems: 'center',
       justifyContent: 'space-evenly',
       paddingLeft: 15,
-      backgroundColor: theme.background,
+      backgroundColor: theme.colors.background,
     },
     scrollView: {
       marginHorizontal: 10,
       paddingBottom: 10,
-      backgroundColor: theme.background,
+      backgroundColor: theme.colors.background,
     },
     titleContainer: {
       flexDirection: 'row',
