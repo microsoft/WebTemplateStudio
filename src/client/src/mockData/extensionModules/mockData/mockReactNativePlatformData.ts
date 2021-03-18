@@ -222,6 +222,33 @@ const pages = (frontendFramework: string): any => {
       rightClickEnabled: true,
       requiredVisualStudioWorkloads: [],
     },
+    {
+      templateId: `wts.Page.${frontendFramework}.Settings`,
+      name: "Settings",
+      defaultName: "Settings",
+      description: "A settings for you to build your web application from scratch.",
+      richDescription:
+        "This is the basic page settings. A page where to mold into whatever you wish. The settings page leaves pretty much everything up to you.",
+      author: "Microsoft",
+      version: "1.0.0",
+      icon: pageImage,
+      displayOrder: 0,
+      isHidden: false,
+      isGroupExclusiveSelection: false,
+      genGroup: 0,
+      multipleInstance: false,
+      itemNameEditable: false,
+      licenses: [
+        {
+          text: "Component",
+          url: "https://component/LICENSE",
+        },
+      ],
+      dependencies: [],
+      templateType: "Page",
+      rightClickEnabled: true,
+      requiredVisualStudioWorkloads: [],
+    },
   ];
 };
 
