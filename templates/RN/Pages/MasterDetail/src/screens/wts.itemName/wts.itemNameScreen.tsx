@@ -11,7 +11,7 @@ export interface IProps {
   navigation: any;
 }
 
-const MasterDetailScreen = ({navigation}: IProps): JSX.Element => {
+const wts.itemNameScreen = ({navigation}: IProps): JSX.Element => {
   const [selectedItem, setSelectedItem] = useState({id: null});
   const {width} = useWindowDimensions();
   const COMPACT_MODE_WIDTH = 700;
@@ -22,7 +22,7 @@ const MasterDetailScreen = ({navigation}: IProps): JSX.Element => {
   const handleOnPress = (item: any) => {
     setSelectedItem(item);
     if (isCompactMode) {
-      navigation.navigate('MasterDetailDetail', {item});
+      navigation.navigate('wts.itemNameDetail', {item});
     }
   };
 
@@ -57,4 +57,4 @@ const MasterDetailScreen = ({navigation}: IProps): JSX.Element => {
   );
 };
 
-export default MasterDetailScreen;
+export default wts.itemNameScreen;
