@@ -1,8 +1,8 @@
 ﻿import {Platform, StyleSheet} from 'react-native';
-
 import appStyles from '../../app.styles';
+import {Theme} from '../../themes/types';
 
-export const getStyles = () =>
+export const getStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       flex: 1,
