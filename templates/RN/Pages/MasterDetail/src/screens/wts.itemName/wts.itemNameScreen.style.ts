@@ -1,11 +1,13 @@
 ﻿import {StyleSheet} from 'react-native';
 
+import {theme} from '../../../app.styles';
+
 export const getStyles = () =>
   StyleSheet.create({
     masterDetailContainer: {
       flex: 1,
       flexDirection: 'row',
-      backgroundColor: '#f2f2f2',
+      backgroundColor: theme.background,
     },
     listContainer: {
       flex: 1,
@@ -13,12 +15,12 @@ export const getStyles = () =>
     itemDetailContainer: {
       flex: 2.5,
       borderLeftWidth: 1,
-      borderLeftColor: '#d8d8d8',
-      backgroundColor: '#d8d8d8',
+      borderLeftColor: theme.colors.border,
+      backgroundColor: theme.colors.border,
     },
     separator: {
       height: 1,
       width: '100%',
-      backgroundColor: '#d8d8d8',
+      backgroundColor: theme.colors.border,
     },
   });

@@ -3,13 +3,11 @@ import {View} from 'react-native';
 
 import ItemDetailScreen from '../ItemDetail/ItemDetailScreen';
 import {getStyles} from './DetailScreen.style';
-import {useTheme} from '../../../context/ThemeContext';
 
 const DetailScreen = (props: any): JSX.Element => {
   const {item} = props.route.params;
 
-  const {theme} = useTheme();
-  const styles = React.useMemo(() => getStyles(), [theme]);
+  const styles = React.useMemo(() => getStyles(), []);
 
   return (
     <View style={styles.container}>

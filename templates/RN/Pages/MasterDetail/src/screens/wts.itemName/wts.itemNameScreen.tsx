@@ -17,7 +17,7 @@ const MasterDetailScreen = ({navigation}: IProps): JSX.Element => {
   const COMPACT_MODE_WIDTH = 700;
   const isCompactMode = width < COMPACT_MODE_WIDTH;
 
-  const styles = getStyles();
+  const styles = React.useMemo(() => getStyles(), []);
 
   const handleOnPress = (item: any) => {
     setSelectedItem(item);

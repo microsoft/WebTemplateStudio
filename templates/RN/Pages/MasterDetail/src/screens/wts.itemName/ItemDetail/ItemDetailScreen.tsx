@@ -9,7 +9,7 @@ export interface IProps {
 }
 
 const ItemDetailScreen = ({item}: IProps): JSX.Element => {
-  const styles = getStyles();
+  const styles = React.useMemo(() => getStyles(), []);
 
   return (
     item &&

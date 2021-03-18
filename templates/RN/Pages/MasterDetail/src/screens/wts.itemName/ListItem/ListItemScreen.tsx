@@ -13,7 +13,7 @@ export interface IProps {
 
 const ListItemScreen = ({item, onPress, isSelected}: IProps) => {
   const {title, status} = item;
-  const styles = getStyles();
+  const styles = React.useMemo(() => getStyles(), []);
 
   return (
     <TouchableOpacity onPress={onPress}>
