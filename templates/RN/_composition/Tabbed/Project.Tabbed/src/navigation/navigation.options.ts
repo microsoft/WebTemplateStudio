@@ -1,18 +1,20 @@
-﻿export const getTabBarOptions = () : any => ({
-  activeTintColor: 'blue',
-  inactiveTintColor: 'black',
-  activeBackgroundColor: 'lightgrey',
-  inactiveBackgroundColor: 'lightgrey',
+﻿import {theme} from '../app.styles';
+
+export const getTabBarOptions = () : any => ({
+  activeTintColor: '#007aff',
+  inactiveTintColor: theme.colors.text,
+  activeBackgroundColor: theme.colors.background,
+  inactiveBackgroundColor: theme.colors.background,
   style: {
-    backgroundColor: 'grey',
+    backgroundColor: theme.colors.border,
     borderTopWidth: 1,
-    borderTopColor: 'grey',
+    borderTopColor: theme.colors.border,
   },
 });
 
 export const getScreenOptions = () : any => ({
   headerStyle: {
-    backgroundColor: 'lightgrey',
+    backgroundColor: theme.colors.background,
   },
-  headerTintColor: 'black',
+  headerTintColor: theme.colors.text,
 });

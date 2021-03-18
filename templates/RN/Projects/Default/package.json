@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.14.1",
-    "@react-native-picker/picker": "^1.9.11",
     "@types/react-native-vector-icons": "^6.4.6",
     "react": "16.13.1",
     "react-native": "0.63.4",
@@ -51,7 +50,8 @@
       "node_modules/(?!(jest-)?react-native|@?react-navigation)"
     ],
     "setupFiles": [
-      "./node_modules/react-native-gesture-handler/jestSetup.js"
+      "./node_modules/react-native-gesture-handler/jestSetup.js",
+      "./jestSetupFile.ts"
     ]
   }
 }

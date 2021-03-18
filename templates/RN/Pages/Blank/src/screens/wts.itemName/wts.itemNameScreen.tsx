@@ -4,7 +4,7 @@ import {Text, View} from 'react-native';
 import {getStyles} from './wts.itemNameScreen.style';
 
 const wts.itemNameScreen = (): JSX.Element => {
-  const styles = getStyles();
+  const styles = React.useMemo(() => getStyles(), []);
 
   return (
     <View style={styles.container}>
