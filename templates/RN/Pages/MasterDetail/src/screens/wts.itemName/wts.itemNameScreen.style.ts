@@ -1,6 +1,6 @@
 ﻿import {StyleSheet} from 'react-native';
 
-import {theme} from '../../../app.styles';
+import {theme} from '../../app.styles';
 
 export const getStyles = () =>
   StyleSheet.create({

@@ -5,7 +5,7 @@ export const theme = {
     primary: '#007aff',
     background: '#f2f2f2',
     card: '#ffffff',
-    text: '##1c1c1e',
+    text: '#1c1c1e',
     border: '#d8d8d8',
     notification: '#ff3b30',
   },
