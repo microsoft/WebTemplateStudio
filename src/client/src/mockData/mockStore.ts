@@ -107,6 +107,7 @@ export const getInitialState = (): AppState => {
           title: "Blank",
           id: "0.7087795384523403",
           icon: "",
+          multipleInstance: true,
         },
       ],
       outputPathObject: {
@@ -161,6 +162,7 @@ const loadPages = (frameWorkName: string): Array<any> => {
     defaultName: "Blank",
     isValidTitle: true,
     author: "Microsoft",
+    multipleInstance: true,
   };
   const gridPage = {
     body: "Simple image and text components which are organized into a grid.",
@@ -179,6 +181,7 @@ const loadPages = (frameWorkName: string): Array<any> => {
     defaultName: "Grid",
     isValidTitle: true,
     author: "Microsoft",
+    multipleInstance: true,
   };
   const listPage = {
     body: "Add and remove text from an adaptive list.",
@@ -197,6 +200,7 @@ const loadPages = (frameWorkName: string): Array<any> => {
     defaultName: "List",
     isValidTitle: true,
     author: "Microsoft",
+    multipleInstance: true,
   };
   const masterPage = {
     body: "A master pane and a details pane for content.",
@@ -215,12 +219,28 @@ const loadPages = (frameWorkName: string): Array<any> => {
     defaultName: "Master Detail",
     isValidTitle: true,
     author: "Microsoft",
+    multipleInstance: true,
   };
+  const settingsPage = {
+    body: "A settings page to configure your preferences for your web application.",
+    internalName: "wts.Page." + frameWorkName + ".Settings",
+    licenses: [],
+    longDescription: "This is the most basic settings page. ...",
+    selected: false,
+    icon: pageImage,
+    title: "Settings",
+    defaultName: "Settings",
+    isValidTitle: true,
+    author: "Microsoft",
+    multipleInstance: false,
+  };
+
   const pages: Array<any> = new Array<any>();
   pages.push(blankPage);
   pages.push(gridPage);
   pages.push(listPage);
   pages.push(masterPage);
+  pages.push(settingsPage);
 
   return pages;
 };
