@@ -27,64 +27,36 @@ describe("PageCard", () => {
   let store: any;
   const mockStore = configureMockStore();
 
-  describe("Blank page selected", () => {
-    beforeEach(() => {
-      const initialState: AppState = getInitialState();
-      loadMasters(initialState);
-      store = mockStore(initialState);
-      props = {
-        page: initialState.templates.pageOptions[0],
-        isModal: true,
-        intl: global.intl,
-      };
+  beforeEach(() => {
+    const initialState: AppState = getInitialState();
+    loadMasters(initialState);
+    store = mockStore(initialState);
+    props = {
+      page: initialState.templates.pageOptions[0],
+      isModal: true,
+      intl: global.intl,
+    };
 
-      wrapper = render(
-        <IntlProvider locale="en">
-          <Provider store={store}>
-            <PageCard {...props} />
-          </Provider>
-        </IntlProvider>
-      );
-    });
-
-    it("dont show button add page", () => {
-      expect(wrapper.queryByRole("figure")).toBe(null);
-    });
-
-    it("on mouse over if cannot add page should show button add page", () => {
-      fireEvent.mouseOver(wrapper.getByRole("button"));
-      expect(wrapper.queryByRole("figure")).toBeDefined();
-    });
-
-    it("add page", () => {
-      fireEvent.click(wrapper.getByRole("button"));
-      expect(setPagesAction).toBeCalled();
-    });
+    wrapper = render(
+      <IntlProvider locale="en">
+        <Provider store={store}>
+          <PageCard {...props} />
+        </Provider>
+      </IntlProvider>
+    );
   });
 
-  describe("Settings page selected", () => {
-    beforeEach(() => {
-      const initialState: AppState = getInitialState();
-      loadMasters(initialState);
-      store = mockStore(initialState);
-      props = {
-        page: initialState.templates.pageOptions[4],
-        isModal: true,
-        intl: global.intl,
-      };
+  it("dont show button add page", () => {
+    expect(wrapper.queryByRole("figure")).toBe(null);
+  });
 
-      wrapper = render(
-        <IntlProvider locale="en">
-          <Provider store={store}>
-            <PageCard {...props} />
-          </Provider>
-        </IntlProvider>
-      );
-    });
+  it("on mouse over if cannot add page should show button add page", () => {
+    fireEvent.mouseOver(wrapper.getByRole("button"));
+    expect(wrapper.queryByRole("figure")).toBeDefined();
+  });
 
-    it("on mouse over if can add page should show button add page", () => {
-      fireEvent.mouseOver(wrapper.getByRole("button"));
-      expect(wrapper.queryByRole("figure")).toBe(null);
-    });
+  it("add page", () => {
+    fireEvent.click(wrapper.getByRole("button"));
+    expect(setPagesAction).toBeCalled();
   });
 });
