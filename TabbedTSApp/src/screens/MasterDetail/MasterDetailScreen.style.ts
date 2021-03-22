@@ -3,7 +3,7 @@ import {Theme} from '../../themes/types';
 
 export const getStyles = (theme: Theme) =>
   StyleSheet.create({
-    masterDetailContainer: {
+    container: {
       flex: 1,
       flexDirection: 'row',
       backgroundColor: theme.colors.background,

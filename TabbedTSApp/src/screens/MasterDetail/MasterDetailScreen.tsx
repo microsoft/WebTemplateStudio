@@ -33,7 +33,7 @@ const MasterDetailScreen = ({navigation}: IProps): JSX.Element => {
   };
 
   return (
-    <View style={styles.masterDetailContainer}>
+    <View style={styles.container}>
       {/* MASTER DETAIL LIST */}
       <View style={styles.listContainer}>
         <FlatList
