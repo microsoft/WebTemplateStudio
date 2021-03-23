@@ -17,16 +17,16 @@ varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt.
 Lorem donec massa sapien faucibus et molestie ac.`;
 
 interface Company {
-  shortDescription: string,
-  longDescription: string,
-  title: string,
-  status: string,
-  shipTo: string,
-  orderTotal: number,
-  orderDate: string,
-  icon: string,
-  id: number,
-};
+  shortDescription: string;
+  longDescription: string;
+  title: string;
+  status: string;
+  shipTo: string;
+  orderTotal: number;
+  orderDate: string;
+  icon: string;
+  id: number;
+}
 
 const companies: Company[] = [
   {

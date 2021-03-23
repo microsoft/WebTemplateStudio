@@ -2,9 +2,8 @@
 //{[{
 import wts.ItemNameStack from './wts.ItemNameStack';
 //}]}
-interface IScreenOpts{
-        },
-      })}>
+    <Tab.Navigator
+      tabBarOptions={tabBarOptions}>
       //^^
       //{[{
           <Tab.Screen name="wts.ItemName" component={wts.ItemNameStack} />

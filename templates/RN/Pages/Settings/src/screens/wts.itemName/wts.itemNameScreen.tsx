@@ -1,7 +1,5 @@
 ﻿import React from 'react';
-
 import {Text, View, Linking} from 'react-native';
-
 import {name, version} from '../../../package.json';
 import {Picker} from '@react-native-picker/picker';
 import {getStyles} from './wts.itemNameScreen.style';
@@ -17,7 +15,7 @@ const goToTermsAndConditions = () => {
 
 const wts.itemNameScreen = (): JSX.Element => {
   const {theme, setTheme} = useTheme();
-  const styles = React.useMemo(() => getStyles(), [theme]);
+  const styles = React.useMemo(() => getStyles(theme), [theme]);
 
   return (
     <View style={styles.container}>

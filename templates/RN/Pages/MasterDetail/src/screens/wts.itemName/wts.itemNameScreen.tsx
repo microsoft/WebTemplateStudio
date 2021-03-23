@@ -31,8 +31,7 @@ const wts.itemNameScreen = ({navigation}: IProps): JSX.Element => {
   };
 
   return (
-    <View style={styles.masterDetailContainer}>
-      {/* MASTER DETAIL LIST */}
+    <View style={styles.container}>
       <View style={styles.listContainer}>
         <FlatList
           data={sampleData.companies}
@@ -47,7 +46,6 @@ const wts.itemNameScreen = ({navigation}: IProps): JSX.Element => {
           keyExtractor={(item) => item.id.toString()}
         />
       </View>
-      {/* MASTER DETAIL DETAIL */}
       {!isCompactMode && (
         <View style={styles.itemDetailContainer}>
           <ItemDetailScreen item={selectedItem} />
