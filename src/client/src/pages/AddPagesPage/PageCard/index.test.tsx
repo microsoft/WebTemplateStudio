@@ -50,10 +50,9 @@ describe("PageCard", () => {
     expect(wrapper.queryByRole("figure")).toBe(null);
   });
 
-  it("on mouse over show button add page", () => {
+  it("on mouse over if cannot add page should show button add page", () => {
     fireEvent.mouseOver(wrapper.getByRole("button"));
-    const addPage = wrapper.getByRole("figure");
-    expect(addPage).toBeDefined();
+    expect(wrapper.queryByRole("figure")).toBeDefined();
   });
 
   it("add page", () => {
