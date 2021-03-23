@@ -4,7 +4,7 @@ import {theme} from '../../app.styles';
 
 export const getStyles = () =>
   StyleSheet.create({
-    masterDetailContainer: {
+    container: {
       flex: 1,
       flexDirection: 'row',
       backgroundColor: theme.colors.background,

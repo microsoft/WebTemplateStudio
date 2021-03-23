@@ -3,11 +3,11 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {getTabBarOptions} from './navigation.options';
 
-interface IScreenOpts{
+interface IScreenOpts {
   route: any;
 }
 
-interface ITabBarIconProps{
+interface ITabBarIconProps {
   focused: boolean;
   size: number;
   color: string;

@@ -15,17 +15,11 @@
     "wts.projecttype": "all",
     "wts.frontendframework": "all",
     "wts.version": "1.0.0",
-    "wts.displayOrder": "0",
-    "wts.casing.sourceName": "pascal"
+    "wts.displayOrder": "0"
   },
   "sourceName": "wts.itemName",
   "preferNameDirectory": true,
   "PrimaryOutputs": [],
   "symbols": {
-    "wts.sourceName.casing.pascal": {
-      "type": "parameter",
-      "replaces": "Param_SourceName_Pascal",
-      "fileRename": "Param_SourceName_Pascal"
-    }
   }
 }
