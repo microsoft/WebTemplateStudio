@@ -3,6 +3,7 @@ import * as React from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { connect, useDispatch } from "react-redux";
 
+import { ReactComponent as Check } from "../../../assets/check.svg";
 import { ReactComponent as Plus } from "../../../assets/plus.svg";
 import Icon from "../../../components/Icon";
 import buttonStyles from "../../../css/button.module.css";
@@ -25,7 +26,7 @@ const PageCard = (props: Props) => {
   const dispatch = useDispatch();
 
   const numSelectedPages = selectedPages.filter((selectedPage) => selectedPage.defaultName === page.defaultName).length;
-  const canAddPage = !pageOutOfBounds && (page.multipleInstance || (!page.multipleInstance && numSelectedPages === 0));
+  const canAddPage = !pageOutOfBounds && (page.multipleInstance || numSelectedPages === 0);
 
   const addPage = () => {
     const select: ISelected = {
@@ -112,6 +113,7 @@ const PageCard = (props: Props) => {
           )}
         </div>
         <div>{page.multipleInstance ? numSelectedPages : ""}</div>
+        {!page.multipleInstance && numSelectedPages > 0 && <Check role="figure" className={cardStyles.iconCheckMark} />}
       </div>
     </div>
   );
