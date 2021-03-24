@@ -23,7 +23,6 @@ const TabNavigation = (): JSX.Element => {
     // For more information about vector icons visit: https://github.com/oblador/react-native-vector-icons
     let icon;
     switch (routeName) {
-      //TODO: Should we add Home for the very first page or live that to the user
       default:
         icon = 'md-square';
     }

@@ -2,16 +2,16 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft Community",
   "classifications": ["Universal"],
-  "name": "wts.RN.Page.Tabbed.AddNavigate",
-  "shortName": "wts.RN.Page.Tabbed.AddNavigate",
-  "identity": "wts.RN.Page.Tabbed.AddNavigate",
+  "name": "wts.RN.Tabbed.Page.AddNavigate",
+  "shortName": "wts.RN.Tabbed.Page.AddNavigate",
+  "identity": "wts.RN.Tabbed.Page.AddNavigate",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "RN",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$projectType == Tabbed & identity == wts.Page.RN.Blank|wts.Page.RN.Settings"
+    "wts.compositionFilter": "$projectType == Tabbed & identity == wts.RN.Page.Blank|wts.RN.Page.Settings"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,

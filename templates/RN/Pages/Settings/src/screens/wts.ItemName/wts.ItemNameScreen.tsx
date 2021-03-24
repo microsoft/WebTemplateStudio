@@ -15,7 +15,7 @@ const goToTermsAndConditions = () => {
   Linking.openURL('http://yourtermsandconditionsurlhere.com');
 };
 
-const wts.itemNameScreen = (): JSX.Element => {
+const wts.ItemNameScreen = (): JSX.Element => {
   const {theme, setTheme} = useTheme();
   const styles = React.useMemo(() => getStyles(theme), [theme]);
 
@@ -53,4 +53,4 @@ const wts.itemNameScreen = (): JSX.Element => {
   );
 };
 
-export default wts.itemNameScreen;
+export default wts.ItemNameScreen;
