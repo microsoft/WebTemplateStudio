@@ -4,15 +4,15 @@ import {useTheme} from '../../context/ThemeContext';
 
 import {getStyles} from './HomeScreen.style';
 
-const Home = (): JSX.Element => {
+const HomeScreen = (): JSX.Element => {
   const {theme} = useTheme();
   const styles = React.useMemo(() => getStyles(theme), [theme]);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Home</Text>
+      <Text style={styles.text}>HomeScreen</Text>
     </View>
   );
 };
 
-export default Home;
+export default HomeScreen;
