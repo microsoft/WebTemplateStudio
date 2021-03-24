@@ -19,7 +19,7 @@ function App(): JSX.Element {
       <NavigationContainer theme={theme}>
         <TabNavigation />
       </NavigationContainer>
-  </ThemeProvider>
+    </ThemeProvider>
     //}]}
   );
 }

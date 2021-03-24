@@ -1,7 +1,9 @@
 ﻿import React from 'react';
 import {Text, View, Linking} from 'react-native';
-import {name, version} from '../../../package.json';
 import {Picker} from '@react-native-picker/picker';
+
+import {name, version} from '../../../package.json';
+
 import {getStyles} from './wts.itemNameScreen.style';
 import {useTheme} from '../../context/ThemeContext';
 import {ThemeName} from '../../themes/types';
@@ -24,7 +26,7 @@ const wts.itemNameScreen = (): JSX.Element => {
         <Picker
           style={styles.picker}
           selectedValue={theme.name}
-          onValueChange={(itemValue: any) => setTheme(itemValue)}>
+          onValueChange={(itemValue: string) => setTheme(itemValue)}>
           <Picker.Item label="Default" value={ThemeName.default} />
           <Picker.Item label="Light" value={ThemeName.light} />
           <Picker.Item label="Dark" value={ThemeName.dark} />

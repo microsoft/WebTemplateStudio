@@ -1,4 +1,5 @@
 ﻿import {Platform, StyleSheet} from 'react-native';
+
 import {appStyles} from '../../app.styles';
 import {Theme} from '../../themes/types';
 
@@ -27,7 +28,7 @@ export const getStyles = (theme: Theme) =>
     },
     link: {
       ...appStyles.link,
-      color: '#007aff',
+      color: theme.colors.primary,
     },
     picker: {
       height: 30,
