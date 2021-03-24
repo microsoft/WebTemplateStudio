@@ -2,16 +2,16 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
-  "name": "wts.Page.RN.Blank.AddTheme",
-  "shortName": "wts.Page.RN.Blank.AddTheme",
-  "identity": "wts.Page.RN.Blank.AddTheme",
+  "name": "wts.RN.Tabbed.Page.Blank.AddTheme",
+  "shortName": "wts.RN.Tabbed.Page.Blank.AddTheme",
+  "identity": "wts.RN.Tabbed.Page.Blank.AddTheme",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "RN",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$projectType == Tabbed & identity == wts.Page.RN.Blank & $page == wts.Page.RN.Settings"
+    "wts.compositionFilter": "$projectType == Tabbed & identity == wts.RN.Page.Blank & $page == wts.RN.Page.Settings"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,

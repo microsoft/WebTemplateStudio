@@ -2,7 +2,7 @@
 import {Text, View, Linking} from 'react-native';
 import {name, version} from '../../../package.json';
 import {Picker} from '@react-native-picker/picker';
-import {getStyles} from './wts.itemNameScreen.style';
+import {getStyles} from './wts.ItemNameScreen.style';
 import {useTheme} from '../../context/ThemeContext';
 import {ThemeName} from '../../themes/types';
 
@@ -13,7 +13,7 @@ const goToTermsAndConditions = () => {
   Linking.openURL('http://yourtermsandconditionsurlhere.com');
 };
 
-const wts.itemNameScreen = (): JSX.Element => {
+const wts.ItemNameScreen = (): JSX.Element => {
   const {theme, setTheme} = useTheme();
   const styles = React.useMemo(() => getStyles(theme), [theme]);
 
@@ -51,4 +51,4 @@ const wts.itemNameScreen = (): JSX.Element => {
   );
 };
 
-export default wts.itemNameScreen;
+export default wts.ItemNameScreen;

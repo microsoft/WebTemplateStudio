@@ -1,15 +1,15 @@
 ﻿import React from 'react';
 import {Text, View} from 'react-native';
-import {getStyles} from './wts.itemNameScreen.style';
+import {getStyles} from './wts.ItemNameScreen.style';
 
-const wts.itemNameScreen = (): JSX.Element => {
+const wts.ItemNameScreen = (): JSX.Element => {
   const styles = React.useMemo(() => getStyles(), []);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>wts.itemNameScreen</Text>
+      <Text style={styles.text}>wts.ItemNameScreen</Text>
     </View>
   );
 };
 
-export default wts.itemNameScreen;
+export default wts.ItemNameScreen;
