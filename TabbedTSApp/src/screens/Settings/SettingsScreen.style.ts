@@ -1,7 +1,7 @@
 import {Platform, StyleSheet} from 'react-native';
 
+import {appStyles} from '../../app.styles';
 import {Theme} from '../../themes/types';
-import appStyles from '../../app.styles';
 
 export const getStyles = (theme: Theme) =>
   StyleSheet.create({

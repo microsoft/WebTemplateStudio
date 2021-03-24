@@ -4,15 +4,14 @@ import {View, FlatList, useWindowDimensions} from 'react-native';
 import sampleData from '../../data/sampleData';
 import ItemDetailScreen from './ItemDetail/ItemDetailScreen';
 import ListItemScreen from './ListItem/ListItemScreen';
+import {getStyles} from './Master_DetailScreen.style';
 import {useTheme} from '../../context/ThemeContext';
-
-import {getStyles} from './MasterDetailScreen.style';
 
 export interface IProps {
   navigation: any;
 }
 
-const MasterDetailScreen = ({navigation}: IProps): JSX.Element => {
+const Master_DetailScreen = ({navigation}: IProps): JSX.Element => {
   const [selectedItem, setSelectedItem] = useState({id: null});
   const {width} = useWindowDimensions();
   const COMPACT_MODE_WIDTH = 700;
@@ -24,7 +23,7 @@ const MasterDetailScreen = ({navigation}: IProps): JSX.Element => {
   const handleOnPress = (item: any) => {
     setSelectedItem(item);
     if (isCompactMode) {
-      navigation.navigate('MasterDetailDetail', {item});
+      navigation.navigate('Master_DetailDetail', {item});
     }
   };
 
@@ -34,7 +33,6 @@ const MasterDetailScreen = ({navigation}: IProps): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      {/* MASTER DETAIL LIST */}
       <View style={styles.listContainer}>
         <FlatList
           data={sampleData.companies}
@@ -49,7 +47,6 @@ const MasterDetailScreen = ({navigation}: IProps): JSX.Element => {
           keyExtractor={(item) => item.id.toString()}
         />
       </View>
-      {/* MASTER DETAIL DETAIL */}
       {!isCompactMode && (
         <View style={styles.itemDetailContainer}>
           <ItemDetailScreen item={selectedItem} />
@@ -59,4 +56,4 @@ const MasterDetailScreen = ({navigation}: IProps): JSX.Element => {
   );
 };
 
-export default MasterDetailScreen;
+export default Master_DetailScreen;

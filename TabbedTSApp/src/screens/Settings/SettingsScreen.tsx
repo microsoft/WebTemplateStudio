@@ -1,9 +1,9 @@
 import React from 'react';
-
 import {Text, View, Linking} from 'react-native';
+import {Picker} from '@react-native-picker/picker';
 
 import {name, version} from '../../../package.json';
-import {Picker} from '@react-native-picker/picker';
+
 import {getStyles} from './SettingsScreen.style';
 import {useTheme} from '../../context/ThemeContext';
 import {ThemeName} from '../../themes/types';
@@ -15,7 +15,7 @@ const goToTermsAndConditions = () => {
   Linking.openURL('http://yourtermsandconditionsurlhere.com');
 };
 
-const Settings = (): JSX.Element => {
+const SettingsScreen = (): JSX.Element => {
   const {theme, setTheme} = useTheme();
   const styles = React.useMemo(() => getStyles(theme), [theme]);
 
@@ -26,7 +26,7 @@ const Settings = (): JSX.Element => {
         <Picker
           style={styles.picker}
           selectedValue={theme.name}
-          onValueChange={(itemValue) => setTheme(itemValue)}>
+          onValueChange={(itemValue: string) => setTheme(itemValue)}>
           <Picker.Item label="Default" value={ThemeName.default} />
           <Picker.Item label="Light" value={ThemeName.light} />
           <Picker.Item label="Dark" value={ThemeName.dark} />
@@ -53,4 +53,4 @@ const Settings = (): JSX.Element => {
   );
 };
 
-export default Settings;
+export default SettingsScreen;

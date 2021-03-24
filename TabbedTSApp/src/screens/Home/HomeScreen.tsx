@@ -1,8 +1,8 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import {useTheme} from '../../context/ThemeContext';
 
 import {getStyles} from './HomeScreen.style';
+import {useTheme} from '../../context/ThemeContext';
 
 const HomeScreen = (): JSX.Element => {
   const {theme} = useTheme();

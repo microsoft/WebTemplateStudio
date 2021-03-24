@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import {createStackNavigator} from '@react-navigation/stack';
 
 import Settings from '../screens/Settings/SettingsScreen';

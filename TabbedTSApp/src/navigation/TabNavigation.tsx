@@ -1,14 +1,12 @@
 import React from 'react';
-
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import MasterDetailStack from './MasterDetailStack';
 import HomeStack from './HomeStack';
+import Master_DetailStack from './Master_DetailStack';
 import SettingsStack from './SettingsStack';
-import {useTheme} from '../context/ThemeContext';
 import {getTabBarOptions} from './navigation.options';
+import {useTheme} from '../context/ThemeContext';
 
 interface IScreenOpts {
   route: any;
@@ -30,9 +28,6 @@ const TabNavigation = (): JSX.Element => {
     // For more information about vector icons visit: https://github.com/oblador/react-native-vector-icons
     let icon;
     switch (routeName) {
-      case 'Home':
-        icon = 'home';
-        break;
       case 'Settings':
         icon = 'settings';
         break;
@@ -56,13 +51,7 @@ const TabNavigation = (): JSX.Element => {
       })}
       tabBarOptions={tabBarOptions}>
       <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen
-        name="MasterDetailStack"
-        component={MasterDetailStack}
-        options={{title: 'Master Detail'}}
-      />
-
-      {/* Place this at the end */}
+      <Tab.Screen name="Master_Detail" component={Master_DetailStack} />
       <Tab.Screen name="Settings" component={SettingsStack} />
     </Tab.Navigator>
   );
