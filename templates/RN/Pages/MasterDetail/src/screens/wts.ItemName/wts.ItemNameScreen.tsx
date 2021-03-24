@@ -5,13 +5,13 @@ import sampleData from '../../data/sampleData';
 import ItemDetailScreen from './ItemDetail/ItemDetailScreen';
 import ListItemScreen from './ListItem/ListItemScreen';
 
-import {getStyles} from './wts.itemNameScreen.style';
+import {getStyles} from './wts.ItemNameScreen.style';
 
 export interface IProps {
   navigation: any;
 }
 
-const wts.itemNameScreen = ({navigation}: IProps): JSX.Element => {
+const wts.ItemNameScreen = ({navigation}: IProps): JSX.Element => {
   const [selectedItem, setSelectedItem] = useState({id: null});
   const {width} = useWindowDimensions();
   const COMPACT_MODE_WIDTH = 700;
@@ -22,7 +22,7 @@ const wts.itemNameScreen = ({navigation}: IProps): JSX.Element => {
   const handleOnPress = (item: any) => {
     setSelectedItem(item);
     if (isCompactMode) {
-      navigation.navigate('wts.itemNameDetail', {item});
+      navigation.navigate('wts.ItemNameDetail', {item});
     }
   };
 
@@ -55,4 +55,4 @@ const wts.itemNameScreen = ({navigation}: IProps): JSX.Element => {
   );
 };
 
-export default wts.itemNameScreen;
+export default wts.ItemNameScreen;

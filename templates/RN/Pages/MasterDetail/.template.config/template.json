@@ -17,7 +17,7 @@
     "wts.version": "1.0.0",
     "wts.displayOrder": "0"
   },
-  "sourceName": "wts.itemName",
+  "sourceName": "wts.ItemName",
   "preferNameDirectory": true,
   "PrimaryOutputs": [],
   "symbols": {
