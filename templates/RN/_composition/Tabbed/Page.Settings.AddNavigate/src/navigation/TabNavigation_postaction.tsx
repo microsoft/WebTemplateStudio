@@ -6,5 +6,5 @@
         break;
       //}]}
       default:
-      icon = 'md-square';
+        icon = 'md-square';
     }

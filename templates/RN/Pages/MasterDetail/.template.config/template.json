@@ -4,8 +4,8 @@
   "classifications": ["Universal"],
   "name": "MasterDetail",
   "shortName": "MasterDetail",
-  "groupIdentity": "wts.Page.RN.MasterDetail",
-  "identity": "wts.Page.RN.MasterDetail",
+  "groupIdentity": "wts.RN.Page.MasterDetail",
+  "identity": "wts.RN.Page.MasterDetail",
   "description": "The master-detail page has a master pane and a details pane for content.",
   "tags": {
     "language": "Any",

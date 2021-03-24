@@ -4,8 +4,8 @@
   "classifications": ["Universal"],
   "name": "Settings",
   "shortName": "Settings",
-  "groupIdentity": "wts.Page.RN.Settings",
-  "identity": "wts.Page.RN.Settings",
+  "groupIdentity": "wts.RN.Page.Settings",
+  "identity": "wts.RN.Page.Settings",
   "description": "The settings page is the page where we recommmend putting the configuration settings for your app.",
   "tags": {
     "language": "Any",

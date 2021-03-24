@@ -2,16 +2,16 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft Community",
   "classifications": ["Universal"],
-  "name": "Page.RN.AddSampleData",
-  "shortName": "Page.RN.AddSampleData",
-  "identity": "Page.RN.AddSampleData",
+  "name": "wts.RN.Page.AddSampleData",
+  "shortName": "wts.RN.Page.AddSampleData",
+  "identity": "wts.RN.Page.AddSampleData",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "RN",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "groupIdentity == wts.Page.RN.MasterDetail"
+    "wts.compositionFilter": "groupIdentity == wts.RN.Page.MasterDetail"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,
