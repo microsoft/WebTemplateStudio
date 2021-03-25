@@ -8,7 +8,7 @@ export const FONTSIZE = {
   SMALL: 14,
 };
 
-export default StyleSheet.create({
+export const appStyles = StyleSheet.create({
   title_xxlarge: {
     fontSize: FONTSIZE.XXLARGE,
     fontWeight: 'bold',
