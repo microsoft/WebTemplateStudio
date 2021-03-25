@@ -20,9 +20,6 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <PackageCertificateKeyFile>TabbedTSApp_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>12A90D8BA3A73BE30985CE3BB180CC3B0F2DB8D7</PackageCertificateThumbprint>
-    <PackageCertificatePassword>password</PackageCertificatePassword>
     <AppxGeneratePrisForPortableLibrariesEnabled>false</AppxGeneratePrisForPortableLibrariesEnabled>
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
@@ -139,7 +136,6 @@
     <Content Include="..\..\node_modules\react-native-vector-icons\Fonts\Ionicons.ttf">
       <Link>Assets\Ionicons.ttf</Link>
     </Content>
-    <None Include="TabbedTSApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />
