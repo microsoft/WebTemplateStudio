@@ -4,7 +4,7 @@ import {View, FlatList, useWindowDimensions} from 'react-native';
 import sampleData from '../../data/sampleData';
 import ItemDetailScreen from './ItemDetail/ItemDetailScreen';
 import ListItemScreen from './ListItem/ListItemScreen';
-import {getStyles} from './wts.itemNameScreen.style';
+import {getStyles} from './wts.ItemNameScreen.style';
 
 export interface IProps {
   navigation: any;

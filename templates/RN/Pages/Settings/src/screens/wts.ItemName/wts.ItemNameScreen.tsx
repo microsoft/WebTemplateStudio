@@ -4,7 +4,7 @@ import {Picker} from '@react-native-picker/picker';
 
 import {name, version} from '../../../package.json';
 
-import {getStyles} from './wts.itemNameScreen.style';
+import {getStyles} from './wts.ItemNameScreen.style';
 import {useTheme} from '../../context/ThemeContext';
 import {ThemeName} from '../../themes/types';
 
