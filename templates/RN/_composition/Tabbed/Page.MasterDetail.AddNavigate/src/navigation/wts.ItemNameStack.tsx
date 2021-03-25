@@ -1,5 +1,6 @@
 ﻿import * as React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
+
 import wts.ItemNameScreen from '../screens/wts.ItemName/wts.ItemNameScreen';
 import DetailScreen from '../screens/wts.ItemName/Detail/DetailScreen';
 import {getScreenOptions} from './navigation.options';

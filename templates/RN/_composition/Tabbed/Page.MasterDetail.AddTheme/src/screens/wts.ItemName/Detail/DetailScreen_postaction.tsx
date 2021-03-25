@@ -1,5 +1,4 @@
-import React from 'react';
-import {View} from 'react-native';
+import {getStyles} from './DetailScreen.style';
 //{[{
 import {useTheme} from '../../../context/ThemeContext';
 //}]}
@@ -9,7 +8,7 @@ const DetailScreen = (props: any): JSX.Element => {
   //}--}
   //{[{
   const {theme} = useTheme();
-  const styles = React.useMemo(() => getStyles(theme), [[theme]]);
+  const styles = React.useMemo(() => getStyles(theme), [theme]);
   //}]}
 };
 

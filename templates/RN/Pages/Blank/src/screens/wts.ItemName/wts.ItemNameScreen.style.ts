@@ -1,4 +1,5 @@
 ﻿import {StyleSheet} from 'react-native';
+
 import {appStyles, theme} from '../../app.styles';
 
 export const getStyles = () =>

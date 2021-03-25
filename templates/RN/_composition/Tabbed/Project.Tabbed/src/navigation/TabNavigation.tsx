@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
+
 import {getTabBarOptions} from './navigation.options';
 
 interface IScreenOpts {
@@ -36,8 +37,7 @@ const TabNavigation = (): JSX.Element => {
       initialRouteName="Home"
       screenOptions={({route}: IScreenOpts) => ({
         tabBarIcon: ({focused, size, color}: ITabBarIconProps) => {
-          let iconName = getIcon(route.name, focused);
-
+          const iconName = getIcon(route.name, focused);
           return <Icon name={iconName} size={size} color={color} />;
         },
       })}
