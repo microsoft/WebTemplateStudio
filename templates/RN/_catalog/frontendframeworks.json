@@ -2,7 +2,7 @@
     {
       "name": "ReactNative",
       "displayName": "ReactNative",
-      "summary": "JavaScript framework",
+      "summary": "A JavaScript framework for building native app using React.",
       "author": "Facebook",
       "order": "1",
       "licenses": "[React Native](https://github.com/facebook/react-native/blob/master/LICENSE)",
