@@ -8,14 +8,14 @@
 
   <Identity
     Name="13522b9d-80d9-4f39-9a59-d898695feba2"
-    Publisher="CN=David-IlitiaPC"
+    Publisher="CN=test"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="13522b9d-80d9-4f39-9a59-d898695feba2" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>tabbedappts</DisplayName>
-    <PublisherDisplayName>David-IlitiaPC</PublisherDisplayName>
+    <PublisherDisplayName>test</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
