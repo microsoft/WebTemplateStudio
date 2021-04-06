@@ -2,16 +2,16 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
-  "name": "wts.Project.RN.AddPicker",
-  "shortName": "wts.Project.RN.AddPicker",
-  "identity": "wts.Project.RN.AddPicker",
+  "name": "wts.RN.Page.AddPicker",
+  "shortName": "wts.RN.Page.AddPicker",
+  "identity": "wts.RN.Page.AddPicker",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "RN",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "groupidentity == wts.Page.RN.Settings"
+    "wts.compositionFilter": "groupidentity == wts.RN.Page.Settings"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,

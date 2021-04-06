@@ -347,6 +347,7 @@ src/extension/package.nls.*.json
 **/*.vsix
 
 !templates/**/package-lock.json
+!/templates/**/android/app/src/debug/
 
 # Ignore OS generated files #
 .DS_Store

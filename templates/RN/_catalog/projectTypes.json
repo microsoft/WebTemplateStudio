@@ -1,17 +1,5 @@
 [
   {
-    "name": "Blank",
-    "displayName": "Blank",
-    "summary": "Basic project upon which to build your app.",
-    "order": "1",
-    "licenses": "[React Native](https://github.com/facebook/react-native/blob/master/LICENSE)\n",
-    "platform": "RN",
-    "languages": ["Any"],
-    "tags": {
-      "preview": true
-    }
-  },
-  {
     "name": "Tabbed",
     "displayName": "Tabbed",
     "summary": "The most common style of navigation in mobile apps.",
