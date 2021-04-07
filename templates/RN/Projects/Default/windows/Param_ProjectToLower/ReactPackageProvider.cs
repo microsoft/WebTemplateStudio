@@ -1,6 +1,6 @@
 using Microsoft.ReactNative;
 
-namespace Param_ProjectName
+namespace Param_ProjectToLower
 {
     public partial class ReactPackageProvider : IReactPackageProvider
     {

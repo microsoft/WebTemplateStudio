@@ -10,8 +10,8 @@
     <ProjectGuid>{F85E6DD1-F8CB-4177-83CC-DA2361C43C91}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Param_ProjectName</RootNamespace>
-    <AssemblyName>Param_ProjectName</AssemblyName>
+    <RootNamespace>Param_ProjectToLower</RootNamespace>
+    <AssemblyName>Param_ProjectToLower</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.18362.0</TargetPlatformVersion>
