@@ -7,14 +7,14 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="92e4e989-a684-4c29-95c0-50df3c3e74b0"
+    Name="2b9a8e10-07fc-4d4e-a869-8ff4096d1940"
     Publisher="CN=test"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="92e4e989-a684-4c29-95c0-50df3c3e74b0" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="2b9a8e10-07fc-4d4e-a869-8ff4096d1940" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>TabbedTSApp</DisplayName>
+    <DisplayName>tabbedtsapp</DisplayName>
     <PublisherDisplayName>test</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -31,12 +31,12 @@
     <Application
       Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="TabbedTSApp.App">
+      EntryPoint="tabbedtsapp.App">
       <uap:VisualElements
-        DisplayName="TabbedTSApp"
+        DisplayName="tabbedtsapp"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="TabbedTSApp"
+        Description="tabbedtsapp"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />

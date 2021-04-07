@@ -1,6 +1,6 @@
 using Microsoft.ReactNative;
 
-namespace TabbedTSApp
+namespace tabbedtsapp
 {
     public partial class ReactPackageProvider : IReactPackageProvider
     {
