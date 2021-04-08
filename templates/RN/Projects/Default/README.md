@@ -1,20 +1,13 @@
-# WORK IN PROGRESS
+﻿# WORK IN PROGRESS
 This is still work in progress.
-We will appreciate any feedback provided. 
+We will appreciate any feedback provided.
 - Opinion about the mockups available on this branch.
-- Desired features for the future. 
+- Desired features for the future.
 - Suggestions about the generated code or the wizard experience.
 - Anything else you could think of ;-).
 
-# React Native App (Tabbed)
-This sample demonstrates a React Native application with Tab Navigation with some basic Theme Support and several types of pages:
-- A Blank Page
-- A Settings Page
-- A Master Detail Page
+# PROJECT TYPE
 
-Runs on mobile devices: iOS, android.
-
-Runs on desktop: Windows.
 
 ### Initialize the sample
 
@@ -39,7 +32,7 @@ Make sure your computer satisfies all the system requirements listed in the [off
     yarn react-native link
     yarn windows
     ```
-    
+
     *Note*: ```yarn windows``` it´s the same as running: ```npx react-native run-windows```
 3. The tool will deploy the application on your machine, run it and launch the packager
 
