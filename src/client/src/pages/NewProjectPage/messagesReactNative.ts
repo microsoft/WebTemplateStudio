@@ -3,7 +3,7 @@ import { defineMessages } from "react-intl";
 const messagesReactNative = defineMessages({
   header: {
     id: "newProjectPage.reactNative.header",
-    defaultMessage: "Create Your React Native App in Seconds (WIP)",
+    defaultMessage: "Create Your React Native App in Seconds",
   },
   body: {
     id: "newProjectPage.reactNative.body",
