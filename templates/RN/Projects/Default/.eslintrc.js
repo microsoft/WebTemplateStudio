@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   extends: '@react-native-community',
-  'env': {
+  env: {
     'jest/globals': true
   },
 };

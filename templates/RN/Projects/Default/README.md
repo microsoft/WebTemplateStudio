@@ -1,4 +1,4 @@
-This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).
+﻿This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).
 
 ## Getting Started
 To start the application:
