@@ -16,7 +16,7 @@ const setThemeNameToStorage = async (themeName: ThemeName) => {
 
 const getThemeNameFromStorage = async () => {
   const name = await AsyncStorage.getItem(STORAGE_THEME_KEY);
-  const themeName = Object.values(ThemeName).find((t) => t === name);
+  const themeName = Object.values(ThemeName).find(t => t === name);
   return themeName ?? ThemeName.default;
 };
 

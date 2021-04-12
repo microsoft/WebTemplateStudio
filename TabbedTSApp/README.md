@@ -1,30 +1,21 @@
-# WORK IN PROGRESS
-This is still work in progress.
-We will appreciate any feedback provided. 
-- Opinion about the mockups available on this branch.
-- Desired features for the future. 
-- Suggestions about the generated code or the wizard experience.
-- Anything else you could think of ;-).
+This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).
 
-# React Native App (Tabbed)
-This sample demonstrates a React Native application with Tab Navigation with some basic Theme Support and several types of pages:
-- A Blank Page
-- A Settings Page
-- A Master Detail Page
+## Getting Started
+To start the application:
+  1. Open **Powershell** or a **Terminal in vscode** with **admin rights**.
+  1. Clone the repository on your machine.
+  1. From the project root folder, run the following command to restore all the dependencies:
+        `yarn`
+  1. Start development app using one of the following commands depending on the platform you want to run:
 
-Runs on mobile devices: iOS, android.
+        ```bash
+        `yarn windows` to start the **Windows** app in development.
 
-Runs on desktop: Windows.
+        `yarn android` to start the **Android** app in development.
 
-### Initialize the sample
+        `yarn ios` to start the **iOS** app in development.
+        ```
 
-1. Open **Powershell** or a **Terminal in vscode** with **admin rights**.
-1. Clone the repository on your machine.
-1. From the project root folder, run the following command to restore all the dependencies:
-
-    ```bash
-    yarn install
-    ```
 ### Run the sample on Windows 10
 
 #### Requirements for React Native Windows ####
@@ -36,10 +27,9 @@ Make sure your computer satisfies all the system requirements listed in the [off
 2. Run the following commands:
 
     ```bash
-    yarn react-native link
     yarn windows
     ```
-    
+
     *Note*: ```yarn windows``` it´s the same as running: ```npx react-native run-windows```
 3. The tool will deploy the application on your machine, run it and launch the packager
 
@@ -77,12 +67,36 @@ As a summary it should just work if after configuring your PC you just run:
 
 *Note*: ```yarn android``` it´s the same as running: ```npx react-native run-android```
 
-
 ### Useful links
-REACT NATIVE WINDOWS APP WITH NAVIGATION: https://reactnavigation.org/docs/getting-started
+React Native Windows app with navigation https://reactnavigation.org/docs/getting-started
 
-TAB NAVIGATION (https://reactnavigation.org/docs/tab-based-navigation)
+Tab navigation (https://reactnavigation.org/docs/tab-based-navigation)
 
-ICONS https://github.com/oblador/react-native-vector-icons
+Icons https://github.com/oblador/react-native-vector-icons
+
+React Native Picker https://github.com/react-native-picker/picker
+
+React Native Storage https://github.com/react-native-async-storage/async-storage
 
 
+## File Structure
+```
+.
+├── __tests__/ - Test files
+├── .vscode/ - Visual Studio Code configuration files
+├── android/ - Native Android code
+├── ios/ - Native iOS code
+├── src/ - application code
+  ├─ data/ - data shown on the application
+  ├─ navigation/ - files related to navigation
+  └─ App.tsx - main root module
+├── windows/ - Native iOS code
+└── README.md
+```
+
+## Additional Documentation
+- React Native - http://reactnative.dev/
+- React Native Windows - https://microsoft.github.io/react-native-windows/
+
+## Feedback welcome
+Do not hesitate to create any issues on our [repo](https://github.com/microsoft/WebTemplateStudio/issues).
