@@ -1,6 +1,6 @@
 ﻿{
   "$schema": "http://json.schemastore.org/template",
-  "author": "Microsoft Community",
+  "author": "Microsoft",
   "classifications": ["Universal"],
   "name": "wts.RN.Page.AddSampleData",
   "shortName": "wts.RN.Page.AddSampleData",
