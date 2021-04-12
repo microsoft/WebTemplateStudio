@@ -5,18 +5,14 @@ To start the application:
   1. Open **Powershell** or a **Terminal in vscode** with **admin rights**.
   1. Clone the repository on your machine.
   1. From the project root folder, run the following command to restore all the dependencies:
-
-        ```bash
-        yarn
-        ```
+        `yarn`
   1. Start development app using one of the following commands depending on the platform you want to run:
 
-        ```bash
-        `yarn windows` to start the **Windows** app in development.
+        **Windows**: `yarn windows`
 
-        `yarn android` to start the **Android** app in development.
+        **Android**: `yarn android`
 
-        `yarn ios` to start the **iOS** app in development.
+        **iOS**: `yarn ios`
         ```
 
 ### Run the sample on Windows 10
@@ -28,10 +24,7 @@ Make sure your computer satisfies all the system requirements listed in the [off
 
 1. You need to open a terminal or vscode with **administrator rights**.
 2. Run the following commands:
-
-    ```bash
-    yarn windows
-    ```
+    `yarn windows`
 
     *Note*: ```yarn windows``` it´s the same as running: ```npx react-native run-windows```
 3. The tool will deploy the application on your machine, run it and launch the packager
@@ -44,9 +37,7 @@ Make sure your computer satisfies all the system requirements listed in the [off
 5. Once the deploy is completed, open a terminal on the project root folder.
 6. Run the following command:
 
-    ```bash
-    yarn start
-    ```
+    `yarn start`
 7. Launch from the Start menu the app.
 
 
