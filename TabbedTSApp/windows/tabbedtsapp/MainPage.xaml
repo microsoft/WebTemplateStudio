@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <react:ReactRootView 
+    <react:ReactRootView
         x:Name="reactRootView"
         ComponentName="TabbedTSApp"
         Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"

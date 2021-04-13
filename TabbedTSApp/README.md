@@ -8,13 +8,11 @@ To start the application:
         `yarn`
   1. Start development app using one of the following commands depending on the platform you want to run:
 
-        ```bash
-        `yarn windows` to start the **Windows** app in development.
+        **Windows**: `yarn windows`
 
-        `yarn android` to start the **Android** app in development.
+        **Android**: `yarn android`
 
-        `yarn ios` to start the **iOS** app in development.
-        ```
+        **iOS**: `yarn ios`
 
 ### Run the sample on Windows 10
 
@@ -25,10 +23,7 @@ Make sure your computer satisfies all the system requirements listed in the [off
 
 1. You need to open a terminal or vscode with **administrator rights**.
 2. Run the following commands:
-
-    ```bash
-    yarn windows
-    ```
+    `yarn windows`
 
     *Note*: ```yarn windows``` it´s the same as running: ```npx react-native run-windows```
 3. The tool will deploy the application on your machine, run it and launch the packager
@@ -41,9 +36,7 @@ Make sure your computer satisfies all the system requirements listed in the [off
 5. Once the deploy is completed, open a terminal on the project root folder.
 6. Run the following command:
 
-    ```bash
-    yarn start
-    ```
+    `yarn start`
 7. Launch from the Start menu the app.
 
 
@@ -68,16 +61,15 @@ As a summary it should just work if after configuring your PC you just run:
 *Note*: ```yarn android``` it´s the same as running: ```npx react-native run-android```
 
 ### Useful links
-React Native Windows app with navigation https://reactnavigation.org/docs/getting-started
+- React Native Windows app with navigation https://reactnavigation.org/docs/getting-started
 
-Tab navigation (https://reactnavigation.org/docs/tab-based-navigation)
+- Tab navigation (https://reactnavigation.org/docs/tab-based-navigation)
 
-Icons https://github.com/oblador/react-native-vector-icons
+- Icons https://github.com/oblador/react-native-vector-icons
 
-React Native Picker https://github.com/react-native-picker/picker
+- React Native Picker https://github.com/react-native-picker/picker
 
-React Native Storage https://github.com/react-native-async-storage/async-storage
-
+- React Native Storage https://github.com/react-native-async-storage/async-storage
 
 ## File Structure
 ```
@@ -89,6 +81,7 @@ React Native Storage https://github.com/react-native-async-storage/async-storage
 ├── src/ - application code
   ├─ data/ - data shown on the application
   ├─ navigation/ - files related to navigation
+  ├─ screens/ - screens or pages available
   └─ App.tsx - main root module
 ├── windows/ - Native iOS code
 └── README.md

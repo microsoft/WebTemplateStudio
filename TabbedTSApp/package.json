@@ -11,8 +11,8 @@
     "windows": "react-native run-windows"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "1.15.2",
     "@react-native-picker/picker": "1.15.0",
+    "@react-native-async-storage/async-storage": "1.15.2",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "5.11.9",
     "@react-navigation/native": "5.9.4",
