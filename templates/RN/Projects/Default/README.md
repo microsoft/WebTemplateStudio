@@ -13,7 +13,6 @@ To start the application:
         **Android**: `yarn android`
 
         **iOS**: `yarn ios`
-        ```
 
 ### Run the sample on Windows 10
 

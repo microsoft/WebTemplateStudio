@@ -9,13 +9,12 @@ namespace Param_ProjectToLower
     {
         public App()
         {
-//-:cnd:noEmit
 #if BUNDLE
             JavaScriptBundleFile = "index.windows";
             InstanceSettings.UseWebDebugger = false;
             InstanceSettings.UseFastRefresh = false;
 #else
-            JavaScriptMainModuleName = "index";
+            JavaScriptBundleFile = "index";
             InstanceSettings.UseWebDebugger = true;
             InstanceSettings.UseFastRefresh = true;
 #endif
@@ -25,12 +24,12 @@ namespace Param_ProjectToLower
 #else
             InstanceSettings.UseDeveloperSupport = false;
 #endif
-//+:cnd:noEmit
 
             Microsoft.ReactNative.Managed.AutolinkedNativeModules.RegisterAutolinkedNativeModulePackages(PackageProviders); // Includes any autolinked modules
 
             PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider());
             PackageProviders.Add(new ReactPackageProvider());
+
             InitializeComponent();
         }
 
@@ -42,9 +41,23 @@ namespace Param_ProjectToLower
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             base.OnLaunched(e);
-            var frame = Window.Current.Content as Frame;
-            frame.Navigate(typeof(MainPage));
-            Window.Current.Activate();
+            var frame = (Frame)Window.Current.Content;
+            frame.Navigate(typeof(MainPage), e.Arguments);
+        }
+
+        /// <summary>
+        /// Invoked when the application is activated by some means other than normal launching.
+        /// </summary>
+        protected override void OnActivated(IActivatedEventArgs e)
+        {
+            var preActivationContent = Window.Current.Content;
+            base.OnActivated(e);
+            if (preActivationContent == null && Window.Current != null)
+            {
+                // Display the initial content
+                var frame = (Frame)Window.Current.Content;
+                frame.Navigate(typeof(MainPage), null);
+            }
         }
     }
 }
