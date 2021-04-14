@@ -61,16 +61,15 @@ As a summary it should just work if after configuring your PC you just run:
 *Note*: ```yarn android``` it´s the same as running: ```npx react-native run-android```
 
 ### Useful links
-React Native Windows app with navigation https://reactnavigation.org/docs/getting-started
+- React Native Windows app with navigation https://reactnavigation.org/docs/getting-started
 
-Tab navigation (https://reactnavigation.org/docs/tab-based-navigation)
+- Tab navigation (https://reactnavigation.org/docs/tab-based-navigation)
 
-Icons https://github.com/oblador/react-native-vector-icons
+- Icons https://github.com/oblador/react-native-vector-icons
 
-React Native Picker https://github.com/react-native-picker/picker
+- React Native Picker https://github.com/react-native-picker/picker
 
-React Native Storage https://github.com/react-native-async-storage/async-storage
-
+- React Native Storage https://github.com/react-native-async-storage/async-storage
 
 ## File Structure
 ```
