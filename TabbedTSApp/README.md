@@ -2,9 +2,8 @@ This project was created using [Microsoft Web Template Studio](https://github.co
 
 ## Getting Started
 To start the application:
-  1. Open **Powershell** or a **Terminal in vscode** with **admin rights**.
-  1. Clone the repository on your machine.
-  1. From the project root folder, run the following command to restore all the dependencies:
+  1. Open the project on **vscode** and open the terminal. You may need to have **admin rights**.
+  1. From the project root folder run the following command to restore all the dependencies:
         `yarn`
   1. Start development app using one of the following commands depending on the platform you want to run:
 
@@ -24,9 +23,7 @@ Make sure your computer satisfies all the system requirements listed in the [off
 1. You need to open a terminal or vscode with **administrator rights**.
 2. Run the following commands:
     `yarn windows`
-
-    *Note*: ```yarn windows``` it´s the same as running: ```npx react-native run-windows```
-3. The tool will deploy the application on your machine, run it and launch the packager
+3. The tool will deploy the application on your machine, run it and launch the packager.
 
 **Option 2**
 1. Open the `windows` folder in File Explorer.
@@ -57,20 +54,6 @@ As a summary it should just work if after configuring your PC you just run:
     yarn react-native link
     yarn android
 ```
-
-*Note*: ```yarn android``` it´s the same as running: ```npx react-native run-android```
-
-### Useful links
-- React Native Windows app with navigation https://reactnavigation.org/docs/getting-started
-
-- Tab navigation (https://reactnavigation.org/docs/tab-based-navigation)
-
-- Icons https://github.com/oblador/react-native-vector-icons
-
-- React Native Picker https://github.com/react-native-picker/picker
-
-- React Native Storage https://github.com/react-native-async-storage/async-storage
-
 ## File Structure
 ```
 .
@@ -88,8 +71,20 @@ As a summary it should just work if after configuring your PC you just run:
 ```
 
 ## Additional Documentation
-- React Native - http://reactnative.dev/
-- React Native Windows - https://microsoft.github.io/react-native-windows/
+- React Native https://reactnative.dev/
+
+- React Native Windows https://microsoft.github.io/react-native-windows/
+
+- React Native Picker https://github.com/react-native-picker/picker
+
+- React Native Storage https://github.com/react-native-async-storage/async-storage
+
+- React Navigation https://reactnavigation.org/docs/getting-started
+
+  - Tab navigation (https://reactnavigation.org/docs/tab-based-navigation)
+
+- Icons https://github.com/oblador/react-native-vector-icons
+
 
 ## Feedback welcome
 Do not hesitate to create any issues on our [repo](https://github.com/microsoft/WebTemplateStudio/issues).
