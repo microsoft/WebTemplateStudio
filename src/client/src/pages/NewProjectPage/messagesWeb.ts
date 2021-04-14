@@ -9,6 +9,10 @@ const messagesWeb = defineMessages({
     id: "newProjectPage.web.body",
     defaultMessage: "Give your full-stack project a name, choose where to create it, then click 'Next' to get started.",
   },
+  infoMessage: {
+    id: "newProjectPage.web.infoMessage",
+    defaultMessage: "",
+  },
   projectNameTitle: {
     id: "newProjectPage.web.projectNameTitle",
     defaultMessage: "Project Name",
