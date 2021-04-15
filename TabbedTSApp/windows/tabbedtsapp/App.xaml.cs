@@ -24,12 +24,12 @@ namespace tabbedtsapp
 #else
             InstanceSettings.UseDeveloperSupport = false;
 #endif
-
             Microsoft.ReactNative.Managed.AutolinkedNativeModules.RegisterAutolinkedNativeModulePackages(PackageProviders); // Includes any autolinked modules
 
             PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider());
             PackageProviders.Add(new ReactPackageProvider());
 			PackageProviders.Add(new ReactNativePicker.ReactPackageProvider());
+
             InitializeComponent();
         }
 
