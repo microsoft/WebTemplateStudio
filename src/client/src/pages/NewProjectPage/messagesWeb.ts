@@ -11,7 +11,7 @@ const messagesWeb = defineMessages({
   },
   infoMessage: {
     id: "newProjectPage.web.infoMessage",
-    defaultMessage: "",
+    defaultMessage: undefined,
   },
   projectNameTitle: {
     id: "newProjectPage.web.projectNameTitle",

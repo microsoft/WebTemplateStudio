@@ -11,7 +11,7 @@ const messagesReactNative = defineMessages({
   },
   infoMessage: {
     id: "newProjectPage.reactNative.infoMessage",
-    defaultMessage: "This feature is currently in Preview, we'd love to get your feedback on Github.",
+    defaultMessage: "This feature is currently in Preview, we'd love to get your feedback on GitHub.",
   },
   projectNameTitle: {
     id: "newProjectPage.reactNative.projectNameTitle",

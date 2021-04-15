@@ -21,13 +21,13 @@ const NewProject = (props: Props) => {
     <div className={styles.container}>
       <div className={styles.newProjectInfo}>
         <Title>{formatMessage(messages.header)}</Title>
-        <p>
-          {messages.infoMessage.defaultMessage && (
+        {messages.infoMessage.defaultMessage && (
+          <p>
             <a target={"_blank"} rel="noreferrer noopener" href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES}>
               {formatMessage(messages.infoMessage)}
             </a>
-          )}
-        </p>
+          </p>
+        )}
         <p>{formatMessage(messages.body)}</p>
         <div className={styles.projectDetailsContainer}>
           <ProjectDetails />
