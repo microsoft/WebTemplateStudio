@@ -15,7 +15,7 @@ To start the application:
 
 ### Run the sample on Windows 10
 
-#### Requirements for React Native Windows ####
+#### Requirements for React Native Windows
 Make sure your computer satisfies all the system requirements listed in the [official documentation](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies).
 
 **Option 1**
@@ -36,9 +36,10 @@ Make sure your computer satisfies all the system requirements listed in the [off
     `yarn start`
 7. Launch from the Start menu the app.
 
-
 ### Run the sample on iOS
-[Go to React Native Documentation](https://reactnative.dev/docs/environment-setup)
+#### Requirements
+Make sure your computer satisfies all the system requirements listed in the [official documentation](https://reactnative.dev/docs/environment-setup).
+
 Once you have the repo and the environment setup, you will just need to run:
 ```bash
     yarn react-native link
@@ -48,12 +49,15 @@ Once you have the repo and the environment setup, you will just need to run:
 *Note*: If navigation icons doesn´t display correctly you may need to go to ```ios``` folder and run ```pod install```
 
 ### Run the sample on Android
-[Go to React Native Documentation](https://reactnative.dev/docs/environment-setup)
+#### Requirements
+Make sure your computer satisfies all the system requirements listed in the [official documentation](https://reactnative.dev/docs/environment-setup).
+
 As a summary it should just work if after configuring your PC you just run:
 ```bash
     yarn react-native link
     yarn android
 ```
+
 ## File Structure
 ```
 .
@@ -62,11 +66,11 @@ As a summary it should just work if after configuring your PC you just run:
 ├── android/ - Native Android code
 ├── ios/ - Native iOS code
 ├── src/ - application code
-  ├─ data/ - data shown on the application
   ├─ navigation/ - files related to navigation
   ├─ screens/ - screens or pages available
+  ├─ app.styles.ts - style file with general styles
   └─ App.tsx - main root module
-├── windows/ - Native iOS code
+├── windows/ - Native windows code
 └── README.md
 ```
 
@@ -84,7 +88,6 @@ As a summary it should just work if after configuring your PC you just run:
   - Tab navigation (https://reactnavigation.org/docs/tab-based-navigation)
 
 - Icons https://github.com/oblador/react-native-vector-icons
-
 
 ## Feedback welcome
 Do not hesitate to create any issues on our [repo](https://github.com/microsoft/WebTemplateStudio/issues).
