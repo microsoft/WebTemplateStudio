@@ -64,6 +64,7 @@ As a summary it should just work if after configuring your PC you just run:
 ├── android/ - Native Android code
 ├── ios/ - Native iOS code
 ├── src/ - application code
+  ├─ app.styles.ts - style file with general styles
   └─ App.tsx - main root module
 ├── windows/ - Native iOS code
 └── README.md
