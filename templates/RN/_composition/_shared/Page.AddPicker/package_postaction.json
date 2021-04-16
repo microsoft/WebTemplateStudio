@@ -5,9 +5,9 @@
   //}]}
     "transformIgnorePatterns": [
       //{--{
-      "node_modules/(?!(jest-)?react-native|@?react-navigation)"
+      "node_modules/(?!(jest-)@?react-native|@?react-navigation)/"
       //}--}
       //{[{
-      "node_modules/(?!(jest-)?react-native|@?react-navigation|@?react-native-picker)"
+      "node_modules/(?!(jest-)@?react-native|@?react-navigation|@?react-native-picker)/"
       //}]}
     ]

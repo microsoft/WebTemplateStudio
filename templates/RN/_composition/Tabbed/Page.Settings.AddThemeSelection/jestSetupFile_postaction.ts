@@ -3,7 +3,7 @@ import mockAsyncStorage from '@react-native-async-storage/async-storage/jest/asy
 //}]}
 
 jest.useFakeTimers();
-jest.mock('react-native/Libraries/Animated/src/NativeAnimatedHelper');
+jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 //{[{
 jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
 //}]}
