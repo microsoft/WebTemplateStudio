@@ -9,7 +9,7 @@ const themes: Record<ThemeName.light | ThemeName.dark, Theme> = {
 };
 
 const STORAGE_THEME_KEY = '@themeName';
-
+// For more information about react native storage visit: https://github.com/react-native-async-storage/async-storage
 const setThemeNameToStorage = async (themeName: ThemeName) => {
   await AsyncStorage.setItem(STORAGE_THEME_KEY, themeName);
 };
