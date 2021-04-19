@@ -29,7 +29,7 @@
       "Any"
     ],
     "tags": {
-      "version": "11.0.1",
+      "version": "11.2.10",
       "checkVersionPackage": "npm|@angular/core",
       "requirements":"node|12.0.x",
       "preview": false
