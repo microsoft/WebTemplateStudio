@@ -8,7 +8,7 @@
     "publish": "node ./scripts/publish"
   },
   "dependencies": {
-    "moleculer": "0.14.11",
+    "moleculer": "0.14.13",
     "moleculer-web": "0.9.1",
     "fs-extra": "9.0.1"
   },
