@@ -13,7 +13,7 @@ Docs to provide useful insights.
 
 - Open **VSCode**
 - Press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open VSCode's extension launcher
-- Type/Select `Web Template Studio: Launch` and press `Enter` to launch the extension
+- Type/Select `Web Template Studio: Create Web App` and press `Enter` to launch the extension
 
 ### Deploy the generated project
 

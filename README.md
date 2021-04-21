@@ -2,10 +2,10 @@
 
 <img src="https://img.shields.io/badge/platform-linux--64%20%7C%20win--64%20%7C%20osx--64%20-lightgrey.svg" alt="Platforms Supported: MacOSX, Linux, Windows"/> <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed." /></a> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: We are using the MIT License"></a> <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-Welcome-brightgreen.svg" alt="We are welcoming PRS!"></a>
 
-Microsoft *Web Template Studio* (aka *WebTS*) is a Visual Studio Code Extension that accelerates the creation of a new **Web or React Native** applications using a wizard-based experience.
+Microsoft *Web Template Studio* (aka *WebTS*) is a Visual Studio Code Extension that accelerates the creation of a new **Web or React Native** application using a wizard-based experience.
 
 *WebTS* enables developers to generate boilerplate code for a **Web or React Native** application by choosing between different project types, frontend and backend frameworks, pages and cloud services.
-The resulting web app is well-formed, readable code that incorporates cloud services on
+The resulting app is well-formed, readable code. The web application incorporates cloud services on
 Azure while implementing proven patterns and best practices. Sprinkled throughout the generated code we have links to
 Docs to provide useful insights. *WebTS* was created using TypeScript and React. Different combinations of generated code
 are merged together by [Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio), which was made using .NET Core.
@@ -18,7 +18,7 @@ are merged together by [Core Template Studio](https://github.com/Microsoft/CoreT
 | release |   [![Build Status](https://winappstudio.visualstudio.com/Vegas/_apis/build/status/webTS/webts.staging.version.create?branchName=release)](https://winappstudio.visualstudio.com/Vegas/_build/latest?definitionId=161&branchName=release)    |
 
 ## Documentation
-Web Template Studio (WebTS) documentation is divided into three areas.
+*Web Template Studio* (*WebTS*) documentation is divided into three areas.
 
 
 ### General
@@ -39,8 +39,8 @@ When developing a full-stack application you will also be interested on the foll
 - [Deployment of the generated apps](docs/generated-apps/deployment.md)
 
 #### React Native applications
-Currently, your generated React Native applications will use React Native with Typescript and C# for the Windows code.
-- [Project Type](docs/generated-apps/project-type/readme.md)
+Currently, your generated React Native applications will be implemented with React Native using the Typescript template and generating the Windows code in C#.
+- [Project Type](docs/generated-apps/project-types/react-native-readme.md)
 
 ### Working on WebTS
 These will help if you want to know more about WebTS or contribute to the project.
@@ -64,7 +64,7 @@ To verify the integrity of the package, download the vsix from the Marketplace, 
 
 - Open **VSCode**
 - Press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open VSCode's extension launcher
-- Type/Select `Web Template Studio: Launch` and press `Enter` to launch the extension
+- Type/Select `Web Template Studio: Create Web App` and press `Enter` to launch the extension
 
 ### Deploy the generated project
 

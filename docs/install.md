@@ -3,7 +3,13 @@
 ## Prerequisites
 
 *Web Template Studio* runs as a VSCode extension and hence you'll need to have *VScode* version 1.38 or above installed.
-Also, you'll need [node](https://nodejs.org/en/download/), [python](https://www.python.org/downloads/) or [ASP.NET](https://dotnet.microsoft.com/download) and [npm](https://www.npmjs.com/get-npm)/[yarn](https://yarnpkg.com/en/docs/install) to run the generated templates.
+
+To run the generated templates you'll need some of the followings installed depending on the type of project you´re creating:
+- [node](https://nodejs.org/en/download/)
+- [python](https://www.python.org/downloads/)
+- [ASP.NET](https://dotnet.microsoft.com/download)
+- [npm](https://www.npmjs.com/get-npm) or [yarn](https://yarnpkg.com/en/docs/install)
+- [react native windows prerequisites](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies)
 
 ## Installing the official release
 Head over to [Visual Studio Marketplace’s Web Template Studio page](https://marketplace.visualstudio.com/items?itemName=WASTeamAccount.WebTemplateStudio-dev-nightly) and click "[install](vscode:extension/WASTeamAccount.WebTemplateStudio-dev-nightly)" 😊.
@@ -27,4 +33,4 @@ Head over to [Visual Studio Marketplace’s Web Template Studio page](https://ma
 
 - Open **VSCode**
 - Press `Ctrl + Shift ⇧ + P` (Windows/Linux) or `Command ⌘ + Shift ⇧ + P` (Mac) to open VSCode's extension launcher
-- Type/Select `Web Template Studio: Launch` and press `Enter` to launch the extension
+- Type/Select `Web Template Studio: Create Web App` and press `Enter` to launch the extension

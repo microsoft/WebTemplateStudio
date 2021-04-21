@@ -6,3 +6,4 @@ The following pages are supported:
 - [Grid](./grid.md)
 - [List](./list.md)
 - [Master Detail](./master-detail.md)
+- [Settings](./settings.md) *Note*: Currently just implemented on React Native.

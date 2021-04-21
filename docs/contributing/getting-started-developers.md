@@ -26,8 +26,9 @@ If you just want to take advantage from *Web Template Studio* extension, check t
 1. Install [Visual Studio Code](https://code.visualstudio.com/)
 1. Install [Yarn](https://yarnpkg.com/en/docs/install). You will need to finish installing Node.js before you install Yarn.
 1. Run the command `npm config set scripts-prepend-node-path true`. This tells VSCode which Node version to run during the extension compilation (otherwise you'll get an error during the build process).
+1. When creating React Native apps you have to check the following [dependencies](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies).
 
-**Note**: If using Windows, use Git Bash. 
+**Note**: If using Windows, use Git Bash.
 
 At some point you may also need to install [React-scripts](https://yarnpkg.com/package/react-scripts) and [Typescript](https://www.typescriptlang.org/).
 
@@ -87,7 +88,7 @@ When you clone *Web Template Studio* you have to run two commands: `git submodul
 Changes on Core Template Studio should be done on the Core Template Studio repos. In WebTS, to update the submodule to the most recent commit, you have to run the command: `git submodule update --remote`.
 
 ## How to run the extension locally
-1. Run `./build-all.sh` from the `_build` folder. This script installs dependencies and compiles the client and core template studio and copies it to the extension. It also builds and installs the extension. 
+1. Run `./build-all.sh` from the `_build` folder. This script installs dependencies and compiles the client and core template studio and copies it to the extension. It also builds and installs the extension.
 
     There are also separate scripts:
     - For building the client (`build-client.sh`).
@@ -96,9 +97,9 @@ Changes on Core Template Studio should be done on the Core Template Studio repos
 2. Open the `src/extension` folder using `VSCode`.
 3. Start the debugger by pressing `F5`. This should open the Extension Development Host in a new Visual Studio Code window.
 4. In the Extension Development Host, press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open the Command Palette.
-5. In the Command Palette, type `Web Template Studio (local): Launch` and press `Enter` to launch the extension. We recently added concurrent installation support.
-    - `Web Template Studio: Launch`: this would launch the marketplace version.
-    - `Web Template Studio (nightly): Launch`: this would launch an installed instance of the extension.
+5. In the Command Palette, type `Web Template Studio (local): Create Web App` and press `Enter` to launch the extension. We recently added concurrent installation support.
+    - `Web Template Studio: Create Web App`: this would launch the marketplace version.
+    - `Web Template Studio (nightly): Create Web App`: this would launch an installed instance of the extension.
 
 ## How to develop the client
 As the client is injected as a static web app in the webview of the extension, debugging inside the extension can be challenging. Running the client in a browser is useful for quickly testing HTML or CSS changes and for debugging since you can use **Chrome extensions** such as `React and Redux developer tools`.
@@ -135,7 +136,7 @@ code --install-extension [extensionName].vsix
 
 Alternatively, the extension can be installed from the context menu of the extension section in Visual Studio code using the "**install from VSIX...**" command. The installed vsix package can be found in the extensions folder. For *Windows*, it is `%USERPROFILE%\.vscode\extensions`. For *Mac/Linux*, it is `~/.vscode/extensions` (By Default).
 
-After installation, use `Ctrl + Shift ⇧ + P` (Windows/Linux) or `Command ⌘ + Shift ⇧ + P` (Mac) in Visual Studio Code to open the Extension Launcher and select `Web Template Studio: Launch` to run the extension.
+After installation, use `Ctrl + Shift ⇧ + P` (Windows/Linux) or `Command ⌘ + Shift ⇧ + P` (Mac) in Visual Studio Code to open the Extension Launcher and select `Web Template Studio: Create Web App` to run the extension.
 
 ## Tests
 
