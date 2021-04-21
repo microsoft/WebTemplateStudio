@@ -1,47 +1,29 @@
-# WORK IN PROGRESS
-This is still work in progress.
-We will appreciate any feedback provided. 
-- Opinion about the mockups available on this branch.
-- Desired features for the future. 
-- Suggestions about the generated code or the wizard experience.
-- Anything else you could think of ;-).
+This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).
 
-# React Native App (Tabbed)
-This sample demonstrates a React Native application with Tab Navigation with some basic Theme Support and several types of pages:
-- A Blank Page
-- A Settings Page
-- A Master Detail Page
+## Getting Started
+To start the application:
+  1. Open the project on **vscode** and open the terminal. You may need to have **admin rights**.
+  1. From the project root folder run the following command to restore all the dependencies:
+        `yarn`
+  1. Start development app using one of the following commands depending on the platform you want to run:
 
-Runs on mobile devices: iOS, android.
+        **Windows**: `yarn windows`
 
-Runs on desktop: Windows.
+        **Android**: `yarn android`
 
-### Initialize the sample
+        **iOS**: `yarn ios`
 
-1. Open **Powershell** or a **Terminal in vscode** with **admin rights**.
-1. Clone the repository on your machine.
-1. From the project root folder, run the following command to restore all the dependencies:
-
-    ```bash
-    yarn install
-    ```
 ### Run the sample on Windows 10
 
-#### Requirements for React Native Windows ####
+#### Requirements for React Native Windows
 Make sure your computer satisfies all the system requirements listed in the [official documentation](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies).
 
 **Option 1**
 
 1. You need to open a terminal or vscode with **administrator rights**.
 2. Run the following commands:
-
-    ```bash
-    yarn react-native link
-    yarn windows
-    ```
-    
-    *Note*: ```yarn windows``` it´s the same as running: ```npx react-native run-windows```
-3. The tool will deploy the application on your machine, run it and launch the packager
+    `yarn windows`
+3. The tool will deploy the application on your machine, run it and launch the packager.
 
 **Option 2**
 1. Open the `windows` folder in File Explorer.
@@ -51,14 +33,13 @@ Make sure your computer satisfies all the system requirements listed in the [off
 5. Once the deploy is completed, open a terminal on the project root folder.
 6. Run the following command:
 
-    ```bash
-    yarn start
-    ```
+    `yarn start`
 7. Launch from the Start menu the app.
 
-
 ### Run the sample on iOS
-[Go to React Native Documentation](https://reactnative.dev/docs/environment-setup)
+#### Requirements
+Make sure your computer satisfies all the system requirements listed in the [official documentation](https://reactnative.dev/docs/environment-setup).
+
 Once you have the repo and the environment setup, you will just need to run:
 ```bash
     yarn react-native link
@@ -68,21 +49,45 @@ Once you have the repo and the environment setup, you will just need to run:
 *Note*: If navigation icons doesn´t display correctly you may need to go to ```ios``` folder and run ```pod install```
 
 ### Run the sample on Android
-[Go to React Native Documentation](https://reactnative.dev/docs/environment-setup)
+#### Requirements
+Make sure your computer satisfies all the system requirements listed in the [official documentation](https://reactnative.dev/docs/environment-setup).
+
 As a summary it should just work if after configuring your PC you just run:
 ```bash
     yarn react-native link
     yarn android
 ```
 
-*Note*: ```yarn android``` it´s the same as running: ```npx react-native run-android```
+## File Structure
+```
+.
+├── __tests__/ - Test files
+├── .vscode/ - Visual Studio Code configuration files
+├── android/ - Native Android code
+├── ios/ - Native iOS code
+├── src/ - application code
+  ├─ navigation/ - files related to navigation
+  ├─ screens/ - screens or pages available
+  ├─ app.styles.ts - style file with general styles
+  └─ App.tsx - main root module
+├── windows/ - Native windows code
+└── README.md
+```
 
+## Additional Documentation
+- React Native https://reactnative.dev/
 
-### Useful links
-REACT NATIVE WINDOWS APP WITH NAVIGATION: https://reactnavigation.org/docs/getting-started
+- React Native Windows https://microsoft.github.io/react-native-windows/
 
-TAB NAVIGATION (https://reactnavigation.org/docs/tab-based-navigation)
+- React Native Picker https://github.com/react-native-picker/picker
 
-ICONS https://github.com/oblador/react-native-vector-icons
+- React Native Storage https://github.com/react-native-async-storage/async-storage
 
+- React Navigation https://reactnavigation.org/docs/getting-started
 
+  - Tab navigation (https://reactnavigation.org/docs/tab-based-navigation)
+
+- Icons https://github.com/oblador/react-native-vector-icons
+
+## Feedback welcome
+Do not hesitate to create any issues on our [repo](https://github.com/microsoft/WebTemplateStudio/issues).

@@ -44,7 +44,7 @@ const Master_DetailScreen = ({navigation}: IProps): JSX.Element => {
             />
           )}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={item => item.id.toString()}
         />
       </View>
       {!isCompactMode && (

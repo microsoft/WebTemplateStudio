@@ -1,0 +1,6 @@
+# Windows files
+[*.bat]
+end_of_line = crlf
+
+[*.{ts,tsx}]
+end_of_line = lf

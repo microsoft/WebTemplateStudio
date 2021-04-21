@@ -35,7 +35,6 @@ export const getStyles = (theme: Theme) =>
       width: 200,
       ...Platform.select({
         android: {
-          backgroundColor: theme.colors.border,
           color: theme.colors.text,
         },
       }),

@@ -18,7 +18,7 @@ interface Props {
 
 const initlDefaultTheme = {...themes.light, name: ThemeName.default};
 
-export const ThemeProvider = React.memo<Props>((props) => {
+export const ThemeProvider = React.memo<Props>(props => {
   const deviceTheme = useColorScheme();
   const [defaultTheme, setdefaultTheme] = useState<Theme>(initlDefaultTheme);
   const [selectedTheme, setSelectedTheme] = useState<Theme>(initlDefaultTheme);
