@@ -13,4 +13,5 @@ export interface IApiTemplateInfo {
   author: string;
   group?: string;
   itemNameEditable?: boolean;
+  multipleInstance?: boolean;
 }

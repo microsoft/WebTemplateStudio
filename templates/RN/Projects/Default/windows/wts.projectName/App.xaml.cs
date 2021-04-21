@@ -9,6 +9,7 @@ namespace Param_ProjectName
     {
         public App()
         {
+//-:cnd:noEmit
 #if BUNDLE
             JavaScriptBundleFile = "index.windows";
             InstanceSettings.UseWebDebugger = false;
@@ -24,12 +25,12 @@ namespace Param_ProjectName
 #else
             InstanceSettings.UseDeveloperSupport = false;
 #endif
+//+:cnd:noEmit
 
             Microsoft.ReactNative.Managed.AutolinkedNativeModules.RegisterAutolinkedNativeModulePackages(PackageProviders); // Includes any autolinked modules
 
             PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider());
             PackageProviders.Add(new ReactPackageProvider());
-
             InitializeComponent();
         }
 

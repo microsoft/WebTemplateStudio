@@ -1,0 +1,21 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft Community",
+  "classifications": ["Universal"],
+  "name": "wts.RN.Tabbed.Page.MasterDetail.AddNavigate",
+  "shortName": "wts.RN.Tabbed.Page.MasterDetail.AddNavigate",
+  "identity": "wts.RN.Tabbed.Page.MasterDetail.AddNavigate",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "composition",
+    "wts.platform": "RN",
+    "wts.version": "1.0.0",
+    "wts.compositionFilter": "$projectType == Tabbed & identity == wts.RN.Page.MasterDetail"
+  },
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+  }
+}

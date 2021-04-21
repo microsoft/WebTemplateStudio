@@ -1,4 +1,5 @@
-﻿# PROJECT TYPE
+﻿├── src/ - application code
 //{[{
-IS THIS NEW INFO ABOUT THE TABBED PROJECT
+  ├─ navigation/ - files related to navigation
 //}]}
+  └─ App.tsx - main root module

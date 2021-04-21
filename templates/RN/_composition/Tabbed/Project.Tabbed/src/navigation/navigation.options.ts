@@ -1,7 +1,7 @@
 ﻿import {theme} from '../app.styles';
 
-export const getTabBarOptions = () : any => ({
-  activeTintColor: '#007aff',
+export const getTabBarOptions = () => ({
+  activeTintColor: theme.colors.primary,
   inactiveTintColor: theme.colors.text,
   activeBackgroundColor: theme.colors.background,
   inactiveBackgroundColor: theme.colors.background,
@@ -12,7 +12,7 @@ export const getTabBarOptions = () : any => ({
   },
 });
 
-export const getScreenOptions = () : any => ({
+export const getScreenOptions = () => ({
   headerStyle: {
     backgroundColor: theme.colors.background,
   },

@@ -3,6 +3,7 @@ import * as React from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { connect, useDispatch } from "react-redux";
 
+import { ReactComponent as Check } from "../../../assets/check.svg";
 import { ReactComponent as Plus } from "../../../assets/plus.svg";
 import Icon from "../../../components/Icon";
 import buttonStyles from "../../../css/button.module.css";
@@ -24,6 +25,9 @@ const PageCard = (props: Props) => {
   const [showPlusIcon, setShowPlusIcon] = React.useState(false);
   const dispatch = useDispatch();
 
+  const numSelectedPages = selectedPages.filter((selectedPage) => selectedPage.defaultName === page.defaultName).length;
+  const canAddPage = !pageOutOfBounds && (page.multipleInstance || numSelectedPages === 0);
+
   const addPage = () => {
     const select: ISelected = {
       author: page.author,
@@ -37,7 +41,7 @@ const PageCard = (props: Props) => {
       editable: page.editable,
     };
 
-    if (!pageOutOfBounds) {
+    if (canAddPage) {
       const newSelectedPages: ISelected[] = selectedPages.splice(0);
       newSelectedPages.push(select);
       dispatch(setPagesAction(newSelectedPages));
@@ -88,7 +92,7 @@ const PageCard = (props: Props) => {
           <Icon name={page.defaultName} icon={page.icon} />
         </div>
         <div className={cardStyles.title}>{page.defaultName}</div>
-        {showPlusIcon && (
+        {showPlusIcon && canAddPage && (
           <div className={cardStyles.plusIcon}>
             <Plus role="figure" />
           </div>
@@ -108,7 +112,8 @@ const PageCard = (props: Props) => {
             </button>
           )}
         </div>
-        <div>{selectedPages.filter((selectedPage) => selectedPage.defaultName === page.defaultName).length}</div>
+        <div>{page.multipleInstance ? numSelectedPages : ""}</div>
+        {!page.multipleInstance && numSelectedPages > 0 && <Check role="figure" className={cardStyles.iconCheckMark} />}
       </div>
     </div>
   );

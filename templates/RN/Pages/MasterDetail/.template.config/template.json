@@ -4,8 +4,8 @@
   "classifications": ["Universal"],
   "name": "MasterDetail",
   "shortName": "MasterDetail",
-  "groupIdentity": "wts.Page.RN.MasterDetail",
-  "identity": "wts.Page.RN.MasterDetail",
+  "groupIdentity": "wts.RN.Page.MasterDetail",
+  "identity": "wts.RN.Page.MasterDetail",
   "description": "The master-detail page has a master pane and a details pane for content.",
   "tags": {
     "language": "Any",
@@ -15,17 +15,11 @@
     "wts.projecttype": "all",
     "wts.frontendframework": "all",
     "wts.version": "1.0.0",
-    "wts.displayOrder": "0",
-    "wts.casing.sourceName": "pascal"
+    "wts.displayOrder": "0"
   },
-  "sourceName": "wts.itemName",
+  "sourceName": "wts.ItemName",
   "preferNameDirectory": true,
   "PrimaryOutputs": [],
   "symbols": {
-    "wts.sourceName.casing.pascal": {
-      "type": "parameter",
-      "replaces": "Param_SourceName_Pascal",
-      "fileRename": "Param_SourceName_Pascal"
-    }
   }
 }
