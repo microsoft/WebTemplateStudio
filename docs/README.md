@@ -21,6 +21,7 @@ Your generated React Native applications will be implemented with React Native u
 When developing a React Native application you will also be interested on the following sections:
 - [Project Types](generated-apps/react-native/project-types/readme.md)
 - [Pages](generated-apps/react-native/pages/readme.md)
+- [Features](generated-apps/react-native/features/readme.md)
 
 ### Working on WebTS
 These will help if you want to know more about *WebTS* or contribute to the project.
