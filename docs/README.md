@@ -4,9 +4,9 @@
 ## General
 Everyone should read these.
 
-- [Installing the extension](/install.md)
-- [Core Concepts](/concepts.md)
-- [Third party libraries](/third-party-libraries.md)
+- [Installing the extension](install.md)
+- [Core Concepts](concepts.md)
+- [Third party libraries](third-party-libraries.md)
 
 ### Using WebTS to build Web apps
 When developing a full-stack web application you will also be interested on the following sections:
@@ -26,6 +26,6 @@ When developing a React Native application you will also be interested on the fo
 These will help if you want to know more about *WebTS* or contribute to the project.
 
 - [Application Arquitecture](contributing/application-architecture.md)
-- [Getting started with the codebase](/contributing/getting-started-developers.md)
-- [Templates](./contributing/templates.md)
-- [Accessibility](./contributing/accessibility.md)
+- [Getting started with the codebase](contributing/getting-started-developers.md)
+- [Templates](contributing/templates.md)
+- [Accessibility](contributing/accessibility.md)
