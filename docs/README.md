@@ -1,7 +1,6 @@
 # Documentation
 *Web Template Studio* (WebTS) documentation is divided into three areas.
 
-
 ## General
 Everyone should read these.
 
@@ -9,20 +8,24 @@ Everyone should read these.
 - [Core Concepts](/docs/concepts.md)
 - [Third party libraries](/docs/third-party-libraries.md)
 
-## Using WebTS to build apps
-These will help if you are using WebTS to build apps.
+### Using WebTS to build Web apps
+When developing a full-stack web application you will also be interested on the following sections:
+- [Frontend frameworks](docs/generated-apps/web/frontend-frameworks/readme.md)
+- [Backend frameworks](docs/generated-apps/web/backend-frameworks/readme.md)
+- [Pages](docs/generated-apps/pages/web/full-stack.md)
+- [Services](docs/generated-apps/web/services/readme.md)
+- [Deployment of the generated apps](docs/generated-apps/web/deployment.md)
 
-- [Frontend frameworks](/docs/generated-apps/frontend-frameworks)
-- [Backend frameworks](/docs/generated-apps/backend-frameworks)
-- [Pages](/docs/generated-apps/pages)
-- [Services](/docs/generated-apps/services)
-- [Deployment of the generated apps](/docs/generated-apps/deployment.md)
+### Using WebTS to build React Native apps
+Your generated React Native applications will be implemented with React Native using the Typescript template and generating the Windows code in C#.
+When developing a React Native application you will also be interested on the following sections:
+- [Project Types](docs/generated-apps/project-types/react-native/projefct-types/readme.md)
+- [Pages](docs/generated-apps/react-native/pages/readme.md)
 
+### Working on WebTS
+These will help if you want to know more about *WebTS* or contribute to the project.
 
-## Working on WebTS
-These will help if you want to know more about WebTS or contribute to the project.
-
-- [Application Arquitecture](/docs/contributing/application-architecture.md)
+- [Application Arquitecture](docs/contributing/application-architecture.md)
 - [Getting started with the codebase](/docs/contributing/getting-started-developers.md)
-- [Templates](./contributing/templates.md)
-- [Accessibility](./contributing/accessibility.md)
+- [Templates](./docs/contributing/templates.md)
+- [Accessibility](./docs/contributing/accessibility.md)

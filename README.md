@@ -18,37 +18,8 @@ are merged together by [Core Template Studio](https://github.com/Microsoft/CoreT
 | release |   [![Build Status](https://winappstudio.visualstudio.com/Vegas/_apis/build/status/webTS/webts.staging.version.create?branchName=release)](https://winappstudio.visualstudio.com/Vegas/_build/latest?definitionId=161&branchName=release)    |
 
 ## Documentation
-*Web Template Studio* (*WebTS*) documentation is divided into three areas.
+Extended *Web Template Studio* (*WebTS*) documentation is [here](./docs/README.md).
 
-
-### General
-Everyone should read these.
-
-- [Installing the extension](/docs/install.md)
-- [Core Concepts](/docs/concepts.md)
-
-### Using WebTS to build Web apps
-When developing a full-stack application you will also be interested on the following sections:
-- [Frontend frameworks](docs/generated-apps/frontend-frameworks/full-stack.md)
-- [Backend frameworks](docs/generated-apps/backend-frameworks/readme.md)
-- [Pages](docs/generated-apps/pages/full-stack.md)
-- [Services](docs/generated-apps/services/readme.md)
-- [Deployment of the generated apps](docs/generated-apps/deployment.md)
-
-### Using WebTS to build React Native apps
-Your generated React Native applications will be implemented with React Native using the Typescript template and generating the Windows code in C#.
-When developing a React Native application you will also be interested on the following sections:
-- [Frontend frameworks](docs/generated-apps/frontend-frameworks/react-native.md)
-- [Project Type](docs/generated-apps/project-types/react-native.md)
-- [Pages](docs/generated-apps/pages/react-native.md)
-
-### Working on WebTS
-These will help if you want to know more about *WebTS* or contribute to the project.
-
-- [Application Arquitecture](docs/contributing/application-architecture.md)
-- [Getting started with the codebase](/docs/contributing/getting-started-developers.md)
-- [Templates](./docs/contributing/templates.md)
-- [Accessibility](./docs/contributing/accessibility.md)
 
 ## SHA256
 
@@ -64,7 +35,7 @@ To verify the integrity of the package, download the `vsix` from the Marketplace
 
 - Open **VSCode**
 - Press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open VSCode's extension launcher
-- Type/Select `Web Template Studio: Create Web App` for a full-stack application or `Web Template Studio: Create React Native App` for a React Native one, and press `Enter` to launch the extension
+- Type/Select `Web Template Studio: Create Web App` for a full-stack web application or `Web Template Studio: Create React Native App` for a React Native one, and press `Enter` to launch the extension
 
 ### Deploy the generated project
 
@@ -84,9 +55,9 @@ To verify the integrity of the package, download the `vsix` from the Marketplace
 ### 2. Scenario 2
 I want to create a react native app that works for Android and Windows.
 
-<img alt="Basic React Native app for Android" src="./docs/resources/react-native-sample-android-app.png" width="95%" />
+<img alt="Basic React Native app for Android" src="./docs/resources/react-native-sample-android-app.png" width="50%" />
 
-<img alt="Basic React Native app for Windows" src="./docs/resources/react-native-sample-windows-app.png" width="95%" />
+<img alt="Basic React Native app for Windows" src="./docs/resources/react-native-sample-windows-app.png" width="50%" />
 
 ## Features
 
