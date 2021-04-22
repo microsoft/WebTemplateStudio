@@ -2,7 +2,7 @@
   {
     "name": "Node",
     "displayName": "Node/Express",
-    "summary": "JavaScript framework",
+    "summary": "Node.js is an open source server environment based on JavaScript that helps you build fast and scalable network applications.",
     "author": "Various",
     "order": "1",
     "licenses": "[Node](https://github.com/nodejs/node/blob/master/LICENSE)  \n[Express](https://github.com/expressjs/express/blob/master/LICENSE)  \n[Express Generator](https://github.com/expressjs/generator/blob/master/LICENSE)",
@@ -19,7 +19,7 @@
   {
     "name": "Flask",
     "displayName": "Flask",
-    "summary": "Python framework",
+    "summary": "Flask is a python microframework with a small core for building web applications.",
     "author": "Various",
     "order": "3",
     "licenses": "[Flask](https://github.com/pallets/flask/blob/master/LICENSE)",
@@ -36,7 +36,7 @@
   {
     "name": "Moleculer",
     "displayName": "Moleculer",
-    "summary": "JavaScript framework",
+    "summary": "Moleculer is a fast, modern and powerful microservices framework for Node.js.",
     "author": "Various",
     "order": "4",
     "licenses": "[Moleculer](https://github.com/moleculerjs/moleculer/blob/master/LICENSE)",
@@ -54,7 +54,7 @@
   {
     "name": "AspNet",
     "displayName": "ASP.NET",
-    "summary": ".NET Core",
+    "summary": "ASP.NET is an open source web framework, created by Microsoft, for building modern web apps and services with .NET.",
     "author": "Microsoft",
     "order": "2",
     "licenses": "[ASP.NET](https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt)",
