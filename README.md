@@ -27,23 +27,23 @@ Everyone should read these.
 - [Installing the extension](/docs/install.md)
 - [Core Concepts](/docs/concepts.md)
 
-### Using WebTS to build apps
-Depending of the type of application you want to create you will have slightly different options. No matter what application you generate you will always have the possibility to add different type of pages.
-- [Pages](docs/generated-apps/pages/readme.md)
-
-#### Full-stack applications
+### Using WebTS to build Web apps
 When developing a full-stack application you will also be interested on the following sections:
-- [Frontend frameworks](docs/generated-apps/frontend-frameworks/readme.md)
+- [Frontend frameworks](docs/generated-apps/frontend-frameworks/full-stack.md)
 - [Backend frameworks](docs/generated-apps/backend-frameworks/readme.md)
+- [Pages](docs/generated-apps/pages/full-stack.md)
 - [Services](docs/generated-apps/services/readme.md)
 - [Deployment of the generated apps](docs/generated-apps/deployment.md)
 
-#### React Native applications
-Currently, your generated React Native applications will be implemented with React Native using the Typescript template and generating the Windows code in C#.
-- [Project Type](docs/generated-apps/project-types/react-native-readme.md)
+### Using WebTS to build React Native apps
+Your generated React Native applications will be implemented with React Native using the Typescript template and generating the Windows code in C#.
+When developing a React Native application you will also be interested on the following sections:
+- [Frontend frameworks](docs/generated-apps/frontend-frameworks/react-native.md)
+- [Project Type](docs/generated-apps/project-types/react-native.md)
+- [Pages](docs/generated-apps/pages/react-native.md)
 
 ### Working on WebTS
-These will help if you want to know more about WebTS or contribute to the project.
+These will help if you want to know more about *WebTS* or contribute to the project.
 
 - [Application Arquitecture](docs/contributing/application-architecture.md)
 - [Getting started with the codebase](/docs/contributing/getting-started-developers.md)
@@ -52,11 +52,11 @@ These will help if you want to know more about WebTS or contribute to the projec
 
 ## SHA256
 
-Visual Studio Code extensions are currently not signed. WebTS provides the Secure Hash Algorithm (SHA) of each version we publish. You can find the current extensions sha256 value in the following files:
+Visual Studio Code extensions are currently not signed. *WebTS* provides the Secure Hash Algorithm (SHA) of each version we publish. You can find the current extensions sha256 value in the following files:
 
 - [sha256-release.md](sha256-release.md)
 
-To verify the integrity of the package, download the vsix from the Marketplace, calculate the hash of the package using the powershell command ‘Get-FileHash’ or any other tool that allows you to calculate the packages hash, and compare both.
+To verify the integrity of the package, download the `vsix` from the Marketplace, calculate the hash of the package using the powershell command `Get-FileHash` or any other tool that allows you to calculate the packages hash, and compare both.
 
 ## Instructions To Use
 
@@ -64,7 +64,7 @@ To verify the integrity of the package, download the vsix from the Marketplace, 
 
 - Open **VSCode**
 - Press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open VSCode's extension launcher
-- Type/Select `Web Template Studio: Create Web App` and press `Enter` to launch the extension
+- Type/Select `Web Template Studio: Create Web App` for a full-stack application or `Web Template Studio: Create React Native App` for a React Native one, and press `Enter` to launch the extension
 
 ### Deploy the generated project
 
@@ -72,12 +72,21 @@ To verify the integrity of the package, download the vsix from the Marketplace, 
 - Open the generated project
 - Press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open VSCode's extension launcher
 - Type/Select `Web Template Studio: Deploy App` and press `Enter` to begin the deployment
+**Note**: Just available for web applications.
 
 ## Example Scenario
 
-I need a full-stack web app that is deployed on Azure App Service Web App.
+### 1. Scenario 1
+ I need a full-stack web app that is deployed on Azure App Service Web App.
 
 <img alt="App with Azure Services" src="./docs/resources/readme-app-azure-screenshot.png" width="95%" />
+
+### 2. Scenario 2
+I want to create a react native app that works for Android and Windows.
+
+<img alt="Basic React Native app for Android" src="./docs/resources/react-native-sample-android-app.png" width="95%" />
+
+<img alt="Basic React Native app for Windows" src="./docs/resources/react-native-sample-windows-app.png" width="95%" />
 
 ## Features
 
@@ -88,6 +97,8 @@ I need a full-stack web app that is deployed on Azure App Service Web App.
 - **Cloud Services**: Lastly, you specify which Azure cloud services you want to use, and we'll build out the framework for the services into your app. Currently supported services cover storage (_Azure Cosmos DB_), and hosting (_Azure App Service_).
 
 Once you make the selections you want and click generate, you can quickly extend the generated code.
+
+
 
 ## Feedback, Requests and Roadmap
 

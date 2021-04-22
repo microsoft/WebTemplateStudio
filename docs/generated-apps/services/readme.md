@@ -1,4 +1,4 @@
-# Web Template Studio - Services
+# Full-stack application - Services
 
 The following services are supported:
 
