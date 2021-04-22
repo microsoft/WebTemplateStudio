@@ -4,7 +4,7 @@ To contribute to *Web Template Studio*.
 If you are authoring templates for *Web Template Studio*, or interested in contributing to this repo, then you are likely interested in how to use the latest version of this code.
 
 This document covers:
-- [Prerequisites](#prerequisites-for-a-full-stack-web-application)
+- [Prerequisites](#prerequisites)
 - [Project folder structure](#project-folder-structure)
 - [Core Template Studio Submodule](#core-template-studio-submodule)
 - [How to run the extension locally](#how-to-run-the-extension-locally)
@@ -17,7 +17,8 @@ Before starting make sure you read the [Web Template Studio arquitecture](applic
 
 If you just want to take advantage from *Web Template Studio* extension, check the [Web Template Studio Installation Instructions page](../install.md).
 
-## Prerequisites for a full-stack web application
+## Prerequisites 
+### For a full-stack web application
 
 1. Install [Node.js](https://nodejs.org/en/download/)
 1. Install [Gulp](https://gulpjs.com/)
@@ -27,7 +28,7 @@ If you just want to take advantage from *Web Template Studio* extension, check t
 1. Install [Yarn](https://yarnpkg.com/en/docs/install). You will need to finish installing Node.js before you install Yarn.
 1. Run the command `npm config set scripts-prepend-node-path true`. This tells VSCode which Node version to run during the extension compilation (otherwise you'll get an error during the build process).
 
-## Prerequisites for a react native application
+### For a react native application
 1. You have to check the following [dependencies](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies).
 
 **Note**: If using Windows, use Git Bash.
