@@ -1,4 +1,4 @@
-# Web Template Studio - React Native - Project types
+# Web Template Studio - Project types for React Native
 
 The following project types are supported:
 
