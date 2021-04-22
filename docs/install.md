@@ -9,7 +9,6 @@ To run the generated templates you'll need some of the followings installed depe
 - [python](https://www.python.org/downloads/)
 - [ASP.NET](https://dotnet.microsoft.com/download)
 - [npm](https://www.npmjs.com/get-npm) or [yarn](https://yarnpkg.com/en/docs/install)
-- [react native windows prerequisites](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies)
 
 ## Installing the official release
 Head over to [Visual Studio Marketplace’s Web Template Studio page](https://marketplace.visualstudio.com/items?itemName=WASTeamAccount.WebTemplateStudio-dev-nightly) and click "[install](vscode:extension/WASTeamAccount.WebTemplateStudio-dev-nightly)" 😊.
