@@ -42,7 +42,7 @@ To verify the integrity of the package, download the `vsix` from the Marketplace
 - Open **VSCode**
 - Open the generated project
 - Press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open VSCode's extension launcher
-- Type/Select `Web Template Studio: Deploy App` and press `Enter` to begin the deployment
+- Type/Select `Web Template Studio: Deploy Web App` and press `Enter` to begin the deployment
 **Note**: Just available for web applications.
 
 ## Example Scenario
@@ -72,7 +72,7 @@ Once you make the selections you want and click generate, you can quickly extend
 
 ## Known Issues
 ### React Native Applications
-#### 1. Generated App has some lint errors. 
+#### 1. Generated App has some lint errors.
 There´s already an issue to fix this due to fix [this](https://github.com/microsoft/WebTemplateStudio/issues/1769). As a workaround you just need to run `yarn lint --fix`.
 #### 2. React Native Windows.
 - Update to 0.64: Bottom tab navigation doesn´t change text colour when selected. There´s [an issue](https://github.com/microsoft/react-native-windows/issues/7560) in React Native Windows to fix this in version 0.65.
