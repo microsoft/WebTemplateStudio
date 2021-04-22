@@ -19,21 +19,21 @@ The easiest way to deploy an application generated with *Web Template Studio* is
 
 3. In the Command Palette, type `Web Template Studio: Deploy Web App` and press `Enter` to launch the deploy.
 
-<img alt="Web Template Studio Deploy App Command" src="../resources/select-webts-deploy-command.png" width="600px" />
+<img alt="Web Template Studio Deploy App Command" src="../../resources/select-webts-deploy-command.png" width="600px" />
 
 *Web Template Studio* will begin preparing the application for deployment. You can see the progress in the Visual Studio Code output. In addition, a notification will be launched for each step executed.
 
 It will run the tasks to install all the necessary dependencies for the frontend and the backend apps.
 
-<img alt="Install Dependencies" src="../resources/preparing-deploy-install-dependencies.png" width="80%" /><br>
+<img alt="Install Dependencies" src="../../resources/preparing-deploy-install-dependencies.png" width="80%" /><br>
 
 Create a Production Build: This step will creates a publish directory with a production build of your frontend and backend apps.
 
-<img alt="Build project" src="../resources/preparing-deploy-build-project.png" width="80%" /><br>
+<img alt="Build project" src="../../resources/preparing-deploy-build-project.png" width="80%" /><br>
 
 This folder will contain all the necessary frontend and backend files for the deployment.
 
-<img alt="Build directory" src="../resources/deploy-publish-directory.png" width="300px" /><br>
+<img alt="Build directory" src="../../resources/deploy-publish-directory.png" width="300px" /><br>
 
 *Web Template Studio* will then automatically launch the command `Azure App Service: Deploy to Web App...`, which will be in charge of deploying the application to an *Azure App Service*.
 
@@ -48,11 +48,11 @@ This folder will contain all the necessary frontend and backend files for the de
 
 Start the application deployment to *Azure App Service*. We can see the progress of the deployment in the output of the *Azure App Service* extension.
 
-<img alt="Deploying app service" src="../resources/deploying-azure-app-service.png" width="80%"  /><br>
+<img alt="Deploying app service" src="../../resources/deploying-azure-app-service.png" width="80%"  /><br>
 
 At the end of the deployment, Visual Studio Code shows us a notification that the deployment has been successful.
 
-<img alt="Deploying app service finished" src="../resources/deploying-azure-app-service-finished.png" width="80%"  /><br>
+<img alt="Deploying app service finished" src="../../resources/deploying-azure-app-service-finished.png" width="80%"  /><br>
 
 ### More info on Azure App Service and deployment:
 

@@ -10,15 +10,15 @@ To create an *Azure App Service* using *Web Template Studio*:
 
 Navigate to the "**Add Optional Cloud Services**" step. Click the "**Add to my project**" button in the **App Service card**.
 
-<img alt="Azure App Service Card" src="../../resources/azure-appservice-card.png" width="250px" />
+<img alt="Azure App Service Card" src="../../../resources/azure-appservice-card.png" width="250px" />
 
-Select a **Subscription** from the **Create App Service** modal that just opened. Use the **Create New** option if you want to create a new *Subscription*. 
+Select a **Subscription** from the **Create App Service** modal that just opened. Use the **Create New** option if you want to create a new *Subscription*.
 
 **Note**: **Create New** will take you to your Azure portal in the browser, so you can create a subscription.
 
 Enter a **Web App Name** for your azure web app. It must be a unique app name that follows the Azure naming convention, for example it should include only the valid characters [a-z, A-Z, 0-9, and -]. Alternatively, you can accept the automatically generated unique name. The URL of the web app is `http://<app_name>.azurewebsites.net`, where `<app_name>` is your app name.
 
-<img alt="Azure Create App Service" src="../../resources/azure-appservice-createappservice.png" width="500px" />
+<img alt="Azure Create App Service" src="../../../resources/azure-appservice-createappservice.png" width="500px" />
 
 ### Advanced mode
 
@@ -30,7 +30,7 @@ We can change these settings using the *advanced mode*. To display it, click on 
 
 - **Resource Group**: A resource group is a container that holds related resources for an Azure solution. If we want to deploy the App Service in any resource group that you have created in the Azure Subscription previously, we can select it in the dropdown. If you don't select any resource group, it will be created in a new Resource Group with the same name as the web app.
 
-<img alt="Azure Create App Service in Advanced Mode" src="../../resources/azure-appservice-createappservice-advanced-mode.png" width="500px"  />
+<img alt="Azure Create App Service in Advanced Mode" src="../../../resources/azure-appservice-createappservice-advanced-mode.png" width="500px"  />
 
 ## Creating App Service
 Once you hit generate on the summary page, *Web Template Studio* will create an *Azure App Service* that will be accessible from `http://<app_name>.azurewebsites.net`.

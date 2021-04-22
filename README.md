@@ -55,7 +55,7 @@ To verify the integrity of the package, download the `vsix` from the Marketplace
 ### 2. Scenario 2
 I want to create a react native app that works for Android and Windows.
 
-<img alt="Basic React Native app for Android" src="./docs/resources/react-native-sample-android-app.png" width="50%" />
+<img alt="Basic React Native app for Android" src="./docs/resources/react-native-sample-android-app.png" width="30%" />
 
 <img alt="Basic React Native app for Windows" src="./docs/resources/react-native-sample-windows-app.png" width="50%" />
 
