@@ -18,7 +18,7 @@ are merged together by [Core Template Studio](https://github.com/Microsoft/CoreT
 | release |   [![Build Status](https://winappstudio.visualstudio.com/Vegas/_apis/build/status/webTS/webts.staging.version.create?branchName=release)](https://winappstudio.visualstudio.com/Vegas/_build/latest?definitionId=161&branchName=release)    |
 
 ## Documentation
-Extended *Web Template Studio* (*WebTS*) documentation is [here](./docs/README.md).
+Detailed *Web Template Studio* (*WebTS*) documentation is [here](./docs/README.md).
 
 
 ## SHA256
