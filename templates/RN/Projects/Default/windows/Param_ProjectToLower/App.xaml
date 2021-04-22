@@ -1,8 +1,8 @@
 ﻿<react:ReactApplication
-    x:Class="Param_ProjectName.App"
+    x:Class="Param_ProjectToLower.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Param_ProjectName"
+    xmlns:local="using:Param_ProjectToLower"
     xmlns:react="using:Microsoft.ReactNative">
     <Application.Resources>
         <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />

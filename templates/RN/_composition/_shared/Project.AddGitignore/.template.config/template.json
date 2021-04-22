@@ -2,20 +2,26 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
-  "name": "wts.RN.Page.AddSampleData",
-  "shortName": "wts.RN.Page.AddSampleData",
-  "identity": "wts.RN.Page.AddSampleData",
+  "name": "wts.RN.Project.AddGitignore",
+  "shortName": "wts.RN.Project.AddGitignore",
+  "identity": "wts.RN.Project.AddGitignore",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "RN",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "groupIdentity == wts.RN.Page.MasterDetail"
+    "wts.compositionFilter": "identity == wts.RN.Project.Default"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,
   "PrimaryOutputs": [],
   "symbols": {
+    "wts.projectName": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_ProjectName",
+      "fileRename": "Param_ProjectName"
+    }
   }
 }
