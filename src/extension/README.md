@@ -20,7 +20,7 @@ Docs to provide useful insights.
 - Open **VSCode**
 - Open the generated project
 - Press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open VSCode's extension launcher
-- Type/Select `Web Template Studio: Deploy App` and press `Enter` to begin the deployment
+- Type/Select `Web Template Studio: Deploy Web App` and press `Enter` to begin the deployment
 
 ## Features
 
