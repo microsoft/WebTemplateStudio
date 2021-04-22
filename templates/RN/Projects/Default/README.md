@@ -2,12 +2,61 @@
 
 ## Getting Started
 To start the application:
-  1. Open a terminal and navigate to the root folder of the application.
-  1. Install dependencies using `yarn` or `yarn install` task.
+  1. Open the project on **vscode** and open the terminal. You may need to have **admin rights**.
+  1. From the project root folder run the following command to restore all the dependencies:
+        `yarn`
   1. Start development app using one of the following commands depending on the platform you want to run:
-    - `yarn windows` to start the **Windows** app in development.
-    - `yarn android` to start the **Android** app in development.
-    - `yarn ios` to start the **iOS** app in development.
+
+        **Windows**: `yarn windows`
+
+        **Android**: `yarn android`
+
+        **iOS**: `yarn ios`
+
+### Run the sample on Windows 10
+
+#### Requirements for React Native Windows
+Make sure your computer satisfies all the system requirements listed in the [official documentation](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies).
+
+**Option 1**
+
+1. You need to open a terminal or vscode with **administrator rights**.
+2. Run the following commands:
+    `yarn windows`
+3. The tool will deploy the application on your machine, run it and launch the packager.
+
+**Option 2**
+1. Open the `windows` folder in File Explorer.
+2. Double click on the `.sln` file to open the solution with Visual Studio 2019.
+3. Double check in Configuration Manager that you're compiling the project with a suitable architecture for your computer (x86 or x64).
+4. Right click on the project root project in Solution Explorer and choose **Deploy**.
+5. Once the deploy is completed, open a terminal on the project root folder.
+6. Run the following command:
+
+    `yarn start`
+7. Launch from the Start menu the app.
+
+### Run the sample on iOS
+#### Requirements
+Make sure your computer satisfies all the system requirements listed in the [official documentation](https://reactnative.dev/docs/environment-setup).
+
+Once you have the repo and the environment setup, you will just need to run:
+```bash
+    yarn react-native link
+    yarn ios
+```
+
+*Note*: If navigation icons doesn´t display correctly you may need to go to ```ios``` folder and run ```pod install```
+
+### Run the sample on Android
+#### Requirements
+Make sure your computer satisfies all the system requirements listed in the [official documentation](https://reactnative.dev/docs/environment-setup).
+
+As a summary it should just work if after configuring your PC you just run:
+```bash
+    yarn react-native link
+    yarn android
+```
 
 ## File Structure
 ```
@@ -17,14 +66,16 @@ To start the application:
 ├── android/ - Native Android code
 ├── ios/ - Native iOS code
 ├── src/ - application code
+  ├─ app.styles.ts - style file with general styles
   └─ App.tsx - main root module
-├── windows/ - Native iOS code
+├── windows/ - Native windows code
 └── README.md
 ```
 
 ## Additional Documentation
-- React Native - http://reactnative.dev/
-- React Native Windows - https://microsoft.github.io/react-native-windows/
+- React Native https://reactnative.dev/
+
+- React Native Windows https://microsoft.github.io/react-native-windows/
 
 ## Feedback welcome
 Do not hesitate to create any issues on our [repo](https://github.com/microsoft/WebTemplateStudio/issues).

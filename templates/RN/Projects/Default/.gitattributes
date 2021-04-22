@@ -1,4 +1,6 @@
-*.pbxproj -text
+# Windows files should use crlf line endings
+# https://help.github.com/articles/dealing-with-line-endings/
+*.bat text eol=crlf
 
 *.ts text eol=lf
 *.tsx text eol=lf
