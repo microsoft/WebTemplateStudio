@@ -4,7 +4,7 @@ To contribute to *Web Template Studio*.
 If you are authoring templates for *Web Template Studio*, or interested in contributing to this repo, then you are likely interested in how to use the latest version of this code.
 
 This document covers:
-- [Prerequisites](#prerequisites)
+- [Prerequisites](#prerequisites-for-a-full-stack-web-application)
 - [Project folder structure](#project-folder-structure)
 - [Core Template Studio Submodule](#core-template-studio-submodule)
 - [How to run the extension locally](#how-to-run-the-extension-locally)
