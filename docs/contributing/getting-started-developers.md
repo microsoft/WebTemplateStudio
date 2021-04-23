@@ -17,7 +17,7 @@ Before starting make sure you read the [Web Template Studio arquitecture](applic
 
 If you just want to take advantage from *Web Template Studio* extension, check the [Web Template Studio Installation Instructions page](../install.md).
 
-## Prerequisites 
+## Prerequisites
 ### For a full-stack web application
 
 1. Install [Node.js](https://nodejs.org/en/download/)
@@ -30,6 +30,10 @@ If you just want to take advantage from *Web Template Studio* extension, check t
 
 ### For a react native application
 1. You have to check the following [dependencies](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies).
+
+    In the Wizard you have a link on the right-side bar, to show a modal with the System Requirements.
+
+   <img alt="React Native System Requirements" src="../resources/react-native-requirements.png" width="85%" />
 
 **Note**: If using Windows, use Git Bash.
 
