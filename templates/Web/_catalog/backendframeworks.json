@@ -61,7 +61,7 @@
     "platform": "Web",
     "languages": ["Any"],
     "tags": {
-      "version": "3.1.9",
+      "version": "3.1.14",
       "checkVersionPackage": "github|dotnet/aspnetcore",
       "requirements":"netcore|3.1.x",
       "preview": false,
