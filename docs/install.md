@@ -5,10 +5,13 @@
 *Web Template Studio* runs as a VSCode extension and hence you'll need to have *VScode* version 1.38 or above installed.
 
 To run the generated templates you'll need some of the followings installed depending on the type of project you´re creating:
+- [npm](https://www.npmjs.com/get-npm) or [yarn](https://yarnpkg.com/en/docs/install)
+### Full-stack web applications
 - [node](https://nodejs.org/en/download/)
 - [python](https://www.python.org/downloads/)
 - [ASP.NET](https://dotnet.microsoft.com/download)
-- [npm](https://www.npmjs.com/get-npm) or [yarn](https://yarnpkg.com/en/docs/install)
+### React Native applications
+- Check the following [requirements](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies).
 
 ## Installing the official release
 Head over to [Visual Studio Marketplace’s Web Template Studio page](https://marketplace.visualstudio.com/items?itemName=WASTeamAccount.WebTemplateStudio-dev-nightly) and click "[install](vscode:extension/WASTeamAccount.WebTemplateStudio-dev-nightly)" 😊.
