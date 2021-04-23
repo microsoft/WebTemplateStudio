@@ -73,7 +73,7 @@ Once you make the selections you want and click generate, you can quickly extend
 ## Known Issues
 ### React Native Applications
 #### 1. Generated App has some lint errors.
-There´s already an issue to fix this due to fix [this](https://github.com/microsoft/WebTemplateStudio/issues/1769). As a workaround you just need to run `yarn lint --fix`.
+As a workaround you just need to run `yarn lint --fix`. There´s already an issue to fix [this](https://github.com/microsoft/WebTemplateStudio/issues/1769). 
 #### 2. React Native Windows.
 - Update to 0.64: Bottom tab navigation doesn´t change text colour when selected. There´s [an issue](https://github.com/microsoft/react-native-windows/issues/7560) in React Native Windows to fix this in version 0.65.
 - Bundle targets fail when path contains spaces. There´s [an issue](https://github.com/microsoft/react-native-windows/issues/7597) in React Native Windows to fix this in version 0.65.
@@ -101,7 +101,7 @@ This code is distributed under the terms and conditions of the [MIT license](LIC
 
 ## Privacy Statement
 
-The extension does [log basic telemetry](docs/telemetry.md) for what is being selected. We are in the process of creating a [Telemetry Data](docs/telemetryData.md) page to summarize usage trends. Please read the [Microsoft privacy statement](http://go.microsoft.com/fwlink/?LinkId=521839) for more information.
+The extension does [log basic telemetry](./docs/telemetry.md) for what is being selected. We are in the process of creating a [Telemetry Data](./docs/telemetryData.md) page to summarize usage trends. Please read the [Microsoft privacy statement](http://go.microsoft.com/fwlink/?LinkId=521839) for more information.
 
 ## Frameworks in Generated Code Not Created by Our Team
 
@@ -123,4 +123,4 @@ The extension does [log basic telemetry](docs/telemetry.md) for what is being se
 
 ## Acknowledgments
 
-Microsoft *Web Template Studio* was [initially created by Microsoft Garage interns](docs/acknowledgments.md). We hope many more continue with the project.
+Microsoft *Web Template Studio* was [initially created by Microsoft Garage interns](./docs/acknowledgments.md). We hope many more continue with the project.

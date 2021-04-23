@@ -63,4 +63,4 @@ At the end of the deployment, Visual Studio Code shows us a notification that th
 
 ## Learn more
 
-- [All docs](../README.md)
+- [All docs](../../README.md)
