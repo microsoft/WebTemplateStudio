@@ -2,7 +2,7 @@
   {
     "name": "React",
     "displayName": "React",
-    "summary": "JavaScript framework",
+    "summary": "React is a component-based open source JavaScript library for building interfaces for single page applications.",
     "author": "Facebook",
     "order": "1",
     "licenses": "[React](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)",
@@ -11,7 +11,7 @@
       "Any"
     ],
     "tags": {
-      "version": "17.0.1",
+      "version": "17.0.2",
       "checkVersionPackage": "npm|react",
       "requirements":"node|12.0.x",
       "preview": false
@@ -20,7 +20,7 @@
   {
     "name": "Angular",
     "displayName": "Angular",
-    "summary": "JavaScript framework",
+    "summary": "Angular is a platform that makes it easy to build applications with the web.",
     "author": "Google",
     "order": "1",
     "licenses": "[Angular](https://github.com/angular/angular/blob/master/LICENSE)  \n[Angular CLI](https://github.com/angular/angular-cli/blob/master/LICENSE)",
@@ -29,7 +29,7 @@
       "Any"
     ],
     "tags": {
-      "version": "11.0.1",
+      "version": "11.2.10",
       "checkVersionPackage": "npm|@angular/core",
       "requirements":"node|12.0.x",
       "preview": false
@@ -38,7 +38,7 @@
   {
     "name": "Vue",
     "displayName": "Vue.js",
-    "summary": "JavaScript framework",
+    "summary": "Vue is a lightweight, progressive JavaScript framework for building user interfaces.",
     "author": "Evan You",
     "order": "1",
     "licenses": "[Vue](https://github.com/vuejs/vue/blob/dev/LICENSE)  \n[Vue CLI](https://github.com/vuejs/vue-cli/blob/dev/LICENSE)",

@@ -7,6 +7,6 @@ const Param_SourceName_Pascal = () => {
         <h3>ReactBlank</h3>
       </div>
     </div>
-  </main>;
+  </main>
 }
 export default Param_SourceName_Pascal;
