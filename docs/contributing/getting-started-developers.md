@@ -45,11 +45,11 @@ This folder contains the source code for the different components of *Web Templa
         - `components`: contains all React components that are reusable.
         - `css`: CSS contains styling that is global.
         - `mockData`: mocked data to be able to use from the browser while developing.
-        - `modals`: React components and its subcomponents displayed as modals.
-        - `pages`:  React components and its subcomponents displayed as main pages on the Wizard.
-        - `store`: contains reducers, actions, interfaces and selectors for the Redux store.
-        - `utils`: contains helper functions, constants and others.
-        *For example*: validation, routes and extensionService.
+        - `modals`: React components and their subcomponents are displayed as modals.
+        - `pages`:  React components and their subcomponents are displayed as main pages on the Wizard.
+        - `store`: contains reducers, actions, interfaces, and selectors for the Redux store.
+        - `utils`: contains helper functions, constants, and others.
+        *For example*: validation, routes, and extensionService.
             - `extensionService`: allows client-extension communication.
 
 
