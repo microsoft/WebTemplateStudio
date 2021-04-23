@@ -3,7 +3,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Param_ProjectName
+namespace Param_ProjectToLower
 {
     sealed partial class App : ReactApplication
     {
@@ -15,7 +15,7 @@ namespace Param_ProjectName
             InstanceSettings.UseWebDebugger = false;
             InstanceSettings.UseFastRefresh = false;
 #else
-            JavaScriptMainModuleName = "index";
+            JavaScriptBundleFile = "index";
             InstanceSettings.UseWebDebugger = true;
             InstanceSettings.UseFastRefresh = true;
 #endif
@@ -26,11 +26,11 @@ namespace Param_ProjectName
             InstanceSettings.UseDeveloperSupport = false;
 #endif
 //+:cnd:noEmit
-
             Microsoft.ReactNative.Managed.AutolinkedNativeModules.RegisterAutolinkedNativeModulePackages(PackageProviders); // Includes any autolinked modules
 
             PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider());
             PackageProviders.Add(new ReactPackageProvider());
+
             InitializeComponent();
         }
 
@@ -42,9 +42,23 @@ namespace Param_ProjectName
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             base.OnLaunched(e);
-            var frame = Window.Current.Content as Frame;
-            frame.Navigate(typeof(MainPage));
-            Window.Current.Activate();
+            var frame = (Frame)Window.Current.Content;
+            frame.Navigate(typeof(MainPage), e.Arguments);
+        }
+
+        /// <summary>
+        /// Invoked when the application is activated by some means other than normal launching.
+        /// </summary>
+        protected override void OnActivated(IActivatedEventArgs e)
+        {
+            var preActivationContent = Window.Current.Content;
+            base.OnActivated(e);
+            if (preActivationContent == null && Window.Current != null)
+            {
+                // Display the initial content
+                var frame = (Frame)Window.Current.Content;
+                frame.Navigate(typeof(MainPage), null);
+            }
         }
     }
 }

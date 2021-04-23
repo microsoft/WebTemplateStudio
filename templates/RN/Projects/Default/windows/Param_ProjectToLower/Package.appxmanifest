@@ -14,7 +14,7 @@
   <mp:PhoneIdentity PhoneProductId="92e4e989-a684-4c29-95c0-50df3c3e74b0" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>Param_ProjectName</DisplayName>
+    <DisplayName>Param_ProjectToLower</DisplayName>
     <PublisherDisplayName>Param_UserName</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -31,12 +31,12 @@
     <Application
       Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="Param_ProjectName.App">
+      EntryPoint="Param_ProjectToLower.App">
       <uap:VisualElements
-        DisplayName="Param_ProjectName"
+        DisplayName="Param_ProjectToLower"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="Param_ProjectName"
+        Description="Param_ProjectToLower"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
