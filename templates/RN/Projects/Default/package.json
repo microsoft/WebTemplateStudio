@@ -1,39 +1,39 @@
 {
-  "name": "Param_ProjectName",
+  "name": "Param_ProjectToLower",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "windows": "react-native run-windows",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "windows": "react-native run-windows"
   },
   "dependencies": {
-    "@types/react-native-vector-icons": "^6.4.6",
-    "react": "16.13.1",
-    "react-native": "0.63.4",
-    "react-native-vector-icons": "^8.1.0",
-    "react-native-windows": "^0.63.0-0"
+    "@types/react-native-vector-icons": "6.4.6",
+    "react": "17.0.1",
+    "react-native": "0.64.0",
+    "react-native-vector-icons": "8.1.0",
+    "react-native-windows": "0.64.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/runtime": "^7.8.4",
-    "@react-native-community/eslint-config": "^1.1.0",
-    "@types/jest": "^25.2.3",
-    "@types/react-native": "^0.63.2",
-    "@types/react-test-renderer": "^16.9.2",
-    "babel-jest": "^25.1.0",
-    "eslint": "^6.5.1",
-    "jest": "^25.1.0",
-    "metro-react-native-babel-preset": "^0.59.0",
-    "react-devtools": "^4.10.1",
-    "react-test-renderer": "16.13.1",
-    "typescript": "^3.8.3"
+    "@babel/core": "7.13.14",
+    "@babel/runtime": "7.13.10",
+    "@react-native-community/eslint-config": "2.0.0",
+    "@types/jest": "26.0.22",
+    "@types/react-native": "0.64.2",
+    "@types/react-test-renderer": "16.9.5",
+    "babel-jest": "26.6.3",
+    "eslint": "7.23.0",
+    "jest": "26.6.3",
+    "metro-react-native-babel-preset": "0.64.0",
+    "react-devtools": "4.10.1",
+    "react-test-renderer": "17.0.1",
+    "typescript": "3.9.9"
   },
   "resolutions": {
-    "@types/react": "^16"
+    "@types/react": "^17"
   },
   "jest": {
     "preset": "react-native",
@@ -46,7 +46,7 @@
       "node"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|@?react-navigation)"
+      "node_modules/(?!(jest-)@?react-native|@?react-navigation)/"
     ],
     "setupFiles": [
       "./node_modules/react-native-gesture-handler/jestSetup.js",
