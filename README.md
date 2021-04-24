@@ -53,7 +53,7 @@ To verify the integrity of the package, download the `vsix` from the Marketplace
 <img alt="App with Azure Services" src="./docs/resources/readme-app-azure-screenshot.png" width="95%" />
 
 ### 2. Scenario 2
-I want to create a react native app that works for Android and Windows.
+I want to create a react native app that works for Android, iOS and Windows. I want my App to have a master-detail and a settings page, that allows the users to switch the App's theme.
 
 <img alt="App with Azure Services" src="./docs/resources/webts-dark-theme-react-native.png" width="95%" />
 
