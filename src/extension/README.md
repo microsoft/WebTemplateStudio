@@ -15,7 +15,7 @@ Docs to provide useful insights.
 - Press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open VSCode's extension launcher
 - Type/Select `Web Template Studio: [command name]` and press `Enter` to launch the extension
 
-  Can check available commands [here](./contributing/application-architecture.md)
+  You can check available commands [here](./contributing/application-architecture.md#extension)
 
 ### Deploy the generated project
 

@@ -111,7 +111,7 @@ Changes on Core Template Studio should be done on the Core Template Studio repos
     - `Web Template Studio (local): [create command name]`: this would launch the local version of the extension while developing.
     - `Web Template Studio (nightly): [create command name]`: this would launch an installed instance of the extension.
 
-    Can check available commands [here](./contributing/application-architecture.md).
+    You can check available commands [here](./contributing/application-architecture.md#extension).
 
 ## How to develop the client
 As the client is injected as a static web app in the webview of the extension, debugging inside the extension can be challenging. Running the client in a browser is useful for quickly testing HTML or CSS changes and for debugging since you can use **Chrome extensions** such as `React and Redux developer tools`.
@@ -150,7 +150,7 @@ Alternatively, the extension can be installed from the context menu of the exten
 
 After installation, use `Ctrl + Shift ⇧ + P` (Windows/Linux) or `Command ⌘ + Shift ⇧ + P` (Mac) in Visual Studio Code to open the Extension Launcher and select `Web Template Studio: [command name]` to run the extension.
 
-You can check available commands [here](./contributing/application-architecture.md).
+You can check available commands [here](./contributing/application-architecture.md#extension).
 
 ## Tests
 
