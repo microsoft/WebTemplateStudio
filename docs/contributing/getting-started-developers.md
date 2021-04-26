@@ -104,9 +104,14 @@ Changes on Core Template Studio should be done on the Core Template Studio repos
 2. Open the `src/extension` folder using `VSCode`.
 3. Start the debugger by pressing `F5`. This should open the Extension Development Host in a new Visual Studio Code window.
 4. In the Extension Development Host, press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open the Command Palette.
-5. In the Command Palette, type `Web Template Studio (local): Create Web App` and press `Enter` to launch the extension. We recently added concurrent installation support.
-    - `Web Template Studio: Create Web App`: this would launch the marketplace version.
-    - `Web Template Studio (nightly): Create Web App`: this would launch an installed instance of the extension.
+5. In the Command Palette, type `Web Template Studio (local): [create command name]` and press `Enter` to launch the extension.
+
+    **Note:** There´s concurrent installation support, so you can run multiple versions of the extension on the same vscode instance.
+    - `Web Template Studio: [create command name]`: this would launch the marketplace version.
+    - `Web Template Studio (local): [create command name]`: this would launch the local version of the extension while developing.
+    - `Web Template Studio (nightly): [create command name]`: this would launch an installed instance of the extension.
+
+    Can check available commands [here](./contributing/application-architecture.md).
 
 ## How to develop the client
 As the client is injected as a static web app in the webview of the extension, debugging inside the extension can be challenging. Running the client in a browser is useful for quickly testing HTML or CSS changes and for debugging since you can use **Chrome extensions** such as `React and Redux developer tools`.
@@ -130,7 +135,7 @@ After starting the client using `yarn start` in VSCode Debug View (`Ctrl + Shift
 - [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)
 - [Debugging in Visual Studio Code](https://code.visualstudio.com/docs/editor/debugging)
 
-## How to built a local vsix
+## How to build a local vsix
 Run `./createLocalVsix.sh` from the `_build` folder.
 
 The script will compile the client, CoreTS (in release mode) and the extension and package the extension into the root directory `/dist` folder. The vsix package can be distributed and installed by anyone who has VSCode using the command in the extension directory:
@@ -143,7 +148,9 @@ code --install-extension [extensionName].vsix
 
 Alternatively, the extension can be installed from the context menu of the extension section in Visual Studio code using the "**install from VSIX...**" command. The installed vsix package can be found in the extensions folder. For *Windows*, it is `%USERPROFILE%\.vscode\extensions`. For *Mac/Linux*, it is `~/.vscode/extensions` (By Default).
 
-After installation, use `Ctrl + Shift ⇧ + P` (Windows/Linux) or `Command ⌘ + Shift ⇧ + P` (Mac) in Visual Studio Code to open the Extension Launcher and select `Web Template Studio: Create Web App` to run the extension.
+After installation, use `Ctrl + Shift ⇧ + P` (Windows/Linux) or `Command ⌘ + Shift ⇧ + P` (Mac) in Visual Studio Code to open the Extension Launcher and select `Web Template Studio: [command name]` to run the extension.
+
+You can check available commands [here](./contributing/application-architecture.md).
 
 ## Tests
 

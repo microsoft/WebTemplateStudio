@@ -13,7 +13,9 @@ Docs to provide useful insights.
 
 - Open **VSCode**
 - Press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open VSCode's extension launcher
-- Type/Select `Web Template Studio: Create Web App` and press `Enter` to launch the extension
+- Type/Select `Web Template Studio: [command name]` and press `Enter` to launch the extension
+
+  Can check available commands [here](./contributing/application-architecture.md)
 
 ### Deploy the generated project
 
@@ -38,7 +40,7 @@ Please use [GitHub issues](https://github.com/Microsoft/WebTemplateStudio/issues
 
 If you have specific feature requests or would like to vote on what others are recommending, please go to the [GitHub issues](https://github.com/Microsoft/WebTemplateStudio/issues) section as well. We would love to hear your thoughts.
 
-We are still extremely early in development and are looking for feedback for roadmap. Currently we are in the process of stabilizing our React, Angular and Vue.js with Node and Flask.
+We are still early in development and are looking for [feedback](https://github.com/Microsoft/WebTemplateStudio/issues) for the roadmap. We're still working on polishing our Web Templates and in our latest version we've also added an initial version of React Native templates.
 
 ## Contributing
 

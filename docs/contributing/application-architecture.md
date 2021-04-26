@@ -26,7 +26,9 @@ It contains several commands that can be called from Visual Studio Code:
 
 ## Client
 
-The wizard client is the visual component of the extension. It is a [React](https://reactjs.org/) app that is compiled into JavaScript that gets injected into html, which then gets served using [VSCode's Webview API](https://code.visualstudio.com/api/extension-guides/webview). It is shown in a Visual Studio Code tab when the user executes the `Web Template Studio: Create Web App` extension command.
+The wizard client is the visual component of the extension. It is a [React](https://reactjs.org/) app that is compiled into JavaScript that gets injected into html, which then gets served using [VSCode's Webview API](https://code.visualstudio.com/api/extension-guides/webview). It is shown in a Visual Studio Code tab when the user executes the `Web Template Studio: [command name]` extension command.
+
+You can check available commands [here](./contributing/application-architecture.md).
 
 It is responsible for the interaction with the user and is responsible for collecting the name and route of the project, the selected frameworks, pages and services and sending them to the extension for processing with Core Template Studio.
 

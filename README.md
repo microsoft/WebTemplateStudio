@@ -37,6 +37,8 @@ To verify the integrity of the package, download the `vsix` from the Marketplace
 - Press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open VSCode's extension launcher
 - Type/Select `Web Template Studio: Create Web App` for a full-stack web application or `Web Template Studio: Create React Native App` for a React Native one, and press `Enter` to launch the extension
 
+**Note**: React Native is still in Preview and we appreciate any feedback on [GitHub](https://github.com/microsoft/WebTemplateStudio/issues).
+
 ### Deploy the generated project
 
 - Open **VSCode**
@@ -57,10 +59,6 @@ I want to create a react native app that works for Android, iOS and Windows. I w
 
 <img alt="App with Azure Services" src="./docs/resources/webts-dark-theme-react-native.png" width="95%" />
 
-Android App             |  Windows App
-:-------------------------:|:-------------------------:
-<img alt="Basic React Native app for Android" src="./docs/resources/react-native-sample-android-app.png" width="550" />  |  <img alt="Basic React Native app for Windows" src="./docs/resources/react-native-sample-windows-app.png" />
-
 ## Features
 
 *Web Template Studio* approaches full-stack web app creation using the following three attribute sets:
@@ -75,7 +73,7 @@ Once you make the selections you want and click generate, you can quickly extend
 ## Known Issues
 ### React Native Applications
 #### 1. Generated App has some lint errors.
-As a workaround you just need to run `yarn lint --fix`. There´s already an issue to fix [this](https://github.com/microsoft/WebTemplateStudio/issues/1769). 
+As a workaround you just need to run `yarn lint --fix`. There´s already an issue to fix [this](https://github.com/microsoft/WebTemplateStudio/issues/1769).
 #### 2. React Native Windows.
 - Update to 0.64: Bottom tab navigation doesn´t change text colour when selected. There´s [an issue](https://github.com/microsoft/react-native-windows/issues/7560) in React Native Windows to fix this in version 0.65.
 - Bundle targets fail when path contains spaces. There´s [an issue](https://github.com/microsoft/react-native-windows/issues/7597) in React Native Windows to fix this in version 0.65.
@@ -87,7 +85,7 @@ Please use [GitHub issues](https://github.com/Microsoft/WebTemplateStudio/issues
 
 If you have specific feature requests or would like to vote on what others are recommending, please go to the [GitHub issues](https://github.com/Microsoft/WebTemplateStudio/issues) section as well. We would love to see what you are thinking.
 
-We are still extremely early in development and are looking for feedback for roadmap. Currently we are in the process of stabilizing our React, Angular and Vue.js with Node and Flask.
+We are still early in development and are looking for [feedback](https://github.com/Microsoft/WebTemplateStudio/issues) for the roadmap. We're still working on polishing our Web Templates and in our latest version we've also added an initial version of React Native templates.
 
 ## Contributing
 
