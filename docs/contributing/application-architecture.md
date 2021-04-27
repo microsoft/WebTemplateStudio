@@ -1,10 +1,10 @@
 # Application Architecture
 
-*Web Template Studio* is a [Visual Studio Code Extension](https://code.visualstudio.com/api) that has three major components. All of them are included in *Web Template Studio* **vsix**: 
+*Web Template Studio* is a [Visual Studio Code Extension](https://code.visualstudio.com/api) that has three major components. All of them are included in *Web Template Studio* **vsix**:
 
   1. The [extension's backend](#extension) (referred to as the [extension](../../src/extension)). Written in [Typescript](https://www.typescriptlang.org/).
   1. The [frontend wizard](#client) (referred to as the [client](../../src/client)). Written in [React](https://reactjs.org/) and [Typescript](https://www.typescriptlang.org/).
-  1. The [generation engine](#Core-template-studio) (referred to as [Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio)) written in [.NET Core](https://dotnet.microsoft.com/download). 
+  1. The [generation engine](#Core-template-studio) (referred to as [Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio)) written in [.NET Core](https://dotnet.microsoft.com/download).
 
 
 <img alt="Architecture Diagram" src="../resources/webts-architecture-diagram.png" width="80%"  />
@@ -15,17 +15,20 @@
 
 The extension is the main part of *Web Template Studio*. It has been built using the [Visual Studio Code Extensibility API](https://code.visualstudio.com/api) to build extensions. It is responsible for launching the client in a Visual Studio Code tab and for communication between the wizard client and the Core Template Studio CLI. It is also responsible for creating the Azure Services (App Service and CosmosDB Service) and the deployment of the generated applications.
 
-It contains two commands that can be called from Visual Studio Code:
+It contains several commands that can be called from Visual Studio Code:
 
-- [webTemplateStudioExtension.wizardLaunch](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/extension.ts#L7-L11): This command is executed when we launch the `Web Template Studio: Launch` command from Visual Studio Code. It is responsible to start the Core Template Studio CLI in a `child_process`, synchronizing the templates and opening the wizard in a Visual Studio Code tab. While the wizard is open, it is also responsible for maintaining communication between the wizard client and the Core Template Studio CLI to obtain templates and generate projects.
+- [webTemplateStudioExtension.commands.web.createApp](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/extension.ts#L7-L11) and  [webTemplateStudioExtension.commands.reactNative.createApp](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/extension.ts#L12-L14): This command is executed when we launch the `Web Template Studio: Create Web App` or `Web Template Studio: Create React Native App` command from Visual Studio Code. It is responsible to start the Core Template Studio CLI in a `child_process`, synchronizing the templates and opening the wizard in a Visual Studio Code tab. While the wizard is open, it is also responsible for maintaining communication between the wizard client and the Core Template Studio CLI to obtain templates and generate projects. Specifically `Web Template Studio: Create Web App` would use the Web templates and open the wizard to create a full-stack web application while the `Web Template Studio: Create React Native App` would open the wizard to create a React Native application.<br>
+**Note**: Currently only one wizard can be open per instance of vscode.
 
-- [webTemplateStudioExtension.deployApp](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/extension.ts#L13-L18): This command is executed when we launch the `Web Template Studio: Deploy App` command from Visual Studio Code. It is responsible for deploying a generated application in Azure. <br>
+- [webTemplateStudioExtension.deployApp](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/extension.ts#L13-L18): This command is executed when we launch the `Web Template Studio: Deploy Web App` command from Visual Studio Code. It is responsible for deploying a generated application in Azure. <br>
 **Note**: For this command to work properly, we need a web application generated with *Web Template Studio* opened and configured with an App Service.
 
 
 ## Client
 
-The wizard client is the visual component of the extension. It is a [React](https://reactjs.org/) app that is compiled into JavaScript that gets injected into html, which then gets served using [VSCode's Webview API](https://code.visualstudio.com/api/extension-guides/webview). It is shown in a Visual Studio Code tab when the user executes the `Web Template Studio: Launch` extension command.
+The wizard client is the visual component of the extension. It is a [React](https://reactjs.org/) app that is compiled into JavaScript that gets injected into html, which then gets served using [VSCode's Webview API](https://code.visualstudio.com/api/extension-guides/webview). It is shown in a Visual Studio Code tab when the user executes the `Web Template Studio: [command name]` extension command.
+
+You can check available commands [here](./contributing/application-architecture.md#extension).
 
 It is responsible for the interaction with the user and is responsible for collecting the name and route of the project, the selected frameworks, pages and services and sending them to the extension for processing with Core Template Studio.
 
@@ -59,7 +62,7 @@ For more Info see [Core Template Studio Docs](https://github.com/microsoft/CoreT
 
 ## Extension and CLI Core Template Studio communication
 
-The communication between the extension and the Core Template Studio CLI is defined in the [coreTemplateStudio.ts](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/coreTemplateStudio.ts) file. This static class is responsible for starting/stopping the Core Template Studio CLI in a `child_process`, and managing the Core Template Studio CLI requests and responses (including notifications and errors). 
+The communication between the extension and the Core Template Studio CLI is defined in the [coreTemplateStudio.ts](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/coreTemplateStudio.ts) file. This static class is responsible for starting/stopping the Core Template Studio CLI in a `child_process`, and managing the Core Template Studio CLI requests and responses (including notifications and errors).
 
 It also exposes public functions to call the Core Template Studio CLI commands. Some of the main functions offered by the [coreTemplateStudio](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/coreTemplateStudio.ts) class are:
 
@@ -94,9 +97,9 @@ To see the Core Template Studio CLI available commands visit [Core Template Stud
 
 When the client wants to execute an extension command, it will call `vscode.postMessage()` function, passing through parameters an object with the following properties:
 
-- module: extension module that should process this request.
-- command: extension command that should process the request.
-- payload: data that we send in the request.
+- *module*: extension module that should process this request.
+- *command*: extension command that should process the request.
+- *payload*: data that we send in the request.
 
 
 #### Example:
@@ -146,8 +149,8 @@ Messages sent from the extension are received in the `messageEventsFromExtension
 
 When the extension needs to send a request to the client, it will call `postMessageWebview()` function in [reactPanel.ts](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/reactPanel.ts). This function communicates with the webview that contains the client, passing through parameters an object with the following properties:
 
-- command: extension command that processed the request.
-- payload: data that we send in the request.
+- *command*: extension command that processed the request.
+- *payload*: data that we send in the request.
 
  #### Example:
 

@@ -1,4 +1,4 @@
-# Web Template Studio - Frontend frameworks
+# Full-stack web application - Frontend frameworks
 
 The following frontend frameworks are supported:
 

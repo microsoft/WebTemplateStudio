@@ -1,4 +1,4 @@
-# Web Template Studio - Pages
+# Full-stack web application - Pages
 
 The following pages are supported:
 

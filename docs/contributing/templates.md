@@ -28,6 +28,7 @@ The [Templates Repository](../../templates) has the following structure:
   - [Pages](../../templates/Web/Pages): Page templates define the source files needed to create a page of a certain type.
   - [Projects](../../templates/Web/Projects): Project templates which define the actual folder structure, source files and auxiliary files to create a base project.
 
+- [RN](../../templates/RN): this folder contains all templates used for React Native projects. Using the same folder structure as above.
 
 ## Learn more
 

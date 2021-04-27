@@ -3,7 +3,15 @@
 ## Prerequisites
 
 *Web Template Studio* runs as a VSCode extension and hence you'll need to have *VScode* version 1.38 or above installed.
-Also, you'll need [node](https://nodejs.org/en/download/), [python](https://www.python.org/downloads/) or [ASP.NET](https://dotnet.microsoft.com/download) and [npm](https://www.npmjs.com/get-npm)/[yarn](https://yarnpkg.com/en/docs/install) to run the generated templates.
+
+To run the generated templates you'll need some of the followings installed depending on the type of project you´re creating:
+- [npm](https://www.npmjs.com/get-npm) or [yarn](https://yarnpkg.com/en/docs/install)
+### Full-stack web applications
+- [node](https://nodejs.org/en/download/)
+- [python](https://www.python.org/downloads/)
+- [ASP.NET](https://dotnet.microsoft.com/download)
+### React Native applications
+- Check the following [requirements](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies).
 
 ## Installing the official release
 Head over to [Visual Studio Marketplace’s Web Template Studio page](https://marketplace.visualstudio.com/items?itemName=WASTeamAccount.WebTemplateStudio-dev-nightly) and click "[install](vscode:extension/WASTeamAccount.WebTemplateStudio-dev-nightly)" 😊.
@@ -16,8 +24,8 @@ Head over to [Visual Studio Marketplace’s Web Template Studio page](https://ma
 <img alt="VSIX Download" src="./resources/vsix-download.png" width="80%" />
 
 3. Open VSCode
-4. Open the extensions menu from VSCode sidebar
-5. Click on the ellipsis in the upper right hand corner
+4. Open the extensions menu from the VSCode sidebar
+5. Click on the ellipsis in the upper right-hand corner
 6. Choose *Install from VSIX*
 7. Select the `.vsix` you downloaded earlier. *Web Template Studio* is now ready to use
 
@@ -27,4 +35,9 @@ Head over to [Visual Studio Marketplace’s Web Template Studio page](https://ma
 
 - Open **VSCode**
 - Press `Ctrl + Shift ⇧ + P` (Windows/Linux) or `Command ⌘ + Shift ⇧ + P` (Mac) to open VSCode's extension launcher
-- Type/Select `Web Template Studio: Launch` and press `Enter` to launch the extension
+- Type/Select `Web Template Studio: [command name]` and press `Enter` to launch the extension.
+
+  List of available commands below:
+  - `Create Web App`
+  - `Create React Native App`
+  - `Deploy Web App`
