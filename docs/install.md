@@ -37,4 +37,7 @@ Head over to [Visual Studio Marketplace’s Web Template Studio page](https://ma
 - Press `Ctrl + Shift ⇧ + P` (Windows/Linux) or `Command ⌘ + Shift ⇧ + P` (Mac) to open VSCode's extension launcher
 - Type/Select `Web Template Studio: [command name]` and press `Enter` to launch the extension.
 
-  You can check available commands [here](./contributing/application-architecture.md#extension).
+  List of available commands below:
+  - `Web Template Studio: Create Web App`
+  - `Web Template Studio: Create React Native App`
+  - `Web Template Studio: Deploy Web App`
