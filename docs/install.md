@@ -38,6 +38,6 @@ Head over to [Visual Studio Marketplace’s Web Template Studio page](https://ma
 - Type/Select `Web Template Studio: [command name]` and press `Enter` to launch the extension.
 
   List of available commands below:
-  - `Web Template Studio: Create Web App`
-  - `Web Template Studio: Create React Native App`
-  - `Web Template Studio: Deploy Web App`
+  - `Create Web App`
+  - `Create React Native App`
+  - `Deploy Web App`
