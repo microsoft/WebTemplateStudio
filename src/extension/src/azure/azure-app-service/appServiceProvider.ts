@@ -1,11 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
-import { ServiceClientCredentials } from "ms-rest";
-import { WebSiteManagementClient } from "azure-arm-website";
-import { AppServicePlanCollection, StringDictionary } from "azure-arm-website/lib/models";
-import ResourceManagementClient, {
-  ResourceManagementModels,
-} from "azure-arm-resource/lib/resource/resourceManagementClient";
+import { ServiceClientCredentials } from "@azure/ms-rest-js";
+import { WebSiteManagementClient } from "@azure/arm-appservice";
 
 import { CONSTANTS, AzureResourceType } from "../../constants/constants";
 import { SubscriptionError, AuthorizationError, DeploymentError, AppServiceError } from "../../errors";
@@ -17,6 +13,8 @@ import { ResourceManager } from "../azure-arm/resourceManager";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
 import { Controller } from "../../controller";
 import { MESSAGES } from "../../constants/messages";
+import { ResourceManagementClient, ResourceManagementModels } from "@azure/arm-resources";
+import { AppServicePlanCollection, StringDictionary } from "@azure/arm-appservice/esm/models";
 
 export interface AppServiceSelections {
   siteName: string;

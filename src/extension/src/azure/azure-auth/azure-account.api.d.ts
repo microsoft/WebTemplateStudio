@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Event, Terminal, Progress, CancellationToken } from "vscode";
-import { ServiceClientCredentials } from "ms-rest";
-import { AzureEnvironment } from "ms-rest-azure";
-import { SubscriptionModels } from "azure-arm-resource";
+import { ServiceClientCredentials } from "@azure/ms-rest-js";
+import { Environment } from '@azure/ms-rest-azure-env';
 import { ReadStream } from "fs";
+import { SubscriptionModels } from '@azure/arm-subscriptions';
 
 export type AzureLoginStatus = "Initializing" | "LoggingIn" | "LoggedIn" | "LoggedOut";
 
@@ -27,7 +27,7 @@ export interface AzureAccount {
 }
 
 export interface AzureSession {
-  readonly environment: AzureEnvironment;
+  readonly environment: Environment;
   readonly userId: string;
   readonly tenantId: string;
   readonly credentials: ServiceClientCredentials;

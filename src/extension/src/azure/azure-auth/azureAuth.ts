@@ -1,6 +1,8 @@
 import { AzureAccount, AzureSession } from "./azure-account.api"; // Other extensions need to copy this .d.ts to their repository.
 import * as vscode from "vscode";
-import { SubscriptionModels, SubscriptionClient as SC, ResourceManagementClient as RMC } from "azure-arm-resource";
+import { ResourceManagementClient } from "@azure/arm-resources";
+import { SubscriptionModels, SubscriptionClient} from "@azure/arm-subscriptions";
+
 import { AuthorizationError, ResourceGroupError } from "../../errors";
 import { CONSTANTS } from "../../constants/constants";
 import { MESSAGES } from "../../constants/messages";
@@ -114,7 +116,7 @@ export abstract class AzureAuth {
     const subscriptionIds: Map<string, boolean> = new Map();
     for (const session of this.api.sessions) {
       const credentials = session.credentials;
-      const subscriptionClient = new SC.SubscriptionClient(credentials);
+      const subscriptionClient = new SubscriptionClient(credentials);
       const subscriptions = await this.listAll(
         subscriptionClient.subscriptions,
         subscriptionClient.subscriptions.list()
@@ -139,7 +141,7 @@ export abstract class AzureAuth {
     this.initialize();
     const { session, subscription } = subscriptionItem;
     const resourceGroupItems: ResourceGroupItem[] = [];
-    const resources = new RMC.ResourceManagementClient(session.credentials, subscription.subscriptionId!);
+    const resources = new ResourceManagementClient(session.credentials, subscription.subscriptionId!);
     const resourceGroups = await this.listAll(resources.resourceGroups, resources.resourceGroups.list());
     resourceGroups.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
     resourceGroupItems.push(
@@ -188,7 +190,7 @@ export abstract class AzureAuth {
     }
 
     await this.initializeLocations(subscriptionItem);
-    const azureResourceClient: RMC.ResourceManagementClient = new RMC.ResourceManagementClient(
+    const azureResourceClient: ResourceManagementClient = new ResourceManagementClient(
       subscriptionItem.session.credentials,
       subscriptionItem.subscription.subscriptionId!
     );
@@ -216,7 +218,7 @@ export abstract class AzureAuth {
     }
 
     await this.initializeLocations(subscriptionItem);
-    const azureResourceClient: RMC.ResourceManagementClient = new RMC.ResourceManagementClient(
+    const azureResourceClient: ResourceManagementClient = new ResourceManagementClient(
       subscriptionItem.session.credentials,
       subscriptionItem.subscription.subscriptionId!
     );
@@ -243,7 +245,7 @@ export abstract class AzureAuth {
     this.initialize();
     const { session, subscription } = subscriptionItem;
     const locationList: LocationItem[] = [];
-    const subscriptionClient = new SC.SubscriptionClient(
+    const subscriptionClient = new SubscriptionClient(
       session.credentials,
       session.environment.resourceManagerEndpointUrl
     );
