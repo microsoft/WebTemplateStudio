@@ -1,4 +1,4 @@
-# Web Template Studio - Backend frameworks
+# Full-stack web application - Backend frameworks
 
 The following backend frameworks are supported:
 
