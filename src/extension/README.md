@@ -15,7 +15,10 @@ Docs to provide useful insights.
 - Press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open VSCode's extension launcher
 - Type/Select `Web Template Studio: [command name]` and press `Enter` to launch the extension
 
-  You can check available commands [here](./contributing/application-architecture.md#extension)
+List of available commands below:
+  - `Create Web App`
+  - `Create React Native App`
+  - `Deploy Web App`
 
 ### Deploy the generated project
 
