@@ -1,10 +1,6 @@
-import { CosmosDBManagementClient } from "azure-arm-cosmosdb";
-import { DatabaseAccount } from "azure-arm-cosmosdb/lib/models";
-import {
-  ResourceManagementClient,
-  ResourceManagementModels,
-} from "azure-arm-resource/lib/resource/resourceManagementClient";
-import { ServiceClientCredentials } from "ms-rest";
+import { CosmosDBManagementClient, CosmosDBManagementModels } from "@azure/arm-cosmosdb";
+import { ResourceManagementClient, ResourceManagementModels } from "@azure/arm-resources";
+import { ServiceClientCredentials } from "@azure/ms-rest-js";
 import * as path from "path";
 
 import { CONSTANTS } from "../../constants/constants";
@@ -29,7 +25,7 @@ export interface CosmosDBSelections {
  * Database Object - tuple to return to caller
  */
 export interface DatabaseObject {
-  databaseAccount: DatabaseAccount;
+  databaseAccount: CosmosDBManagementModels.DatabaseAccountGetResults;
   connectionString: string;
 }
 
@@ -239,7 +235,7 @@ export class CosmosDBDeploy {
         options
       );
 
-      const databaseAccount: DatabaseAccount = await this.SubscriptionItemCosmosClient.databaseAccounts.get(
+      const databaseAccount: CosmosDBManagementModels.DatabaseAccountGetResults = await this.SubscriptionItemCosmosClient.databaseAccounts.get(
         resourceGroup,
         databaseName
       );

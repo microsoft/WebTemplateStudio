@@ -1,5 +1,5 @@
-import ResourceManagementClient from "azure-arm-resource/lib/resource/resourceManagementClient";
-import { ServiceClientCredentials } from "ms-rest";
+import { ResourceManagementClient } from "@azure/arm-resources";
+import { ServiceClientCredentials } from "@azure/ms-rest-js";
 
 import { MESSAGES } from "../../constants/messages";
 import { SubscriptionError } from "../../errors";

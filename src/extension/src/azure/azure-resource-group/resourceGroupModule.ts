@@ -1,5 +1,4 @@
-import { ResourceGroup, ResourceGroupListResult } from "azure-arm-resource/lib/resource/models";
-import { ResourceManagementClient } from "azure-arm-resource/lib/resource/resourceManagementClient";
+import { ResourceManagementClient, ResourceManagementModels } from "@azure/arm-resources";
 
 import { CONSTANTS } from "../../constants/constants";
 import { MESSAGES } from "../../constants/messages";
@@ -33,7 +32,7 @@ export class ResourceGroupDeploy {
         throw new AuthorizationError(MESSAGES.ERRORS.AZURE_RESOURCE_CLIENT_NOT_DEFINED);
       }
       const { resourceGroupName, location } = resourceGroupSelection;
-      const options: ResourceGroup = {
+      const options: ResourceManagementModels.ResourceGroup = {
         name: resourceGroupName,
         location: location,
       };
@@ -90,7 +89,9 @@ export class ResourceGroupDeploy {
     return !exist;
   }
 
-  public async GetResourceGroups(subscriptionItem: SubscriptionItem): Promise<ResourceGroupListResult> {
+  public async GetResourceGroups(
+    subscriptionItem: SubscriptionItem
+  ): Promise<ResourceManagementModels.ResourceGroupListResult> {
     this.setAzureResourceClient(subscriptionItem);
     if (this.azureResourceClient === undefined) {
       throw new AuthorizationError(MESSAGES.ERRORS.AZURE_RESOURCE_CLIENT_NOT_DEFINED);
@@ -99,9 +100,12 @@ export class ResourceGroupDeploy {
     return groups;
   }
 
-  public async GetResourceGroup(name: string, subscription: SubscriptionItem): Promise<ResourceGroup | undefined> {
+  public async GetResourceGroup(
+    name: string,
+    subscription: SubscriptionItem
+  ): Promise<ResourceManagementModels.ResourceGroup | undefined> {
     const resourceGroups = await this.GetResourceGroups(subscription);
-    return resourceGroups.find((r) => r.name === name);
+    return resourceGroups.find((r: any) => r.name === name);
   }
 
   public async ExistResourceGroup(name: string, subscription: SubscriptionItem): Promise<boolean> {
