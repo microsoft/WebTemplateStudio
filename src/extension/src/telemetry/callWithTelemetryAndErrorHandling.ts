@@ -6,11 +6,12 @@
 
 import * as vscode from "vscode";
 import { MessageItem, window } from "vscode";
-import { MESSAGES } from "../constants/messages";
-import { reportAnIssue } from "./reportAnIssue";
-import { IParsedError, parseError } from "./parseError";
 import { ExtensionContext } from "vscode";
+
+import { MESSAGES } from "../constants/messages";
 import { Logger } from "../utils/logger";
+import { IParsedError, parseError } from "./parseError";
+import { reportAnIssue } from "./reportAnIssue";
 
 export interface IActionContext {
   properties: TelemetryProperties;

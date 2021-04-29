@@ -1,5 +1,5 @@
-import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 import { ISelected } from "../../../types/selected";
+import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 
 export interface ISelectFrontendAction {
   type: USERSELECTION_TYPEKEYS.SELECT_FRONTEND_FRAMEWORK;

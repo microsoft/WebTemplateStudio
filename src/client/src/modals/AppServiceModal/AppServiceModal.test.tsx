@@ -1,17 +1,19 @@
+import "@testing-library/jest-dom";
+import "@testing-library/jest-dom/extend-expect";
+
+import { fireEvent, waitFor } from "@testing-library/react";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import "@testing-library/jest-dom";
-import AppServiceModal from ".";
-import { getInitialState, setOpenModal, addFeaturesOptions } from "../../mockData/mockStore";
+
 import button from "../../css/button.module.css";
-import "@testing-library/jest-dom/extend-expect";
-import { renderWithStore } from "../../testUtils";
-import messages from "./messages";
-import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
-import { waitFor, fireEvent } from "@testing-library/react";
+import { addFeaturesOptions, getInitialState, setOpenModal } from "../../mockData/mockStore";
 import { closeModalAction } from "../../store/navigation/modals/action";
+import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import { saveAppServiceAction } from "../../store/userSelection/services/appService/action";
 import { IAppService } from "../../store/userSelection/services/appService/model";
+import { renderWithStore } from "../../testUtils";
+import AppServiceModal from ".";
+import messages from "./messages";
 
 jest.mock("../../components/SubscriptionSelection", () => {
   return (props: any) => {

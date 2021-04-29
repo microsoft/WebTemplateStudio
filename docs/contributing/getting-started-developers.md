@@ -18,6 +18,7 @@ Before starting make sure you read the [Web Template Studio arquitecture](applic
 If you just want to take advantage from *Web Template Studio* extension, check the [Web Template Studio Installation Instructions page](../install.md).
 
 ## Prerequisites
+### For a full-stack web application
 
 1. Install [Node.js](https://nodejs.org/en/download/)
 1. Install [Gulp](https://gulpjs.com/)
@@ -27,7 +28,14 @@ If you just want to take advantage from *Web Template Studio* extension, check t
 1. Install [Yarn](https://yarnpkg.com/en/docs/install). You will need to finish installing Node.js before you install Yarn.
 1. Run the command `npm config set scripts-prepend-node-path true`. This tells VSCode which Node version to run during the extension compilation (otherwise you'll get an error during the build process).
 
-**Note**: If using Windows, use Git Bash. 
+### For a react native application
+1. You have to check the following [dependencies](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies).
+
+    In the Wizard you have a link on the right-side bar, to show a modal with the System Requirements.
+
+   <img alt="React Native System Requirements" src="../resources/react-native-requirements.png" width="85%" />
+
+**Note**: If using Windows, use Git Bash.
 
 At some point you may also need to install [React-scripts](https://yarnpkg.com/package/react-scripts) and [Typescript](https://www.typescriptlang.org/).
 
@@ -42,11 +50,11 @@ This folder contains the source code for the different components of *Web Templa
         - `components`: contains all React components that are reusable.
         - `css`: CSS contains styling that is global.
         - `mockData`: mocked data to be able to use from the browser while developing.
-        - `modals`: React components and its subcomponents displayed as modals.
-        - `pages`:  React components and its subcomponents displayed as main pages on the Wizard.
-        - `store`: contains reducers, actions, interfaces and selectors for the Redux store.
-        - `utils`: contains helper functions, constants and others.
-        *For example*: validation, routes and extensionService.
+        - `modals`: React components and their subcomponents are displayed as modals.
+        - `pages`:  React components and their subcomponents are displayed as main pages on the Wizard.
+        - `store`: contains reducers, actions, interfaces, and selectors for the Redux store.
+        - `utils`: contains helper functions, constants, and others.
+        *For example*: validation, routes, and extensionService.
             - `extensionService`: allows client-extension communication.
 
 
@@ -87,7 +95,7 @@ When you clone *Web Template Studio* you have to run two commands: `git submodul
 Changes on Core Template Studio should be done on the Core Template Studio repos. In WebTS, to update the submodule to the most recent commit, you have to run the command: `git submodule update --remote`.
 
 ## How to run the extension locally
-1. Run `./build-all.sh` from the `_build` folder. This script installs dependencies and compiles the client and core template studio and copies it to the extension. It also builds and installs the extension. 
+1. Run `./build-all.sh` from the `_build` folder. This script installs dependencies and compiles the client and core template studio and copies it to the extension. It also builds and installs the extension.
 
     There are also separate scripts:
     - For building the client (`build-client.sh`).
@@ -96,9 +104,14 @@ Changes on Core Template Studio should be done on the Core Template Studio repos
 2. Open the `src/extension` folder using `VSCode`.
 3. Start the debugger by pressing `F5`. This should open the Extension Development Host in a new Visual Studio Code window.
 4. In the Extension Development Host, press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open the Command Palette.
-5. In the Command Palette, type `Web Template Studio (local): Launch` and press `Enter` to launch the extension. We recently added concurrent installation support.
-    - `Web Template Studio: Launch`: this would launch the marketplace version.
-    - `Web Template Studio (nightly): Launch`: this would launch an installed instance of the extension.
+5. In the Command Palette, type `Web Template Studio (local): [create command name]` and press `Enter` to launch the extension.
+
+    **Note:** There´s concurrent installation support, so you can run multiple versions of the extension on the same vscode instance.
+    - `Web Template Studio: [create command name]`: this would launch the marketplace version.
+    - `Web Template Studio (local): [create command name]`: this would launch the local version of the extension while developing.
+    - `Web Template Studio (nightly): [create command name]`: this would launch an installed instance of the extension.
+
+    You can check available commands [here](./contributing/application-architecture.md#extension).
 
 ## How to develop the client
 As the client is injected as a static web app in the webview of the extension, debugging inside the extension can be challenging. Running the client in a browser is useful for quickly testing HTML or CSS changes and for debugging since you can use **Chrome extensions** such as `React and Redux developer tools`.
@@ -122,7 +135,7 @@ After starting the client using `yarn start` in VSCode Debug View (`Ctrl + Shift
 - [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)
 - [Debugging in Visual Studio Code](https://code.visualstudio.com/docs/editor/debugging)
 
-## How to built a local vsix
+## How to build a local vsix
 Run `./createLocalVsix.sh` from the `_build` folder.
 
 The script will compile the client, CoreTS (in release mode) and the extension and package the extension into the root directory `/dist` folder. The vsix package can be distributed and installed by anyone who has VSCode using the command in the extension directory:
@@ -135,7 +148,9 @@ code --install-extension [extensionName].vsix
 
 Alternatively, the extension can be installed from the context menu of the extension section in Visual Studio code using the "**install from VSIX...**" command. The installed vsix package can be found in the extensions folder. For *Windows*, it is `%USERPROFILE%\.vscode\extensions`. For *Mac/Linux*, it is `~/.vscode/extensions` (By Default).
 
-After installation, use `Ctrl + Shift ⇧ + P` (Windows/Linux) or `Command ⌘ + Shift ⇧ + P` (Mac) in Visual Studio Code to open the Extension Launcher and select `Web Template Studio: Launch` to run the extension.
+After installation, use `Ctrl + Shift ⇧ + P` (Windows/Linux) or `Command ⌘ + Shift ⇧ + P` (Mac) in Visual Studio Code to open the Extension Launcher and select `Web Template Studio: [command name]` to run the extension.
+
+You can check available commands [here](./contributing/application-architecture.md#extension).
 
 ## Tests
 

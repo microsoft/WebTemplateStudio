@@ -1,24 +1,22 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-import { AppState } from "../../../store/combineReducers";
-import { TemplateType } from "../../../store/templates/combineReducers";
-import {
-  setSelectedFrontendFrameworkAction,
-  setSelectedBackendFrameworkAction,
-} from "../../../store/userSelection/frameworks/action";
-
-import { IOption } from "../../../types/option";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+import { useDispatch, useSelector } from "react-redux";
 
 import Dropdown from "../../../components/Dropdown";
+import { AppState } from "../../../store/combineReducers";
+import { TemplateType } from "../../../store/templates/combineReducers";
 import {
   getDropdownBackendFrameworksSelector,
   getDropdownFrontendFrameworksSelector,
 } from "../../../store/templates/frameworks/selector";
-
+import {
+  setSelectedBackendFrameworkAction,
+  setSelectedFrontendFrameworkAction,
+} from "../../../store/userSelection/frameworks/action";
+import { IOption } from "../../../types/option";
+import SectionTitle from "../../Titles/SectionTitle";
 import rightsidebarStyles from "../rightsidebarStyles.module.css";
 import messages from "./messages";
-import InputTitle from "../../Titles/TitleForInput";
 
 type Props = InjectedIntlProps;
 
@@ -79,7 +77,7 @@ const SelectFrameworks = (props: Props) => {
     <div className={rightsidebarStyles.sidebarItem}>
       {frontendOptions.length > 1 && selectedFrontendFramework && selectedFrontendFramework.value !== "" && (
         <div className={rightsidebarStyles.inputContainer}>
-          <InputTitle>{formatMessage(messages.frontendFramework)}</InputTitle>
+          <SectionTitle>{formatMessage(messages.frontendFramework)}</SectionTitle>
           <Dropdown
             handleChange={(selectedFrontendFramework) => {
               setSelectedFrontendFramework(selectedFrontendFramework);
@@ -92,7 +90,7 @@ const SelectFrameworks = (props: Props) => {
       )}
       {backendOptions.length > 1 && selectedBackendFramework && selectedBackendFramework.value !== "" && (
         <div className={rightsidebarStyles.inputContainer}>
-          <InputTitle>{formatMessage(messages.backendFramework)}</InputTitle>
+          <SectionTitle>{formatMessage(messages.backendFramework)}</SectionTitle>
           <Dropdown
             handleChange={(selectedBackendFramework) => {
               setSelectedBackendFramework(selectedBackendFramework);

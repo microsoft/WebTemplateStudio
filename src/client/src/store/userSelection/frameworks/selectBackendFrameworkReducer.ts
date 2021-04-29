@@ -1,6 +1,6 @@
-import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 import { ISelected } from "../../../types/selected";
 import WizardSelectionActionType from "../selectionActionType";
+import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 
 const initialState = {
   title: "",
@@ -10,7 +10,7 @@ const initialState = {
   author: "",
 };
 
-const backendFramework = (state: ISelected = initialState, action: WizardSelectionActionType) : ISelected => {
+const backendFramework = (state: ISelected = initialState, action: WizardSelectionActionType): ISelected => {
   switch (action.type) {
     case USERSELECTION_TYPEKEYS.SELECT_BACKEND_FRAMEWORK:
       return action.payload;

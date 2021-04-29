@@ -1,15 +1,16 @@
+import { SagaMiddleware } from "redux-saga";
 import { all } from "redux-saga/effects";
-import { frameworkSaga } from "./userSelection/frameworks/saga";
-import { getFeaturesSaga } from "./userSelection/frameworks/getFeaturesSaga";
+
+import { IVSCodeObject } from "../types/vscode";
 import {
-  loadTemplatesSaga,
   loadLogin,
   loadProjectTypesListSagaAndOptionalFrameworkList,
   loadroutesNavItemsaSaga,
+  loadTemplatesSaga,
   resetWizardSaga,
 } from "./config/config/saga";
-import { IVSCodeObject } from "../types/vscode";
-import { SagaMiddleware } from "redux-saga";
+import { getFeaturesSaga } from "./userSelection/frameworks/getFeaturesSaga";
+import { frameworkSaga } from "./userSelection/frameworks/saga";
 
 let rootSagaVscode: any;
 function* rootSaga() {
@@ -24,7 +25,7 @@ function* rootSaga() {
   ]);
 }
 
-function runSagaMiddleware(vscode: IVSCodeObject, sagaMiddleware: SagaMiddleware<any>) : void {
+function runSagaMiddleware(vscode: IVSCodeObject, sagaMiddleware: SagaMiddleware<any>): void {
   rootSagaVscode = vscode;
   sagaMiddleware.run(rootSaga);
 }

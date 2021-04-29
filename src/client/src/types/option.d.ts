@@ -27,6 +27,7 @@ export interface IOption {
   expectedTime?: string | FM.MessageDescriptor;
   expectedPrice?: string | FM.MessageDescriptor;
   editable?: boolean;
+  multipleInstance?: boolean;
 }
 
 export interface IVersionPackage {

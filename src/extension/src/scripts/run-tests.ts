@@ -10,7 +10,7 @@ const yellowColor = "\x1b[33m%s\x1b[0m";
 const testFolder = path.join(__dirname, "..", "..", "..", "..", "template_test");
 console.log(cyanColor, `Run test scripts from ${testFolder}`);
 
-let files: string[] = [];
+const files: string[] = [];
 fs.readdirSync(testFolder).forEach((file: string) => {
   files.push(file.toString());
 });
@@ -18,8 +18,8 @@ fs.readdirSync(testFolder).forEach((file: string) => {
 asyncForEach(files, async (file: string) => {
   console.log(cyanColor, `Current project: ${file}`);
 
-  let packageJsonFile = path.join(testFolder, file, file, "frontend", "package.json");
-  let packageJson = require(packageJsonFile);
+  const packageJsonFile = path.join(testFolder, file, file, "frontend", "package.json");
+  const packageJson = require(packageJsonFile);
 
   // TODO: Enable when Vue project has test script
   // if(!packageJson.scripts.test) {

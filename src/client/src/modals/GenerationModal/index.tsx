@@ -1,31 +1,27 @@
 import * as React from "react";
-import { connect, useSelector, useDispatch } from "react-redux";
-import { ReactComponent as Close } from "../../assets/cancel.svg";
-import asModal from "../../components/Modal";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { forkJoin, Subject } from "rxjs";
 
-import buttonStyles from "../../css/button.module.css";
-import styles from "./styles.module.css";
-
-import { GenerationItemData, GENERATION_NAMES } from "../../types/generationStatus";
-import { isGenModalOpenSelector } from "../../store/navigation/modals/selector";
-import { KEY_EVENTS, WEB_TEMPLATE_STUDIO_LINKS, TELEMETRY } from "../../utils/constants/constants";
-
-import { AppState } from "../../store/combineReducers";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-import { messages } from "./messages";
-import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
-import keyUpHandler from "../../utils/keyUpHandler";
-
-import { sendTelemetry, generateProject, openProjectInVSCode } from "../../utils/extensionService/extensionService";
-import { resetWizardAction } from "../../store/config/config/action";
 import { AppContext } from "../../AppContext";
+import asModal from "../../components/Modal";
+import ModalContent from "../../components/ModalContent";
+import buttonStyles from "../../css/button.module.css";
+import { AppState } from "../../store/combineReducers";
+import { resetWizardAction } from "../../store/config/config/action";
+import { isGenModalOpenSelector } from "../../store/navigation/modals/selector";
+import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import { getGenerationData } from "../../store/userSelection/app/selector";
-import { getCosmosDB, getAppService } from "../../store/userSelection/services/servicesSelector";
-import GenerationItem from "./GenerationItem";
-import { Subject, forkJoin } from "rxjs";
-import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
+import { getAppService, getCosmosDB } from "../../store/userSelection/services/servicesSelector";
+import { GENERATION_NAMES, GenerationItemData } from "../../types/generationStatus";
 import { AZURE_LINKS } from "../../utils/constants/azure";
-import ModalTitle from "../../components/Titles/TitleForModal";
+import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
+import { TELEMETRY, WEB_TEMPLATE_STUDIO_LINKS } from "../../utils/constants/constants";
+import { generateProject, openProjectInVSCode, sendTelemetry } from "../../utils/extensionService/extensionService";
+import keyUpHandler from "../../utils/keyUpHandler";
+import GenerationItem from "./GenerationItem";
+import { messages } from "./messages";
+import styles from "./styles.module.css";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -120,14 +116,6 @@ const GenerationModal = ({ intl }: Props) => {
     dispatch(resetWizardAction());
   };
 
-  const closeKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
-    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      event.preventDefault();
-      event.stopPropagation();
-      closeModalAndCreateNewProject({ fromCloseButton: true });
-    }
-  };
-
   const trackCreateNewProjectTelemetry = ({ fromCloseButton, fromCreateNewProjectButton }: any) => {
     if (fromCloseButton) {
       sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_CREATE_NEW_PROJECT, {
@@ -143,20 +131,11 @@ const GenerationModal = ({ intl }: Props) => {
   };
 
   return (
-    <div>
-      <div className={styles.header}>
-        <ModalTitle>{formatMessage(messages.creatingYourProject)}</ModalTitle>
-        {isGenerationFinished && (
-          <Close
-            tabIndex={0}
-            className={styles.closeIcon}
-            data-testid="close-button"
-            onClick={() => closeModalAndCreateNewProject({ fromCloseButton: true })}
-            onKeyDown={closeKeyDownHandler}
-          />
-        )}
-      </div>
-
+    <ModalContent
+      title={intl.formatMessage(messages.creatingYourProject)}
+      canClose={isGenerationFinished}
+      onClose={() => closeModalAndCreateNewProject({ fromCloseButton: true })}
+    >
       <div className={styles.messages}>
         {!isGenerationFinished && <p>{statusMessage}</p>}
         {isGenerationTemplatesSuccess && <p>{formatMessage(messages.seeReadme)}</p>}
@@ -198,7 +177,7 @@ const GenerationModal = ({ intl }: Props) => {
           </button>
         )}
       </div>
-    </div>
+    </ModalContent>
   );
 };
 

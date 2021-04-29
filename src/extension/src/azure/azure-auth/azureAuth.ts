@@ -1,11 +1,11 @@
-import { AzureAccount, AzureSession } from "./azure-account.api"; // Other extensions need to copy this .d.ts to their repository.
-import * as vscode from "vscode";
 import { ResourceManagementClient } from "@azure/arm-resources";
-import { SubscriptionModels, SubscriptionClient} from "@azure/arm-subscriptions";
+import { SubscriptionClient, SubscriptionModels } from "@azure/arm-subscriptions";
+import * as vscode from "vscode";
 
-import { AuthorizationError, ResourceGroupError } from "../../errors";
 import { CONSTANTS } from "../../constants/constants";
 import { MESSAGES } from "../../constants/messages";
+import { AuthorizationError, ResourceGroupError } from "../../errors";
+import { AzureAccount, AzureSession } from "./azure-account.api"; // Other extensions need to copy this .d.ts to their repository.
 
 const MICROSOFT_DOCUMENT_DB_PROVIDER = "Microsoft.DocumentDb";
 const MICROSOFT_WEB_PROVIDER = "Microsoft.Web";

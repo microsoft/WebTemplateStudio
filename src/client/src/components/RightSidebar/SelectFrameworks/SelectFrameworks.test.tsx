@@ -1,18 +1,17 @@
+import { RenderResult } from "@testing-library/react";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import { RenderResult } from "@testing-library/react";
 
 import {
-  getInitialState,
-  addFrontEndFrameworksOptions,
   addBackEndFrameworksOptions,
-  setFrontendFramework,
+  addFrontEndFrameworksOptions,
+  getInitialState,
   setBackendFramework,
+  setFrontendFramework,
 } from "../../../mockData/mockStore";
-import SelectFrameworks from "./index";
-import { renderWithStore } from "../../../testUtils";
 import { AppState } from "../../../store/combineReducers";
-
+import { renderWithStore } from "../../../testUtils";
+import SelectFrameworks from "./index";
 import messages from "./messages";
 
 describe("SelectFrameworks", () => {
@@ -48,7 +47,7 @@ describe("SelectFrameworks", () => {
     beforeEach(() => {
       const initialState: AppState = getInitialState();
       addFrontEndFrameworksOptions(initialState);
-      setFrontendFramework(initialState,"React");
+      setFrontendFramework(initialState, "React");
 
       store = mockStore(initialState);
       wrapper = renderWithStore(<SelectFrameworks />, store);

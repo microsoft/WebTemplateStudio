@@ -3,11 +3,9 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 
 import { ReactComponent as DownSVG } from "../../assets/i-collapsibleDown.svg";
 import { ReactComponent as UpSVG } from "../../assets/i-collapsibleUp.svg";
-
 import { KEY_EVENTS } from "../../utils/constants/constants";
-
-import styles from "./styles.module.css";
 import messages from "./messages";
+import styles from "./styles.module.css";
 
 interface IProps {
   question: string;

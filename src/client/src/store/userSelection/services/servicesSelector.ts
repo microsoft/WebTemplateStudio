@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+
 import { AppState } from "../../combineReducers";
 
 const getServices = createSelector(
@@ -29,4 +30,4 @@ const getServiceFilter = (state: AppState, internalName: string) => {
 
 const hasSelectedService = createSelector(getServiceFilter, (service) => service !== undefined);
 
-export { getServices, getAppService, getCosmosDB, hasServices, hasSelectedService };
+export { getAppService, getCosmosDB, getServices, hasSelectedService, hasServices };

@@ -1,16 +1,16 @@
-import * as vscode from "vscode";
-import * as path from "path";
-import * as os from "os";
-import * as fs from "fs";
-
 import { ChildProcess, spawn } from "child_process";
+import { EventEmitter } from "events";
+import * as fs from "fs";
+import * as os from "os";
+import * as path from "path";
+import * as vscode from "vscode";
+
 import { CLI, CLI_SETTINGS } from "./constants/cli";
 import { ICommandPayload } from "./types/commandPayload";
-import { IGenerationData, IService } from "./types/generationTypes";
-import { EventEmitter } from "events";
 import { IEngineGenerationPayloadType } from "./types/engineGenerationPayloadType";
-import { ISyncPayloadType } from "./types/syncPayloadType";
 import { IEngineGenerationTemplateType } from "./types/engineGenerationTemplateType";
+import { IGenerationData, IService } from "./types/generationTypes";
+import { ISyncPayloadType } from "./types/syncPayloadType";
 
 class CliEventEmitter extends EventEmitter {}
 

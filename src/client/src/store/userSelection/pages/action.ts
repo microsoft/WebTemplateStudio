@@ -1,6 +1,6 @@
 import { ISelected } from "../../../types/selected";
-import { ISetPageAction, IsetPagesAction } from "./model";
 import { USERSELECTION_TYPEKEYS } from "../typeKeys";
+import { ISetPageAction, IsetPagesAction } from "./model";
 
 export const setPagesAction = (pages: ISelected[]): IsetPagesAction => ({
   type: USERSELECTION_TYPEKEYS.SELECT_PAGES,

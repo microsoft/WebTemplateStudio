@@ -9,55 +9,30 @@
 .boundingBox {
   width: 260px;
 }
-.cardContainer {
-  height: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-}
-
-.cardContainer > *:last-child {
-  margin-top: auto;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.headerIconContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1.8px solid var(--vscode-editor-foreground);
-  height: 2em;
-  width: 2em;
-  border-radius: 50%;
-}
 
 .icon {
   height: 1em;
   width: 1em;
+}
+
+.icon path {
   fill: var(--vscode-editor-foreground);
 }
 
-.description {
-  margin-top: 1rem;
-  height: 10rem;
+.serviceFeaturesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
 }
 
-.expectedPrice {
+.serviceFeatureInfo {
   display: flex;
-  margin-bottom: 1em;
-}
-
-.expectedTime {
-  display: flex;
-  margin-bottom: 15px;
 }
 
 .svg {
   margin-right: 1em;
+}
+
+.svg path {
   fill: var(--vscode-editor-foreground);
 }

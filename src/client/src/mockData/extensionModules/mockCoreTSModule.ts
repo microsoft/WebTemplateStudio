@@ -1,15 +1,15 @@
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/commands";
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import * as mockWebData from "./mockData/mockWebPlatformData";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { PLATFORM } from "../../utils/constants/constants";
+import { mockedPlatform } from "../mockConfig";
 import * as mockReactNativeData from "./mockData/mockReactNativePlatformData";
+import * as mockWebData from "./mockData/mockWebPlatformData";
 
-// WTS DEV: Change mock data to change platform
-const mockData = mockWebData;
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+const mockData = mockedPlatform === PLATFORM.REACTNATIVE ? mockReactNativeData : mockWebData;
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const getProjectTypes = (message: any) : void => {
+const getProjectTypes = (message: any): void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
@@ -24,10 +24,8 @@ const getProjectTypes = (message: any) : void => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const getFrameworks = (message: any) : void => {
-  const projectTypes = mockData.projectTypes !== undefined ?
-  mockData.projectTypes :
-  [];
+const getFrameworks = (message: any): void => {
+  const projectTypes = mockData.projectTypes !== undefined ? mockData.projectTypes : [];
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
@@ -36,7 +34,7 @@ const getFrameworks = (message: any) : void => {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
         frameworks: mockData.frameworks,
         isPreview: true,
-        projectType: projectTypes !== undefined ? projectTypes[0].name: "",
+        projectType: projectTypes !== undefined ? projectTypes[0].name : "",
       },
     },
     "*"
@@ -44,7 +42,7 @@ const getFrameworks = (message: any) : void => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const getAllLicenses = (message: any) : void => {
+const getAllLicenses = (message: any): void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
@@ -59,7 +57,7 @@ const getAllLicenses = (message: any) : void => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const getTemplateConfig = (message: any) : void => {
+const getTemplateConfig = (message: any): void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
@@ -74,7 +72,7 @@ const getTemplateConfig = (message: any) : void => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const getPages = (message: any) : void => {
+const getPages = (message: any): void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
@@ -89,7 +87,7 @@ const getPages = (message: any) : void => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const getFeatures = (message: any) : void => {
+const getFeatures = (message: any): void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
@@ -103,4 +101,4 @@ const getFeatures = (message: any) : void => {
   );
 };
 
-export { getProjectTypes, getFrameworks, getAllLicenses, getTemplateConfig, getPages, getFeatures };
+export { getAllLicenses, getFeatures, getFrameworks, getPages, getProjectTypes, getTemplateConfig };

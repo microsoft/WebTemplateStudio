@@ -1,13 +1,14 @@
+import { RenderResult } from "@testing-library/react";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import Footer from ".";
-import { getInitialState, setSelectedRoute } from "../../mockData/mockStore";
-import { RenderResult } from "@testing-library/react";
-import { renderWithStore } from "../../testUtils";
-import styles from "./styles.module.css";
+
 import buttonStyles from "../../css/button.module.css";
-import { ROUTE } from "../../utils/constants/constants";
+import { getInitialState, setSelectedRoute } from "../../mockData/mockStore";
 import { AppState } from "../../store/combineReducers";
+import { renderWithStore } from "../../testUtils";
+import { ROUTE } from "../../utils/constants/constants";
+import Footer from ".";
+import styles from "./styles.module.css";
 
 describe("Footer", () => {
   let props: any;
@@ -121,13 +122,13 @@ describe("Footer", () => {
       wrapper = renderWithStore(<Footer />, store);
 
       const backButton = wrapper.getByText("Back");
-      expect(backButton).toHaveClass(styles.disabledOverlay);
+      expect(backButton).toBeDisabled();
 
       const nextButton = wrapper.getByText("Next");
-      expect(nextButton).toHaveClass(styles.disabledOverlay);
+      expect(nextButton).toBeDisabled();
 
       const createButton = wrapper.getByText("Create Project");
-      expect(createButton).toHaveClass(styles.disabledOverlay);
+      expect(createButton).toBeDisabled();
     });
   });
 
@@ -147,7 +148,7 @@ describe("Footer", () => {
     it("generate button should be disabled", () => {
       wrapper = renderWithStore(<Footer />, store);
       const createButton = wrapper.getByText("Create Project");
-      expect(createButton).toHaveClass(styles.disabledOverlay);
+      expect(createButton).toBeDisabled();
     });
   });
 });

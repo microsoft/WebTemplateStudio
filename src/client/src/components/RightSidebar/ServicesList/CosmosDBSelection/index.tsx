@@ -1,18 +1,16 @@
 import * as React from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { useDispatch } from "react-redux";
-import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import { AppContext } from "../../../../AppContext";
-import { ICosmosDB } from "../../../../store/userSelection/services/cosmosDb/model";
 import { openCosmosDbModalAction } from "../../../../store/navigation/modals/action";
 import { removeCosmosDbAction } from "../../../../store/userSelection/services/cosmosDb/action";
-import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
+import { ICosmosDB } from "../../../../store/userSelection/services/cosmosDb/model";
 import { EXTENSION_COMMANDS } from "../../../../utils/constants/commands";
 import { SERVICE_KEYS } from "../../../../utils/constants/constants";
-
-import SidebarItem from "../SidebarItem";
+import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
 import servicelistStyles from "../servicelistStyles.module.css";
-
+import SidebarItem from "../SidebarItem";
 import messages from "./messages";
 
 interface IProps {

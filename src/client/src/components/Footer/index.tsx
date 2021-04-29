@@ -1,31 +1,26 @@
 import React, { useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { InjectedIntlProps, injectIntl } from "react-intl";
+import { useDispatch, useSelector } from "react-redux";
 
-import { AppState } from "../../store/combineReducers";
 import { AppContext } from "../../AppContext";
-
-import { sendTelemetry } from "../../utils/extensionService/extensionService";
-import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
-import { ROUTE } from "../../utils/constants/constants";
-
-import { IVSCodeObject } from "../../types/vscode";
-import { IRoutesNavItems } from "../../types/route";
-import { IOption } from "../../types/option";
-
-import {
-  isEnableNextPageSelector,
-  isEnableGenerateButtonSelector,
-  getSelectedRoute,
-} from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+import buttonStyles from "../../css/button.module.css";
+import { AppState } from "../../store/combineReducers";
+import { setDetailPageAction } from "../../store/config/detailsPage/action";
 import { openGenModalAction } from "../../store/navigation/modals/action";
 import { setRoutesAction } from "../../store/navigation/routesNavItems/actions";
-import { setDetailPageAction } from "../../store/config/detailsPage/action";
-
-import classnames from "classnames";
-import buttonStyles from "../../css/button.module.css";
-import styles from "./styles.module.css";
+import {
+  getSelectedRoute,
+  isEnableGenerateButtonSelector,
+  isEnableNextPageSelector,
+} from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { IOption } from "../../types/option";
+import { IRoutesNavItems } from "../../types/route";
+import { IVSCodeObject } from "../../types/vscode";
+import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
+import { ROUTE } from "../../utils/constants/constants";
+import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import messages from "./messages";
+import styles from "./styles.module.css";
 
 type Props = InjectedIntlProps;
 
@@ -85,38 +80,23 @@ const Footer = (props: Props) => {
           <div>{formatMessage(messages.license)}</div>
           <div className={styles.buttonContainer}>
             <button
-              tabIndex={!isFirstStep ? 0 : -1}
-              className={classnames(buttonStyles.buttonDark, {
-                [styles.disabledOverlay]: isFirstStep || !isEnableGenerateButton,
-              })}
-              onClick={() => {
-                if (!isFirstStep && isEnableGenerateButton) navigateBack();
-              }}
+              disabled={isFirstStep || !isEnableGenerateButton}
+              className={buttonStyles.buttonHighlighted}
+              onClick={() => navigateBack()}
             >
               {formatMessage(messages.back)}
             </button>
             <button
-              tabIndex={isEnableNextPage ? 0 : -1}
-              className={classnames(styles.button, styles.buttonNext, buttonStyles.buttonHighlighted, {
-                [buttonStyles.buttonDark]: !isEnableNextPage,
-                [styles.disabledOverlay]: isLastStep || !isEnableNextPage || !isEnableGenerateButton,
-              })}
-              onClick={() => {
-                if (!isLastStep && isEnableNextPage && isEnableGenerateButton) navigateForward();
-              }}
+              disabled={isLastStep || !isEnableNextPage || !isEnableGenerateButton}
+              className={buttonStyles.buttonHighlighted}
+              onClick={() => navigateForward()}
             >
               {formatMessage(messages.next)}
             </button>
             <button
               disabled={!isEnableGenerateButton}
-              className={classnames({
-                [buttonStyles.buttonDark]: !isEnableGenerateButton,
-                [buttonStyles.buttonHighlighted]: isEnableGenerateButton,
-                [styles.disabledOverlay]: !isEnableGenerateButton,
-              })}
-              onClick={(e) => {
-                if (isEnableGenerateButton) generateProject(e);
-              }}
+              className={buttonStyles.buttonHighlighted}
+              onClick={(e) => generateProject(e)}
             >
               {formatMessage(messages.generate)}
             </button>

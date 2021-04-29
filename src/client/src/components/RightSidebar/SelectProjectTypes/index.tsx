@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-import { AppState } from "../../../store/combineReducers";
-import { TemplateType } from "../../../store/templates/combineReducers";
-import { setSelectedProjectTypeAction } from "../../../store/userSelection/projectType/action";
-import { getDropdownProjectTypeSelector } from "../../../store/templates/projectTypes/selector";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+import { useDispatch, useSelector } from "react-redux";
 
 import Dropdown from "../../../components/Dropdown";
-
+import { AppState } from "../../../store/combineReducers";
+import { TemplateType } from "../../../store/templates/combineReducers";
+import { getDropdownProjectTypeSelector } from "../../../store/templates/projectTypes/selector";
+import { setSelectedProjectTypeAction } from "../../../store/userSelection/projectType/action";
+import SectionTitle from "../../Titles/SectionTitle";
 import rightsidebarStyles from "../rightsidebarStyles.module.css";
 import messages from "./messages";
-import InputTitle from "../../Titles/TitleForInput";
 
 type Props = InjectedIntlProps;
 
@@ -49,7 +48,7 @@ const SelectProjectTypes = (props: Props) => {
     <>
       {projectTypesOptions.length > 1 && storedProjectType.internalName !== "" && (
         <div className={rightsidebarStyles.sidebarItem}>
-          <InputTitle>{formatMessage(messages.selectProjectTypes)}</InputTitle>
+          <SectionTitle>{formatMessage(messages.selectProjectTypes)}</SectionTitle>
           <Dropdown
             handleChange={(projectType) => setSelectedProjectType(projectType)}
             ariaLabel={formatMessage(messages.selectProjectTypes)}

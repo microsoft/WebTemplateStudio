@@ -1,20 +1,19 @@
+import { WebSiteManagementClient } from "@azure/arm-appservice";
+import { AppServicePlanCollection, StringDictionary } from "@azure/arm-appservice/esm/models";
+import { ResourceManagementClient, ResourceManagementModels } from "@azure/arm-resources";
+import { ServiceClientCredentials } from "@azure/ms-rest-js";
 import * as fs from "fs";
 import * as path from "path";
-import { ServiceClientCredentials } from "@azure/ms-rest-js";
-import { WebSiteManagementClient } from "@azure/arm-appservice";
 
-import { CONSTANTS, AzureResourceType } from "../../constants/constants";
-import { SubscriptionError, AuthorizationError, DeploymentError, AppServiceError } from "../../errors";
-
-import { SubscriptionItem, ResourceGroupItem } from "../azure-auth/azureAuth";
+import { AzureResourceType, CONSTANTS } from "../../constants/constants";
+import { MESSAGES } from "../../constants/messages";
+import { Controller } from "../../controller";
+import { AppServiceError, AuthorizationError, DeploymentError, SubscriptionError } from "../../errors";
+import { ARMFileHelper } from "../azure-arm/armFileHelper";
+import { ResourceManager } from "../azure-arm/resourceManager";
+import { ResourceGroupItem, SubscriptionItem } from "../azure-auth/azureAuth";
 import { NameGenerator } from "../utils/nameGenerator";
 import { AppNameValidationResult, NameValidator } from "../utils/nameValidator";
-import { ResourceManager } from "../azure-arm/resourceManager";
-import { ARMFileHelper } from "../azure-arm/armFileHelper";
-import { Controller } from "../../controller";
-import { MESSAGES } from "../../constants/messages";
-import { ResourceManagementClient, ResourceManagementModels } from "@azure/arm-resources";
-import { AppServicePlanCollection, StringDictionary } from "@azure/arm-appservice/esm/models";
 
 export interface AppServiceSelections {
   siteName: string;

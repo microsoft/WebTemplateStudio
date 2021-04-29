@@ -1,27 +1,23 @@
+import classNames from "classnames";
 import * as React from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
-import { injectIntl, InjectedIntlProps } from "react-intl";
 
-import { openAzureServicesModalAction } from "../../../store/navigation/modals/action";
-import { hasSelectedService } from "../../../store/userSelection/services/servicesSelector";
-import { isLoggedInSelector } from "../../../store/config/azure/selector";
-import { setDetailPageAction } from "../../../store/config/detailsPage/action";
-import { AppState } from "../../../store/combineReducers";
-
-import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
-
-import Icon from "../../../components/Icon";
-
-import { ReactComponent as PlusSVG } from "../../../assets/plus.svg";
 import { ReactComponent as EditSVG } from "../../../assets/edit.svg";
 import { ReactComponent as PriceSVG } from "../../../assets/money.svg";
+import { ReactComponent as PlusSVG } from "../../../assets/plus.svg";
 import { ReactComponent as TimeSVG } from "../../../assets/timer.svg";
-
-import cardStyles from "../../cardStyles.module.css";
+import Icon from "../../../components/Icon";
 import buttonStyles from "../../../css/button.module.css";
-import styles from "./styles.module.css";
+import { AppState } from "../../../store/combineReducers";
+import { isLoggedInSelector } from "../../../store/config/azure/selector";
+import { setDetailPageAction } from "../../../store/config/detailsPage/action";
+import { openAzureServicesModalAction } from "../../../store/navigation/modals/action";
+import { hasSelectedService } from "../../../store/userSelection/services/servicesSelector";
+import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
+import cardStyles from "../../cardStyles.module.css";
 import messages from "./messages";
-import classNames from "classnames";
+import styles from "./styles.module.css";
 
 interface IProps {
   service: IService;
@@ -29,7 +25,7 @@ interface IProps {
 
 type Props = IProps & InjectedIntlProps;
 
-export const ServiceCard = (props: Props) : JSX.Element => {
+export const ServiceCard = (props: Props): JSX.Element => {
   const { intl, service } = props;
   const [showPlusIcon, setShowPlusIcon] = React.useState(false);
 
@@ -73,56 +69,51 @@ export const ServiceCard = (props: Props) : JSX.Element => {
       onMouseLeave={() => setShowPlusIcon(false)}
       onMouseOver={() => setShowPlusIcon(true)}
     >
-      <div>
-        <div className={cardStyles.gridLayoutCardHeader}>
-          <div>
-            <Icon name={service.title} icon={service.icon} />
+      <div className={cardStyles.gridLayoutCardHeader}>
+        <div>
+          <Icon name={service.title} icon={service.icon} />
+        </div>
+        <div className={cardStyles.title}>{service.title}</div>
+        {showPlusIcon && (
+          <div className={cardStyles.plusIcon}>
+            {!hasService && (
+              <PlusSVG
+                role="figure"
+                className={styles.icon}
+                title={formatMessage(messages.addToProject)}
+                aria-label={formatMessage(messages.addToProject)}
+              />
+            )}
+            {hasService && (
+              <EditSVG
+                role="figure"
+                className={styles.icon}
+                title={formatMessage(messages.editResource)}
+                aria-label={formatMessage(messages.editResource)}
+              />
+            )}
           </div>
-          <div className={cardStyles.title}>{service.title}</div>
-
-          {showPlusIcon && (
-            <div className={classNames(styles.headerIconContainer)}>
-              {!hasService && (
-                <PlusSVG
-                  role="figure"
-                  className={styles.icon}
-                  title={formatMessage(messages.addToProject)}
-                  aria-label={formatMessage(messages.addToProject)}
-                />
-              )}
-              {hasService && (
-                <EditSVG
-                  role="figure"
-                  className={styles.icon}
-                  title={formatMessage(messages.editResource)}
-                  aria-label={formatMessage(messages.editResource)}
-                />
-              )}
-            </div>
-          )}
-        </div>
-        <div className={styles.description}>
-          {service.expectedPrice && (
-            <div className={styles.expectedPrice}>
-              <PriceSVG role="figure" className={styles.svg} aria-label={formatMessage(messages.price)} />
-              <div>{formatMessage(service.expectedPrice)}</div>
-            </div>
-          )}
-          {service.expectedTime && (
-            <div className={styles.expectedTime}>
-              <TimeSVG role="figure" className={styles.svg} aria-label={formatMessage(messages.setUpTime)} />
-              <div>{formatMessage(service.expectedTime)}</div>
-            </div>
-          )}
-          <div>{service.body}</div>
-        </div>
-        <div className={cardStyles.gridLayoutCardFooter}>
-          <div>
-            <button tabIndex={0} onClick={showDetails} className={buttonStyles.buttonLink}>
-              {formatMessage(messages.learnMore)}
-            </button>
+        )}
+      </div>
+      <div className={styles.serviceFeaturesContainer}>
+        {service.expectedPrice && (
+          <div className={styles.serviceFeatureInfo}>
+            <PriceSVG role="figure" className={styles.svg} aria-label={formatMessage(messages.price)} />
+            <div>{formatMessage(service.expectedPrice)}</div>
           </div>
-        </div>
+        )}
+        {service.expectedTime && (
+          <div className={styles.serviceFeatureInfo}>
+            <TimeSVG role="figure" className={styles.svg} aria-label={formatMessage(messages.setUpTime)} />
+            <div>{formatMessage(service.expectedTime)}</div>
+          </div>
+        )}
+      </div>
+      <div>{service.body}</div>
+      <div className={cardStyles.gridLayoutCardFooter}>
+        <button tabIndex={0} onClick={showDetails} className={buttonStyles.buttonLink}>
+          {formatMessage(messages.learnMore)}
+        </button>
       </div>
     </div>
   );

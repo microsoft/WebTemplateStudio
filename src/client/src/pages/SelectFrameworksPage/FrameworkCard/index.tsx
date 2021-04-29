@@ -1,27 +1,27 @@
 import classNames from "classnames";
 import * as React from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { connect, useDispatch } from "react-redux";
-import { ISelectProps, IStateProps } from "./interfaces";
-import { mapStateToProps } from "./store";
-import DependencyInfo from "./DependencyInfo";
-import messages from "./messages";
-import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-import { ReactComponent as Check } from "../../../assets/check.svg";
-import { getLatestVersion } from "../../../utils/extensionService/extensionService";
+
 import { AppContext } from "../../../AppContext";
+import { ReactComponent as Check } from "../../../assets/check.svg";
+import Icon from "../../../components/Icon";
+import buttonStyles from "../../../css/button.module.css";
+import { setDetailPageAction } from "../../../store/config/detailsPage/action";
 import { updateFrameworksAction } from "../../../store/templates/frameworks/action";
-import { IOption } from "../../../types/option";
 import {
   setSelectedBackendFrameworkAction,
   setSelectedFrontendFrameworkAction,
 } from "../../../store/userSelection/frameworks/action";
-import { setDetailPageAction } from "../../../store/config/detailsPage/action";
-import Icon from "../../../components/Icon";
-
-import styles from "./styles.module.css";
+import { IOption } from "../../../types/option";
+import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
+import { getLatestVersion } from "../../../utils/extensionService/extensionService";
 import cardStyles from "../../cardStyles.module.css";
-import buttonStyles from "../../../css/button.module.css";
+import DependencyInfo from "./DependencyInfo";
+import { ISelectProps, IStateProps } from "./interfaces";
+import messages from "./messages";
+import { mapStateToProps } from "./store";
+import styles from "./styles.module.css";
 
 type Props = ISelectProps & IStateProps & InjectedIntlProps;
 
@@ -115,33 +115,28 @@ const FrameworkCard = (props: Props) => {
         [cardStyles.selected]: selected,
       })}
     >
+      <div className={cardStyles.gridLayoutCardHeader}>
+        <div>{framework.internalName && <Icon name={framework.internalName} icon={framework.icon} />}</div>
+        <div className={cardStyles.title}>{framework.title}</div>
+      </div>
       <div>
-        <div className={cardStyles.gridLayoutCardHeader}>
-          <div>{framework.internalName && <Icon name={framework.internalName} icon={framework.icon} />}</div>
-          <div className={classNames(cardStyles.title)}>{framework.title}</div>
-        </div>
-
-        <div className={styles.gridLayoutVersion}>
-          <div className={cardStyles.version}>v{framework.version}</div>
-          {latestVersion === framework.version && <div className={styles.latestVersion}>(Latest)</div>}
-        </div>
+        v{framework.version}
+        {latestVersion === framework.version && ` ${intl.formatMessage(messages.latest)}`}
         <div className={styles.description}>{framework.body}</div>
-        <div className={cardStyles.DependencyInfo}>
-          {selected && !framework.requirement?.isInstalled && <DependencyInfo requirement={framework.requirement} />}
+      </div>
+      {selected && !framework.requirement?.isInstalled && <DependencyInfo requirement={framework.requirement} />}
+      <div className={cardStyles.gridLayoutCardFooter}>
+        <div>
+          <button
+            onClick={showMoreInfo}
+            onKeyDown={showMoreInfoIfEnterOrSpace}
+            className={buttonStyles.buttonLink}
+            tabIndex={0}
+          >
+            {intl.formatMessage(messages.learnMore)}
+          </button>
         </div>
-        <div className={cardStyles.gridLayoutCardFooter}>
-          <div>
-            <button
-              onClick={showMoreInfo}
-              onKeyDown={showMoreInfoIfEnterOrSpace}
-              className={buttonStyles.buttonLink}
-              tabIndex={0}
-            >
-              {intl.formatMessage(messages.learnMore)}
-            </button>
-          </div>
-          {selected && <Check role="figure" className={cardStyles.iconCheckMark} />}
-        </div>
+        {selected && <Check role="figure" className={cardStyles.iconCheckMark} />}
       </div>
     </div>
   );

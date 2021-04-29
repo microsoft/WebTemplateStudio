@@ -4,11 +4,11 @@ import { IActionContext } from "../../telemetry/callWithTelemetryAndErrorHandlin
 import { ITelemetryService } from "../../telemetry/telemetryService";
 import { IAzureService, IGenerationData, IService, SERVICE_CATEGORY, SERVICE_TYPE } from "../../types/generationTypes";
 import { GenerationItemStatus, sendGenerationStatus } from "./generationStatus";
-import { IGenerator } from "./IGenerator";
 import AppServiceGenerator from "./generators/AppServiceGenerator";
 import CosmosDBGenerator from "./generators/CosmosDBGenerator";
 import ResourceGroupGenerator from "./generators/ResourceGroupGenerator";
 import TemplatesGenerator from "./generators/TemplatesGenerator";
+import { IGenerator } from "./IGenerator";
 
 export interface DeployedServiceStatus {
   serviceType: SERVICE_TYPE;
@@ -92,10 +92,11 @@ export default class GenerationService {
   }
 
   private deployWithTelemetry<T>(telemetryEvent: string, callback: Promise<T>): Promise<any> {
-    return this.Telemetry.callWithTelemetryAndCatchHandleErrors(telemetryEvent, async function (
-      this: IActionContext
-    ): Promise<T> {
-      return await callback;
-    });
+    return this.Telemetry.callWithTelemetryAndCatchHandleErrors(
+      telemetryEvent,
+      async function (this: IActionContext): Promise<T> {
+        return await callback;
+      }
+    );
   }
 }

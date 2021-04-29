@@ -1,7 +1,6 @@
 import { PLATFORM } from "../../../utils/constants/constants";
 import { backendImage, frontendImage, noImage, pageImage, serviceImage } from "./mockSvgData";
 
-// WTS DEV: Change mock data to change platform
 const platform = PLATFORM.WEB;
 
 const projectTypes = [
@@ -293,7 +292,7 @@ const templatesInfo = {
   platformRequirements: [],
 };
 
-const pages = (frontendFramework: string) : any => {
+const pages = (frontendFramework: string): any => {
   return [
     {
       templateId: `wts.Page.${frontendFramework}.Blank`,
@@ -494,4 +493,4 @@ const features = [
   },
 ];
 
-export {platform, projectTypes, frameworks, licenses, templatesInfo, pages, features };
+export { features, frameworks, licenses, pages, platform, projectTypes, templatesInfo };

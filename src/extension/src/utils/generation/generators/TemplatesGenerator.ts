@@ -1,13 +1,13 @@
 import { MESSAGES } from "../../../constants/messages";
 import { CoreTemplateStudio } from "../../../coreTemplateStudio";
 import { IGenerationData } from "../../../types/generationTypes";
+import { Logger } from "../../logger";
 import {
   GenerationItemStatus,
   sendGenerationStatus,
   TEMPLATES_GENERATION_NAME,
   updateStatusMessage,
 } from "../generationStatus";
-import { Logger } from "../../logger";
 
 export default class TemplatesGenerator {
   public async generate(generationData: IGenerationData): Promise<string | undefined> {

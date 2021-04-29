@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+
 import { AppState } from "../../combineReducers";
 
 const isLoggedInSelector = (state: AppState): boolean => state.config.azureProfileData.email !== "";
@@ -14,4 +15,4 @@ const getDropdownSubscriptionsSelector = createSelector([getSubscriptionsSelecto
   }) as IDropDownOptionType[];
 });
 
-export { isLoggedInSelector, getSubscriptionsSelector, getDropdownSubscriptionsSelector };
+export { getDropdownSubscriptionsSelector, getSubscriptionsSelector, isLoggedInSelector };

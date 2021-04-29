@@ -13,21 +13,17 @@ const messages = defineMessages({
     id: "detailsPage.details.redirectLabel.generic",
     defaultMessage: "here",
   },
-  licenses:{
+  licenses: {
     id: "detailsPage.details.licenses",
-    defaultMessage:"Licenses:",
+    defaultMessage: "Licenses:",
   },
-  author:{
+  author: {
     id: "detailsPage.details.author",
-    defaultMessage:"Author:",
+    defaultMessage: "Author:",
   },
-  version:{
+  version: {
     id: "detailsPage.details.version",
-    defaultMessage:"Version:",
-  },
-  back:{
-    id: "detailsPage.details.back",
-    defaultMessage:"Back",
+    defaultMessage: "Version:",
   },
 });
 export default messages;

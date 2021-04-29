@@ -1,12 +1,12 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
-import FrameworkCard from "./FrameworkCard";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { AppState } from "../../store/combineReducers";
+import { useSelector } from "react-redux";
 
-import messages from "./messages";
-import pageStyles from "../pageStyles.module.css";
 import Title from "../../components/Titles/Title";
+import { AppState } from "../../store/combineReducers";
+import pageStyles from "../pageStyles.module.css";
+import FrameworkCard from "./FrameworkCard";
+import messages from "./messages";
 
 type Props = InjectedIntlProps;
 
@@ -20,24 +20,24 @@ const SelectFrameworks = ({ intl }: Props) => {
       {frontendOptions.length > 0 && (
         <>
           <Title>{intl.formatMessage(messages.frontendTitle)}</Title>
-          <div className={pageStyles.flexContainer}>
+          <div className={pageStyles.flexCardsContainer}>
             {frontendOptions
-            .filter(frontend => isPreview || !frontend.isPreview)
-            .map((frontend) => {
+              .filter((frontend) => isPreview || !frontend.isPreview)
+              .map((frontend) => {
                 return <FrameworkCard key={frontend.internalName} framework={frontend} isFrontEnd={true} />;
-            })}
+              })}
           </div>
         </>
       )}
       {backendOptions.length > 0 && (
         <>
           <Title>{intl.formatMessage(messages.backendTitle)}</Title>
-          <div className={pageStyles.flexContainer}>
+          <div className={pageStyles.flexCardsContainer}>
             {backendOptions
-            .filter(backend => isPreview || !backend.isPreview)
-            .map((backend) => {
+              .filter((backend) => isPreview || !backend.isPreview)
+              .map((backend) => {
                 return <FrameworkCard key={backend.internalName} framework={backend} isFrontEnd={false} />;
-            })}
+              })}
           </div>
         </>
       )}

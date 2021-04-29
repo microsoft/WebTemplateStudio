@@ -1,14 +1,14 @@
+import { fireEvent, waitFor } from "@testing-library/react";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import { renderWithStore } from "../../../testUtils";
-import { getInitialState, setAzureEmail } from "../../../mockData/mockStore";
-import messages from "./messages";
-import { fireEvent, waitFor } from "@testing-library/react";
-import { azureLogout } from "../../../utils/extensionService/extensionService";
-import { logOutAzureAction } from "../../../store/config/azure/action";
-import { AppState } from "../../../store/combineReducers";
 
+import { getInitialState, setAzureEmail } from "../../../mockData/mockStore";
+import { AppState } from "../../../store/combineReducers";
+import { logOutAzureAction } from "../../../store/config/azure/action";
+import { renderWithStore } from "../../../testUtils";
+import { azureLogout } from "../../../utils/extensionService/extensionService";
 import AzureAccount from ".";
+import messages from "./messages";
 
 jest.mock("../../../store/config/azure/action", () => {
   const logOutAzureAction = jest.fn(() => ({

@@ -1,9 +1,10 @@
+import { RenderResult } from "@testing-library/react";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import RuntimeStackInfo from ".";
-import { getInitialState, setBackendFramework, addBackEndFrameworksOptions } from "../../../mockData/mockStore";
-import { RenderResult } from "@testing-library/react";
+
+import { addBackEndFrameworksOptions, getInitialState, setBackendFramework } from "../../../mockData/mockStore";
 import { renderWithStore } from "../../../testUtils";
+import RuntimeStackInfo from ".";
 import messages from "./messages";
 
 describe("RuntimeStackInfo", () => {

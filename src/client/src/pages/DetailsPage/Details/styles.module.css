@@ -1,51 +1,10 @@
-.spacer {
-  margin-right: 52px;
-}
-
-.backIcon path {
-  fill: var(--vscode-textLink-foreground);
-}
-
-.backIcon {
-  height: 1em;
-  margin-right: 1em;
-  margin-top: 5px;
-  cursor: pointer;
-}
-
 .container {
   max-width: 65%;
-}
-
-.backContainer {
   display: flex;
-  margin-bottom: 2em;
-}
-
-.innerBackContainer {
-  height: 2em;
-  padding-left: 1px;
-  padding-right: 2px;
-  display: flex;
-}
-
-.innerBackContainer:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
-.headerContainer,
-.detailsContainer {
-  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
   margin-bottom: 1em;
   margin-right: 1em;
-}
-
-.licenseCategory {
-  align-self: flex-start;
-}
-
-.licenseCategory {
-  margin-left: 0px;
 }
 
 .licenses {
@@ -54,10 +13,7 @@
 }
 
 .licenses p {
-  margin-block-start: 0;
-}
-.detailsDescription {
-  margin-bottom: 0px;
+  margin: 0;
 }
 
 .categoriesContainer {
@@ -70,22 +26,17 @@
   width: 80% !important;
 }
 
-.details {
-  padding-top: 2px;
-  color: var(--vscode-textLink-foreground);
-  cursor: pointer;
-}
-
-.details:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
+.metaData > p {
+  margin: 0;
 }
 
 .longDescription {
   line-height: 1.75em;
 }
 
-.colWidth {
+.detailSectionLabel {
   width: 70px;
+  align-self: flex-start;
 }
 
 .licenseButton {
@@ -102,7 +53,6 @@
 .licenseButton:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
-
 
 @media (max-width: 850px) {
   .container {

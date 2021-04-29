@@ -1,12 +1,12 @@
-import * as React from "react";
-import styles from "./styles.module.css";
 import classnames from "classnames";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import * as React from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 
 import Notification from "../../../../components/Notification";
-import messages from "./messages";
-import { REQUIREMENTS_DATA } from "../../../../utils/constants/constants";
 import { IRequirement } from "../../../../types/option";
+import { REQUIREMENTS_DATA } from "../../../../utils/constants/constants";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 interface IProps {
   requirement: IRequirement;

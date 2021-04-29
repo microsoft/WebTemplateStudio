@@ -1,5 +1,5 @@
-import { IOption } from "../../types/option";
 import { ISelected } from "../../../types/selected";
+import { IOption } from "../../types/option";
 
 interface IProps {
   page: IOption;
@@ -12,4 +12,4 @@ interface IStateProps {
   pageOutOfBounds: boolean;
 }
 
-export { IStateProps, IProps };
+export { IProps, IStateProps };

@@ -1,24 +1,22 @@
+import classNames from "classnames";
 import * as React from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { connect, useDispatch } from "react-redux";
-import { injectIntl, InjectedIntlProps } from "react-intl";
 
-import { IProps, IStateProps } from "./interfaces";
+import { ReactComponent as Check } from "../../../assets/check.svg";
+import { ReactComponent as Plus } from "../../../assets/plus.svg";
+import Icon from "../../../components/Icon";
+import buttonStyles from "../../../css/button.module.css";
+import { setDetailPageAction } from "../../../store/config/detailsPage/action";
+import { setPagesAction } from "../../../store/userSelection/pages/action";
 import { ISelected } from "../../../types/selected";
 import { KEY_EVENTS, ROUTE } from "../../../utils/constants/constants";
 import { inferItemName } from "../../../utils/infer/itemName";
-
-import { setPagesAction } from "../../../store/userSelection/pages/action";
-import { setDetailPageAction } from "../../../store/config/detailsPage/action";
-import { mapStateToProps } from "./store";
-
-import { ReactComponent as Plus } from "../../../assets/plus.svg";
-import Icon from "../../../components/Icon";
-
-import messages from "../../messages";
-import classNames from "classnames";
-import styles from "./styles.module.css";
 import cardStyles from "../../cardStyles.module.css";
-import buttonStyles from "../../../css/button.module.css";
+import messages from "../../messages";
+import { IProps, IStateProps } from "./interfaces";
+import { mapStateToProps } from "./store";
+import styles from "./styles.module.css";
 
 type Props = IProps & IStateProps & InjectedIntlProps;
 
@@ -26,6 +24,9 @@ const PageCard = (props: Props) => {
   const { page, intl, selectedPages, isModal, pageOutOfBounds } = props;
   const [showPlusIcon, setShowPlusIcon] = React.useState(false);
   const dispatch = useDispatch();
+
+  const numSelectedPages = selectedPages.filter((selectedPage) => selectedPage.defaultName === page.defaultName).length;
+  const canAddPage = !pageOutOfBounds && (page.multipleInstance || numSelectedPages === 0);
 
   const addPage = () => {
     const select: ISelected = {
@@ -40,7 +41,7 @@ const PageCard = (props: Props) => {
       editable: page.editable,
     };
 
-    if (!pageOutOfBounds) {
+    if (canAddPage) {
       const newSelectedPages: ISelected[] = selectedPages.splice(0);
       newSelectedPages.push(select);
       dispatch(setPagesAction(newSelectedPages));
@@ -86,36 +87,33 @@ const PageCard = (props: Props) => {
       onMouseLeave={() => setShowPlusIcon(false)}
       onMouseOver={() => setShowPlusIcon(true)}
     >
-      <div>
-        <div className={cardStyles.gridLayoutCardHeader}>
-          <div>
-            <Icon name={page.defaultName} icon={page.icon} />
+      <div className={cardStyles.gridLayoutCardHeader}>
+        <div>
+          <Icon name={page.defaultName} icon={page.icon} />
+        </div>
+        <div className={cardStyles.title}>{page.defaultName}</div>
+        {showPlusIcon && canAddPage && (
+          <div className={cardStyles.plusIcon}>
+            <Plus role="figure" />
           </div>
-          <div className={classNames(cardStyles.title)}>{page.defaultName}</div>
-          {showPlusIcon && (
-            <div className={classNames(styles.headerIconContainer)}>
-              <Plus role="figure" />
-            </div>
+        )}
+      </div>
+      <div className={styles.description}>{page.body}</div>
+      <div className={cardStyles.gridLayoutCardFooter}>
+        <div>
+          {!isModal && (
+            <button
+              onClick={showMoreInfo}
+              onKeyDown={showMoreInfoIfEnterOrSpace}
+              className={buttonStyles.buttonLink}
+              tabIndex={0}
+            >
+              {intl.formatMessage(messages.Preview)}
+            </button>
           )}
         </div>
-        <div className={styles.description}>{page.body}</div>
-        <div className={cardStyles.gridLayoutCardFooter}>
-          <div>
-            {!isModal && (
-              <button
-                onClick={showMoreInfo}
-                onKeyDown={showMoreInfoIfEnterOrSpace}
-                className={buttonStyles.buttonLink}
-                tabIndex={0}
-              >
-                {intl.formatMessage(messages.Preview)}
-              </button>
-            )}
-          </div>
-          <div>
-            {selectedPages.filter((selectedPage) => selectedPage.defaultName === page.defaultName).length}
-          </div>
-        </div>
+        <div>{page.multipleInstance ? numSelectedPages : ""}</div>
+        {!page.multipleInstance && numSelectedPages > 0 && <Check role="figure" className={cardStyles.iconCheckMark} />}
       </div>
     </div>
   );

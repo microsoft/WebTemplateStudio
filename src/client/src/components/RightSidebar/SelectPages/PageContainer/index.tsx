@@ -2,9 +2,7 @@ import * as React from "react";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 
 import { ISelected } from "../../../../types/selected";
-
 import DraggablePage from "./DraggablePage";
-
 import styles from "./styles.module.css";
 
 const SortableSidebarItem = SortableElement(

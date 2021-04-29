@@ -1,6 +1,7 @@
 import { createSelector } from "reselect";
-import { UserSelectionState } from "../../userSelection/combineReducers";
+
 import { AppState } from "../../combineReducers";
+import { UserSelectionState } from "../../userSelection/combineReducers";
 
 const getConfigSelector = (state: AppState): UserSelectionState => state.userSelection;
 

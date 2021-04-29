@@ -1,8 +1,8 @@
 import { IOption } from "../../../types/option";
-import { TEMPLATES_TYPEKEYS } from "../templateTypeKeys";
 import RootAction from "../../ActionType";
+import { TEMPLATES_TYPEKEYS } from "../templateTypeKeys";
 
-const backendFrameworkOptions = (state: IOption[] = [], action: RootAction) : IOption[] => {
+const backendFrameworkOptions = (state: IOption[] = [], action: RootAction): IOption[] => {
   switch (action.type) {
     case TEMPLATES_TYPEKEYS.SET_BACKEND_FRAMEWORKS:
       const newState = [...state];

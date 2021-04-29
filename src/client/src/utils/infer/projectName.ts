@@ -1,7 +1,7 @@
 import { IVSCodeObject } from "../../types/vscode";
 import { addExistingProjectNameValidate, IValidation } from "../validations/validations";
 
-export const inferProjectName = async (outputPath: string, vscode: IVSCodeObject) : Promise<string> => {
+export const inferProjectName = async (outputPath: string, vscode: IVSCodeObject): Promise<string> => {
   let projectName = "";
   const baseProjectName = "myApp";
   const validate = await addExistingProjectNameValidate(baseProjectName, outputPath, vscode);

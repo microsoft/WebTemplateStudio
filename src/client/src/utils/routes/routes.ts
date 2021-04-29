@@ -1,5 +1,5 @@
-import { PLATFORM, ROUTE } from "../constants/constants";
 import { IRoutesNavItems } from "../../types/route";
+import { PLATFORM, ROUTE } from "../constants/constants";
 import messages from "./messages";
 
 const NavItemsWeb: IRoutesNavItems[] = [

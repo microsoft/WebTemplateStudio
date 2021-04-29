@@ -1,5 +1,5 @@
-import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 import { IValidation } from "../../../utils/validations/validations";
+import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 
 export interface ISetProjectNameActionType {
   type: USERSELECTION_TYPEKEYS.SET_PROJECT_NAME;

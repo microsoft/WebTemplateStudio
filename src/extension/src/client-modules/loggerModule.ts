@@ -1,7 +1,8 @@
 import * as vscode from "vscode";
-import { WizardServant, IPayloadResponse } from "../wizardServant";
+
 import { EXTENSION_COMMANDS } from "../constants/commands";
 import { Logger, LogLevel } from "../utils/logger";
+import { IPayloadResponse, WizardServant } from "../wizardServant";
 
 type ILoggingPayload = {
   level: LogLevel;

@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+
 import { IOption } from "../../../types/option";
 import { AppState } from "../../combineReducers";
 

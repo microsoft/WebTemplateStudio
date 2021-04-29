@@ -1,13 +1,12 @@
 import * as React from "react";
 import { useState } from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-
-import modalStyles from "../../../css/modal.module.css";
-import styles from "./styles.module.css";
-import messages from "./messages";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 
 import Dropdown from "../../../components/Dropdown";
+import modalStyles from "../../../css/modal.module.css";
 import { AZURE } from "../../../utils/constants/azure";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 const ApiValues: IDropDownOptionType[] = [
   {

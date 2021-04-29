@@ -1,7 +1,10 @@
-import { ISelected } from "../types/selected";
 import { FormattedMessage } from "react-intl";
+
 import { AppState } from "../store/combineReducers";
+import { IPlatformRequirement } from "../store/config/platform/model";
 import { ModalType } from "../store/navigation/typeKeys";
+import { ISelected } from "../types/selected";
+import { PLATFORM } from "../utils/constants/constants";
 import { getNavItems } from "../utils/routes/routes";
 import {
   backendImage,
@@ -10,10 +13,8 @@ import {
   projectTypeImage,
   serviceImage,
 } from "./extensionModules/mockData/mockSvgData";
-import { PLATFORM } from "../utils/constants/constants";
-import { IPlatformRequirement } from "../store/config/platform/model";
 
-export const getISelected = () : ISelected => {
+export const getISelected = (): ISelected => {
   const selected: ISelected = {
     title: "title1",
     internalName: "internamName1",
@@ -106,6 +107,7 @@ export const getInitialState = (): AppState => {
           title: "Blank",
           id: "0.7087795384523403",
           icon: "",
+          multipleInstance: true,
         },
       ],
       outputPathObject: {
@@ -160,6 +162,7 @@ const loadPages = (frameWorkName: string): Array<any> => {
     defaultName: "Blank",
     isValidTitle: true,
     author: "Microsoft",
+    multipleInstance: true,
   };
   const gridPage = {
     body: "Simple image and text components which are organized into a grid.",
@@ -178,6 +181,7 @@ const loadPages = (frameWorkName: string): Array<any> => {
     defaultName: "Grid",
     isValidTitle: true,
     author: "Microsoft",
+    multipleInstance: true,
   };
   const listPage = {
     body: "Add and remove text from an adaptive list.",
@@ -196,6 +200,7 @@ const loadPages = (frameWorkName: string): Array<any> => {
     defaultName: "List",
     isValidTitle: true,
     author: "Microsoft",
+    multipleInstance: true,
   };
   const masterPage = {
     body: "A master pane and a details pane for content.",
@@ -214,12 +219,28 @@ const loadPages = (frameWorkName: string): Array<any> => {
     defaultName: "Master Detail",
     isValidTitle: true,
     author: "Microsoft",
+    multipleInstance: true,
   };
+  const settingsPage = {
+    body: "A settings page to configure your preferences for your web application.",
+    internalName: "wts.Page." + frameWorkName + ".Settings",
+    licenses: [],
+    longDescription: "This is the most basic settings page. ...",
+    selected: false,
+    icon: pageImage,
+    title: "Settings",
+    defaultName: "Settings",
+    isValidTitle: true,
+    author: "Microsoft",
+    multipleInstance: false,
+  };
+
   const pages: Array<any> = new Array<any>();
   pages.push(blankPage);
   pages.push(gridPage);
   pages.push(listPage);
   pages.push(masterPage);
+  pages.push(settingsPage);
 
   return pages;
 };
@@ -287,7 +308,7 @@ const getSubscriptionsSelector = (): Array<Subscription> => {
   return subscriptions;
 };
 
-export const addProjectTypeOptions = (store: AppState) : void => {
+export const addProjectTypeOptions = (store: AppState): void => {
   store.templates.projectTypesOptions = [
     {
       internalName: "Tabbed",
@@ -303,7 +324,7 @@ export const addProjectTypeOptions = (store: AppState) : void => {
   ];
 };
 
-export const addFrontEndFrameworksOptions = (store: AppState) : any => {
+export const addFrontEndFrameworksOptions = (store: AppState): any => {
   store.templates.frontendOptions = [
     {
       author: "Facebook",
@@ -375,7 +396,7 @@ export const addFrontEndFrameworksOptions = (store: AppState) : any => {
   return store;
 };
 
-export const addBackEndFrameworksOptions = (store: AppState) : any => {
+export const addBackEndFrameworksOptions = (store: AppState): any => {
   store.templates.backendOptions = [
     {
       author: "Various",
@@ -461,40 +482,40 @@ export const addBackEndFrameworksOptions = (store: AppState) : any => {
   return store;
 };
 
-export const addFeaturesOptions = (store: AppState) : void => {
+export const addFeaturesOptions = (store: AppState): void => {
   store.templates.featureOptions = loadFeatures();
 };
 
-export const getServicesGroups = (store: AppState) : string[] => {
+export const getServicesGroups = (store: AppState): string[] => {
   const groups = store.templates.featureOptions.map((g) => g.group) as string[];
   return [...new Set(groups)];
 };
 
-export const loadMasters = (store: AppState) : void => {
+export const loadMasters = (store: AppState): void => {
   store.templates.pageOptions = loadPages("React");
 };
 
-export const setSubscriptions = (store: AppState) : void => {
+export const setSubscriptions = (store: AppState): void => {
   store.config.azureProfileData.subscriptions = getSubscriptionsSelector();
 };
 
-export const setBackendFramework = (store: AppState, internalName: string) : void => {
+export const setBackendFramework = (store: AppState, internalName: string): void => {
   store.userSelection.backendFramework.internalName = internalName;
 };
 
-export const setFrontendFramework = (store: AppState, internalName: string) : void => {
+export const setFrontendFramework = (store: AppState, internalName: string): void => {
   store.userSelection.frontendFramework.internalName = internalName;
 };
 
-export const setSelectedProjectTypeAction = (store: AppState, internalName: string) : void => {
+export const setSelectedProjectTypeAction = (store: AppState, internalName: string): void => {
   store.userSelection.projectType.internalName = internalName;
 };
 
-export const setOpenModal = (store: AppState, modalType: ModalType) : void => {
+export const setOpenModal = (store: AppState, modalType: ModalType): void => {
   store.navigation.modals.openModal.modalType = modalType;
 };
 
-export const setSelectedRoute = (store: AppState, seletedRoute: string) : void => {
+export const setSelectedRoute = (store: AppState, seletedRoute: string): void => {
   //store.navigation.routes.selected = seletedRoute;
   store.navigation.routesNavItems.forEach((route) => {
     route.isSelected = false;
@@ -502,11 +523,11 @@ export const setSelectedRoute = (store: AppState, seletedRoute: string) : void =
   store.navigation.routesNavItems.filter((route) => route.route === seletedRoute)[0].isSelected = true;
 };
 
-export const setAzureEmail = (store: AppState, email = "test@test.com") : void => {
+export const setAzureEmail = (store: AppState, email = "test@test.com"): void => {
   store.config.azureProfileData.email = email;
 };
 
-export const setGenerationData = (store: AppState) : number => {
+export const setGenerationData = (store: AppState): number => {
   store.userSelection.pages = [getISelected()];
   store.userSelection.services.appService = {
     subscription: "",
@@ -529,7 +550,7 @@ export const setGenerationData = (store: AppState) : number => {
   return 3;
 };
 
-export const addPlatformRequirementsOptions = (store: AppState) : number => {
+export const addPlatformRequirementsOptions = (store: AppState): number => {
   store.config.platform.requirements = loadPlatformRequirements();
   return store.config.platform.requirements.length;
 };

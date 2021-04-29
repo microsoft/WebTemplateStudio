@@ -1,10 +1,9 @@
+import { EXTENSION_COMMANDS } from "../utils/constants/commands";
+import { ENVIRONMENT } from "../utils/constants/constants";
 import * as mockAzureModule from "./extensionModules/mockAzureModule";
 import * as mockCoreTSModule from "./extensionModules/mockCoreTSModule";
-import * as mockLoggerModule from "./extensionModules/mockLoggerModule";
 import * as mockGenerationModule from "./extensionModules/mockGenerationModule";
-
-import { ENVIRONMENT } from "../utils/constants/constants";
-import { EXTENSION_COMMANDS } from "../utils/constants/commands";
+import * as mockLoggerModule from "./extensionModules/mockLoggerModule";
 
 /**
  * Models the functionality of acquireVsCodeApi() from vscode for use
@@ -13,8 +12,8 @@ import { EXTENSION_COMMANDS } from "../utils/constants/commands";
  * Mimics VSCode API by using native postMessage API to mimic postMessage from
  * VSCode.
  */
-const mockVsCodeApi = () : any => ({
-  postMessage: (message: any) : void => {
+const mockVsCodeApi = (): any => ({
+  postMessage: (message: any): void => {
     if (process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT || process.env.NODE_ENV === ENVIRONMENT.TEST) {
       switch (message.command) {
         case EXTENSION_COMMANDS.GET_FRAMEWORKS:

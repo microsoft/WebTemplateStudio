@@ -1,13 +1,13 @@
 import * as vscode from "vscode";
 
-import { WizardServant, IPayloadResponse } from "../wizardServant";
 import { EXTENSION_COMMANDS } from "../constants/commands";
 import { CoreTemplateStudio } from "../coreTemplateStudio";
+import { IPayloadResponse, WizardServant } from "../wizardServant";
 
 import fs = require("fs-extra");
 import { getGenerationData } from "../utils/generation/generationUtils";
-import RequirementsService from "../utils/requirements/RequirementsService";
 import { Logger } from "../utils/logger";
+import RequirementsService from "../utils/requirements/RequirementsService";
 
 const previewOptionSelected = vscode.workspace.getConfiguration().get<boolean>("wts.enablePreviewMode");
 

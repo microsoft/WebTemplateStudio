@@ -1,16 +1,12 @@
 //TODO: review and add proper testing
+import { RenderResult } from "@testing-library/react";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import { RenderResult } from "@testing-library/react";
 
-import {
-  getInitialState,
-  addProjectTypeOptions,
-  setSelectedProjectTypeAction,
-} from "../../../mockData/mockStore";
-import SelectProjectTypes from "./index";
-import { renderWithStore } from "../../../testUtils";
+import { addProjectTypeOptions, getInitialState, setSelectedProjectTypeAction } from "../../../mockData/mockStore";
 import { AppState } from "../../../store/combineReducers";
+import { renderWithStore } from "../../../testUtils";
+import SelectProjectTypes from "./index";
 
 describe("Select Project Types", () => {
   let wrapper: RenderResult;

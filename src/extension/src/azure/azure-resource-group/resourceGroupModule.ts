@@ -1,11 +1,12 @@
-import { SubscriptionItem } from "../azure-auth/azureAuth";
-import { ResourceManager } from "../azure-arm/resourceManager";
 import { ResourceGroup, ResourceGroupListResult } from "azure-arm-resource/lib/resource/models";
 import { ResourceManagementClient } from "azure-arm-resource/lib/resource/resourceManagementClient";
-import { ResourceGroupError, AuthorizationError, DeploymentError } from "../../errors";
+
 import { CONSTANTS } from "../../constants/constants";
-import { NameGenerator } from "../utils/nameGenerator";
 import { MESSAGES } from "../../constants/messages";
+import { AuthorizationError, DeploymentError, ResourceGroupError } from "../../errors";
+import { ResourceManager } from "../azure-arm/resourceManager";
+import { SubscriptionItem } from "../azure-auth/azureAuth";
+import { NameGenerator } from "../utils/nameGenerator";
 
 export interface ResourceGroupSelection {
   subscriptionItem: SubscriptionItem;

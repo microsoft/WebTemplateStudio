@@ -1,12 +1,13 @@
-import * as React from "react";
-import configureMockStore from "redux-mock-store";
-import AddPagesPage from "./index";
-import { Provider } from "react-redux";
-import { getInitialState, loadMasters } from "../../mockData/mockStore";
 import { render } from "@testing-library/react";
+import * as React from "react";
 import { IntlProvider } from "react-intl";
-import messages from "./messages";
+import { Provider } from "react-redux";
+import configureMockStore from "redux-mock-store";
+
+import { getInitialState, loadMasters } from "../../mockData/mockStore";
 import { AppState } from "../../store/combineReducers";
+import AddPagesPage from "./index";
+import messages from "./messages";
 
 describe("AddPagesPage", () => {
   let props: any;
