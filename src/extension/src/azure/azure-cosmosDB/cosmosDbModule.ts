@@ -269,7 +269,7 @@ export class CosmosDBDeploy {
   }
 
   private createCosmosClient(userSubscriptionItem: SubscriptionItem): CosmosDBManagementClient {
-    const userCredentials: ServiceClientCredentials = userSubscriptionItem.session.credentials;
+    const userCredentials: ServiceClientCredentials = userSubscriptionItem.session.credentials2;
     if (
       userSubscriptionItem === undefined ||
       userSubscriptionItem.subscription === undefined ||
@@ -277,11 +277,7 @@ export class CosmosDBDeploy {
     ) {
       throw new SubscriptionError(MESSAGES.ERRORS.SUBSCRIPTION_NOT_DEFINED);
     }
-    return new CosmosDBManagementClient(
-      userCredentials,
-      userSubscriptionItem.subscriptionId,
-      userSubscriptionItem.session.environment.resourceManagerEndpointUrl
-    );
+    return new CosmosDBManagementClient(userCredentials, userSubscriptionItem.subscriptionId);
   }
 
   /*

@@ -72,7 +72,7 @@ export class AppServiceProvider {
   }
 
   private createWebClient(userSubscriptionItem: SubscriptionItem): WebSiteManagementClient {
-    const credentials: ServiceClientCredentials = userSubscriptionItem.session.credentials;
+    const credentials: ServiceClientCredentials = userSubscriptionItem.session.credentials2;
 
     if (
       userSubscriptionItem === undefined ||

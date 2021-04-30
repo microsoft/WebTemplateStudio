@@ -1,4 +1,4 @@
-import { ResourceManagementClient } from "@azure/arm-resources";
+import { ResourceManagementClient, ResourceManagementModels } from "@azure/arm-resources";
 import { SubscriptionClient, SubscriptionModels } from "@azure/arm-subscriptions";
 import * as vscode from "vscode";
 
@@ -28,10 +28,6 @@ export interface ResourceGroupItem {
 
 export interface LocationItem {
   locationDisplayName: string;
-}
-
-interface PartialList<T> extends Array<T> {
-  nextLink?: string;
 }
 
 export abstract class AzureAuth {
@@ -113,25 +109,21 @@ export abstract class AzureAuth {
   private static async loadSubscriptionItems(): Promise<SubscriptionItem[]> {
     await this.api.waitForFilters();
     const subscriptionItems: SubscriptionItem[] = [];
-    const subscriptionIds: Map<string, boolean> = new Map();
+
     for (const session of this.api.sessions) {
-      const credentials = session.credentials;
-      const subscriptionClient = new SubscriptionClient(credentials);
-      const subscriptions = await this.listAll(
-        subscriptionClient.subscriptions,
-        subscriptionClient.subscriptions.list()
+      const credentials = session.credentials2;
+      const subscriptionClient: SubscriptionClient = new SubscriptionClient(credentials);
+      const subscriptions: SubscriptionModels.SubscriptionListResult = await subscriptionClient.subscriptions.list();
+
+      subscriptionItems.push(
+        ...subscriptions.map((subscription) => ({
+          label: subscription.displayName || "",
+          subscriptionId: subscription.subscriptionId || "",
+          description: subscription.displayName || "",
+          session,
+          subscription,
+        }))
       );
-      for (const subscription of subscriptions) {
-        if (subscription.subscriptionId && !subscriptionIds.has(subscription.subscriptionId)) {
-          subscriptionIds.set(subscription.subscriptionId, true);
-          subscriptionItems.push({
-            label: subscription.displayName || "",
-            subscriptionId: subscription.subscriptionId || "",
-            session,
-            subscription,
-          });
-        }
-      }
     }
     subscriptionItems.sort((a, b) => a.label.localeCompare(b.label));
     return subscriptionItems;
@@ -141,8 +133,9 @@ export abstract class AzureAuth {
     this.initialize();
     const { session, subscription } = subscriptionItem;
     const resourceGroupItems: ResourceGroupItem[] = [];
-    const resources = new ResourceManagementClient(session.credentials, subscription.subscriptionId!);
-    const resourceGroups = await this.listAll(resources.resourceGroups, resources.resourceGroups.list());
+    const resources = new ResourceManagementClient(session.credentials2, subscription.subscriptionId!);
+    const resourceGroups: ResourceManagementModels.ResourceGroupListResult = await resources.resourceGroups.list();
+
     resourceGroups.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
     resourceGroupItems.push(
       ...resourceGroups.map((resourceGroup) => {
@@ -191,7 +184,7 @@ export abstract class AzureAuth {
 
     await this.initializeLocations(subscriptionItem);
     const azureResourceClient: ResourceManagementClient = new ResourceManagementClient(
-      subscriptionItem.session.credentials,
+      subscriptionItem.session.credentials2,
       subscriptionItem.subscription.subscriptionId!
     );
     const cosmosLocations: LocationItem[] = [];
@@ -219,7 +212,7 @@ export abstract class AzureAuth {
 
     await this.initializeLocations(subscriptionItem);
     const azureResourceClient: ResourceManagementClient = new ResourceManagementClient(
-      subscriptionItem.session.credentials,
+      subscriptionItem.session.credentials2,
       subscriptionItem.subscription.subscriptionId!
     );
     const locations: LocationItem[] = [];
@@ -245,10 +238,7 @@ export abstract class AzureAuth {
     this.initialize();
     const { session, subscription } = subscriptionItem;
     const locationList: LocationItem[] = [];
-    const subscriptionClient = new SubscriptionClient(
-      session.credentials,
-      session.environment.resourceManagerEndpointUrl
-    );
+    const subscriptionClient = new SubscriptionClient(session.credentials2);
     const locations: SubscriptionModels.LocationListResult = await subscriptionClient.subscriptions.listLocations(
       subscription.subscriptionId!
     );
@@ -261,20 +251,5 @@ export abstract class AzureAuth {
       })
     );
     this.locationsCache = locationList;
-  }
-
-  private static async listAll<T>(
-    client: { listNext(nextPageLink: string): Promise<PartialList<T>> },
-    first: Promise<PartialList<T>>
-  ): Promise<T[]> {
-    const all: T[] = [];
-    for (
-      let list = await first;
-      list.length || list.nextLink;
-      list = list.nextLink ? await client.listNext(list.nextLink) : []
-    ) {
-      all.push(...list);
-    }
-    return all;
   }
 }

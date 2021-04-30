@@ -142,6 +142,7 @@
     "@azure/arm-resources": "^4.0.0",
     "@azure/arm-subscriptions": "^3.0.0",
     "@azure/ms-rest-js": "^2.4.0",
+    "@azure/ms-rest-nodeauth": "^3.0.9",
     "@types/archiver": "^3.1.0",
     "@types/fs-extra": "^9.0.1",
     "@types/node-fetch": "^2.5.6",
