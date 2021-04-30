@@ -309,7 +309,7 @@ export class CosmosDBDeploy {
       return MESSAGES.ERRORS.NAME_MIN_MAX(min, max);
     } else if (name.match(/[^a-z0-9-]/)) {
       return MESSAGES.ERRORS.COSMOS_VALID_CHARACTERS;
-    } else if (await this.SubscriptionItemCosmosClient.databaseAccounts.checkNameExists(name)) {
+    } else if ((await this.SubscriptionItemCosmosClient.databaseAccounts.checkNameExists(name)).body) {
       return MESSAGES.ERRORS.COSMOS_ACCOUNT_NOT_AVAILABLE(name);
     } else {
       return undefined;
