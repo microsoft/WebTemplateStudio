@@ -1,10 +1,8 @@
-import ResourceManagementClient, {
-  ResourceManagementModels,
-} from "azure-arm-resource/lib/resource/resourceManagementClient";
-import { WebSiteManagementClient } from "azure-arm-website";
-import { AppServicePlanCollection, StringDictionary } from "azure-arm-website/lib/models";
+import { WebSiteManagementClient } from "@azure/arm-appservice";
+import { AppServicePlanCollection, StringDictionary } from "@azure/arm-appservice/esm/models";
+import { ResourceManagementClient, ResourceManagementModels } from "@azure/arm-resources";
+import { ServiceClientCredentials } from "@azure/ms-rest-js";
 import * as fs from "fs";
-import { ServiceClientCredentials } from "ms-rest";
 import * as path from "path";
 
 import { AzureResourceType, CONSTANTS } from "../../constants/constants";
@@ -74,7 +72,7 @@ export class AppServiceProvider {
   }
 
   private createWebClient(userSubscriptionItem: SubscriptionItem): WebSiteManagementClient {
-    const credentials: ServiceClientCredentials = userSubscriptionItem.session.credentials;
+    const credentials: ServiceClientCredentials = userSubscriptionItem.session.credentials2;
 
     if (
       userSubscriptionItem === undefined ||

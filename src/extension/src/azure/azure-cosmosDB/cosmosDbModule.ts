@@ -1,10 +1,6 @@
-import { CosmosDBManagementClient } from "azure-arm-cosmosdb";
-import { DatabaseAccount } from "azure-arm-cosmosdb/lib/models";
-import {
-  ResourceManagementClient,
-  ResourceManagementModels,
-} from "azure-arm-resource/lib/resource/resourceManagementClient";
-import { ServiceClientCredentials } from "ms-rest";
+import { CosmosDBManagementClient, CosmosDBManagementModels } from "@azure/arm-cosmosdb";
+import { ResourceManagementClient, ResourceManagementModels } from "@azure/arm-resources";
+import { ServiceClientCredentials } from "@azure/ms-rest-js";
 import * as path from "path";
 
 import { CONSTANTS } from "../../constants/constants";
@@ -29,7 +25,7 @@ export interface CosmosDBSelections {
  * Database Object - tuple to return to caller
  */
 export interface DatabaseObject {
-  databaseAccount: DatabaseAccount;
+  databaseAccount: CosmosDBManagementModels.DatabaseAccountGetResults;
   connectionString: string;
 }
 
@@ -239,7 +235,7 @@ export class CosmosDBDeploy {
         options
       );
 
-      const databaseAccount: DatabaseAccount = await this.SubscriptionItemCosmosClient.databaseAccounts.get(
+      const databaseAccount: CosmosDBManagementModels.DatabaseAccountGetResults = await this.SubscriptionItemCosmosClient.databaseAccounts.get(
         resourceGroup,
         databaseName
       );
@@ -273,7 +269,7 @@ export class CosmosDBDeploy {
   }
 
   private createCosmosClient(userSubscriptionItem: SubscriptionItem): CosmosDBManagementClient {
-    const userCredentials: ServiceClientCredentials = userSubscriptionItem.session.credentials;
+    const userCredentials: ServiceClientCredentials = userSubscriptionItem.session.credentials2;
     if (
       userSubscriptionItem === undefined ||
       userSubscriptionItem.subscription === undefined ||
@@ -281,11 +277,7 @@ export class CosmosDBDeploy {
     ) {
       throw new SubscriptionError(MESSAGES.ERRORS.SUBSCRIPTION_NOT_DEFINED);
     }
-    return new CosmosDBManagementClient(
-      userCredentials,
-      userSubscriptionItem.subscriptionId,
-      userSubscriptionItem.session.environment.resourceManagerEndpointUrl
-    );
+    return new CosmosDBManagementClient(userCredentials, userSubscriptionItem.subscriptionId);
   }
 
   /*
@@ -317,7 +309,7 @@ export class CosmosDBDeploy {
       return MESSAGES.ERRORS.NAME_MIN_MAX(min, max);
     } else if (name.match(/[^a-z0-9-]/)) {
       return MESSAGES.ERRORS.COSMOS_VALID_CHARACTERS;
-    } else if (await this.SubscriptionItemCosmosClient.databaseAccounts.checkNameExists(name)) {
+    } else if ((await this.SubscriptionItemCosmosClient.databaseAccounts.checkNameExists(name)).body) {
       return MESSAGES.ERRORS.COSMOS_ACCOUNT_NOT_AVAILABLE(name);
     } else {
       return undefined;

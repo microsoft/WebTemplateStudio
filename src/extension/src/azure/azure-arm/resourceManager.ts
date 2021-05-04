@@ -1,5 +1,5 @@
-import ResourceManagementClient from "azure-arm-resource/lib/resource/resourceManagementClient";
-import { ServiceClientCredentials } from "ms-rest";
+import { ResourceManagementClient } from "@azure/arm-resources";
+import { ServiceClientCredentials } from "@azure/ms-rest-js";
 
 import { MESSAGES } from "../../constants/messages";
 import { SubscriptionError } from "../../errors";
@@ -9,7 +9,7 @@ export class ResourceManager {
   private AzureResourceManagementClient: ResourceManagementClient | undefined;
 
   private createResourceManagementClient(userSubscriptionItem: SubscriptionItem): ResourceManagementClient {
-    const userCredentials: ServiceClientCredentials = userSubscriptionItem.session.credentials;
+    const userCredentials: ServiceClientCredentials = userSubscriptionItem.session.credentials2;
     if (
       userSubscriptionItem === undefined ||
       userSubscriptionItem.subscription === undefined ||
@@ -17,11 +17,7 @@ export class ResourceManager {
     ) {
       throw new SubscriptionError(MESSAGES.ERRORS.SUBSCRIPTION_NOT_DEFINED);
     }
-    return new ResourceManagementClient(
-      userCredentials,
-      userSubscriptionItem.subscriptionId,
-      userSubscriptionItem.session.environment.resourceManagerEndpointUrl
-    );
+    return new ResourceManagementClient(userCredentials, userSubscriptionItem.subscriptionId);
   }
 
   public getResourceManagementClient(userSubscriptionItem: SubscriptionItem): ResourceManagementClient {
