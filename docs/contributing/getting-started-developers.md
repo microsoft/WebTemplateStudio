@@ -9,7 +9,7 @@ This document covers:
 - [Core Template Studio Submodule](#core-template-studio-submodule)
 - [How to run the extension locally](#how-to-run-the-extension-locally)
 - [How to develop the client](#how-to-develop-the-client)
-- [How to built a local vsix](#how-to-built-a-local-vsix)
+- [How to build a local vsix](#how-to-build-a-local-vsix)
 - [Tests](#tests)
 - [Under the hood](#under-the-hood)
 
