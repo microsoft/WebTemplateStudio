@@ -160,7 +160,7 @@ For example, no Frameworks at all for the `Create Web App` command. Make sure yo
 
     If that´s not the case, and you have an older version, or you´re missing some package of templates, then you will need to retrieve them from the generated .vsix in the [Build Pipeline](https://winappstudio.visualstudio.com/Vegas). Also will need to update the `Allowed Packages` with the .mstx hashes in the file `CoreTemplateStudio.config` within the proper folder depending on the OS you are working (*win21* for instance, when developing on *Windows* for example).
 
-<img alt="Install extension from .vsix" src="../resources/vscode-output-window-errors.png" width="600px"  />
+<img alt="Install extension from .vsix" src="../resources/vscode-output-window-errors.png" width="500px"  />
 <img alt="Folder where you can find the .mstx for the templates" src="../resources/extension-folder-mstx.png" width="400px"  />
 
 
