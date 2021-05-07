@@ -5,6 +5,7 @@
 const path = require("path");
 const FilterWarningsPlugin = require("webpack-filter-warnings-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin');
 
 const config = {
   target: "node", // vscode extensions run in a Node.js-context 📖 -> https://webpack.js.org/configuration/node/
@@ -49,5 +50,15 @@ const config = {
     }),
     new CleanWebpackPlugin(),
   ],
+  optimization: {
+    minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            keep_fnames: /AbortSignal/,
+          },
+        }),
+      ],
+  },
 };
 module.exports = config;
