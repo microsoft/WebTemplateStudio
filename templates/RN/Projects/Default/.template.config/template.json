@@ -17,7 +17,8 @@
     "wts.platform": "RN",
     "wts.version": "1.0.0",
     "wts.compositionOrder": "0",
-    "wts.casing.sourceName": "lower"
+    "wts.casing.sourceName": "lower",
+    "wts.licenses": "[React Native](https://github.com/facebook/react-native/blob/master/LICENSE)|[React Native Windows](https://github.com/microsoft/react-native-windows/blob/master/LICENSE)"
   },
   "sourceName": "wts.projectName",
   "preferNameDirectory": true,
