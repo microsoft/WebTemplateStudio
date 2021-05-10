@@ -13,4 +13,4 @@ In smaller devices or if resized the application would look like this:
 <img alt="Master Detail Page in React Native app for Android" src="../../../resources/rnw-android-app-masterDetail.png" width="500" />
 
 ## iOS App
-TODO: Pending to add screenshot here.
+<img alt="Master Detail Page in React Native app for iOS" src="../../../resources/rnw-ios-app-masterDetail.png" width="500" />

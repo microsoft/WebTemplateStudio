@@ -9,7 +9,7 @@ This document covers:
 - [Core Template Studio Submodule](#core-template-studio-submodule)
 - [How to run the extension locally](#how-to-run-the-extension-locally)
 - [How to develop the client](#how-to-develop-the-client)
-- [How to built a local vsix](#how-to-built-a-local-vsix)
+- [How to build a local vsix](#how-to-build-a-local-vsix)
 - [Tests](#tests)
 - [Under the hood](#under-the-hood)
 
@@ -148,9 +148,21 @@ code --install-extension [extensionName].vsix
 
 Alternatively, the extension can be installed from the context menu of the extension section in Visual Studio code using the "**install from VSIX...**" command. The installed vsix package can be found in the extensions folder. For *Windows*, it is `%USERPROFILE%\.vscode\extensions`. For *Mac/Linux*, it is `~/.vscode/extensions` (By Default).
 
+<img alt="Install extension from .vsix" src="../resources/install-extension-with-vsix.png" width="500px"  />
+
 After installation, use `Ctrl + Shift ⇧ + P` (Windows/Linux) or `Command ⌘ + Shift ⇧ + P` (Mac) in Visual Studio Code to open the Extension Launcher and select `Web Template Studio: [command name]` to run the extension.
 
 You can check available commands [here](./contributing/application-architecture.md#extension).
+
+### Possible problems and workarounds to fix them
+1. You may get some errors on the output console for the extension: `webtemplatestudio-{env}`, or maybe you realise that there´s missing information displayed on the screen.
+For example, no Frameworks at all for the `Create Web App` command. Make sure you have the proper versions of the .mstx for the templates in the extension folder - as mentioned above, for *Windows* would be `%USERPROFILE%\.vscode\extensions\wasteamaccount.webtemplatestudio-{environment}-{version}\src\corets-cli` or in *Mac/Linux* `~/.vscode/extensions/wasteamaccount.webtemplatestudio-{environment}-{version}/src/corets-cli`.
+
+    If that´s not the case, and you have an older version, or you´re missing some package of templates, then you will need to retrieve them from the generated .vsix in the [Build Pipeline](https://winappstudio.visualstudio.com/Vegas). Also will need to update the `Allowed Packages` with the .mstx hashes in the file `CoreTemplateStudio.config` within the proper folder depending on the OS you are working (*win21* for instance, when developing on *Windows* for example).
+
+<img alt="Install extension from .vsix" src="../resources/vscode-output-window-errors.png" width="500px"  />
+<img alt="Folder where you can find the .mstx for the templates" src="../resources/extension-folder-mstx.png" width="400px"  />
+
 
 ## Tests
 
