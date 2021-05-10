@@ -11,7 +11,8 @@
     "wts.type": "composition",
     "wts.platform": "RN",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "groupidentity == wts.RN.Page.Settings"
+    "wts.compositionFilter": "groupidentity == wts.RN.Page.Settings",
+    "wts.licenses": "[React Native Picker](https://github.com/react-native-picker/picker/blob/master/LICENSE)"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,
