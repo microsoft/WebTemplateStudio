@@ -1,11 +1,12 @@
 # Web Template Studio (Preview)
 
-Web Template Studio (_WebTS_) is a Visual Studio Code Extension that accelerates the creation of new web applications using a
-wizard-based experience. WebTS enables developers to generate boilerplate code for a web app
-by choosing between different frontend frameworks, backend frameworks, pages and cloud services.
-The resulting web application is well-formed, readable code that incorporates cloud services on
+Microsoft *Web Template Studio* (aka *WebTS*) is a Visual Studio Code Extension that accelerates the creation of a new **Web or React Native** application using a wizard-based experience.
+
+*WebTS* enables developers to generate boilerplate code for a **Web or React Native** application by choosing between different project types, frontend and backend frameworks, pages and cloud services.
+The resulting app is well-formed, readable code. The web application incorporates cloud services on
 Azure while implementing proven patterns and best practices. Sprinkled throughout the generated code we have links to
-Docs to provide useful insights.
+Docs to provide useful insights. *WebTS* was created using TypeScript and React. Different combinations of generated code
+are merged together by [Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio), which was made using .NET Core.
 
 ## Instructions To Use
 
@@ -13,12 +14,9 @@ Docs to provide useful insights.
 
 - Open **VSCode**
 - Press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open VSCode's extension launcher
-- Type/Select `Web Template Studio: [command name]` and press `Enter` to launch the extension
+- Type/Select `Web Template Studio: Create Web App` for a full-stack web application or `Web Template Studio: Create React Native App` for a React Native one, and press `Enter` to launch the extension
 
-List of available commands below:
-  - `Create Web App`
-  - `Create React Native App`
-  - `Deploy Web App`
+**Note**: React Native is still in Preview and we appreciate any feedback on [GitHub](https://github.com/microsoft/WebTemplateStudio/issues).
 
 ### Deploy the generated project
 
@@ -26,6 +24,8 @@ List of available commands below:
 - Open the generated project
 - Press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open VSCode's extension launcher
 - Type/Select `Web Template Studio: Deploy Web App` and press `Enter` to begin the deployment
+
+**Note**: Just available for web applications.
 
 ## Features
 
