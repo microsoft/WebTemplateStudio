@@ -29,6 +29,7 @@ List of available commands below:
 
 ## Features
 
+### Full-stack web app
 Web Template Studio approaches full-stack web app creation using the following three attribute sets:
 
 - **Frameworks**: First, which frameworks do you want to use for your frontend and backend? We currently support three frameworks for frontend: _[React](https://reactjs.org/)_, _[Angular](https://angular.io/)_, _[Vue.js](https://vuejs.org/)_ and four frameworks for backend: _[Node](https://nodejs.org/en/)_, _[Flask](http://flask.pocoo.org/)_, _[Moleculer](https://moleculer.services/)_ and _[ASP.NET](https://dotnet.microsoft.com/apps/aspnet/)_. We also provide a dependency checker to make sure you have the required version of Node and/or Python installed.
@@ -36,6 +37,12 @@ Web Template Studio approaches full-stack web app creation using the following t
 - **Cloud Services**: Lastly, you specify which Azure cloud services you want to use, and we'll build out the framework for the services into your app. Currently supported services cover storage (_Azure Cosmos DB_), and hosting (_Azure App Service_).
 
 Once you make the selections you want and click generate, you can quickly extend the generated code.
+
+### React Native app
+Web Template Studio approaches React Native app creation using the following two attribute sets:
+
+- **Project Type**: Only [Tabbed Navigation](https://reactnavigation.org/docs/tab-based-navigation/) currently available. From that version, it would easy for developers to modify this navigation to Drawer instead or remove it when no necessary.
+- **App pages**: Next, to accelerate app creation, we provide a number of app page templates that you can use to add common UI pages into your new app. The current page templates include: _blank page_, _master detail_ and a _settings_ page that comes with basic _Theme Support_, allowing the user to choose between *Light*, *Dark* or *Default*. Using the wizard, add as many of the pages as you need, providing a name for each one, and we'll generate them for you.
 
 ## Feedback, Requests and Roadmap
 
