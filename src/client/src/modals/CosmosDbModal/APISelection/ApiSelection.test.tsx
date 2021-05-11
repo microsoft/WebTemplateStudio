@@ -1,10 +1,12 @@
-import * as React from "react";
 import "@testing-library/jest-dom";
-import ApiSelection from ".";
-import { RenderResult, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
+
+import { fireEvent, RenderResult } from "@testing-library/react";
+import * as React from "react";
+
 import { renderWithIntl } from "../../../testUtils";
 import { AZURE } from "../../../utils/constants/azure";
+import ApiSelection from ".";
 
 jest.mock("../../../components/Dropdown", () => require("../../../testUtils").dropdownMock);
 

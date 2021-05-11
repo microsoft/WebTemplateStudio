@@ -1,17 +1,19 @@
+import classNames from "classnames";
 import * as React from "react";
 import { useState } from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-import styles from "./styles.module.css";
-import { ReactComponent as Refresh } from "../../assets/i-refresh.svg";
-import messages from "./messages";
-import Dropdown from "../Dropdown";
-import classNames from "classnames";
-import { AZURE_LINKS } from "../../utils/constants/azure";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { useSelector } from "react-redux";
+
+import { AppContext } from "../../AppContext";
+import { ReactComponent as Refresh } from "../../assets/i-refresh.svg";
+import modalStyles from "../../css/modal.module.css";
 import { AppState } from "../../store/combineReducers";
 import { getSubscriptionsSelector } from "../../store/config/azure/selector";
+import { AZURE_LINKS } from "../../utils/constants/azure";
 import { getResourceGroups } from "../../utils/extensionService/extensionService";
-import { AppContext } from "../../AppContext";
+import Dropdown from "../Dropdown";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 interface IProps {
   subscription: string;
@@ -90,14 +92,12 @@ const ResourceGroupSelection = (props: Props) => {
 
   return (
     <div className={classNames(styles.container, { [styles.containerDisabled]: disableComponent })}>
-      <div className={styles.header}>
-        <div className={styles.title}>{formatMessage(messages.title)}</div>
-        <a className={styles.link} href={AZURE_LINKS.CREATE_NEW_RESOURCE_GROUP}>
-          {formatMessage(messages.newResourceGroupLink)}
-        </a>
+      <div className={modalStyles.header}>
+        <div className={modalStyles.title}>{formatMessage(messages.title)}</div>
+        <a href={AZURE_LINKS.CREATE_NEW_RESOURCE_GROUP}>{formatMessage(messages.newResourceGroupLink)}</a>
       </div>
 
-      <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
+      <div className={modalStyles.subtitle}>{formatMessage(messages.subtitle)}</div>
       <div className={styles.dropdownContainer}>
         <div className={styles.dropdown}>
           <Dropdown

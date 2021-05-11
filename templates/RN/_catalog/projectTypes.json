@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Tabbed",
+    "displayName": "Tabbed",
+    "summary": "The most common style of navigation in mobile apps.",
+    "order": "0",
+    "licenses": "[React Navigation](https://github.com/react-navigation/react-navigation/blob/main/packages/core/LICENSE)",
+    "platform": "RN",
+    "languages": ["Any"],
+    "tags": {
+      "preview": false
+    }
+  }
+]

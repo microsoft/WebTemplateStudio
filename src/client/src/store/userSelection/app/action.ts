@@ -1,20 +1,19 @@
-import { ISetProjectNameActionType } from "./model";
+import { IValidation } from "../../../utils/validations/validations";
 import { USERSELECTION_TYPEKEYS } from "../typeKeys";
+import { ISetProjectNameActionType } from "./model";
 
-export const setProjectNameAction = (
-  projectName: string, validation: any
-): ISetProjectNameActionType => {
+export const setProjectNameAction = (projectName: string, validation: IValidation): ISetProjectNameActionType => {
   const projectNameObject = {
     projectName,
-    validation
+    validation,
   };
   return {
     type: USERSELECTION_TYPEKEYS.SET_PROJECT_NAME,
-    payload: projectNameObject
+    payload: projectNameObject,
   };
 };
 
 export const setOutputPathAction = (outputPath: string): any => ({
   type: USERSELECTION_TYPEKEYS.SET_OUTPUT_PATH,
-  payload: outputPath
+  payload: outputPath,
 });

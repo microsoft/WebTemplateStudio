@@ -1,5 +1,6 @@
 import util = require("util");
 import semver = require("semver");
+import { IRequirementValidator } from "../IRequirementValidator";
 
 export default class NetCoreValidator implements IRequirementValidator {
   private exec = util.promisify(require("child_process").exec);

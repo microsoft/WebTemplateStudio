@@ -1,12 +1,25 @@
 import { createSelector } from "reselect";
-import { UserSelectionState } from "../../userSelection/combineReducers";
+
 import { AppState } from "../../combineReducers";
 
-const getConfigSelector = (state: AppState): UserSelectionState => state.userSelection
+const getConfigSelector = (state: AppState) => state.config;
 
-const getProjectTypeSelector = createSelector(
-  getConfigSelector,
-  (select) => select.projectType
-);
+const getPlatformSelector = createSelector(getConfigSelector, (config) => config.platform);
 
-export { getProjectTypeSelector };
+const getPlatformRequirementsSelector = createSelector(getPlatformSelector, (platform) => platform.requirements);
+
+const hasPlatformRequirementsSelector = createSelector(getPlatformRequirementsSelector, (requirements) => {
+  return requirements.length > 0;
+});
+
+const hasInvalidPlatformRequirementsSelector = createSelector(getPlatformRequirementsSelector, (requirements) => {
+  const invalidRequirements = requirements.filter((r) => !r.isInstalled);
+  return invalidRequirements.length > 0;
+});
+
+export {
+  getPlatformRequirementsSelector,
+  getPlatformSelector,
+  hasInvalidPlatformRequirementsSelector,
+  hasPlatformRequirementsSelector,
+};

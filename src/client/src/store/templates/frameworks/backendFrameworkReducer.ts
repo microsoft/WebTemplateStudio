@@ -1,11 +1,8 @@
 import { IOption } from "../../../types/option";
-import { TEMPLATES_TYPEKEYS } from "../templateTypeKeys";
 import RootAction from "../../ActionType";
+import { TEMPLATES_TYPEKEYS } from "../templateTypeKeys";
 
-const backendFrameworkOptions = (
-  state: IOption[] = [],
-  action: RootAction
-) => {
+const backendFrameworkOptions = (state: IOption[] = [], action: RootAction): IOption[] => {
   switch (action.type) {
     case TEMPLATES_TYPEKEYS.SET_BACKEND_FRAMEWORKS:
       const newState = [...state];
@@ -24,7 +21,9 @@ const backendFrameworkOptions = (
     case TEMPLATES_TYPEKEYS.UPDATE_FRAMEWORK:
       const newStateUpdate = [...state];
       for (const frameworkToUpdate of action.payload) {
-        newStateUpdate.filter((framework)=> framework.internalName === frameworkToUpdate.internalName)[0] = frameworkToUpdate;
+        newStateUpdate.filter(
+          (framework) => framework.internalName === frameworkToUpdate.internalName
+        )[0] = frameworkToUpdate;
       }
       return newStateUpdate;
     default:

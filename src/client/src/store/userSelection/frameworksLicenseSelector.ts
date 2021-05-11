@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+
 import { ILicenseObject } from "../../types/license";
 import { AppState } from "../combineReducers";
 import { UserSelectionState } from "./combineReducers";
@@ -24,14 +25,8 @@ const getPageLicenses = (userSelection: UserSelectionState): ILicenseObject[] =>
   return licenses;
 };
 
-const getFrameworkLicensesSelector = createSelector(
-  getUserSelection,
-  getFrameworkLicenses
-);
+const getFrameworkLicensesSelector = createSelector(getUserSelection, getFrameworkLicenses);
 
-const getPageLicencesSelector = createSelector(
-  getUserSelection,
-  getPageLicenses
-);
+const getPageLicencesSelector = createSelector(getUserSelection, getPageLicenses);
 
 export { getFrameworkLicensesSelector, getPageLicencesSelector };

@@ -1,11 +1,11 @@
-import { AZURE_TYPEKEYS } from "../../../config/azure/typeKeys";
 import RootAction from "../../../ActionType";
+import { AZURE_TYPEKEYS } from "../../../config/azure/typeKeys";
 import { SERVICES_TYPEKEYS } from "../typeKeys";
 import { ICosmosDB } from "./model";
 
 const initialState: ICosmosDB | null = null;
 
-const services = (state: ICosmosDB | null = initialState, action: RootAction) => {
+const services = (state: ICosmosDB | null = initialState, action: RootAction): ICosmosDB | null => {
   switch (action.type) {
     case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:
     case SERVICES_TYPEKEYS.REMOVE_COSMOS_DB:

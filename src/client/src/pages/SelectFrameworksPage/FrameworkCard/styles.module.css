@@ -1,0 +1,4 @@
+.description {
+  max-height: 4rem;
+  text-overflow: ellipsis;
+}

@@ -1,10 +1,11 @@
 import { combineReducers } from "redux";
-import detailsPage from "./detailsPage/detailsPageReducer";
+
+import { azureProfileData } from "./azure/reducer";
 import previewStatus from "./config/previewReducer";
+import detailsPage from "./detailsPage/detailsPageReducer";
+import platform from "./platform/reducer";
 import validations from "./validations/setValidationsReducer";
 import versions from "./versions/reducer";
-import { azureProfileData } from "./azure/reducer";
-import platform from "./platform/reducer";
 
 const configReducer = combineReducers({
   detailsPage,
@@ -12,7 +13,7 @@ const configReducer = combineReducers({
   validations,
   versions,
   azureProfileData,
-  platform
+  platform,
 });
 
 export default configReducer;

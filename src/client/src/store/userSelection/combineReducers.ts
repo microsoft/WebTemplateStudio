@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
 
+import outputPathObject from "./app/updateOutputPathReducer";
+import projectNameObject from "./app/updateProjectNameReducer";
 import backendFramework from "./frameworks/selectBackendFrameworkReducer";
 import frontendFramework from "./frameworks/selectFrontendFrameworkReducer";
 import pages from "./pages/selectPagesReducer";
-import projectNameObject from "./app/updateProjectNameReducer";
-import outputPathObject from "./app/updateOutputPathReducer";
-import services from "./services/combineReducers";
 import projectType from "./projectType/reducer";
+import services from "./services/combineReducers";
 
 const UserSelectionStateReducer = combineReducers({
   frontendFramework,
@@ -15,7 +15,7 @@ const UserSelectionStateReducer = combineReducers({
   outputPathObject,
   projectNameObject,
   services,
-  projectType
+  projectType,
 });
 
 export default UserSelectionStateReducer;

@@ -1,5 +1,5 @@
 //{[{
-azure-cosmos==3.2.0
-python-dotenv==0.15.0
+azure-cosmos==4.2.0
+python-dotenv==0.17.0
 //}]}
 flask==1.1.2

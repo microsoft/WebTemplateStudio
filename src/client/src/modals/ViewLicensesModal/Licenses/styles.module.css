@@ -1,5 +1,7 @@
-.container {
-  margin-bottom: 30px;
+.container > ul {
+  list-style-type: none;
+  padding-inline-start: 0;
+  margin: 0;
 }
 
 .licenseButton {

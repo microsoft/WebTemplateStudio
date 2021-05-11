@@ -1,30 +1,19 @@
+import { WebSiteManagementClient } from "@azure/arm-appservice";
+import { AppServicePlanCollection, StringDictionary } from "@azure/arm-appservice/esm/models";
+import { ResourceManagementClient, ResourceManagementModels } from "@azure/arm-resources";
+import { ServiceClientCredentials } from "@azure/ms-rest-js";
 import * as fs from "fs";
 import * as path from "path";
-import { ServiceClientCredentials } from "ms-rest";
-import { WebSiteManagementClient } from "azure-arm-website";
-import {
-  AppServicePlanCollection,
-  StringDictionary
-} from "azure-arm-website/lib/models";
-import ResourceManagementClient, {
-  ResourceManagementModels
-} from "azure-arm-resource/lib/resource/resourceManagementClient";
 
-import { CONSTANTS, AzureResourceType } from "../../constants/constants";
-import {
-  SubscriptionError,
-  AuthorizationError,
-  DeploymentError,
-  AppServiceError
-} from "../../errors";
-
-import { SubscriptionItem, ResourceGroupItem } from "../azure-auth/azureAuth";
+import { AzureResourceType, CONSTANTS } from "../../constants/constants";
+import { MESSAGES } from "../../constants/messages";
+import { Controller } from "../../controller";
+import { AppServiceError, AuthorizationError, DeploymentError, SubscriptionError } from "../../errors";
+import { ARMFileHelper } from "../azure-arm/armFileHelper";
+import { ResourceManager } from "../azure-arm/resourceManager";
+import { ResourceGroupItem, SubscriptionItem } from "../azure-auth/azureAuth";
 import { NameGenerator } from "../utils/nameGenerator";
 import { AppNameValidationResult, NameValidator } from "../utils/nameValidator";
-import { ResourceManager } from "../azure-arm/resourceManager";
-import { ARMFileHelper } from "../azure-arm/armFileHelper";
-import { Controller } from "../../controller";
-import { MESSAGES } from "../../constants/messages";
 
 export interface AppServiceSelections {
   siteName: string;
@@ -42,10 +31,7 @@ export class AppServiceProvider {
   private webClient: WebSiteManagementClient | undefined;
 
   // returns the id of the instance created
-  public async createWebApp(
-    selections: AppServiceSelections,
-    appPath: string
-  ): Promise<string | undefined> {
+  public async createWebApp(selections: AppServiceSelections, appPath: string): Promise<string | undefined> {
     const template = this.getAppServiceARMTemplate();
     const parameters = this.getAppServiceARMParameter(selections);
     const deploymentParams = parameters.parameters;
@@ -54,16 +40,17 @@ export class AppServiceProvider {
         properties: {
           mode: "Incremental",
           parameters: deploymentParams,
-          template: template
-        }
+          template: template,
+        },
       };
       const azureResourceClient: ResourceManagementClient = new ResourceManager().getResourceManagementClient(
         selections.subscriptionItem
       );
       this.writeARMTemplatesToApp(appPath, template, parameters);
-      const deploymentName = (
-        selections.siteName + APP_SERVICE_DEPLOYMENT_SUFFIX
-      ).substr(0, CONSTANTS.DEPLOYMENT_NAME.MAX_LENGTH);
+      const deploymentName = (selections.siteName + APP_SERVICE_DEPLOYMENT_SUFFIX).substr(
+        0,
+        CONSTANTS.DEPLOYMENT_NAME.MAX_LENGTH
+      );
       const result = await azureResourceClient.deployments.createOrUpdate(
         selections.resourceGroupItem.name,
         deploymentName,
@@ -79,19 +66,13 @@ export class AppServiceProvider {
    * Sets a web client from a users selected subscription item's credentials
    */
   private setWebClient(userSubscriptionItem: SubscriptionItem): void {
-    if (
-      this.webClient === undefined ||
-      this.webClient.subscriptionId !== userSubscriptionItem.subscriptionId
-    ) {
+    if (this.webClient === undefined || this.webClient.subscriptionId !== userSubscriptionItem.subscriptionId) {
       this.webClient = this.createWebClient(userSubscriptionItem);
     }
   }
 
-  private createWebClient(
-    userSubscriptionItem: SubscriptionItem
-  ): WebSiteManagementClient {
-    const credentials: ServiceClientCredentials =
-      userSubscriptionItem.session.credentials;
+  private createWebClient(userSubscriptionItem: SubscriptionItem): WebSiteManagementClient {
+    const credentials: ServiceClientCredentials = userSubscriptionItem.session.credentials2;
 
     if (
       userSubscriptionItem === undefined ||
@@ -101,25 +82,17 @@ export class AppServiceProvider {
       throw new SubscriptionError(MESSAGES.ERRORS.SUBSCRIPTION_NOT_DEFINED);
     }
 
-    return new WebSiteManagementClient(
-      credentials,
-      userSubscriptionItem.subscriptionId
-    );
+    return new WebSiteManagementClient(credentials, userSubscriptionItem.subscriptionId);
   }
 
-  public async checkWebAppName(
-    appName: string,
-    subscriptionItem: SubscriptionItem
-  ): Promise<string | undefined> {
+  public async checkWebAppName(appName: string, subscriptionItem: SubscriptionItem): Promise<string | undefined> {
     try {
       this.setWebClient(subscriptionItem);
     } catch (error) {
       return error.message;
     }
 
-    const validationStatus: AppNameValidationResult = NameValidator.validateAppName(
-      appName
-    );
+    const validationStatus: AppNameValidationResult = NameValidator.validateAppName(appName);
     if (!validationStatus.isValid) {
       // returns error message
       return validationStatus.message;
@@ -129,16 +102,16 @@ export class AppServiceProvider {
     }
     return await this.webClient
       .checkNameAvailability(appName + CONSTANTS.APP_SERVICE_DOMAIN, "Site", {
-        isFqdn: true
+        isFqdn: true,
       })
-      .then(res => {
+      .then((res) => {
         if (res.nameAvailable) {
           return undefined;
         } else {
           return MESSAGES.ERRORS.WEB_APP_NAME_NOT_AVAILABLE(appName);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         return error.message;
       });
   }
@@ -169,66 +142,48 @@ export class AppServiceProvider {
 
     parameters.parameters = {
       name: {
-        value: selections.siteName
+        value: selections.siteName,
       },
       appServicePlanName: {
-        value: selections.appServicePlanName
+        value: selections.appServicePlanName,
       },
       tier: {
-        value: selections.tier
+        value: selections.tier,
       },
       sku: {
-        value: selections.sku
+        value: selections.sku,
       },
       linuxFxVersion: {
-        value: selections.linuxFxVersion
+        value: selections.linuxFxVersion,
       },
       subscriptionId: {
-        value: selections.subscriptionItem.subscriptionId
+        value: selections.subscriptionItem.subscriptionId,
       },
       location: {
-        value: selections.location
-      }
+        value: selections.location,
+      },
     };
 
     return parameters;
   }
 
-  private writeARMTemplatesToApp(
-    appPath: string,
-    template: any,
-    parameters: any
-  ): void {
+  private writeARMTemplatesToApp(appPath: string, template: any, parameters: any): void {
     ARMFileHelper.createDirIfNonExistent(path.join(appPath, "arm-templates"));
-    ARMFileHelper.writeObjectToJsonFile(
-      path.join(appPath, "arm-templates", "web-app-template.json"),
-      template
-    );
-    ARMFileHelper.writeObjectToJsonFile(
-      path.join(appPath, "arm-templates", "web-app-parameters.json"),
-      parameters
-    );
+    ARMFileHelper.writeObjectToJsonFile(path.join(appPath, "arm-templates", "web-app-template.json"), template);
+    ARMFileHelper.writeObjectToJsonFile(path.join(appPath, "arm-templates", "web-app-parameters.json"), parameters);
   }
 
   public async generateValidASPName(name: string): Promise<string> {
-    let generatedName: string = NameGenerator.generateName(
-      name,
-      AzureResourceType.AppServicePlan
-    );
+    let generatedName: string = NameGenerator.generateName(name, AzureResourceType.AppServicePlan);
     let isValid: boolean = await this.validateASPName(generatedName);
     let tries = 0;
     while (tries < CONSTANTS.VALIDATION_LIMIT && !isValid) {
-      generatedName = NameGenerator.generateName(
-        name,
-        AzureResourceType.AppServicePlan
-      );
+      generatedName = NameGenerator.generateName(name, AzureResourceType.AppServicePlan);
       isValid = await this.validateASPName(generatedName);
       tries++;
     }
     if (tries >= CONSTANTS.VALIDATION_LIMIT) {
-      throw new AppServiceError(
-        MESSAGES.ERRORS.CREATION_TRIES_EXCEEDED("app service plan")
-      );
+      throw new AppServiceError(MESSAGES.ERRORS.CREATION_TRIES_EXCEEDED("app service plan"));
     }
     return generatedName;
   }
@@ -246,7 +201,7 @@ export class AppServiceProvider {
       throw new AuthorizationError(MESSAGES.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
     }
     const allASP: AppServicePlanCollection = await this.webClient.appServicePlans.list();
-    return allASP.some(asp => {
+    return allASP.some((asp) => {
       return asp.name === name;
     });
   }
@@ -254,17 +209,13 @@ export class AppServiceProvider {
   public async updateAppSettings(
     resourceGroupName: string,
     webAppName: string,
-    properties: {[propertyName: string]: string}
+    properties: { [propertyName: string]: string }
   ): Promise<void> {
     if (this.webClient === undefined) {
       throw new AuthorizationError(MESSAGES.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
     }
-    const settings : StringDictionary = { properties };
+    const settings: StringDictionary = { properties };
 
-    this.webClient.webApps.updateApplicationSettings(
-      resourceGroupName,
-      webAppName,
-      settings
-    );
+    this.webClient.webApps.updateApplicationSettings(resourceGroupName, webAppName, settings);
   }
 }

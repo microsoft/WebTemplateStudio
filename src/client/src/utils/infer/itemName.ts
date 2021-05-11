@@ -5,18 +5,18 @@ export interface IStateValidationItemName {
   errorMessage: string;
 }
 
-export const inferItemName = (basePageName: string, selectedPages: Array<ISelected>) => {
+export const inferItemName = (basePageName: string, selectedPages: Array<ISelected>): string => {
   let suggestedName = "";
   let index = 1;
-  if (selectedPages.filter(page => page.title===basePageName).length===0){
+  if (selectedPages.filter((page) => page.title === basePageName).length === 0) {
     suggestedName = basePageName;
   }
 
-  while (suggestedName===""){
-    const exist = selectedPages.filter(page => page.title===basePageName + index.toString()).length>0;
-    if (!exist){
+  while (suggestedName === "") {
+    const exist = selectedPages.filter((page) => page.title === basePageName + index.toString()).length > 0;
+    if (!exist) {
       suggestedName = basePageName + index.toString();
-    }else{
+    } else {
       index++;
     }
   }

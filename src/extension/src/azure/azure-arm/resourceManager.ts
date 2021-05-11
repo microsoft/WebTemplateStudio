@@ -1,17 +1,15 @@
-import ResourceManagementClient from "azure-arm-resource/lib/resource/resourceManagementClient";
-import { SubscriptionItem } from "../azure-auth/azureAuth";
-import { ServiceClientCredentials } from "ms-rest";
-import { SubscriptionError } from "../../errors";
+import { ResourceManagementClient } from "@azure/arm-resources";
+import { ServiceClientCredentials } from "@azure/ms-rest-js";
+
 import { MESSAGES } from "../../constants/messages";
+import { SubscriptionError } from "../../errors";
+import { SubscriptionItem } from "../azure-auth/azureAuth";
 
 export class ResourceManager {
   private AzureResourceManagementClient: ResourceManagementClient | undefined;
 
-  private createResourceManagementClient(
-    userSubscriptionItem: SubscriptionItem
-  ): ResourceManagementClient {
-    const userCredentials: ServiceClientCredentials =
-      userSubscriptionItem.session.credentials;
+  private createResourceManagementClient(userSubscriptionItem: SubscriptionItem): ResourceManagementClient {
+    const userCredentials: ServiceClientCredentials = userSubscriptionItem.session.credentials2;
     if (
       userSubscriptionItem === undefined ||
       userSubscriptionItem.subscription === undefined ||
@@ -19,24 +17,15 @@ export class ResourceManager {
     ) {
       throw new SubscriptionError(MESSAGES.ERRORS.SUBSCRIPTION_NOT_DEFINED);
     }
-    return new ResourceManagementClient(
-      userCredentials,
-      userSubscriptionItem.subscriptionId,
-      userSubscriptionItem.session.environment.resourceManagerEndpointUrl
-    );
+    return new ResourceManagementClient(userCredentials, userSubscriptionItem.subscriptionId);
   }
 
-  public getResourceManagementClient(
-    userSubscriptionItem: SubscriptionItem
-  ): ResourceManagementClient {
+  public getResourceManagementClient(userSubscriptionItem: SubscriptionItem): ResourceManagementClient {
     if (
       this.AzureResourceManagementClient === undefined ||
-      this.AzureResourceManagementClient.subscriptionId !==
-        userSubscriptionItem.subscriptionId
+      this.AzureResourceManagementClient.subscriptionId !== userSubscriptionItem.subscriptionId
     ) {
-      this.AzureResourceManagementClient = this.createResourceManagementClient(
-        userSubscriptionItem
-      );
+      this.AzureResourceManagementClient = this.createResourceManagementClient(userSubscriptionItem);
     }
     return this.AzureResourceManagementClient;
   }

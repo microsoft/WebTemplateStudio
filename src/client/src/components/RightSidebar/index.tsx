@@ -1,37 +1,46 @@
-import React, { useState, useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-
-import * as ModalActions from "../../store/navigation/modals/action";
-import { hasServices as hasServicesSelector } from "../../store/userSelection/services/servicesSelector";
-import { getSelectedRoute } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
-
-import { KEY_EVENTS } from "../../utils/constants/constants";
-import { ROUTE } from "../../utils/constants/routes";
+import classnames from "classnames";
+import React, { useMemo, useState } from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+import { useDispatch, useSelector } from "react-redux";
 
 import { ReactComponent as CancelSVG } from "../../assets/cancel.svg";
-
-import About from "./About";
-import SelectPages from "./SelectPages";
+import buttonStyles from "../../css/button.module.css";
+import {
+  getPlatformSelector,
+  hasInvalidPlatformRequirementsSelector,
+  hasPlatformRequirementsSelector,
+} from "../../store/config/platform/selector";
+import * as ModalActions from "../../store/navigation/modals/action";
+import { getSelectedRoute } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { hasServices as hasServicesSelector } from "../../store/userSelection/services/servicesSelector";
+import { KEY_EVENTS, PLATFORM, ROUTE } from "../../utils/constants/constants";
+import Notification from "../Notification";
 import ProjectDetails from "../ProjectDetails";
-import ServicesList from "./ServicesList";
-import SelectFrameworks from "./SelectFrameworks";
-
+import Title from "../Titles/Title";
+import About from "./About";
 import messages from "./messages";
-import classnames from "classnames";
+import messagesReactNative from "./messagesReactNative";
+import messagesWeb from "./messagesWeb";
+import SelectFrameworks from "./SelectFrameworks";
+import SelectPages from "./SelectPages";
+import SelectProjectTypes from "./SelectProjectTypes";
+import ServicesList from "./ServicesList";
 import styles from "./styles.module.css";
-import buttonStyles from "../../css/buttonStyles.module.css";
 
 type Props = InjectedIntlProps;
 
 const RightSidebar = (props: Props) => {
   const [isSidebarOpen, setIsSiderbarOpen] = useState(true);
   const hasServices: boolean = useSelector(hasServicesSelector);
+  const hasRequirements = useSelector(hasPlatformRequirementsSelector);
+  const hasInvalidRequirements = useSelector(hasInvalidPlatformRequirementsSelector);
   const selectedRoute = useSelector(getSelectedRoute);
   const isFirstOrLastPage: boolean = useMemo<boolean>(
     () => selectedRoute === ROUTE.NEW_PROJECT || selectedRoute === ROUTE.REVIEW_AND_GENERATE,
     [selectedRoute]
   );
+  const platform = useSelector(getPlatformSelector);
+  const platformMessages = platform.id === PLATFORM.WEB ? messagesWeb : messagesReactNative;
 
   const { intl } = props;
   const { formatMessage } = intl;
@@ -67,7 +76,8 @@ const RightSidebar = (props: Props) => {
       {(isSidebarOpen || isFirstOrLastPage) && (
         <div role="complementary" id="dvRightSideBar" className={classnames(styles.container, styles.rightViewCropped)}>
           <div className={styles.summaryContainer} id="dvSummaryContainer">
-            <div className={classnames(styles.endAlign, styles.marginLeft)}>
+            <div className={styles.titleContainer}>
+              <Title>{formatMessage(platformMessages.yourProjectDetails)}</Title>
               <CancelSVG
                 tabIndex={0}
                 className={classnames(styles.icon, {
@@ -80,27 +90,47 @@ const RightSidebar = (props: Props) => {
               />
             </div>
 
-            <div className={styles.marginLeft}>
-              <div className={styles.title}>{formatMessage(messages.yourProjectDetails)}</div>
+            {hasInvalidRequirements && (
+              <div className={styles.notificationContainer}>
+                <Notification showWarning={true} altMessage={formatMessage(messages.missingRequirements)}>
+                  {formatMessage(messages.missingRequirements)}
+                  <button
+                    className={classnames(styles.notificationLink, buttonStyles.buttonLink)}
+                    onClick={() => dispatch(ModalActions.openPlatformRequirementsAction())}
+                  >
+                    {formatMessage(messages.viewDetails)}
+                  </button>
+                </Notification>
+              </div>
+            )}
 
+            <div>
               <ProjectDetails isRightsidebar={true} />
 
+              <SelectProjectTypes />
               <SelectFrameworks />
               <SelectPages pathname={selectedRoute} />
               {hasServices && <ServicesList />}
             </div>
 
             <div className={styles.container}>
-              {selectedRoute !== ROUTE.REVIEW_AND_GENERATE && (
-                <div className={styles.buttonContainer}>
-                  <button
-                    className={classnames(buttonStyles.buttonDark, styles.button)}
-                    onClick={() => dispatch(ModalActions.openViewLicensesModalAction())}
-                  >
-                    {formatMessage(messages.viewLicenses)}
-                  </button>
-                </div>
+              <div className={styles.buttonContainer}>
+                <button
+                  className={buttonStyles.buttonLink}
+                  onClick={() => dispatch(ModalActions.openViewLicensesModalAction())}
+                >
+                  {formatMessage(messages.viewLicenses)}
+                </button>
+              </div>
+              {hasRequirements && (
+                <button
+                  className={buttonStyles.buttonLink}
+                  onClick={() => dispatch(ModalActions.openPlatformRequirementsAction())}
+                >
+                  {formatMessage(messages.viewRequirements)}
+                </button>
               )}
+
               <About />
             </div>
           </div>

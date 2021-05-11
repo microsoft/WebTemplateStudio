@@ -1,13 +1,9 @@
-import {
-  DEVELOPMENT,
-  TEST,
-} from "../utils/constants/constants";
-
+import { EXTENSION_COMMANDS } from "../utils/constants/commands";
+import { ENVIRONMENT } from "../utils/constants/constants";
 import * as mockAzureModule from "./extensionModules/mockAzureModule";
 import * as mockCoreTSModule from "./extensionModules/mockCoreTSModule";
-import * as mockLoggerModule from "./extensionModules/mockLoggerModule";
 import * as mockGenerationModule from "./extensionModules/mockGenerationModule";
-import { EXTENSION_COMMANDS } from "../utils/constants/commands";
+import * as mockLoggerModule from "./extensionModules/mockLoggerModule";
 
 /**
  * Models the functionality of acquireVsCodeApi() from vscode for use
@@ -16,26 +12,26 @@ import { EXTENSION_COMMANDS } from "../utils/constants/commands";
  * Mimics VSCode API by using native postMessage API to mimic postMessage from
  * VSCode.
  */
-const mockVsCodeApi = () => ({
-  postMessage: (message: any) => {
-    if (process.env.NODE_ENV === DEVELOPMENT || process.env.NODE_ENV === TEST) {
+const mockVsCodeApi = (): any => ({
+  postMessage: (message: any): void => {
+    if (process.env.NODE_ENV === ENVIRONMENT.DEVELOPMENT || process.env.NODE_ENV === ENVIRONMENT.TEST) {
       switch (message.command) {
         case EXTENSION_COMMANDS.GET_FRAMEWORKS:
           mockCoreTSModule.getFrameworks(message);
           break;
         case EXTENSION_COMMANDS.GET_LATEST_VERSION:
-            const latestVersion = "v3.1.5";
-            window.postMessage(
-              {
-                command: EXTENSION_COMMANDS.GET_LATEST_VERSION,
-                payload: {
-                  scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                  latestVersion,
-                }
+          const latestVersion = "v3.1.5";
+          window.postMessage(
+            {
+              command: EXTENSION_COMMANDS.GET_LATEST_VERSION,
+              payload: {
+                scope: message.payload && message.payload.scope ? message.payload.scope : "",
+                latestVersion,
               },
-              "*"
-            );
-            break;
+            },
+            "*"
+          );
+          break;
         case EXTENSION_COMMANDS.GET_PAGES:
           mockCoreTSModule.getPages(message);
           break;
@@ -71,54 +67,54 @@ const mockVsCodeApi = () => ({
             {
               command: EXTENSION_COMMANDS.GET_OUTPUT_PATH_FROM_CONFIG,
               payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                outputPath: "/generic_output_path"
-              }
+                scope: message.payload && message.payload.scope ? message.payload.scope : "",
+                outputPath: "/generic_output_path",
+              },
             },
             "*"
           );
           break;
-          case EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH:
-            window.postMessage(
-              {
-                command: EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH,
-                payload: {
-                  scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                  outputPath: "/new_generic_output_path"
-                }
+        case EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH:
+          window.postMessage(
+            {
+              command: EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH,
+              payload: {
+                scope: message.payload && message.payload.scope ? message.payload.scope : "",
+                outputPath: "/new_generic_output_path",
               },
-              "*"
-            );
-            break;
+            },
+            "*"
+          );
+          break;
         case EXTENSION_COMMANDS.GET_TEMPLATE_INFO:
           mockCoreTSModule.getTemplateConfig(message);
           break;
-          case EXTENSION_COMMANDS.GET_PROJECT_TYPES:
-            mockCoreTSModule.getProjectTypes(message);
-              break;
-          case EXTENSION_COMMANDS.GET_ALL_LICENSES:
-              mockCoreTSModule.getAllLicenses(message);
-                break;
+        case EXTENSION_COMMANDS.GET_PROJECT_TYPES:
+          mockCoreTSModule.getProjectTypes(message);
+          break;
+        case EXTENSION_COMMANDS.GET_ALL_LICENSES:
+          mockCoreTSModule.getAllLicenses(message);
+          break;
         case EXTENSION_COMMANDS.GEN_STATUS:
           break;
-          case EXTENSION_COMMANDS.AZURE_LOGIN:
-            mockAzureModule.login(message);
-            break;
-            case EXTENSION_COMMANDS.AZURE_LOGOUT:
-              mockAzureModule.logout(message);
-              break;
+        case EXTENSION_COMMANDS.AZURE_LOGIN:
+          mockAzureModule.login(message);
+          break;
+        case EXTENSION_COMMANDS.AZURE_LOGOUT:
+          mockAzureModule.logout(message);
+          break;
         case EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION:
           // produces a mock validation response from VSCode in development
           window.postMessage(
             {
               command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
               payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
+                scope: message.payload && message.payload.scope ? message.payload.scope : "",
                 projectPathValidation: {
                   isValid: true,
-                  error: ""
-                }
-              }
+                  error: "",
+                },
+              },
             },
             "*"
           );
@@ -131,7 +127,7 @@ const mockVsCodeApi = () => ({
           break;
       }
     }
-  }
+  },
 });
 
 export default mockVsCodeApi;

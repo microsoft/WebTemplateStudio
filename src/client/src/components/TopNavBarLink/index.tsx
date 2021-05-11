@@ -1,11 +1,10 @@
 import classnames from "classnames";
 import * as React from "react";
-import { injectIntl, FormattedMessage, InjectedIntl } from "react-intl";
+import { FormattedMessage, InjectedIntl, injectIntl } from "react-intl";
 
-
-import styles from "./styles.module.css";
-import keyUpHandler from "../../utils/keyUpHandler";
 import { ARIA_LABELS_NAVIGATION } from "../../utils/constants/constants";
+import keyUpHandler from "../../utils/keyUpHandler";
+import styles from "./styles.module.css";
 
 const TopNavBarLink = ({
   pageNumber,
@@ -13,7 +12,7 @@ const TopNavBarLink = ({
   visitedCheck,
   disabled,
   isSelected,
-  intl
+  intl,
 }: {
   pageNumber: number;
   text: string;
@@ -23,19 +22,15 @@ const TopNavBarLink = ({
   isSelected: boolean;
   intl: InjectedIntl;
 }) => {
-
-  const getAriaLabel = (
-    arialabeltext: FormattedMessage.MessageDescriptor,
-    isSelected = false
-  ): string => {
+  const getAriaLabel = (arialabeltext: FormattedMessage.MessageDescriptor, isSelected = false): string => {
     if (isSelected) {
       arialabeltext = ARIA_LABELS_NAVIGATION.ARIA_LABELS_CURRENT_PAGE;
     }
     return intl.formatMessage(arialabeltext, {
       pagesText: intl.formatMessage({
         id: "ariaLabelForLink",
-        defaultMessage: text
-      })
+        defaultMessage: text,
+      }),
     });
   };
 
@@ -48,21 +43,16 @@ const TopNavBarLink = ({
       id={"page" + pageNumber}
       aria-label={
         visitedCheck || isSelected
-          ? getAriaLabel(
-              ARIA_LABELS_NAVIGATION.ARIA_LABELS_MESSAGES,
-              isSelected
-            )
+          ? getAriaLabel(ARIA_LABELS_NAVIGATION.ARIA_LABELS_MESSAGES, isSelected)
           : getAriaLabel(ARIA_LABELS_NAVIGATION.ARIA_LABELS_DISABLED_PAGE)
       }
     >
-      <div
-        className={classnames(styles.text,styles.textSelected)}
-      >
+      <div className={classnames(styles.text, styles.textSelected)}>
         <div
           className={classnames(styles.pageNumber, {
             [styles.pageIsSelected]: isSelected,
             [styles.pageIsVisited]: visitedCheck,
-            [styles.pageCursorPointer]: !disabled
+            [styles.pageCursorPointer]: !disabled,
           })}
         >
           {pageNumber}
@@ -71,7 +61,7 @@ const TopNavBarLink = ({
           className={classnames({
             [styles.pageIsSelectedSmall]: isSelected,
             [styles.pageText]: !isSelected,
-            [styles.pageCursorPointer]: !disabled
+            [styles.pageCursorPointer]: !disabled,
           })}
         >
           {text}

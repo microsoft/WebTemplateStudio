@@ -2,6 +2,8 @@ import { Logger } from "../../logger";
 import semver = require("semver");
 import axios from "axios";
 
+import { IPackageSource } from "../IPackageSource";
+
 export default class githubPackageSource implements IPackageSource {
   public async getLatestVersion(packageName: string) {
     let latestVersion = "0.0.0";
@@ -15,7 +17,7 @@ export default class githubPackageSource implements IPackageSource {
           if (version && !semver.prerelease(version) && semver.gt(version, latestVersion)) {
             latestVersion = version;
           }
-      });
+        });
     } catch (error) {
       Logger.appendError("EXTENSION", `Error getting latest version of ${packageName} package from GitHub:`, error);
     }

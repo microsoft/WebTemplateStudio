@@ -15,12 +15,12 @@ export const CLI = {
   BASE_CLI_TOOL_NAME: "Microsoft.Templates.Cli",
   SYNC_COMMAND_PREFIX: "sync",
   SYNC_COMPLETE_STATE: "syncResult",
-  SYNC_PROGRESS_STATE: "syncProgress"
+  SYNC_PROGRESS_STATE: "syncProgress",
 };
 
 export const CLI_SETTINGS = {
   PRODUCTION_PATH_TO_TEMPLATES: "..",
   DEVELOPMENT_PATH_TO_TEMPLATES: "../../../../..",
   MAX_SYNC_REQUEST_ATTEMPTS: 5,
-  WINDOWS_PLATFORM_VERSION: "win32"
-}
+  WINDOWS_PLATFORM_VERSION: "win32",
+};

@@ -1,10 +1,10 @@
-import {ISelectProjectTypeAction} from "./platform/model";
+import { IPreviewStatusActionTypeAction, IResetWizardAction } from "./config/model";
+import { ISetPlatformTypeAction } from "./platform/model";
+import { IProjectPathValidationAction, IValidationsAction } from "./validations/model";
 import { IVersionData } from "./versions/model";
-import { IResetWizardAction, IPreviewStatusActionTypeAction } from "./config/model";
-import { IProjectPathValidationAction, IValidationsAction} from "./validations/model";
 
 type ConfigType =
-  ISelectProjectTypeAction
+  | ISetPlatformTypeAction
   | IVersionData
   | IResetWizardAction
   | IPreviewStatusActionTypeAction

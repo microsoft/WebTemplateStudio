@@ -1,29 +1,26 @@
-import { USERSELECTION_TYPEKEYS } from "../typeKeys";
-import { IOutputPath } from "./model";
 import RootAction from "../../ActionType";
 import { CONFIG_TYPEKEYS } from "../../config/configTypeKeys";
+import { USERSELECTION_TYPEKEYS } from "../typeKeys";
+import { IOutputPath } from "./model";
 
 const initialState = {
   outputPath: "",
-  validation: undefined
+  validation: undefined,
 };
 
-const outputPathReducer = (
-  state: IOutputPath = initialState,
-  action: RootAction
-) => {
+const outputPathReducer = (state: IOutputPath = initialState, action: RootAction): any => {
   switch (action.type) {
     case USERSELECTION_TYPEKEYS.SET_OUTPUT_PATH:
       return {
         ...state,
-        outputPath: action.payload
+        outputPath: action.payload,
       };
     case CONFIG_TYPEKEYS.SET_PROJECT_PATH_VALIDATION:
       return {
         ...state,
         validation: {
-          ...action.payload
-        }
+          ...action.payload,
+        },
       };
     default:
       return state;

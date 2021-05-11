@@ -1,11 +1,12 @@
 import { createSelector } from "reselect";
+
+import { IOption } from "../../../types/option";
 import { ITemplateInfo } from "../../../types/templateInfo";
-import { getOutputPath, getProjectName } from "./wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../combineReducers";
 import { UserSelectionState } from "../combineReducers";
-import { IOption } from "../../../types/option";
-import { getProjectTypeSelector } from "../../config/platform/selector";
+import { getProjectTypeSelector } from "../projectType/selector";
 import { getServices } from "../services/servicesSelector";
+import { getOutputPath, getProjectName } from "./wizardSelectionSelector/wizardSelectionSelector";
 
 const getWizardSelectionsUserSelector = (state: AppState): UserSelectionState => state.userSelection;
 const getBackendOptionsSelector = (state: AppState): IOption[] => state.templates.backendOptions;
@@ -25,47 +26,35 @@ const getPages = (selection: UserSelectionState): ITemplateInfo[] => {
   for (const page of pages) {
     pagesInfo.push({
       name: page.title,
-      identity: page.internalName
+      identity: page.internalName,
     });
   }
   return pagesInfo;
 };
 
-const getFrontendFrameworkSelector = createSelector(
-  getWizardSelectionsUserSelector,
-  getFrontendFramework
-);
+const getFrontendFrameworkSelector = createSelector(getWizardSelectionsUserSelector, getFrontendFramework);
 
-const getBackendFrameworkSelector = createSelector(
-  getWizardSelectionsUserSelector,
-  getBackendFramework
-);
+const getBackendFrameworkSelector = createSelector(getWizardSelectionsUserSelector, getBackendFramework);
 
-const getPagesSelector = createSelector(
-  getWizardSelectionsUserSelector,
-  getPages
-);
+const getPagesSelector = createSelector(getWizardSelectionsUserSelector, getPages);
 
 const getLinuxVersionFromBackendFrameworkSelector = (
   backendFrameworks: IOption[],
   backendFramework: string
 ): string => {
-  const selectedBackendFramework = backendFrameworks.find(b => b.internalName === backendFramework);
-  return selectedBackendFramework && selectedBackendFramework.linuxVersion
-  ? selectedBackendFramework.linuxVersion
-  : "";
+  const selectedBackendFramework = backendFrameworks.find((b) => b.internalName === backendFramework);
+  return selectedBackendFramework && selectedBackendFramework.linuxVersion ? selectedBackendFramework.linuxVersion : "";
 };
 
 const getLinuxVersionSelector = createSelector(
   getBackendOptionsSelector,
   getBackendFrameworkSelector,
   getLinuxVersionFromBackendFrameworkSelector
-)
+);
 
-const getRuntimeStackSelector = createSelector(
-  getLinuxVersionSelector,
-  (version) => version === "" ? "" : version.split("|")[0]
-)
+const getRuntimeStackSelector = createSelector(getLinuxVersionSelector, (version) =>
+  version === "" ? "" : version.split("|")[0]
+);
 
 const getGenerationData = createSelector(
   getProjectName,
@@ -94,7 +83,7 @@ const getGenerationData = createSelector(
       backendFramework,
       backendFrameworkLinuxVersion,
       pages,
-      services
+      services,
     };
   }
 );

@@ -1,13 +1,15 @@
+import classNames from "classnames";
 import * as React from "react";
 import { useState } from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-import styles from "./styles.module.css";
-import messages from "./messages";
-import Dropdown from "../Dropdown";
-import classNames from "classnames";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+
+import { AppContext } from "../../AppContext";
+import modalStyles from "../../css/modal.module.css";
 import { AzureResourceType } from "../../utils/constants/azure";
 import { getLocations } from "../../utils/extensionService/extensionService";
-import { AppContext } from "../../AppContext";
+import Dropdown from "../Dropdown";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 interface IProps {
   location: string;
@@ -26,7 +28,7 @@ const LocationSelection = (props: Props) => {
   const [selectedDropdownLocation, setSelectedDropdownLocation] = useState<IDropDownOptionType | undefined>(undefined);
 
   React.useEffect(() => {
-    if(subscription) {
+    if (subscription) {
       chargeLocations();
     }
   }, [subscription]);
@@ -53,15 +55,15 @@ const LocationSelection = (props: Props) => {
     }));
     setDropdownLocations(newDropDownLocations);
   };
-  
+
   const disableComponent = subscription === "" || dropdownLocations.length === 0;
 
   return (
     <div className={classNames(styles.container, { [styles.containerDisabled]: disableComponent })}>
-      <div className={styles.header}>
-        <div className={styles.title}>{formatMessage(messages.title)}</div>
+      <div className={modalStyles.header}>
+        <div className={modalStyles.title}>{formatMessage(messages.title)}</div>
       </div>
-      <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
+      <div className={modalStyles.subtitle}>{formatMessage(messages.subtitle)}</div>
       <Dropdown
         ariaLabel={formatMessage(messages.ariaDropdownLabel)}
         options={dropdownLocations}

@@ -1,12 +1,14 @@
+import "@testing-library/jest-dom/";
+
+import { waitForElementToBeRemoved } from "@testing-library/react";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import AppNameEditor from ".";
-import styles from "./styles.module.css";
-import "@testing-library/jest-dom/";
+
 import { getInitialState } from "../../../mockData/mockStore";
-import { waitForElementToBeRemoved } from "@testing-library/react";
 import { renderWithStore } from "../../../testUtils";
+import AppNameEditor from ".";
 import messages from "./messages";
+import styles from "./styles.module.css";
 
 describe("AppNameEditor", () => {
   let props: any;

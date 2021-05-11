@@ -13,9 +13,9 @@ export class MasterListComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
-  selectSampleOrder() {
+  selectSampleOrder(): void {
     this.itemClick.emit();
   }
 }

@@ -13,12 +13,18 @@
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$backendframework == Flask & groupIdentity == wts.Page.Grid"
+    "wts.compositionFilter": "$backendframework == Flask & groupIdentity == wts.Page.Grid",
+    "wts.casing.projectName": "snake"
   },
     "sourceName": "wts.ItemName",
     "preferNameDirectory": true,
     "PrimaryOutputs": [
     ],
     "symbols": {
+      "wts.projectName.casing.snake": {
+        "type": "parameter",
+        "fileRename": "Param_ProjectName_Snake",
+        "replaces": "Param_ProjectName_Snake"
+      }
     }
   }

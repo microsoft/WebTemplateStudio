@@ -8,14 +8,11 @@ const initialState = {
   validation: {
     isValid: false,
     error: validationMessages.default,
-    isDirty:false
-  }
+    isDirty: false,
+  },
 };
 
-const projectNameReducer = (
-  state: IProjectName = initialState,
-  action: WizardSelectionActionType
-) => {
+const projectNameReducer = (state: IProjectName = initialState, action: WizardSelectionActionType): IProjectName => {
   switch (action.type) {
     case USERSELECTION_TYPEKEYS.SET_PROJECT_NAME:
       return action.payload;

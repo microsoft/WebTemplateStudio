@@ -2,9 +2,9 @@ import { AzureServices } from "../../../azure/azureServices";
 import { MESSAGES } from "../../../constants/messages";
 import { TelemetryEventName } from "../../../constants/telemetry";
 import { IAppService, IGenerationData, IService, SERVICE_TYPE } from "../../../types/generationTypes";
-import { sendGenerationStatus, GenerationItemStatus } from "../generationStatus";
 import { Logger } from "../../logger";
 import { DeployedServiceStatus } from "../GenerationService";
+import { GenerationItemStatus, sendGenerationStatus } from "../generationStatus";
 import { IGenerator } from "../IGenerator";
 
 export default class AppServiceGenerator implements IGenerator {

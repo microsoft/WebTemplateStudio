@@ -1,0 +1,57 @@
+.backContainer {
+  display: flex;
+  margin-bottom: 2em;
+  color: var(--vscode-textLink-foreground);
+}
+
+.innerBackContainer {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.25em 0.25em 0.25em 0;
+}
+
+.innerBackContainer:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.backIcon path {
+  fill: var(--vscode-textLink-foreground);
+}
+
+.backIcon {
+  height: 1em;
+  margin-right: 0.5em;
+}
+
+.headerContainer {
+  display: flex;
+  grid-gap: 0.75em;
+}
+
+.detailsContainer {
+  display: flex;
+  margin-left: 2.75em;
+}
+
+.screenshot {
+  width: 100%;
+  border: 1px solid var(--vscode-editor-foreground);
+}
+
+.screenShotContainer {
+  width: 65%;
+  margin-right: 3em;
+}
+
+@media (max-width: 850px) {
+  .detailsContainer {
+    display: block;
+  }
+
+  .screenShotContainer {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

@@ -50,26 +50,32 @@
     "vscode-nls": "^4.0.0"
   },
   "activationEvents": [
-    "onCommand:webTemplateStudioExtension.wizardLaunch.local",
-    "onCommand:webTemplateStudioExtension.deployApp.local"
+    "onCommand:webTemplateStudioExtension.web.createApp.local",
+    "onCommand:webTemplateStudioExtension.web.deployApp.local",
+    "onCommand:webTemplateStudioExtension.reactNative.createApp.local"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "webTemplateStudioExtension.wizardLaunch.local",
-        "title": "%webTemplateStudioExtension.commands.wizardLaunch%",
-        "category": "%webTemplateStudioExtension.commands.wts%"
+        "command": "webTemplateStudioExtension.web.createApp.local",
+        "title": "%webTemplateStudioExtension.commands.web.createApp%",
+        "category": "%webTemplateStudioExtension.commands.category%"
       },
       {
-        "command": "webTemplateStudioExtension.deployApp.local",
-        "title": "%webTemplateStudioExtension.commands.deployApp%",
-        "category": "%webTemplateStudioExtension.commands.wts%"
+        "command": "webTemplateStudioExtension.web.deployApp.local",
+        "title": "%webTemplateStudioExtension.commands.web.deployApp%",
+        "category": "%webTemplateStudioExtension.commands.category%"
+      },
+      {
+        "command": "webTemplateStudioExtension.reactNative.createApp.local",
+        "title": "%webTemplateStudioExtension.commands.reactNative.createApp%",
+        "category": "%webTemplateStudioExtension.commands.category%"
       }
     ],
     "configuration": {
       "type": "object",
-      "title": "%webTemplateStudioExtension.commands.wts%",
+      "title": "%webTemplateStudioExtension.commands.category%",
       "properties": {
         "wts.changeSaveToLocation": {
           "type": "string",
@@ -95,7 +101,10 @@
     "build": "tsc -p tsconfig.json",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "lint": "yarn eslint ./src/**/*.{ts,tsx}",
+    "lint": "eslint ./src/**/*.ts",
+    "lint:fix": "eslint --fix ./src/**/*.ts",
+    "prettier": "prettier --check src/**/*.ts",
+    "prettier:format": "prettier --write src/**/*.ts",
     "test": "npm run compile && node ./out/test/runTest.js",
     "template-tests": "node ./out/scripts/generate-test && node ./out/scripts/run-tests",
     "createVsixPackage": "vsce package --yarn -o \"./../../dist/webts-0.0.0-UNTRACKEDVERSION.vsix\""
@@ -104,13 +113,17 @@
     "@types/mocha": "^7.0.2",
     "@types/node": "^14.0.14",
     "@types/vscode": "^1.38",
-    "@typescript-eslint/eslint-plugin": "^3.0.1",
-    "@typescript-eslint/parser": "^3.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.15.1",
+    "@typescript-eslint/parser": "^4.15.1",
     "del": "^5.1.0",
-    "eslint": "^7.1.0",
+    "eslint": "^7.20.0",
+    "eslint-config-prettier": "^8.0.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
     "event-stream": "^4.0.1",
     "kind-of": "^6.0.3",
     "mocha": "^7.2.0",
+    "prettier": "^2.2.1",
     "run-sequence": "^2.2.1",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.3",
@@ -124,6 +137,12 @@
     "ms-azuretools.vscode-azureappservice"
   ],
   "dependencies": {
+    "@azure/arm-appservice": "^7.0.0",
+    "@azure/arm-cosmosdb": "^12.1.0",
+    "@azure/arm-resources": "^4.0.0",
+    "@azure/arm-subscriptions": "^3.0.0",
+    "@azure/ms-rest-js": "^2.4.0",
+    "@azure/ms-rest-nodeauth": "^3.0.9",
     "@types/archiver": "^3.1.0",
     "@types/fs-extra": "^9.0.1",
     "@types/node-fetch": "^2.5.6",
@@ -132,23 +151,18 @@
     "@types/rimraf": "^3.0.0",
     "@types/semver": "^7.2.0",
     "archiver": "^4.0.1",
-    "axios": "^0.19.2",
-    "azure-arm-cosmosdb": "^2.3.0",
-    "azure-arm-resource": "^7.3.0",
-    "azure-arm-website": "^5.7.0",
+    "axios": "^0.21.1",
     "clean-webpack-plugin": "^3.0.0",
     "fs-extra": "^9.0.0",
     "global": "^4.4.0",
     "latest-version": "^5.1.0",
     "log4js": "^6.3.0",
-    "ms-rest": "^2.5.4",
-    "ms-rest-azure": "^3.0.0",
     "node-fetch": "^2.6.1",
     "node-fs-extra": "^0.8.2",
     "opn": "^6.0.0",
     "p-retry": "^4.2.0",
     "rimraf": "^3.0.2",
-    "url-parse": "^1.4.7",
+    "url-parse": "^1.5.0",
     "vsce": "^1.75.0",
     "vscode-extension-telemetry": "^0.1.6",
     "vscode-nls": "^4.1.2",

@@ -8,7 +8,7 @@ const messages = defineMessages({
   runtimeStack: {
     id: "AppServiceModal.RuntimeStackInfo.runtimeStack",
     defaultMessage: "Your runtime stack is {runtimeStack}.",
-  }
+  },
 });
 
 export default messages;

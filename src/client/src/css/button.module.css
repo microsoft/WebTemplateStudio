@@ -1,0 +1,55 @@
+.buttonHighlighted {
+  background-color: var(--vscode-button-background);
+  color: var(--vscode-button-foreground);
+}
+
+.buttonHighlighted:hover {
+  background-color: var(--vscode-button-hoverBackground);
+}
+
+.buttonDark {
+  background-color: var(--vscode-editor-background);
+  color: var(--vscode-button-secondaryForeground);
+}
+
+.buttonDark:hover {
+  background-color: var(--vscode-button-secondaryHoverBackground);
+  color: var(--vscode-button-secondaryHoverHighlightForeground);
+}
+
+.buttonHighlighted,
+.buttonDark {
+  text-decoration: none;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  border: none;
+}
+
+.buttonHighlighted:disabled,
+.buttonDark:disabled {
+  pointer-events: none;
+  opacity: 0.4;
+  background: var(--vscode-editor-background);
+  color: var(--vscode-editor-foreground);
+}
+
+/* This style should match a style in index.css */
+.buttonLink {
+  text-decoration: none;
+  color: var(--vscode-textLink-foreground);
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.buttonLink:hover {
+  text-decoration: underline;
+}
+
+.buttonLink:focus,
+.buttonDark:focus,
+.buttonHighlighted:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}

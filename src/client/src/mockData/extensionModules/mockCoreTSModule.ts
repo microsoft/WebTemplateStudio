@@ -1,8 +1,15 @@
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/commands";
+import { PLATFORM } from "../../utils/constants/constants";
+import { mockedPlatform } from "../mockConfig";
+import * as mockReactNativeData from "./mockData/mockReactNativePlatformData";
+import * as mockWebData from "./mockData/mockWebPlatformData";
 
-import * as mockData from "./mockData/mockWebPlatformData";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+const mockData = mockedPlatform === PLATFORM.REACTNATIVE ? mockReactNativeData : mockWebData;
 
-const getProjectTypes = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const getProjectTypes = (message: any): void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
@@ -16,7 +23,9 @@ const getProjectTypes = (message: any) => {
   );
 };
 
-const getFrameworks = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const getFrameworks = (message: any): void => {
+  const projectTypes = mockData.projectTypes !== undefined ? mockData.projectTypes : [];
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
@@ -25,14 +34,15 @@ const getFrameworks = (message: any) => {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
         frameworks: mockData.frameworks,
         isPreview: true,
-        projectType: "FullStackWebApp",
+        projectType: projectTypes !== undefined ? projectTypes[0].name : "",
       },
     },
     "*"
   );
 };
 
-const getAllLicenses = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const getAllLicenses = (message: any): void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
@@ -46,7 +56,8 @@ const getAllLicenses = (message: any) => {
   );
 };
 
-const getTemplateConfig = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const getTemplateConfig = (message: any): void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
@@ -60,7 +71,8 @@ const getTemplateConfig = (message: any) => {
   );
 };
 
-const getPages = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const getPages = (message: any): void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
@@ -74,7 +86,8 @@ const getPages = (message: any) => {
   );
 };
 
-const getFeatures = (message: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const getFeatures = (message: any): void => {
   window.postMessage(
     {
       module: EXTENSION_MODULES.CORETS,
@@ -88,4 +101,4 @@ const getFeatures = (message: any) => {
   );
 };
 
-export { getProjectTypes, getFrameworks, getAllLicenses, getTemplateConfig, getPages, getFeatures };
+export { getAllLicenses, getFeatures, getFrameworks, getPages, getProjectTypes, getTemplateConfig };

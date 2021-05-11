@@ -1,36 +1,26 @@
-import classnames from "classnames";
-import * as React from "react";
-import buttonStyles from "../../css/buttonStyles.module.css";
-import styles from "./styles.module.css";
-import { KEY_EVENTS } from "../../utils/constants/constants";
-import { ROUTE } from "../../utils/constants/routes";
-
-import { IVSCodeObject } from "../../types/vscode";
-
-import { openGenModalAction } from "../../store/navigation/modals/action";
-
+import React, { useMemo } from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
+import { useDispatch, useSelector } from "react-redux";
 
-import {
-  isEnableNextPageSelector,
-  isEnableGenerateButtonSelector,
-  getSelectedRoute,
-} from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
-import { AppState } from "../../store/combineReducers";
-
-import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
-import nextArrow from "../../assets/nextarrow.svg";
-import keyUpHandler from "../../utils/keyUpHandler";
-import messages from "./messages";
-import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import { AppContext } from "../../AppContext";
-import { useSelector, useDispatch } from "react-redux";
-import { useMemo } from "react";
-import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
-import { IRoutesNavItems } from "../../types/route";
-import { setRoutesAction } from "../../store/navigation/routesNavItems/actions";
-import { IOption } from "../../types/option";
+import buttonStyles from "../../css/button.module.css";
+import { AppState } from "../../store/combineReducers";
 import { setDetailPageAction } from "../../store/config/detailsPage/action";
+import { openGenModalAction } from "../../store/navigation/modals/action";
+import { setRoutesAction } from "../../store/navigation/routesNavItems/actions";
+import {
+  getSelectedRoute,
+  isEnableGenerateButtonSelector,
+  isEnableNextPageSelector,
+} from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { IOption } from "../../types/option";
+import { IRoutesNavItems } from "../../types/route";
+import { IVSCodeObject } from "../../types/vscode";
+import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
+import { ROUTE } from "../../utils/constants/constants";
+import { sendTelemetry } from "../../utils/extensionService/extensionService";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 type Props = InjectedIntlProps;
 
@@ -83,78 +73,30 @@ const Footer = (props: Props) => {
     dispatch(setRoutesAction(newRoutesNavItems));
   };
 
-  const navigateForwardOnKeyPress = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
-    event.stopPropagation();
-    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      navigateForward();
-    }
-  };
-
-  const navigateBackOnKeyPress = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
-    event.stopPropagation();
-    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      navigateBack();
-    }
-  };
-
   return (
     <nav aria-label={formatMessage(messages.navAriaLabel)}>
       {currentRoute !== ROUTE.PAGE_DETAILS && (
         <div className={styles.footer}>
           <div>{formatMessage(messages.license)}</div>
           <div className={styles.buttonContainer}>
-            <a
-              tabIndex={!isFirstStep ? 0 : -1}
-              className={classnames(buttonStyles.buttonDark, styles.button, styles.buttonBack, {
-                [styles.disabledOverlay]: isFirstStep || !isEnableGenerateButton,
-              })}
-              onClick={() => {
-                if (!isFirstStep && isEnableGenerateButton) navigateBack();
-              }}
-              onKeyPress={(event) => {
-                if (!isFirstStep && isEnableGenerateButton) navigateBackOnKeyPress(event);
-              }}
-              onKeyUp={(event: React.KeyboardEvent<HTMLAnchorElement>) => {
-                if (!isFirstStep && isEnableGenerateButton) keyUpHandler(event);
-              }}
+            <button
+              disabled={isFirstStep || !isEnableGenerateButton}
+              className={buttonStyles.buttonHighlighted}
+              onClick={() => navigateBack()}
             >
               {formatMessage(messages.back)}
-            </a>
-            <a
-              tabIndex={isEnableNextPage ? 0 : -1}
-              className={classnames(styles.button, styles.buttonNext, buttonStyles.buttonHighlighted, {
-                [buttonStyles.buttonDark]: !isEnableNextPage,
-                [styles.disabledOverlay]: isLastStep || !isEnableNextPage || !isEnableGenerateButton,
-              })}
-              onClick={() => {
-                if (!isLastStep && isEnableNextPage && isEnableGenerateButton) navigateForward();
-              }}
-              onKeyPress={(event) => {
-                if (!isLastStep && isEnableNextPage && isEnableGenerateButton) navigateForwardOnKeyPress(event);
-              }}
-              onKeyUp={(event: React.KeyboardEvent<HTMLAnchorElement>) => {
-                if (!isLastStep && isEnableNextPage && isEnableGenerateButton) keyUpHandler(event);
-              }}
+            </button>
+            <button
+              disabled={isLastStep || !isEnableNextPage || !isEnableGenerateButton}
+              className={buttonStyles.buttonHighlighted}
+              onClick={() => navigateForward()}
             >
               {formatMessage(messages.next)}
-              {nextArrow && (
-                <NextArrow
-                  className={classnames(styles.nextIcon, {
-                    [styles.nextIconNotDisabled]: isEnableNextPage,
-                  })}
-                />
-              )}
-            </a>
+            </button>
             <button
               disabled={!isEnableGenerateButton}
-              className={classnames(styles.button, {
-                [buttonStyles.buttonDark]: !isEnableGenerateButton,
-                [buttonStyles.buttonHighlighted]: isEnableGenerateButton,
-                [styles.disabledOverlay]: !isEnableGenerateButton,
-              })}
-              onClick={(e) => {
-                if (isEnableGenerateButton) generateProject(e);
-              }}
+              className={buttonStyles.buttonHighlighted}
+              onClick={(e) => generateProject(e)}
             >
               {formatMessage(messages.generate)}
             </button>

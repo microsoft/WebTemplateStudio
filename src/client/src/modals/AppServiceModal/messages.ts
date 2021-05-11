@@ -9,17 +9,13 @@ const messages = defineMessages({
     id: "AppServiceModal.saveMessage",
     defaultMessage: "Save",
   },
-  showAdvancedMode:{
+  showAdvancedMode: {
     id: "AppServiceModal.showAdvancedMode",
     defaultMessage: "Advanced mode",
   },
-  hideAdvancedMode:{
+  hideAdvancedMode: {
     id: "AppServiceModal.hideAdvancedMode",
     defaultMessage: "Hide advanced mode",
-  },
-  ariaCloseModalLabel:{
-    id: "AppServiceModal.ariaCloseModalLabel",
-    defaultMessage: "Close App Service Configuration Modal",
   },
 });
 

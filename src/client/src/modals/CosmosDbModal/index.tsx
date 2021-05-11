@@ -1,36 +1,30 @@
+import classNames from "classnames";
 import * as React from "react";
 import { useState } from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { connect, useSelector, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
+
 import { AppContext } from "../../AppContext";
-
-import { AppState } from "../../store/combineReducers";
-import { ICosmosDB } from "../../store/userSelection/services/cosmosDb/model";
-import { getCosmosDB } from "../../store/userSelection/services/servicesSelector";
-import { closeModalAction } from "../../store/navigation/modals/action";
-import { saveCosmosDbAction } from "../../store/userSelection/services/cosmosDb/action";
-import { isCosmosDbModalOpenSelector } from "../../store/navigation/modals/selector";
-
-import asModal from "../../components/Modal";
+import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
 import LocationSelection from "../../components/LocationSelection";
+import asModal from "../../components/Modal";
+import ModalContent from "../../components/ModalContent";
 import ResourceGroupSelection from "../../components/ResourceGroupSelection";
 import SubscriptionSelection from "../../components/SubscriptionSelection";
-
-import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
-
-import { KEY_EVENTS } from "../../utils/constants/constants";
+import buttonStyles from "../../css/button.module.css";
+import { AppState } from "../../store/combineReducers";
+import { isCosmosDbModalOpenSelector } from "../../store/navigation/modals/selector";
+import { saveCosmosDbAction } from "../../store/userSelection/services/cosmosDb/action";
+import { ICosmosDB } from "../../store/userSelection/services/cosmosDb/model";
+import { getCosmosDB } from "../../store/userSelection/services/servicesSelector";
+import { AZURE, AzureResourceType, SERVICE_KEYS } from "../../utils/constants/azure";
 import { EXTENSION_COMMANDS } from "../../utils/constants/commands";
+import { WIZARD_CONTENT_FEATURES } from "../../utils/constants/internalNames";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants/internalNames";
-import { AZURE, SERVICE_KEYS, AzureResourceType } from "../../utils/constants/azure";
-
 import AccountNameEditor from "./AccountNameEditor/index";
 import ApiSelection from "./APISelection/index";
-import buttonStyles from "../../css/buttonStyles.module.css";
-import styles from "./styles.module.css";
 import messages from "./messages";
-import classNames from "classnames";
+import styles from "./styles.module.css";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -44,7 +38,7 @@ const CosmosModal = ({ intl }: Props) => {
   const { vscode } = React.useContext(AppContext);
   const cosmosInStore = useSelector(getCosmosDB);
   const templateCosmosDB = useSelector((state: AppState) => state.templates.featureOptions).filter(
-    (feature) => feature.internalName === WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB
+    (feature) => feature.internalName === WIZARD_CONTENT_FEATURES.COSMOS_DB
   )[0];
   const initialSubscription = cosmosInStore ? cosmosInStore.subscription : "";
   const initialAccountName = cosmosInStore ? cosmosInStore.accountName : "";
@@ -77,16 +71,7 @@ const CosmosModal = ({ intl }: Props) => {
   };
 
   const getButtonClassNames = () => {
-    const buttonClass = isEnableSaveButton() ? buttonStyles.buttonHighlighted : buttonStyles.buttonDark;
-    return classNames(buttonClass, styles.button);
-  };
-
-  const closeModalIfPressEnterOrSpaceKey = (event: React.KeyboardEvent<SVGSVGElement>) => {
-    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      event.preventDefault();
-      event.stopPropagation();
-      dispatch(closeModalAction());
-    }
+    return isEnableSaveButton() ? buttonStyles.buttonHighlighted : buttonStyles.buttonDark;
   };
 
   const saveCosmosSelection = () => {
@@ -96,11 +81,11 @@ const CosmosModal = ({ intl }: Props) => {
       location,
       resourceGroup,
       api,
-      groupName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
+      groupName: WIZARD_CONTENT_FEATURES.COSMOS_DB,
       internalName:
         api === AZURE.COSMOS_APIS.MONGO
-          ? WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO
-          : WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL,
+          ? WIZARD_CONTENT_FEATURES.COSMOS_DB_MONGO
+          : WIZARD_CONTENT_FEATURES.COSMOS_DB_SQL,
       editable: templateCosmosDB.editable,
       icon: templateCosmosDB.icon,
     };
@@ -108,18 +93,7 @@ const CosmosModal = ({ intl }: Props) => {
   };
 
   return (
-    <React.Fragment>
-      <div className={styles.header}>
-        <div className={styles.title}>{formatMessage(messages.title)}</div>
-        <Cancel
-          tabIndex={0}
-          aria-label={intl.formatMessage(messages.ariaCloseModalLabel)}
-          data-testid="close-button"
-          className={styles.closeIcon}
-          onClick={() => dispatch(closeModalAction())}
-          onKeyDown={closeModalIfPressEnterOrSpaceKey}
-        />
-      </div>
+    <ModalContent title={formatMessage(messages.title)}>
       <div className={styles.body}>
         <SubscriptionSelection initialSubscription={subscription} onSubscriptionChange={setSubscription} />
 
@@ -158,7 +132,7 @@ const CosmosModal = ({ intl }: Props) => {
           {formatMessage(messages.save)}
         </button>
       </div>
-    </React.Fragment>
+    </ModalContent>
   );
 };
 

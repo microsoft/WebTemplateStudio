@@ -1,11 +1,12 @@
 import { createSelector } from "reselect";
+
 import { RowType } from "../../../../types/rowType";
 import { ISelected } from "../../../../types/selected";
+import { ROUTE } from "../../../../utils/constants/constants";
 import { IValidation } from "../../../../utils/validations/validations";
 import { AppState } from "../../../combineReducers";
-import { UserSelectionState } from "../../combineReducers";
-import { ROUTE } from "../../../../utils/constants/routes";
 import { IValidations } from "../../../config/validations/model";
+import { UserSelectionState } from "../../combineReducers";
 
 const getWizardSelectionsSelector = (state: AppState): UserSelectionState => state.userSelection;
 const getProjectName = (state: AppState): string => state.userSelection.projectNameObject.projectName;
@@ -24,27 +25,37 @@ const getSelectedRoute = (state: AppState): string => {
 
 const isEnableNextPageSelector = (state: AppState): boolean => {
   let valid = false;
-  if (getSelectedRoute(state) === ROUTE.NEW_PROJECT) {
+  const selectedRoute = getSelectedRoute(state);
+
+  if (selectedRoute === ROUTE.NEW_PROJECT) {
     valid =
       state.userSelection.projectNameObject.validation.isValid === true &&
       state.userSelection.outputPathObject.outputPath !== "";
   }
 
   if (
-    getSelectedRoute(state) === ROUTE.SELECT_FRAMEWORKS &&
-    state.templates.frontendOptions &&
-    state.templates.backendOptions &&
-    state.userSelection.frontendFramework.title !== "" &&
-    state.userSelection.backendFramework.title !== ""
+    selectedRoute === ROUTE.SELECT_PROJECT_TYPE &&
+    (state.templates.projectTypesOptions.length === 1 ||
+      (state.templates.projectTypesOptions.length > 0 && state.userSelection.frontendFramework.title !== ""))
   ) {
     valid = true;
   }
 
-  if (getSelectedRoute(state) === ROUTE.ADD_PAGES && state.userSelection.pages.length > 0) {
+  if (
+    selectedRoute === ROUTE.SELECT_FRAMEWORKS &&
+    (state.templates.frontendOptions.length === 0 ||
+      (state.templates.frontendOptions.length > 0 && state.userSelection.frontendFramework.title !== "")) &&
+    (state.templates.backendOptions.length === 0 ||
+      (state.templates.backendOptions.length > 0 && state.userSelection.backendFramework.title !== ""))
+  ) {
     valid = true;
   }
 
-  if (getSelectedRoute(state) === ROUTE.ADD_SERVICES || getSelectedRoute(state) === ROUTE.REVIEW_AND_GENERATE) {
+  if (selectedRoute === ROUTE.ADD_PAGES && state.userSelection.pages.length > 0) {
+    valid = true;
+  }
+
+  if (selectedRoute === ROUTE.ADD_SERVICES || selectedRoute === ROUTE.REVIEW_AND_GENERATE) {
     valid = true;
   }
 
@@ -119,15 +130,15 @@ const frameworksRowItems = (selection: UserSelectionState): RowType[] => {
 const getFrameworksRowItemSelector = createSelector(getWizardSelectionsSelector, frameworksRowItems);
 
 export {
-  getWizardSelectionsSelector,
   getFrameworksRowItemSelector,
   getOutputPath,
   getOutputPathValidation,
   getProjectName,
-  getValidations,
   getProjectNameValidation,
   getSelectedRoute,
-  isValidNameAndProjectPathSelector,
-  isEnableNextPageSelector,
+  getValidations,
+  getWizardSelectionsSelector,
   isEnableGenerateButtonSelector,
+  isEnableNextPageSelector,
+  isValidNameAndProjectPathSelector,
 };

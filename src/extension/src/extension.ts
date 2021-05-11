@@ -1,22 +1,20 @@
 import * as vscode from "vscode";
+
+import { PLATFORM } from "./constants/constants";
 import { Controller } from "./controller";
 import { Deploy } from "./deploy";
-import { Platform } from "./constants/constants";
 
 export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
-    vscode.commands.registerCommand(
-      "webTemplateStudioExtension.wizardLaunch.local",
-      async () => {
-        Controller.getInstance(context, Platform.Web);
-      }
-    ),
-    vscode.commands.registerCommand(
-      "webTemplateStudioExtension.deployApp.local",
-      async () => {
-        await Deploy.getInstance(context).deployProject();
-      }
-    )
+    vscode.commands.registerCommand("webTemplateStudioExtension.web.createApp.local", async () => {
+      Controller.getInstance(context, PLATFORM.WEB);
+    }),
+    vscode.commands.registerCommand("webTemplateStudioExtension.reactNative.createApp.local", async () => {
+      Controller.getInstance(context, PLATFORM.REACTNATIVE);
+    }),
+    vscode.commands.registerCommand("webTemplateStudioExtension.web.deployApp.local", async () => {
+      await Deploy.getInstance(context).deployProject();
+    })
   );
 }
 

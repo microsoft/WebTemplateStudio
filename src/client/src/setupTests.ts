@@ -1,8 +1,9 @@
-import { configure, shallow, mount } from "enzyme";
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
+
+import { configure, mount, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import { IntlProvider, intlShape } from "react-intl";
 import React from "react";
+import { IntlProvider, intlShape } from "react-intl";
 
 /**
  * This setup file configures the Enzyme Adapter and is executed before running the tests
@@ -16,7 +17,7 @@ global.intl = intl;
 
 //https://medium.com/@sapegin/testing-react-intl-components-with-jest-and-enzyme-f9d43d9c923e
 // `intl` prop is required when using injectIntl HOC
-const nodeWithIntlProp = node => React.cloneElement(node, { intl });
+const nodeWithIntlProp = (node) => React.cloneElement(node, { intl });
 
 // shallow() with React Intl context
 global.shallowWithIntl = (node, { context, ...options } = {}) => {
@@ -24,25 +25,22 @@ global.shallowWithIntl = (node, { context, ...options } = {}) => {
     ...options,
     context: {
       ...context,
-      intl
-    }
+      intl,
+    },
   });
 };
 
 // mount() with React Intl context
-global.mountWithIntl = (
-    node,
-    { context, childContextTypes, ...options } = {}
-  ) => {
-    return mount(nodeWithIntlProp(node), {
-      ...options,
-      context: {
-        ...context,
-        intl
-      },
-      childContextTypes: {
-        intl: intlShape,
-        ...childContextTypes
-      }
-    });
-  };
+global.mountWithIntl = (node, { context, childContextTypes, ...options } = {}) => {
+  return mount(nodeWithIntlProp(node), {
+    ...options,
+    context: {
+      ...context,
+      intl,
+    },
+    childContextTypes: {
+      intl: intlShape,
+      ...childContextTypes,
+    },
+  });
+};

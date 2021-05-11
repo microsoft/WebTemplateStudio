@@ -1,23 +1,23 @@
-import * as React from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-import { GenerationItemData, GenerationItemStatus } from "../../../types/generationStatus";
 import classnames from "classnames";
-import buttonStyles from "../../../css/buttonStyles.module.css";
-import styles from "./styles.module.css";
-import messages from "./messages";
-import keyUpHandler from "../../../utils/keyUpHandler";
+import * as React from "react";
+import { useEffect } from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 
-import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
+import { AppContext } from "../../../AppContext";
 import { ReactComponent as Checkmark } from "../../../assets/checkgreen.svg";
 import { ReactComponent as ErrorRed } from "../../../assets/errorred.svg";
+import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
+import buttonStyles from "../../../css/button.module.css";
+import { GenerationItemData, GenerationItemStatus } from "../../../types/generationStatus";
+import { EXTENSION_COMMANDS } from "../../../utils/constants/commands";
 import {
   openLogFile,
   subscribeToExtensionEvents,
   unsubscribeToExtensionEvents,
 } from "../../../utils/extensionService/extensionService";
-import { AppContext } from "../../../AppContext";
-import { useEffect } from "react";
-import { EXTENSION_COMMANDS } from "../../../utils/constants/commands";
+import keyUpHandler from "../../../utils/keyUpHandler";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 interface IProps {
   item: GenerationItemData;
@@ -64,7 +64,7 @@ const GenerationItem = ({ intl, item }: Props) => {
       {status === GenerationItemStatus.Success && (
         <div className={styles.inLine}>
           {item.link && (
-            <a className={styles.link} href={item.link} onKeyUp={keyUpHandler}>
+            <a href={item.link} onKeyUp={keyUpHandler}>
               {formatMessage(messages.view)}
             </a>
           )}

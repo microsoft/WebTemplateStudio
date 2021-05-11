@@ -1,6 +1,10 @@
-import { IUpdateFrameworkActionTypeAction, IFrontendFrameworksActionTypeAction, IBackendFrameworksSuccessActionTypeAction } from "./frameworks/model";
-import { IPageOptionsActionType } from "./pages/model";
 import { IFeaturesActionType } from "./features/models";
+import {
+  IBackendFrameworksSuccessActionTypeAction,
+  IFrontendFrameworksActionTypeAction,
+  IUpdateFrameworkActionTypeAction,
+} from "./frameworks/model";
+import { IPageOptionsActionType } from "./pages/model";
 
 type WizardContentActionType =
   | IBackendFrameworksSuccessActionTypeAction

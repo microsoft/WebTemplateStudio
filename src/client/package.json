@@ -31,7 +31,7 @@
     "react-markdown": "^4.3.1",
     "react-modal": "^3.8.1",
     "react-redux": "^7.2.0",
-    "react-scripts": "^3.4.1",
+    "react-scripts": "4.0.3",
     "react-select": "^3.1.0",
     "react-sortable-hoc": "^1.11.0",
     "redux": "^4.0.5",
@@ -51,8 +51,13 @@
     "manage:translations": "node scripts/manageTranslations.js",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
     "eject": "react-scripts eject",
-    "format": "prettier --write src/**/*.{ts,tsx}",
-    "lint": "eslint ./src/**/*.{ts,tsx}"
+    "lint": "eslint ./src/**/*.{ts,tsx}",
+    "lint:fix": "eslint --fix ./src/**/*.{ts,tsx}",
+    "prettier": "prettier --check src/**/*.{ts,tsx,css}",
+    "prettier:format": "prettier --write src/**/*.{ts,tsx,css}"
+  },
+  "jest": {
+    "resetMocks": false
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -68,14 +73,18 @@
     "@types/enzyme": "^3.10.5",
     "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/redux-mock-store": "^1.0.2",
-    "@typescript-eslint/eslint-plugin": "^2.29.0",
-    "@typescript-eslint/parser": "^2.29.0",
+    "@typescript-eslint/eslint-plugin": "^4.15.1",
+    "@typescript-eslint/parser": "^4.15.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
-    "eslint": "^6.8.0",
-    "eslint-plugin-react": "^7.19.0",
-    "eslint-plugin-react-hooks": "^3.0.0",
+    "eslint": "^7.20.0",
+    "eslint-config-prettier": "^8.0.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
     "jest-environment-jsdom-sixteen": "^1.0.3",
+    "prettier": "^2.2.1",
     "react-intl-translations-manager": "^5.0.3",
     "redux-mock-store": "^1.5.4",
     "webpack-filter-warnings-plugin": "^1.2.1"

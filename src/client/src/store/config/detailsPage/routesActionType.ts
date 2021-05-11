@@ -1,4 +1,4 @@
-import { ISetDetails  } from "./model";
+import { ISetDetails } from "./model";
 
 type DetailsType = ISetDetails;
 

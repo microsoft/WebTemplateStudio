@@ -1,11 +1,12 @@
+import { render, RenderResult } from "@testing-library/react";
 import * as React from "react";
+import { IntlProvider } from "react-intl";
+import * as ReactRedux from "react-redux";
 import configureMockStore from "redux-mock-store";
+
+import { getInitialState } from "../../../mockData/mockStore";
 import About from "./index";
 import messages from "./messages";
-import * as ReactRedux from 'react-redux'
-import { getInitialState } from "../../../mockData/mockStore";
-import { render, RenderResult } from "@testing-library/react";
-import { IntlProvider } from "react-intl";
 
 describe("About", () => {
   let wrapper: RenderResult;
@@ -13,15 +14,15 @@ describe("About", () => {
   const mockStore = configureMockStore();
 
   describe("Tests", () => {
-    const mockDispatch = jest.fn()
+    const mockDispatch = jest.fn();
     beforeEach(() => {
-      jest.spyOn(ReactRedux, 'useDispatch').mockReturnValue(mockDispatch)
+      jest.spyOn(ReactRedux, "useDispatch").mockReturnValue(mockDispatch);
 
       store = mockStore(getInitialState());
       wrapper = render(
         <IntlProvider locale="en">
           <ReactRedux.Provider store={store}>
-            <About/>
+            <About />
           </ReactRedux.Provider>
         </IntlProvider>
       );
@@ -38,8 +39,12 @@ describe("About", () => {
       const expectedTextWizardVersion = intl.formatMessage(messages.wizardVersion);
       expect(wrapper.getByText(expectedTextVisitRepo)).toBeDefined();
       expect(wrapper.getByText(expectedTextReportIssue)).toBeDefined();
-      expect(wrapper.getByText(expectedTextTemplatesVersion + " " + store.getState().config.versions.templatesVersion)).toBeDefined();
-      expect(wrapper.getByText(expectedTextWizardVersion + " " + store.getState().config.versions.wizardVersion)).toBeDefined();
+      expect(
+        wrapper.getByText(expectedTextTemplatesVersion + " " + store.getState().config.versions.templatesVersion)
+      ).toBeDefined();
+      expect(
+        wrapper.getByText(expectedTextWizardVersion + " " + store.getState().config.versions.wizardVersion)
+      ).toBeDefined();
     });
   });
 });

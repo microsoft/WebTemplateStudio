@@ -1,20 +1,21 @@
 import { createSelector } from "reselect";
-import { AppState } from "../../combineReducers";
+
 import { IOption } from "../../../types/option";
+import { SERVICE_GROUPS } from "../../../utils/constants/azure";
+import { WIZARD_CONTENT_FEATURES } from "../../../utils/constants/internalNames";
+import { AppState } from "../../combineReducers";
 import { openAppServiceModalAction, openCosmosDbModalAction } from "../../navigation/modals/action";
 import messages from "./messages";
-import { SERVICE_GROUPS } from "../../../utils/constants/azure";
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants/internalNames";
 
-const getFeatures = (state: AppState) => state.templates.featureOptions;
+const getFeatures = (state: AppState): IOption[] => state.templates.featureOptions;
 
 const getServiceGroups = createSelector(getFeatures, (features) => {
-    const result = features.reduce((result, feature) => {
-      const service = getService(feature);
-      const group = result.find((s) => s.name.description === service.group);
-      if (group) {
-        group.services.push(service);
-      } else {
+  const result = features.reduce((result, feature) => {
+    const service = getService(feature);
+    const group = result.find((s) => s.name.description === service.group);
+    if (group) {
+      group.services.push(service);
+    } else {
       const serviceGroupMetadata = getServiceGroupMetadata(service.group);
       result.push({
         name: serviceGroupMetadata.name,
@@ -35,19 +36,19 @@ const getService = (option: IOption): IService => {
     openModalAction: metadata ? metadata.openModalAction : undefined,
     expectedPrice: metadata ? metadata.expectedPrice : undefined,
     expectedTime: metadata ? metadata.expectedTime : undefined,
-    editable: option.editable
+    editable: option.editable,
   };
 };
 
 const getServiceMetadata = (serviceId: string) => {
   switch (serviceId) {
-    case WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE:
+    case WIZARD_CONTENT_FEATURES.APP_SERVICE:
       return {
         openModalAction: openAppServiceModalAction(),
         expectedPrice: messages.appServiceExpectedPrice,
         expectedTime: messages.appServiceExpectedTime,
       };
-    case WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB:
+    case WIZARD_CONTENT_FEATURES.COSMOS_DB:
       return {
         openModalAction: openCosmosDbModalAction(),
         expectedPrice: messages.cosmosDbExpectedPrice,
@@ -58,7 +59,7 @@ const getServiceMetadata = (serviceId: string) => {
   }
 };
 
-export const getServiceGroupMetadata = (groupName: string|undefined) => {
+export const getServiceGroupMetadata = (groupName: string | undefined): any => {
   switch (groupName) {
     case SERVICE_GROUPS.HOSTING:
       return {

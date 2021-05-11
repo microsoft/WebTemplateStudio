@@ -4,7 +4,7 @@ export interface IApiTemplateInfo {
   displayName: string;
   summary: string;
   longDescription: string;
-  position: number;
+  order: number;
   icon: string;
   licenses: string[];
   selected: boolean;
@@ -13,4 +13,5 @@ export interface IApiTemplateInfo {
   author: string;
   group?: string;
   itemNameEditable?: boolean;
+  multipleInstance?: boolean;
 }

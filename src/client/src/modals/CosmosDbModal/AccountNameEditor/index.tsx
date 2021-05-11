@@ -1,15 +1,17 @@
-import * as React from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-import styles from "./styles.module.css";
 import classNames from "classnames";
-import messages from "./messages";
-import { getProjectName } from "../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
-import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
-import { ReactComponent as GreenCheck } from "../../../assets/checkgreen.svg";
-import { ValidateCosmosAccountName, GetValidCosmosAccountName } from "../../../utils/extensionService/extensionService";
+import * as React from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { useSelector } from "react-redux";
-import { AppState } from "../../../store/combineReducers";
+
 import { AppContext } from "../../../AppContext";
+import { ReactComponent as GreenCheck } from "../../../assets/checkgreen.svg";
+import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
+import modalStyles from "../../../css/modal.module.css";
+import { AppState } from "../../../store/combineReducers";
+import { getProjectName } from "../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { GetValidCosmosAccountName, ValidateCosmosAccountName } from "../../../utils/extensionService/extensionService";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 let timeout: NodeJS.Timeout | undefined;
 let validationCosmosDbAccountNameScopeId = 0;
@@ -38,7 +40,7 @@ const AccountNameEditor = ({
 
   React.useEffect(() => {
     if (isValidSubscription() && accountName === "") {
-      GetValidCosmosAccountName(projectName, vscode).then(event => onAccountNameChange(event.data.payload.validName));
+      GetValidCosmosAccountName(projectName, vscode).then((event) => onAccountNameChange(event.data.payload.validName));
     }
   }, [subscription]);
 
@@ -46,16 +48,17 @@ const AccountNameEditor = ({
     onIsAvailableAccountNameChange(false);
     if (accountName !== "") {
       setIsValidatingName(true);
-      delayValidation(() =>{
+      delayValidation(() => {
         validationCosmosDbAccountNameScopeId++;
-        ValidateCosmosAccountName(subscription, accountName, validationCosmosDbAccountNameScopeId, vscode).then(event => {
-          if(validationCosmosDbAccountNameScopeId === event.data.payload.scope)
-          {
-            setInvalidAccountNameMessage(event.data.payload.errorMessage);
-            onIsAvailableAccountNameChange(event.data.payload.isValid);
-            setIsValidatingName(false);
+        ValidateCosmosAccountName(subscription, accountName, validationCosmosDbAccountNameScopeId, vscode).then(
+          (event) => {
+            if (validationCosmosDbAccountNameScopeId === event.data.payload.scope) {
+              setInvalidAccountNameMessage(event.data.payload.errorMessage);
+              onIsAvailableAccountNameChange(event.data.payload.isValid);
+              setIsValidatingName(false);
+            }
           }
-        });
+        );
       });
     }
   }, [accountName]);
@@ -68,7 +71,7 @@ const AccountNameEditor = ({
       timeout = undefined;
       validation();
     }, 700);
-  }
+  };
 
   const isValidSubscription = (): boolean => {
     return subscription !== "" && subscription !== "Select...";
@@ -80,15 +83,15 @@ const AccountNameEditor = ({
         [styles.containerDisabled]: !isValidSubscription(),
       })}
     >
-      <div className={styles.title}>{formatMessage(messages.title)}</div>
-      <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
+      <div className={modalStyles.title}>{formatMessage(messages.title)}</div>
+      <div className={modalStyles.subtitle}>{formatMessage(messages.subtitle)}</div>
       <div className={styles.inputContainer}>
         <input
           aria-label={formatMessage(messages.ariaInputLabel)}
           placeholder={formatMessage(messages.inputPlaceholderMessage)}
           className={styles.input}
           value={accountName}
-          onChange={e => onAccountNameChange(e.currentTarget.value)}
+          onChange={(e) => onAccountNameChange(e.currentTarget.value)}
           disabled={!isValidSubscription()}
         />
         {accountName !== "" && invalidAccountNameMessage === "" && !isValidatingName && (
@@ -97,7 +100,9 @@ const AccountNameEditor = ({
         {isValidatingName && <Spinner data-testid="spinner" className={styles.spinner} />}
       </div>
       {accountName !== "" && !isValidatingName && invalidAccountNameMessage !== "" && (
-        <div data-testid="error-message" className={styles.errorMessage}>{invalidAccountNameMessage}</div>
+        <div data-testid="error-message" className={styles.errorMessage}>
+          {invalidAccountNameMessage}
+        </div>
       )}
     </div>
   );

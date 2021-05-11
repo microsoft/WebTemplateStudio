@@ -1,16 +1,15 @@
 import React from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { connect } from "react-redux";
-import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import { AppState } from "../../../store/combineReducers";
-import { getServices } from "../../../store/userSelection/services/servicesSelector";
 import { ServiceState } from "../../../store/userSelection/services/combineReducers";
-
-import CosmosDBSelection from "./CosmosDBSelection";
+import { getServices } from "../../../store/userSelection/services/servicesSelector";
+import SectionTitle from "../../Titles/SectionTitle";
+import rightsidebarStyles from "../rightsidebarStyles.module.css";
 import AppServiceSelection from "./AppServiceSelection";
-
+import CosmosDBSelection from "./CosmosDBSelection";
 import messages from "./messages";
-import styles from "./styles.module.css";
 
 interface IProps {
   services: ServiceState;
@@ -24,8 +23,8 @@ function ServicesList({ services, intl }: Props) {
   const hasCosmos = services.cosmosDB !== null;
 
   return (
-    <div className={styles.servicesSection}>
-      <div className={styles.title}>{formatMessage(messages.services)}</div>
+    <div className={rightsidebarStyles.sidebarItem}>
+      <SectionTitle>{formatMessage(messages.services)}</SectionTitle>
       {hasAppService && <AppServiceSelection appServiceSelection={services.appService} />}
       {hasCosmos && <CosmosDBSelection cosmosSelection={services.cosmosDB} />}
     </div>
@@ -33,7 +32,7 @@ function ServicesList({ services, intl }: Props) {
 }
 
 const mapStateToProps = (state: AppState): IProps => ({
-  services: getServices(state)
+  services: getServices(state),
 });
 
 export default connect(mapStateToProps)(injectIntl(ServicesList));

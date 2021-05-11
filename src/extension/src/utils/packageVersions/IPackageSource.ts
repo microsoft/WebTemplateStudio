@@ -1,3 +1,3 @@
-interface IPackageSource {
-    getLatestVersion: (packageName: string) => Promise<string>;
-  }
+export interface IPackageSource {
+  getLatestVersion: (packageName: string) => Promise<string>;
+}

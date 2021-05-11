@@ -1,0 +1,26 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft Community",
+  "classifications": ["Universal"],
+  "name": "Page.React.AddImport",
+  "shortName": "Page.React.AddImport",
+  "identity": "Page.React.AddImport",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "composition",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.compositionFilter": "$frontendframework == React & wts.type == page",
+    "wts.casing.sourceName": "pascal"
+  },
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.sourceName.casing.pascal": {
+      "type": "parameter",
+      "replaces": "Param_SourceName_Pascal"
+    }
+  }
+}

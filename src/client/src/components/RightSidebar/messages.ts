@@ -3,7 +3,7 @@ import { defineMessages } from "react-intl";
 const messages = defineMessages({
   viewLicenses: {
     id: "rightSidebar.viewLicenses",
-    defaultMessage: "View Licenses",
+    defaultMessage: "View licenses",
   },
   showAriaLabel: {
     id: "rightSidebar.showAriaLabel",
@@ -21,10 +21,17 @@ const messages = defineMessages({
     id: "rightSidebar.hideIcon",
     defaultMessage: "Hide",
   },
-
-  yourProjectDetails: {
-    id: "rightSidebar.yourProjectDetails",
-    defaultMessage: "Your Project Details",
+  missingRequirements: {
+    id: "rightSidebar.missingRequirements",
+    defaultMessage: "Missing requirements.",
+  },
+  viewDetails: {
+    id: "rightSidebar.viewDetails",
+    defaultMessage: "View details",
+  },
+  viewRequirements: {
+    id: "rightSidebar.viewRequirements",
+    defaultMessage: "View requirements",
   },
 });
 

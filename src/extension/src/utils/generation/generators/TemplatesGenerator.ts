@@ -1,16 +1,16 @@
 import { MESSAGES } from "../../../constants/messages";
 import { CoreTemplateStudio } from "../../../coreTemplateStudio";
 import { IGenerationData } from "../../../types/generationTypes";
+import { Logger } from "../../logger";
 import {
   GenerationItemStatus,
   sendGenerationStatus,
   TEMPLATES_GENERATION_NAME,
   updateStatusMessage,
 } from "../generationStatus";
-import { Logger } from "../../logger";
 
 export default class TemplatesGenerator {
-  public async generate(generationData: IGenerationData): Promise<string|undefined> {
+  public async generate(generationData: IGenerationData): Promise<string | undefined> {
     const { PROJECT_GENERATION_FINISHED, TEMPLATES_COULD_NOT_BE_GENERATED } = MESSAGES.GENERATION;
     const { Generating, Success, Failed } = GenerationItemStatus;
     try {

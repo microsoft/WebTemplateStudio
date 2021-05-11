@@ -1,0 +1,19 @@
+.container {
+  margin-right: 20%;
+  width: 100%;
+  z-index: 1;
+}
+
+.selectionContainer {
+  margin-bottom: 4em;
+}
+
+.selectionContainer > p {
+  max-width: 350px;
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  position: relative;
+}

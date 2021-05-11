@@ -1,7 +1,0 @@
-# vscode configuration
-.vscode/settings.json
-
-# production
-//{[{
-**/build
-//}]}

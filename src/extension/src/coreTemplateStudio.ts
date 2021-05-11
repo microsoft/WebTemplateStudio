@@ -1,16 +1,16 @@
-import * as vscode from "vscode";
-import * as path from "path";
-import * as os from "os";
-import * as fs from "fs";
-
 import { ChildProcess, spawn } from "child_process";
+import { EventEmitter } from "events";
+import * as fs from "fs";
+import * as os from "os";
+import * as path from "path";
+import * as vscode from "vscode";
+
 import { CLI, CLI_SETTINGS } from "./constants/cli";
 import { ICommandPayload } from "./types/commandPayload";
-import { IGenerationData, IService } from "./types/generationTypes";
-import { EventEmitter } from "events";
 import { IEngineGenerationPayloadType } from "./types/engineGenerationPayloadType";
-import { ISyncPayloadType } from "./types/syncPayloadType";
 import { IEngineGenerationTemplateType } from "./types/engineGenerationTemplateType";
+import { IGenerationData, IService } from "./types/generationTypes";
+import { ISyncPayloadType } from "./types/syncPayloadType";
 
 class CliEventEmitter extends EventEmitter {}
 
@@ -149,7 +149,15 @@ export class CoreTemplateStudio {
   }
 
   public async getPages(projectType: string, frontendFramework: string, backendFramework: string): Promise<any> {
-    const getPagesCommand = `${CLI.GET_PAGES} -p ${projectType} -f ${frontendFramework} -b ${backendFramework}\n`;
+    let getPagesCommand = `${CLI.GET_PAGES} -p ${projectType} `;
+    if (frontendFramework !== "") {
+      getPagesCommand = getPagesCommand.concat(`-f ${frontendFramework} `);
+    }
+    if (backendFramework !== "") {
+      getPagesCommand = getPagesCommand.concat(`-b ${backendFramework}`);
+    }
+    getPagesCommand = getPagesCommand.concat(`\n`);
+
     return this.awaitCliEvent(CLI.GET_PAGES_RESULT, getPagesCommand);
   }
 
@@ -199,7 +207,7 @@ export class CoreTemplateStudio {
       frontendFramework: frontendFramework,
       backendFramework: backendFramework,
       language: "Any",
-      platform: "Web",
+      platform: CoreTemplateStudio._templateConfig.platform,
       homeName: "Test",
       pages: pages.map((page: any) => ({
         name: page.name,

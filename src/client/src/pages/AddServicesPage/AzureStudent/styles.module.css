@@ -1,0 +1,22 @@
+.studentContainer {
+  display: flex;
+  width: 100%;
+  padding: 0.8em 0em;
+  background-color: hsla(0, 0%, 47%, 0.2);
+  margin-top: 0;
+  margin-right: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+.infoContainer {
+  padding-left: 4em;
+}
+
+.cloudServicesSvg {
+  width: 200px;
+}
+
+.body {
+  margin-bottom: 8px;
+}

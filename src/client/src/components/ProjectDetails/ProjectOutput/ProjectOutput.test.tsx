@@ -1,16 +1,15 @@
-import * as React from "react";
-import configureMockStore from "redux-mock-store";
 import "@testing-library/jest-dom";
 import "@testing-library/jest-dom/extend-expect";
-import { RenderResult, fireEvent, waitFor, act } from "@testing-library/react";
 
-import { getInitialState, setSelectedRoute } from "../../../mockData/mockStore";
-import { renderWithStore } from "../../../testUtils";
+import { act, RenderResult } from "@testing-library/react";
+import * as React from "react";
+import configureMockStore from "redux-mock-store";
 
-import messages from "./messages";
-import styles from "./styles.module.css";
-import ProjectOutput from ".";
+import { getInitialState } from "../../../mockData/mockStore";
 import { AppState } from "../../../store/combineReducers";
+import { renderWithStore } from "../../../testUtils";
+import ProjectOutput from ".";
+import messages from "./messages";
 
 describe("Project Output component", () => {
   let store: any;

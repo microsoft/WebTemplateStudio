@@ -1,22 +1,19 @@
+import classnames from "classnames";
 import React, { useState } from "react";
+import { InjectedIntl, injectIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 import { arrayMove } from "react-sortable-hoc";
-import { injectIntl, InjectedIntl } from "react-intl";
 
-import { PAGE_NAME_CHARACTER_LIMIT } from "../../../utils/constants/constants";
-
+import { ReactComponent as HideIconSVG } from "../../../assets/i-hide.svg";
+import { ReactComponent as ShowIconSVG } from "../../../assets/i-show.svg";
 import { AppState } from "../../../store/combineReducers";
 import { setPagesAction } from "../../../store/userSelection/pages/action";
-
-import PageContainer from "./PageContainer";
-
-import messages from "./messages";
-import classnames from "classnames";
+import { PAGE_NAME_CHARACTER_LIMIT } from "../../../utils/constants/constants";
+import SectionTitle from "../../Titles/SectionTitle";
 import rightsidebarStyles from "../rightsidebarStyles.module.css";
+import messages from "./messages";
+import PageContainer from "./PageContainer";
 import styles from "./styles.module.css";
-
-import { ReactComponent as ShowIconSVG } from "../../../assets/i-show.svg";
-import { ReactComponent as HideIconSVG } from "../../../assets/i-hide.svg";
 
 interface IStateProps {
   pathname: string;
@@ -33,24 +30,20 @@ const SelectPages = (props: Props) => {
   const selectedPages: any[] = useSelector((state: AppState) => state.userSelection.pages);
   const dispatch = useDispatch();
 
-  const onSortEnd = ({
-    oldIndex,
-    newIndex
-  }: {
-    oldIndex: number;
-    newIndex: number;
-  }) => {
+  const onSortEnd = ({ oldIndex, newIndex }: { oldIndex: number; newIndex: number }) => {
     dispatch(setPagesAction(arrayMove(selectedPages, oldIndex, newIndex)));
   };
   const DRAG_PIXEL_THRESHOLD = 1;
+  const MAX_PAGES_ALLOWED = 20;
 
   return (
-    <div className={styles.sortablePages}>
+    <div className={rightsidebarStyles.sidebarItem}>
       <div className={classnames(styles.pageListContainer)}>
-        <div className={rightsidebarStyles.title}>
-          {`${props.intl!.formatMessage(messages.pages)} (${selectedPages.length >= 0 ? selectedPages.length : ""
-            })`}
-        </div>
+        <SectionTitle>
+          {`${props.intl!.formatMessage(messages.pages)} (${
+            selectedPages.length >= 0 ? selectedPages.length : ""
+          }/${MAX_PAGES_ALLOWED})`}
+        </SectionTitle>
         <div className={styles.iconsContainer}>
           <button
             className={styles.hideOrShow}
@@ -59,10 +52,18 @@ const SelectPages = (props: Props) => {
             }}
           >
             {isMinimized ? (
-              <ShowIconSVG className={styles.viewIcon} />
+              <ShowIconSVG
+                className={styles.viewIcon}
+                aria-label={props.intl!.formatMessage(messages.showAriaLabel)}
+                title={props.intl!.formatMessage(messages.showIcon)}
+              />
             ) : (
-                <HideIconSVG className={styles.viewIcon} />
-              )}
+              <HideIconSVG
+                className={styles.viewIcon}
+                aria-label={props.intl!.formatMessage(messages.hideAriaLabel)}
+                title={props.intl!.formatMessage(messages.hideIcon)}
+              />
+            )}
           </button>
         </div>
       </div>
@@ -73,8 +74,8 @@ const SelectPages = (props: Props) => {
           onSortEnd={onSortEnd}
           distance={DRAG_PIXEL_THRESHOLD}
           lockToContainerEdges
-          lockAxis='y'
-          lockOffset='25%'
+          lockAxis="y"
+          lockOffset="25%"
         />
       )}
     </div>

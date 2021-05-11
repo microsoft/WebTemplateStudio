@@ -1,12 +1,9 @@
 import { EXTENSION_COMMANDS } from "./constants/commands";
-import { IActionContext, ITelemetryService } from "./telemetry/telemetryService";
 import { MESSAGES } from "./constants/messages";
+import { IActionContext, ITelemetryService } from "./telemetry/telemetryService";
 
 export abstract class WizardServant {
-  abstract clientCommandMap: Map<
-    EXTENSION_COMMANDS,
-    (message: any) => Promise<IPayloadResponse>
-  >;
+  abstract clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>>;
   private _commandBidding = (message: any): Promise<any> => {
     return new Promise(() => {
       payload: message;
@@ -22,14 +19,12 @@ export abstract class WizardServant {
     classModule: WizardServant,
     Telemetry: ITelemetryService
   ): Promise<unknown> {
-    classModule._commandBidding = classModule.clientCommandMap.get(
-      messagePayload.command
-    )!;
+    classModule._commandBidding = classModule.clientCommandMap.get(messagePayload.command)!;
     if (classModule._commandBidding) {
       if (messagePayload.track) {
         return Telemetry.callWithTelemetryAndCatchHandleErrors(
           messagePayload.command,
-          async function(this: IActionContext) {
+          async function (this: IActionContext) {
             return classModule._commandBidding(messagePayload);
           }
         );
@@ -40,7 +35,7 @@ export abstract class WizardServant {
           // To ensure error gets logged and report an issue experience launches
           return Telemetry.callWithTelemetryAndCatchHandleErrors(
             messagePayload.command,
-            async function(this: IActionContext) {
+            async function (this: IActionContext) {
               throw error;
             }
           );
@@ -49,10 +44,8 @@ export abstract class WizardServant {
     } else {
       return Telemetry.callWithTelemetryAndCatchHandleErrors(
         messagePayload.command,
-        async function(this: IActionContext) {
-          throw Error(
-            MESSAGES.ERRORS.INVALID_COMMAND + ":" + messagePayload.command
-          );
+        async function (this: IActionContext) {
+          throw Error(MESSAGES.ERRORS.INVALID_COMMAND + ":" + messagePayload.command);
         }
       );
     }

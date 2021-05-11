@@ -1,6 +1,6 @@
-import { WizardServant, IPayloadResponse } from "../wizardServant";
 import { EXTENSION_COMMANDS } from "../constants/commands";
 import PackageVersionService from "../utils/packageVersions/PackageVersionService";
+import { IPayloadResponse, WizardServant } from "../wizardServant";
 
 export class DependenciesModule extends WizardServant {
   private packageVersionService = new PackageVersionService();

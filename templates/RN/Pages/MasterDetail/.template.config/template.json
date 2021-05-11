@@ -1,0 +1,25 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft",
+  "classifications": ["Universal"],
+  "name": "MasterDetail",
+  "shortName": "MasterDetail",
+  "groupIdentity": "wts.RN.Page.MasterDetail",
+  "identity": "wts.RN.Page.MasterDetail",
+  "description": "The master-detail page has a master pane and a details pane for content.",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "page",
+    "wts.platform": "RN",
+    "wts.projecttype": "all",
+    "wts.frontendframework": "all",
+    "wts.version": "1.0.0",
+    "wts.displayOrder": "0"
+  },
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+  }
+}

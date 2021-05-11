@@ -1,9 +1,8 @@
 import * as React from "react";
-import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
-
 import Select, { components } from "react-select";
-import dropdownstyles from "./dropdownstyles";
 
+import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
+import dropdownstyles from "./dropdownstyles";
 import styles from "./styles.module.css";
 
 export interface IDropdownProps {
@@ -21,7 +20,7 @@ const DEFAULT_VALUE = {
   label: "Select...",
 };
 
-const DropdownIndicator = (props: any) => {
+const DropdownIndicator = (props: any): JSX.Element => {
   return (
     components.DropdownIndicator && (
       <components.DropdownIndicator {...props}>
@@ -38,8 +37,8 @@ const Dropdown = ({
   value,
   disabled,
   ariaLabel,
-  openDropdownUpwards
-}: IDropdownProps) => {
+  openDropdownUpwards,
+}: IDropdownProps): JSX.Element => {
   return (
     <Select
       aria-label={ariaLabel}

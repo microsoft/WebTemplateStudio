@@ -1,12 +1,13 @@
 import { combineReducers } from "redux";
-import navigation from "./navigation/combineReducers";
-import templates from "./templates/combineReducers";
-import config from "./config/combineReducers";
-import userSelection from "./userSelection/combineReducers";
-import RootAction from "./ActionType";
-import { CONFIG_TYPEKEYS } from "./config/configTypeKeys";
+
 import { IRoutesNavItems } from "../types/route";
 import { ISelected } from "../types/selected";
+import RootAction from "./ActionType";
+import config from "./config/combineReducers";
+import { CONFIG_TYPEKEYS } from "./config/configTypeKeys";
+import navigation from "./navigation/combineReducers";
+import templates from "./templates/combineReducers";
+import userSelection from "./userSelection/combineReducers";
 
 const appReducer = combineReducers({
   templates,
@@ -17,7 +18,7 @@ const appReducer = combineReducers({
 
 export type AppState = ReturnType<typeof appReducer>;
 
-const rootReducer = (state: AppState | undefined, action: RootAction) => {
+const rootReducer = (state: AppState | undefined, action: RootAction): any => {
   let passedState: any;
 
   if (action.type === CONFIG_TYPEKEYS.RESET_WIZARD) {
@@ -63,6 +64,7 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
         },
         frontendFramework: frontendOptions[0],
         backendFramework: backendOptions[0],
+        projectType: projectTypesOptions[0],
         pages: [blankSelect],
       },
       templates: { backendOptions, frontendOptions, pageOptions, featureOptions, projectTypesOptions },

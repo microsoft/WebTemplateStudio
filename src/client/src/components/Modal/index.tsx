@@ -1,7 +1,7 @@
 import * as React from "react";
-
 import Modal from "react-modal";
-import { NAVIGATION_MODAL_TYPES, ModalType } from "../../store/navigation/typeKeys";
+
+import { ModalType, NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 
 /**
  * A Higher-Order Component that creates a modal from a normal React component
@@ -25,8 +25,7 @@ const getCustomStyles = (MODAL_TYPE?: ModalType): Modal.Styles => {
   // depends on modal type, customize width
   if (
     MODAL_TYPE &&
-    (MODAL_TYPE === NAVIGATION_MODAL_TYPES.GEN_MODAL ||
-      MODAL_TYPE === NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL)
+    (MODAL_TYPE === NAVIGATION_MODAL_TYPES.GEN_MODAL || MODAL_TYPE === NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL)
   ) {
     CUSTOM_WIDTH = "40%";
   }
@@ -39,7 +38,7 @@ const getCustomStyles = (MODAL_TYPE?: ModalType): Modal.Styles => {
       right: 0,
       bottom: 0,
       zIndex: 2000,
-      backgroundColor: "rgba(0, 0, 0, 0.6)"
+      backgroundColor: "rgba(0, 0, 0, 0.6)",
     },
     content: {
       top: "50%",
@@ -50,12 +49,12 @@ const getCustomStyles = (MODAL_TYPE?: ModalType): Modal.Styles => {
       transform: "translate(-50%, -50%)",
       borderRadius: "3px",
       width: CUSTOM_WIDTH,
-      padding: "4vh",
+      padding: "2rem",
       background: backgroundColor,
       border: "0.5px solid var(--vscode-editor-foreground)",
       maxWidth: "700px",
-      minWidth: "300px"
-    }
+      minWidth: "300px",
+    },
   };
 };
 
@@ -64,18 +63,17 @@ interface IProps {
   isModalOpen: boolean;
 }
 
-const asModal = <P extends object>(
+const asModal = <P extends Record<string, unknown>>(
   WrappedComponent: React.ComponentType<P>,
   MODAL_TYPE?: ModalType
-) => {
+): any => {
   return class extends React.Component<P & IProps> {
     static defaultProps = {
-      closeModal: () => void(0),
-      isModalOpen: false
+      closeModal: () => void 0,
+      isModalOpen: false,
     };
     render() {
       return (
-
         <Modal
           isOpen={this.props.isModalOpen}
           onRequestClose={this.props.closeModal}
@@ -83,7 +81,7 @@ const asModal = <P extends object>(
           style={getCustomStyles(MODAL_TYPE)}
           ariaHideApp={false}
         >
-          <WrappedComponent {...this.props as P} />
+          <WrappedComponent {...(this.props as P)} />
         </Modal>
       );
     }

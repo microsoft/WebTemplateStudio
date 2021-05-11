@@ -1,0 +1,21 @@
+.centerView {
+  padding: 0;
+  width: 100%;
+}
+
+.container {
+  position: relative;
+}
+
+.logInInfoBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-flow: row wrap;
+}
+
+.servicesContainer {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}

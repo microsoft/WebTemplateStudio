@@ -3,7 +3,7 @@
   <ItemGroup>
     <!--^^-->
     <!--{[{-->
-    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.14.0" />
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.17.1" />
     <!--}]}-->
   </ItemGroup>
 

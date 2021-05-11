@@ -1,0 +1,62 @@
+.container {
+  max-width: 65%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+  margin-bottom: 1em;
+  margin-right: 1em;
+}
+
+.licenses {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+.licenses p {
+  margin: 0;
+}
+
+.categoriesContainer {
+  margin-right: 15%;
+}
+
+.metaData {
+  display: flex;
+  align-items: center;
+  width: 80% !important;
+}
+
+.metaData > p {
+  margin: 0;
+}
+
+.longDescription {
+  line-height: 1.75em;
+}
+
+.detailSectionLabel {
+  width: 70px;
+  align-self: flex-start;
+}
+
+.licenseButton {
+  text-decoration: none;
+  color: var(--vscode-textLink-foreground);
+  font-weight: var(--vscode-font-weight);
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: inherit;
+  padding: 0px;
+}
+
+.licenseButton:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+@media (max-width: 850px) {
+  .container {
+    margin-top: 3rem;
+    margin-left: 2.2em;
+  }
+}

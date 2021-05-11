@@ -1,13 +1,15 @@
 import * as React from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-import styles from "./styles.module.css";
-import messages from "./messages";
-import Dropdown from "../Dropdown";
-import { useSelector } from "react-redux";
-import { getDropdownSubscriptionsSelector } from "../../store/config/azure/selector";
 import { useState } from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+import { useSelector } from "react-redux";
+
+import modalStyles from "../../css/modal.module.css";
 import { AppState } from "../../store/combineReducers";
+import { getDropdownSubscriptionsSelector } from "../../store/config/azure/selector";
 import { AZURE_LINKS } from "../../utils/constants/azure";
+import Dropdown from "../Dropdown";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 interface IProps {
   initialSubscription: string;
@@ -23,7 +25,7 @@ const SubscriptionSelection = (props: Props) => {
   const [selectedSubscription, setSelectedSubscription] = useState<IDropDownOptionType | undefined>(undefined);
 
   React.useEffect(() => {
-    const subscription = subscriptions.find(s => s.value === initialSubscription);
+    const subscription = subscriptions.find((s) => s.value === initialSubscription);
     if (subscription) {
       setSelectedSubscription(subscription);
     }
@@ -34,20 +36,18 @@ const SubscriptionSelection = (props: Props) => {
       onSubscriptionChange(selectedSubscription.value);
     }
   }, [selectedSubscription]);
-  
+
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <div className={styles.title}>{formatMessage(messages.title)}</div>
-        <a className={styles.link} href={AZURE_LINKS.CREATE_NEW_SUBSCRIPTION}>
-          {formatMessage(messages.newSubscriptionLink)}
-        </a>
+      <div className={modalStyles.header}>
+        <div className={modalStyles.title}>{formatMessage(messages.title)}</div>
+        <a href={AZURE_LINKS.CREATE_NEW_SUBSCRIPTION}>{formatMessage(messages.newSubscriptionLink)}</a>
       </div>
-      <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
+      <div className={modalStyles.subtitle}>{formatMessage(messages.subtitle)}</div>
       <Dropdown
         ariaLabel={formatMessage(messages.ariaDropdownLabel)}
         options={subscriptions}
-        handleChange={subscription => setSelectedSubscription(subscription)}
+        handleChange={(subscription) => setSelectedSubscription(subscription)}
         value={selectedSubscription}
       />
     </div>

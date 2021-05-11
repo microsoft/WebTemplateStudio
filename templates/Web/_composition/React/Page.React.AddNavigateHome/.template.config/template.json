@@ -1,0 +1,21 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft Community",
+  "classifications": ["Universal"],
+  "name": "Page.React.AddNavigateHome",
+  "shortName": "Page.React.AddNavigateHome",
+  "identity": "Page.React.AddNavigateHome",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "composition",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.compositionFilter": "$frontendframework == React & wts.type == page & $ishomepage == true"
+  },
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+  }
+}

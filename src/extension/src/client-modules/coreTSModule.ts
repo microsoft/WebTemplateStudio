@@ -1,20 +1,21 @@
 import * as vscode from "vscode";
 
-import { WizardServant, IPayloadResponse } from "../wizardServant";
 import { EXTENSION_COMMANDS } from "../constants/commands";
 import { CoreTemplateStudio } from "../coreTemplateStudio";
+import { IPayloadResponse, WizardServant } from "../wizardServant";
 
 import fs = require("fs-extra");
 import { getGenerationData } from "../utils/generation/generationUtils";
-import RequirementsService from "../utils/requirements/RequirementsService";
 import { Logger } from "../utils/logger";
+import RequirementsService from "../utils/requirements/RequirementsService";
 
-const previewOptionSelected = vscode.workspace
-      .getConfiguration()
-      .get<boolean>("wts.enablePreviewMode");
+const previewOptionSelected = vscode.workspace.getConfiguration().get<boolean>("wts.enablePreviewMode");
 
 export class CoreTSModule extends WizardServant {
-  private requirementsService = new RequirementsService();
+  constructor(private requirementsService: RequirementsService) {
+    super();
+  }
+
   clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([
     [EXTENSION_COMMANDS.GET_PROJECT_TYPES, this.getProjectTypes],
     [EXTENSION_COMMANDS.GET_FRAMEWORKS, this.getFrameworks],
@@ -26,6 +27,7 @@ export class CoreTSModule extends WizardServant {
 
   async getProjectTypes(): Promise<IPayloadResponse> {
     const projectTypes = await CoreTemplateStudio.GetExistingInstance().getProjectTypes();
+    this.transformIconToBase64(projectTypes);
     return {
       payload: {
         projectTypes,
@@ -42,8 +44,9 @@ export class CoreTSModule extends WizardServant {
   };
 
   async getFrameworks(message: any): Promise<IPayloadResponse> {
-    const frameworks = (await CoreTemplateStudio.GetExistingInstance().getFrameworks(message.payload.projectType))
-                    .filter((item: any)  => previewOptionSelected || item.tags.preview == previewOptionSelected);
+    const frameworks = (
+      await CoreTemplateStudio.GetExistingInstance().getFrameworks(message.payload.projectType)
+    ).filter((item: any) => previewOptionSelected || item.tags.preview == previewOptionSelected);
     this.transformIconToBase64(frameworks);
     await this.updateRequirements(frameworks);
 

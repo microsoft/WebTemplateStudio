@@ -1,10 +1,12 @@
 import * as React from "react";
 import { useState } from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-import styles from "./styles.module.css";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+
 import Dropdown from "../../../components/Dropdown";
+import modalStyles from "../../../css/modal.module.css";
 import { AZURE } from "../../../utils/constants/azure";
 import messages from "./messages";
+import styles from "./styles.module.css";
 
 const ApiValues: IDropDownOptionType[] = [
   {
@@ -31,7 +33,7 @@ const ApiSelection = (props: Props) => {
   const [selectedApi, setSelectedApi] = useState<IDropDownOptionType | undefined>(undefined);
 
   React.useEffect(() => {
-    const api = ApiValues.find(s => s.value === initialApi);
+    const api = ApiValues.find((s) => s.value === initialApi);
     if (api) {
       setSelectedApi(api);
     }
@@ -45,15 +47,13 @@ const ApiSelection = (props: Props) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <div className={styles.title}>{formatMessage(messages.title)}</div>
-      </div>
-      <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
+      <div className={modalStyles.title}>{formatMessage(messages.title)}</div>
+      <div className={modalStyles.subtitle}>{formatMessage(messages.subtitle)}</div>
       <Dropdown
-        openDropdownUpwards={!isAdvancedMode}      
+        openDropdownUpwards={!isAdvancedMode}
         ariaLabel={formatMessage(messages.ariaDropdownLabel)}
-        options={ApiValues}        
-        handleChange={api => setSelectedApi(api)}
+        options={ApiValues}
+        handleChange={(api) => setSelectedApi(api)}
         value={selectedApi}
       />
     </div>

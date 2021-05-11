@@ -6,10 +6,12 @@ This section outlines the main concepts and definitions used in *Web Template St
 
 *Web Template Studio* is divided in the following main elements:
 
-- **Extension**: Refers to the Visual Studio Code Extension project, which, once installed, allows users to have an improved experience when creating a new Web Application from the `Web Template Studio: Launch` command. The extension is written in typescript.
+- **Extension**: Refers to the Visual Studio Code Extension project, which, once installed, allows users to have an improved experience when creating a new Web Application from the `Web Template Studio: [command name]` command. The extension is written in typescript.
+
+  Can check available commands [here](./contributing/application-architecture.md#extension).
 - **Wizard**: Refers to the WebTS client project, where all user interaction occurs after launching *Web Template Studio*. The Wizard guides the user through some steps to create the desired project. It allows the user to select from the available frameworks, pages and Azure Cloud Services. The wizard is created with React Typescript and is displayed through the React Panel.
 - **Core Template Studio and Core Template Studio CLI**: Refers to the .NET Core executable that handles all of the template synchronization and code generation (composition, generation + postaction execution). The CLI is the entry point for executing commands on Core Template Studio executable. CoreTS CLI is a self-contained .NET Core 3.1 application.
-- **Template**: A template contains code with metadata. The metadata will contain the following template information: name, description, licensing, remarks, programming language, type, etc. The template definition is based on [dotnet Template Engine](https://github.com/dotnet/templating). [More details on templates](../contributing/templates.md)
+- **Template**: A template contains code with metadata. The metadata will contain the following template information: name, description, licensing, remarks, programming language, type, etc. The template definition is based on [dotnet Template Engine](https://github.com/dotnet/templating). [More details on templates](./contributing/templates.md)
 
 ## Other Terminology
 

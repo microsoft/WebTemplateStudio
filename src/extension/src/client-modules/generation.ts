@@ -1,11 +1,12 @@
 import * as vscode from "vscode";
-import { WizardServant, IPayloadResponse } from "../wizardServant";
+
+import { EXTENSION_COMMANDS } from "../constants/commands";
 import { CONSTANTS } from "../constants/constants";
 import { TelemetryEventName } from "../constants/telemetry";
 import { ITelemetryService } from "../telemetry/telemetryService";
-import { EXTENSION_COMMANDS } from "../constants/commands";
 import GenerationService from "../utils/generation/GenerationService";
 import { getGenerationData } from "../utils/generation/generationUtils";
+import { IPayloadResponse, WizardServant } from "../wizardServant";
 
 export class Generation extends WizardServant {
   clientCommandMap: Map<EXTENSION_COMMANDS, (message: any) => Promise<IPayloadResponse>> = new Map([

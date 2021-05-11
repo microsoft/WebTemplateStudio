@@ -1,8 +1,14 @@
+import { PLATFORM } from "../../../utils/constants/constants";
 import { backendImage, frontendImage, noImage, pageImage, serviceImage } from "./mockSvgData";
+
+const platform = PLATFORM.WEB;
 
 const projectTypes = [
   {
     name: "FullStackWebApp",
+    displayName: "FullStackWebApp",
+    icon: "",
+    order: 1,
   },
 ];
 
@@ -29,7 +35,7 @@ const frameworks = [
         url: "https://github.com/facebook/create-react-app/blob/master/LICENSE",
       },
     ],
-    platforms: ["Web"],
+    platforms: platform,
     languages: ["Any"],
     tags: {
       version: "16.8.4",
@@ -38,7 +44,7 @@ const frameworks = [
       enabled: true,
       type: "frontend",
       checkVersionPackage: "npm|react",
-      requirements:"node|12.0.x",
+      requirements: "node|12.0.x",
       isRequirementInstalled: true,
     },
   },
@@ -64,7 +70,7 @@ const frameworks = [
         url: "https://github.com/angular/angular-cli/blob/master/LICENSE",
       },
     ],
-    platforms: ["Web"],
+    platforms: platform,
     languages: ["Any"],
     tags: {
       version: "7.2.0",
@@ -73,7 +79,7 @@ const frameworks = [
       enabled: true,
       type: "frontend",
       checkVersionPackage: "npm|@angular/core",
-      requirements:"node|12.0.x",
+      requirements: "node|12.0.x",
       isRequirementInstalled: false,
     },
   },
@@ -99,7 +105,7 @@ const frameworks = [
         url: "https://github.com/vuejs/vue-cli/blob/dev/LICENSE",
       },
     ],
-    platforms: ["Web"],
+    platforms: platform,
     languages: ["Any"],
     tags: {
       version: "2.6.6",
@@ -108,7 +114,7 @@ const frameworks = [
       enabled: true,
       type: "frontend",
       checkVersionPackage: "npm|vue",
-      requirements:"node|12.0.x",
+      requirements: "node|12.0.x",
       isRequirementInstalled: false,
     },
   },
@@ -138,7 +144,7 @@ const frameworks = [
         url: "https://github.com/expressjs/generator/blob/master/LICENSE",
       },
     ],
-    platforms: ["Web"],
+    platforms: platform,
     languages: ["Any"],
     tags: {
       version: "10.15.0",
@@ -148,7 +154,7 @@ const frameworks = [
       type: "backend",
       linuxVersion: "node|12-lts",
       checkVersionPackage: "npm|express",
-      requirements:"node|12.0.x",
+      requirements: "node|12.0.x",
       isRequirementInstalled: true,
     },
   },
@@ -160,7 +166,7 @@ const frameworks = [
     author: "Various",
     order: "1",
     licenses: "[Moleculer](https://github.com/moleculerjs/moleculer/blob/master/LICENSE)",
-    platforms: ["Web"],
+    platforms: platform,
     languages: ["Any"],
     tags: {
       version: "0.14.3",
@@ -169,7 +175,7 @@ const frameworks = [
       type: "backend",
       linuxVersion: "node|12-lts",
       checkVersionPackage: "npm|moleculer",
-      requirements:"node|12.0.x",
+      requirements: "node|12.0.x",
       isRequirementInstalled: true,
     },
   },
@@ -190,7 +196,7 @@ const frameworks = [
         url: "https://github.com/pallets/flask/blob/master/LICENSE",
       },
     ],
-    platforms: ["Web"],
+    platforms: platform,
     languages: ["Any"],
     tags: {
       version: "1.0.3",
@@ -200,7 +206,7 @@ const frameworks = [
       type: "backend",
       linuxVersion: "python|3.7",
       checkVersionPackage: "github|pallets/flask",
-      requirements:"python|3.5.x",
+      requirements: "python|3.5.x",
       isRequirementInstalled: false,
     },
   },
@@ -220,7 +226,7 @@ const frameworks = [
         url: "https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt",
       },
     ],
-    platforms: ["Web"],
+    platforms: platform,
     languages: ["Any"],
     tags: {
       version: "3.1.5",
@@ -230,7 +236,7 @@ const frameworks = [
       type: "backend",
       linuxVersion: "DOTNETCORE|3.1",
       checkVersionPackage: "github|dotnet/aspnetcore",
-      requirements:"netcore|3.1.x",
+      requirements: "netcore|3.1.x",
       isRequirementInstalled: false,
     },
   },
@@ -282,10 +288,11 @@ const templatesInfo = {
     validateExistingNames: false,
   },
   preview: false,
-  platform: "Web",
+  platform: platform,
+  platformRequirements: [],
 };
 
-const pages = (frontendFramework: string) => {
+const pages = (frontendFramework: string): any => {
   return [
     {
       templateId: `wts.Page.${frontendFramework}.Blank`,
@@ -314,6 +321,7 @@ const pages = (frontendFramework: string) => {
       rightClickEnabled: true,
       requiredVisualStudioWorkloads: [],
     },
+
     {
       templateId: `wts.Page.${frontendFramework}.Grid`,
       name: "Grid",
@@ -485,4 +493,4 @@ const features = [
   },
 ];
 
-export { projectTypes, frameworks, licenses, templatesInfo, pages, features };
+export { features, frameworks, licenses, pages, platform, projectTypes, templatesInfo };

@@ -1,18 +1,17 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { useDispatch } from "react-redux";
-import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import { AppContext } from "../../../../AppContext";
-import { IAppService } from "../../../../store/userSelection/services/appService/model";
-import { removeAppServiceAction } from "../../../../store/userSelection/services/appService/action";
 import { openAppServiceModalAction } from "../../../../store/navigation/modals/action";
+import { removeAppServiceAction } from "../../../../store/userSelection/services/appService/action";
+import { IAppService } from "../../../../store/userSelection/services/appService/model";
 import { EXTENSION_COMMANDS } from "../../../../utils/constants/commands";
 import { SERVICE_KEYS } from "../../../../utils/constants/constants";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
-
-import messages from "./messages";
-import SidebarItem from "../SidebarItem";
 import servicelistStyles from "../servicelistStyles.module.css";
+import SidebarItem from "../SidebarItem";
+import messages from "./messages";
 
 interface IProps {
   appServiceSelection: IAppService | null;

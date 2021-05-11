@@ -1,14 +1,12 @@
 import { SubscriptionItem } from "../azure/azure-auth/azureAuth";
-
-import { AzureResourceType } from "../constants/constants";
-import { EXTENSION_COMMANDS } from "../constants/commands";
-
-import { AuthorizationError } from "../errors";
-import { WizardServant, IPayloadResponse } from "../wizardServant";
-import { Logger } from "../utils/logger";
 import { AzureServices } from "../azure/azureServices";
 import { NameGenerator } from "../azure/utils/nameGenerator";
+import { EXTENSION_COMMANDS } from "../constants/commands";
+import { AzureResourceType } from "../constants/constants";
 import { MESSAGES } from "../constants/messages";
+import { AuthorizationError } from "../errors";
+import { Logger } from "../utils/logger";
+import { IPayloadResponse, WizardServant } from "../wizardServant";
 
 interface Subscription {
   name: string;
@@ -101,20 +99,20 @@ export class AzureModule extends WizardServant {
   }
 
   public async validateCosmosName(message: any): Promise<IPayloadResponse> {
-    try{
+    try {
       const validateResult = await AzureServices.validateCosmosName(message.appName, message.subscription);
-    return {
-      payload: {
-        ...validateResult,
-      },
-    };
-    }catch(error) {
+      return {
+        payload: {
+          ...validateResult,
+        },
+      };
+    } catch (error) {
       return { payload: undefined };
     }
   }
 
   private getFormattedSubscriptions(subscriptions: SubscriptionItem[]): Subscription[] {
-    return subscriptions.map(subscription => {
+    return subscriptions.map((subscription) => {
       return {
         name: subscription.label,
         isMicrosoftLearn: AzureServices.IsMicrosoftLearnSubscription(subscription),

@@ -1,0 +1,20 @@
+[
+    {
+      "name": "ReactNative",
+      "displayName": "ReactNative",
+      "summary": "A JavaScript framework for building native app using React.",
+      "author": "Facebook",
+      "order": "1",
+      "licenses": "[React Native](https://github.com/facebook/react-native/blob/master/LICENSE)",
+      "platform": "RN",
+      "languages": [
+        "Any"
+      ],
+      "tags": {
+        "version": "",
+        "checkVersionPackage": "",
+        "requirements":"",
+        "preview": false
+      }
+    }
+  ]

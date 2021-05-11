@@ -1,0 +1,38 @@
+.container {
+  width: 300px;
+  height: 300px;
+  padding: 2.5em;
+  background-color: hsla(0, 0%, 47%, 0.2);
+  margin-bottom: 10px;
+}
+
+.boundingBox {
+  width: 260px;
+}
+
+.icon {
+  height: 1em;
+  width: 1em;
+}
+
+.icon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.serviceFeaturesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+}
+
+.serviceFeatureInfo {
+  display: flex;
+}
+
+.svg {
+  margin-right: 1em;
+}
+
+.svg path {
+  fill: var(--vscode-editor-foreground);
+}

@@ -6,6 +6,9 @@ magenta='\033[0;35m'
 red='\033[0;31m'
 nc='\033[0m'
 
+BASEDIR=$(dirname "$0")
+cd $BASEDIR
+
 if [ ! -z "$1" ] && ([ "$1" == "release" ] || [ "$1" == "debug" ]); then # Check if release was passed as parameter, else ignore it
 
     rm -rf ../src/extension/src/corets-cli/win32/

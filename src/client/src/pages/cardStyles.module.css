@@ -1,0 +1,86 @@
+.container {
+  cursor: pointer;
+  background-color: hsla(0, 0%, 47%, 0.2);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 1em;
+}
+
+.container:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+  border: 0.5px solid var(--vscode-contrastActiveBorder);
+}
+
+.container:focus:not([data-focus-visible-added]) {
+  outline: none;
+  border: none;
+}
+
+.boundingBox {
+  width: 230px;
+  height: 200px;
+  padding: 20px;
+}
+
+.gridLayoutCardHeader {
+  display: grid;
+  grid-template-columns: auto 1fr min-content;
+  max-height: 50px;
+  grid-gap: 0.75em;
+}
+
+.gridLayoutCardHeader .title {
+  font-size: 1.3rem;
+}
+
+.selected {
+  border: none;
+  outline: 3px solid var(--vscode-editor-foreground);
+}
+
+.selected:focus {
+  border: none;
+  outline: 3px solid var(--vscode-contrastActiveBorder);
+}
+
+.selected:focus:not([data-focus-visible-added]) {
+  border: none;
+  outline: 3px solid var(--vscode-editor-foreground);
+}
+
+.DependencyInfo {
+  margin-top: 1rem;
+  height: 4.5rem;
+}
+
+.iconCheckMark {
+  margin-left: 0.5em;
+  height: 1em;
+  width: 1em;
+  align-self: center;
+}
+
+.iconCheckMark path {
+  fill: var(--vscode-gitDecoration-untrackedResourceForeground);
+}
+
+.plusIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1.8px solid var(--vscode-editor-foreground);
+  height: 2em;
+  width: 2em;
+  border-radius: 50%;
+}
+
+.plusIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.gridLayoutCardFooter {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+}

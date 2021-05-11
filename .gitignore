@@ -338,7 +338,7 @@ ASALocalRun/
 **/out/
 !src/extension/locales/**/out/
 src/extension/package.nls.*.json
-**/react/
+**/extension/react/
 **/dist/
 **/distVsix/
 **/node_modules/
@@ -347,6 +347,7 @@ src/extension/package.nls.*.json
 **/*.vsix
 
 !templates/**/package-lock.json
+!/templates/**/android/app/src/debug/
 
 # Ignore OS generated files #
 .DS_Store
@@ -370,3 +371,4 @@ src/extension/src/corets-cli/win32/
 template_test/
 src/client/src/translations/en.json
 src/client/src/translations/whitelist_en.json
+src/client/.eslintcache

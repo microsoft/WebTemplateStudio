@@ -1,5 +1,4 @@
-.header,
-.headerTitleSmall {
+.header {
   position: absolute;
   width: 100%;
   background-color: var(--vscode-input-background);
@@ -18,30 +17,7 @@
 
 .headerTitle,
 .headerTitleSmall {
-  font-size: 1.7em;
-  padding-left: 24px;
-}
-
-.azureProfile {
-  display: flex;
-  justify-content: space-between;
-}
-
-.profileName {
-  margin-right: 2em;
-}
-
-.button {
-  color: var(--vscode-textLink-foreground);
-  padding: 1px;
-}
-
-.button:hover {
-  cursor: pointer;
-}
-
-.button:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
+  padding-left: 1em;
 }
 
 @media (min-width: 760px) {

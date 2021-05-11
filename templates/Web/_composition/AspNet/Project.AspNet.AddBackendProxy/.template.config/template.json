@@ -7,11 +7,12 @@
   "identity": "wts.Project.AspNet.AddBackendProxy",
   "tags": {
     "language": "Any",
-    "type": "project",
+    "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "identity == wts.Proj.AspNetDefault"
+    "wts.compositionOrder": "3",
+    "wts.compositionFilter": "$backendframework == AspNet & wts.type == project"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,

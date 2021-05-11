@@ -1,20 +1,18 @@
+import classnames from "classnames";
 import * as React from "react";
+import { InjectedIntl, InjectedIntlProps, injectIntl } from "react-intl";
 import { connect } from "react-redux";
-import { injectIntl, InjectedIntl, InjectedIntlProps } from "react-intl";
 
+import { ReactComponent as CloseSVG } from "../../../../assets/cancel.svg";
+import { ReactComponent as EditSVG } from "../../../../assets/edit.svg";
 import { AppState } from "../../../../store/combineReducers";
-import { getValidations } from "../../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { IValidations } from "../../../../store/config/validations/model";
+import { getValidations } from "../../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { ISelected } from "../../../../types/selected";
 import { KEY_EVENTS } from "../../../../utils/constants/constants";
-
+import Icon from "../../../Icon";
 import messages from "./messages";
 import styles from "./styles.module.css";
-import classnames from "classnames";
-
-import { ReactComponent as EditSVG } from "../../../../assets/edit.svg";
-import { ReactComponent as CloseSVG } from "../../../../assets/cancel.svg";
-import Icon from "../../../Icon";
 
 interface IStateProps {
   text: string;
@@ -76,11 +74,7 @@ const SidebarItem = ({
         </div>
         {editable && (
           <div className={styles.errorStack}>
-            <div
-              className={classnames(customInputStyle, {
-                [styles.pagesTextContainer]: true,
-              })}
-            >
+            <div className={classnames(customInputStyle, styles.pagesTextContainer)}>
               <div className={styles.inputContainer}>
                 {idx && (
                   <input
@@ -95,13 +89,7 @@ const SidebarItem = ({
         )}
         {!editable && (
           <div className={styles.errorStack}>
-            <div
-              className={classnames({
-                [styles.pagesTextContainerNoEdit]: true,
-              })}
-            >
-              {text}
-            </div>
+            <div className={styles.pagesTextContainerNoEdit}>{text}</div>
           </div>
         )}
         {configurable && (

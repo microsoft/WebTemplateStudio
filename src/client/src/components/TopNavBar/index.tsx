@@ -1,20 +1,20 @@
 import classnames from "classnames";
 import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import TopNavBarLink from "../TopNavBarLink";
-import styles from "./styles.module.css";
+import { useDispatch, useSelector } from "react-redux";
 
-import {
-  isEnableNextPageSelector,
-  getSelectedRoute,
-} from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
-import messages from "./messages";
 import { AppState } from "../../store/combineReducers";
-import { IRoutesNavItems } from "../../types/route";
-import { setRoutesAction } from "../../store/navigation/routesNavItems/actions";
 import { setDetailPageAction } from "../../store/config/detailsPage/action";
+import { setRoutesAction } from "../../store/navigation/routesNavItems/actions";
+import {
+  getSelectedRoute,
+  isEnableNextPageSelector,
+} from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { IOption } from "../../types/option";
+import { IRoutesNavItems } from "../../types/route";
+import TopNavBarLink from "../TopNavBarLink";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 type Props = InjectedIntlProps;
 

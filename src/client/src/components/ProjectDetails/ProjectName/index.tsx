@@ -1,22 +1,20 @@
+import classnames from "classnames";
 import * as React from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-
-import * as wizardSelectionSelector from "../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
-import { setProjectPathValidationAction } from "../../../store/config/validations/action";
-import { setProjectNameAction } from "../../../store/userSelection/app/action";
-
-import { validateProjectName } from "../../../utils/validations/projectName/projectName";
-import { PROJECT_NAME_CHARACTER_LIMIT } from "../../../utils/constants/constants";
-import { inferProjectName } from "../../../utils/infer/projectName";
 
 import { AppContext } from "../../../AppContext";
-
-import classnames from "classnames";
 import stylesInput from "../../../css/input.module.css";
-import styles from "./styles.module.css";
-import messages from "./messages";
+import { setProjectPathValidationAction } from "../../../store/config/validations/action";
+import { setProjectNameAction } from "../../../store/userSelection/app/action";
+import * as wizardSelectionSelector from "../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { PROJECT_NAME_CHARACTER_LIMIT } from "../../../utils/constants/constants";
+import { inferProjectName } from "../../../utils/infer/projectName";
+import { validateProjectName } from "../../../utils/validations/projectName/projectName";
 import rightsidebarStyles from "../../RightSidebar/rightsidebarStyles.module.css";
+import SectionTitle from "../../Titles/SectionTitle";
+import messages from "./messages";
+import styles from "./styles.module.css";
 
 interface IProps {
   isRightsidebar?: boolean;
@@ -37,18 +35,18 @@ const ProjectName = (props: Props) => {
 
   const [name, setName] = React.useState("");
 
-  const validate = (projectName: string) =>{
-      validateProjectName(projectName, outputPath, validations.projectNameValidationConfig, vscode).then(
-        (validationResult) => {
-          validationResult.isDirty = projectNameValidation.isDirty;
-          dispatch(setProjectNameAction(projectName, validationResult));
+  const validate = (projectName: string) => {
+    validateProjectName(projectName, outputPath, validations.projectNameValidationConfig, vscode).then(
+      (validationResult) => {
+        validationResult.isDirty = projectNameValidation.isDirty;
+        dispatch(setProjectNameAction(projectName, validationResult));
 
-          if (projectName !== "") {
-            dispatch(setProjectPathValidationAction({ isValid: validationResult.isValid }));
-          }
+        if (projectName !== "") {
+          dispatch(setProjectPathValidationAction({ isValid: validationResult.isValid }));
         }
-      );
-  }
+      }
+    );
+  };
 
   const validateAndSetProjectName = (e: React.SyntheticEvent<HTMLInputElement>) => {
     const newProjectName: string = e.currentTarget.value;
@@ -59,7 +57,7 @@ const ProjectName = (props: Props) => {
   React.useEffect(() => {
     if (projectName === "" && outputPath !== "" && projectNameValidation.isDirty === false) {
       inferProjectName(outputPath, vscode).then((suggestedProjectName) => {
-        dispatch(setProjectNameAction(suggestedProjectName, { isValid: true, error: "", isDirty: true }));
+        dispatch(setProjectNameAction(suggestedProjectName, { isValid: true, isDirty: true }));
         setName(suggestedProjectName);
       });
     } else {
@@ -77,9 +75,7 @@ const ProjectName = (props: Props) => {
 
   return (
     <div className={props.isRightsidebar ? rightsidebarStyles.inputContainer : styles.inputContainer}>
-      <div className={props.isRightsidebar ? rightsidebarStyles.title : styles.inputTitle}>
-        {formatMessage(messages.projectNameTitle)}
-      </div>
+      <SectionTitle>{formatMessage(messages.projectNameTitle)}</SectionTitle>
 
       <div>
         <input
@@ -91,7 +87,9 @@ const ProjectName = (props: Props) => {
         />
 
         {!projectNameValidation.isValid && projectNameValidation.isDirty && (
-          <div className={styles.errorMessage}>{formatMessage(projectNameValidation.error)}</div>
+          <div className={styles.errorMessage}>
+            {projectNameValidation.error ? formatMessage(projectNameValidation.error) : ""}
+          </div>
         )}
       </div>
     </div>

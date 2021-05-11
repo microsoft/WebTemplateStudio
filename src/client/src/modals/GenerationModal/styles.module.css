@@ -1,76 +1,15 @@
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2em;
-}
-
-.title {
-  font-size: 2.5em;
-  font-weight: lighter;
-  line-height: 25px;
-  color: var(--vscode-editor-foreground);
-}
-
-.closeIcon {
-  cursor: pointer;
-  height: 15px;
-  width: 15px;
-  padding: 1px;
-  margin-right: 2px;
-}
-
-.closeIcon path {
-  fill: var(--vscode-editor-foreground);
-}
-
-.closeIcon:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
-.messages {
-  margin-top: 40px;
-}
-
-.messages > p {
-  margin-top: 15px;
-  font-size: 1.2em;
-}
-
 .generationItems {
-  margin-top: 40px;
-  padding-top: 0.6em;
-  padding-bottom: 0.6em;
+  margin-top: 2em;
+  margin-bottom: 3em;
   background-color: var(--vscode-editorWidget-border);
 }
 
 .footer {
-  margin-top: 60px;
-  float: right;
-  align-items: center;
   display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .footer > button {
-  align-items: center;
-  font-size: 1.2em;
   margin-left: 1em;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 33px;
-}
-
-.footer > button:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
-.link {
-  color: var(--vscode-textLink-foreground);
-  font-weight: var(--vscode-font-weight);
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.link:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
