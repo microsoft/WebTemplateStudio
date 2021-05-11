@@ -29,6 +29,7 @@ are merged together by [Core Template Studio](https://github.com/Microsoft/CoreT
 
 ## Features
 
+### Full-stack web app
 Web Template Studio approaches full-stack web app creation using the following three attribute sets:
 
 - **Frameworks**: First, which frameworks do you want to use for your frontend and backend? We currently support three frameworks for frontend: _[React](https://reactjs.org/)_, _[Angular](https://angular.io/)_, _[Vue.js](https://vuejs.org/)_ and four frameworks for backend: _[Node](https://nodejs.org/en/)_, _[Flask](http://flask.pocoo.org/)_, _[Moleculer](https://moleculer.services/)_ and _[ASP.NET](https://dotnet.microsoft.com/apps/aspnet/)_. We also provide a dependency checker to make sure you have the required version of Node and/or Python installed.
@@ -37,13 +38,19 @@ Web Template Studio approaches full-stack web app creation using the following t
 
 Once you make the selections you want and click generate, you can quickly extend the generated code.
 
+### React Native app
+Web Template Studio approaches React Native app creation using the following two attribute sets:
+
+- **Project Type**: Only [Tabbed Navigation](https://reactnavigation.org/docs/tab-based-navigation/) currently available. From that version, it would easy for developers to modify this navigation to Drawer instead or remove it when no necessary.
+- **App pages**: Next, to accelerate app creation, we provide a number of app page templates that you can use to add common UI pages into your new app. The current page templates include: _blank page_, _master detail_ and a _settings_ page that comes with basic _Theme Support_, allowing the user to choose between *Light*, *Dark* or *Default*. Using the wizard, add as many of the pages as you need, providing a name for each one, and we'll generate them for you.
+
 ## Feedback, Requests and Roadmap
 
 Please use [GitHub issues](https://github.com/Microsoft/WebTemplateStudio/issues) for feedback, questions or comments.
 
 If you have specific feature requests or would like to vote on what others are recommending, please go to the [GitHub issues](https://github.com/Microsoft/WebTemplateStudio/issues) section as well. We would love to hear your thoughts.
 
-We are still extremely early in development and are looking for feedback for roadmap. Currently we are in the process of stabilizing our React, Angular and Vue.js with Node and Flask.
+We are still early in development and are looking for [feedback](https://github.com/Microsoft/WebTemplateStudio/issues) for the roadmap. We're still working on polishing our Web Templates and in our latest version we've also added an initial version of React Native templates.
 
 ## Contributing
 
