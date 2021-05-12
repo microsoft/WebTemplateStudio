@@ -34,7 +34,9 @@
     "Azure Cosmos DB",
     "Azure App Service",
     "Moleculer",
-    "MoleculerJS"
+    "MoleculerJS",
+    "React Native",
+    "React Native Windows"
   ],
   "preview": true,
   "homepage": "https://github.com/Microsoft/WebTemplateStudio/blob/master/README.md",
