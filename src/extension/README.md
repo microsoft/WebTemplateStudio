@@ -1,11 +1,12 @@
 # Web Template Studio (Preview)
 
-Web Template Studio (_WebTS_) is a Visual Studio Code Extension that accelerates the creation of new web applications using a
-wizard-based experience. WebTS enables developers to generate boilerplate code for a web app
-by choosing between different frontend frameworks, backend frameworks, pages and cloud services.
-The resulting web application is well-formed, readable code that incorporates cloud services on
+Microsoft *Web Template Studio* (aka *WebTS*) is a Visual Studio Code Extension that accelerates the creation of a new **Web or React Native** application using a wizard-based experience.
+
+*WebTS* enables developers to generate boilerplate code for a **Web or React Native** application by choosing between different project types, frontend and backend frameworks, pages and cloud services.
+The resulting app is well-formed, readable code. The web application incorporates cloud services on
 Azure while implementing proven patterns and best practices. Sprinkled throughout the generated code we have links to
-Docs to provide useful insights.
+Docs to provide useful insights. *WebTS* was created using TypeScript and React. Different combinations of generated code
+are merged together by [Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio), which was made using .NET Core.
 
 ## Instructions To Use
 
@@ -13,12 +14,9 @@ Docs to provide useful insights.
 
 - Open **VSCode**
 - Press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open VSCode's extension launcher
-- Type/Select `Web Template Studio: [command name]` and press `Enter` to launch the extension
+- Type/Select `Web Template Studio: Create Web App` for a full-stack web application or `Web Template Studio: Create React Native App` for a React Native one, and press `Enter` to launch the extension
 
-List of available commands below:
-  - `Create Web App`
-  - `Create React Native App`
-  - `Deploy Web App`
+**Note**: React Native is still in Preview and we appreciate any feedback on [GitHub](https://github.com/microsoft/WebTemplateStudio/issues).
 
 ### Deploy the generated project
 
@@ -27,8 +25,11 @@ List of available commands below:
 - Press `Ctrl + Shift ⇧ + P` in Windows/Linux or `Command ⌘ + Shift ⇧ + P` in Mac to open VSCode's extension launcher
 - Type/Select `Web Template Studio: Deploy Web App` and press `Enter` to begin the deployment
 
+**Note**: Just available for web applications.
+
 ## Features
 
+### Full-stack web app
 Web Template Studio approaches full-stack web app creation using the following three attribute sets:
 
 - **Frameworks**: First, which frameworks do you want to use for your frontend and backend? We currently support three frameworks for frontend: _[React](https://reactjs.org/)_, _[Angular](https://angular.io/)_, _[Vue.js](https://vuejs.org/)_ and four frameworks for backend: _[Node](https://nodejs.org/en/)_, _[Flask](http://flask.pocoo.org/)_, _[Moleculer](https://moleculer.services/)_ and _[ASP.NET](https://dotnet.microsoft.com/apps/aspnet/)_. We also provide a dependency checker to make sure you have the required version of Node and/or Python installed.
@@ -36,6 +37,12 @@ Web Template Studio approaches full-stack web app creation using the following t
 - **Cloud Services**: Lastly, you specify which Azure cloud services you want to use, and we'll build out the framework for the services into your app. Currently supported services cover storage (_Azure Cosmos DB_), and hosting (_Azure App Service_).
 
 Once you make the selections you want and click generate, you can quickly extend the generated code.
+
+### React Native app
+Web Template Studio approaches React Native app creation using the following two attribute sets:
+
+- **Project Type**: Currently we only provide [Tabbed Navigation](https://reactnavigation.org/docs/tab-based-navigation/) as this is possibly the most common style of navigation in mobile apps. If you prefer a different navigation pattern you can replace TabNavigation with the navigation pattern that best fits your app.  For instruction on adding Drawer navigation see the [Drawer Navigation](https://reactnavigation.org/docs/drawer-based-navigation) docs.
+- **App pages**: Next, to accelerate app creation, we provide a number of app page templates that you can use to add common UI pages into your new app. The current page templates include: _blank page_, _master detail_ and a _settings_ page that comes with basic _Theme Support_, allowing the user to choose between *Light*, *Dark* or *Default*. Using the wizard, add as many of the pages as you need, providing a name for each one, and we'll generate them for you.
 
 ## Feedback, Requests and Roadmap
 

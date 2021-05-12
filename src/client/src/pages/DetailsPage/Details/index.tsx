@@ -31,21 +31,20 @@ const Details = ({ detailInfo, formatteDetailInfo, intl }: Props) => {
     isAuthorOrVersion?: boolean
   ) => {
     if (isAuthorOrVersion) {
-      return <ReactMarkdown source={info as string} renderers={{ link: LinkRenderer, paragraph: ParagraphRenderer }} />;
+      return <ReactMarkdown components={{ link: LinkRenderer, p: ParagraphRenderer }}>{info as string}</ReactMarkdown>;
     }
     if (formatteDetailInfo) {
       if (isMarkdown) {
         return (
-          <ReactMarkdown
-            source={intl.formatMessage(info as FormattedMessage.MessageDescriptor)}
-            renderers={{ link: LinkRenderer, paragraph: ParagraphRenderer }}
-          />
+          <ReactMarkdown components={{ link: LinkRenderer, p: ParagraphRenderer }}>
+            {intl.formatMessage(info as FormattedMessage.MessageDescriptor)}
+          </ReactMarkdown>
         );
       }
       return intl.formatMessage(info as FormattedMessage.MessageDescriptor);
     }
     if (isMarkdown) {
-      return <ReactMarkdown source={info as string} renderers={{ link: LinkRenderer, paragraph: ParagraphRenderer }} />;
+      return <ReactMarkdown components={{ link: LinkRenderer, p: ParagraphRenderer }}>{info as string}</ReactMarkdown>;
     } else {
       return info;
     }
@@ -80,7 +79,7 @@ const Details = ({ detailInfo, formatteDetailInfo, intl }: Props) => {
                       </p>
                     );
                   })
-                : <ReactMarkdown source={detailInfo.licenses} renderers={{ link: LinkRenderer }} /> ||
+                : <ReactMarkdown components={{ link: LinkRenderer }}>{detailInfo.licenses}</ReactMarkdown> ||
                   intl!.formatMessage(messages.none)}
             </div>
           </div>
