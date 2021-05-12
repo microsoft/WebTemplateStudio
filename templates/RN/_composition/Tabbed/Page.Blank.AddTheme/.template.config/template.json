@@ -12,7 +12,7 @@
     "wts.platform": "RN",
     "wts.version": "1.0.0",
     "wts.compositionFilter": "$projectType == Tabbed & identity == wts.RN.Page.Blank & $page == wts.RN.Page.Settings",
-    "wts.compostionOrder": "1"
+    "wts.compositionOrder": "1"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,
