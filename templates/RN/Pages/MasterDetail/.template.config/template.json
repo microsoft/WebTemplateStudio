@@ -15,7 +15,7 @@
     "wts.projecttype": "all",
     "wts.frontendframework": "all",
     "wts.version": "1.0.0",
-    "wts.displayOrder": "0"
+    "wts.displayOrder": "2"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,

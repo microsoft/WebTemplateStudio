@@ -16,7 +16,7 @@
     "wts.frontendframework": "all",
     "wts.multipleInstance": "false",
     "wts.version": "1.0.0",
-    "wts.displayOrder": "0"
+    "wts.displayOrder": "3"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,
