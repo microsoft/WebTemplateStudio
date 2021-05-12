@@ -41,7 +41,7 @@ Once you make the selections you want and click generate, you can quickly extend
 ### React Native app
 Web Template Studio approaches React Native app creation using the following two attribute sets:
 
-- **Project Type**: Only [Tabbed Navigation](https://reactnavigation.org/docs/tab-based-navigation/) currently available. From that version, it would easy for developers to modify this navigation to Drawer instead or remove it when no necessary.
+- **Project Type**: Currently we only provide [Tabbed Navigation](https://reactnavigation.org/docs/tab-based-navigation/) as this is possibly the most common style of navigation in mobile apps. If you prefer a different navigation pattern you can replace TabNavigation with the navigation pattern that best fits your app.  For instruction on adding Drawer navigation see the [Drawer Navigation](https://reactnavigation.org/docs/drawer-based-navigation) docs.
 - **App pages**: Next, to accelerate app creation, we provide a number of app page templates that you can use to add common UI pages into your new app. The current page templates include: _blank page_, _master detail_ and a _settings_ page that comes with basic _Theme Support_, allowing the user to choose between *Light*, *Dark* or *Default*. Using the wizard, add as many of the pages as you need, providing a name for each one, and we'll generate them for you.
 
 ## Feedback, Requests and Roadmap
