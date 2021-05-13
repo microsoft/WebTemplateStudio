@@ -6,7 +6,7 @@
   "shortName": "wts.RN.Tabbed.Page.AddNavigate",
   "identity": "wts.RN.Tabbed.Page.AddNavigate",
   "tags": {
-    "language": "Any",
+    "language":  "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "RN",
