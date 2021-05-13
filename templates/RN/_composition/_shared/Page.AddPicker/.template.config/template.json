@@ -12,7 +12,7 @@
     "wts.platform": "RN",
     "wts.version": "1.0.0",
     "wts.compositionFilter": "groupidentity == wts.RN.Page.Settings",
-    "wts.casing.sourceName": "lower",
+    "wts.casing.projectName": "lower",
     "wts.licenses": "[React Native Picker](https://github.com/react-native-picker/picker/blob/master/LICENSE)"
   },
   "sourceName": "wts.ItemName",
@@ -25,7 +25,7 @@
       "replaces": "Param_ProjectName",
       "fileRename": "Param_ProjectName"
     },
-    "wts.sourceName.casing.lower":
+    "wts.projectName.casing.lower":
     {
       "type": "parameter",
       "replaces": "Param_ProjectToLower",
