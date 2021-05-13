@@ -11,6 +11,7 @@
     "wts.type": "composition",
     "wts.platform": "RN",
     "wts.version": "1.0.0",
+    "wts.casing.projectName": "lower",
     "wts.compositionFilter": "identity == wts.RN.Project.Default"
   },
   "sourceName": "wts.ItemName",
@@ -22,6 +23,12 @@
       "dataType": "string",
       "replaces": "Param_ProjectName",
       "fileRename": "Param_ProjectName"
+    },
+    "wts.projectName.casing.lower":
+    {
+      "type": "parameter",
+      "replaces": "Param_ProjectToLower",
+      "fileRename": "Param_ProjectToLower"
     }
   }
 }
