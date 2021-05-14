@@ -12,6 +12,7 @@
     "wts.platform": "RN",
     "wts.version": "1.0.0",
     "wts.compositionFilter": "$projectType == Tabbed & identity == wts.RN.Page.Settings",
+    "wts.compositionOrder": "1",
     "wts.licenses": "[Async storage](https://github.com/react-native-async-storage/async-storage/blob/master/LICENSE)"
   },
   "sourceName": "wts.ItemName",

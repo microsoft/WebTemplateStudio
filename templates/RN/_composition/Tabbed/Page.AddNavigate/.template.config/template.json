@@ -6,12 +6,13 @@
   "shortName": "wts.RN.Tabbed.Page.AddNavigate",
   "identity": "wts.RN.Tabbed.Page.AddNavigate",
   "tags": {
-    "language": "Any",
+    "language":  "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "RN",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$projectType == Tabbed & identity == wts.RN.Page.Blank|wts.RN.Page.Settings"
+    "wts.compositionFilter": "$projectType == Tabbed & identity == wts.RN.Page.Blank|wts.RN.Page.Settings",
+    "wts.compositionOrder": "0"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,
