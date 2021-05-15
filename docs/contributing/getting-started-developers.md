@@ -9,6 +9,7 @@ This document covers:
 - [Core Template Studio Submodule](#core-template-studio-submodule)
 - [How to run the extension locally](#how-to-run-the-extension-locally)
 - [How to develop the client](#how-to-develop-the-client)
+- [Troubleshooting](#troubleshooting)
 - [How to build a local vsix](#how-to-build-a-local-vsix)
 - [Tests](#tests)
 - [Under the hood](#under-the-hood)
@@ -29,15 +30,16 @@ If you just want to take advantage from *Web Template Studio* extension, check t
 1. Run the command `npm config set scripts-prepend-node-path true`. This tells VSCode which Node version to run during the extension compilation (otherwise you'll get an error during the build process).
 
 ### For a react native application
-1. You have to check the following [dependencies](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies).
+    You have to check the following [dependencies](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies).
 
-    In the Wizard you have a link on the right-side bar, to show a modal with the System Requirements.
+    In the Wizard you have a link on the right-side bar, to show a modal with the System Requirements. If any of them is missing you will see a warning.
 
-   <img alt="React Native System Requirements" src="../resources/react-native-requirements.png" width="85%" />
+    If you are running `WebTS` in Mac/Linux you will see a different message, notifying you that the generated native Windows application cannot be run.
 
-**Note**: If using Windows, use Git Bash.
+    <img alt="React Native System Requirements" src="../resources/react-native-requirements.png" width="85%" />
 
-At some point you may also need to install [React-scripts](https://yarnpkg.com/package/react-scripts) and [Typescript](https://www.typescriptlang.org/).
+
+**Note**: When developing in `WebTS` you may also need to install [React-scripts](https://yarnpkg.com/package/react-scripts) and [Typescript](https://www.typescriptlang.org/).
 
 ## Project folder structure
 
@@ -135,6 +137,26 @@ After starting the client using `yarn start` in VSCode Debug View (`Ctrl + Shift
 - [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)
 - [Debugging in Visual Studio Code](https://code.visualstudio.com/docs/editor/debugging)
 
+## Troubleshooting
+You may encounter some issues when using or developing in WebTS. It could be due to folder permissions, missing to create the Template packages,... Find below a list of folders that you may be interested in visiting and removing if this happens to you.
+
+You need permissions to write on the following folder, as `WebTS` creates a *WebTS* folder there. A `Logs` and `Templates` folder will be created here when running `Web Template Studio`.
+
+```
+Mac: /Users/[username]/.local/share
+Linux: //home/[username]/.local/share
+Windows:  %LocalAppData%
+```
+If it´s not an issue with permissions you can retrieve further information on the logs inside that folder. For example: in Windows: `%LocalAppData%` + `/WebTS/Logs`
+
+Template engine may be missing execute permissions on the following ones:
+
+```
+Mac: /Users/[username]/.vscode-server/extensions/wasteamaccount.webtemplatestudio-[environment]-[version]/src/corets-cli/
+Linux: //home/[username]/.vscode-server/extensions/wasteamaccount.webtemplatestudio-[environment]-[version]/src/corets-cli/
+Windows: %userprofile%\.vscode\extensions\wasteamaccount.webtemplatestudio-[environment]-[version]\src\corets-cli\
+```
+
 ## How to build a local vsix
 Run `./createLocalVsix.sh` from the `_build` folder.
 
@@ -155,10 +177,14 @@ After installation, use `Ctrl + Shift ⇧ + P` (Windows/Linux) or `Command ⌘ +
 You can check available commands [here](./contributing/application-architecture.md#extension).
 
 ### Possible problems and workarounds to fix them
-1. You may get some errors on the output console for the extension: `webtemplatestudio-{env}`, or maybe you realise that there´s missing information displayed on the screen.
-For example, no Frameworks at all for the `Create Web App` command. Make sure you have the proper versions of the .mstx for the templates in the extension folder - as mentioned above, for *Windows* would be `%USERPROFILE%\.vscode\extensions\wasteamaccount.webtemplatestudio-{environment}-{version}\src\corets-cli` or in *Mac/Linux* `~/.vscode/extensions/wasteamaccount.webtemplatestudio-{environment}-{version}/src/corets-cli`.
+You may get some errors on the output console for the extension: `webtemplatestudio-{env}`, or maybe you realise that there´s missing information displayed on the screen.
+For example, no Frameworks at all for the `Create Web App` command. Make sure you have the proper versions of the `.mstx` for the templates in the extension folder - as mentioned above, for *Windows* would be `%USERPROFILE%\.vscode\extensions\wasteamaccount.webtemplatestudio-{environment}-{version}\src\corets-cli` or in *Mac/Linux* `~/.vscode/extensions/wasteamaccount.webtemplatestudio-{environment}-{version}/src/corets-cli`.
 
-    If that´s not the case, and you have an older version, or you´re missing some package of templates, then you will need to retrieve them from the generated .vsix in the [Build Pipeline](https://winappstudio.visualstudio.com/Vegas). Also will need to update the `Allowed Packages` with the .mstx hashes in the file `CoreTemplateStudio.config` within the proper folder depending on the OS you are working (*win21* for instance, when developing on *Windows* for example).
+    If that´s not the case, and you have an older version, or you´re missing some package of templates, then you will need to retrieve them from the generated `.vsix`.
+    1. You can follow [the following instructions](https://github.com/microsoft/CoreTemplateStudio/wiki/Tools:-WTS-Packaging-Tool) to create the package.
+    2. If you have permissions, you can download the `.vsix` from the *Build Pipeline*.
+
+    **Note**: You will also need to update the `Allowed Packages` with the `.mstx` hashes in the file `CoreTemplateStudio.config` within the proper folder depending on the OS you are working (*win32* for instance, when developing on *Windows* for example).
 
 <img alt="Install extension from .vsix" src="../resources/vscode-output-window-errors.png" width="500px"  />
 <img alt="Folder where you can find the .mstx for the templates" src="../resources/extension-folder-mstx.png" width="400px"  />
