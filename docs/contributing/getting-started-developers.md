@@ -149,7 +149,7 @@ Windows:  %LocalAppData%
 ```
 If it´s not an issue with permissions you can retrieve further information on the logs inside that folder. For example: in Windows: `%LocalAppData%` + `/WebTS/Logs`
 
-Template engine may be missing execute permissions on the following ones:
+Web Template Studio may be missing execute permissions on the following ones:
 
 ```
 Mac: /Users/[username]/.vscode-server/extensions/wasteamaccount.webtemplatestudio-[environment]-[version]/src/corets-cli/
