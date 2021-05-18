@@ -13,6 +13,7 @@ This document covers:
 - [How to build a local vsix](#how-to-build-a-local-vsix)
 - [Tests](#tests)
 - [Under the hood](#under-the-hood)
+- [Folder overview](#folder-overview)
 
 Before starting make sure you read the [Web Template Studio arquitecture](application-architecture.md) document.
 
@@ -137,26 +138,6 @@ After starting the client using `yarn start` in VSCode Debug View (`Ctrl + Shift
 - [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)
 - [Debugging in Visual Studio Code](https://code.visualstudio.com/docs/editor/debugging)
 
-## Troubleshooting
-You may encounter some issues when using or developing in WebTS. It could be due to folder permissions, missing to create the Template packages,... Find below a list of folders that you may be interested in visiting and removing if this happens to you.
-
-You need permissions to write on the following folder, as `WebTS` creates a *WebTS* folder there. A `Logs` and `Templates` folder will be created here when running `Web Template Studio`.
-
-```
-Mac: /Users/[username]/.local/share
-Linux: //home/[username]/.local/share
-Windows:  %LocalAppData%
-```
-If it´s not an issue with permissions you can retrieve further information on the logs inside that folder. For example: in Windows: `%LocalAppData%` + `/WebTS/Logs`
-
-Web Template Studio may be missing execute permissions on the following ones:
-
-```
-Mac: /Users/[username]/.vscode-server/extensions/wasteamaccount.webtemplatestudio-[environment]-[version]/src/corets-cli/
-Linux: //home/[username]/.vscode-server/extensions/wasteamaccount.webtemplatestudio-[environment]-[version]/src/corets-cli/
-Windows: %userprofile%\.vscode\extensions\wasteamaccount.webtemplatestudio-[environment]-[version]\src\corets-cli\
-```
-
 ## How to build a local vsix
 Run `./createLocalVsix.sh` from the `_build` folder.
 
@@ -219,6 +200,46 @@ repository by [rebornix](https://github.com/rebornix):
 - We inline the initial html `<!DOCTYPE html> ... ` content in `src/extension/src/reactPanel.ts`  when creating the webview
 - For all resources going to the webview, their scheme is `vscode-resource`
 - We add a baseUrl `<base href="${vscode.Uri.file(path.join(this._extensionPath, 'build')).with({ scheme: 'vscode-resource' })}/">` and then all relative paths work.
+
+## Troubleshooting
+You may encounter some issues when using or developing in WebTS. It could be due to folder permissions, missing to create the Template packages,... Find below a list of folders that you may be interested in visiting and removing if this happens to you.
+
+- You need permissions to write on the local `WebTS` folder, where you can find the `Logs` and `Templates` folders.
+
+- Web Template Studio may be missing execute permissions on the `corets-cli` folder, can check full path on the table below, where the Core Template Studio CLI is located.
+
+- The template cache is located in the `.templateengine` folder. Template caches are isolated by environment.
+
+**Note**: If you clean or remove the corets-cli folder, you should make sure that you re run the build-all.sh script. Otherwise, if you removed the Templates or the Template Cache, you need to Launch the `Web Template Studio` wizard again.
+
+**Warning**: When you are debugging the application, a shortcut to the `Templates` folder of your code is used. Mind that everything you modified there, will be changed on the **local repository**.
+
+## Useful folders
+To make it easier for you to see which folder is used on the different OS, we added a summary table below:
+
+| Environment | Description | Folder |
+| ----------- | ------ | ----------- |
+| `Windows` | Core Template Studio CLI | `%userprofile%\.vscode\extensions\wasteamaccount.webtemplatestudio-[environment]-[version]\src\corets-cli\`  |
+|  | Logs and Templates |`%LocalAppData%/WebTS`  |
+|  | Template cache | `%userprofile%\.templateengine\[environment].[platform].Any`  |
+| `Mac` | Core Template Studio CLI | `/Users/[username]/.vscode-server/extensions/wasteamaccount.webtemplatestudio-[environment]-[version]/src/corets-cli/`  |
+| | Logs and Templates | `/Users/[username]/.local/share/WebTS` |
+| | Template cache | `/Users/[username]/.templateengine/[environment].[platform].Any` |
+| `Linux` | Core Template Studio CLI | `//home/[username]/.vscode-server/extensions/wasteamaccount.webtemplatestudio-[environment]-[version]/src/corets-cli/` |
+| | Logs and Templates | `//home/[username]/.local/share/WebTS` |  |
+| | Template cache | `//home/[username]/.templateengine/[environment].[platform].Any` |
+
+Below you have an overview of the different folder names for the different environments:
+
+| Environment name | Description | .vsix folder name | Template Cache Folder Name |
+| ----------- | ----------- | -------------- | ------------ |
+| WebTSDebug | Debug extension locally | - | WebTSDebug |
+| Local | Local vsix | local | Local.Web.Any  |
+|  |   | | Local.RN.Any |
+| Nightly | Nightly version | nightly | Nightly.Web.Any |
+|  |  | |  Nightly.RN.Any |
+| Dev | Marketplace version | dev-nightly | Dev.Web.Any |
+|  |  |  | Dev.RN.Any |
 
 ## Learn more
 
