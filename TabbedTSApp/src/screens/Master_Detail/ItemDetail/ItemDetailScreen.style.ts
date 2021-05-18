@@ -7,7 +7,7 @@ export const getStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       flex: 1,
-      alignItems: 'center',
+      alignItems: 'flex-start',
       justifyContent: 'space-evenly',
       paddingLeft: 15,
       backgroundColor: theme.colors.background,
