@@ -27,11 +27,9 @@ import { fireEvent } from "@testing-library/react";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
 
-import { getInitialState, setAzureEmail } from "../../../mockData/mockStore";
+import { getInitialState } from "../../../mockData/mockStore";
 import { AppState } from "../../../store/combineReducers";
 import { setDetailPageAction } from "../../../store/config/detailsPage/action";
-import { openAzureServicesModalAction } from "../../../store/navigation/modals/action";
-
 import { renderWithStore } from "../../../testUtils";
 import { IOption } from "../../../types/option";
 import { ServiceCard } from "./index";
