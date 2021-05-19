@@ -103,35 +103,7 @@ describe("ServiceCard", () => {
     expect(setDetailPageAction).toBeCalled();
   });
 
-  xit("If user is not Logged in and click on open modal button, openAzureServicesModalAction should be called  ", () => {
-    const openModalButton = wrapper.getByText(intl.formatMessage(messages.addToProject));
-    fireEvent.click(openModalButton);
-    expect(openAzureServicesModalAction).toBeCalled();
-  });
-
-  xit("If user is Logged in and click on open modal button, serviceOpenModalAction should be called", () => {
-    initialState = getInitialState();
-    setAzureEmail(initialState);
-    store = mockStore(initialState);
-    wrapper = renderWithStore(<ServiceCard {...props} />, store);
-    expect(wrapper).toBeDefined();
-
-    const openModalButton = wrapper.getByText(intl.formatMessage(messages.addToProject));
-    fireEvent.click(openModalButton);
-    expect(openAzureServicesModalAction).toBeCalled();
-  });
-
   it("dont show button add to project", () => {
     expect(wrapper.getAllByRole("figure")).toHaveLength(2);
-  });
-
-  xit("on mouse over should show button add page", () => {
-    fireEvent.mouseOver(wrapper.getByText(intl.formatMessage(messages.addToProject)));
-    expect(wrapper.queryAllByRole("figure")).toHaveLength(3);
-  });
-
-  xit("add service", () => {
-    fireEvent.click(wrapper.getByText(intl.formatMessage(messages.addToProject)));
-    expect(setDetailPageAction).toBeCalled();
   });
 });
