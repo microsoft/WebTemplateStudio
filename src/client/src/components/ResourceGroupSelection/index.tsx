@@ -28,7 +28,7 @@ const ResourceGroupSelection = (props: Props) => {
   const { vscode } = React.useContext(AppContext);
   const { subscription, resourceGroup, onResourceGroupChange } = props;
   const subscriptions = useSelector((state: AppState) => getSubscriptionsSelector(state));
-  const [dropdownResourceGroups, setDropownResourceGroups] = useState<IDropDownOptionType[]>([]);
+  const [dropdownResourceGroups, setDropdownResourceGroups] = useState<IDropDownOptionType[]>([]);
   const [selectedDropdownResourceGroup, setSelectedDropdownResourceGroup] = useState<IDropDownOptionType | undefined>(
     undefined
   );
@@ -74,7 +74,7 @@ const ResourceGroupSelection = (props: Props) => {
         value: resourceGroup.name,
       })
     );
-    setDropownResourceGroups(newDropdownResourceGroups);
+    setDropdownResourceGroups(newDropdownResourceGroups);
   };
 
   const isMicrosoftLearnSubscription = (): boolean => {
@@ -84,7 +84,7 @@ const ResourceGroupSelection = (props: Props) => {
 
   const refreshResourceGroups = async () => {
     setIsRefresh(true);
-    setDropownResourceGroups([]);
+    setDropdownResourceGroups([]);
     chargeResourceGroups();
   };
 

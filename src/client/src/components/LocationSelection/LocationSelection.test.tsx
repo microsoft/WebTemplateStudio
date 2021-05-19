@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import "@testing-library/jest-dom/extend-expect";
 
-import { act, fireEvent, RenderResult, waitFor } from "@testing-library/react";
+import { act, RenderResult, waitFor } from "@testing-library/react";
 import * as React from "react";
 
 import { renderWithIntl } from "../../testUtils";
@@ -32,13 +32,6 @@ describe("LocationSelection", () => {
     });
   });
 
-  xit("If has not subscription, dropdown should be disabled", () => {
-    props.subscription = "";
-    wrapper = renderWithIntl(<LocationSelection {...props} />);
-    const dropdown = wrapper.getByTestId("dropdown");
-    expect(dropdown).toBeDisabled();
-  });
-
   it("If has subscription, dropdown should be enabled", () => {
     act(() => {
       props.subscription = "subscription 1";
@@ -67,14 +60,5 @@ describe("LocationSelection", () => {
       expect(props.onLocationChange).toHaveBeenCalledTimes(1);
       expect(props.onLocationChange).toHaveBeenCalledWith("Central US");
     });
-  });
-
-  xit("Wen selected an location in a dropdown, onLocationChange notify selected location", () => {
-    const selectedLocation = "Central US";
-    wrapper = renderWithIntl(<LocationSelection {...props} />);
-    const dropdown = wrapper.getByTestId("dropdown");
-    fireEvent.change(dropdown, { target: { label: selectedLocation, value: selectedLocation } });
-    expect(props.onLocationChange).toHaveBeenCalledTimes(1);
-    expect(props.onLocationChange).toHaveBeenCalledWith(selectedLocation);
   });
 });

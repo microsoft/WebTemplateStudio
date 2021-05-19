@@ -1,18 +1,5 @@
-import { fireEvent } from "@testing-library/react";
-import * as React from "react";
-import configureMockStore from "redux-mock-store";
-
-import { getInitialState, setAzureEmail } from "../../../mockData/mockStore";
-import { AppState } from "../../../store/combineReducers";
-import { setDetailPageAction } from "../../../store/config/detailsPage/action";
-import { openAzureServicesModalAction } from "../../../store/navigation/modals/action";
-import { renderWithStore } from "../../../testUtils";
-import { IOption } from "../../../types/option";
-import { ServiceCard } from "./index";
-import messages from "./messages";
-
 jest.mock("../../../store/config/detailsPage/action", () => {
-  jest.fn((detailPageInfo: IOption, isIntlFormatted = false, originRoute: string) => ({
+  const setDetailPageAction = jest.fn((detailPageInfo: IOption, isIntlFormatted = false, originRoute: string) => ({
     type: "WTS/navigation/routes/SET_DETAILS_PAGE_INFO",
     payload: {
       data: detailPageInfo,
@@ -21,12 +8,8 @@ jest.mock("../../../store/config/detailsPage/action", () => {
     },
   }));
 
-  const setPageWizardPageAction = jest.fn((route: string) => ({
-    type: "WTS/navigation/routes/SET_PAGE_WIZARD_PAGE",
-    payload: route,
-  }));
   return {
-    setPageWizardPageAction,
+    setDetailPageAction,
   };
 });
 
@@ -40,19 +23,27 @@ jest.mock("../../../store/navigation/modals/action", () => {
   };
 });
 
-xdescribe("ServiceCard", () => {
+import { fireEvent } from "@testing-library/react";
+import * as React from "react";
+import configureMockStore from "redux-mock-store";
+
+import { getInitialState, setAzureEmail } from "../../../mockData/mockStore";
+import { AppState } from "../../../store/combineReducers";
+import { setDetailPageAction } from "../../../store/config/detailsPage/action";
+import { openAzureServicesModalAction } from "../../../store/navigation/modals/action";
+
+import { renderWithStore } from "../../../testUtils";
+import { IOption } from "../../../types/option";
+import { ServiceCard } from "./index";
+import messages from "./messages";
+
+describe("ServiceCard", () => {
   let props: any;
   let store: any;
   let initialState: AppState;
-  const mockStore = configureMockStore<AppState>();
+  let wrapper: any;
 
-  const serviceOpenModalAction = jest.fn(() => ({
-    type: "WTS/navigation/modals/OPEN_MODAL",
-    payload: {
-      modalType: "APP_SERVICE_MODAL",
-      modalData: null,
-    },
-  }));
+  const mockStore = configureMockStore<AppState>();
 
   const mockService: IService = {
     body: "Quickly build, deploy, and scale your web apps with confidence.",
@@ -68,7 +59,7 @@ xdescribe("ServiceCard", () => {
     isValidTitle: true,
     author: "Microsoft",
     group: "CloudHosting",
-    openModalAction: serviceOpenModalAction(),
+    openModalAction: jest.fn(),
     expectedPrice: {
       id: "servicesSelector.appServiceExpectedPrice",
       defaultMessage: "Free 30 Day Trial",
@@ -86,42 +77,43 @@ xdescribe("ServiceCard", () => {
       service: mockService,
       intl,
     };
+    wrapper = renderWithStore(<ServiceCard {...props} />, store);
   });
 
   it("renders without crashing", () => {
-    const wrapper = renderWithStore(<ServiceCard {...props} />, store);
     expect(wrapper).toBeDefined();
   });
 
   it("renders service title, body, expected price and expected time", () => {
-    const wrapper = renderWithStore(<ServiceCard {...props} />, store);
-
     expect(wrapper.getByText(mockService.title)).toBeDefined();
     expect(wrapper.getByText(mockService.body)).toBeDefined();
     expect(wrapper.getByText(intl.formatMessage(mockService.expectedPrice))).toBeDefined();
     expect(wrapper.getByText(intl.formatMessage(mockService.expectedTime))).toBeDefined();
   });
 
-  it("when learn more button clicked, setPageWizardPageAction and setDetailPageAction should be called", () => {
-    const wrapper = renderWithStore(<ServiceCard {...props} />, store);
-
+  it("when learn more button clicked, setDetailPageAction should be called", () => {
     const learnMoreButton = wrapper.getByText(intl.formatMessage(messages.learnMore));
     fireEvent.click(learnMoreButton);
-    //expect(setPageWizardPageAction).toHaveBeenCalled();
     expect(setDetailPageAction).toHaveBeenCalled();
   });
 
-  it("when press enter key on learn more button, setPageWizardPageAction and setDetailPageAction should be called", () => {
-    const wrapper = renderWithStore(<ServiceCard {...props} />, store);
-
+  it("when press enter key on learn more button, setDetailPageAction should be called", () => {
     const learnMoreButton = wrapper.getByText(intl.formatMessage(messages.learnMore));
     fireEvent.keyDown(learnMoreButton, { key: "Enter", code: "Enter" });
-    //expect(setPageWizardPageAction).toBeCalled();
     expect(setDetailPageAction).toBeCalled();
   });
 
-  it("If user is not Logged in and click on open modal button, openAzureServicesModalAction should be called  ", () => {
-    const wrapper = renderWithStore(<ServiceCard {...props} />, store);
+  xit("If user is not Logged in and click on open modal button, openAzureServicesModalAction should be called  ", () => {
+    const openModalButton = wrapper.getByText(intl.formatMessage(messages.addToProject));
+    fireEvent.click(openModalButton);
+    expect(openAzureServicesModalAction).toBeCalled();
+  });
+
+  xit("If user is Logged in and click on open modal button, serviceOpenModalAction should be called", () => {
+    initialState = getInitialState();
+    setAzureEmail(initialState);
+    store = mockStore(initialState);
+    wrapper = renderWithStore(<ServiceCard {...props} />, store);
     expect(wrapper).toBeDefined();
 
     const openModalButton = wrapper.getByText(intl.formatMessage(messages.addToProject));
@@ -129,15 +121,17 @@ xdescribe("ServiceCard", () => {
     expect(openAzureServicesModalAction).toBeCalled();
   });
 
-  it("If user is Logged in and click on open modal button, serviceOpenModalAction should be called", () => {
-    initialState = getInitialState();
-    setAzureEmail(initialState);
-    store = mockStore(initialState);
-    const wrapper = renderWithStore(<ServiceCard {...props} />, store);
-    expect(wrapper).toBeDefined();
+  it("dont show button add to project", () => {
+    expect(wrapper.getAllByRole("figure")).toHaveLength(2);
+  });
 
-    const openModalButton = wrapper.getByText(intl.formatMessage(messages.addToProject));
-    fireEvent.click(openModalButton);
-    expect(serviceOpenModalAction).toBeCalled();
+  xit("on mouse over should show button add page", () => {
+    fireEvent.mouseOver(wrapper.getByText(intl.formatMessage(messages.addToProject)));
+    expect(wrapper.queryAllByRole("figure")).toHaveLength(3);
+  });
+
+  xit("add service", () => {
+    fireEvent.click(wrapper.getByText(intl.formatMessage(messages.addToProject)));
+    expect(setDetailPageAction).toBeCalled();
   });
 });

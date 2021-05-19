@@ -72,14 +72,6 @@ describe("ResourceGroupSelection", () => {
     });
   });
 
-  xit("When selected an resource group in a dropdown, onResourceGroupChange notify selected resource group", () => {
-    const selectedResourceGroup = "resourceGroupMock 1";
-    wrapper = renderWithStore(<ResourceGroupSelection {...props} />, store);
-    const dropdown = wrapper.getByTestId("dropdown");
-    fireEvent.change(dropdown, { target: { label: selectedResourceGroup, value: selectedResourceGroup } });
-    expect(props.onResourceGroupChange).toHaveBeenCalledWith(selectedResourceGroup);
-  });
-
   it("Has a create new resource group link", () => {
     wrapper = renderWithStore(<ResourceGroupSelection {...props} />, store);
     const link = wrapper.getByText(intl.formatMessage(messages.newResourceGroupLink));
