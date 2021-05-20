@@ -72,7 +72,7 @@ const AppNameEditor = ({ intl, subscription, appName, onAppNameChange, onIsAvail
   return (
     <div
       className={classNames(styles.container, {
-        [styles.containerDisabled]: !isValidSubscription,
+        [styles.containerDisabled]: !isValidSubscription(),
       })}
     >
       <div className={modalStyles.title}>{formatMessage(messages.title)}</div>
