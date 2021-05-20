@@ -33,14 +33,14 @@ const AppNameEditor = ({ intl, subscription, appName, onAppNameChange, onIsAvail
   const [isValidatingName, setIsValidatingName] = React.useState(false);
 
   React.useEffect(() => {
-    if (subscription !== "" && appName === "") {
+    if (isValidSubscription()) {
       GetValidAppServiceName(projectName, vscode).then((event) => onAppNameChange(event.data.payload.validName));
     }
   }, [subscription]);
 
   React.useEffect(() => {
     onIsAvailableAppNameChange(false);
-    if (appName !== "") {
+    if (isValidSubscription()) {
       setIsValidatingName(true);
       delayValidation(() => {
         validationAppServiceNameScopeId++;
@@ -65,10 +65,14 @@ const AppNameEditor = ({ intl, subscription, appName, onAppNameChange, onIsAvail
     }, 700);
   };
 
+  const isValidSubscription = (): boolean => {
+    return subscription !== "" && subscription !== "Select...";
+  };
+
   return (
     <div
       className={classNames(styles.container, {
-        [styles.containerDisabled]: subscription === "",
+        [styles.containerDisabled]: !isValidSubscription,
       })}
     >
       <div className={modalStyles.title}>{formatMessage(messages.title)}</div>
@@ -80,14 +84,14 @@ const AppNameEditor = ({ intl, subscription, appName, onAppNameChange, onIsAvail
           className={styles.input}
           value={appName}
           onChange={(e) => onAppNameChange(e.currentTarget.value)}
-          disabled={subscription === ""}
+          disabled={!isValidSubscription()}
         />
         {appName !== "" && invalidAppNameMessage === "" && !isValidatingName && (
           <GreenCheck data-testid="green-check" className={styles.validationIcon} />
         )}
         {isValidatingName && <Spinner data-testid="spinner" className={styles.spinner} />}
       </div>
-      {appName !== "" && !isValidatingName && invalidAppNameMessage !== "" && (
+      {!isValidatingName && invalidAppNameMessage !== "" && (
         <div data-testid="error-message" className={styles.errorMessage}>
           {invalidAppNameMessage}
         </div>

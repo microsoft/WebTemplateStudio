@@ -67,7 +67,6 @@ input::placeholder {
   font-size: 90%;
   opacity: 0.5;
   box-sizing: border-box;
-  position: absolute;
   width: 100%;
   z-index: 1;
 }
