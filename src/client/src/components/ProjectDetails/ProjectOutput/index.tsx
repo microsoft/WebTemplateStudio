@@ -40,7 +40,7 @@ const ProjectOutput = (props: Props) => {
   }, [vscode]);
 
   const handleSaveClick = () => {
-    browseNewOutputPath(vscode).then((event) => {
+    browseNewOutputPath(outputPath, vscode).then((event) => {
       const message = event.data;
       if (message.payload !== null && message.payload.outputPath !== undefined) {
         dispatch(setOutputPathAction(message.payload.outputPath));
