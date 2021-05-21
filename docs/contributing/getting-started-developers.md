@@ -9,9 +9,11 @@ This document covers:
 - [Core Template Studio Submodule](#core-template-studio-submodule)
 - [How to run the extension locally](#how-to-run-the-extension-locally)
 - [How to develop the client](#how-to-develop-the-client)
+- [Troubleshooting](#troubleshooting)
 - [How to build a local vsix](#how-to-build-a-local-vsix)
 - [Tests](#tests)
 - [Under the hood](#under-the-hood)
+- [Folder overview](#folder-overview)
 
 Before starting make sure you read the [Web Template Studio arquitecture](application-architecture.md) document.
 
@@ -29,15 +31,16 @@ If you just want to take advantage from *Web Template Studio* extension, check t
 1. Run the command `npm config set scripts-prepend-node-path true`. This tells VSCode which Node version to run during the extension compilation (otherwise you'll get an error during the build process).
 
 ### For a react native application
-1. You have to check the following [dependencies](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies).
+    You have to check the following [dependencies](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies).
 
-    In the Wizard you have a link on the right-side bar, to show a modal with the System Requirements.
+    In the Wizard you have a link on the right-side bar, to show a modal with the System Requirements. If any of them is missing you will see a warning.
 
-   <img alt="React Native System Requirements" src="../resources/react-native-requirements.png" width="85%" />
+    If you are running `WebTS` in Mac/Linux you will see a different message, notifying you that the generated native Windows application cannot be run.
 
-**Note**: If using Windows, use Git Bash.
+    <img alt="React Native System Requirements" src="../resources/react-native-requirements.png" width="85%" />
 
-At some point you may also need to install [React-scripts](https://yarnpkg.com/package/react-scripts) and [Typescript](https://www.typescriptlang.org/).
+
+**Note**: When developing in `WebTS` you may also need to install [React-scripts](https://yarnpkg.com/package/react-scripts) and [Typescript](https://www.typescriptlang.org/).
 
 ## Project folder structure
 
@@ -155,10 +158,14 @@ After installation, use `Ctrl + Shift ⇧ + P` (Windows/Linux) or `Command ⌘ +
 You can check available commands [here](./contributing/application-architecture.md#extension).
 
 ### Possible problems and workarounds to fix them
-1. You may get some errors on the output console for the extension: `webtemplatestudio-{env}`, or maybe you realise that there´s missing information displayed on the screen.
-For example, no Frameworks at all for the `Create Web App` command. Make sure you have the proper versions of the .mstx for the templates in the extension folder - as mentioned above, for *Windows* would be `%USERPROFILE%\.vscode\extensions\wasteamaccount.webtemplatestudio-{environment}-{version}\src\corets-cli` or in *Mac/Linux* `~/.vscode/extensions/wasteamaccount.webtemplatestudio-{environment}-{version}/src/corets-cli`.
+You may get some errors on the output console for the extension: `webtemplatestudio-{env}`, or maybe you realise that there´s missing information displayed on the screen.
+For example, no Frameworks at all for the `Create Web App` command. Make sure you have the proper versions of the `.mstx` for the templates in the extension folder - as mentioned above, for *Windows* would be `%USERPROFILE%\.vscode\extensions\wasteamaccount.webtemplatestudio-{environment}-{version}\src\corets-cli` or in *Mac/Linux* `~/.vscode/extensions/wasteamaccount.webtemplatestudio-{environment}-{version}/src/corets-cli`.
 
-    If that´s not the case, and you have an older version, or you´re missing some package of templates, then you will need to retrieve them from the generated .vsix in the [Build Pipeline](https://winappstudio.visualstudio.com/Vegas). Also will need to update the `Allowed Packages` with the .mstx hashes in the file `CoreTemplateStudio.config` within the proper folder depending on the OS you are working (*win21* for instance, when developing on *Windows* for example).
+    If that´s not the case, and you have an older version, or you´re missing some package of templates, then you will need to retrieve them from the generated `.vsix`.
+    1. You can follow [the following instructions](https://github.com/microsoft/CoreTemplateStudio/wiki/Tools:-WTS-Packaging-Tool) to create the package.
+    2. If you have permissions, you can download the `.vsix` from the *Build Pipeline*.
+
+    **Note**: You will also need to update the `Allowed Packages` with the `.mstx` hashes in the file `CoreTemplateStudio.config` within the proper folder depending on the OS you are working (*win32* for instance, when developing on *Windows* for example).
 
 <img alt="Install extension from .vsix" src="../resources/vscode-output-window-errors.png" width="500px"  />
 <img alt="Folder where you can find the .mstx for the templates" src="../resources/extension-folder-mstx.png" width="400px"  />
@@ -193,6 +200,46 @@ repository by [rebornix](https://github.com/rebornix):
 - We inline the initial html `<!DOCTYPE html> ... ` content in `src/extension/src/reactPanel.ts`  when creating the webview
 - For all resources going to the webview, their scheme is `vscode-resource`
 - We add a baseUrl `<base href="${vscode.Uri.file(path.join(this._extensionPath, 'build')).with({ scheme: 'vscode-resource' })}/">` and then all relative paths work.
+
+## Troubleshooting
+You may encounter some issues when using or developing in WebTS. It could be due to folder permissions, missing to create the Template packages,... Find below a list of folders that you may be interested in visiting and removing if this happens to you.
+
+- You need permissions to write on the local `WebTS` folder, where you can find the `Logs` and `Templates` folders.
+
+- Web Template Studio may be missing execute permissions on the `corets-cli` folder, can check full path on the table below, where the Core Template Studio CLI is located.
+
+- The template cache is located in the `.templateengine` folder. Template caches are isolated by environment.
+
+**Note**: If you clean or remove the corets-cli folder, you should make sure that you re run the build-all.sh script. Otherwise, if you removed the Templates or the Template Cache, you need to Launch the `Web Template Studio` wizard again.
+
+**Warning**: When you are debugging the application, a shortcut to the `Templates` folder of your code is used. Mind that everything you modified there, will be changed on the **local repository**.
+
+## Useful folders
+To make it easier for you to see which folder is used on the different OS, we added a summary table below:
+
+| Environment | Description | Folder |
+| ----------- | ------ | ----------- |
+| `Windows` | Core Template Studio CLI | `%userprofile%\.vscode\extensions\wasteamaccount.webtemplatestudio-[environment]-[version]\src\corets-cli\`  |
+|  | Logs and Templates |`%LocalAppData%/WebTS`  |
+|  | Template cache | `%userprofile%\.templateengine\[environment].[platform].Any`  |
+| `Mac` | Core Template Studio CLI | `/Users/[username]/.vscode-server/extensions/wasteamaccount.webtemplatestudio-[environment]-[version]/src/corets-cli/`  |
+| | Logs and Templates | `/Users/[username]/.local/share/WebTS` |
+| | Template cache | `/Users/[username]/.templateengine/[environment].[platform].Any` |
+| `Linux` | Core Template Studio CLI | `//home/[username]/.vscode-server/extensions/wasteamaccount.webtemplatestudio-[environment]-[version]/src/corets-cli/` |
+| | Logs and Templates | `//home/[username]/.local/share/WebTS` |  |
+| | Template cache | `//home/[username]/.templateengine/[environment].[platform].Any` |
+
+Below you have an overview of the different folder names for the different environments:
+
+| Environment name | Description | .vsix folder name | Template Cache Folder Name |
+| ----------- | ----------- | -------------- | ------------ |
+| WebTSDebug | Debug extension locally | - | WebTSDebug |
+| Local | Local vsix | local | Local.Web.Any  |
+|  |   | | Local.RN.Any |
+| Nightly | Nightly version | nightly | Nightly.Web.Any |
+|  |  | |  Nightly.RN.Any |
+| Dev | Marketplace version | dev-nightly | Dev.Web.Any |
+|  |  |  | Dev.RN.Any |
 
 ## Learn more
 

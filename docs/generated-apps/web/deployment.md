@@ -37,14 +37,14 @@ This folder will contain all the necessary frontend and backend files for the de
 
 *Web Template Studio* will then automatically launch the command `Azure App Service: Deploy to Web App...`, which will be in charge of deploying the application to an *Azure App Service*.
 
-    - If you have added an *Azure App Service* when creating your application with *Web Template Studio*, the application already has a deployment configuration, so it will use the created *Azure App Service*.
+  - If you have added an *Azure App Service* when creating your application with *Web Template Studio*, the application already has a deployment configuration, so it will use the created *Azure App Service*.
 
-    - Otherwise, the *Azure App Service* extension will ask you for the configuration settings to create a new *Azure App Service*:
-      - The folder that contains the app to deploy to the App Service. Select the `publish` folder for deployment to be successful.
-      - Select `Create New Web App...`
-      - Enter your web app name
-      - Select Linux as your OS
-      - Select Node.js 12 LTS for a Node/Express application, Python 3.7 for a Flask application or .Net Core Latest runtime for ASP .NET application.
+  - Otherwise, the *Azure App Service* extension will ask you for the configuration settings to create a new *Azure App Service*:
+    - The folder that contains the app to deploy to the App Service. Select the `publish` folder for deployment to be successful.
+    - Select `Create New Web App...`
+    - Enter your web app name
+    - Select Linux as your OS
+    - Select Node.js 12 LTS for a Node/Express application, Python 3.7 for a Flask application or .Net Core Latest runtime for ASP .NET application.
 
 Start the application deployment to *Azure App Service*. We can see the progress of the deployment in the output of the *Azure App Service* extension.
 

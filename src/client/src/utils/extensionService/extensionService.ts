@@ -148,12 +148,15 @@ const getOutputPathFromConfig = (vscode: IVSCodeObject): Promise<any> => {
   );
 };
 
-const browseNewOutputPath = (vscode: IVSCodeObject): Promise<any> => {
+const browseNewOutputPath = (outputPath: string, vscode: IVSCodeObject): Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH,
     {
       module: EXTENSION_MODULES.DEFAULTS,
       command: EXTENSION_COMMANDS.BROWSE_NEW_OUTPUT_PATH,
+      payload: {
+        outputPath,
+      },
     },
     vscode
   );
