@@ -1,4 +1,4 @@
-import { fireEvent, render, RenderResult } from "@testing-library/react";
+import { render, RenderResult } from "@testing-library/react";
 import * as React from "react";
 import { IntlProvider } from "react-intl";
 import * as ReactRedux from "react-redux";
@@ -36,10 +36,6 @@ describe("About", () => {
     it("should have messages", () => {
       const expectedTextPages = intl.formatMessage(messages.pages);
       expect(wrapper.getByText(expectedTextPages, { exact: false })).toBeDefined();
-    });
-
-    xit(`check link issue`, () => {
-      fireEvent.click(wrapper.getByTestId("btnResetPages"));
     });
   });
 });
