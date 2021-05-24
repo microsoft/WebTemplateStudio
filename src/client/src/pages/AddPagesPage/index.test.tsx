@@ -1,17 +1,22 @@
-import { render } from "@testing-library/react";
+import { RenderResult } from "@testing-library/react";
 import * as React from "react";
-import { IntlProvider } from "react-intl";
-import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 
-import { getInitialState, loadMasters } from "../../mockData/mockStore";
+import {
+  addBackEndFrameworksOptions,
+  addFrontEndFrameworksOptions,
+  getInitialState,
+  loadMasters,
+} from "../../mockData/mockStore";
 import { AppState } from "../../store/combineReducers";
-import AddPagesPage from "./index";
+import { renderWithStore } from "../../testUtils";
+import AddPagesPage from ".";
 import messages from "./messages";
 
 describe("AddPagesPage", () => {
   let props: any;
-  let wrapper: any;
+  let wrapper: RenderResult;
+
   let store: any;
   let initialState: AppState;
   const mockStore = configureMockStore();
@@ -19,30 +24,23 @@ describe("AddPagesPage", () => {
   beforeEach(() => {
     initialState = getInitialState();
     loadMasters(initialState);
+    addFrontEndFrameworksOptions(initialState);
+    addBackEndFrameworksOptions(initialState);
     store = mockStore(initialState);
 
     props = {
       isModal: true,
-      intl: global.intl,
     };
-
-    wrapper = render(
-      <IntlProvider locale="en">
-        <Provider store={store}>
-          <AddPagesPage {...props} />
-        </Provider>
-      </IntlProvider>
-    );
   });
 
-  xit("check card components", () => {
-    const buttonLength = wrapper.queryAllByRole("button").length;
-    expect(buttonLength).toBe(
-      initialState.templates.backendOptions.length + initialState.templates.frontendOptions.length
-    );
+  it("renders without crashing", () => {
+    wrapper = renderWithStore(<AddPagesPage {...props} />, store);
+    expect(wrapper).toBeDefined();
   });
 
   it("check title", () => {
+    wrapper = renderWithStore(<AddPagesPage {...props} />, store);
+
     expect(wrapper.getByText(intl.formatMessage(messages.pagesTitleQuestion))).toBeDefined();
   });
 });
