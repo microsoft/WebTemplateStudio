@@ -121,8 +121,9 @@ As the client is injected as a static web app in the webview of the extension, d
 
 When running in the browser, communication with the extension is done against the mock `mockVsCodeApi.ts` in the `mockData` folder. Note that the behaviour of the client on the browser may differ from the behaviour in the extension, so make sure to test out both.
 Styles are mocked in the Browser using the file [`mockThemes.css`](../../src/client/src/css/mockThemes.css).
+To choose what platform you want to debug you can modify `mockConfig.ts` in the `mockData`folder.
 
-1. Run `./build-client.sh` from the _build folder.
+1. Run `./build-client.sh` from the _build folder. Or you can use the command `yarn build` if you are on the `client` folder already.
 2. Open the `src/client` folder using `VSCode`.
 3. Start the client using `yarn start` to begin development in the browser. We recommend using a chromium based browser such as Chrome.
 
@@ -132,7 +133,7 @@ Styles are mocked in the Browser using the file [`mockThemes.css`](../../src/cli
 
 ### To debug from Visual Studio Code:
 Install [Debugger for Chrome extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) in Visual Studio Code debug Wizard Client.
-After starting the client using `yarn start` in VSCode Debug View (`Ctrl + Shift ⇧ + D` (Windows/Linux) or `Shift ⇧ + Command ⌘ + D` (Mac) in Visual Studio Code) select "*Debug WebTS Client*" and start debugging (`F5`).
+After starting the client using `yarn start` in VSCode Debug View (`Ctrl + Shift ⇧ + D` (Windows/Linux) or `Shift ⇧ + Command ⌘ + D` (Mac) in Visual Studio Code) select "*Debug WebTS Client*" and start debugging (you can directly press: `F5`).
 
 #### More info:
 - [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)
