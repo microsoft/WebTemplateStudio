@@ -120,10 +120,12 @@ Changes on Core Template Studio should be done on the Core Template Studio repos
 As the client is injected as a static web app in the webview of the extension, debugging inside the extension can be challenging. Running the client in a browser is useful for quickly testing HTML or CSS changes and for debugging since you can use **Chrome extensions** such as `React and Redux developer tools`.
 
 When running in the browser, communication with the extension is done against the mock `mockVsCodeApi.ts` in the `mockData` folder. Note that the behaviour of the client on the browser may differ from the behaviour in the extension, so make sure to test out both.
-Styles are mocked in the Browser using the file [`mockThemes.css`](../../src/client/src/css/mockThemes.css).
-To choose what platform you want to debug you can modify `mockConfig.ts` in the `mockData`folder.
 
-1. Run `./build-client.sh` from the _build folder. Or you can use the command `yarn build` if you are on the `client` folder already.
+Styles are mocked in the Browser using the file [`mockThemes.css`](../../src/client/src/css/mockThemes.css).
+
+To choose what platform you want to debug, you can modify `mockConfig.ts` in the `mockData`folder.
+
+1. Run `./build-client.sh` from the `_build` folder. Or you can use the command `yarn build` if you are on the `client` folder already.
 2. Open the `src/client` folder using `VSCode`.
 3. Start the client using `yarn start` to begin development in the browser. We recommend using a chromium based browser such as Chrome.
 
