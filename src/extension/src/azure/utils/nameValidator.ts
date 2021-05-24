@@ -10,10 +10,10 @@ export interface AppNameValidationResult {
 export namespace NameValidator {
   function checkNameRegex(name: string): AppNameValidationResult {
     const regexp = /^[a-zA-Z0-9]+[a-zA-Z0-9-]*[a-zA-Z0-9]+$/;
-    if (!regexp.test(name)) {
+    if (name.trim() == "" || !regexp.test(name)) {
       return {
         isValid: false,
-        message: MESSAGES.ERRORS.APP_INVALID_NAME(name),
+        message: MESSAGES.ERRORS.APP_INVALID_NAME,
       };
     }
     return { isValid: true, message: "" };

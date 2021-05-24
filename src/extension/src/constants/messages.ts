@@ -55,13 +55,10 @@ export const MESSAGES = {
       "CosmosDBDeploy: GetConnectionString Failed to create Client with SubscriptionItem - "
     ),
     RUNTIME_NOT_IMPLEMENTED: localize("error.runtimeNotImplemented", "Runtime not implemented yet"),
-    APP_INVALID_NAME: (name: string): string => {
-      return localize(
-        "error.appInvalidName",
-        "Invalid name {0}. Name can only include alphanumeric characters and dashes, and must start/end with alphanumeric characters",
-        name
-      );
-    },
+    APP_INVALID_NAME: localize(
+      "error.appInvalidName",
+      "Name must start/end with alphanumeric. Allowed characters: a-z, A-Z, 0-9, the '-' character."
+    ),
     EMPTY_OUTPUT_PATH: localize("error.emptyOutputPath", "Output Path cannot be empty."),
     EMPTY_PROJECT_NAME: localize("error.emptyProjectName", "Project Name cannot be empty."),
     PROJECT_NAME_LENGTH_EXCEEDED_MAX: localize(
@@ -94,7 +91,7 @@ export const MESSAGES = {
     },
     COSMOS_VALID_CHARACTERS: localize(
       "error.cosmosValidCharacters",
-      "The name can only contain lowercase letters, numbers, and the '-' character."
+      "Allowed characters: a-z, 0-9 and the '-' character."
     ),
     NAME_MIN_MAX: (min: number, max: number): string => {
       return localize("error.nameMinMax", "The name must be between {0} and {1} characters.", min, max);
