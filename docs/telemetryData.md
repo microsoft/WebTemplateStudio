@@ -2,6 +2,18 @@
 
 As new features and pages roll out, percentages  will adjust.
 
+### Category
+
+|Type|Percentage|
+|:---|:---:|
+|Web|99.7%|
+|RN|0.3%|
+
+### Project Generation by category
+
+<details>
+<summary>Web Full Stack Generation</summary>
+
 ### Frontend Frameworks
 
 |Framework Type|Percentage|
@@ -28,10 +40,26 @@ As new features and pages roll out, percentages  will adjust.
 |Master Detail|19%|
 |List|16.8%|
 
-### Services
 
-|Services|Percentage|
+</details>
+
+<details>
+<summary>React Native Generation</summary>
+
+### Project Types
+
+|Framework Type|Percentage|
 |:---|:---:|
-|Cosmos DB|55.2%|
-|App Service|44.8%|
+|Tabbed|100%|
+
+### Pages
+
+|Pages|Percentage|
+|:---|:---:|
+|Blank|50%|
+|Settings|33.3%|
+|MasterDetail|16.7%|
+
+
+</details>
 
