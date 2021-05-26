@@ -53,9 +53,9 @@ const projectTypes = [
   {
     name: "Tabbed",
     displayName: "Tabbed",
-    summary: "Tabbed summary ***",
-    body: "Tabbed description***",
-    description: "Tabbed rich description***",
+    summary: "Tabbed summary",
+    body: "Tabbed description",
+    description: "Tabbed rich description",
     licenses:
       "[React Native](https://github.com/facebook/react-native/blob/master/LICENSE)\n [React Navigation](https://github.com/react-navigation/react-navigation/blob/main/packages/core/LICENSE)",
     icon: projectTypeImage,
@@ -64,9 +64,9 @@ const projectTypes = [
   {
     name: "Drawer",
     displayName: "Drawer",
-    summary: "Drawer summary ***",
-    body: "Drawer description***",
-    description: "Drawer rich description***",
+    summary: "Drawer summary",
+    body: "Drawer description",
+    description: "Drawer rich description",
     licenses:
       "[React Native](https://github.com/facebook/react-native/blob/master/LICENSE)\n [React Navigation](https://github.com/react-navigation/react-navigation/blob/main/packages/core/LICENSE)",
     icon: noImage,
@@ -76,12 +76,12 @@ const projectTypes = [
 
 const frameworks = [
   {
-    name: "React Native MOCK",
-    displayName: "React Native MOCK",
+    name: "React Native",
+    displayName: "React Native",
     icon: frontendImage,
     summary: "JavaScript framework by Facebook",
     description:
-      "MOCKED DESCRIPTION React is a component-based open source JavaScript library for building interfaces for single page applications. It is used for handling view layer for web and mobile apps. React allows you to design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.  \r\n\r\n  \r\nMore information about React can be found [here](https://reactjs.org).\r\n",
+      "React is a component-based open source JavaScript library for building interfaces for single page applications. It is used for handling view layer for web and mobile apps. React allows you to design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.  \r\n\r\n  \r\nMore information about React can be found [here](https://reactjs.org).\r\n",
     author: "Facebook",
     order: 1,
     metadataType: "Framework",
