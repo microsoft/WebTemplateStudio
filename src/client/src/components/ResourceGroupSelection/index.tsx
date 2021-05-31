@@ -29,9 +29,8 @@ const ResourceGroupSelection = (props: Props) => {
   const { subscription, resourceGroup, onResourceGroupChange } = props;
   const subscriptions = useSelector((state: AppState) => getSubscriptionsSelector(state));
   const [dropdownResourceGroups, setDropdownResourceGroups] = useState<IDropDownOptionType[]>([]);
-  const [selectedDropdownResourceGroup, setSelectedDropdownResourceGroup] = useState<IDropDownOptionType | undefined>(
-    undefined
-  );
+  const [selectedDropdownResourceGroup, setSelectedDropdownResourceGroup] =
+    useState<IDropDownOptionType | undefined>(undefined);
   const [isRefresh, setIsRefresh] = useState(false);
 
   const DEFAULT_RESOURCE_GROUP: IDropDownOptionType = {

@@ -68,9 +68,8 @@ const DraggablePage = ({
 
   const moveDownScroll = () => {
     if (document.getElementById("dvRightSideBar") && document.getElementById("dvSummaryContainer"))
-      document.getElementById("dvRightSideBar")!.scrollTop = document.getElementById(
-        "dvSummaryContainer"
-      )!.offsetHeight;
+      document.getElementById("dvRightSideBar")!.scrollTop =
+        document.getElementById("dvSummaryContainer")!.offsetHeight;
   };
   const setFocus = () => {
     const node = inputRef.current!;
