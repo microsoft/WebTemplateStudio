@@ -95,24 +95,11 @@ Core Template Studio is integrated into *Web Template Studio* using a git submod
 When you clone *Web Template Studio* you have to run two commands: `git submodule init` and `git submodule update` to fetch all the data from Core Template Studio. When fetching changes, also execute `git submodule update` after doing git fetch to be sure you're submodule is up to date.
 
 ### Update with remote changes
-Changes on Core Template Studio should be done on the Core Template Studio repos. In WebTS, to update the submodule to the most recent commit, you have to run the command: `git submodule update --remote`.
+Changes on Core Template Studio should be done on the Core Template Studio repos. In WebTS, to update the submodule to the most recent commit, you have to run the command: `git submodule update --remote`. 
 
-### Submodule update with new commits in CoreTS
-First, you may want to fetch new commits that were done in the submodule repository. Then retrieve the latest commits on the submodule repository and use the SHA for the commit you want to update to. For more info visit the [official documentation](https://git-scm.com/docs/git-submodule).
+This will require a new `git submodule update` on other local repositories to get the update.
 
-You can find a sample of steps below. But they can vary depending on the version or the commit you need to update to.
-
-```
-cd src/CoreTemplateStudio
-git fetch
-git log --oneline origin/dev -3
-git checkout -q {}
-cd ..
-git add .
-git commit -m "Submodule update"
-git push
-```
-
+For more info visit the [official documentation](https://git-scm.com/docs/git-submodule).
 
 ## How to run the extension locally
 1. Run `./build-all.sh` from the `_build` folder. This script installs dependencies and compiles the client and core template studio and copies it to the extension. It also builds and installs the extension.
