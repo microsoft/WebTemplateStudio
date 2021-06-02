@@ -95,7 +95,11 @@ Core Template Studio is integrated into *Web Template Studio* using a git submod
 When you clone *Web Template Studio* you have to run two commands: `git submodule init` and `git submodule update` to fetch all the data from Core Template Studio. When fetching changes, also execute `git submodule update` after doing git fetch to be sure you're submodule is up to date.
 
 ### Update with remote changes
-Changes on Core Template Studio should be done on the Core Template Studio repos. In WebTS, to update the submodule to the most recent commit, you have to run the command: `git submodule update --remote`.
+Changes on Core Template Studio should be done on the Core Template Studio repos. In WebTS, to update the submodule to the most recent commit, you have to run the command: `git submodule update --remote`. 
+
+This will require a new `git submodule update` on other local repositories to get the update.
+
+For more info visit the [official documentation](https://git-scm.com/docs/git-submodule).
 
 ## How to run the extension locally
 1. Run `./build-all.sh` from the `_build` folder. This script installs dependencies and compiles the client and core template studio and copies it to the extension. It also builds and installs the extension.
@@ -120,9 +124,12 @@ Changes on Core Template Studio should be done on the Core Template Studio repos
 As the client is injected as a static web app in the webview of the extension, debugging inside the extension can be challenging. Running the client in a browser is useful for quickly testing HTML or CSS changes and for debugging since you can use **Chrome extensions** such as `React and Redux developer tools`.
 
 When running in the browser, communication with the extension is done against the mock `mockVsCodeApi.ts` in the `mockData` folder. Note that the behaviour of the client on the browser may differ from the behaviour in the extension, so make sure to test out both.
+
 Styles are mocked in the Browser using the file [`mockThemes.css`](../../src/client/src/css/mockThemes.css).
 
-1. Run `./build-client.sh` from the _build folder.
+To choose what platform you want to debug, you can modify `mockConfig.ts` in the `mockData`folder.
+
+1. Run `./build-client.sh` from the `_build` folder. Or you can use the command `yarn build` if you are on the `client` folder already.
 2. Open the `src/client` folder using `VSCode`.
 3. Start the client using `yarn start` to begin development in the browser. We recommend using a chromium based browser such as Chrome.
 
@@ -132,7 +139,7 @@ Styles are mocked in the Browser using the file [`mockThemes.css`](../../src/cli
 
 ### To debug from Visual Studio Code:
 Install [Debugger for Chrome extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) in Visual Studio Code debug Wizard Client.
-After starting the client using `yarn start` in VSCode Debug View (`Ctrl + Shift ⇧ + D` (Windows/Linux) or `Shift ⇧ + Command ⌘ + D` (Mac) in Visual Studio Code) select "*Debug WebTS Client*" and start debugging (`F5`).
+After starting the client using `yarn start` in VSCode Debug View (`Ctrl + Shift ⇧ + D` (Windows/Linux) or `Shift ⇧ + Command ⌘ + D` (Mac) in Visual Studio Code) select "*Debug WebTS Client*" and start debugging (you can directly press: `F5`).
 
 #### More info:
 - [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)
