@@ -235,10 +235,8 @@ export class CosmosDBDeploy {
         options
       );
 
-      const databaseAccount: CosmosDBManagementModels.DatabaseAccountGetResults = await this.SubscriptionItemCosmosClient.databaseAccounts.get(
-        resourceGroup,
-        databaseName
-      );
+      const databaseAccount: CosmosDBManagementModels.DatabaseAccountGetResults =
+        await this.SubscriptionItemCosmosClient.databaseAccounts.get(resourceGroup, databaseName);
 
       const connectionString = await this.getConnectionString(
         this.SubscriptionItemCosmosClient,

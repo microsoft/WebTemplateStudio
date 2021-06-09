@@ -13,9 +13,7 @@ export interface IPackageJson {
       };
 }
 
-export function getPackageInfo(
-  ctx?: vscode.ExtensionContext
-): {
+export function getPackageInfo(ctx?: vscode.ExtensionContext): {
   extensionName: string;
   extensionVersion: string;
   aiKey: string;
