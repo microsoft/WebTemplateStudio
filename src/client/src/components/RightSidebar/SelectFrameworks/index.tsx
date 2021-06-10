@@ -27,8 +27,9 @@ const SelectFrameworks = (props: Props) => {
   const frontendFrameworks = useSelector((state: AppState) => getDropdownFrontendFrameworksSelector(state));
   const backendFrameworks = useSelector((state: AppState) => getDropdownBackendFrameworksSelector(state));
 
-  const [selectedFrontendFramework, setSelectedFrontendFramework] =
-    useState<IDropDownOptionType | undefined>(undefined);
+  const [selectedFrontendFramework, setSelectedFrontendFramework] = useState<IDropDownOptionType | undefined>(
+    undefined
+  );
   const [selectedBackendFramework, setSelectedBackendFramework] = useState<IDropDownOptionType | undefined>(undefined);
 
   const { intl } = props;
