@@ -1,7 +1,7 @@
+# Ignored files
 .vscode/**
 .vscode-test/**
 out/**
-src/**
 node_modules/**
 .gitignore
 vsc-extension-quickstart.md
@@ -9,6 +9,9 @@ vsc-extension-quickstart.md
 **/.eslintrc.js
 **/*.map
 **/*.ts
+src/configuration.json
+
+# Whitelist needed files
 !src/corets-cli/**
 !src/azure/azure-app-service/arm-templates
 !src/azure/azure-cosmosDB/arm-templates
