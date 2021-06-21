@@ -2,20 +2,19 @@
 
 "use strict";
 
-const path = require("path");
 const FilterWarningsPlugin = require("webpack-filter-warnings-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const TerserPlugin = require('terser-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
 
 const config = {
+  mode: "production",
   target: "node", // vscode extensions run in a Node.js-context 📖 -> https://webpack.js.org/configuration/node/
   entry: "./src/extension.ts", // the entry point of this extension, 📖 -> https://webpack.js.org/configuration/entry-context/
   output: {
     // the bundle is stored in the 'dist' folder (check package.json), 📖 -> https://webpack.js.org/configuration/output/
-    path: path.resolve(__dirname, "dist"),
     filename: "extension.js",
     libraryTarget: "commonjs2",
     devtoolModuleFilenameTemplate: "../[resource-path]",
+    clean: true,
   },
   devtool: "source-map",
   externals: {
@@ -48,17 +47,17 @@ const config = {
     new FilterWarningsPlugin({
       exclude: /Critical dependency: require function is used in a way in which dependencies cannot be statically extracted/,
     }),
-    new CleanWebpackPlugin(),
   ],
   optimization: {
     minimize: true,
-      minimizer: [
-        new TerserPlugin({
-          terserOptions: {
-            keep_fnames: /AbortSignal/,
-          },
-        }),
-      ],
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          keep_fnames: /AbortSignal/,
+        },
+        extractComments: false,
+      }),
+    ],
   },
 };
 module.exports = config;
