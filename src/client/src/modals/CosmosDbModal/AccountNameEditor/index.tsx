@@ -39,14 +39,14 @@ const AccountNameEditor = ({
   const [isValidatingName, setIsValidatingName] = React.useState(false);
 
   React.useEffect(() => {
-    if (isValidSubscription() && accountName === "") {
+    if (isValidSubscription()) {
       GetValidCosmosAccountName(projectName, vscode).then((event) => onAccountNameChange(event.data.payload.validName));
     }
   }, [subscription]);
 
   React.useEffect(() => {
     onIsAvailableAccountNameChange(false);
-    if (accountName !== "") {
+    if (isValidSubscription()) {
       setIsValidatingName(true);
       delayValidation(() => {
         validationCosmosDbAccountNameScopeId++;
@@ -99,7 +99,7 @@ const AccountNameEditor = ({
         )}
         {isValidatingName && <Spinner data-testid="spinner" className={styles.spinner} />}
       </div>
-      {accountName !== "" && !isValidatingName && invalidAccountNameMessage !== "" && (
+      {!isValidatingName && invalidAccountNameMessage !== "" && (
         <div data-testid="error-message" className={styles.errorMessage}>
           {invalidAccountNameMessage}
         </div>

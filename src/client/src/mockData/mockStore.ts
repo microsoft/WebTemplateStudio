@@ -117,7 +117,7 @@ export const getInitialState = (): AppState => {
         projectName: "myApp",
         validation: {
           isValid: true,
-          error: ("" as unknown) as FormattedMessage.MessageDescriptor,
+          error: "" as unknown as FormattedMessage.MessageDescriptor,
           isDirty: true,
         },
       },

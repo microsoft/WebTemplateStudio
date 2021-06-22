@@ -9,9 +9,11 @@ This document covers:
 - [Core Template Studio Submodule](#core-template-studio-submodule)
 - [How to run the extension locally](#how-to-run-the-extension-locally)
 - [How to develop the client](#how-to-develop-the-client)
+- [Troubleshooting](#troubleshooting)
 - [How to build a local vsix](#how-to-build-a-local-vsix)
 - [Tests](#tests)
 - [Under the hood](#under-the-hood)
+- [Folder overview](#folder-overview)
 
 Before starting make sure you read the [Web Template Studio arquitecture](application-architecture.md) document.
 
@@ -29,15 +31,16 @@ If you just want to take advantage from *Web Template Studio* extension, check t
 1. Run the command `npm config set scripts-prepend-node-path true`. This tells VSCode which Node version to run during the extension compilation (otherwise you'll get an error during the build process).
 
 ### For a react native application
-1. You have to check the following [dependencies](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies).
+    You have to check the following [dependencies](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies).
 
-    In the Wizard you have a link on the right-side bar, to show a modal with the System Requirements.
+    In the Wizard you have a link on the right-side bar, to show a modal with the System Requirements. If any of them is missing you will see a warning.
 
-   <img alt="React Native System Requirements" src="../resources/react-native-requirements.png" width="85%" />
+    If you are running `WebTS` in Mac/Linux you will see a different message, notifying you that the generated native Windows application cannot be run.
 
-**Note**: If using Windows, use Git Bash.
+    <img alt="React Native System Requirements" src="../resources/react-native-requirements.png" width="85%" />
 
-At some point you may also need to install [React-scripts](https://yarnpkg.com/package/react-scripts) and [Typescript](https://www.typescriptlang.org/).
+
+**Note**: When developing in `WebTS` you may also need to install [React-scripts](https://yarnpkg.com/package/react-scripts) and [Typescript](https://www.typescriptlang.org/).
 
 ## Project folder structure
 
@@ -92,7 +95,11 @@ Core Template Studio is integrated into *Web Template Studio* using a git submod
 When you clone *Web Template Studio* you have to run two commands: `git submodule init` and `git submodule update` to fetch all the data from Core Template Studio. When fetching changes, also execute `git submodule update` after doing git fetch to be sure you're submodule is up to date.
 
 ### Update with remote changes
-Changes on Core Template Studio should be done on the Core Template Studio repos. In WebTS, to update the submodule to the most recent commit, you have to run the command: `git submodule update --remote`.
+Changes on Core Template Studio should be done on the Core Template Studio repos. In WebTS, to update the submodule to the most recent commit, you have to run the command: `git submodule update --remote`. 
+
+This will require a new `git submodule update` on other local repositories to get the update.
+
+For more info visit the [official documentation](https://git-scm.com/docs/git-submodule).
 
 ## How to run the extension locally
 1. Run `./build-all.sh` from the `_build` folder. This script installs dependencies and compiles the client and core template studio and copies it to the extension. It also builds and installs the extension.
@@ -117,9 +124,12 @@ Changes on Core Template Studio should be done on the Core Template Studio repos
 As the client is injected as a static web app in the webview of the extension, debugging inside the extension can be challenging. Running the client in a browser is useful for quickly testing HTML or CSS changes and for debugging since you can use **Chrome extensions** such as `React and Redux developer tools`.
 
 When running in the browser, communication with the extension is done against the mock `mockVsCodeApi.ts` in the `mockData` folder. Note that the behaviour of the client on the browser may differ from the behaviour in the extension, so make sure to test out both.
+
 Styles are mocked in the Browser using the file [`mockThemes.css`](../../src/client/src/css/mockThemes.css).
 
-1. Run `./build-client.sh` from the _build folder.
+To choose what platform you want to debug, you can modify `mockConfig.ts` in the `mockData`folder.
+
+1. Run `./build-client.sh` from the `_build` folder. Or you can use the command `yarn build` if you are on the `client` folder already.
 2. Open the `src/client` folder using `VSCode`.
 3. Start the client using `yarn start` to begin development in the browser. We recommend using a chromium based browser such as Chrome.
 
@@ -129,7 +139,7 @@ Styles are mocked in the Browser using the file [`mockThemes.css`](../../src/cli
 
 ### To debug from Visual Studio Code:
 Install [Debugger for Chrome extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) in Visual Studio Code debug Wizard Client.
-After starting the client using `yarn start` in VSCode Debug View (`Ctrl + Shift ⇧ + D` (Windows/Linux) or `Shift ⇧ + Command ⌘ + D` (Mac) in Visual Studio Code) select "*Debug WebTS Client*" and start debugging (`F5`).
+After starting the client using `yarn start` in VSCode Debug View (`Ctrl + Shift ⇧ + D` (Windows/Linux) or `Shift ⇧ + Command ⌘ + D` (Mac) in Visual Studio Code) select "*Debug WebTS Client*" and start debugging (you can directly press: `F5`).
 
 #### More info:
 - [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)
@@ -155,10 +165,14 @@ After installation, use `Ctrl + Shift ⇧ + P` (Windows/Linux) or `Command ⌘ +
 You can check available commands [here](./contributing/application-architecture.md#extension).
 
 ### Possible problems and workarounds to fix them
-1. You may get some errors on the output console for the extension: `webtemplatestudio-{env}`, or maybe you realise that there´s missing information displayed on the screen.
-For example, no Frameworks at all for the `Create Web App` command. Make sure you have the proper versions of the .mstx for the templates in the extension folder - as mentioned above, for *Windows* would be `%USERPROFILE%\.vscode\extensions\wasteamaccount.webtemplatestudio-{environment}-{version}\src\corets-cli` or in *Mac/Linux* `~/.vscode/extensions/wasteamaccount.webtemplatestudio-{environment}-{version}/src/corets-cli`.
+You may get some errors on the output console for the extension: `webtemplatestudio-{env}`, or maybe you realise that there´s missing information displayed on the screen.
+For example, no Frameworks at all for the `Create Web App` command. Make sure you have the proper versions of the `.mstx` for the templates in the extension folder - as mentioned above, for *Windows* would be `%USERPROFILE%\.vscode\extensions\wasteamaccount.webtemplatestudio-{environment}-{version}\src\corets-cli` or in *Mac/Linux* `~/.vscode/extensions/wasteamaccount.webtemplatestudio-{environment}-{version}/src/corets-cli`.
 
-    If that´s not the case, and you have an older version, or you´re missing some package of templates, then you will need to retrieve them from the generated .vsix in the [Build Pipeline](https://winappstudio.visualstudio.com/Vegas). Also will need to update the `Allowed Packages` with the .mstx hashes in the file `CoreTemplateStudio.config` within the proper folder depending on the OS you are working (*win21* for instance, when developing on *Windows* for example).
+    If that´s not the case, and you have an older version, or you´re missing some package of templates, then you will need to retrieve them from the generated `.vsix`.
+    1. You can follow [the following instructions](https://github.com/microsoft/CoreTemplateStudio/wiki/Tools:-WTS-Packaging-Tool) to create the package.
+    2. If you have permissions, you can download the `.vsix` from the *Build Pipeline*.
+
+    **Note**: You will also need to update the `Allowed Packages` with the `.mstx` hashes in the file `CoreTemplateStudio.config` within the proper folder depending on the OS you are working (*win32* for instance, when developing on *Windows* for example).
 
 <img alt="Install extension from .vsix" src="../resources/vscode-output-window-errors.png" width="500px"  />
 <img alt="Folder where you can find the .mstx for the templates" src="../resources/extension-folder-mstx.png" width="400px"  />
@@ -193,6 +207,46 @@ repository by [rebornix](https://github.com/rebornix):
 - We inline the initial html `<!DOCTYPE html> ... ` content in `src/extension/src/reactPanel.ts`  when creating the webview
 - For all resources going to the webview, their scheme is `vscode-resource`
 - We add a baseUrl `<base href="${vscode.Uri.file(path.join(this._extensionPath, 'build')).with({ scheme: 'vscode-resource' })}/">` and then all relative paths work.
+
+## Troubleshooting
+You may encounter some issues when using or developing in WebTS. It could be due to folder permissions, missing to create the Template packages,... Find below a list of folders that you may be interested in visiting and removing if this happens to you.
+
+- You need permissions to write on the local `WebTS` folder, where you can find the `Logs` and `Templates` folders.
+
+- Web Template Studio may be missing execute permissions on the `corets-cli` folder, can check full path on the table below, where the Core Template Studio CLI is located.
+
+- The template cache is located in the `.templateengine` folder. Template caches are isolated by environment.
+
+**Note**: If you clean or remove the corets-cli folder, you should make sure that you re run the build-all.sh script. Otherwise, if you removed the Templates or the Template Cache, you need to Launch the `Web Template Studio` wizard again.
+
+**Warning**: When you are debugging the application, a shortcut to the `Templates` folder of your code is used. Mind that everything you modified there, will be changed on the **local repository**.
+
+## Useful folders
+To make it easier for you to see which folder is used on the different OS, we added a summary table below:
+
+| Environment | Description | Folder |
+| ----------- | ------ | ----------- |
+| `Windows` | Core Template Studio CLI | `%userprofile%\.vscode\extensions\wasteamaccount.webtemplatestudio-[environment]-[version]\src\corets-cli\`  |
+|  | Logs and Templates |`%LocalAppData%/WebTS`  |
+|  | Template cache | `%userprofile%\.templateengine\[environment].[platform].Any`  |
+| `Mac` | Core Template Studio CLI | `/Users/[username]/.vscode-server/extensions/wasteamaccount.webtemplatestudio-[environment]-[version]/src/corets-cli/`  |
+| | Logs and Templates | `/Users/[username]/.local/share/WebTS` |
+| | Template cache | `/Users/[username]/.templateengine/[environment].[platform].Any` |
+| `Linux` | Core Template Studio CLI | `//home/[username]/.vscode-server/extensions/wasteamaccount.webtemplatestudio-[environment]-[version]/src/corets-cli/` |
+| | Logs and Templates | `//home/[username]/.local/share/WebTS` |  |
+| | Template cache | `//home/[username]/.templateengine/[environment].[platform].Any` |
+
+Below you have an overview of the different folder names for the different environments:
+
+| Environment name | Description | .vsix folder name | Template Cache Folder Name |
+| ----------- | ----------- | -------------- | ------------ |
+| WebTSDebug | Debug extension locally | - | WebTSDebug |
+| Local | Local vsix | local | Local.Web.Any  |
+|  |   | | Local.RN.Any |
+| Nightly | Nightly version | nightly | Nightly.Web.Any |
+|  |  | |  Nightly.RN.Any |
+| Dev | Marketplace version | dev-nightly | Dev.Web.Any |
+|  |  |  | Dev.RN.Any |
 
 ## Learn more
 

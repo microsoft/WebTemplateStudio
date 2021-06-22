@@ -1,13 +1,11 @@
 import * as React from "react";
-import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 
 import { getInitialState } from "../../../mockData/mockStore";
-import AppServiceSelection from "./AppServiceSelection";
-import CosmosDBSelection from "./CosmosDBSelection";
+import { renderWithStore } from "../../../testUtils";
+import appServiceMessages from "./AppServiceSelection/messages";
+import cosmosDBMessages from "./CosmosDBSelection/messages";
 import ServicesList from "./index";
-
-const mockStore = configureMockStore();
 
 const emptyCosmosDB = null;
 const emptyAppService = null;
@@ -20,22 +18,22 @@ const mockVsCode = {
 
 describe("ServicesList", () => {
   let props: any;
+  let store: any;
   let wrapper: any;
   let initialState: any;
+
+  const mockStore = configureMockStore();
 
   describe("When has not selected AppService in store", () => {
     beforeEach(() => {
       initialState = getInitialState();
+      store = mockStore(initialState);
       initialState.userSelection.services = {
         appService: emptyAppService,
       };
       initialState.vscode = mockVsCode;
 
-      wrapper = mountWithIntl(
-        <Provider store={mockStore(initialState)}>
-          <ServicesList {...props} />
-        </Provider>
-      ).children();
+      wrapper = renderWithStore(<ServicesList {...props} />, store);
     });
 
     it("renders without crashing", () => {
@@ -43,13 +41,13 @@ describe("ServicesList", () => {
     });
 
     it("Should not have a rendered AppServiceSelection component", () => {
-      const appServiceComponent = wrapper.find(AppServiceSelection);
-      expect(appServiceComponent).toHaveLength(0);
+      expect(wrapper.queryByText(intl.formatMessage(appServiceMessages.title))).not.toBeInTheDocument();
     });
   });
 
   describe("When has selected AppService in store", () => {
     beforeEach(() => {
+      store = mockStore(initialState);
       const appService = { ...emptyAppService, selection: {} };
       initialState = getInitialState();
       initialState.userSelection.services = {
@@ -57,11 +55,7 @@ describe("ServicesList", () => {
       };
       initialState.vscode = mockVsCode;
 
-      wrapper = mountWithIntl(
-        <Provider store={mockStore(initialState)}>
-          <ServicesList {...props} />
-        </Provider>
-      ).children();
+      wrapper = renderWithStore(<ServicesList {...props} />, store);
     });
 
     it("renders without crashing", () => {
@@ -69,24 +63,21 @@ describe("ServicesList", () => {
     });
 
     it("Should have a rendered AppServiceSelection component", () => {
-      const appServiceComponent = wrapper.find(AppServiceSelection);
-      expect(appServiceComponent).toHaveLength(1);
+      const appServiceComponent = wrapper.getByText(intl.formatMessage(appServiceMessages.title));
+      expect(appServiceComponent).toBeDefined();
     });
   });
 
-  describe("When hasn not selected CosmosDB service in store", () => {
+  describe("When has not selected CosmosDB service in store", () => {
     beforeEach(() => {
       initialState = getInitialState();
+      store = mockStore(initialState);
       initialState.userSelection.services = {
         cosmosDB: emptyCosmosDB,
       };
       initialState.vscode = mockVsCode;
 
-      wrapper = mountWithIntl(
-        <Provider store={mockStore(initialState)}>
-          <ServicesList {...props} />
-        </Provider>
-      ).children();
+      wrapper = renderWithStore(<ServicesList {...props} />, store);
     });
 
     it("renders without crashing", () => {
@@ -94,8 +85,7 @@ describe("ServicesList", () => {
     });
 
     it("Should not have a rendered CosmosDBSelection component", () => {
-      const cosmosDBComponent = wrapper.find(CosmosDBSelection);
-      expect(cosmosDBComponent).toHaveLength(0);
+      expect(wrapper.queryByText(intl.formatMessage(cosmosDBMessages.title))).not.toBeInTheDocument();
     });
   });
 
@@ -104,14 +94,11 @@ describe("ServicesList", () => {
       const cosmosDB = { ...emptyCosmosDB, selection: ["any"] };
 
       initialState = getInitialState();
+      store = mockStore(initialState);
       initialState.userSelection.services = { cosmosDB };
       initialState.vscode = mockVsCode;
 
-      wrapper = mountWithIntl(
-        <Provider store={mockStore(initialState)}>
-          <ServicesList {...props} />
-        </Provider>
-      ).children();
+      wrapper = renderWithStore(<ServicesList {...props} />, store);
     });
 
     it("renders without crashing", () => {
@@ -119,8 +106,8 @@ describe("ServicesList", () => {
     });
 
     it("Should have a rendered CosmosDBSelection component", () => {
-      const cosmosDBComponent = wrapper.find(CosmosDBSelection);
-      expect(cosmosDBComponent).toHaveLength(1);
+      const cosmosDBComponent = wrapper.getByText(intl.formatMessage(cosmosDBMessages.title));
+      expect(cosmosDBComponent).toBeDefined();
     });
   });
 });
