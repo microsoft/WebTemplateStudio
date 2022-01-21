@@ -158,7 +158,7 @@
     "fs-extra": "^9.0.0",
     "global": "^4.4.0",
     "latest-version": "^5.1.0",
-    "log4js": "^6.3.0",
+    "log4js": "^6.4.0",
     "node-fetch": "^2.6.1",
     "node-fs-extra": "^0.8.2",
     "opn": "^6.0.0",
