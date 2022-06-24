@@ -24,7 +24,7 @@
     "focus-visible": "^5.1.0",
     "global": "^4.4.0",
     "lodash": "^4.17.19",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-intl": "^2.8.0",
