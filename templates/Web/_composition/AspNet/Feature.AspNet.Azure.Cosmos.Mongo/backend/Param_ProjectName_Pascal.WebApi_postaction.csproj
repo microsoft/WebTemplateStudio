@@ -3,7 +3,7 @@
   <ItemGroup>
     <!--^^-->
     <!--{[{-->
-    <PackageReference Include="MongoDB.Driver" Version="2.12.2" />
+    <PackageReference Include="MongoDB.Driver" Version="2.19.0" />
     <!--}]}-->
   </ItemGroup>
 
