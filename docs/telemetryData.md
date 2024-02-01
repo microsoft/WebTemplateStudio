@@ -1,4 +1,4 @@
-# Telemetry for Web Template Studio - 2021.06
+# Telemetry for Web Template Studio - 2024.01
 
 As new features and pages roll out, percentages  will adjust.
 
@@ -6,8 +6,8 @@ As new features and pages roll out, percentages  will adjust.
 
 |Type|Percentage|
 |:---|:---:|
-|Web|88.1%|
-|RN|11.9%|
+|Web|82.1%|
+|RN|17.9%|
 
 ### Project Generation by category
 
@@ -18,27 +18,27 @@ As new features and pages roll out, percentages  will adjust.
 
 |Framework Type|Percentage|
 |:---|:---:|
-|React|58.1%|
-|Vue|21.4%|
-|Angular|20.5%|
+|React|72.9%|
+|Vue|22.9%|
+|Angular|4.2%|
 
 ### Backend Frameworks
 
 |Framework Type|Percentage|
 |:---|:---:|
-|Node|50.8%|
-|AspNet|22%|
-|Flask|18.7%|
-|Moleculer|8.6%|
+|Node|63.5%|
+|Flask|19.8%|
+|AspNet|15.6%|
+|Moleculer|1%|
 
 ### Pages
 
 |Pages|Percentage|
 |:---|:---:|
-|Blank|33.1%|
-|Grid|25%|
-|Master Detail|21.9%|
-|List|20%|
+|Blank|48.3%|
+|Master Detail|19.1%|
+|Grid|18.7%|
+|List|13.9%|
 
 
 </details>
@@ -56,9 +56,9 @@ As new features and pages roll out, percentages  will adjust.
 
 |Pages|Percentage|
 |:---|:---:|
-|Blank|47.5%|
-|MasterDetail|29.3%|
-|Settings|23.2%|
+|Blank|56.1%|
+|MasterDetail|24.4%|
+|Settings|19.5%|
 
 
 </details>
